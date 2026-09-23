@@ -1,0 +1,19 @@
+Two-phase droplet-impact surrogate: transfer evaluation
+========================================================
+Model : conditional U-Net (base=16, levels=3), trained ONLY on simple cases
+        (flat wall + 2 periodic pillar arrays), 25 epochs, final train loss ~7e-4.
+Data  : 192^2 solver / 64^2 surrogate, save every 20 solver steps.
+Metric: evaluate_transfer.py --horizon 40  (one-step on true states + autoregressive rollout-K)
+
+Grouped results (mean over cases):
+
+  split  family    n    1step_phi_RMSE   rollout40_RMSE   mass_rel(init)  spread_abs
+  train  simple   13        0.0166           0.1459           0.50          0.78
+  test   complex  10        0.0195           0.1808           0.81          1.09
+
+Interpretation
+--------------
+* One-step phase prediction transfers well: only ~18% higher RMSE on unseen
+  complex surfaces (0.0166 -> 0.0195).
+* Autoregressive rollout drifts more on complex surfaces; the gap concentrates in
+  fine-scale features (splashing satellites, thin lamella, pillar penetration depth).
