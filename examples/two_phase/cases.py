@@ -143,8 +143,61 @@ def augmented_cases(n: int = 48, seed: int = 4242):
     return [dict(split="train", family="complex_aug", **_sample_complex(rng, i)) for i in range(n)]
 
 
+def _low_common(rng):
+    # Low-We regime: gentler impact, higher surface tension
+    # Use smaller dt for stability (capillary force ~1/We is large)
+    We = float(np.round(rng.uniform(12.0, 60.0), 1))
+    # dt 1e-3 for We<20, 2e-3 otherwise (CFL for capillary)
+    dt = 1e-3 if We < 18 else 2e-3
+    return dict(
+        We=We,
+        cos_theta=float(np.round(rng.uniform(-0.5, 0.6), 2)),
+        R=float(np.round(rng.uniform(0.55, 0.75), 3)),
+        u_impact=float(np.round(rng.uniform(0.15, 0.30), 3)),
+        dt=dt,
+    )
+
+def _sample_low(rng, i):
+    # 60% flat, 40% pillars, all low-We
+    if rng.uniform() < 0.6:
+        return dict(surface="flat", **_low_common(rng))
+    return dict(
+        surface="pillars",
+        n_pillars=int(rng.integers(3, 6)),
+        width=float(np.round(rng.uniform(0.18, 0.35), 3)),
+        height=float(np.round(rng.uniform(0.15, 0.35), 3)),
+        center=float(np.round(3.0 + rng.uniform(-0.4, 0.4), 3)),
+        **_low_common(rng),
+    )
+
+def lowwe_cases(n: int = 48, seed: int = 2027):
+    rng = np.random.default_rng(seed)
+    return [dict(split="train", family="lowWe", **_sample_low(rng, i)) for i in range(n)]
+
+def lowwe_test_cases(n: int = 12, seed: int = 3027):
+    rng = np.random.default_rng(seed)
+    out = []
+    for i in range(n):
+        fam = COMPLEX_FAMILIES[i % len(COMPLEX_FAMILIES)]
+        c = dict(split="test", family="lowWe_test", surface=fam, seed=2000+i, **_low_common(rng))
+        if fam == "random_pillars":
+            c["n_pillars"] = int(rng.integers(4, 8))
+        elif fam == "hierarchical":
+            c.update(n_pillars=int(rng.integers(2,4)), width=float(np.round(rng.uniform(0.4,0.7),3)),
+                     height=float(np.round(rng.uniform(0.3,0.55),3)), n_sub=int(rng.integers(2,4)),
+                     sub_width=float(np.round(rng.uniform(0.07,0.12),3)), sub_height=float(np.round(rng.uniform(0.08,0.16),3)))
+        elif fam == "grooves":
+            c.update(n_grooves=int(rng.integers(4,8)), width=float(np.round(rng.uniform(0.18,0.32),3)), depth=float(np.round(rng.uniform(0.15,0.3),3)))
+        else:
+            c["slope"] = float(np.round(rng.choice([-1,1])*rng.uniform(0.15,0.5),3))
+        out.append(c)
+    return out
+
 CASE_SETS = {
     "base": lambda: [copy.deepcopy(c) for c in CASES],
     "large": large_simple_cases,
     "aug": augmented_cases,
+    "lowWe": lowwe_cases,
+    "lowWe_test": lowwe_test_cases,
+    "lowWe_all": lambda: lowwe_cases(48, 2027) + lowwe_test_cases(12, 3027),
 }

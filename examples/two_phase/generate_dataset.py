@@ -62,8 +62,19 @@ def main():
             print(f"[{i:2d}] exists, skip: {label}")
             continue
         t0 = time.time()
-        p, solid, st = pf.build_case(case, N=args.N, dt=args.dt)
-        final, phi, u, v = pf.rollout(st, solid, p, args.nsteps, save_every=args.save_every)
+        # use case-specific dt if present (e.g. lowWe needs 1e-3)
+        dt = float(case.get("dt", args.dt))
+        # keep physical time per trajectory ~8 and physical time per saved frame ~0.08
+        # baseline: dt=4e-3, nsteps=2000, save_every=20 => 8.0 time, 0.08 per frame, T=100
+        nsteps = args.nsteps
+        save_every = args.save_every
+        if "dt" in case:
+            # scale to keep physical time constant
+            nsteps = int(round(args.nsteps * args.dt / dt))
+            save_every = int(round(args.save_every * args.dt / dt))
+            nsteps = max(save_every, (nsteps // save_every) * save_every)  # multiple
+        p, solid, st = pf.build_case(case, N=args.N, dt=dt)
+        final, phi, u, v = pf.rollout(st, solid, p, nsteps, save_every=save_every)
         if not bool(np.isfinite(np.asarray(phi)).all()):
             print(f"[{i:2d}] NaN/inf in trajectory, skip: {label}", flush=True)
             continue

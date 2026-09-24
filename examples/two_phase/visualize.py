@@ -63,8 +63,9 @@ def overlay(ax, phi, chi, title=None, truth=None, mask_solid=True):
 
 
 def run_case(case, nsteps=1200, save_every=10, N=192, dt=None):
-    p, solid, st = pf.build_case(case, N=N, dt=dt if dt is not None else 4e-3)
-    # build_case already clips dt to CFL; show what was actually used
+    dt_eff = case.get("dt", dt if dt is not None else 4e-3)
+    p, solid, st = pf.build_case(case, N=N, dt=dt_eff)
+    # low-We may need longer nsteps; caller can pass larger nsteps
     _, phi, u, v = pf.rollout(st, solid, p, nsteps, save_every=save_every)
     return p, solid, np.asarray(phi), np.asarray(u), np.asarray(v)
 
@@ -134,7 +135,111 @@ def fig_wetting():
     print("saved fig_wetting.png")
 
 
+def fig_lowWe():
+    """Low-We Weber sweep (We=8..60) with slow impact speed — stable dt"""
+    Wes = [10, 18, 32, 55]
+    frames = [12, 30, 60, 90]
+    fig, axes = plt.subplots(len(Wes), len(frames), figsize=(2.2*len(frames), 2.3*len(Wes)))
+    for r, we in enumerate(Wes):
+        # low We needs smaller dt for capillary stability
+        u = 0.18 if we < 15 else 0.22 if we < 35 else 0.28
+        dt = 1e-3 if we < 20 else 2e-3
+        nsteps = 2500 if we < 20 else 1800  # longer for slow fall
+        case = dict(surface="flat", We=we, cos_theta=0.0, u_impact=u, R=0.65, dt=dt)
+        p, solid, phi, _, _ = run_case(case, nsteps=nsteps, save_every=10, N=192)
+        T = phi.shape[0]
+        for c, ti in enumerate(frames):
+            ti = min(ti, T-1)
+            overlay(axes[r][c], phi[ti], solid.chi, title=f"t={ti}" if r==0 else None)
+            if c==0:
+                axes[r][c].set_ylabel(f"We={we}\nu={u:.2f}", fontsize=9)
+    fig.suptitle("Low-We sweep (flat wall, slow impact) — gentle deposition vs splash", fontsize=11)
+    fig.tight_layout()
+    fig.savefig(f"{OSDIR}/fig_lowWe.png", dpi=110)
+    plt.close(fig)
+    print("saved fig_lowWe.png")
+
+def fig_lowWe_transfer(ckpt="ckpts/lowWe.pkl"):
+    """Show surrogate predictions on low-We unseen cases"""
+    import pickle, surrogate as S
+    try:
+        with open(ckpt, "rb") as fh:
+            ck = pickle.load(fh)
+        # use same logic as fig_transfer but for lowWe_test
+        # Load checkpoint via surrogate.load_checkpoint
+        model, params, cfg = S.load_checkpoint(ckpt)
+        uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
+        import jax
+        apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
+        def predict(state, geom, scal):
+            x = state.copy()
+            x[...,1:3] /= uv
+            out = __import__('numpy').asarray(apply_fn(__import__('jax.numpy').asarray(__import__('numpy').concatenate([x, geom], -1)), __import__('jax.numpy').asarray(scal)))
+            out = out.copy()
+            out[...,0] = __import__('numpy').clip(out[...,0], 0, 1)
+            out[...,1:3] *= uv
+            return out
+        # need data: try data/lowWe_all
+        import glob, os, numpy as np
+        picks = []
+        for split in ("test",):
+            for f in sorted(glob.glob("data/lowWe_all/*.npz")):
+                d = np.load(f, allow_pickle=True)
+                if str(d["split"]) != split:
+                    continue
+                # pick 3 diverse
+                picks.append(dict(phi=d["phi"].astype(np.float32), u=d["u"].astype(np.float32), v=d["v"].astype(np.float32),
+                                  chi=d["chi"].astype(np.float32), sdf=d["sdf"] if "sdf" in d else None,
+                                  scalars=d["scalars"].astype(np.float32), surface=str(d["surface"]), file=f))
+                if len(picks)>=3:
+                    break
+        if not picks:
+            # fallback to generating on fly
+            import phasefield as pf
+            for we in [10, 25, 50]:
+                u = 0.2 if we<20 else 0.3
+                case = dict(surface="random_pillars", We=we, cos_theta=0.0, seed=2001, u_impact=u, n_pillars=6)
+                p, solid, st = pf.build_case(case, N=192, dt=4e-3)
+                _, phi, uu, vv = pf.rollout(st, solid, p, 2000, save_every=20)
+                phi, uu, vv = np.asarray(phi), np.asarray(uu), np.asarray(vv)
+                chi = np.asarray(solid.chi)
+                picks.append(dict(phi=phi, u=uu, v=vv, chi=chi, sdf=np.asarray(solid.sdf), scalars=np.array([we/100,0.5,0.0, p.dx],dtype=np.float32), surface="random_pillars"))
+        fig, axes = plt.subplots(len(picks), 5, figsize=(2.2*5, 2.4*len(picks)))
+        if len(picks)==1:
+            axes = axes[None]
+        frames = [0, 12, 24, 36, 50]
+        for r, c in enumerate(picks):
+            # build geom
+            geom = S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode) if c["sdf"] is not None else c["chi"][...,None]
+            geom_b = np.repeat(geom[None], 1, axis=0)
+            # rollout surrogate
+            st = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
+            traj = [st[...,0]]
+            cur = st
+            for _ in range(50):
+                cur = predict(cur[None], geom[None], c["scalars"][None])[0]
+                # clip phi
+                cur[...,0] = np.clip(cur[...,0], 0, 1)
+                traj.append(cur[...,0].copy())
+            traj = np.stack(traj)
+            for ci, ti in enumerate(frames):
+                ti = min(ti, c["phi"].shape[0]-1, traj.shape[0]-1)
+                overlay(axes[r][ci], traj[ti], c["chi"], truth=c["phi"][ti])
+                if ci==0:
+                    axes[r][ci].set_ylabel(f"{c['surface']}\nWe={float(c['scalars'][0])*100:.0f}", fontsize=8)
+                if r==0:
+                    axes[r][ci].set_title(f"t={ti}", fontsize=8)
+        fig.suptitle("Low-We surrogate rollout (blue) vs truth (red) — unseen complex surfaces", fontsize=10)
+        fig.tight_layout()
+        fig.savefig(f"{OSDIR}/fig_lowWe_transfer.png", dpi=110)
+        plt.close(fig)
+        print("saved fig_lowWe_transfer.png")
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        print(f"lowWe transfer fig failed: {e}")
+
 def fig_diagnosis():
+
     """Explain the 'liquid in the wall' artifact: diffuse solid + volume wetting."""
     fig = plt.figure(figsize=(13, 4.2))
     gs = fig.add_gridspec(1, 4, width_ratios=[1.2, 1.2, 1.6, 1.6], wspace=0.35)
@@ -317,7 +422,7 @@ def fig_metrics(ckpt):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["solver", "transfer", "diagnosis", "resolution", "all"], default="solver")
+    ap.add_argument("--mode", choices=["solver", "transfer", "diagnosis", "resolution", "lowWe", "all"], default="solver")
     ap.add_argument("--ckpt", default="ckpts/surrogate.pkl")
     args = ap.parse_args()
     os.makedirs(OSDIR, exist_ok=True)
@@ -325,6 +430,7 @@ def main():
         fig_surfaces()
         fig_weber()
         fig_wetting()
+        fig_lowWe()
     if args.mode in ("diagnosis", "all"):
         fig_diagnosis()
     if args.mode in ("resolution", "all"):
@@ -332,6 +438,9 @@ def main():
     if args.mode in ("transfer", "all"):
         fig_transfer(args.ckpt)
         fig_metrics(args.ckpt)
+    if args.mode in ("lowWe", "all"):
+        fig_lowWe()
+        fig_lowWe_transfer(args.ckpt)
 
 
 if __name__ == "__main__":
