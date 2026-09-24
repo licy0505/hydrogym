@@ -137,5 +137,6 @@ examples/firedrake/getting_started/output/
 # two-phase example artifacts
 examples/two_phase/data/
 examples/two_phase/ckpts/
+examples/two_phase/logs/
 examples/two_phase/*.png
 examples/two_phase/*.npz
