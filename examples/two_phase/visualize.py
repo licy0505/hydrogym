@@ -159,7 +159,7 @@ def fig_lowWe():
     plt.close(fig)
     print("saved fig_lowWe.png")
 
-def fig_lowWe_transfer(ckpt="ckpts/lowWe.pkl"):
+def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf.pkl"):
     """Show surrogate predictions on low-We unseen cases"""
     import pickle, surrogate as S
     try:
@@ -170,11 +170,14 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe.pkl"):
         model, params, cfg = S.load_checkpoint(ckpt)
         uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
         import jax
+        import jax.numpy as jnp
         apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
         def predict(state, geom, scal):
             x = state.copy()
             x[...,1:3] /= uv
-            out = __import__('numpy').asarray(apply_fn(__import__('jax.numpy').asarray(__import__('numpy').concatenate([x, geom], -1)), __import__('jax.numpy').asarray(scal)))
+            xb = jnp.asarray(__import__('numpy').concatenate([x, geom], -1))
+            cb = jnp.asarray(scal)
+            out = __import__('numpy').asarray(apply_fn(xb, cb))
             out = out.copy()
             out[...,0] = __import__('numpy').clip(out[...,0], 0, 1)
             out[...,1:3] *= uv
@@ -182,17 +185,27 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe.pkl"):
         # need data: try data/lowWe_all
         import glob, os, numpy as np
         picks = []
-        for split in ("test",):
+        # try test first, then any available
+        for split in ("test", "train"):
             for f in sorted(glob.glob("data/lowWe_all/*.npz")):
                 d = np.load(f, allow_pickle=True)
                 if str(d["split"]) != split:
                     continue
-                # pick 3 diverse
                 picks.append(dict(phi=d["phi"].astype(np.float32), u=d["u"].astype(np.float32), v=d["v"].astype(np.float32),
                                   chi=d["chi"].astype(np.float32), sdf=d["sdf"] if "sdf" in d else None,
                                   scalars=d["scalars"].astype(np.float32), surface=str(d["surface"]), file=f))
                 if len(picks)>=3:
                     break
+            if len(picks)>=3:
+                break
+        if not picks:
+            # last resort: any file regardless of split
+            import glob as _g
+            for f in sorted(_g.glob("data/lowWe_all/*.npz"))[:3]:
+                d = np.load(f, allow_pickle=True)
+                picks.append(dict(phi=d["phi"].astype(np.float32), u=d["u"].astype(np.float32), v=d["v"].astype(np.float32),
+                                  chi=d["chi"].astype(np.float32), sdf=d["sdf"] if "sdf" in d else None,
+                                  scalars=d["scalars"].astype(np.float32), surface=str(d["surface"]), file=f))
         if not picks:
             # fallback to generating on fly
             import phasefield as pf
@@ -440,8 +453,13 @@ def main():
         fig_metrics(args.ckpt)
     if args.mode in ("lowWe", "all"):
         fig_lowWe()
-        fig_lowWe_transfer(args.ckpt)
-
+        # resolve lowWe ckpt regardless of cwd
+        import os as _os
+        _cand1 = "ckpts/lowWe_fno_sdf.pkl"
+        _cand2 = "examples/two_phase/ckpts/lowWe_fno_sdf.pkl"
+        _cand3 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf.pkl")
+        _ckpt = _cand1 if _os.path.exists(_cand1) else (_cand2 if _os.path.exists(_cand2) else (_cand3 if _os.path.exists(_cand3) else args.ckpt))
+        fig_lowWe_transfer(_ckpt)
 
 if __name__ == "__main__":
     main()
