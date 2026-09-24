@@ -113,6 +113,8 @@ class PhaseFieldParams:
     cfl: float = 0.4  # used by ``stable_dt``
     use_gravity: bool = False
     dtype: type = jnp.float32
+    enforce_solid_phi: bool = False  # if True, clip phi to 0 inside the solid (chi_hard>0.5) every sub-step
+    solid_phi_clip: float = 0.5  # hard-mask threshold on chi_hard
 
     # extras that the RL / surrogate layer likes to have around
     extras: dict = field(default_factory=dict)
@@ -526,6 +528,8 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
         source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)
         phi_hat = (jnp.fft.rfft2(phi) + dt * source_hat) / denom
         phi_new = jnp.fft.irfft2(phi_hat, s=phi.shape)
+        if p.enforce_solid_phi:
+            phi_new = jnp.where(solid.chi_hard > p.solid_phi_clip, 0.0, phi_new)
 
         # Brinkman penalization, implicit -> unconditionally stable
         damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)
@@ -540,6 +544,8 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
         return (phi_new, u_new, v_new, t + dt), None
 
     (phi, u, v, t), _ = lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)
+    if p.enforce_solid_phi:
+        phi = jnp.where(solid.chi_hard > p.solid_phi_clip, 0.0, phi)
     return State(phi=phi, u=u, v=v, t=t)
 
 
@@ -676,8 +682,17 @@ def empty_solid(p: PhaseFieldParams) -> Solid:
     return Solid(chi=z, ds=z, cos_theta=z, sdf=jnp.ones_like(z), chi_hard=jnp.zeros_like(z))
 
 
-def build_case(case: dict, N: int = 192, dt: float = 4e-3):
-    """Materialise (params, solid, initial_state) from a case dict (see cases.py)."""
+def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
+    """Materialise (params, solid, initial_state) from a case dict (see cases.py).
+
+    ``dt`` is clipped to the CFL-stable value for the chosen ``N`` (higher
+    resolution needs a smaller step; the old default 4e-3 is only stable at
+    N≈192).
+    """
+    if dt is None:
+        dt = 2e-3
+    p0 = PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dt=dt)
+    dt = min(float(dt), float(stable_dt(p0, u_max=2.0)))
     p = PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, Re=case.get("Re", 200.0), We=case.get("We", 100.0), dt=dt)
     gen = SURFACE_REGISTRY[case.get("surface", "flat")]
     surf_kwargs = {
