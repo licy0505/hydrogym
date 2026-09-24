@@ -455,10 +455,18 @@ def main():
         fig_lowWe()
         # resolve lowWe ckpt regardless of cwd
         import os as _os
-        _cand1 = "ckpts/lowWe_fno_sdf.pkl"
-        _cand2 = "examples/two_phase/ckpts/lowWe_fno_sdf.pkl"
-        _cand3 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf.pkl")
-        _ckpt = _cand1 if _os.path.exists(_cand1) else (_cand2 if _os.path.exists(_cand2) else (_cand3 if _os.path.exists(_cand3) else args.ckpt))
+        _cand1 = "ckpts/lowWe_fno_sdf_v2.pkl"
+        _cand2 = "examples/two_phase/ckpts/lowWe_fno_sdf_v2.pkl"
+        _cand3 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf_v2.pkl")
+        _cand4 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf.pkl")
+        _cand5 = "ckpts/lowWe_fno_sdf.pkl"
+        if _os.path.exists(_cand1): _ckpt=_cand1
+        elif _os.path.exists(_cand2): _ckpt=_cand2
+        elif _os.path.exists(_cand3): _ckpt=_cand3
+        elif _os.path.exists(_cand4): _ckpt=_cand4
+        elif _os.path.exists(_cand5): _ckpt=_cand5
+        elif _os.path.exists("examples/two_phase/ckpts/lowWe_fno_sdf.pkl"): _ckpt="examples/two_phase/ckpts/lowWe_fno_sdf.pkl"
+        else: _ckpt=args.ckpt
         fig_lowWe_transfer(_ckpt)
 
 if __name__ == "__main__":
