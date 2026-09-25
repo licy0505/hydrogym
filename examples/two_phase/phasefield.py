@@ -214,7 +214,12 @@ def make_solid(
         ds=ds,
         cos_theta=cos_theta.astype(params.dtype),
         sdf=sdf.astype(params.dtype),
-        chi_hard=(chi > 0.5).astype(params.dtype),
+        # Do not clip the diffuse interface itself.  Clipping at chi>0.5
+        # removed liquid from the first two interface cells and caused a
+        # several-percent mass loss on every contact.  Only the deep solid is
+        # impermeable; the diffuse interfacial band is left to the penalized
+        # phase-field flux.
+        chi_hard=(sdf < -params.eps).astype(params.dtype),
     )
 
 
@@ -476,7 +481,6 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
     dx, dy = p.dx, p.dy
 
     mu = chemical_potential(phi, solid, p)
-    mu_x, mu_y = _ddx(mu, dx), _ddy(mu, dy)
 
     # mobility is damped inside the solid so that the order parameter there is
     # essentially slaved to the wetting boundary condition
@@ -493,9 +497,12 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
     adv_v = div_upwind(u, v, v, dx, dy)
     lap_u, lap_v = _lap(u, dx, dy), _lap(v, dx, dy)
 
-    # capillary (Korteweg) force  -(1/We) mu grad(phi)
-    cap_x = -(SIGMA_NORM / p.We) * mu * mu_x / rho
-    cap_y = -(SIGMA_NORM / p.We) * mu * mu_y / rho
+    # capillary (Korteweg/CSF) force.  The original implementation used
+    # ``mu * grad(mu)`` by mistake; it must use ``mu * grad(phi)``.  This removes
+    # a nonphysical force but does not by itself validate low-We trajectories.
+    phi_x, phi_y = _ddx(phi, dx), _ddy(phi, dy)
+    cap_x = -(SIGMA_NORM / p.We) * mu * phi_x / p.rho_l
+    cap_y = -(SIGMA_NORM / p.We) * mu * phi_y / p.rho_l
 
     if p.use_gravity:
         g_y = -(1.0 / p.Fr**2) * (rho - jnp.mean(rho)) / rho
@@ -509,13 +516,16 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
 
 
 def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
-    """One semi-implicit SSP-RK3 step.
+    """One step made of three semi-implicit Euler substeps.
 
     The 4th-order Cahn-Hilliard diffusion is integrated implicitly in Fourier
     space inside every stage, which removes the O(eps^4/M) stability restriction;
     the Brinkman penalization of the solid is implicit as well.
     """
-    dt = p.dt
+    # Three Euler substeps must sum to one requested step.  Previously each
+    # substep used p.dt and advanced time by 3*p.dt, while files and plots
+    # reported p.dt.  We do not claim SSP-RK3 accuracy for this integrator.
+    dt = p.dt / 3.0
     m2 = p.m2
     denom = 1.0 + dt * p.M * p.eps * m2**2
 
@@ -523,13 +533,11 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
         phi, u, v, t = carry
         phi_rhs, u_rhs, v_rhs, mu, mu_expl = rhs(State(phi, u, v, t), solid, p)
 
-        # implicit CH diffusion:  (I + dt M eps^2 lap^2) phi+ = phi + dt * explicit
+        # implicit CH diffusion: (I + dt M eps lap^2) phi+ = phi + dt * explicit
         # lap(mu_expl) == -k2 * rfft2(mu_expl)
         source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)
         phi_hat = (jnp.fft.rfft2(phi) + dt * source_hat) / denom
         phi_new = jnp.fft.irfft2(phi_hat, s=phi.shape)
-        if p.enforce_solid_phi:
-            phi_new = jnp.where(solid.chi_hard > p.solid_phi_clip, 0.0, phi_new)
 
         # Brinkman penalization, implicit -> unconditionally stable
         damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)
@@ -544,8 +552,6 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
         return (phi_new, u_new, v_new, t + dt), None
 
     (phi, u, v, t), _ = lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)
-    if p.enforce_solid_phi:
-        phi = jnp.where(solid.chi_hard > p.solid_phi_clip, 0.0, phi)
     return State(phi=phi, u=u, v=v, t=t)
 
 
@@ -560,15 +566,37 @@ def droplet_initial_state(
     y0: float = 3.0,
     R: float = 0.5,
     u_impact: float = 1.0,
+    velocity_mode: str = "uniform",
 ) -> State:
     """Circular droplet of radius R centred at (x0, y0) moving downwards at u_impact."""
     X, Y = grids(p)
     r = jnp.sqrt((X - x0) ** 2 + (Y - y0) ** 2)
     phi = 0.5 * (1.0 - jnp.tanh((r - R) / (jnp.sqrt(2.0) * p.eps)))
-    # momentum-consistent translation of the droplet only: v = -U0 rho_l phi / rho(phi)
-    rho = rho_of(phi, p)
-    v = -u_impact * p.rho_l * phi / rho
-    u = jnp.zeros_like(phi)
+    if velocity_mode == "uniform":
+        # A uniform translation is exactly divergence-free on the periodic
+        # grid, so the projection preserves the requested impact speed.  The
+        # wall's Brinkman term then supplies the relative no-slip condition.
+        u = jnp.zeros_like(phi)
+        v = -u_impact * jnp.ones_like(phi)
+    elif velocity_mode == "streamfunction":
+        # Optional localized alternative.  A local downward-only velocity is
+        # compressible; this streamfunction construction makes it divergence
+        # free, with a weak return flow outside the drop.
+        sx = (X - x0)
+        sx = (sx + 0.5 * p.Lx) % p.Lx - 0.5 * p.Lx
+        sy = (Y - y0)
+        sy = (sy + 0.5 * p.Ly) % p.Ly - 0.5 * p.Ly
+        radial = jnp.sqrt(sx * sx + sy * sy + 1e-12)
+        envelope = 0.5 * (1.0 - jnp.tanh((radial - (R + 0.35)) / max(2.0 * p.eps, 0.08)))
+        psi = u_impact * sx * envelope
+        u = _ddy(psi, p.dy)
+        v = -_ddx(psi, p.dx)
+        divergence = _ddx(u, p.dx) + _ddy(v, p.dy)
+        pr = poisson_solve(divergence, p.m2_proj)
+        u = u - _ddx(pr, p.dx)
+        v = v - _ddy(pr, p.dy)
+    else:
+        raise ValueError(f"unknown velocity_mode={velocity_mode!r}")
     return State(phi=phi.astype(p.dtype), u=u.astype(p.dtype), v=v.astype(p.dtype), t=0.0)
 
 
@@ -592,10 +620,10 @@ def rollout(
     def body(carry, _):
         s, buf_phi, buf_u, buf_v, i = carry
         s = step(s, solid, p)
-        save = (i % save_every) == 0
-        buf_phi = jnp.where(save, buf_phi.at[i // save_every].set(s.phi), buf_phi)
-        buf_u = jnp.where(save, buf_u.at[i // save_every].set(s.u), buf_u)
-        buf_v = jnp.where(save, buf_v.at[i // save_every].set(s.v), buf_v)
+        save = ((i + 1) % save_every) == 0
+        buf_phi = jnp.where(save, buf_phi.at[(i + 1) // save_every - 1].set(s.phi), buf_phi)
+        buf_u = jnp.where(save, buf_u.at[(i + 1) // save_every - 1].set(s.u), buf_u)
+        buf_v = jnp.where(save, buf_v.at[(i + 1) // save_every - 1].set(s.v), buf_v)
         return (s, buf_phi, buf_u, buf_v, i + 1), None
 
     save_every = max(1, min(save_every, n_steps))
@@ -669,11 +697,12 @@ def measure_contact_angle(phi, solid: Solid, p: PhaseFieldParams, level: float =
 def pressure_field(state: State, solid: Solid, p: PhaseFieldParams):
     """Projection pressure of the current step (used for diagnostics, e.g. Laplace law)."""
     _, u_rhs, v_rhs, _, _ = rhs(state, solid, p)
-    damp = 1.0 / (1.0 + p.dt * solid.chi / p.eta_pen)
-    u_new = (state.u + p.dt * u_rhs) * damp
-    v_new = (state.v + p.dt * v_rhs) * damp
+    dt = p.dt / 3.0
+    damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)
+    u_new = (state.u + dt * u_rhs) * damp
+    v_new = (state.v + dt * v_rhs) * damp
     div = _ddx(u_new, p.dx) + _ddy(v_new, p.dy)
-    return poisson_solve(div / p.dt, p.m2_proj)
+    return poisson_solve(div / dt, p.m2_proj)
 
 
 def empty_solid(p: PhaseFieldParams) -> Solid:
@@ -685,15 +714,33 @@ def empty_solid(p: PhaseFieldParams) -> Solid:
 def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
     """Materialise (params, solid, initial_state) from a case dict (see cases.py).
 
-    ``dt`` is clipped to the CFL-stable value for the chosen ``N`` (higher
-    resolution needs a smaller step; the old default 4e-3 is only stable at
-    N≈192).
+    ``dt`` is clipped to the CFL-stable value for the chosen ``N``.  A case may
+    set ``eps_factor`` (interface thickness in grid spacings), ``impact_gap``,
+    ``Re``, ``wall_energy_amp`` and the solid-mask options.  The generated drop
+    is placed above the highest solid point, so it never begins inside a wall or
+    pillar.
     """
     if dt is None:
         dt = 2e-3
     p0 = PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dt=dt)
     dt = min(float(dt), float(stable_dt(p0, u_max=2.0)))
-    p = PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, Re=case.get("Re", 200.0), We=case.get("We", 100.0), dt=dt)
+    p = PhaseFieldParams(
+        Nx=N,
+        Ny=N,
+        Lx=6.0,
+        Ly=6.0,
+        Re=case.get("Re", 200.0),
+        We=case.get("We", 100.0),
+        dt=dt,
+        eps=(float(case["eps_factor"]) * 6.0 / N) if "eps_factor" in case else case.get("eps"),
+        # The old solver allowed the phase field to occupy the diffuse wall.
+        # Keeping the hard mask on for generated data prevents a trajectory
+        # from starting with liquid inside a solid cell and removes a large,
+        # resolution-dependent source of mass loss.
+        enforce_solid_phi=bool(case.get("enforce_solid_phi", True)),
+        wall_energy_amp=float(case.get("wall_energy_amp", 5.0)),
+        wet_band=float(case.get("wet_band", 0.15)),
+    )
     gen = SURFACE_REGISTRY[case.get("surface", "flat")]
     surf_kwargs = {
         k: v
@@ -719,8 +766,28 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
     sdf = gen(p, **surf_kwargs)
     solid = make_solid(sdf, p, cos_theta=float(case.get("cos_theta", 0.0)))
     R = case.get("R", 0.7)
-    y0 = case.get("y0", 0.25 + R - 0.1)
-    state = droplet_initial_state(p, x0=3.0, y0=y0, R=R, u_impact=case.get("u_impact", 0.5))
+    # Start above the highest point of the selected surface.  The previous
+    # default ``0.25 + R - 0.1`` put the initial drop *inside* the flat wall by
+    # 0.1 length units.  That contaminates low-We trajectories before impact
+    # and makes the network learn an impossible initial geometry.
+    X, Y = grids(p)
+    surface_top = jnp.max(jnp.where(sdf < 0.0, Y, -jnp.inf))
+    default_gap = max(2.0 * p.eps, 0.05)
+    y0_default = float(surface_top) + float(R) + float(case.get("impact_gap", default_gap))
+    y0 = case.get("y0", y0_default)
+    if y0 - float(R) <= float(surface_top):
+        raise ValueError(
+            f"initial droplet overlaps the solid: y0-R={y0 - float(R):.6g} "
+            f"<= surface_top={float(surface_top):.6g}; increase impact_gap"
+        )
+    state = droplet_initial_state(
+        p,
+        x0=float(case.get("x0", 3.0)),
+        y0=y0,
+        R=R,
+        u_impact=case.get("u_impact", 0.5),
+        velocity_mode=case.get("velocity_mode", "uniform"),
+    )
     return p, solid, state
 
 

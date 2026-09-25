@@ -144,16 +144,30 @@ def augmented_cases(n: int = 48, seed: int = 4242):
 
 
 def _low_common(rng):
-    # Low-We regime: gentler impact, higher surface tension
-    # Use smaller dt for stability (capillary force ~1/We is large)
+    # Low-We regime: gentler impact, higher surface tension.  The original
+    # cases kept Re=200 while reducing We, which made the coarse diffuse
+    # interface develop large spurious currents before impact.  Re is matched
+    # to the sampled impact speed and the interface is deliberately resolved
+    # with three grid cells for this stress-test regime.
     We = float(np.round(rng.uniform(12.0, 60.0), 1))
+    u_impact = float(np.round(rng.uniform(0.15, 0.30), 3))
+    Re = float(np.round(np.clip(200.0 * u_impact / 0.5, 60.0, 120.0), 1))
     # dt 1e-3 for We<20, 2e-3 otherwise (CFL for capillary)
     dt = 1e-3 if We < 18 else 2e-3
     return dict(
         We=We,
+        Re=Re,
         cos_theta=float(np.round(rng.uniform(-0.5, 0.6), 2)),
         R=float(np.round(rng.uniform(0.55, 0.75), 3)),
-        u_impact=float(np.round(rng.uniform(0.15, 0.30), 3)),
+        u_impact=u_impact,
+        eps_factor=3.0,
+        wall_energy_amp=0.5,
+        wet_band=0.08,
+        # Keep the initial interface outside the wall but close enough that
+        # the localized divergence-free impact field reaches it within the
+        # low-We training horizon.
+        impact_gap=0.03,
+        velocity_mode="streamfunction",
         dt=dt,
     )
 

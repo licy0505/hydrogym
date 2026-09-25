@@ -136,24 +136,46 @@ def fig_wetting():
 
 
 def fig_lowWe():
-    """Low-We Weber sweep (We=8..60) with slow impact speed — stable dt"""
+    """Low-We sweep using the same guarded cases as the training generator.
+
+    The old figure intentionally started the drop inside the wall and used the
+    high-We resolution/viscosity settings.  It therefore displayed numerical
+    spikes rather than a low-We deposition sequence.  Frame selection below is
+    done in physical time, not by an arbitrary frame number.
+    """
     Wes = [10, 18, 32, 55]
-    frames = [12, 30, 60, 90]
-    fig, axes = plt.subplots(len(Wes), len(frames), figsize=(2.2*len(frames), 2.3*len(Wes)))
+    frame_times = [0.2, 0.6, 1.0, 1.4]
+    fig, axes = plt.subplots(len(Wes), len(frame_times), figsize=(2.2*len(frame_times), 2.3*len(Wes)))
     for r, we in enumerate(Wes):
-        # low We needs smaller dt for capillary stability
+        # Match cases._low_common: lower Re, a better-resolved interface, a
+        # small wetting affinity, and a positive gap above the wall.
         u = 0.18 if we < 15 else 0.22 if we < 35 else 0.28
+        Re = float(np.clip(200.0 * u / 0.5, 60.0, 120.0))
         dt = 1e-3 if we < 20 else 2e-3
-        nsteps = 2500 if we < 20 else 1800  # longer for slow fall
-        case = dict(surface="flat", We=we, cos_theta=0.0, u_impact=u, R=0.65, dt=dt)
+        nsteps = 2500 if we < 20 else 1800
+        case = dict(
+            surface="flat",
+            We=we,
+            Re=Re,
+            cos_theta=0.0,
+            u_impact=u,
+            R=0.65,
+            eps_factor=3.0,
+            wall_energy_amp=0.5,
+            wet_band=0.08,
+            impact_gap=0.03,
+            velocity_mode="streamfunction",
+            dt=dt,
+        )
         p, solid, phi, _, _ = run_case(case, nsteps=nsteps, save_every=10, N=192)
         T = phi.shape[0]
-        for c, ti in enumerate(frames):
-            ti = min(ti, T-1)
-            overlay(axes[r][c], phi[ti], solid.chi, title=f"t={ti}" if r==0 else None)
+        frame_dt = p.dt * 10.0
+        for c, time_target in enumerate(frame_times):
+            ti = min(max(int(round(time_target / frame_dt)) - 1, 0), T - 1)
+            overlay(axes[r][c], phi[ti], solid.chi, title=f"t={((ti + 1) * frame_dt):.2f}" if r == 0 else None)
             if c==0:
-                axes[r][c].set_ylabel(f"We={we}\nu={u:.2f}", fontsize=9)
-    fig.suptitle("Low-We sweep (flat wall, slow impact) — gentle deposition vs splash", fontsize=11)
+                axes[r][c].set_ylabel(f"We={we}\nRe={Re:.0f}", fontsize=9)
+    fig.suptitle("Low-We sweep with guarded initialization and physical-time frames", fontsize=11)
     fig.tight_layout()
     fig.savefig(f"{OSDIR}/fig_lowWe.png", dpi=110)
     plt.close(fig)
