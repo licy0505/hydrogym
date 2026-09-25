@@ -80,3 +80,46 @@ def test_generated_case_starts_outside_solid():
     )
     overlap = float(jnp.sum(st.phi * solid.chi) / jnp.maximum(jnp.sum(st.phi), 1e-12))
     assert overlap < 0.05
+
+
+def test_wetting_band_is_fluid_side_only():
+    p = pf.PhaseFieldParams(Nx=96, Ny=96, Lx=6.0, Ly=6.0, wet_band=0.1)
+    solid = pf.make_solid(pf.surface_flat(p), p, cos_theta=0.5)
+    band = np.asarray(pf.wet_band(solid, p))
+    sdf = np.asarray(solid.sdf)
+    assert np.max(np.abs(band[sdf < 0.0])) == pytest.approx(0.0, abs=1e-7)
+    assert float(np.max(band[(sdf >= 0.0) & (sdf < p.wet_band)])) > 0.5
+    assert float(np.max(band[sdf > 4.0 * p.wet_band])) < 1e-5
+
+
+def test_solid_projection_is_bounded_and_mass_conserving():
+    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0, enforce_solid_phi=True)
+    solid = pf.make_solid(pf.surface_flat(p), p, cos_theta=0.0)
+    phi = np.asarray(
+        pf.droplet_initial_state(p, x0=3.0, y0=0.4, R=0.5, u_impact=0.0).phi
+    )
+    before = float(phi.sum())
+    projected = np.asarray(pf._project_phase_outside_solid(jnp.asarray(phi), solid, p))
+    assert projected.min() >= -1e-7
+    assert projected.max() <= 1.0 + 1e-7
+    assert np.max(np.abs(projected[np.asarray(solid.sdf) < 0.0])) < 1e-6
+    assert projected.sum() == pytest.approx(before, rel=2e-5, abs=2e-5)
+
+
+def test_lowwe_clearance_scales_with_eps():
+    p, solid, st = pf.build_case(
+        dict(
+            surface="flat",
+            We=12.0,
+            Re=70.0,
+            R=0.65,
+            u_impact=0.2,
+            eps_factor=3.0,
+            impact_gap=0.03,
+            impact_gap_eps=2.5,
+        ),
+        N=96,
+        dt=1e-3,
+    )
+    solid_mask = np.asarray(solid.sdf) < 0.0
+    assert float(np.max(np.asarray(st.phi)[solid_mask])) < 0.05

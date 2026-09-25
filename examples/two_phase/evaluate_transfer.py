@@ -80,8 +80,7 @@ def evaluate(ckpt, data, horizon, verbose=True):
             continue
         geoms, scals, trues = [], [], []
         for c in cs:
-            d = np.load(c["file"], allow_pickle=True)
-            geoms.append(S.geometry_features(c["chi"], d["sdf"] if "sdf" in d else None, float(c["scalars"][3]), geom_mode))
+            geoms.append(S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode))
             scals.append(c["scalars"])
             trues.append(np.stack([c["phi"], c["u"], c["v"]], -1))
         T = min(t.shape[0] for t in trues)
@@ -106,10 +105,13 @@ def evaluate(ckpt, data, horizon, verbose=True):
 
         for i, c in enumerate(cs):
             pt, tt = traj[i], true[i, ..., 0]
-            m0 = max(float(tt[0].sum()), 1e-6)
+            fluid = (c["sdf"] >= 0.0).astype(np.float32) if c["sdf"] is not None else (c["chi"] < 0.5).astype(np.float32)
+            m0 = max(float(np.sum(tt[0] * fluid)), 1e-6)
             eK = np.mean((pt[1:K] - tt[1:K]) ** 2)
             eT = np.mean((pt[1:] - tt[1:]) ** 2)
-            mE = np.mean([abs(pt[t].sum() - tt[t].sum()) / m0 for t in range(1, K)])
+            mE = np.mean(
+                [abs(np.sum(pt[t] * fluid) - np.sum(tt[t] * fluid)) / m0 for t in range(1, K)]
+            )
             sE = np.mean([abs(spreading(pt[t]) - spreading(tt[t])) for t in range(1, K)])
             fam = "simple" if c["surface"] in ("flat", "pillars") else "complex"
             r = dict(

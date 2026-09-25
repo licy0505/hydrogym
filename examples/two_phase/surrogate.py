@@ -21,6 +21,20 @@ import jax.numpy as jnp
 import numpy as np
 from flax import linen as nn
 
+DATASET_SCHEMA_VERSION = 2
+
+
+def _require_current_dataset(d, path):
+    if "dataset_schema_version" not in d.files:
+        raise RuntimeError(
+            f"stale two_phase dataset: {path} has no schema marker; regenerate with generate_dataset.py"
+        )
+    version = int(np.asarray(d["dataset_schema_version"]).item())
+    if version != DATASET_SCHEMA_VERSION:
+        raise RuntimeError(
+            f"stale two_phase dataset: {path} schema={version}, expected={DATASET_SCHEMA_VERSION}; regenerate"
+        )
+
 
 class Film(nn.Module):
     """Feature-wise linear modulation from the scalar conditioning vector."""
@@ -88,6 +102,7 @@ def load_arrays(data_dir, split):
         d = np.load(f, allow_pickle=True)
         if str(d["split"]) != split:
             continue
+        _require_current_dataset(d, f)
         phi = d["phi"].astype(np.float32)
         u = d["u"].astype(np.float32)
         v = d["v"].astype(np.float32)
@@ -118,12 +133,15 @@ def load_full(data_dir, split):
         d = np.load(f, allow_pickle=True)
         if str(d["split"]) != split:
             continue
+        _require_current_dataset(d, f)
         out.append(
             dict(
                 phi=d["phi"].astype(np.float32),
                 u=d["u"].astype(np.float32),
                 v=d["v"].astype(np.float32),
                 chi=d["chi"].astype(np.float32),
+                sdf=d["sdf"].astype(np.float32) if "sdf" in d else None,
+                time=d["time"].astype(np.float32) if "time" in d else np.arange(d["phi"].shape[0], dtype=np.float32),
                 scalars=d["scalars"].astype(np.float32),
                 surface=str(d["surface"]),
                 file=f,
@@ -146,6 +164,7 @@ def load_windows(data_dir, split, K):
         d = np.load(f, allow_pickle=True)
         if str(d["split"]) != split:
             continue
+        _require_current_dataset(d, f)
         phi = d["phi"].astype(np.float32)
         u = d["u"].astype(np.float32)
         v = d["v"].astype(np.float32)
@@ -247,17 +266,39 @@ class FNOBlock(nn.Module):
 
 
 def mass_project(phi_pred, phi_in, chi=None):
-    """Differentiable exact liquid-mass correction on the interface band.
+    """Bounded, fluid-only, mass-conservative projection.
 
-    The solver's Cahn-Hilliard update is conservative for the *total* phase field
-    (liquid may enter the diffuse solid band through the wetting term, so the
-    fluid-only mass is not invariant), hence the total sum of phi is matched.
+    The previous one-shot correction could push phi outside [0,1]; the caller
+    then clipped it and silently broke the claimed exact conservation.  Solve
+    for a scalar correction by bisection *with the bounds inside the solve*.
     """
-    phi_pred = jnp.clip(phi_pred, 0.0, 1.0)
-    m_in = jnp.sum(phi_in, axis=(1, 2), keepdims=True)
-    m_pr = jnp.sum(phi_pred, axis=(1, 2), keepdims=True)
-    w = 4.0 * phi_pred * (1.0 - phi_pred) + 1e-3
-    return phi_pred + (m_in - m_pr) * w / jnp.sum(w, axis=(1, 2), keepdims=True)
+    phi0 = jnp.clip(phi_pred, 0.0, 1.0)
+    if chi is None:
+        fluid = jnp.ones_like(phi0)
+    else:
+        fluid = (chi < 0.5).astype(phi0.dtype)
+
+    phi0 = phi0 * fluid
+    target = jnp.sum(jnp.clip(phi_in, 0.0, 1.0) * fluid, axis=(1, 2), keepdims=True)
+    capacity = jnp.sum(fluid, axis=(1, 2), keepdims=True)
+    target = jnp.clip(target, 0.0, capacity)
+    weight = fluid * (4.0 * phi0 * (1.0 - phi0) + 5.0e-2)
+
+    lo = -32.0 * jnp.ones_like(target)
+    hi = 32.0 * jnp.ones_like(target)
+
+    def body(_i, bounds):
+        lo_, hi_ = bounds
+        mid = 0.5 * (lo_ + hi_)
+        cand = jnp.clip(phi0 + mid * weight, 0.0, 1.0) * fluid
+        mass = jnp.sum(cand, axis=(1, 2), keepdims=True)
+        lo_ = jnp.where(mass < target, mid, lo_)
+        hi_ = jnp.where(mass < target, hi_, mid)
+        return lo_, hi_
+
+    lo, hi = jax.lax.fori_loop(0, 36, body, (lo, hi))
+    lam = 0.5 * (lo + hi)
+    return jnp.clip(phi0 + lam * weight, 0.0, 1.0) * fluid
 
 
 class FNO(nn.Module):
@@ -321,6 +362,12 @@ def load_checkpoint(path):
         cfg = dict(arch="unet", residual=False, conservative=False, base=ck.get("base", 16),
                    levels=ck.get("levels", 3), geom="chi", uv_scale=ck["uv_scale"], legacy=True)
         return UNet(base=cfg["base"], levels=cfg["levels"], out_channels=3), ck["params"], cfg
+    version = int(cfg.get("dataset_schema_version", 0))
+    if version != DATASET_SCHEMA_VERSION:
+        raise RuntimeError(
+            f"checkpoint {path} was trained on stale two_phase data schema={version}; "
+            f"expected={DATASET_SCHEMA_VERSION}. Regenerate data and retrain."
+        )
     return build_model(cfg), ck["params"], cfg
 
 
@@ -343,6 +390,7 @@ class TrajectoryStore:
             d = np.load(f, allow_pickle=True)
             if str(d["split"]) != split:
                 continue
+            _require_current_dataset(d, f)
             fam = "simple" if str(d["surface"]) in ("flat", "pillars") else "complex"
             if families and fam not in families:
                 continue

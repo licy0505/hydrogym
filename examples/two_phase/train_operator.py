@@ -68,9 +68,11 @@ def main():
     if args.resume:
         _, params, cfg = S.load_checkpoint(args.resume)
         assert not cfg.get("legacy"), "resume a train_operator.py checkpoint"
+        assert cfg.get("dataset_schema_version") == S.DATASET_SCHEMA_VERSION
         print(f"resumed {args.resume}: {cfg}", flush=True)
     else:
         cfg = dict(
+            dataset_schema_version=S.DATASET_SCHEMA_VERSION,
             arch=args.arch,
             geom=args.geom,
             residual=not args.no_residual,

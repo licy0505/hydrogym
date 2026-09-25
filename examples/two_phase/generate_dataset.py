@@ -41,6 +41,8 @@ import numpy as np
 import cases as C
 import phasefield as pf
 
+DATASET_SCHEMA_VERSION = 2
+
 
 def _case_name(case: dict, set_name: str, index: int) -> str:
     """Return a stable, filesystem-safe case name."""
@@ -48,6 +50,17 @@ def _case_name(case: dict, set_name: str, index: int) -> str:
         label = C.case_label({k: v for k, v in case.items() if k != "family"})
         return f"{case['split']}_{index:02d}_{label}"
     return f"{case['split']}_{set_name}_{index:03d}_{case['surface']}"
+
+
+def _saved_case_is_current(path: Path) -> bool:
+    """Return True only for data written by the current solver/data contract."""
+    try:
+        with np.load(path, allow_pickle=True) as d:
+            if "dataset_schema_version" not in d.files:
+                return False
+            return int(np.asarray(d["dataset_schema_version"]).item()) == DATASET_SCHEMA_VERSION
+    except Exception:
+        return False
 
 
 def _effective_schedule(case: dict, args: argparse.Namespace) -> tuple[float, int, int]:
@@ -80,6 +93,7 @@ def _diagnose(
     u: np.ndarray,
     v: np.ndarray,
     solid: pf.Solid,
+    p: pf.PhaseFieldParams,
     *,
     max_phi_overshoot: float,
     max_solid_leak: float,
@@ -87,28 +101,35 @@ def _diagnose(
     max_total_mass_ratio: float,
     max_speed: float,
 ) -> tuple[bool, dict]:
-    """Validate finite values, mass, phase bounds, and solid leakage."""
-    chi = np.asarray(solid.chi, dtype=np.float64)
+    """Validate finite values, conservative mass and *deep-solid* leakage."""
     phi0 = np.asarray(initial.phi, dtype=np.float64)
     phi = np.asarray(phi, dtype=np.float64)
     u = np.asarray(u, dtype=np.float64)
     v = np.asarray(v, dtype=np.float64)
+    hard_solid = np.asarray(solid.sdf < 0.0, dtype=np.float64)
+    fluid = 1.0 - hard_solid
 
-    total0 = float(np.mean(phi0))
-    total = np.mean(phi, axis=(1, 2))
-    denom = np.maximum(np.mean(np.abs(phi), axis=(1, 2)), 1e-12)
-    leak = np.mean(np.abs(phi) * chi[None], axis=(1, 2)) / denom
+    total0 = float(np.sum(phi0))
+    total = np.sum(phi, axis=(1, 2))
+    fluid0 = float(np.sum(phi0 * fluid))
+    fluid_mass = np.sum(phi * fluid[None], axis=(1, 2))
+    denom = np.maximum(np.sum(np.abs(phi), axis=(1, 2)), 1e-12)
+    leak = np.sum(np.abs(phi) * hard_solid[None], axis=(1, 2)) / denom
     speed = np.sqrt(u * u + v * v)
 
     finite = bool(np.isfinite(phi).all() and np.isfinite(u).all() and np.isfinite(v).all())
     overshoot = float(max(np.max(-phi), np.max(phi - 1.0), 0.0)) if phi.size else 0.0
     total_ratio = total / max(total0, 1e-12)
+    fluid_ratio = fluid_mass / max(fluid0, 1e-12)
     diag = {
         "finite": finite,
-        "initial_total_mass": total0,
+        "initial_total_mass": total0 * p.dx * p.dy,
         "final_total_mass_ratio": float(total_ratio[-1]),
         "min_total_mass_ratio": float(np.min(total_ratio)),
         "max_total_mass_ratio": float(np.max(total_ratio)),
+        "final_fluid_mass_ratio": float(fluid_ratio[-1]),
+        "min_fluid_mass_ratio": float(np.min(fluid_ratio)),
+        "max_fluid_mass_ratio": float(np.max(fluid_ratio)),
         "initial_solid_leak": float(leak[0]),
         "max_solid_leak": float(np.max(leak)),
         "max_phi_overshoot": overshoot,
@@ -119,6 +140,8 @@ def _diagnose(
         finite
         and diag["min_total_mass_ratio"] >= min_total_mass_ratio
         and diag["max_total_mass_ratio"] <= max_total_mass_ratio
+        and diag["min_fluid_mass_ratio"] >= min_total_mass_ratio
+        and diag["max_fluid_mass_ratio"] <= max_total_mass_ratio
         and diag["max_solid_leak"] <= max_solid_leak
         and diag["max_phi_overshoot"] <= max_phi_overshoot
         and diag["max_speed"] <= max_speed
@@ -146,19 +169,25 @@ def _save_case(
     diagnostics: dict,
 ) -> None:
     """Write one validated trajectory with explicit physical-time metadata."""
-    phi_d = _downsample_history(phi, ds).astype(np.float16)
+    # Keep phi/geometry in float32: thin low-We films can sit near the plotting
+    # threshold and should not lose additional information to float16 quantisation.
+    phi_d = _downsample_history(phi, ds).astype(np.float32)
     u_d = _downsample_history(u, ds).astype(np.float16)
     v_d = _downsample_history(v, ds).astype(np.float16)
-    chi_d = _downsample_history(np.asarray(solid.chi)[None], ds)[0].astype(np.float16)
+    chi_d = _downsample_history(np.asarray(solid.chi)[None], ds)[0].astype(np.float32)
     sdf = np.asarray(jnp.clip(solid.sdf, -1.0, 3.0))[None]
     sdf_d = _downsample_history(sdf, ds)[0].astype(np.float32)
+    saved_dx = float(p.dx * ds)
     scalars = np.array(
-        [case.get("We", 100.0) / 100.0, case.get("Re", 200.0) / 200.0, float(case.get("cos_theta", 0.0)), p.dx],
+        [case.get("We", 100.0) / 100.0, case.get("Re", 200.0) / 200.0, float(case.get("cos_theta", 0.0)), saved_dx],
         dtype=np.float32,
     )
     case_meta = dict(case)
     case_meta.update(
+        dataset_schema_version=DATASET_SCHEMA_VERSION,
         solver_dt=float(p.dt),
+        solver_dx=float(p.dx),
+        saved_dx=saved_dx,
         save_every=int(save_every),
         frame_dt=float(p.dt * save_every),
         diagnostics=diagnostics,
@@ -173,6 +202,7 @@ def _save_case(
         sdf=sdf_d,
         scalars=scalars,
         time=times,
+        dataset_schema_version=np.array(DATASET_SCHEMA_VERSION, dtype=np.int32),
         surface=np.array(case.get("surface", "flat")),
         split=np.array(case["split"]),
         case=np.array(json.dumps(case_meta, ensure_ascii=False)),
@@ -191,10 +221,10 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="max cases (0 = all)")
     ap.add_argument("--overwrite", action="store_true", help="regenerate existing .npz files")
     ap.add_argument("--dry-run", action="store_true", help="build cases and print schedule without integrating")
-    ap.add_argument("--max-phi-overshoot", type=float, default=0.08)
-    ap.add_argument("--max-solid-leak", type=float, default=0.08)
-    ap.add_argument("--min-total-mass-ratio", type=float, default=0.95)
-    ap.add_argument("--max-total-mass-ratio", type=float, default=1.05)
+    ap.add_argument("--max-phi-overshoot", type=float, default=0.02)
+    ap.add_argument("--max-solid-leak", type=float, default=5e-4)
+    ap.add_argument("--min-total-mass-ratio", type=float, default=0.995)
+    ap.add_argument("--max-total-mass-ratio", type=float, default=1.005)
     ap.add_argument("--max-speed", type=float, default=5.0)
     args = ap.parse_args()
 
@@ -213,8 +243,10 @@ def main() -> None:
         name = _case_name(case, args.set, i)
         path = out_dir / f"{name}.npz"
         if path.exists() and not args.overwrite:
-            print(f"[{i:03d}] exists, skip: {path.name}", flush=True)
-            continue
+            if _saved_case_is_current(path):
+                print(f"[{i:03d}] current schema, skip: {path.name}", flush=True)
+                continue
+            print(f"[{i:03d}] stale schema, regenerate: {path.name}", flush=True)
 
         dt, nsteps, save_every = _effective_schedule(case, args)
         print(f"[{i:03d}] {name}: dt={dt:g}, nsteps={nsteps}, save_every={save_every}", flush=True)
@@ -232,6 +264,7 @@ def main() -> None:
                 np.asarray(u),
                 np.asarray(v),
                 solid,
+                p,
                 max_phi_overshoot=args.max_phi_overshoot,
                 max_solid_leak=args.max_solid_leak,
                 min_total_mass_ratio=args.min_total_mass_ratio,

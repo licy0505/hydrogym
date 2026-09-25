@@ -113,8 +113,9 @@ class PhaseFieldParams:
     cfl: float = 0.4  # used by ``stable_dt``
     use_gravity: bool = False
     dtype: type = jnp.float32
-    enforce_solid_phi: bool = False  # if True, clip phi to 0 inside the solid (chi_hard>0.5) every sub-step
-    solid_phi_clip: float = 0.5  # hard-mask threshold on chi_hard
+    # If enabled, each sub-step uses a bounded, mass-conserving projection that
+    # removes phi from the geometric solid without deleting liquid mass.
+    enforce_solid_phi: bool = False
 
     # extras that the RL / surrogate layer likes to have around
     extras: dict = field(default_factory=dict)
@@ -214,12 +215,10 @@ def make_solid(
         ds=ds,
         cos_theta=cos_theta.astype(params.dtype),
         sdf=sdf.astype(params.dtype),
-        # Do not clip the diffuse interface itself.  Clipping at chi>0.5
-        # removed liquid from the first two interface cells and caused a
-        # several-percent mass loss on every contact.  Only the deep solid is
-        # impermeable; the diffuse interfacial band is left to the penalized
-        # phase-field flux.
-        chi_hard=(sdf < -params.eps).astype(params.dtype),
+        # Exact geometric solid mask.  When ``enforce_solid_phi`` is enabled
+        # the phase projection below keeps phi out of these cells while
+        # preserving total liquid mass.
+        chi_hard=(sdf < 0.0).astype(params.dtype),
     )
 
 
@@ -431,7 +430,17 @@ def phi_wet_of(cos_theta):
 
 
 def wet_band(solid: Solid, p: PhaseFieldParams):
-    return 0.5 * (1.0 - jnp.tanh(solid.sdf / p.wet_band))
+    """Fluid-side, wall-localised wetting envelope.
+
+    The previous ``0.5 * (1 - tanh(sdf / width))`` tends to one throughout
+    the solid volume, so the wall free-energy acted as a bulk source inside
+    the obstacle.  Wetting is a boundary effect: keep it on the fluid side
+    and decay it away from the wall.
+    """
+    width = max(float(p.wet_band), float(p.dx))
+    d = jnp.maximum(solid.sdf, 0.0)
+    band = jnp.exp(-(d / width) ** 2)
+    return jnp.where(solid.sdf >= 0.0, band, 0.0).astype(p.dtype)
 
 
 def wetting_mu(phi, solid: Solid, p: PhaseFieldParams):
@@ -482,12 +491,14 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
 
     mu = chemical_potential(phi, solid, p)
 
-    # mobility is damped inside the solid so that the order parameter there is
-    # essentially slaved to the wetting boundary condition
-    mob = 1.0 - 0.9 * solid.chi
+    # Keep the spectral CH mobility spatially constant.  The old code multiplied
+    # ``mu_expl`` by a cell-centred mobility and then took a Laplacian, which
+    # computes Δ(mob*mu), not the conservative operator ∇·(mob∇mu).
+    # Solid impermeability is enforced after the semi-implicit CH update by the
+    # bounded, mass-conserving geometric projection below.
     mu_expl = fprime(phi) / p.eps + wetting_mu(phi, solid, p)
 
-    # --- phase field: advection + wetting reaction, biharmonic diffusion implicit ---
+    # --- phase field: conservative advection, biharmonic diffusion implicit ---
     phi_rhs = -div_upwind(u, v, phi, dx, dy)
 
     # --- momentum ---
@@ -512,7 +523,52 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
     u_rhs = -adv_u + nu * lap_u + cap_x
     v_rhs = -adv_v + nu * lap_v + cap_y + g_y
 
-    return phi_rhs, u_rhs, v_rhs, mu, mob * mu_expl
+    return phi_rhs, u_rhs, v_rhs, mu, mu_expl
+
+
+def _bounded_mass_project_2d(phi, active, target_mass, weight):
+    """Project ``phi`` to [0,1] on ``active`` cells at fixed total mass.
+
+    A scalar Lagrange multiplier is found by bisection for
+
+        sum(active * clip(phi + lambda * weight, 0, 1)) = target_mass.
+
+    This avoids the old hard solid clip, which deleted liquid every time the
+    diffuse interface touched the wall.
+    """
+    active = active.astype(phi.dtype)
+    base = jnp.clip(phi, 0.0, 1.0) * active
+    capacity = jnp.sum(active)
+    target = jnp.clip(target_mass, 0.0, capacity)
+    weight = jnp.maximum(weight, 1.0e-4) * active
+
+    lo = jnp.asarray(-1.0e4, dtype=phi.dtype)
+    hi = jnp.asarray(1.0e4, dtype=phi.dtype)
+
+    def body(_i, bounds):
+        lo_, hi_ = bounds
+        mid = 0.5 * (lo_ + hi_)
+        candidate = jnp.clip(base + mid * weight, 0.0, 1.0) * active
+        mass = jnp.sum(candidate)
+        lo_ = jnp.where(mass < target, mid, lo_)
+        hi_ = jnp.where(mass < target, hi_, mid)
+        return lo_, hi_
+
+    lo, hi = lax.fori_loop(0, 40, body, (lo, hi))
+    lam = 0.5 * (lo + hi)
+    return jnp.clip(base + lam * weight, 0.0, 1.0) * active
+
+
+def _project_phase_outside_solid(phi, solid: Solid, p: PhaseFieldParams):
+    """Remove phase from the geometric solid without changing total mass."""
+    active = 1.0 - solid.chi_hard
+    base = jnp.clip(phi, 0.0, 1.0)
+    wall_scale = max(2.0 * float(p.eps), float(p.dx))
+    d = jnp.maximum(solid.sdf, 0.0)
+    wall_weight = jnp.exp(-(d / wall_scale) ** 2)
+    interface_weight = 4.0 * base * (1.0 - base)
+    weight = active * (wall_weight + 0.25 * interface_weight + 1.0e-3)
+    return _bounded_mass_project_2d(phi, active, jnp.sum(phi), weight)
 
 
 def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
@@ -538,6 +594,8 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
         source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)
         phi_hat = (jnp.fft.rfft2(phi) + dt * source_hat) / denom
         phi_new = jnp.fft.irfft2(phi_hat, s=phi.shape)
+        if p.enforce_solid_phi:
+            phi_new = _project_phase_outside_solid(phi_new, solid, p)
 
         # Brinkman penalization, implicit -> unconditionally stable
         damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)
@@ -733,10 +791,7 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
         We=case.get("We", 100.0),
         dt=dt,
         eps=(float(case["eps_factor"]) * 6.0 / N) if "eps_factor" in case else case.get("eps"),
-        # The old solver allowed the phase field to occupy the diffuse wall.
-        # Keeping the hard mask on for generated data prevents a trajectory
-        # from starting with liquid inside a solid cell and removes a large,
-        # resolution-dependent source of mass loss.
+        # Generated trajectories use the mass-conserving solid projection.
         enforce_solid_phi=bool(case.get("enforce_solid_phi", True)),
         wall_energy_amp=float(case.get("wall_energy_amp", 5.0)),
         wet_band=float(case.get("wet_band", 0.15)),
@@ -772,13 +827,19 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
     # and makes the network learn an impossible initial geometry.
     X, Y = grids(p)
     surface_top = jnp.max(jnp.where(sdf < 0.0, Y, -jnp.inf))
-    default_gap = max(2.0 * p.eps, 0.05)
-    y0_default = float(surface_top) + float(R) + float(case.get("impact_gap", default_gap))
-    y0 = case.get("y0", y0_default)
-    if y0 - float(R) <= float(surface_top):
+    # A geometric non-overlap is not enough for a diffuse interface.  Require
+    # clearance in units of eps so the initial tanh tail is not already inside
+    # the wall.  Explicit ``impact_gap`` may enlarge, but never shrink, this.
+    min_gap = max(float(case.get("impact_gap_eps", 2.0)) * float(p.eps), 0.05)
+    requested_gap = float(case.get("impact_gap", min_gap))
+    gap = max(requested_gap, min_gap)
+    y0_default = float(surface_top) + float(R) + gap
+    y0 = float(case.get("y0", y0_default))
+    clearance = y0 - float(R) - float(surface_top)
+    if clearance < min_gap - 1.0e-12:
         raise ValueError(
-            f"initial droplet overlaps the solid: y0-R={y0 - float(R):.6g} "
-            f"<= surface_top={float(surface_top):.6g}; increase impact_gap"
+            f"initial diffuse interface is too close to the solid: clearance={clearance:.6g}, "
+            f"required>={min_gap:.6g} ({case.get('impact_gap_eps', 2.0):g} eps)"
         )
     state = droplet_initial_state(
         p,

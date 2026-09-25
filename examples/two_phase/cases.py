@@ -163,10 +163,9 @@ def _low_common(rng):
         eps_factor=3.0,
         wall_energy_amp=0.5,
         wet_band=0.08,
-        # Keep the initial interface outside the wall but close enough that
-        # the localized divergence-free impact field reaches it within the
-        # low-We training horizon.
-        impact_gap=0.03,
+        # Clearance must scale with the diffuse-interface thickness.  A fixed
+        # 0.03 gap is < eps at N=192 and seeds O(0.4) liquid fraction on the wall.
+        impact_gap_eps=2.5,
         velocity_mode="streamfunction",
         dt=dt,
     )

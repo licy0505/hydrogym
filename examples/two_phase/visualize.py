@@ -45,17 +45,29 @@ def flip(a):
     return np.flipud(np.asarray(a).T)
 
 
-def overlay(ax, phi, chi, title=None, truth=None, mask_solid=True):
+def overlay(
+    ax,
+    phi,
+    chi,
+    title=None,
+    truth=None,
+    mask_solid=True,
+    display_thresh=0.5,
+    truth_levels=(0.5,),
+):
     ax.imshow(flip(chi), cmap="gray_r", vmin=0, vmax=1, origin="lower")
     if mask_solid:
-        mask = (flip(phi) < 0.5) | (flip(chi) > 0.5)
+        mask = (flip(phi) < display_thresh) | (flip(chi) > 0.5)
     else:
-        mask = flip(phi) < 0.5
+        mask = flip(phi) < display_thresh
     ax.imshow(np.ma.masked_where(mask, flip(phi)), cmap="Blues", vmin=0, vmax=1, alpha=0.9)
     if truth is not None:
         if mask_solid:
             truth = np.where(np.asarray(chi) > 0.5, 0.0, truth)
-        ax.contour(flip(truth), levels=[0.5], colors="r", linewidths=1)
+        truth_f = flip(truth)
+        for level in truth_levels:
+            if float(np.nanmin(truth_f)) <= level <= float(np.nanmax(truth_f)):
+                ax.contour(truth_f, levels=[level], colors="r", linewidths=1)
     ax.set_xticks([])
     ax.set_yticks([])
     if title:
@@ -181,97 +193,91 @@ def fig_lowWe():
     plt.close(fig)
     print("saved fig_lowWe.png")
 
-def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf.pkl"):
-    """Show surrogate predictions on low-We unseen cases"""
-    import pickle, surrogate as S
-    try:
-        with open(ckpt, "rb") as fh:
-            ck = pickle.load(fh)
-        # use same logic as fig_transfer but for lowWe_test
-        # Load checkpoint via surrogate.load_checkpoint
-        model, params, cfg = S.load_checkpoint(ckpt)
-        uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
-        import jax
-        import jax.numpy as jnp
-        apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
-        def predict(state, geom, scal):
-            x = state.copy()
-            x[...,1:3] /= uv
-            xb = jnp.asarray(__import__('numpy').concatenate([x, geom], -1))
-            cb = jnp.asarray(scal)
-            out = __import__('numpy').asarray(apply_fn(xb, cb))
-            out = out.copy()
-            out[...,0] = __import__('numpy').clip(out[...,0], 0, 1)
-            out[...,1:3] *= uv
-            return out
-        # need data: try data/lowWe_all
-        import glob, os, numpy as np
-        picks = []
-        # try test first, then any available
-        for split in ("test", "train"):
-            for f in sorted(glob.glob("data/lowWe_all/*.npz")):
-                d = np.load(f, allow_pickle=True)
-                if str(d["split"]) != split:
-                    continue
-                picks.append(dict(phi=d["phi"].astype(np.float32), u=d["u"].astype(np.float32), v=d["v"].astype(np.float32),
-                                  chi=d["chi"].astype(np.float32), sdf=d["sdf"] if "sdf" in d else None,
-                                  scalars=d["scalars"].astype(np.float32), surface=str(d["surface"]), file=f))
-                if len(picks)>=3:
-                    break
-            if len(picks)>=3:
-                break
-        if not picks:
-            # last resort: any file regardless of split
-            import glob as _g
-            for f in sorted(_g.glob("data/lowWe_all/*.npz"))[:3]:
-                d = np.load(f, allow_pickle=True)
-                picks.append(dict(phi=d["phi"].astype(np.float32), u=d["u"].astype(np.float32), v=d["v"].astype(np.float32),
-                                  chi=d["chi"].astype(np.float32), sdf=d["sdf"] if "sdf" in d else None,
-                                  scalars=d["scalars"].astype(np.float32), surface=str(d["surface"]), file=f))
-        if not picks:
-            # fallback to generating on fly
-            import phasefield as pf
-            for we in [10, 25, 50]:
-                u = 0.2 if we<20 else 0.3
-                case = dict(surface="random_pillars", We=we, cos_theta=0.0, seed=2001, u_impact=u, n_pillars=6)
-                p, solid, st = pf.build_case(case, N=192, dt=4e-3)
-                _, phi, uu, vv = pf.rollout(st, solid, p, 2000, save_every=20)
-                phi, uu, vv = np.asarray(phi), np.asarray(uu), np.asarray(vv)
-                chi = np.asarray(solid.chi)
-                picks.append(dict(phi=phi, u=uu, v=vv, chi=chi, sdf=np.asarray(solid.sdf), scalars=np.array([we/100,0.5,0.0, p.dx],dtype=np.float32), surface="random_pillars"))
-        fig, axes = plt.subplots(len(picks), 5, figsize=(2.2*5, 2.4*len(picks)))
-        if len(picks)==1:
-            axes = axes[None]
-        frames = [0, 12, 24, 36, 50]
-        for r, c in enumerate(picks):
-            # build geom
-            geom = S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode) if c["sdf"] is not None else c["chi"][...,None]
-            geom_b = np.repeat(geom[None], 1, axis=0)
-            # rollout surrogate
-            st = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
-            traj = [st[...,0]]
-            cur = st
-            for _ in range(50):
-                cur = predict(cur[None], geom[None], c["scalars"][None])[0]
-                # clip phi
-                cur[...,0] = np.clip(cur[...,0], 0, 1)
-                traj.append(cur[...,0].copy())
-            traj = np.stack(traj)
-            for ci, ti in enumerate(frames):
-                ti = min(ti, c["phi"].shape[0]-1, traj.shape[0]-1)
-                overlay(axes[r][ci], traj[ti], c["chi"], truth=c["phi"][ti])
-                if ci==0:
-                    axes[r][ci].set_ylabel(f"{c['surface']}\nWe={float(c['scalars'][0])*100:.0f}", fontsize=8)
-                if r==0:
-                    axes[r][ci].set_title(f"t={ti}", fontsize=8)
-        fig.suptitle("Low-We surrogate rollout (blue) vs truth (red) — unseen complex surfaces", fontsize=10)
-        fig.tight_layout()
-        fig.savefig(f"{OSDIR}/fig_lowWe_transfer.png", dpi=110)
-        plt.close(fig)
-        print("saved fig_lowWe_transfer.png")
-    except Exception as e:
-        import traceback; traceback.print_exc()
-        print(f"lowWe transfer fig failed: {e}")
+def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_all"):
+    """Strict low-We transfer figure: *test split only*, no silent fallback."""
+    import surrogate as S
+
+    model, params, cfg = S.load_checkpoint(ckpt)
+    uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
+    apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
+
+    def predict(state, geom, scal):
+        x = state.copy()
+        x[..., 1:3] /= uv
+        out = np.asarray(apply_fn(jnp.asarray(np.concatenate([x, geom], -1)), jnp.asarray(scal)))
+        out = out.copy()
+        # mass_project already returns bounded phi for current-schema models;
+        # this clip is therefore idempotent rather than a second mass-changing step.
+        out[..., 0] = np.clip(out[..., 0], 0.0, 1.0)
+        out[..., 1:3] *= uv
+        return out
+
+    tests = [
+        c for c in S.load_full(data_dir, "test")
+        if c["surface"] not in ("flat", "pillars")
+    ]
+    if len(tests) < 3:
+        raise RuntimeError(
+            f"need >=3 low-We complex TEST trajectories in {data_dir}; found {len(tests)}. "
+            "Run: python generate_dataset.py --set lowWe_all --out data/lowWe_all --nsteps 2000 --ds 3"
+        )
+    picks = tests[:3]
+
+    fig, axes = plt.subplots(len(picks), 5, figsize=(2.2 * 5, 2.4 * len(picks)))
+    if len(picks) == 1:
+        axes = axes[None]
+
+    for r, c in enumerate(picks):
+        geom = S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode)
+        st = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
+        K = min(c["phi"].shape[0], 51)
+        traj = [st[..., 0].copy()]
+        cur = st
+        for _ in range(K - 1):
+            cur = predict(cur[None], geom[None], c["scalars"][None])[0]
+            traj.append(cur[..., 0].copy())
+        traj = np.stack(traj)
+        frames = np.unique(np.rint(np.linspace(0, K - 1, 5)).astype(int))
+        if len(frames) < 5:
+            frames = np.pad(frames, (0, 5 - len(frames)), mode="edge")
+
+        fluid = (c["sdf"] >= 0.0).astype(np.float32)
+        m0 = max(float(np.sum(c["phi"][0] * fluid)), 1e-12)
+        for ci, ti in enumerate(frames[:5]):
+            pred_mass = float(np.sum(traj[ti] * fluid) / m0)
+            truth_mass = float(np.sum(c["phi"][ti] * fluid) / m0)
+            t_phys = float(c["time"][ti]) if c.get("time") is not None else float(ti)
+            overlay(
+                axes[r][ci],
+                traj[ti],
+                c["chi"],
+                truth=c["phi"][ti],
+                display_thresh=0.05,
+                truth_levels=(0.1, 0.5),
+            )
+            axes[r][ci].text(
+                0.02,
+                0.02,
+                f"M/M0 p={pred_mass:.3f} t={truth_mass:.3f}\nmaxφ={float(np.max(traj[ti])):.2f}",
+                transform=axes[r][ci].transAxes,
+                fontsize=5.5,
+                va="bottom",
+            )
+            if ci == 0:
+                axes[r][ci].set_ylabel(
+                    f"{c['surface']}\nWe={float(c['scalars'][0]) * 100:.0f}", fontsize=8
+                )
+            axes[r][ci].set_title(f"t={t_phys:.3f}", fontsize=8)
+
+    fig.suptitle(
+        "Low-We surrogate rollout (blue) vs solver truth (red) — strict unseen TEST surfaces",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    fig.savefig(f"{OSDIR}/fig_lowWe_transfer.png", dpi=130)
+    plt.close(fig)
+    print("saved fig_lowWe_transfer.png")
+
 
 def fig_diagnosis():
 
@@ -459,6 +465,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["solver", "transfer", "diagnosis", "resolution", "lowWe", "all"], default="solver")
     ap.add_argument("--ckpt", default="ckpts/surrogate.pkl")
+    ap.add_argument("--lowwe-ckpt", default="ckpts/lowWe_fno_sdf_u3.pkl")
+    ap.add_argument("--lowwe-data", default="data/lowWe_all")
     args = ap.parse_args()
     os.makedirs(OSDIR, exist_ok=True)
     if args.mode in ("solver", "all"):
@@ -473,23 +481,11 @@ def main():
     if args.mode in ("transfer", "all"):
         fig_transfer(args.ckpt)
         fig_metrics(args.ckpt)
-    if args.mode in ("lowWe", "all"):
+    if args.mode == "lowWe":
         fig_lowWe()
-        # resolve lowWe ckpt regardless of cwd
-        import os as _os
-        _cand1 = "ckpts/lowWe_fno_sdf_v2.pkl"
-        _cand2 = "examples/two_phase/ckpts/lowWe_fno_sdf_v2.pkl"
-        _cand3 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf_v2.pkl")
-        _cand4 = _os.path.join(_os.path.dirname(__file__), "ckpts/lowWe_fno_sdf.pkl")
-        _cand5 = "ckpts/lowWe_fno_sdf.pkl"
-        if _os.path.exists(_cand1): _ckpt=_cand1
-        elif _os.path.exists(_cand2): _ckpt=_cand2
-        elif _os.path.exists(_cand3): _ckpt=_cand3
-        elif _os.path.exists(_cand4): _ckpt=_cand4
-        elif _os.path.exists(_cand5): _ckpt=_cand5
-        elif _os.path.exists("examples/two_phase/ckpts/lowWe_fno_sdf.pkl"): _ckpt="examples/two_phase/ckpts/lowWe_fno_sdf.pkl"
-        else: _ckpt=args.ckpt
-        fig_lowWe_transfer(_ckpt)
+    if args.mode in ("lowWe", "all"):
+        fig_lowWe_transfer(args.lowwe_ckpt, args.lowwe_data)
+
 
 if __name__ == "__main__":
     main()
