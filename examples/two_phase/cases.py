@@ -170,6 +170,7 @@ def _low_common(rng):
         dt=dt,
     )
 
+
 def _sample_low(rng, i):
     # 60% flat, 40% pillars, all low-We
     if rng.uniform() < 0.6:
@@ -183,28 +184,40 @@ def _sample_low(rng, i):
         **_low_common(rng),
     )
 
+
 def lowwe_cases(n: int = 48, seed: int = 2027):
     rng = np.random.default_rng(seed)
     return [dict(split="train", family="lowWe", **_sample_low(rng, i)) for i in range(n)]
+
 
 def lowwe_test_cases(n: int = 12, seed: int = 3027):
     rng = np.random.default_rng(seed)
     out = []
     for i in range(n):
         fam = COMPLEX_FAMILIES[i % len(COMPLEX_FAMILIES)]
-        c = dict(split="test", family="lowWe_test", surface=fam, seed=2000+i, **_low_common(rng))
+        c = dict(split="test", family="lowWe_test", surface=fam, seed=2000 + i, **_low_common(rng))
         if fam == "random_pillars":
             c["n_pillars"] = int(rng.integers(4, 8))
         elif fam == "hierarchical":
-            c.update(n_pillars=int(rng.integers(2,4)), width=float(np.round(rng.uniform(0.4,0.7),3)),
-                     height=float(np.round(rng.uniform(0.3,0.55),3)), n_sub=int(rng.integers(2,4)),
-                     sub_width=float(np.round(rng.uniform(0.07,0.12),3)), sub_height=float(np.round(rng.uniform(0.08,0.16),3)))
+            c.update(
+                n_pillars=int(rng.integers(2, 4)),
+                width=float(np.round(rng.uniform(0.4, 0.7), 3)),
+                height=float(np.round(rng.uniform(0.3, 0.55), 3)),
+                n_sub=int(rng.integers(2, 4)),
+                sub_width=float(np.round(rng.uniform(0.07, 0.12), 3)),
+                sub_height=float(np.round(rng.uniform(0.08, 0.16), 3)),
+            )
         elif fam == "grooves":
-            c.update(n_grooves=int(rng.integers(4,8)), width=float(np.round(rng.uniform(0.18,0.32),3)), depth=float(np.round(rng.uniform(0.15,0.3),3)))
+            c.update(
+                n_grooves=int(rng.integers(4, 8)),
+                width=float(np.round(rng.uniform(0.18, 0.32), 3)),
+                depth=float(np.round(rng.uniform(0.15, 0.3), 3)),
+            )
         else:
-            c["slope"] = float(np.round(rng.choice([-1,1])*rng.uniform(0.15,0.5),3))
+            c["slope"] = float(np.round(rng.choice([-1, 1]) * rng.uniform(0.15, 0.5), 3))
         out.append(c)
     return out
+
 
 CASE_SETS = {
     "base": lambda: [copy.deepcopy(c) for c in CASES],

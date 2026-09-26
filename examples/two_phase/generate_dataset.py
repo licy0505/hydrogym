@@ -34,11 +34,10 @@ import json
 import time
 from pathlib import Path
 
+import cases as C
 import jax
 import jax.numpy as jnp
 import numpy as np
-
-import cases as C
 import phasefield as pf
 
 DATASET_SCHEMA_VERSION = 2
@@ -275,7 +274,9 @@ def main() -> None:
                 _write_rejection(out_dir, name, case, diagnostics)
                 print(f"[{i:03d}] REJECT {diagnostics} -> rejected/{name}.json", flush=True)
                 continue
-            _save_case(path, case, p, solid, np.asarray(phi), np.asarray(u), np.asarray(v), save_every, args.ds, diagnostics)
+            _save_case(
+                path, case, p, solid, np.asarray(phi), np.asarray(u), np.asarray(v), save_every, args.ds, diagnostics
+            )
             print(f"[{i:03d}] saved T={phi.shape[0]} in {time.time() - t0:.1f}s -> {path}", flush=True)
         except (FloatingPointError, ValueError, RuntimeError) as exc:
             diagnostics = {"exception": type(exc).__name__, "message": str(exc)}

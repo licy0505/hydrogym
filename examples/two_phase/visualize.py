@@ -27,14 +27,12 @@ import os
 
 import jax
 import jax.numpy as jnp
+import matplotlib
 import numpy as np
 
-import matplotlib
-
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
 import cases as C
+import matplotlib.pyplot as plt
 import phasefield as pf
 
 OSDIR = "figures"
@@ -157,7 +155,7 @@ def fig_lowWe():
     """
     Wes = [10, 18, 32, 55]
     frame_times = [0.2, 0.6, 1.0, 1.4]
-    fig, axes = plt.subplots(len(Wes), len(frame_times), figsize=(2.2*len(frame_times), 2.3*len(Wes)))
+    fig, axes = plt.subplots(len(Wes), len(frame_times), figsize=(2.2 * len(frame_times), 2.3 * len(Wes)))
     for r, we in enumerate(Wes):
         # Match cases._low_common: lower Re, a better-resolved interface, a
         # small wetting affinity, and a positive gap above the wall.
@@ -185,13 +183,14 @@ def fig_lowWe():
         for c, time_target in enumerate(frame_times):
             ti = min(max(int(round(time_target / frame_dt)) - 1, 0), T - 1)
             overlay(axes[r][c], phi[ti], solid.chi, title=f"t={((ti + 1) * frame_dt):.2f}" if r == 0 else None)
-            if c==0:
+            if c == 0:
                 axes[r][c].set_ylabel(f"We={we}\nRe={Re:.0f}", fontsize=9)
     fig.suptitle("Low-We sweep with guarded initialization and physical-time frames", fontsize=11)
     fig.tight_layout()
     fig.savefig(f"{OSDIR}/fig_lowWe.png", dpi=110)
     plt.close(fig)
     print("saved fig_lowWe.png")
+
 
 def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_all"):
     """Strict low-We transfer figure: *test split only*, no silent fallback."""
@@ -212,10 +211,7 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_a
         out[..., 1:3] *= uv
         return out
 
-    tests = [
-        c for c in S.load_full(data_dir, "test")
-        if c["surface"] not in ("flat", "pillars")
-    ]
+    tests = [c for c in S.load_full(data_dir, "test") if c["surface"] not in ("flat", "pillars")]
     if len(tests) < 3:
         raise RuntimeError(
             f"need >=3 low-We complex TEST trajectories in {data_dir}; found {len(tests)}. "
@@ -264,9 +260,7 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_a
                 va="bottom",
             )
             if ci == 0:
-                axes[r][ci].set_ylabel(
-                    f"{c['surface']}\nWe={float(c['scalars'][0]) * 100:.0f}", fontsize=8
-                )
+                axes[r][ci].set_ylabel(f"{c['surface']}\nWe={float(c['scalars'][0]) * 100:.0f}", fontsize=8)
             axes[r][ci].set_title(f"t={t_phys:.3f}", fontsize=8)
 
     fig.suptitle(
@@ -280,7 +274,6 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_a
 
 
 def fig_diagnosis():
-
     """Explain the 'liquid in the wall' artifact: diffuse solid + volume wetting."""
     fig = plt.figure(figsize=(13, 4.2))
     gs = fig.add_gridspec(1, 4, width_ratios=[1.2, 1.2, 1.6, 1.6], wspace=0.35)
@@ -329,7 +322,7 @@ def fig_diagnosis():
         chi_tmp = np.asarray(s2.chi)
         t = np.arange(phi_tmp.shape[0]) * p2.dt * 10
         leak = [float((phi_tmp[k] * chi_tmp).sum() / max(phi_tmp[k].sum(), 1)) for k in range(phi_tmp.shape[0])]
-        ax.plot(t, leak, lw=1.5 if N==192 else 1.0, alpha=0.9, label=f"N={N} dx={p2.dx:.3f}")
+        ax.plot(t, leak, lw=1.5 if N == 192 else 1.0, alpha=0.9, label=f"N={N} dx={p2.dx:.3f}")
     ax.set_xlabel("t (non-dim)")
     ax.set_ylabel("leak fraction sum(phi*chi)/sum(phi)")
     ax.set_ylim(0, 0.22)
@@ -337,36 +330,51 @@ def fig_diagnosis():
     ax.grid(alpha=0.3)
     ax.set_title("Wall leak vs time (finer dx -> thinner diffuse wall)", fontsize=8)
 
-    fig.suptitle("Diagnosis: liquid-in-wall is diffuse Brinkman wall + volume wetting; masked viz hides it, finer dx reduces it", fontsize=10)
+    fig.suptitle(
+        "Diagnosis: liquid-in-wall is diffuse Brinkman wall + volume wetting; masked viz hides it, finer dx reduces it",
+        fontsize=10,
+    )
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     fig.savefig(f"{OSDIR}/fig_diagnosis.png", dpi=130)
     plt.close(fig)
     print("saved fig_diagnosis.png")
+
 
 def fig_resolution():
     """Fixed solver at two resolutions, same physical time, all six surfaces (light)."""
     surfaces = ["flat", "pillars", "random_pillars", "hierarchical", "grooves", "wedge"]
     frames = [15, 40]  # two times to keep runtime reasonable
     Ns = [192, 320]  # 320 instead of 384 to fit CFL with dt~2e-3 and still show sharpening
-    fig, axes = plt.subplots(len(surfaces), len(frames) * len(Ns), figsize=(2.0 * len(frames) * len(Ns), 2.1 * len(surfaces)), sharex=True, sharey=True)
+    fig, axes = plt.subplots(
+        len(surfaces),
+        len(frames) * len(Ns),
+        figsize=(2.0 * len(frames) * len(Ns), 2.1 * len(surfaces)),
+        sharex=True,
+        sharey=True,
+    )
     if len(surfaces) == 1:
         axes = np.array([axes])
     for r, s in enumerate(surfaces):
         for c, ti_phys in enumerate(frames):
             for j, N in enumerate(Ns):
                 col = c * len(Ns) + j
-                p_tmp, solid_tmp, phi_tmp, _, _ = run_case(dict(surface=s, We=150.0, cos_theta=0.0, seed=7, n_pillars=5), nsteps=800, save_every=10, N=N)
+                p_tmp, solid_tmp, phi_tmp, _, _ = run_case(
+                    dict(surface=s, We=150.0, cos_theta=0.0, seed=7, n_pillars=5), nsteps=800, save_every=10, N=N
+                )
                 ti = min(ti_phys, phi_tmp.shape[0] - 1)
                 overlay(axes[r][col], phi_tmp[ti], solid_tmp.chi)
                 if r == 0:
                     axes[r][col].set_title(f"N={N} t={ti}", fontsize=7)
                 if col == 0:
                     axes[r][col].set_ylabel(s, fontsize=8)
-    fig.suptitle("Fixed solver N=192 vs N=320 (same phys. time, CFL-adaptive dt) — sharper interface, no wall leak", fontsize=10)
+    fig.suptitle(
+        "Fixed solver N=192 vs N=320 (same phys. time, CFL-adaptive dt) — sharper interface, no wall leak", fontsize=10
+    )
     fig.tight_layout()
     fig.savefig(f"{OSDIR}/fig_resolution.png", dpi=130)
     plt.close(fig)
     print("saved fig_resolution.png")
+
 
 # -------------------------------------------------------------------------------------
 #  transfer figures
@@ -463,7 +471,9 @@ def fig_metrics(ckpt):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["solver", "transfer", "diagnosis", "resolution", "lowWe", "all"], default="solver")
+    ap.add_argument(
+        "--mode", choices=["solver", "transfer", "diagnosis", "resolution", "lowWe", "all"], default="solver"
+    )
     ap.add_argument("--ckpt", default="ckpts/surrogate.pkl")
     ap.add_argument("--lowwe-ckpt", default="ckpts/lowWe_fno_sdf_u3.pkl")
     ap.add_argument("--lowwe-data", default="data/lowWe_all")

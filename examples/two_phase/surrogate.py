@@ -26,9 +26,7 @@ DATASET_SCHEMA_VERSION = 2
 
 def _require_current_dataset(d, path):
     if "dataset_schema_version" not in d.files:
-        raise RuntimeError(
-            f"stale two_phase dataset: {path} has no schema marker; regenerate with generate_dataset.py"
-        )
+        raise RuntimeError(f"stale two_phase dataset: {path} has no schema marker; regenerate with generate_dataset.py")
     version = int(np.asarray(d["dataset_schema_version"]).item())
     if version != DATASET_SCHEMA_VERSION:
         raise RuntimeError(
@@ -215,7 +213,7 @@ def geometry_features(chi: np.ndarray, sdf: np.ndarray | None, dx: float, mode: 
             raise ValueError("dataset has no 'sdf' array -- regenerate with generate_dataset.py")
         return chi[..., None]
     sdf = np.asarray(sdf, np.float32)
-    feats = [chi] + [np.tanh(sdf / l) for l in SDF_SCALES]
+    feats = [chi] + [np.tanh(sdf / scale) for scale in SDF_SCALES]
     gx = (np.roll(sdf, -1, 0) - np.roll(sdf, 1, 0)) / (2 * dx)
     gy = (np.roll(sdf, -1, 1) - np.roll(sdf, 1, 1)) / (2 * dx)
     nrm = np.sqrt(gx**2 + gy**2) + 1e-6
@@ -359,8 +357,16 @@ def load_checkpoint(path):
         ck = pickle.load(fh)
     cfg = ck.get("cfg")
     if cfg is None:  # legacy: plain UNet, absolute prediction, chi only
-        cfg = dict(arch="unet", residual=False, conservative=False, base=ck.get("base", 16),
-                   levels=ck.get("levels", 3), geom="chi", uv_scale=ck["uv_scale"], legacy=True)
+        cfg = dict(
+            arch="unet",
+            residual=False,
+            conservative=False,
+            base=ck.get("base", 16),
+            levels=ck.get("levels", 3),
+            geom="chi",
+            uv_scale=ck["uv_scale"],
+            legacy=True,
+        )
         return UNet(base=cfg["base"], levels=cfg["levels"], out_channels=3), ck["params"], cfg
     version = int(cfg.get("dataset_schema_version", 0))
     if version != DATASET_SCHEMA_VERSION:

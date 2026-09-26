@@ -19,9 +19,7 @@ def test_mass_project_is_bounded_and_fluid_mass_exact():
     chi = np.zeros_like(phi_in)
     chi[:, :, :3] = 1.0
 
-    out = np.asarray(
-        S.mass_project(jnp.asarray(phi_pred), jnp.asarray(phi_in), jnp.asarray(chi))
-    )
+    out = np.asarray(S.mass_project(jnp.asarray(phi_pred), jnp.asarray(phi_in), jnp.asarray(chi)))
     fluid = chi < 0.5
 
     assert out.min() >= -1e-7

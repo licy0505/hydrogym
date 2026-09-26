@@ -34,7 +34,6 @@ from collections import defaultdict
 import jax
 import jax.numpy as jnp
 import numpy as np
-
 import surrogate as S
 
 
@@ -105,13 +104,13 @@ def evaluate(ckpt, data, horizon, verbose=True):
 
         for i, c in enumerate(cs):
             pt, tt = traj[i], true[i, ..., 0]
-            fluid = (c["sdf"] >= 0.0).astype(np.float32) if c["sdf"] is not None else (c["chi"] < 0.5).astype(np.float32)
+            fluid = (
+                (c["sdf"] >= 0.0).astype(np.float32) if c["sdf"] is not None else (c["chi"] < 0.5).astype(np.float32)
+            )
             m0 = max(float(np.sum(tt[0] * fluid)), 1e-6)
             eK = np.mean((pt[1:K] - tt[1:K]) ** 2)
             eT = np.mean((pt[1:] - tt[1:]) ** 2)
-            mE = np.mean(
-                [abs(np.sum(pt[t] * fluid) - np.sum(tt[t] * fluid)) / m0 for t in range(1, K)]
-            )
+            mE = np.mean([abs(np.sum(pt[t] * fluid) - np.sum(tt[t] * fluid)) / m0 for t in range(1, K)])
             sE = np.mean([abs(spreading(pt[t]) - spreading(tt[t])) for t in range(1, K)])
             fam = "simple" if c["surface"] in ("flat", "pillars") else "complex"
             r = dict(
@@ -139,9 +138,14 @@ def evaluate(ckpt, data, horizon, verbose=True):
     for key, rs in sorted(groups.items()):
         summary[f"{key[0]}/{key[1]}"] = {
             "n": len(rs),
-            **{m: float(np.mean([r[m] for r in rs])) for m in ("one_step", "rollK", "rollT", "massK", "spreadK", "iouK", "iouT")},
+            **{
+                m: float(np.mean([r[m] for r in rs]))
+                for m in ("one_step", "rollK", "rollT", "massK", "spreadK", "iouK", "iouT")
+            },
         }
-    return dict(ckpt=ckpt, cfg={k: v for k, v in cfg.items() if k != "train_hist"}, horizon=K, T=T, rows=rows, summary=summary)
+    return dict(
+        ckpt=ckpt, cfg={k: v for k, v in cfg.items() if k != "train_hist"}, horizon=K, T=T, rows=rows, summary=summary
+    )
 
 
 def main():
@@ -155,7 +159,10 @@ def main():
     res = evaluate(args.ckpt, args.data, args.horizon)
     K = res["horizon"]
     print(f"\n-- grouped: {args.ckpt} --")
-    print(f"{'group':16s} {'n':>3s} {'1step':>7s} {'roll' + str(K):>8s} {'roll' + str(res['T']):>8s} {'mass':>6s} {'spread':>7s} {'IoU' + str(K):>7s}")
+    print(
+        f"{'group':16s} {'n':>3s} {'1step':>7s} {'roll' + str(K):>8s} "
+        f"{'roll' + str(res['T']):>8s} {'mass':>6s} {'spread':>7s} {'IoU' + str(K):>7s}"
+    )
     for g, s in res["summary"].items():
         print(
             f"{g:16s} {s['n']:3d} {s['one_step']:7.4f} {s['rollK']:8.4f} {s['rollT']:8.4f} "

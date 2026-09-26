@@ -95,9 +95,7 @@ def test_wetting_band_is_fluid_side_only():
 def test_solid_projection_is_bounded_and_mass_conserving():
     p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0, enforce_solid_phi=True)
     solid = pf.make_solid(pf.surface_flat(p), p, cos_theta=0.0)
-    phi = np.asarray(
-        pf.droplet_initial_state(p, x0=3.0, y0=0.4, R=0.5, u_impact=0.0).phi
-    )
+    phi = np.asarray(pf.droplet_initial_state(p, x0=3.0, y0=0.4, R=0.5, u_impact=0.0).phi)
     before = float(phi.sum())
     projected = np.asarray(pf._project_phase_outside_solid(jnp.asarray(phi), solid, p))
     assert projected.min() >= -1e-7

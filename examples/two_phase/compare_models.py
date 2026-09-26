@@ -23,9 +23,8 @@ import matplotlib
 import numpy as np
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
 import evaluate_transfer as E
+import matplotlib.pyplot as plt
 import surrogate as S
 
 LABELS = {
@@ -58,7 +57,8 @@ def load_results(names):
 def table(res):
     K = next(iter(res.values()))["horizon"]
     hdr = (
-        f"| model | train traj | group | 1-step RMSE | rollout-{K} RMSE | rollout-99 RMSE | mass err | spread err | IoU@{K} |\n"
+        f"| model | train traj | group | 1-step RMSE | rollout-{K} RMSE | rollout-99 RMSE "
+        f"| mass err | spread err | IoU@{K} |\n"
         "|---|---|---|---|---|---|---|---|---|\n"
     )
     lines = []
@@ -69,7 +69,8 @@ def table(res):
                 continue
             lines.append(
                 f"| {LABELS.get(n, n)} | {r['cfg'].get('n_train_traj', 13 if n != 'persistence' else '-')} | {g} | "
-                f"{s['one_step']:.4f} | {s['rollK']:.4f} | {s['rollT']:.4f} | {s['massK']:.3f} | {s['spreadK']:.2f} | {s['iouK']:.3f} |"
+                f"{s['one_step']:.4f} | {s['rollK']:.4f} | {s['rollT']:.4f} | {s['massK']:.3f} "
+                f"| {s['spreadK']:.2f} | {s['iouK']:.3f} |"
             )
     return hdr + "\n".join(lines) + "\n"
 

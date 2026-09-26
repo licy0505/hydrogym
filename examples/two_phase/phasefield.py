@@ -52,7 +52,6 @@ import jax
 import jax.numpy as jnp
 from jax import lax
 
-
 # f(phi) = phi^2 (1-phi)^2  ->  sigma = sqrt(2)/6, so the Korteweg force is
 # rescaled by SIGMA_NORM = 6/sqrt(2) to make the non-dimensional sigma = 1/We.
 SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
@@ -439,7 +438,7 @@ def wet_band(solid: Solid, p: PhaseFieldParams):
     """
     width = max(float(p.wet_band), float(p.dx))
     d = jnp.maximum(solid.sdf, 0.0)
-    band = jnp.exp(-(d / width) ** 2)
+    band = jnp.exp(-((d / width) ** 2))
     return jnp.where(solid.sdf >= 0.0, band, 0.0).astype(p.dtype)
 
 
@@ -565,7 +564,7 @@ def _project_phase_outside_solid(phi, solid: Solid, p: PhaseFieldParams):
     base = jnp.clip(phi, 0.0, 1.0)
     wall_scale = max(2.0 * float(p.eps), float(p.dx))
     d = jnp.maximum(solid.sdf, 0.0)
-    wall_weight = jnp.exp(-(d / wall_scale) ** 2)
+    wall_weight = jnp.exp(-((d / wall_scale) ** 2))
     interface_weight = 4.0 * base * (1.0 - base)
     weight = active * (wall_weight + 0.25 * interface_weight + 1.0e-3)
     return _bounded_mass_project_2d(phi, active, jnp.sum(phi), weight)
@@ -640,9 +639,9 @@ def droplet_initial_state(
         # Optional localized alternative.  A local downward-only velocity is
         # compressible; this streamfunction construction makes it divergence
         # free, with a weak return flow outside the drop.
-        sx = (X - x0)
+        sx = X - x0
         sx = (sx + 0.5 * p.Lx) % p.Lx - 0.5 * p.Lx
-        sy = (Y - y0)
+        sy = Y - y0
         sy = (sy + 0.5 * p.Ly) % p.Ly - 0.5 * p.Ly
         radial = jnp.sqrt(sx * sx + sy * sy + 1e-12)
         envelope = 0.5 * (1.0 - jnp.tanh((radial - (R + 0.35)) / max(2.0 * p.eps, 0.08)))

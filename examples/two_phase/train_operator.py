@@ -34,7 +34,6 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 import optax
-
 import surrogate as S
 
 
@@ -140,7 +139,10 @@ def main():
         if it % args.log_every == 0:
             hist.append((it, run / args.log_every))
             el = time.time() - t0
-            print(f"step {it:5d}  loss={run / args.log_every:.3e}  ({el:.0f}s, eta {el / it * (args.steps - it):.0f}s)", flush=True)
+            print(
+                f"step {it:5d}  loss={run / args.log_every:.3e}  ({el:.0f}s, eta {el / it * (args.steps - it):.0f}s)",
+                flush=True,
+            )
             run = 0.0
         if it % 500 == 0:
             save()
