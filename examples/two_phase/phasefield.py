@@ -56,6 +56,9 @@ from jax import lax
 # rescaled by SIGMA_NORM = 6/sqrt(2) to make the non-dimensional sigma = 1/We.
 SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 
+# Bump this whenever the solver/data contract changes in a trajectory-changing way.
+SOLVER_CONTRACT_VERSION = 3
+
 
 #######################################################################################
 #                                                                                     #
@@ -344,10 +347,23 @@ def surface_hierarchical(
     return sdf_union(big, small, Y - wall_height)
 
 
-def surface_wedge(params: PhaseFieldParams, wall_height: float = 0.25, slope: float = 0.5, **_) -> jnp.ndarray:
-    """Inclined wall (asymmetric spreading test)."""
+def surface_wedge(
+    params: PhaseFieldParams,
+    wall_height: float = 0.25,
+    slope: float = 0.5,
+    center: float | None = None,
+    **_,
+) -> jnp.ndarray:
+    """Periodic locally-inclined wall used as the asymmetric-spreading test."""
     X, Y = grids(params)
-    return Y - (wall_height + slope * (X - params.Lx / 2))
+    if center is None:
+        center = params.Lx / 2.0
+    wave_number = 6.0 * jnp.pi / params.Lx
+    phase = wave_number * (X - center)
+    amplitude = slope / wave_number
+    height = wall_height + amplitude * jnp.sin(phase)
+    dh_dx = slope * jnp.cos(phase)
+    return (Y - height) / jnp.sqrt(1.0 + dh_dx**2)
 
 
 SURFACE_REGISTRY = {
@@ -459,15 +475,13 @@ def chemical_potential(phi, solid: Solid, p: PhaseFieldParams):
 
 
 def poisson_solve(rhs, m2):
-    """Periodic solve of the *discrete* Poisson problem lap(x) = rhs by FFT.
-
-    ``m2`` is the Fourier symbol of the same 5-point Laplacian that the
-    finite-difference stencils realise (see :attr:`PhaseFieldParams.m2`).
-    """
+    """Periodic solve of ``lap(x)=rhs`` with every discrete null mode removed."""
     rhs_hat = jnp.fft.rfft2(rhs)
-    m2_safe = m2.at[0, 0].set(1.0)
-    # the Laplacian has symbol -m2, hence the minus sign
-    x_hat = (-rhs_hat / m2_safe).at[0, 0].set(0.0)
+    scale = jnp.maximum(jnp.max(m2), jnp.asarray(1.0, dtype=m2.dtype))
+    tol = 64.0 * jnp.finfo(m2.dtype).eps * scale
+    null = m2 <= tol
+    denom = jnp.where(null, 1.0, m2)
+    x_hat = jnp.where(null, 0.0, -rhs_hat / denom)
     return jnp.fft.irfft2(x_hat, s=rhs.shape)
 
 
@@ -700,8 +714,9 @@ def rollout(
 
 
 def liquid_mass(phi, solid: Solid, p: PhaseFieldParams):
-    """Liquid area (2-D 'mass'), excluding whatever sits inside the solid."""
-    return jnp.sum(phi * (1.0 - solid.chi)) * p.dx * p.dy
+    """Liquid area (2-D 'mass') in the geometric fluid region."""
+    fluid = (solid.sdf >= 0.0).astype(phi.dtype)
+    return jnp.sum(phi * fluid) * p.dx * p.dy
 
 
 def spreading_width(phi, p: PhaseFieldParams, thresh: float = 0.5):

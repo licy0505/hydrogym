@@ -25,8 +25,6 @@ from __future__ import annotations
 import argparse
 import os
 
-import jax
-import jax.numpy as jnp
 import matplotlib
 import numpy as np
 
@@ -50,15 +48,26 @@ def overlay(
     title=None,
     truth=None,
     mask_solid=True,
-    display_thresh=0.5,
+    display_thresh=0.10,
     truth_levels=(0.5,),
 ):
+    # Solid background with crisp contour to eliminate floating gap
     ax.imshow(flip(chi), cmap="gray_r", vmin=0, vmax=1, origin="lower")
+    chi_f = flip(chi)
+    if float(np.nanmin(chi_f)) < 0.5 < float(np.nanmax(chi_f)):
+        ax.contour(chi_f, levels=[0.5], colors="#212121", linewidths=1.0)
+
     if mask_solid:
-        mask = (flip(phi) < display_thresh) | (flip(chi) > 0.5)
+        mask = (flip(phi) < display_thresh) | (flip(chi) > 0.65)
     else:
         mask = flip(phi) < display_thresh
-    ax.imshow(np.ma.masked_where(mask, flip(phi)), cmap="Blues", vmin=0, vmax=1, alpha=0.9)
+    ax.imshow(np.ma.masked_where(mask, flip(phi)), cmap="Blues", vmin=0, vmax=1, alpha=0.92)
+
+    # Liquid interface contour
+    phi_f = flip(phi)
+    if float(np.nanmin(phi_f)) < 0.5 < float(np.nanmax(phi_f)):
+        ax.contour(phi_f, levels=[0.5], colors="#0D47A1", linewidths=1.2)
+
     if truth is not None:
         if mask_solid:
             truth = np.where(np.asarray(chi) > 0.5, 0.0, truth)
@@ -87,20 +96,35 @@ def run_case(case, nsteps=1200, save_every=10, N=192, dt=None):
 
 def fig_surfaces():
     surfaces = ["flat", "pillars", "random_pillars", "hierarchical", "grooves", "wedge"]
-    frames = [5, 25, 45, 70, 100]
-    fig, axes = plt.subplots(len(surfaces), len(frames), figsize=(2.2 * len(frames), 2.3 * len(surfaces)))
+    frames = [0, 6, 14, 24, 38]
+    fig, axes = plt.subplots(len(surfaces), len(frames), figsize=(2.4 * len(frames), 2.3 * len(surfaces)))
     for r, s in enumerate(surfaces):
-        case = dict(surface=s, We=150.0, cos_theta=0.0, seed=7, n_pillars=5)
-        p, solid, phi, _, _ = run_case(case)
+        case = dict(
+            surface=s,
+            We=200.0,
+            Re=200.0,
+            cos_theta=0.75,
+            u_impact=1.6,
+            seed=7,
+            n_pillars=5,
+            dt=2.5e-3,
+        )
+        p, solid, phi, _, _ = run_case(case, nsteps=160, save_every=4, dt=2.5e-3)
         T = phi.shape[0]
         for c, ti in enumerate(frames):
             ti = min(ti, T - 1)
-            overlay(axes[r][c], phi[ti], solid.chi, title=f"t={ti}" if r == 0 else None)
+            phys_t = (ti + 1) * 4 * p.dt if ti > 0 else 0.0
+            title = f"t = {phys_t:.2f} s" if r == 0 else None
+            overlay(axes[r][c], phi[ti], solid.chi, title=title)
             if c == 0:
-                axes[r][c].set_ylabel(s, fontsize=9)
-    fig.suptitle("Droplet impact across surface families (We=150)", fontsize=11)
+                axes[r][c].set_ylabel(s, fontsize=9.5, fontweight="bold")
+    fig.suptitle(
+        "Droplet Descent & Spreading across Surface Families (We=200, u0=1.6, cos $\\theta$=0.75)",
+        fontsize=12,
+        fontweight="bold",
+    )
     fig.tight_layout()
-    fig.savefig(f"{OSDIR}/fig_surfaces.png", dpi=110)
+    fig.savefig(f"{OSDIR}/fig_surfaces.png", dpi=120)
     plt.close(fig)
     print("saved fig_surfaces.png")
 
@@ -126,19 +150,22 @@ def fig_weber():
 
 
 def fig_wetting():
-    cts = [-0.99, 0.0, 0.99]
-    frames = [10, 40, 80, 110]
-    fig, axes = plt.subplots(len(cts), len(frames), figsize=(2.2 * len(frames), 2.3 * len(cts)))
+    cts = [-0.85, 0.0, 0.85]
+    frames = [0, 6, 14, 24, 38]
+    fig, axes = plt.subplots(len(cts), len(frames), figsize=(2.4 * len(frames), 2.3 * len(cts)))
+    labels = ["Hydrophobic\n$\\cos\\theta$=-0.85", "Neutral\n$\\cos\\theta$=0.0", "Hydrophilic\n$\\cos\\theta$=+0.85"]
     for r, ct in enumerate(cts):
-        case = dict(surface="flat", We=100.0, cos_theta=ct)
-        p, solid, phi, _, _ = run_case(case)
+        case = dict(surface="flat", We=200.0, Re=200.0, cos_theta=ct, u_impact=1.6, dt=2.5e-3)
+        p, solid, phi, _, _ = run_case(case, nsteps=160, save_every=4, dt=2.5e-3)
         T = phi.shape[0]
         for c, ti in enumerate(frames):
             ti = min(ti, T - 1)
-            overlay(axes[r][c], phi[ti], solid.chi, title=f"t={ti}" if r == 0 else None)
+            phys_t = (ti + 1) * 4 * p.dt if ti > 0 else 0.0
+            title = f"t = {phys_t:.2f} s" if r == 0 else None
+            overlay(axes[r][c], phi[ti], solid.chi, title=title)
             if c == 0:
-                axes[r][c].set_ylabel(f"cos$\\theta$={ct}", fontsize=9)
-    fig.suptitle("Wettability sweep: hydrophobic -> hydrophilic (We=100)", fontsize=11)
+                axes[r][c].set_ylabel(labels[r], fontsize=9)
+    fig.suptitle("Wettability Sweep: Hydrophobic Rebound vs Hydrophilic Spreading (We=200)", fontsize=11)
     fig.tight_layout()
     fig.savefig(f"{OSDIR}/fig_wetting.png", dpi=110)
     plt.close(fig)
@@ -173,7 +200,7 @@ def fig_lowWe():
             eps_factor=3.0,
             wall_energy_amp=0.5,
             wet_band=0.08,
-            impact_gap=0.03,
+            impact_gap_eps=2.5,
             velocity_mode="streamfunction",
             dt=dt,
         )
@@ -193,56 +220,51 @@ def fig_lowWe():
 
 
 def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_all"):
-    """Strict low-We transfer figure: *test split only*, no silent fallback."""
+    """Full-horizon low-We transfer: every unseen family, median + worst."""
+    import evaluate_transfer as E
     import surrogate as S
 
-    model, params, cfg = S.load_checkpoint(ckpt)
-    uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
-    apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
+    predict, _, geom_mode = E.make_predictor(ckpt)
+    tests = S.load_full(data_dir, "test")
+    expected = ("random_pillars", "hierarchical", "grooves", "wedge")
+    grouped = {fam: [c for c in tests if c["surface"] == fam] for fam in expected}
+    missing = [fam for fam, cs in grouped.items() if not cs]
+    if missing:
+        raise RuntimeError(f"missing low-We TEST families in {data_dir}: {missing}")
 
-    def predict(state, geom, scal):
-        x = state.copy()
-        x[..., 1:3] /= uv
-        out = np.asarray(apply_fn(jnp.asarray(np.concatenate([x, geom], -1)), jnp.asarray(scal)))
-        out = out.copy()
-        # mass_project already returns bounded phi for current-schema models;
-        # this clip is therefore idempotent rather than a second mass-changing step.
-        out[..., 0] = np.clip(out[..., 0], 0.0, 1.0)
-        out[..., 1:3] *= uv
-        return out
-
-    tests = [c for c in S.load_full(data_dir, "test") if c["surface"] not in ("flat", "pillars")]
-    if len(tests) < 3:
-        raise RuntimeError(
-            f"need >=3 low-We complex TEST trajectories in {data_dir}; found {len(tests)}. "
-            "Run: python generate_dataset.py --set lowWe_all --out data/lowWe_all --nsteps 2000 --ds 3"
-        )
-    picks = tests[:3]
-
-    fig, axes = plt.subplots(len(picks), 5, figsize=(2.2 * 5, 2.4 * len(picks)))
-    if len(picks) == 1:
-        axes = axes[None]
-
-    for r, c in enumerate(picks):
+    def rollout_case(c):
         geom = S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode)
-        st = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
-        K = min(c["phi"].shape[0], 51)
-        traj = [st[..., 0].copy()]
-        cur = st
-        for _ in range(K - 1):
-            cur = predict(cur[None], geom[None], c["scalars"][None])[0]
+        cur = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
+        traj = [cur[..., 0].copy()]
+        raw_m, proj_l1 = [], []
+        for _ in range(c["phi"].shape[0] - 1):
+            cur_b, aux = predict(cur[None], geom[None], c["scalars"][None], return_aux=True)
+            cur = cur_b[0]
             traj.append(cur[..., 0].copy())
-        traj = np.stack(traj)
-        frames = np.unique(np.rint(np.linspace(0, K - 1, 5)).astype(int))
-        if len(frames) < 5:
-            frames = np.pad(frames, (0, 5 - len(frames)), mode="edge")
+            raw_m.append(float(aux["raw_mass_rel"][0]))
+            proj_l1.append(float(aux["projection_l1_rel"][0]))
+        return np.stack(traj), float(np.mean(raw_m)), float(np.mean(proj_l1))
 
+    rows = []
+    for fam in expected:
+        scored = []
+        for c in grouped[fam]:
+            traj, raw_m, proj_l1 = rollout_case(c)
+            final_iou = E.iou(traj[-1], c["phi"][-1])
+            scored.append((final_iou, c, traj, raw_m, proj_l1))
+        scored.sort(key=lambda x: x[0])
+        for rank, item in (("worst", scored[0]), ("median", scored[len(scored) // 2])):
+            rows.append((fam, rank, *item))
+
+    fig, axes = plt.subplots(len(rows), 5, figsize=(11.5, 2.15 * len(rows)))
+    for r, (fam, rank, final_iou, c, traj, raw_m, proj_l1) in enumerate(rows):
+        T = min(traj.shape[0], c["phi"].shape[0])
+        frames = np.rint(np.linspace(0, T - 1, 5)).astype(int)
         fluid = (c["sdf"] >= 0.0).astype(np.float32)
         m0 = max(float(np.sum(c["phi"][0] * fluid)), 1e-12)
-        for ci, ti in enumerate(frames[:5]):
+        for ci, ti in enumerate(frames):
             pred_mass = float(np.sum(traj[ti] * fluid) / m0)
             truth_mass = float(np.sum(c["phi"][ti] * fluid) / m0)
-            t_phys = float(c["time"][ti]) if c.get("time") is not None else float(ti)
             overlay(
                 axes[r][ci],
                 traj[ti],
@@ -254,33 +276,37 @@ def fig_lowWe_transfer(ckpt="ckpts/lowWe_fno_sdf_u3.pkl", data_dir="data/lowWe_a
             axes[r][ci].text(
                 0.02,
                 0.02,
-                f"M/M0 p={pred_mass:.3f} t={truth_mass:.3f}\nmaxφ={float(np.max(traj[ti])):.2f}",
+                f"M/M0 {pred_mass:.3f}/{truth_mass:.3f}",
                 transform=axes[r][ci].transAxes,
-                fontsize=5.5,
+                fontsize=5.2,
                 va="bottom",
             )
+            axes[r][ci].set_title(f"t={float(c['time'][ti]):.3f}", fontsize=7)
             if ci == 0:
-                axes[r][ci].set_ylabel(f"{c['surface']}\nWe={float(c['scalars'][0]) * 100:.0f}", fontsize=8)
-            axes[r][ci].set_title(f"t={t_phys:.3f}", fontsize=8)
+                axes[r][ci].set_ylabel(
+                    f"{fam} · {rank}\nWe={float(c['scalars'][0]) * 100:.0f}\n"
+                    f"IoUfinal={final_iou:.3f}\nrawM={raw_m:.1e} projL1={proj_l1:.1e}",
+                    fontsize=6.5,
+                )
 
     fig.suptitle(
-        "Low-We surrogate rollout (blue) vs solver truth (red) — strict unseen TEST surfaces",
+        "Low-We full-horizon transfer — every unseen family; median and worst case",
         fontsize=10,
     )
     fig.tight_layout()
-    fig.savefig(f"{OSDIR}/fig_lowWe_transfer.png", dpi=130)
+    fig.savefig(f"{OSDIR}/fig_lowWe_transfer.png", dpi=150)
     plt.close(fig)
     print("saved fig_lowWe_transfer.png")
 
 
 def fig_diagnosis():
-    """Explain the 'liquid in the wall' artifact: diffuse solid + volume wetting."""
+    """Ablation: reproduce the legacy wall leak only with solid projection disabled."""
     fig = plt.figure(figsize=(13, 4.2))
     gs = fig.add_gridspec(1, 4, width_ratios=[1.2, 1.2, 1.6, 1.6], wspace=0.35)
 
-    case = dict(surface="flat", We=100.0, cos_theta=0.0, R=0.7)
+    case = dict(surface="flat", We=100.0, cos_theta=0.0, R=0.7, enforce_solid_phi=False)
 
-    # single run at N=192 (default solver, no hard clip)
+    # Deliberately disable the current mass-conserving solid projection.
     p, solid, phi, _, _ = run_case(case, nsteps=1200, save_every=10, N=192)
     chi = np.asarray(solid.chi)
     T = phi.shape[0]
@@ -316,7 +342,11 @@ def fig_diagnosis():
     # D: leak vs time for 3 resolutions (solver unchanged, just dt adapted)
     ax = fig.add_subplot(gs[0, 3])
     for N in [192, 256, 320]:
-        p2, s2, st2 = pf.build_case(dict(surface="flat", We=100, cos_theta=0.0, R=0.7), N=N, dt=2e-3)
+        p2, s2, st2 = pf.build_case(
+            dict(surface="flat", We=100, cos_theta=0.0, R=0.7, enforce_solid_phi=False),
+            N=N,
+            dt=2e-3,
+        )
         _, phi_tmp, _, _ = pf.rollout(st2, s2, p2, 600, save_every=10)
         phi_tmp = np.asarray(phi_tmp)
         chi_tmp = np.asarray(s2.chi)
@@ -341,30 +371,36 @@ def fig_diagnosis():
 
 
 def fig_resolution():
-    """Fixed solver at two resolutions, same physical time, all six surfaces (light)."""
+    """Compare resolutions at identical physical times, not equal frame indices."""
     surfaces = ["flat", "pillars", "random_pillars", "hierarchical", "grooves", "wedge"]
-    frames = [15, 40]  # two times to keep runtime reasonable
-    Ns = [192, 320]  # 320 instead of 384 to fit CFL with dt~2e-3 and still show sharpening
+    target_times = [0.6, 1.4]
+    Ns = [192, 320]
     fig, axes = plt.subplots(
         len(surfaces),
-        len(frames) * len(Ns),
-        figsize=(2.0 * len(frames) * len(Ns), 2.1 * len(surfaces)),
+        len(target_times) * len(Ns),
+        figsize=(2.0 * len(target_times) * len(Ns), 2.1 * len(surfaces)),
         sharex=True,
         sharey=True,
     )
     if len(surfaces) == 1:
         axes = np.array([axes])
     for r, s in enumerate(surfaces):
-        for c, ti_phys in enumerate(frames):
+        for c, time_target in enumerate(target_times):
             for j, N in enumerate(Ns):
                 col = c * len(Ns) + j
+                save_every = 10
                 p_tmp, solid_tmp, phi_tmp, _, _ = run_case(
-                    dict(surface=s, We=150.0, cos_theta=0.0, seed=7, n_pillars=5), nsteps=800, save_every=10, N=N
+                    dict(surface=s, We=150.0, cos_theta=0.0, seed=7, n_pillars=5),
+                    nsteps=800,
+                    save_every=save_every,
+                    N=N,
                 )
-                ti = min(ti_phys, phi_tmp.shape[0] - 1)
+                frame_dt = p_tmp.dt * save_every
+                ti = min(max(int(round(time_target / frame_dt)) - 1, 0), phi_tmp.shape[0] - 1)
+                actual_time = (ti + 1) * frame_dt
                 overlay(axes[r][col], phi_tmp[ti], solid_tmp.chi)
                 if r == 0:
-                    axes[r][col].set_title(f"N={N} t={ti}", fontsize=7)
+                    axes[r][col].set_title(f"N={N} t={actual_time:.3f}", fontsize=7)
                 if col == 0:
                     axes[r][col].set_ylabel(s, fontsize=8)
     fig.suptitle(
@@ -381,54 +417,49 @@ def fig_resolution():
 # -------------------------------------------------------------------------------------
 
 
-def load_model(ckpt):
-    import pickle
-
+def _rollout_surrogate_current(ckpt, c, K=None):
+    import evaluate_transfer as E
     import surrogate as S
 
-    with open(ckpt, "rb") as fh:
-        ck = pickle.load(fh)
-    params, uv = ck["params"], ck["uv_scale"]
-    base = ck.get("base", 16)
-    levels = ck.get("levels", 3)
-    model = S.UNet(base=base, levels=levels, out_channels=3)
-    apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
-    return apply_fn, uv
-
-
-def rollout_surrogate(apply_fn, uv, c, K):
-    phi_t, u_t, v_t, chi, scal = c["phi"], c["u"], c["v"], c["chi"], c["scalars"]
-    phi_p, u_p, v_p = phi_t[0].copy(), u_t[0].copy(), v_t[0].copy()
-    out = [phi_p]
-    for t in range(K - 1):
-        x = np.stack([phi_p, u_p / uv, v_p / uv, chi], -1)[None]
-        o = np.asarray(apply_fn(jnp.asarray(x), jnp.asarray(scal[None])))[0]
-        phi_p = np.clip(o[..., 0], 0, 1)
-        u_p, v_p = o[..., 1] * uv, o[..., 2] * uv
-        out.append(phi_p.copy())
+    predict, _, geom_mode = E.make_predictor(ckpt)
+    geom = S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode)
+    if K is None:
+        K = c["phi"].shape[0]
+    K = min(K, c["phi"].shape[0])
+    st = np.stack([c["phi"][0], c["u"][0], c["v"][0]], -1)
+    out = [st[..., 0].copy()]
+    for _ in range(K - 1):
+        st = predict(st[None], geom[None], c["scalars"][None])[0]
+        out.append(st[..., 0].copy())
     return np.stack(out)
 
 
-def fig_transfer(ckpt):
+def fig_transfer(ckpt, data_dir="data/base"):
     import surrogate as S
 
-    apply_fn, uv = load_model(ckpt)
-    picks = (
-        [c for c in S.load_full("data", "train") if c["surface"] == "flat"][:1]
-        + [c for c in S.load_full("data", "test") if c["surface"] == "random_pillars"][:1]
-        + [c for c in S.load_full("data", "test") if c["surface"] == "hierarchical"][:1]
-    )
-    frames = [0, 10, 20, 30, 39]
-    fig, axes = plt.subplots(len(picks), len(frames), figsize=(2.2 * len(frames), 2.4 * len(picks)))
+    train = S.load_full(data_dir, "train")
+    test = S.load_full(data_dir, "test")
+    picks = [c for c in train if c["surface"] == "flat"][:1]
+    for fam in ("random_pillars", "hierarchical", "grooves", "wedge"):
+        picks += [c for c in test if c["surface"] == fam][:1]
+    if not picks:
+        raise RuntimeError(f"no transfer trajectories found in {data_dir}")
+
+    fig, axes = plt.subplots(len(picks), 5, figsize=(11.0, 2.25 * len(picks)))
+    if len(picks) == 1:
+        axes = axes[None]
     for r, c in enumerate(picks):
-        pred = rollout_surrogate(apply_fn, uv, c, 40)
+        pred = _rollout_surrogate_current(ckpt, c)
+        T = min(len(pred), c["phi"].shape[0])
+        frames = np.rint(np.linspace(0, T - 1, 5)).astype(int)
         for ci, ti in enumerate(frames):
-            overlay(axes[r][ci], pred[ti], c["chi"], title=f"t={ti}" if r == 0 else None, truth=c["phi"][ti])
+            overlay(axes[r][ci], pred[ti], c["chi"], truth=c["phi"][ti])
+            axes[r][ci].set_title(f"t={float(c['time'][ti]):.3f}", fontsize=7)
             if ci == 0:
-                axes[r][ci].set_ylabel(c["surface"], fontsize=9)
-    fig.suptitle("Surrogate rollout (blue) vs solver truth (red) -- trained on simple only", fontsize=10)
+                axes[r][ci].set_ylabel(c["surface"], fontsize=8)
+    fig.suptitle("Full-horizon surrogate rollout (blue) vs solver truth (red)", fontsize=10)
     fig.tight_layout()
-    fig.savefig(f"{OSDIR}/fig_transfer.png", dpi=110)
+    fig.savefig(f"{OSDIR}/fig_transfer.png", dpi=130)
     plt.close(fig)
     print("saved fig_transfer.png")
 
@@ -441,30 +472,38 @@ def spreading(phi, L=6.0):
     return (xs.max() - xs.min()) * (L / phi.shape[0])
 
 
-def fig_metrics(ckpt):
+def fig_metrics(ckpt, data_dir="data/base"):
     import surrogate as S
 
-    apply_fn, uv = load_model(ckpt)
-    fig, axes = plt.subplots(2, 3, figsize=(11, 6))
-    tests = [c for c in S.load_full("data", "test")]
-    for i, c in enumerate(tests[:3]):
-        K = 40
-        pred = rollout_surrogate(apply_fn, uv, c, K)
-        tt = np.arange(K)
+    tests = S.load_full(data_dir, "test")
+    picks = []
+    for fam in ("random_pillars", "hierarchical", "grooves", "wedge"):
+        picks += [c for c in tests if c["surface"] == fam][:1]
+    fig, axes = plt.subplots(2, len(picks), figsize=(3.5 * len(picks), 6))
+    if len(picks) == 1:
+        axes = axes[:, None]
+    for i, c in enumerate(picks):
+        pred = _rollout_surrogate_current(ckpt, c)
+        K = min(len(pred), c["phi"].shape[0])
+        tt = c["time"][:K]
         d_true = [spreading(c["phi"][t]) for t in range(K)]
         d_pred = [spreading(pred[t]) for t in range(K)]
-        m_true = [c["phi"][t].sum() for t in range(K)]
-        m_pred = [pred[t].sum() for t in range(K)]
+        fluid = (c["sdf"] >= 0.0).astype(np.float32)
+        m0 = max(float(np.sum(c["phi"][0] * fluid)), 1e-12)
+        m_true = [float(np.sum(c["phi"][t] * fluid) / m0) for t in range(K)]
+        m_pred = [float(np.sum(pred[t] * fluid) / m0) for t in range(K)]
         axes[0][i].plot(tt, d_true, "r-", label="truth")
         axes[0][i].plot(tt, d_pred, "b--", label="surrogate")
         axes[0][i].set_title(f"D(t) {c['surface']}", fontsize=9)
         axes[1][i].plot(tt, m_true, "r-")
         axes[1][i].plot(tt, m_pred, "b--")
-        axes[1][i].set_title(f"mass {c['surface']}", fontsize=9)
-    axes[0][0].legend(fontsize=7)
-    fig.suptitle("Transfer: spreading width and liquid mass, surrogate vs truth (3 unseen surfaces)", fontsize=10)
+        axes[1][i].set_title(f"fluid M/M0 {c['surface']}", fontsize=9)
+        axes[1][i].set_xlabel("physical time")
+    if picks:
+        axes[0][0].legend(fontsize=7)
+    fig.suptitle("Full-horizon transfer diagnostics on every unseen surface family", fontsize=10)
     fig.tight_layout()
-    fig.savefig(f"{OSDIR}/fig_metrics.png", dpi=110)
+    fig.savefig(f"{OSDIR}/fig_metrics.png", dpi=130)
     plt.close(fig)
     print("saved fig_metrics.png")
 
@@ -475,6 +514,7 @@ def main():
         "--mode", choices=["solver", "transfer", "diagnosis", "resolution", "lowWe", "all"], default="solver"
     )
     ap.add_argument("--ckpt", default="ckpts/surrogate.pkl")
+    ap.add_argument("--data", default="data/base")
     ap.add_argument("--lowwe-ckpt", default="ckpts/lowWe_fno_sdf_u3.pkl")
     ap.add_argument("--lowwe-data", default="data/lowWe_all")
     args = ap.parse_args()
@@ -489,8 +529,8 @@ def main():
     if args.mode in ("resolution", "all"):
         fig_resolution()
     if args.mode in ("transfer", "all"):
-        fig_transfer(args.ckpt)
-        fig_metrics(args.ckpt)
+        fig_transfer(args.ckpt, args.data)
+        fig_metrics(args.ckpt, args.data)
     if args.mode == "lowWe":
         fig_lowWe()
     if args.mode in ("lowWe", "all"):
