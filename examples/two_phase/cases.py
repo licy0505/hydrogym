@@ -39,13 +39,61 @@ CASES = [
     dict(split="train", surface="pillars", n_pillars=4, width=0.3, height=0.4, We=100.0, cos_theta=0.5, seed=12),
     # ------------------------------------------------------------------- TEST
     # Unseen random pillar fields (the "complex" surfaces)
-    dict(split="test", surface="random_pillars", n_pillars=7, seed=100, We=100.0, cos_theta=-0.5),
-    dict(split="test", surface="random_pillars", n_pillars=7, seed=101, We=200.0, cos_theta=-0.5),
-    dict(split="test", surface="random_pillars", n_pillars=6, seed=102, We=100.0, cos_theta=0.0),
-    dict(split="test", surface="random_pillars", n_pillars=8, seed=103, We=200.0, cos_theta=0.5),
-    # Hierarchical two-scale pillars
-    dict(split="test", surface="hierarchical", seed=104, We=100.0, cos_theta=-0.5),
-    dict(split="test", surface="hierarchical", seed=105, We=200.0, cos_theta=0.0),
+    dict(
+        split="test",
+        surface="random_pillars",
+        n_pillars=7,
+        width_range=(0.20, 0.40),
+        seed=100,
+        We=100.0,
+        cos_theta=-0.5,
+    ),
+    dict(
+        split="test",
+        surface="random_pillars",
+        n_pillars=7,
+        width_range=(0.20, 0.40),
+        seed=101,
+        We=200.0,
+        cos_theta=-0.5,
+    ),
+    dict(
+        split="test",
+        surface="random_pillars",
+        n_pillars=6,
+        width_range=(0.20, 0.40),
+        seed=102,
+        We=100.0,
+        cos_theta=0.0,
+    ),
+    dict(
+        split="test",
+        surface="random_pillars",
+        n_pillars=8,
+        width_range=(0.20, 0.40),
+        seed=103,
+        We=200.0,
+        cos_theta=0.5,
+    ),
+    # Hierarchical two-scale pillars, widened enough to survive saved-grid downsampling.
+    dict(
+        split="test",
+        surface="hierarchical",
+        sub_width=0.22,
+        sub_height=0.18,
+        seed=104,
+        We=100.0,
+        cos_theta=-0.5,
+    ),
+    dict(
+        split="test",
+        surface="hierarchical",
+        sub_width=0.22,
+        sub_height=0.18,
+        seed=105,
+        We=200.0,
+        cos_theta=0.0,
+    ),
     # Grooved surfaces
     dict(split="test", surface="grooves", seed=106, We=100.0, cos_theta=-0.5),
     dict(split="test", surface="grooves", seed=107, We=200.0, cos_theta=0.0),
@@ -101,7 +149,7 @@ def _sample_simple(rng, i):
     return dict(
         surface="pillars",
         n_pillars=int(rng.integers(3, 9)),
-        width=float(np.round(rng.uniform(0.15, 0.4), 3)),
+        width=float(np.round(rng.uniform(0.20, 0.4), 3)),
         height=float(np.round(rng.uniform(0.2, 0.55), 3)),
         center=float(np.round(3.0 + rng.uniform(-0.5, 0.5), 3)),
         **_common(rng),
@@ -113,19 +161,20 @@ def _sample_complex(rng, i):
     c = dict(surface=fam, seed=1000 + i, **_common(rng))
     if fam == "random_pillars":
         c["n_pillars"] = int(rng.integers(4, 10))
+        c["width_range"] = (0.20, 0.40)
     elif fam == "hierarchical":
         c.update(
             n_pillars=int(rng.integers(2, 5)),
             width=float(np.round(rng.uniform(0.4, 0.8), 3)),
             height=float(np.round(rng.uniform(0.3, 0.6), 3)),
             n_sub=int(rng.integers(2, 5)),
-            sub_width=float(np.round(rng.uniform(0.06, 0.14), 3)),
-            sub_height=float(np.round(rng.uniform(0.08, 0.2), 3)),
+            sub_width=float(np.round(rng.uniform(0.20, 0.32), 3)),
+            sub_height=float(np.round(rng.uniform(0.16, 0.28), 3)),
         )
     elif fam == "grooves":
         c.update(
             n_grooves=int(rng.integers(3, 10)),
-            width=float(np.round(rng.uniform(0.15, 0.4), 3)),
+            width=float(np.round(rng.uniform(0.20, 0.4), 3)),
             depth=float(np.round(rng.uniform(0.15, 0.4), 3)),
         )
     else:  # wedge (same wall anchoring as the test wedge)
@@ -198,14 +247,15 @@ def lowwe_test_cases(n: int = 12, seed: int = 3027):
         c = dict(split="test", family="lowWe_test", surface=fam, seed=2000 + i, **_low_common(rng))
         if fam == "random_pillars":
             c["n_pillars"] = int(rng.integers(4, 8))
+            c["width_range"] = (0.18, 0.32)
         elif fam == "hierarchical":
             c.update(
                 n_pillars=int(rng.integers(2, 4)),
                 width=float(np.round(rng.uniform(0.4, 0.7), 3)),
                 height=float(np.round(rng.uniform(0.3, 0.55), 3)),
                 n_sub=int(rng.integers(2, 4)),
-                sub_width=float(np.round(rng.uniform(0.07, 0.12), 3)),
-                sub_height=float(np.round(rng.uniform(0.08, 0.16), 3)),
+                sub_width=float(np.round(rng.uniform(0.16, 0.24), 3)),
+                sub_height=float(np.round(rng.uniform(0.14, 0.22), 3)),
             )
         elif fam == "grooves":
             c.update(

@@ -121,3 +121,31 @@ def test_lowwe_clearance_scales_with_eps():
     )
     solid_mask = np.asarray(solid.sdf) < 0.0
     assert float(np.max(np.asarray(st.phi)[solid_mask])) < 0.05
+
+
+def test_poisson_masks_centered_difference_nyquist_null_modes():
+    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0)
+    i = jnp.arange(p.Nx)[:, None]
+    checker = jnp.where((i % 2) == 0, 1.0, -1.0) * jnp.ones((1, p.Ny))
+    sol = pf.poisson_solve(checker, p.m2_proj)
+    assert np.isfinite(np.asarray(sol)).all()
+    assert float(jnp.max(jnp.abs(sol))) < 1e-6
+
+
+def test_periodic_wedge_has_no_edge_cliff_and_normalised_levelset():
+    p = pf.PhaseFieldParams(Nx=192, Ny=192, Lx=6.0, Ly=6.0)
+    sdf = np.asarray(pf.surface_wedge(p, slope=0.5))
+    assert float(np.max(np.abs(sdf[0] - sdf[-1]))) < 2.0 * p.dx
+    gx = np.asarray(pf._ddx(jnp.asarray(sdf), p.dx))
+    gy = np.asarray(pf._ddy(jnp.asarray(sdf), p.dy))
+    near = np.abs(sdf) < 2.0 * p.dx
+    grad_norm = np.sqrt(gx**2 + gy**2)
+    assert float(np.median(grad_norm[near])) == pytest.approx(1.0, rel=0.12)
+
+
+def test_liquid_mass_uses_geometric_fluid():
+    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0)
+    solid = pf.make_solid(pf.surface_flat(p), p)
+    phi = jnp.ones((p.Nx, p.Ny))
+    expected = float(jnp.sum(solid.sdf >= 0.0) * p.dx * p.dy)
+    assert float(pf.liquid_mass(phi, solid, p)) == pytest.approx(expected, rel=1e-6)

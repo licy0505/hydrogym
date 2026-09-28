@@ -30,17 +30,18 @@ the effective values are saved in the per-case metadata.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import time
 from pathlib import Path
 
 import cases as C
 import jax
-import jax.numpy as jnp
 import numpy as np
 import phasefield as pf
+from scipy.ndimage import distance_transform_edt
 
-DATASET_SCHEMA_VERSION = 2
+DATASET_SCHEMA_VERSION = 3
 
 
 def _case_name(case: dict, set_name: str, index: int) -> str:
@@ -51,15 +52,65 @@ def _case_name(case: dict, set_name: str, index: int) -> str:
     return f"{case['split']}_{set_name}_{index:03d}_{case['surface']}"
 
 
-def _saved_case_is_current(path: Path) -> bool:
-    """Return True only for data written by the current solver/data contract."""
+def _source_sha256(path: str | Path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
+    """Hash every input that can change the generated trajectory or saved grid."""
+    payload = dict(
+        schema=DATASET_SCHEMA_VERSION,
+        solver_contract=int(pf.SOLVER_CONTRACT_VERSION),
+        solver_sha256=_source_sha256(pf.__file__),
+        generator_sha256=_source_sha256(__file__),
+        case=case,
+        N=int(args.N),
+        ds=int(args.ds),
+        dt=float(dt),
+        nsteps=int(nsteps),
+        save_every=int(save_every),
+        validation=dict(
+            max_phi_overshoot=float(getattr(args, "max_phi_overshoot", 0.02)),
+            max_solid_leak=float(getattr(args, "max_solid_leak", 5e-4)),
+            min_total_mass_ratio=float(getattr(args, "min_total_mass_ratio", 0.995)),
+            max_total_mass_ratio=float(getattr(args, "max_total_mass_ratio", 1.005)),
+            max_speed=float(getattr(args, "max_speed", 5.0)),
+            min_feature_cells=float(getattr(args, "min_feature_cells", 2.0)),
+        ),
+    )
+    raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _saved_case_is_current(path: Path, expected_fingerprint: str) -> bool:
+    """Return True only when schema and exact generation fingerprint match."""
     try:
         with np.load(path, allow_pickle=True) as d:
-            if "dataset_schema_version" not in d.files:
+            if "dataset_schema_version" not in d.files or "dataset_fingerprint" not in d.files:
                 return False
-            return int(np.asarray(d["dataset_schema_version"]).item()) == DATASET_SCHEMA_VERSION
+            version = int(np.asarray(d["dataset_schema_version"]).item())
+            fingerprint = str(np.asarray(d["dataset_fingerprint"]).item())
+            return version == DATASET_SCHEMA_VERSION and fingerprint == expected_fingerprint
     except Exception:
         return False
+
+
+def _smallest_feature_size(case: dict) -> float:
+    surface = case.get("surface", "flat")
+    if surface == "pillars":
+        return float(case.get("width", 0.3))
+    if surface == "random_pillars":
+        return float(case.get("width_range", (0.15, 0.4))[0])
+    if surface == "hierarchical":
+        return float(min(case.get("width", 0.6), case.get("sub_width", 0.1)))
+    if surface == "grooves":
+        return float(case.get("width", 0.25))
+    return float("inf")
+
+
+def _feature_cells(case: dict, saved_dx: float) -> float:
+    size = _smallest_feature_size(case)
+    return float("inf") if not np.isfinite(size) else size / saved_dx
 
 
 def _effective_schedule(case: dict, args: argparse.Namespace) -> tuple[float, int, int]:
@@ -84,6 +135,27 @@ def _downsample_history(history: np.ndarray, factor: int) -> np.ndarray:
     if Nx % factor or Ny % factor:
         raise ValueError(f"downsample factor {factor} does not divide ({Nx}, {Ny})")
     return history.reshape(T, Nx // factor, factor, Ny // factor, factor).mean(axis=(2, 4))
+
+
+def _coarsen_geometry(solid: pf.Solid, factor: int, fine_dx: float) -> tuple[np.ndarray, np.ndarray]:
+    """Return coarse solid fraction and a reinitialised coarse signed distance."""
+    hard = (np.asarray(solid.sdf) < 0.0).astype(np.float32)
+    frac = _downsample_history(hard[None], factor)[0].astype(np.float32)
+    if factor == 1:
+        return frac, np.asarray(solid.sdf, dtype=np.float32)
+
+    mask = frac >= 0.5
+    saved_dx = fine_dx * factor
+    # Geometry is periodic in x. Tile only the x-axis before the EDT so points
+    # near the left/right seam see the correct nearest solid across the seam.
+    tiled = np.concatenate([mask, mask, mask], axis=0)
+    outside_tiled = distance_transform_edt(~tiled) * saved_dx
+    inside_tiled = distance_transform_edt(tiled) * saved_dx
+    nx = mask.shape[0]
+    outside = outside_tiled[nx : 2 * nx]
+    inside = inside_tiled[nx : 2 * nx]
+    sdf = (outside - inside).astype(np.float32)
+    return frac, sdf
 
 
 def _diagnose(
@@ -166,6 +238,8 @@ def _save_case(
     save_every: int,
     ds: int,
     diagnostics: dict,
+    dataset_fingerprint: str,
+    feature_cells_min: float,
 ) -> None:
     """Write one validated trajectory with explicit physical-time metadata."""
     # Keep phi/geometry in float32: thin low-We films can sit near the plotting
@@ -173,9 +247,8 @@ def _save_case(
     phi_d = _downsample_history(phi, ds).astype(np.float32)
     u_d = _downsample_history(u, ds).astype(np.float16)
     v_d = _downsample_history(v, ds).astype(np.float16)
-    chi_d = _downsample_history(np.asarray(solid.chi)[None], ds)[0].astype(np.float32)
-    sdf = np.asarray(jnp.clip(solid.sdf, -1.0, 3.0))[None]
-    sdf_d = _downsample_history(sdf, ds)[0].astype(np.float32)
+    chi_d, sdf_d = _coarsen_geometry(solid, ds, p.dx)
+    sdf_d = np.clip(sdf_d, -1.0, 3.0).astype(np.float32)
     saved_dx = float(p.dx * ds)
     scalars = np.array(
         [case.get("We", 100.0) / 100.0, case.get("Re", 200.0) / 200.0, float(case.get("cos_theta", 0.0)), saved_dx],
@@ -189,6 +262,9 @@ def _save_case(
         saved_dx=saved_dx,
         save_every=int(save_every),
         frame_dt=float(p.dt * save_every),
+        feature_cells_min=float(feature_cells_min),
+        dataset_fingerprint=dataset_fingerprint,
+        solver_sha256=_source_sha256(pf.__file__),
         diagnostics=diagnostics,
     )
     times = np.arange(1, phi_d.shape[0] + 1, dtype=np.float32) * float(p.dt * save_every)
@@ -202,6 +278,9 @@ def _save_case(
         scalars=scalars,
         time=times,
         dataset_schema_version=np.array(DATASET_SCHEMA_VERSION, dtype=np.int32),
+        dataset_fingerprint=np.array(dataset_fingerprint),
+        solver_sha256=np.array(_source_sha256(pf.__file__)),
+        feature_cells_min=np.array(feature_cells_min, dtype=np.float32),
         surface=np.array(case.get("surface", "flat")),
         split=np.array(case["split"]),
         case=np.array(json.dumps(case_meta, ensure_ascii=False)),
@@ -225,6 +304,12 @@ def main() -> None:
     ap.add_argument("--min-total-mass-ratio", type=float, default=0.995)
     ap.add_argument("--max-total-mass-ratio", type=float, default=1.005)
     ap.add_argument("--max-speed", type=float, default=5.0)
+    ap.add_argument(
+        "--min-feature-cells",
+        type=float,
+        default=2.0,
+        help="reject discrete micro-features narrower than this many saved-grid cells",
+    )
     args = ap.parse_args()
 
     if args.N % args.ds:
@@ -241,14 +326,33 @@ def main() -> None:
     for i, case in enumerate(all_cases):
         name = _case_name(case, args.set, i)
         path = out_dir / f"{name}.npz"
-        if path.exists() and not args.overwrite:
-            if _saved_case_is_current(path):
-                print(f"[{i:03d}] current schema, skip: {path.name}", flush=True)
-                continue
-            print(f"[{i:03d}] stale schema, regenerate: {path.name}", flush=True)
 
         dt, nsteps, save_every = _effective_schedule(case, args)
-        print(f"[{i:03d}] {name}: dt={dt:g}, nsteps={nsteps}, save_every={save_every}", flush=True)
+        fingerprint = _dataset_fingerprint(case, args, dt, nsteps, save_every)
+        saved_dx = 6.0 / args.N * args.ds
+        feature_cells_min = _feature_cells(case, saved_dx)
+
+        if path.exists() and not args.overwrite:
+            if _saved_case_is_current(path, fingerprint):
+                print(f"[{i:03d}] exact fingerprint match, skip: {path.name}", flush=True)
+                continue
+            print(f"[{i:03d}] stale fingerprint, regenerate: {path.name}", flush=True)
+
+        print(
+            f"[{i:03d}] {name}: dt={dt:g}, nsteps={nsteps}, save_every={save_every}, "
+            f"feature_cells={feature_cells_min:.2f}",
+            flush=True,
+        )
+        if feature_cells_min < args.min_feature_cells:
+            diagnostics = {
+                "reason": "underresolved_geometry",
+                "feature_cells_min": feature_cells_min,
+                "required_feature_cells": args.min_feature_cells,
+                "saved_dx": saved_dx,
+            }
+            _write_rejection(out_dir, name, case, diagnostics)
+            print(f"[{i:03d}] REJECT underresolved geometry: {diagnostics}", flush=True)
+            continue
         if args.dry_run:
             continue
 
@@ -275,7 +379,18 @@ def main() -> None:
                 print(f"[{i:03d}] REJECT {diagnostics} -> rejected/{name}.json", flush=True)
                 continue
             _save_case(
-                path, case, p, solid, np.asarray(phi), np.asarray(u), np.asarray(v), save_every, args.ds, diagnostics
+                path,
+                case,
+                p,
+                solid,
+                np.asarray(phi),
+                np.asarray(u),
+                np.asarray(v),
+                save_every,
+                args.ds,
+                diagnostics,
+                fingerprint,
+                feature_cells_min,
             )
             print(f"[{i:03d}] saved T={phi.shape[0]} in {time.time() - t0:.1f}s -> {path}", flush=True)
         except (FloatingPointError, ValueError, RuntimeError) as exc:

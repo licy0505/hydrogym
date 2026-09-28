@@ -19,11 +19,12 @@
 | `phasefield.py` | 2-D Cahn–Hilliard–Navier–Stokes 两相求解器（JAX，可微，`lax.scan` rollout）+ 微结构几何生成 + 观测量 |
 | `cases.py` | 训练 / 测试 case 定义（训练只含简单表面，测试含复杂表面） |
 | `generate_dataset.py` | 生成降采样轨迹数据集（`data/`，已 gitignore） |
-| `surrogate.py` | 条件 U-Net（FiLM 调制）代理模型 + 数据加载 |
-| `train_surrogate.py` | 在简单 case 上训练代理模型 |
-| `evaluate_transfer.py` | 自回归 rollout，评估「简单 → 复杂」的迁移误差 |
-| `validate_physics.py` | 求解器物理验证（质量守恒、 Laplace 律、润湿控制） |
-| `visualize.py` | 生成 `figures/` 下的可视化图（求解器扫参 + 代理迁移对比 + 定量曲线） |
+| `surrogate.py` | FNO / U-Net、SDF 多尺度几何编码、有界质量投影与数据指纹 |
+| `train_operator.py` | teacher-forced / guarded-unroll FNO 训练；checkpoint 与数据指纹强绑定 |
+| `evaluate_transfer.py` | full-horizon 迁移评估、逐表面指标、raw-mass 与投影工作量诊断 |
+| `test_two_phase.py` | 求解器守恒、压力投影、壁面/几何回归测试 |
+| `test_surrogate.py` | 代理质量投影与 straight-through 梯度回归测试 |
+| `visualize.py` | 求解器图、严格 test-only/full-horizon 迁移图与分辨率图 |
 
 ---
 
@@ -33,7 +34,8 @@
 用 Brinkman 体积惩罚法处理：
 
 ```
-∂φ/∂t + ∇·(uφ) = M∇²μ + S_wet(φ)          μ = f'(φ)/ε − ε∇²φ
+∂φ/∂t + ∇·(uφ) = M∇²μ
+μ = f'(φ)/ε − ε∇²φ + μ_wet(φ,SDF)
 ∂u/t + ∇·(uu) = −∇p/ρ + ∇·(ν∇u) − (σ/We)μ∇φ/ρ − (χ/η)u ,  ∇·u = 0
 ```
 
@@ -52,11 +54,11 @@
 2. Cahn–Hilliard 的四阶扩散项在**傅里叶空间隐式**处理，去掉 `O(ε⁴/M)` 稳定性限制。
 3. 固体惩罚项隐式处理，无条件稳定。
 
-### 物理验证（`validate_physics.py`）
+### 自动回归验证
 
-- **质量守恒**：1000 步液滴质量漂移 < 0.002 %。
-- **Laplace 律**：静滴内外压差 ∝ σ/R（经标定系数），验证 `We` 的物理含义。
-- **润湿控制**：`cos_theta` 单调控制最大铺展宽度（疏水 → 铺展小 / 回弹，亲水 → 铺展大 / 成膜）。
+可复现检查位于 `test_two_phase.py`、`test_surrogate.py`、`test_dataset_contract.py` 和
+`test_train_operator.py`，统一由 `pytest` 执行。压力投影显式屏蔽 centred-difference 的
+Nyquist 零模；数据生成在写盘前检查守恒、固体泄漏、相场越界和微结构可解析性。
 
 ---
 
@@ -80,20 +82,21 @@
 
 - **训练集（简单）**：平壁 × {We, cosθ} 扫参 + 2 种周期柱阵。
 - **测试集（复杂、未见）**：随机柱 ×4、分级柱 ×2、凹槽 ×2、斜面 ×2。
-- **代理模型**：条件 U-Net（FiLM 注入 We/Re/cosθ），输入 `(φ,u,v,χ)`，预测 20 个求解步后的
-  `(φ,u,v)`；自回归 rollout 得到整条 φ(x,t)。
-- **评估指标**：相场 RMSE、末帧液体质量相对误差、铺展宽度 D(t) 的 RMSE；按「简单 / 复杂」
-  分组对比，得到**迁移差距**。
+- **代理模型**：FNO + 局部卷积分支，输入 `(φ,u,v)` 与 SDF 多尺度几何特征；We/Re/cosθ 由
+  FiLM 注入。low-We 正式协议使用 192² solver → 96² surrogate（`ds=2`），避免 hierarchical
+  微结构在 64² 网格上消失。
+- **评估指标**：one-step RMSE、严格 K-step 与 full-horizon RMSE、IoU、铺展宽度，以及
+  **投影前 raw mass error / projection L1**。投影后的 mass error 只用于检查约束器，不再当成
+  网络自身学会守恒的证据。
 
 ## 运行
 
 ```bash
-pip install jax[cpu] flax optax numpy matplotlib scipy   # 或直接用仓库 docker
 cd examples/two_phase
-python validate_physics.py                 # 先验证求解器
-python generate_dataset.py --nsteps 2000   # 生成数据（约 1 分钟 / 全部 case，CPU）
-python train_surrogate.py --epochs 25      # 训练
-python evaluate_transfer.py                # 评估迁移
+pytest test_two_phase.py test_surrogate.py test_dataset_contract.py test_train_operator.py
+
+# schema v3 + exact fingerprint；旧 schema-v2 数据/checkpoint 会 fail closed
+bash run_experiments.sh
 ```
 
 ---
@@ -123,25 +126,14 @@ python evaluate_transfer.py                # 评估迁移
 几何；(c) 物理一致损失（质量守恒、接触角）正则；(d) 用 unrolled / 多步反传训练抑制曝光偏差；
 (e) 换 JAX-Fluids 全可微两相求解器做 fine-tune。
 
-### 改进：unrolled 训练抑制曝光偏差（已实现 `--unroll`）
+### guarded unrolled fine-tune
 
-teacher-forcing 训练的模型在**自回归 rollout** 时会累积曝光偏差（液团漂移、质量不守恒）。
-用 `--unroll K` 让梯度穿过 K 步自回归循环做 fine-tune 后，rollout 误差显著下降：
-
-| 模型 | 分组 | rollout-40 φ-RMSE | 液体质量误差(相对初始) |
-|------|------|------------------|---------------------|
-| teacher-forced | 简单 | 0.242 | 1.94 |
-| teacher-forced | 复杂 | 0.259 | 2.25 |
-| **+ unrolled(3) fine-tune** | 简单 | **0.120** | **0.34** |
-| **+ unrolled(3) fine-tune** | 复杂 | **0.144** | **0.60** |
-
-即 unrolled 训练把复杂表面的 rollout RMSE 降约 44%、质量误差降约 3.7×。
-
-```bash
-python train_surrogate.py --epochs 12                          # teacher-forced
-python train_surrogate.py --unroll 3 --epochs 4 --lr 3e-4 \
-    --resume ckpts/surrogate.pkl --out ckpts/surrogate_unrolled.pkl
-```
+`train_operator.py --unroll 3` 用于抑制 exposure bias，但 unroll 候选不会无条件替换 teacher-forced
+模型。训练对 raw mass error 与 projection workload 加显式惩罚，保留 teacher-forced anchor，并在
+**训练集内部留出的 trajectory validation split** 上做 early stopping。只有 rollout validation loss
+真正改善且 raw-mass / projection-work 指标不过阈值时，候选才会被接受；否则保存为
+`*.rejected.pkl` 供诊断，正式 `_u3.pkl` 回退到 parent 参数。这样不会使用 OOD test 集挑模型，
+也不会把 conservative projector “替网络兜底”的退化结果当成改进。
 
 ---
 

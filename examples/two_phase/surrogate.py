@@ -14,6 +14,7 @@ transfer protocol here are identical.
 
 from __future__ import annotations
 
+import hashlib
 from typing import Sequence
 
 import jax
@@ -21,7 +22,7 @@ import jax.numpy as jnp
 import numpy as np
 from flax import linen as nn
 
-DATASET_SCHEMA_VERSION = 2
+DATASET_SCHEMA_VERSION = 3
 
 
 def _require_current_dataset(d, path):
@@ -32,6 +33,35 @@ def _require_current_dataset(d, path):
         raise RuntimeError(
             f"stale two_phase dataset: {path} schema={version}, expected={DATASET_SCHEMA_VERSION}; regenerate"
         )
+    if "dataset_fingerprint" not in d.files:
+        raise RuntimeError(f"dataset {path} has no exact fingerprint; regenerate with generate_dataset.py")
+
+
+def combine_fingerprints(fingerprints) -> str:
+    vals = sorted(str(x) for x in fingerprints)
+    if not vals:
+        raise RuntimeError("cannot fingerprint an empty dataset selection")
+    return hashlib.sha256("\n".join(vals).encode()).hexdigest()
+
+
+def dataset_fingerprint(dirs, split=None, families=None) -> str:
+    """Fingerprint a selected collection of trajectory files."""
+    import glob
+    import os
+
+    if isinstance(dirs, str):
+        dirs = [d for d in dirs.split(",") if d]
+    fps = []
+    for f in sorted(f for d in dirs for f in glob.glob(os.path.join(d, "*.npz"))):
+        with np.load(f, allow_pickle=True) as z:
+            if split is not None and str(z["split"]) != split:
+                continue
+            _require_current_dataset(z, f)
+            fam = "simple" if str(z["surface"]) in ("flat", "pillars") else "complex"
+            if families and fam not in families:
+                continue
+            fps.append(str(np.asarray(z["dataset_fingerprint"]).item()))
+    return combine_fingerprints(fps)
 
 
 class Film(nn.Module):
@@ -214,8 +244,9 @@ def geometry_features(chi: np.ndarray, sdf: np.ndarray | None, dx: float, mode: 
         return chi[..., None]
     sdf = np.asarray(sdf, np.float32)
     feats = [chi] + [np.tanh(sdf / scale) for scale in SDF_SCALES]
-    gx = (np.roll(sdf, -1, 0) - np.roll(sdf, 1, 0)) / (2 * dx)
-    gy = (np.roll(sdf, -1, 1) - np.roll(sdf, 1, 1)) / (2 * dx)
+    # The embedded wall is not periodic in y; wrapping the SDF top-to-bottom
+    # creates a fake normal. Use one-sided edge derivatives instead.
+    gx, gy = np.gradient(sdf, dx, dx, edge_order=2)
     nrm = np.sqrt(gx**2 + gy**2) + 1e-6
     feats += [gx / nrm, gy / nrm]
     return np.stack(feats, axis=-1).astype(np.float32)
@@ -263,24 +294,19 @@ class FNOBlock(nn.Module):
         return x + nn.gelu(y)  # residual block
 
 
-def mass_project(phi_pred, phi_in, chi=None):
-    """Bounded, fluid-only, mass-conservative projection.
-
-    The previous one-shot correction could push phi outside [0,1]; the caller
-    then clipped it and silently broke the claimed exact conservation.  Solve
-    for a scalar correction by bisection *with the bounds inside the solve*.
-    """
-    phi0 = jnp.clip(phi_pred, 0.0, 1.0)
+def mass_project_with_stats(phi_pred, phi_in, chi=None):
+    """Bounded conservative projection plus diagnostics of projector workload."""
+    raw = jnp.clip(phi_pred, 0.0, 1.0)
     if chi is None:
-        fluid = jnp.ones_like(phi0)
+        fluid = jnp.ones_like(raw)
     else:
-        fluid = (chi < 0.5).astype(phi0.dtype)
+        fluid = (chi < 0.5).astype(raw.dtype)
 
-    phi0 = phi0 * fluid
+    raw = raw * fluid
     target = jnp.sum(jnp.clip(phi_in, 0.0, 1.0) * fluid, axis=(1, 2), keepdims=True)
     capacity = jnp.sum(fluid, axis=(1, 2), keepdims=True)
     target = jnp.clip(target, 0.0, capacity)
-    weight = fluid * (4.0 * phi0 * (1.0 - phi0) + 5.0e-2)
+    weight = fluid * (4.0 * raw * (1.0 - raw) + 5.0e-2)
 
     lo = -32.0 * jnp.ones_like(target)
     hi = 32.0 * jnp.ones_like(target)
@@ -288,7 +314,7 @@ def mass_project(phi_pred, phi_in, chi=None):
     def body(_i, bounds):
         lo_, hi_ = bounds
         mid = 0.5 * (lo_ + hi_)
-        cand = jnp.clip(phi0 + mid * weight, 0.0, 1.0) * fluid
+        cand = jnp.clip(raw + mid * weight, 0.0, 1.0) * fluid
         mass = jnp.sum(cand, axis=(1, 2), keepdims=True)
         lo_ = jnp.where(mass < target, mid, lo_)
         hi_ = jnp.where(mass < target, hi_, mid)
@@ -296,7 +322,33 @@ def mass_project(phi_pred, phi_in, chi=None):
 
     lo, hi = jax.lax.fori_loop(0, 36, body, (lo, hi))
     lam = 0.5 * (lo + hi)
-    return jnp.clip(phi0 + lam * weight, 0.0, 1.0) * fluid
+    projected = jnp.clip(raw + lam * weight, 0.0, 1.0) * fluid
+
+    target_mass = target[..., 0, 0]
+    denom = jnp.maximum(target_mass, 1.0e-6)
+    delta = jnp.abs(projected - raw)
+    stats = {
+        "raw_mass_rel": jnp.abs(jnp.sum(raw, axis=(1, 2)) - target_mass) / denom,
+        "projection_l1_rel": jnp.sum(delta, axis=(1, 2)) / denom,
+        "projection_linf": jnp.max(delta, axis=(1, 2)),
+    }
+    return projected, stats
+
+
+def straight_through_project(raw, projected):
+    """Use the exact projected value in forward mode but identity gradient in backprop.
+
+    Differentiating through the bisection projector lets unrolled training exploit
+    the correction operator instead of learning the raw phase evolution.  This
+    straight-through form keeps the physical forward constraint while training
+    the network output itself toward the target.
+    """
+    return raw + jax.lax.stop_gradient(projected - raw)
+
+
+def mass_project(phi_pred, phi_in, chi=None):
+    """Compatibility wrapper returning only the exact bounded phase."""
+    return mass_project_with_stats(phi_pred, phi_in, chi)[0]
 
 
 class FNO(nn.Module):
@@ -331,7 +383,7 @@ class Surrogate(nn.Module):
     levels: int = 3
 
     @nn.compact
-    def __call__(self, x, cond):
+    def __call__(self, x, cond, return_aux: bool = False):
         if self.arch == "fno":
             out = FNO(self.width, self.modes, self.layers)(x, cond)
         else:
@@ -339,8 +391,15 @@ class Surrogate(nn.Module):
         if self.residual:
             out = out + x[..., :3]
         if self.conservative:
-            phi = mass_project(out[..., 0], x[..., 0], x[..., 3])
+            raw_phi = out[..., 0]
+            projected, aux = mass_project_with_stats(raw_phi, x[..., 0], x[..., 3])
+            phi = straight_through_project(raw_phi, projected)
             out = jnp.concatenate([phi[..., None], out[..., 1:]], axis=-1)
+        else:
+            z = jnp.zeros((x.shape[0],), dtype=out.dtype)
+            aux = {"raw_mass_rel": z, "projection_l1_rel": z, "projection_linf": z}
+        if return_aux:
+            return out, aux
         return out
 
 
@@ -378,11 +437,7 @@ def load_checkpoint(path):
 
 
 class TrajectoryStore:
-    """Memory-lean container of many trajectories (float16 states, per-case geometry).
-
-    Batches are windows of ``K+1`` consecutive frames that never cross case
-    boundaries, so the same store serves teacher-forced (K=1) and unrolled training.
-    """
+    """Store phase in float32 while keeping velocities float16 until batching."""
 
     def __init__(self, dirs, split="train", geom="sdf", families=None):
         import glob
@@ -391,31 +446,37 @@ class TrajectoryStore:
         if isinstance(dirs, str):
             dirs = [d for d in dirs.split(",") if d]
         files = sorted(f for d in dirs for f in glob.glob(os.path.join(d, "*.npz")))
-        states, geoms, scals, self.meta = [], [], [], []
+        phis, vels, geoms, scals, fps, self.meta = [], [], [], [], [], []
         for f in files:
-            d = np.load(f, allow_pickle=True)
-            if str(d["split"]) != split:
-                continue
-            _require_current_dataset(d, f)
-            fam = "simple" if str(d["surface"]) in ("flat", "pillars") else "complex"
-            if families and fam not in families:
-                continue
-            states.append(np.stack([d["phi"], d["u"], d["v"]], axis=-1).astype(np.float16))
-            scal = d["scalars"].astype(np.float32)
-            geoms.append(geometry_features(d["chi"], d["sdf"] if "sdf" in d else None, float(scal[3]), geom))
-            scals.append(scal)
-            self.meta.append(dict(file=f, surface=str(d["surface"]), family=fam))
-        if not states:
+            with np.load(f, allow_pickle=True) as d:
+                if str(d["split"]) != split:
+                    continue
+                _require_current_dataset(d, f)
+                fam = "simple" if str(d["surface"]) in ("flat", "pillars") else "complex"
+                if families and fam not in families:
+                    continue
+                phis.append(d["phi"].astype(np.float32))
+                vels.append(np.stack([d["u"], d["v"]], axis=-1).astype(np.float16))
+                scal = d["scalars"].astype(np.float32)
+                geoms.append(geometry_features(d["chi"], d["sdf"], float(scal[3]), geom))
+                scals.append(scal)
+                fp = str(np.asarray(d["dataset_fingerprint"]).item())
+                fps.append(fp)
+                self.meta.append(dict(file=f, surface=str(d["surface"]), family=fam, fingerprint=fp))
+        if not phis:
             raise RuntimeError(f"no '{split}' trajectories found in {dirs}")
-        T = min(s.shape[0] for s in states)
-        self.states = np.stack([s[:T] for s in states])  # (N, T, H, W, 3) float16
-        self.geom = np.stack(geoms)  # (N, H, W, G)
-        self.scal = np.stack(scals)  # (N, S)
+        T = min(s.shape[0] for s in phis)
+        self.phi = np.stack([s[:T] for s in phis]).astype(np.float32)
+        self.vel = np.stack([s[:T] for s in vels]).astype(np.float16)
+        self.geom = np.stack(geoms).astype(np.float32)
+        self.scal = np.stack(scals).astype(np.float32)
         self.T = T
-        self.uv_scale = float(max(np.abs(self.states[..., 1:3].astype(np.float32)).max(), 1e-3))
+        self.H, self.W = self.phi.shape[2:4]
+        self.dataset_fingerprint = combine_fingerprints(fps)
+        self.uv_scale = float(max(np.max(np.abs(self.vel)), 1e-3))
 
     def __len__(self):
-        return self.states.shape[0]
+        return self.phi.shape[0]
 
     def windows(self, K):
         n, T = len(self), self.T
@@ -423,6 +484,11 @@ class TrajectoryStore:
 
     def batch(self, idx, K, uv):
         c, t = idx[:, 0], idx[:, 1]
-        fr = np.stack([self.states[c, t + k] for k in range(K + 1)], axis=1).astype(np.float32)
+        frames = []
+        for k in range(K + 1):
+            phi = self.phi[c, t + k][..., None]
+            vel = self.vel[c, t + k].astype(np.float32)
+            frames.append(np.concatenate([phi, vel], axis=-1))
+        fr = np.stack(frames, axis=1)
         fr[..., 1:3] /= uv
         return fr, self.geom[c], self.scal[c]

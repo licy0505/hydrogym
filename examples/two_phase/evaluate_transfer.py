@@ -51,28 +51,52 @@ def iou(a, b):
 
 
 def make_predictor(ckpt):
-    if ckpt == "persistence":  # trivial baseline: phi(t+1) = phi(t)
-        return (lambda state, geom, scal: state.copy()), dict(arch="persistence", geom="chi", uv_scale=1.0), "chi"
+    if ckpt == "persistence":
+
+        def persistence(state, geom, scal, return_aux=False):
+            out = state.copy()
+            if not return_aux:
+                return out
+            z = np.zeros((state.shape[0],), dtype=np.float32)
+            return out, {"raw_mass_rel": z, "projection_l1_rel": z, "projection_linf": z}
+
+        return persistence, dict(arch="persistence", geom="chi", uv_scale=1.0), "chi"
+
     model, params, cfg = S.load_checkpoint(ckpt)
     uv, geom_mode = cfg["uv_scale"], cfg.get("geom", "chi")
     apply_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb))
+    aux_supported = not cfg.get("legacy", False)
+    if aux_supported:
+        apply_aux_fn = jax.jit(lambda xb, cb: model.apply({"params": params}, xb, cb, return_aux=True))
 
-    def predict(state, geom, scal):
-        """state (B,H,W,3) physical units -> next state (B,H,W,3)."""
+    def predict(state, geom, scal, return_aux=False):
+        """state (B,H,W,3) physical units -> next state, optionally with head diagnostics."""
         x = state.copy()
         x[..., 1:3] /= uv
-        out = np.asarray(apply_fn(jnp.asarray(np.concatenate([x, geom], -1)), jnp.asarray(scal)))
+        xb = jnp.asarray(np.concatenate([x, geom], -1))
+        cb = jnp.asarray(scal)
+        if return_aux and aux_supported:
+            out, aux = apply_aux_fn(xb, cb)
+            out = np.asarray(out)
+            aux = {k: np.asarray(v) for k, v in aux.items()}
+        else:
+            out = np.asarray(apply_fn(xb, cb))
+            z = np.zeros((state.shape[0],), dtype=np.float32)
+            aux = {"raw_mass_rel": z, "projection_l1_rel": z, "projection_linf": z}
         out = out.copy()
         out[..., 0] = np.clip(out[..., 0], 0.0, 1.0)
         out[..., 1:3] *= uv
-        return out
+        return (out, aux) if return_aux else out
 
     return predict, cfg, geom_mode
 
 
 def evaluate(ckpt, data, horizon, verbose=True):
     predict, cfg, geom_mode = make_predictor(ckpt)
-    rows, groups = [], defaultdict(list)
+    rows, groups, surface_groups = [], defaultdict(list), defaultdict(list)
+    full_horizon = None
+    effective_horizon = None
+
     for split in ("train", "test"):
         cs = S.load_full(data, split)
         if not cs:
@@ -82,36 +106,43 @@ def evaluate(ckpt, data, horizon, verbose=True):
             geoms.append(S.geometry_features(c["chi"], c["sdf"], float(c["scalars"][3]), geom_mode))
             scals.append(c["scalars"])
             trues.append(np.stack([c["phi"], c["u"], c["v"]], -1))
+
         T = min(t.shape[0] for t in trues)
-        true = np.stack([t[:T] for t in trues])  # (N,T,H,W,3)
+        true = np.stack([t[:T] for t in trues])
         geom, scal = np.stack(geoms), np.stack(scals)
         N = true.shape[0]
-        K = min(horizon, T)
+        K = min(int(horizon), T - 1)
+        effective_horizon = K
+        full_horizon = T - 1
 
-        # one-step on true states (per case, all frames batched)
         one = []
         for i in range(N):
-            pred = predict(true[i, :-1], np.repeat(geom[i : i + 1], T - 1, 0), np.repeat(scal[i : i + 1], T - 1, 0))
+            pred = predict(
+                true[i, :-1],
+                np.repeat(geom[i : i + 1], T - 1, 0),
+                np.repeat(scal[i : i + 1], T - 1, 0),
+            )
             one.append(float(np.sqrt(np.mean((pred[..., 0] - true[i, 1:, ..., 0]) ** 2))))
 
-        # autoregressive rollout of all cases together (full length, metrics at K and T)
         st = true[:, 0].copy()
         traj = [st[..., 0]]
-        for t in range(T - 1):
-            st = predict(st, geom, scal)
+        aux_hist = {"raw_mass_rel": [], "projection_l1_rel": [], "projection_linf": []}
+        for _ in range(T - 1):
+            st, aux = predict(st, geom, scal, return_aux=True)
             traj.append(st[..., 0])
-        traj = np.stack(traj, 1)  # (N,T,H,W)
+            for key in aux_hist:
+                aux_hist[key].append(np.asarray(aux[key], dtype=np.float64))
+        traj = np.stack(traj, 1)
+        aux_hist = {k: np.stack(v, axis=1) for k, v in aux_hist.items()}
 
         for i, c in enumerate(cs):
             pt, tt = traj[i], true[i, ..., 0]
-            fluid = (
-                (c["sdf"] >= 0.0).astype(np.float32) if c["sdf"] is not None else (c["chi"] < 0.5).astype(np.float32)
-            )
+            fluid = (c["sdf"] >= 0.0).astype(np.float32)
             m0 = max(float(np.sum(tt[0] * fluid)), 1e-6)
-            eK = np.mean((pt[1:K] - tt[1:K]) ** 2)
+            eK = np.mean((pt[1 : K + 1] - tt[1 : K + 1]) ** 2)
             eT = np.mean((pt[1:] - tt[1:]) ** 2)
-            mE = np.mean([abs(np.sum(pt[t] * fluid) - np.sum(tt[t] * fluid)) / m0 for t in range(1, K)])
-            sE = np.mean([abs(spreading(pt[t]) - spreading(tt[t])) for t in range(1, K)])
+            mE = np.mean([abs(np.sum(pt[t] * fluid) - np.sum(tt[t] * fluid)) / m0 for t in range(1, K + 1)])
+            sE = np.mean([abs(spreading(pt[t]) - spreading(tt[t])) for t in range(1, K + 1)])
             fam = "simple" if c["surface"] in ("flat", "pillars") else "complex"
             r = dict(
                 split=split,
@@ -123,28 +154,60 @@ def evaluate(ckpt, data, horizon, verbose=True):
                 rollT=float(np.sqrt(eT)),
                 massK=float(mE),
                 spreadK=float(sE),
-                iouK=iou(pt[K - 1], tt[K - 1]),
+                iouK=iou(pt[K], tt[K]),
                 iouT=iou(pt[-1], tt[-1]),
+                rawMassK=float(np.mean(aux_hist["raw_mass_rel"][i, :K])),
+                projL1K=float(np.mean(aux_hist["projection_l1_rel"][i, :K])),
+                projLinfK=float(np.max(aux_hist["projection_linf"][i, :K])),
             )
             rows.append(r)
             groups[(split, fam)].append(r)
+            surface_groups[(split, c["surface"])].append(r)
             if verbose:
                 print(
-                    f"{split:5s} {c['surface']:15s} 1step={r['one_step']:.4f} roll{K}={r['rollK']:.4f} "
-                    f"roll{T}={r['rollT']:.4f} mass={r['massK']:.3f} spread={r['spreadK']:.2f} IoU{K}={r['iouK']:.3f}",
+                    f"{split:5s} {c['surface']:15s} 1step={r['one_step']:.4f} "
+                    f"roll{K}={r['rollK']:.4f} roll{T - 1}={r['rollT']:.4f} "
+                    f"IoU{K}={r['iouK']:.3f} rawM={r['rawMassK']:.3e} "
+                    f"projL1={r['projL1K']:.3e}",
                     flush=True,
                 )
-    summary = {}
-    for key, rs in sorted(groups.items()):
-        summary[f"{key[0]}/{key[1]}"] = {
-            "n": len(rs),
-            **{
-                m: float(np.mean([r[m] for r in rs]))
-                for m in ("one_step", "rollK", "rollT", "massK", "spreadK", "iouK", "iouT")
-            },
-        }
+
+    metrics = (
+        "one_step",
+        "rollK",
+        "rollT",
+        "massK",
+        "spreadK",
+        "iouK",
+        "iouT",
+        "rawMassK",
+        "projL1K",
+        "projLinfK",
+    )
+
+    def summarize(mapping):
+        out = {}
+        for key, rs in sorted(mapping.items()):
+            out[f"{key[0]}/{key[1]}"] = {
+                "n": len(rs),
+                **{m: float(np.mean([r[m] for r in rs])) for m in metrics},
+            }
+        return out
+
     return dict(
-        ckpt=ckpt, cfg={k: v for k, v in cfg.items() if k != "train_hist"}, horizon=K, T=T, rows=rows, summary=summary
+        ckpt=ckpt,
+        cfg={k: v for k, v in cfg.items() if k != "train_hist"},
+        protocol=dict(
+            dataset_schema_version=S.DATASET_SCHEMA_VERSION,
+            eval_dataset_fingerprint=S.dataset_fingerprint(data),
+            data=data,
+        ),
+        horizon=effective_horizon,
+        full_horizon=full_horizon,
+        T=full_horizon + 1,
+        rows=rows,
+        summary=summarize(groups),
+        surface_summary=summarize(surface_groups),
     )
 
 
@@ -161,12 +224,13 @@ def main():
     print(f"\n-- grouped: {args.ckpt} --")
     print(
         f"{'group':16s} {'n':>3s} {'1step':>7s} {'roll' + str(K):>8s} "
-        f"{'roll' + str(res['T']):>8s} {'mass':>6s} {'spread':>7s} {'IoU' + str(K):>7s}"
+        f"{'roll' + str(res['full_horizon']):>8s} {'IoU' + str(K):>7s} "
+        f"{'rawM':>9s} {'projL1':>9s}"
     )
     for g, s in res["summary"].items():
         print(
             f"{g:16s} {s['n']:3d} {s['one_step']:7.4f} {s['rollK']:8.4f} {s['rollT']:8.4f} "
-            f"{s['massK']:6.3f} {s['spreadK']:7.2f} {s['iouK']:7.3f}"
+            f"{s['iouK']:7.3f} {s['rawMassK']:9.2e} {s['projL1K']:9.2e}"
         )
     if args.json:
         os.makedirs(os.path.dirname(args.json) or ".", exist_ok=True)
