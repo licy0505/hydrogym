@@ -1,0 +1,61 @@
+{
+  "profile": "convergence",
+  "dtype": "float32",
+  "benchmarks": {
+    "convergence": {
+      "grid_refinement": {
+        "base_case": {
+          "R": 0.7,
+          "We": 100.0,
+          "Re": 200.0,
+          "eps_factor": 2.0,
+          "dt": 0.002,
+          "steps": 500,
+          "save_every": 50,
+          "target_deg": 90.0,
+          "relaxation_steps": 500,
+          "impact_steps": 300,
+          "cos_theta": 0.0,
+          "impact_gap": 0.1,
+          "velocity_mode": "streamfunction"
+        },
+        "N_values": [
+          96,
+          128,
+          192
+        ],
+        "eps_factor": 2.0,
+        "eps_mode": "coupled"
+      },
+      "interface_thickness": {
+        "base_case": {
+          "R": 0.7,
+          "We": 100.0,
+          "Re": 200.0,
+          "dt": 0.002,
+          "steps": 500,
+          "save_every": 50,
+          "target_deg": 90.0,
+          "relaxation_steps": 500,
+          "impact_steps": 300,
+          "cos_theta": 0.0,
+          "impact_gap": 0.1,
+          "velocity_mode": "streamfunction"
+        },
+        "N": 192,
+        "eps_factors": [
+          1.5,
+          2.0,
+          2.5,
+          3.0
+        ]
+      }
+    }
+  },
+  "output": {
+    "directory": "artifacts/production_validation/convergence",
+    "formats": [
+      "json"
+    ]
+  }
+}

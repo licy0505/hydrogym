@@ -1,0 +1,72 @@
+{
+  "profile": "baseline",
+  "dtype": "float32",
+  "benchmarks": {
+    "static_droplet": {
+      "radii": [
+        0.6,
+        0.8,
+        1.0,
+        1.2
+      ],
+      "N": 128,
+      "steps": 1000,
+      "We": 100.0,
+      "Re": 200.0,
+      "eps_factor": 2.0,
+      "dt": 0.002,
+      "save_every": 50
+    },
+    "contact_angle": {
+      "targets": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ],
+      "N": 128,
+      "relaxation_steps": 3000,
+      "We": 100.0,
+      "Re": 200.0,
+      "eps_factor": 2.0,
+      "wall_energy_amp": 5.0,
+      "R": 1.1,
+      "dt": 0.004
+    },
+    "impact": {
+      "N": 128,
+      "steps": 1200,
+      "save_every": 20,
+      "eps_factor": 2.0,
+      "dt": 0.002,
+      "cases": [
+        {
+          "name": "flat_moderate_We_neutral",
+          "We": 100.0,
+          "Re": 200.0,
+          "R": 0.7,
+          "cos_theta": 0.0,
+          "impact_gap": 0.1,
+          "u_impact": 1.0,
+          "velocity_mode": "streamfunction"
+        },
+        {
+          "name": "flat_lower_We_hydrophobic",
+          "We": 50.0,
+          "Re": 150.0,
+          "R": 0.7,
+          "cos_theta": -0.5,
+          "impact_gap": 0.1,
+          "u_impact": 1.0,
+          "velocity_mode": "streamfunction"
+        }
+      ]
+    }
+  },
+  "output": {
+    "directory": "artifacts/production_validation/baseline",
+    "formats": [
+      "json"
+    ]
+  }
+}
