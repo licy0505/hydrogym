@@ -174,31 +174,46 @@ def _diagnose(
 ) -> tuple[bool, dict]:
     """Validate finite values, conservative mass and *deep-solid* leakage."""
     # Histories begin at the first saved frame (after ``save_every`` steps).
-    # The solver's bounded solid projection can redistribute diffuse-interface
-    # mass during those unsaved startup steps, so comparing saved frames to the
-    # raw t=0 state would report a false fluid-mass increase.
+    # Keep the two reference states separate: the raw t=0 state is authoritative
+    # for total-mass conservation, while the first saved state is authoritative
+    # for fluid-region mass because the startup solid projection may redistribute
+    # a small diffuse-interface tail from solid to fluid cells.
+    raw_initial = np.asarray(initial.phi, dtype=np.float64)
     phi = np.asarray(phi, dtype=np.float64)
-    phi0 = np.asarray(phi[0] if phi.shape[0] else initial.phi, dtype=np.float64)
+    first_saved = np.asarray(phi[0] if phi.shape[0] else raw_initial, dtype=np.float64)
     u = np.asarray(u, dtype=np.float64)
     v = np.asarray(v, dtype=np.float64)
     hard_solid = np.asarray(solid.sdf < 0.0, dtype=np.float64)
     fluid = 1.0 - hard_solid
 
-    total0 = float(np.sum(phi0))
+    raw_total0 = float(np.sum(raw_initial))
+    first_saved_total = float(np.sum(first_saved))
     total = np.sum(phi, axis=(1, 2))
-    fluid0 = float(np.sum(phi0 * fluid))
+    first_saved_fluid0 = float(np.sum(first_saved * fluid))
+    raw_initial_fluid0 = float(np.sum(raw_initial * fluid))
     fluid_mass = np.sum(phi * fluid[None], axis=(1, 2))
     denom = np.maximum(np.sum(np.abs(phi), axis=(1, 2)), 1e-12)
+    raw_initial_denom = max(float(np.sum(np.abs(raw_initial))), 1e-12)
     leak = np.sum(np.abs(phi) * hard_solid[None], axis=(1, 2)) / denom
+    raw_initial_solid_leak = float(np.sum(np.abs(raw_initial) * hard_solid) / raw_initial_denom)
     speed = np.sqrt(u * u + v * v)
 
-    finite = bool(np.isfinite(phi).all() and np.isfinite(u).all() and np.isfinite(v).all())
+    finite = bool(
+        np.isfinite(raw_initial).all() and np.isfinite(phi).all() and np.isfinite(u).all() and np.isfinite(v).all()
+    )
     overshoot = float(max(np.max(-phi), np.max(phi - 1.0), 0.0)) if phi.size else 0.0
-    total_ratio = total / max(total0, 1e-12)
-    fluid_ratio = fluid_mass / max(fluid0, 1e-12)
+    total_ratio = total / max(raw_total0, 1e-12)
+    fluid_ratio = fluid_mass / max(first_saved_fluid0, 1e-12)
+    startup_total_mass_ratio = first_saved_total / max(raw_total0, 1e-12)
+    startup_fluid_mass_ratio = fluid_mass[0] / max(raw_initial_fluid0, 1e-12)
     diag = {
         "finite": finite,
-        "initial_total_mass": total0 * p.dx * p.dy,
+        "initial_total_mass": raw_total0 * p.dx * p.dy,
+        "first_saved_total_mass": first_saved_total * p.dx * p.dy,
+        "startup_total_mass_ratio": float(startup_total_mass_ratio),
+        "startup_fluid_mass_ratio": float(startup_fluid_mass_ratio),
+        "raw_initial_fluid_mass": raw_initial_fluid0 * p.dx * p.dy,
+        "raw_initial_solid_leak": raw_initial_solid_leak,
         "final_total_mass_ratio": float(total_ratio[-1]),
         "min_total_mass_ratio": float(np.min(total_ratio)),
         "max_total_mass_ratio": float(np.max(total_ratio)),
