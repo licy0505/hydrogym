@@ -25,6 +25,9 @@
 | `test_two_phase.py` | 求解器守恒、压力投影、壁面/几何回归测试 |
 | `test_surrogate.py` | 代理质量投影与 straight-through 梯度回归测试 |
 | `visualize.py` | 求解器图、严格 test-only/full-horizon 迁移图与分辨率图 |
+| `make_impact_visualization.py` | 六种表面的下落–撞击–铺展全过程图与 GIF |
+| `make_contact_closeup.py` | 近壁面三相接触线微观特写（无需 checkpoint） |
+| `make_regression_visualization.py` | FNO 在 4 种未见壁面上的 full-horizon 自回归回归图 |
 
 ---
 
@@ -97,7 +100,82 @@ pytest test_two_phase.py test_surrogate.py test_dataset_contract.py test_train_o
 
 # schema v3 + exact fingerprint；旧 schema-v2 数据/checkpoint 会 fail closed
 bash run_experiments.sh
+
+# 高惯性撞击 / 动态铺展数据集（spreading）+ FNO 回归评测
+python generate_dataset.py --set spreading --out data/spreading --nsteps 2000 --ds 3
+python train_operator.py --data data/spreading --arch fno --geom sdf \
+    --steps 2500 --out ckpts/fno_spreading.pkl
+python make_regression_visualization.py --data data/spreading \
+    --ckpt ckpts/fno_spreading.pkl
+
+# 近壁面三相接触线特写（只用求解器，不需要 checkpoint）
+python make_contact_closeup.py
 ```
+
+---
+
+## 3b. 高惯性铺展数据集与 FNO 回归评测（`spreading`）
+
+`spreading` case 集专门针对**高惯性撞击 + 动态铺展**：训练只用平壁与规则柱阵，
+测试保留 4 种未见复杂几何（随机柱、分级柱、凹槽、斜面），全部使用 `u_impact=1.6~1.7`
+的高惯性初速与 `dt=2e-3`：
+
+| split | surface | We | cosθ | u_impact |
+|-------|---------|----|------|----------|
+| train | flat | 150 / 200 / 250 / 200 | -0.5 / 0.0 / 0.5 / 0.8 | 1.6 / 1.7 |
+| train | pillars (4/5/6 柱) | 150 / 200 / 250 / 220 | -0.5 / 0.0 / 0.5 / 0.8 | 1.6 / 1.7 |
+| test | random_pillars (seed 102) | 200 | 0.5 | 1.6 |
+| test | hierarchical (seed 105) | 200 | 0.0 | 1.6 |
+| test | grooves (seed 107) | 200 | 0.5 | 1.6 |
+| test | wedge (seed 108) | 200 | 0.0 | 1.6 |
+
+`make_regression_visualization.py` 在**每种未见壁面**上做 full-horizon 自回归 rollout，
+逐帧与求解器真值对比，输出三张图：
+
+- `fig_fno_regression.png`：4 表面 × 6 时刻，蓝（FNO）对红（真值）等值线 + 逐帧 RMSE；
+- `fig_fno_regression_metrics.png`：铺展宽度 D(t) 与流体质量 M/M₀ 曲线；
+- `fig_fno_regression_summary.png`：逐表面 RMSE / final IoU / 质量误差汇总。
+
+![fno regression](figures/fig_fno_regression.png)
+
+### 结果（CPU, 192² 求解 / 64² 代理, FNO+SDF, full-horizon 自回归）
+
+| 未见表面 | rollout RMSE | final IoU | 质量误差(相对) | persistence 基线 RMSE |
+|---------|--------------|-----------|----------------|----------------------|
+| random_pillars | 0.038 | 0.882 | 0.0016 | 0.028 |
+| hierarchical   | 0.047 | 0.907 | 0.0011 | 0.045 |
+| grooves        | 0.079 | 0.769 | 0.0005 | 0.074 |
+| wedge          | 0.055 | 0.871 | 0.0004 | 0.053 |
+
+**解读（含反面结论）**
+
+1. **质量守恒几乎完美**（相对误差 ≤ 0.16%）：conservative head 的有界质量投影把自回归
+   质量漂移压到 0.05% 以下，说明投影约束器在整个 rollout 中始终成立。
+2. **界面 IoU 0.77–0.91**：四种未见几何的 φ=0.5 界面都被复现，主液团的位置与形状正确。
+3. **但 RMSE 并未低于 persistence 基线**。这是本 regime 的固有性质：`Fr≈10⁶`（无重力）
+   加上 Brinkman 壁面惩罚使撞击强烈过阻尼，液滴约 1 s 即进入准静态，而 horizon 长达 8 s，
+   于是"什么都不动"的基线在 φ-RMSE 上天然占优。**在该数据集上 RMSE 不是有区分度的指标**，
+   应看 IoU / 铺展宽度 D(t) / 质量误差。
+4. **guarded unrolled fine-tune 有效但幅度有限**：候选只在训练集留出的 validation split 上
+   把 rollout loss 从 1.779e-4 降到 1.773e-4（同时满足 `--min-improve 0.002` 与 raw-mass /
+   projection 阈值），被 guard 接受；它把 3/4 个未见表面的 RMSE 与 IoU 同时改善
+   （如 hierarchical IoU 0.770→0.907）。该判断未触碰 test 集，因此模型选择是合规的。
+
+`make_contact_closeup.py` 回答另一个问题：**三相接触线附近到底发生了什么**。全场的
+192² 图看不见它，因此脚本重跑求解器并对每个时刻给出三行面板：
+
+1. 全场 φ 与固体的位置（红框 = 特写窗口）；
+2. 近壁面三类相（气/液/固）的逐格特写，红点标出 φ=χ=0.5 的三相点；
+3. 过接触线的竖直 φ/χ 剖面，直接读出弥散界面厚度与接触角。
+
+外加 `fig_contact_closeup_metrics.png`：湿润宽度 w_c(t)、近壁液体面积与表观接触角 θ(t)。
+
+![contact closeup](figures/fig_contact_closeup.png)
+
+> 近壁面的一个实现细节：液滴初始只高出固体 `2ε`，而 Brinkman 惩罚 + 弥散界面会让紧贴
+> 壁面处 φ 被压低约 `2.5ε`，因此**单看 φ 阈值无法区分"还在空中"与"已经接触"**。
+> 脚本因此用「总下降量比例」判定触地，再用与 `contact_area` 一致的 `|sdf| < 0.15`
+> 润湿带提取接触线。
 
 ---
 

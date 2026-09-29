@@ -144,3 +144,42 @@ if unroll_accepted ckpts/lowWe_fno_sdf_u3.pkl; then
   LOWWE_CKPT=ckpts/lowWe_fno_sdf_u3.pkl
 fi
 $PY visualize.py --mode lowWe --lowwe-data data/lowWe_all --lowwe-ckpt "$LOWWE_CKPT"
+
+# ---------------------------------------------------------------------------
+#  High-inertia impact / dynamic spreading set (transfer to 4 unseen walls)
+# ---------------------------------------------------------------------------
+if [ ! -d data/spreading ]; then
+  $PY generate_dataset.py --set spreading --out data/spreading --nsteps 2000 --ds 3 \
+    --min-feature-cells 2.0 | tee -a logs/gen_spreading.log
+fi
+
+SPREAD_CKPT=ckpts/fno_spreading.pkl
+if ckpt_current ckpts/fno_spreading.pkl data/spreading "" 1; then
+  :
+else
+  $PY train_operator.py --data data/spreading --arch fno --geom sdf \
+    --steps 2500 --out ckpts/fno_spreading.pkl 2>&1 | tee logs/train_fno_spreading.log
+fi
+
+if unroll_accepted ckpts/fno_spreading_u3.pkl; then
+  SPREAD_CKPT=ckpts/fno_spreading_u3.pkl
+else
+  rm -f ckpts/fno_spreading_u3.pkl results/fno_spreading_u3.json
+  $PY train_operator.py --data data/spreading --resume ckpts/fno_spreading.pkl \
+    --unroll 3 --batch 8 --lr 1e-4 --steps 600 --raw-mass-weight 0.05 \
+    --projection-weight 0.02 --teacher-anchor-weight 0.25 --val-frac 0.10 \
+    --min-improve 0.002 --guard-raw-mass 0.05 --guard-projection-l1 0.05 \
+    --out ckpts/fno_spreading_u3.pkl 2>&1 | tee logs/train_fno_spreading_u3.log
+  if unroll_accepted ckpts/fno_spreading_u3.pkl; then
+    SPREAD_CKPT=ckpts/fno_spreading_u3.pkl
+  else
+    rm -f ckpts/fno_spreading_u3.pkl
+    echo "[spreading] guarded unroll rejected; parent checkpoint remains the published model" \
+      | tee logs/eval_fno_spreading_u3.log
+  fi
+fi
+
+$PY evaluate_transfer.py --data data/spreading --ckpt "$SPREAD_CKPT" \
+  --json results/fno_spreading.json | tee logs/eval_fno_spreading.log
+$PY make_regression_visualization.py --data data/spreading --ckpt "$SPREAD_CKPT"
+$PY make_contact_closeup.py
