@@ -40,7 +40,7 @@ def _minimal_report() -> dict:
         "contract_status": "PASS",
         "repository": {
             "git_sha": "a" * 40,
-            "solver_contract_version": 4,
+            "solver_contract_version": 5,
             "phasefield_sha256": "b" * 64,
             "validation_code_sha256": "c" * 64,
         },
@@ -257,3 +257,318 @@ def test_tiny_static_droplet_execution_has_finite_metrics_and_positive_mass():
     assert np.isfinite([result.mass_relative_drift, result.max_speed_peak, result.delta_p, result.laplace_ratio]).all()
     assert result.pressure_diagnostic_method == "projection_reconstructed"
     assert len(result.time_series["time"]) == 2
+
+
+# ---------------------------------------------------------------------------
+#  L1A-2a: capillary sign consistency, evidence-gated blocker, before/after guards
+# ---------------------------------------------------------------------------
+
+
+def test_laplace_pressure_increases_with_curvature():
+    """Smaller drops (larger curvature 1/R) have a larger *positive* projection-pressure jump."""
+    pytest.importorskip("jax")
+    from production.validation import run_static_droplet_case
+
+    cases = {
+        radius: run_static_droplet_case(
+            R=radius,
+            N=64,
+            steps=60,
+            We=100.0,
+            Re=200.0,
+            eps_factor=2.0,
+            save_every=60,
+            dt=0.002,
+            dtype="float32",
+        )
+        for radius in (0.7, 1.0)
+    }
+    small, large = cases[0.7], cases[1.0]
+    assert small.laplace_ratio > 0.0 and large.laplace_ratio > 0.0  # signed: never abs()
+    assert small.delta_p > large.delta_p > 0.0  # smaller R -> larger positive delta_p
+    assert 1.2 < small.delta_p / large.delta_p < 1.7  # ideal 1/0.7 = 1.43; coarse-grid tolerance
+    for case in cases.values():
+        assert 0.7 < case.laplace_ratio < 1.3  # scale sanity on a coarse grid, not an accuracy gate
+
+
+def test_capillary_audit_reports_consistent_conventions():
+    pytest.importorskip("jax")
+    from production.capillary_audit import CONVENTIONS, run_audit
+
+    assert {
+        "phase_orientation",
+        "outward_normal",
+        "chemical_potential",
+        "korteweg_force",
+        "pressure_gradient",
+        "laplace_jump",
+    } <= set(CONVENTIONS)
+    result = run_audit(N=64)
+    assert [check.name for check in result.checks if not check.passed] == []
+    assert result.diagnosis["three_conventions_consistent"] is True
+    assert result.to_dict()["settings"]["solver_contract_version"] == 5
+
+
+def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
+    """Mutation check: the audit is not vacuous -- a sign regression is caught and blamed on the force."""
+    pytest.importorskip("jax")
+    import phasefield as pf
+    from production.capillary_audit import run_audit
+
+    real_rhs = pf.rhs
+
+    def flipped(state, solid, params):
+        phi_rhs, u_rhs, v_rhs, mu, mu_expl = real_rhs(state, solid, params)
+        return phi_rhs, -u_rhs, -v_rhs, mu, mu_expl  # at rest: exactly the contract-v4 force
+
+    monkeypatch.setattr(pf, "rhs", flipped)
+    result = run_audit(N=64)
+    failed = {check.name for check in result.checks if not check.passed}
+    assert {"korteweg_force_direction", "laplace_jump_sign_and_scale", "free_energy_consistency"} <= failed
+    assert result.diagnosis["force_convention_consistent"] is False
+    assert result.diagnosis["projection_convention_consistent"] is True
+    assert result.diagnosis["diagnostic_pressure_convention_consistent"] is True
+
+
+def _static_benchmarks(ratios, *, r_squared=0.9996, slope=0.0109, extra_failed_record=False):
+    radii = [0.6, 0.8, 1.0, 1.2][: len(ratios)]
+    cases = [{"R": radius, "finite": True, "laplace_ratio": ratio} for radius, ratio in zip(radii, ratios)]
+    if extra_failed_record:
+        cases.append({"R": 1.4, "finite": False, "error": "FloatingPointError: injected"})
+    return {
+        "static_droplet": {"cases": cases, "summary": {"r_squared": r_squared, "slope_delta_p_vs_inv_R": slope}},
+        "contact_angle": {"summary": None, "cases": []},
+        "impact": {"cases": []},
+        "convergence": {},
+    }
+
+
+def _blockers(benchmarks):
+    from production.run_validation import _assessed_blockers
+
+    return {item["id"]: item for item in _assessed_blockers(benchmarks)}
+
+
+def test_laplace_sign_blocker_is_closed_only_with_evidence():
+    good = _blockers(_static_benchmarks([1.0459, 1.0194, 1.0083, 1.0032]))
+    assert good["P-LAPLACE-SIGN"]["status"] == "resolved_in_contract_v5"
+    assert good["P-LAPLACE-SIGN"]["evidence"]["all_ratios_positive"] is True
+    assert good["P-LAPLACE-SIGN"]["evidence"]["scaling_correct"] is True
+    assert good["P-LAPLACE-SIGN"]["evidence"]["provisional_laplace_target_met"] is True
+    # the closed sign blocker must not close anything else
+    for name in ("P-VARDENS-PROJ", "P-CAP-RHO", "N-DT", "P-VARVISC", "BC-Y-PERIODIC"):
+        assert good[name]["status"] == "open"
+
+    wrong_sign = _blockers(_static_benchmarks([-1.0459, -1.0194, -1.0083, -1.0032], slope=-0.0109))
+    assert wrong_sign["P-LAPLACE-SIGN"]["status"] == "confirmed_problem"
+    one_bad = _blockers(_static_benchmarks([1.0459, 1.0194, -0.01, 1.0032]))
+    assert one_bad["P-LAPLACE-SIGN"]["status"] == "confirmed_problem"
+
+    too_few = _blockers(_static_benchmarks([1.0459, 1.0194], r_squared=1.0))
+    assert too_few["P-LAPLACE-SIGN"]["status"] == "measurement_required"  # 2 radii cannot show 1/R scaling
+    missing_case = _blockers(_static_benchmarks([1.0459, 1.0194, 1.0083], extra_failed_record=True))
+    assert missing_case["P-LAPLACE-SIGN"]["status"] == "measurement_required"
+
+    bad_scaling = _blockers(_static_benchmarks([1.0459, 1.0194, 1.0083, 1.0032], r_squared=0.9))
+    assert bad_scaling["P-LAPLACE-SIGN"]["status"] == "confirmed_problem"
+    negative_slope = _blockers(_static_benchmarks([1.0459, 1.0194, 1.0083, 1.0032], slope=-0.0109))
+    assert negative_slope["P-LAPLACE-SIGN"]["status"] == "confirmed_problem"
+
+    # sign fixed and 1/R holds, but the provisional 5 % magnitude goal is missed: closed, and honestly labelled
+    coarse = _blockers(_static_benchmarks([1.2, 1.1, 1.05, 1.02]))
+    assert coarse["P-LAPLACE-SIGN"]["status"] == "resolved_in_contract_v5"
+    assert coarse["P-LAPLACE-SIGN"]["evidence"]["provisional_laplace_target_met"] is False
+
+
+def test_report_schema_allows_resolved_blocker_status_only_when_known():
+    report = _minimal_report()
+    blocker = {"id": "P-LAPLACE-SIGN", "severity": "high", "description": "d", "status": "resolved_in_contract_v5"}
+    report["known_solver_blockers"] = [blocker]
+    assert validate_report_schema(report) == []
+    blocker["status"] = "resolved_in_contract_v6"
+    assert any("status is invalid" in error for error in validate_report_schema(report))
+
+
+def test_ci_profile_report_records_contract_v5_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
+    pytest.importorskip("jax")
+    import phasefield as pf
+    from production.config import compute_file_sha256
+    from production.run_validation import run_validation
+
+    monkeypatch.setenv("JAX_PLATFORMS", "cpu")  # run_validation pins the CPU for the ci profile
+    monkeypatch.setenv("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+    config_path = HERE / "production" / "configs" / "ci.json"
+    assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
+    report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
+    assert validate_report_schema(report) == []
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 5
+    assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
+    assert len(report["repository"]["validation_code_sha256"]) == 64
+    assert len(report["config"]["sha256"]) == 64
+    assert report["physics_status"] == "BASELINE_ONLY"  # never VALIDATED / PRODUCTION_READY here
+    blockers = {item["id"]: item["status"] for item in report["known_solver_blockers"]}
+    assert blockers["P-LAPLACE-SIGN"] == "measurement_required"  # one radius cannot establish 1/R scaling
+    for name in ("P-VARDENS-PROJ", "P-CAP-RHO", "N-DT", "P-VARVISC", "BC-Y-PERIODIC"):
+        assert blockers[name] == "open"
+    static = report["benchmarks"]["static_droplet"]["cases"][0]
+    assert static["delta_p"] > 0.0 and static["laplace_ratio"] > 0.0
+
+
+def _comparison_report(
+    *,
+    contract,
+    ratios,
+    slope,
+    peak=2.0e-4,
+    static_mass=1.0e-7,
+    impact_mass=1.0e-3,
+    impact_peak=2.3,
+    r_squared=0.99964,
+    config_sha="d" * 64,
+    status="BASELINE_ONLY",
+    laplace_status="confirmed_problem",
+    cap_rho_status="open",
+):
+    report = _minimal_report()
+    report["physics_status"] = status
+    report["repository"]["solver_contract_version"] = contract
+    report["config"]["sha256"] = config_sha
+    radii = [0.6, 0.8, 1.0, 1.2]
+    report["benchmarks"]["static_droplet"] = {
+        "cases": [
+            {
+                "R": radius,
+                "finite": True,
+                "laplace_ratio": ratio,
+                "delta_p": ratio / (radius * 100.0),
+                "max_speed_peak": peak,
+                "max_speed_final": peak,
+                "kinetic_energy_final": 1.0e-8,
+                "mass_relative_drift": static_mass,
+            }
+            for radius, ratio in zip(radii, ratios)
+        ],
+        "summary": {"slope_delta_p_vs_inv_R": slope, "r_squared": r_squared},
+    }
+    report["benchmarks"]["contact_angle"] = {
+        "cases": [{"target_deg": 90.0, "measured_deg": 117.0, "signed_error_deg": 27.0}],
+        "summary": {"mae_deg": 27.0, "max_absolute_error_deg": 27.0},
+    }
+    report["benchmarks"]["impact"] = {
+        "cases": [
+            {
+                "case_name": "flat",
+                "finite": True,
+                "beta_max": 2.2,
+                "final_y_cm": 0.9,
+                "mass_drift": impact_mass,
+                "first_contact_time": None,
+                "time_series": {"g_0.5": [0.30, 0.1484], "g_0.1": [0.2, 0.0547], "max_speed": [impact_peak, 0.5]},
+            }
+        ]
+    }
+    statuses = {
+        "P-VARDENS-PROJ": "open",
+        "P-CAP-RHO": cap_rho_status,
+        "N-DT": "open",
+        "W-CONTACT-ANGLE": "confirmed_problem",
+        "P-LAPLACE-SIGN": laplace_status,
+        "P-VARVISC": "open",
+        "BC-Y-PERIODIC": "open",
+    }
+    report["known_solver_blockers"] = [
+        {"id": name, "severity": "high", "status": status_, "description": name} for name, status_ in statuses.items()
+    ]
+    return report
+
+
+def _guard_failures(before, after):
+    from production.compare_reports import compare_reports
+
+    result = compare_reports(before, after)
+    return {g["name"] for g in result["guards"] if not g["passed"] and g["kind"] == "guard"}, result
+
+
+def _healthy_pair(**after_overrides):
+    before = _comparison_report(contract=4, ratios=[-1.0459, -1.0193, -1.0083, -1.0031], slope=-0.0109)
+    after_kwargs = dict(
+        contract=5,
+        ratios=[1.0459, 1.0194, 1.0083, 1.0032],
+        slope=0.0109,
+        peak=1.5e-4,
+        laplace_status="resolved_in_contract_v5",
+    )
+    after_kwargs.update(after_overrides)
+    return before, _comparison_report(**after_kwargs)
+
+
+def test_compare_reports_healthy_l1a2a_pair_passes_every_guard():
+    from production.compare_reports import format_markdown
+
+    before, after = _healthy_pair()
+    failures, result = _guard_failures(before, after)
+    assert failures == set()
+    assert result["guards_passed"] is True
+    assert all(g["passed"] for g in result["guards"])  # P1 targets also met for this pair
+    assert result["laplace"]["after_max_abs_error"] == pytest.approx(0.0459)
+    markdown = format_markdown(result)
+    assert "| 0.6 | -1.0459 | +1.0459 | 0.0459 |" in markdown
+    assert "\\|After−1\\|" in markdown
+
+
+@pytest.mark.parametrize(
+    "override, guard",
+    [
+        (dict(ratios=[1.0459, 1.0194, -0.02, 1.0032]), "P0_all_laplace_ratios_positive"),
+        (dict(r_squared=0.9), "P0_delta_p_vs_inv_R_scaling"),
+        (dict(slope=-0.0109), "P0_delta_p_vs_inv_R_scaling"),
+        (dict(peak=1.5e-3), "spurious_current_peak_guard"),  # > max(5 x 2e-4, 1e-3)
+        (dict(static_mass=2.0e-4), "static_mass_drift_guard"),
+        (dict(impact_mass=6.0e-3), "impact_mass_drift_guard"),
+        (dict(impact_peak=9.0), "impact_no_explosive_acceleration_guard"),
+        (dict(config_sha="e" * 64), "baseline_config_unchanged"),
+        (dict(status="VALIDATED"), "physics_status_not_promoted"),
+        (dict(status="PRODUCTION_READY"), "physics_status_not_promoted"),
+        (dict(cap_rho_status="resolved_in_contract_v5"), "untouched_blockers_remain_open"),
+        (dict(contract=4), "solver_contract_bumped"),
+    ],
+)
+def test_compare_reports_guards_fail_closed(override, guard):
+    before, after = _healthy_pair(**override)
+    failures, result = _guard_failures(before, after)
+    assert guard in failures
+    assert result["guards_passed"] is False
+
+
+def test_compare_reports_blocker_closed_without_evidence_is_flagged():
+    before, after = _healthy_pair(ratios=[1.0459, 1.0194, -0.02, 1.0032])
+    failures, _ = _guard_failures(before, after)
+    assert "laplace_blocker_closed_only_with_evidence" in failures
+
+
+def test_compare_reports_cli_exit_status(tmp_path):
+    from production.compare_reports import main
+
+    before, after = _healthy_pair()
+    paths = {}
+    for name, report in (("before", before), ("after", after)):
+        paths[name] = tmp_path / f"{name}.json"
+        paths[name].write_text(json.dumps(report), encoding="utf-8")
+    md = tmp_path / "compare.md"
+    assert main(["--before", str(paths["before"]), "--after", str(paths["after"]), "--markdown", str(md)]) == 0
+    assert "L1A-2a before / after" in md.read_text(encoding="utf-8")
+
+    _, bad_after = _healthy_pair(ratios=[1.0459, 1.0194, -0.02, 1.0032])
+    paths["bad"] = tmp_path / "bad.json"
+    paths["bad"].write_text(json.dumps(bad_after), encoding="utf-8")
+    assert main(["--before", str(paths["before"]), "--after", str(paths["bad"])]) == 1  # guard failed: STOP
+    assert main(["--before", str(paths["before"]), "--after", str(tmp_path / "missing.json")]) == 2
+
+
+def test_compare_reports_target_mirrors_provisional_targets():
+    pytest.importorskip("jax")
+    from production import compare_reports
+    from production.validation import LAPLACE_SIGN_CLOSURE_CRITERIA, PROVISIONAL_READINESS_TARGETS
+
+    assert compare_reports.LAPLACE_TARGET == PROVISIONAL_READINESS_TARGETS["laplace_relative_error"]
+    assert compare_reports.LAPLACE_MIN_R_SQUARED == LAPLACE_SIGN_CLOSURE_CRITERIA["min_r_squared"]

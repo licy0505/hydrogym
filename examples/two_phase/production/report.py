@@ -154,6 +154,7 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
                 "measurement_required",
                 "confirmed_problem",
                 "acceptable_for_next_stage",
+                "resolved_in_contract_v5",
             }:
                 errors.append(f"known_solver_blockers[{index}].status is invalid")
     if not isinstance(report.get("provisional_readiness_targets"), dict):
