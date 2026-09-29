@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# End-to-end FNO / SDF / fingerprinted experiment chain with guarded unroll fine-tuning.
+# Development-scale FNO / SDF experiment chain with guarded unroll fine-tuning.
+# This runner is not a publication-production configuration; keep large/HPC
+# data and training outside this CPU-oriented example.
 set -euo pipefail
 cd "$(dirname "$0")"
 PY=${PY:-python}
@@ -9,10 +11,10 @@ mkdir -p logs ckpts results
 
 for s in base large aug; do
   $PY generate_dataset.py --set "$s" --out "data/$s" --nsteps 2000 --ds 3 \
-    --min-feature-cells 2.0 | tee -a "logs/gen_$s.log"
+    --min-feature-cells 2.0 --require-complete | tee -a "logs/gen_$s.log"
 done
 $PY generate_dataset.py --set lowWe_all --out data/lowWe_all --nsteps 2000 --ds 2 \
-  --min-feature-cells 2.5 | tee -a logs/gen_lowWe_all.log
+  --min-feature-cells 2.5 --require-complete | tee -a logs/gen_lowWe_all.log
 
 ckpt_current() {
   local f=$1 data=$2 fams=${3:-} expected_unroll=$4
@@ -150,7 +152,7 @@ $PY visualize.py --mode lowWe --lowwe-data data/lowWe_all --lowwe-ckpt "$LOWWE_C
 # ---------------------------------------------------------------------------
 if [ ! -d data/spreading ]; then
   $PY generate_dataset.py --set spreading --out data/spreading --nsteps 2000 --ds 3 \
-    --min-feature-cells 2.0 | tee -a logs/gen_spreading.log
+    --min-feature-cells 2.0 --require-complete | tee -a logs/gen_spreading.log
 fi
 
 SPREAD_CKPT=ckpts/fno_spreading.pkl

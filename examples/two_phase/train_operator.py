@@ -67,6 +67,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/base,data/large", help="comma-separated dataset dirs")
     ap.add_argument("--families", default="", help="restrict train families, e.g. 'simple'")
+    ap.add_argument(
+        "--profile",
+        choices=["smoke", "development", "production"],
+        default="development",
+        help="experiment scale label stored in the checkpoint (not a physics-fidelity claim)",
+    )
     ap.add_argument("--arch", default="fno", choices=["fno", "unet"])
     ap.add_argument("--geom", default="sdf", choices=["sdf", "chi"])
     ap.add_argument("--no-residual", action="store_true")
@@ -126,6 +132,7 @@ def main():
             levels=args.levels,
         )
 
+    cfg["experiment_profile"] = args.profile
     fams = tuple(f for f in args.families.split(",") if f) or None
     store = S.TrajectoryStore(args.data, "train", geom=cfg["geom"], families=fams)
     if args.resume and cfg.get("train_dataset_fingerprint") != store.dataset_fingerprint:

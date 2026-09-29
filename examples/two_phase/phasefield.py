@@ -57,7 +57,7 @@ from jax import lax
 SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 
 # Bump this whenever the solver/data contract changes in a trajectory-changing way.
-SOLVER_CONTRACT_VERSION = 3
+SOLVER_CONTRACT_VERSION = 4
 
 
 #######################################################################################
@@ -238,6 +238,32 @@ def sdf_box(X, Y, x0, x1, y0, y1):
     outside = jnp.sqrt(dx_**2 + dy_**2)
     inside = jnp.minimum(jnp.maximum(x0 - X, jnp.maximum(X - x1, jnp.maximum(y0 - Y, Y - y1))), 0.0)
     return outside + inside
+
+
+def _local_surface_top(
+    sdf: jnp.ndarray,
+    p: PhaseFieldParams,
+    x0: float,
+    radius: float,
+    margin: float | None = None,
+) -> jnp.ndarray:
+    """Return the highest solid cell beneath a local, periodically wrapped footprint.
+
+    A global ``max(Y[sdf < 0])`` is unsafe for textured surfaces: a tall pillar
+    on the other side of the domain can move a drop that is nowhere near it.
+    The support search is therefore restricted to the periodic x-distance of the
+    drop footprint plus a small diffuse-interface margin.  The zero fallback is
+    finite and is only used for a degenerate SDF with no solid cell in that
+    local window.
+    """
+    X, Y = grids(p)
+    if margin is None:
+        margin = max(2.0 * float(p.eps), float(p.dx))
+    periodic_dx = (X - float(x0) + 0.5 * p.Lx) % p.Lx - 0.5 * p.Lx
+    support = jnp.abs(periodic_dx) <= float(radius) + float(margin)
+    valid = support & (sdf < 0.0) & jnp.isfinite(sdf) & jnp.isfinite(Y)
+    local_top = jnp.max(jnp.where(valid, Y, jnp.asarray(0.0, dtype=Y.dtype)))
+    return jnp.where(jnp.any(valid), local_top, jnp.asarray(0.0, dtype=Y.dtype))
 
 
 def sdf_union(*sdfs):
@@ -789,8 +815,8 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
     ``dt`` is clipped to the CFL-stable value for the chosen ``N``.  A case may
     set ``eps_factor`` (interface thickness in grid spacings), ``impact_gap``,
     ``Re``, ``wall_energy_amp`` and the solid-mask options.  The generated drop
-    is placed above the highest solid point, so it never begins inside a wall or
-    pillar.
+    is placed above the local support under its footprint, so a remote obstacle
+    cannot change its initial height.
     """
     if dt is None:
         dt = 2e-3
@@ -835,21 +861,24 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
     sdf = gen(p, **surf_kwargs)
     solid = make_solid(sdf, p, cos_theta=float(case.get("cos_theta", 0.0)))
     R = case.get("R", 0.7)
-    # Start above the highest point of the selected surface.  The previous
-    # default ``0.25 + R - 0.1`` put the initial drop *inside* the flat wall by
-    # 0.1 length units.  That contaminates low-We trajectories before impact
-    # and makes the network learn an impossible initial geometry.
-    X, Y = grids(p)
-    surface_top = jnp.max(jnp.where(sdf < 0.0, Y, -jnp.inf))
     # A geometric non-overlap is not enough for a diffuse interface.  Require
     # clearance in units of eps so the initial tanh tail is not already inside
     # the wall.  Explicit ``impact_gap`` may enlarge, but never shrink, this.
+    x0 = float(case.get("x0", 3.0))
+    local_surface_top = _local_surface_top(
+        sdf,
+        p,
+        x0=x0,
+        radius=float(R),
+        margin=case.get("surface_margin"),
+    )
+    surface_top = float(local_surface_top)
     min_gap = max(float(case.get("impact_gap_eps", 2.0)) * float(p.eps), 0.05)
     requested_gap = float(case.get("impact_gap", min_gap))
     gap = max(requested_gap, min_gap)
-    y0_default = float(surface_top) + float(R) + gap
+    y0_default = surface_top + float(R) + gap
     y0 = float(case.get("y0", y0_default))
-    clearance = y0 - float(R) - float(surface_top)
+    clearance = y0 - float(R) - surface_top
     if clearance < min_gap - 1.0e-12:
         raise ValueError(
             f"initial diffuse interface is too close to the solid: clearance={clearance:.6g}, "
@@ -857,7 +886,7 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
         )
     state = droplet_initial_state(
         p,
-        x0=float(case.get("x0", 3.0)),
+        x0=x0,
         y0=y0,
         R=R,
         u_impact=case.get("u_impact", 0.5),

@@ -165,8 +165,12 @@ def _plot_closeup(ax, phi, chi, p, box, cl, wall_top, dz):
     ys = (np.arange(n_y) + 0.5) * p.dy
     sx = (xs >= x0) & (xs <= x1)
     sy = (ys >= y0) & (ys <= y1)
-    extent = [float(xs[sx].min() - 0.5 * p.dx), float(xs[sx].max() + 0.5 * p.dx),
-              float(ys[sy].min() - 0.5 * p.dy), float(ys[sy].max() + 0.5 * p.dy)]
+    extent = [
+        float(xs[sx].min() - 0.5 * p.dx),
+        float(xs[sx].max() + 0.5 * p.dx),
+        float(ys[sy].min() - 0.5 * p.dy),
+        float(ys[sy].max() + 0.5 * p.dy),
+    ]
 
     im = ax.imshow(
         idx[np.ix_(sx, sy)].T,
@@ -281,7 +285,6 @@ def main():
 
     frame_dt = float(p.dt * args.save_every)
     times = np.arange(phi.shape[0]) * frame_dt
-    R = float(case.get("R", 0.7))
     touchdown = touchdown_index(phi, Y)
     if touchdown is None:
         print("[closeup] touchdown: not reached within the simulated horizon", flush=True)
@@ -320,7 +323,6 @@ def main():
     dz = float(p.dy)
     fig, axes = plt.subplots(3, len(picks), figsize=(2.9 * len(picks), 7.4), dpi=140)
     axes = np.atleast_2d(axes)
-    im = None
     for c, k in enumerate(picks):
         cl = cl_all[k]
         if cl is not None:

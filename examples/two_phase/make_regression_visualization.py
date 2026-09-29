@@ -250,7 +250,9 @@ def main():
             pred=pred,
             roll_rmse=float(np.sqrt(np.mean((pred - truth) ** 2))),
             iou=iou(pred[-1], truth[-1]),
-            mass_err=float(np.mean([abs(np.sum(pred[t] * fluid) - np.sum(truth[t] * fluid)) / m0 for t in range(1, T)])),
+            mass_err=float(
+                np.mean([abs(np.sum(pred[t] * fluid) - np.sum(truth[t] * fluid)) / m0 for t in range(1, T)])
+            ),
         )
         rollouts.append(item)
         print(

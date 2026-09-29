@@ -82,6 +82,48 @@ def test_generated_case_starts_outside_solid():
     assert overlap < 0.05
 
 
+def test_remote_tall_obstacle_does_not_raise_local_support():
+    """Initial clearance is based on the drop footprint, not a global max height."""
+    p = pf.PhaseFieldParams(Nx=128, Ny=128, Lx=6.0, Ly=6.0)
+    X, Y = pf.grids(p)
+    wall = pf.surface_flat(p)
+    remote = pf.sdf_box(X, Y, 4.35, 4.85, 0.25, 2.0)
+    sdf = pf.sdf_union(wall, remote)
+    local = float(pf._local_surface_top(sdf, p, x0=1.0, radius=0.65, margin=0.1))
+    global_top = float(jnp.max(jnp.where(sdf < 0.0, Y, -jnp.inf)))
+    assert global_top > local + 1.0
+    assert local == pytest.approx(float(pf._local_surface_top(wall, p, x0=1.0, radius=0.65, margin=0.1)))
+
+
+def test_smoke_flat_drop_moves_downward_and_reaches_wall_signal():
+    """A representative L0 case should exhibit basic kinematics, not a static field."""
+    p, solid, initial = pf.build_case(
+        dict(
+            surface="flat",
+            We=120.0,
+            Re=120.0,
+            R=0.65,
+            u_impact=1.0,
+            eps_factor=2.0,
+            impact_gap_eps=0.75,
+            velocity_mode="uniform",
+            dt=2e-3,
+        ),
+        N=64,
+        dt=2e-3,
+    )
+    step = jax.jit(pf.step, static_argnums=(2,))
+    states = [initial]
+    for _ in range(40):
+        states.append(step(states[-1], solid, p))
+    y = jnp.arange(p.Ny) * p.dy + 0.5 * p.dy
+    centroids = [float(jnp.sum(s.phi * y[None, :]) / jnp.maximum(jnp.sum(s.phi), 1e-8)) for s in states]
+    assert centroids[-1] < centroids[0]
+    # The lower fluid cells must eventually carry a nonzero liquid signal.
+    near_wall = (y > 0.25) & (y < 0.75)
+    assert float(jnp.max(states[-1].phi[:, near_wall])) > 1e-4
+
+
 def test_wetting_band_is_fluid_side_only():
     p = pf.PhaseFieldParams(Nx=96, Ny=96, Lx=6.0, Ly=6.0, wet_band=0.1)
     solid = pf.make_solid(pf.surface_flat(p), p, cos_theta=0.5)

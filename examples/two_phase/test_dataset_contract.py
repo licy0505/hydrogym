@@ -88,3 +88,60 @@ def test_spreading_schedule_is_integer_and_physical():
         assert dt > 0.0 and nsteps >= save_every > 0
         assert nsteps % save_every == 0
         assert dt <= float(c["dt"])
+
+
+def test_smoke_case_set_is_exactly_the_l0_transfer_contract():
+    smoke = C.CASE_SETS["smoke"]()
+    assert len(smoke) == 8
+    train = [c for c in smoke if c["split"] == "train"]
+    test = [c for c in smoke if c["split"] == "test"]
+    assert len(train) == len(test) == 4
+    assert {c["surface"] for c in train} <= {"flat", "pillars"}
+    assert {c["surface"] for c in train} == {"flat", "pillars"}
+    assert {c["surface"] for c in test} == {"random_pillars", "hierarchical", "grooves", "wedge"}
+    assert all(float(c["u_impact"]) == 1.0 for c in smoke)
+    assert all(float(c["Re"]) == 120.0 for c in smoke)
+    assert all(float(c["R"]) == pytest.approx(0.65) for c in smoke)
+    assert all(c["velocity_mode"] == "uniform" for c in smoke)
+    assert all(float(c["dt"]) == pytest.approx(2e-3) for c in smoke)
+
+
+def test_smoke_geometry_features_have_three_saved_grid_cells():
+    saved_dx = 6.0 / 64.0
+    smoke = C.CASE_SETS["smoke"]()
+    cells = [G._feature_cells(c, saved_dx) for c in smoke]
+    finite = [n for n in cells if np.isfinite(n)]
+    assert finite and min(finite) >= 3.0
+
+
+def test_diagnose_checks_startup_total_mass_against_raw_initial_state():
+    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0)
+    solid = pf.make_solid(pf.surface_flat(p), p)
+    raw = np.zeros((p.Nx, p.Ny), dtype=np.float32)
+    raw[0, 0] = 0.5  # diffuse tail in the geometric solid at raw t=0
+    raw[0, 4] = 0.5
+    initial = pf.State(phi=raw, u=np.zeros_like(raw), v=np.zeros_like(raw), t=0.0)
+
+    # Simulate a startup loss: the first saved frame has no solid leakage but
+    # contains only 0.495 of the original total mass. Fluid mass is intentionally
+    # normalised from this first saved frame, not from the raw state.
+    first_saved = np.zeros_like(raw)
+    first_saved[0, 4] = 0.495
+    history = first_saved[None, ...]
+    ok, diagnostics = G._diagnose(
+        initial,
+        history,
+        np.zeros_like(history),
+        np.zeros_like(history),
+        solid,
+        p,
+        max_phi_overshoot=0.02,
+        max_solid_leak=5e-4,
+        min_total_mass_ratio=0.995,
+        max_total_mass_ratio=1.005,
+        max_speed=5.0,
+    )
+    assert not ok
+    assert diagnostics["startup_total_mass_ratio"] == pytest.approx(0.495)
+    assert diagnostics["min_total_mass_ratio"] == pytest.approx(0.495)
+    assert diagnostics["min_fluid_mass_ratio"] == pytest.approx(1.0)

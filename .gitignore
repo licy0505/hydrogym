@@ -135,6 +135,7 @@ examples/firedrake/getting_started/output/
 .vscode/
 
 # two-phase example artifacts
+examples/two_phase/artifacts/
 examples/two_phase/data/
 examples/two_phase/ckpts/
 examples/two_phase/logs/
