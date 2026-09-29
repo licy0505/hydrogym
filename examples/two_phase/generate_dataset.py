@@ -255,9 +255,7 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
     accepted_statuses = {"current", "generated"}
     accepted = [r for r in records if r["status"] in accepted_statuses]
     rejected = [
-        r
-        for r in records
-        if r["status"] in {"underresolved_geometry", "physics_validation_rejection", "exception"}
+        r for r in records if r["status"] in {"underresolved_geometry", "physics_validation_rejection", "exception"}
     ]
     fingerprints = sorted(str(r["trajectory_fingerprint"]) for r in accepted if r.get("trajectory_fingerprint"))
     aggregate = hashlib.sha256("\n".join(fingerprints).encode()).hexdigest()
@@ -342,7 +340,6 @@ def _save_case(
         split=np.array(case["split"]),
         case=np.array(json.dumps(case_meta, ensure_ascii=False)),
     )
-
 
 
 def main() -> None:
