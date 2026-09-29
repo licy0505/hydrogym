@@ -269,6 +269,26 @@ def lowwe_test_cases(n: int = 12, seed: int = 3027):
     return out
 
 
+def spreading_cases():
+    """High-inertia impact and dynamic spreading dataset across distinct surfaces."""
+    return [
+        # Train (flat walls & regular pillars with descent & spreading)
+        dict(split="train", surface="flat", We=150.0, Re=200.0, cos_theta=-0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="flat", We=200.0, Re=200.0, cos_theta=0.0, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="flat", We=250.0, Re=200.0, cos_theta=0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="flat", We=200.0, Re=200.0, cos_theta=0.8, u_impact=1.7, dt=2.0e-3),
+        dict(split="train", surface="pillars", n_pillars=4, width=0.3, height=0.35, We=150.0, cos_theta=-0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="pillars", n_pillars=5, width=0.25, height=0.35, We=200.0, cos_theta=0.0, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="pillars", n_pillars=6, width=0.25, height=0.35, We=250.0, cos_theta=0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="train", surface="pillars", n_pillars=5, width=0.35, height=0.35, We=220.0, cos_theta=0.8, u_impact=1.7, dt=2.0e-3),
+        # Test (unseen complex geometries)
+        dict(split="test", surface="random_pillars", n_pillars=6, width_range=(0.20, 0.40), seed=102, We=200.0, cos_theta=0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="test", surface="hierarchical", sub_width=0.22, sub_height=0.18, seed=105, We=200.0, cos_theta=0.0, u_impact=1.6, dt=2.0e-3),
+        dict(split="test", surface="grooves", seed=107, We=200.0, cos_theta=0.5, u_impact=1.6, dt=2.0e-3),
+        dict(split="test", surface="wedge", seed=108, We=200.0, cos_theta=0.0, u_impact=1.6, dt=2.0e-3),
+    ]
+
+
 CASE_SETS = {
     "base": lambda: [copy.deepcopy(c) for c in CASES],
     "large": large_simple_cases,
@@ -276,4 +296,5 @@ CASE_SETS = {
     "lowWe": lowwe_cases,
     "lowWe_test": lowwe_test_cases,
     "lowWe_all": lambda: lowwe_cases(48, 2027) + lowwe_test_cases(12, 3027),
+    "spreading": spreading_cases,
 }

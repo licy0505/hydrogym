@@ -42,3 +42,49 @@ def test_coarse_geometry_is_signed_and_shape_correct():
     assert np.any(sdf < 0.0)
     assert np.any(sdf > 0.0)
     assert np.all((frac >= 0.0) & (frac <= 1.0))
+
+
+# ---------------------------------------------------------------------------
+#  ``spreading``: high-inertia impact + dynamic spreading transfer set
+# ---------------------------------------------------------------------------
+
+
+def test_spreading_set_keeps_the_transfer_protocol():
+    cs = C.CASE_SETS["spreading"]()
+    train = [c for c in cs if c["split"] == "train"]
+    test = [c for c in cs if c["split"] == "test"]
+    assert train and test
+    # Train only ever sees the two simple families; the complex ones stay unseen.
+    assert {c["surface"] for c in train} <= set(C.SIMPLE_FAMILIES)
+    assert {c["surface"] for c in test} <= set(C.COMPLEX_FAMILIES)
+    # Every unseen family is represented.
+    assert {c["surface"] for c in test} == set(C.COMPLEX_FAMILIES)
+    # Test geometries are disjoint from the training ones (distinct seeds).
+    train_seeds = {c.get("seed") for c in train}
+    assert not any(c.get("seed") in train_seeds for c in test)
+
+
+def test_spreading_cases_are_high_inertia_and_cfl_stable():
+    for c in C.CASE_SETS["spreading"]():
+        assert float(c["u_impact"]) >= 1.5
+        # ``Re`` is optional and defaults to 200 inside ``pf.build_case``.
+        assert float(c.get("Re", 200.0)) == 200.0
+        assert float(c["We"]) >= 150.0
+        p = pf.PhaseFieldParams(Nx=192, Ny=192, Lx=6.0, Ly=6.0, dt=float(c["dt"]))
+        # The requested dt must already be inside the CFL-stable envelope.
+        assert float(c["dt"]) <= float(pf.stable_dt(p, u_max=2.0))
+
+
+def test_spreading_geometries_are_resolvable_on_v3_saved_grid():
+    saved_dx = 6.0 / 192 * 3
+    cells = [G._feature_cells(c, saved_dx) for c in C.CASE_SETS["spreading"]()]
+    assert min(cells) >= 2.0
+
+
+def test_spreading_schedule_is_integer_and_physical():
+    args = _args(3)
+    for c in C.CASE_SETS["spreading"]():
+        dt, nsteps, save_every = G._effective_schedule(c, args)
+        assert dt > 0.0 and nsteps >= save_every > 0
+        assert nsteps % save_every == 0
+        assert dt <= float(c["dt"])
