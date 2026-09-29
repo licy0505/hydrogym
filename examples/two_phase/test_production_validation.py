@@ -141,6 +141,18 @@ def test_report_schema_valid_missing_field_and_nan():
     assert any("non-finite" in error for error in validate_report_schema(nonfinite))
 
 
+@pytest.mark.parametrize(
+    "version, valid",
+    [(4, True), (5, True), (3, False), (6, False), (True, False), ("5", False), (5.0, False), (None, False)],
+)
+def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
+    """Historical (v4) and current (v5) reports validate; unknown or malformed contracts do not."""
+    report = _minimal_report()
+    report["repository"]["solver_contract_version"] = version
+    contract_errors = [e for e in validate_report_schema(report) if "solver_contract_version" in e]
+    assert (not contract_errors) is valid
+
+
 def test_atomic_report_writer_emits_strict_json(tmp_path):
     path = tmp_path / "nested" / "report.json"
     write_report_atomic(_minimal_report(), path)
