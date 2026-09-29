@@ -117,6 +117,10 @@ jobs:
           uv run --no-sync pytest -q test_production_validation.py
           uv run --no-sync python -m production.run_validation --config production/configs/ci.json --out artifacts/production_validation/ci --overwrite
 
+      - name: Run two-phase capillary sign audit
+        working-directory: examples/two_phase
+        run: uv run --no-sync python -m production.capillary_audit --json artifacts/production_validation/capillary_audit.json
+
       - name: Run two-phase L0 smoke
         run: uv run --no-sync bash examples/two_phase/run_smoke.sh
 
@@ -130,6 +134,7 @@ jobs:
             examples/two_phase/artifacts/smoke/data/manifest.json
             examples/two_phase/artifacts/smoke/report.json
             examples/two_phase/artifacts/production_validation/ci/report.json
+            examples/two_phase/artifacts/production_validation/capillary_audit.json
 
   package:
     name: Package distributions
