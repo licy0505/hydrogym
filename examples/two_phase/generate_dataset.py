@@ -173,8 +173,12 @@ def _diagnose(
     max_speed: float,
 ) -> tuple[bool, dict]:
     """Validate finite values, conservative mass and *deep-solid* leakage."""
-    phi0 = np.asarray(initial.phi, dtype=np.float64)
+    # Histories begin at the first saved frame (after ``save_every`` steps).
+    # The solver's bounded solid projection can redistribute diffuse-interface
+    # mass during those unsaved startup steps, so comparing saved frames to the
+    # raw t=0 state would report a false fluid-mass increase.
     phi = np.asarray(phi, dtype=np.float64)
+    phi0 = np.asarray(phi[0] if phi.shape[0] else initial.phi, dtype=np.float64)
     u = np.asarray(u, dtype=np.float64)
     v = np.asarray(v, dtype=np.float64)
     hard_solid = np.asarray(solid.sdf < 0.0, dtype=np.float64)
@@ -220,11 +224,62 @@ def _diagnose(
     return bool(ok), diag
 
 
+def _rejection_path(out_dir: Path, name: str) -> Path:
+    return out_dir / "rejected" / f"{name}.json"
+
+
+def _remove_rejection(out_dir: Path, name: str) -> None:
+    _rejection_path(out_dir, name).unlink(missing_ok=True)
+
+
 def _write_rejection(out_dir: Path, name: str, case: dict, diagnostics: dict) -> None:
     reject_dir = out_dir / "rejected"
     reject_dir.mkdir(parents=True, exist_ok=True)
     payload = {"case": case, "diagnostics": diagnostics}
-    (reject_dir / f"{name}.json").write_text(json.dumps(payload, indent=2, ensure_ascii=False))
+    _rejection_path(out_dir, name).write_text(json.dumps(payload, indent=2, ensure_ascii=False))
+
+
+def _manifest_record(name: str, case: dict, status: str, fingerprint: str | None = None) -> dict:
+    record = {
+        "case_name": name,
+        "split": case["split"],
+        "surface": case.get("surface", "flat"),
+        "status": status,
+    }
+    if fingerprint is not None:
+        record["trajectory_fingerprint"] = fingerprint
+    return record
+
+
+def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
+    accepted_statuses = {"current", "generated"}
+    accepted = [r for r in records if r["status"] in accepted_statuses]
+    rejected = [
+        r
+        for r in records
+        if r["status"] in {"underresolved_geometry", "physics_validation_rejection", "exception"}
+    ]
+    fingerprints = sorted(str(r["trajectory_fingerprint"]) for r in accepted if r.get("trajectory_fingerprint"))
+    aggregate = hashlib.sha256("\n".join(fingerprints).encode()).hexdigest()
+    accepted_by_surface = {}
+    for record in accepted:
+        surface = record["surface"]
+        accepted_by_surface[surface] = accepted_by_surface.get(surface, 0) + 1
+    manifest = {
+        "manifest_schema_version": 1,
+        "dataset_schema_version": DATASET_SCHEMA_VERSION,
+        "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        "case_set": set_name,
+        "expected": len(records),
+        "accepted": len(accepted),
+        "rejected": len(rejected),
+        "complete": len(records) == len(accepted) and not rejected,
+        "accepted_by_surface": accepted_by_surface,
+        "aggregate_fingerprint": aggregate,
+        "records": records,
+    }
+    (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
+    return manifest
 
 
 def _save_case(
@@ -240,6 +295,7 @@ def _save_case(
     diagnostics: dict,
     dataset_fingerprint: str,
     feature_cells_min: float,
+    parameter_semantics: dict,
 ) -> None:
     """Write one validated trajectory with explicit physical-time metadata."""
     # Keep phi/geometry in float32: thin low-We films can sit near the plotting
@@ -265,6 +321,7 @@ def _save_case(
         feature_cells_min=float(feature_cells_min),
         dataset_fingerprint=dataset_fingerprint,
         solver_sha256=_source_sha256(pf.__file__),
+        parameter_semantics=parameter_semantics,
         diagnostics=diagnostics,
     )
     times = np.arange(1, phi_d.shape[0] + 1, dtype=np.float32) * float(p.dt * save_every)
@@ -287,6 +344,7 @@ def _save_case(
     )
 
 
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--set", default="base", choices=sorted(C.CASE_SETS))
@@ -298,6 +356,7 @@ def main() -> None:
     ap.add_argument("--dt", type=float, default=4e-3, help="nominal solver timestep")
     ap.add_argument("--limit", type=int, default=0, help="max cases (0 = all)")
     ap.add_argument("--overwrite", action="store_true", help="regenerate existing .npz files")
+    ap.add_argument("--require-complete", action="store_true", help="fail if any planned case is not accepted")
     ap.add_argument("--dry-run", action="store_true", help="build cases and print schedule without integrating")
     ap.add_argument("--max-phi-overshoot", type=float, default=0.02)
     ap.add_argument("--max-solid-leak", type=float, default=5e-4)
@@ -323,20 +382,35 @@ def main() -> None:
     if args.limit:
         all_cases = all_cases[: args.limit]
 
+    records = []
     for i, case in enumerate(all_cases):
         name = _case_name(case, args.set, i)
         path = out_dir / f"{name}.npz"
+        temporary_path = out_dir / f".{name}.tmp.npz"
+        _remove_rejection(out_dir, name)
 
         dt, nsteps, save_every = _effective_schedule(case, args)
         fingerprint = _dataset_fingerprint(case, args, dt, nsteps, save_every)
         saved_dx = 6.0 / args.N * args.ds
         feature_cells_min = _feature_cells(case, saved_dx)
+        semantics = {
+            "nominal_We": float(case.get("We", 100.0)),
+            "nominal_Re": float(case.get("Re", 200.0)),
+            "u_impact_star": float(case.get("u_impact", 0.5)),
+            "kinematic_We": float(case.get("We", 100.0)) * float(case.get("u_impact", 0.5)) ** 2,
+            "kinematic_Re": float(case.get("Re", 200.0)) * abs(float(case.get("u_impact", 0.5))),
+        }
 
-        if path.exists() and not args.overwrite:
-            if _saved_case_is_current(path, fingerprint):
-                print(f"[{i:03d}] exact fingerprint match, skip: {path.name}", flush=True)
-                continue
-            print(f"[{i:03d}] stale fingerprint, regenerate: {path.name}", flush=True)
+        if path.exists() and not args.overwrite and _saved_case_is_current(path, fingerprint):
+            print(f"[{i:03d}] exact fingerprint match, skip: {path.name}", flush=True)
+            records.append(_manifest_record(name, case, "current", fingerprint))
+            continue
+
+        if path.exists():
+            reason = "overwrite" if args.overwrite else "stale fingerprint"
+            print(f"[{i:03d}] {reason}, remove and regenerate: {path.name}", flush=True)
+            path.unlink(missing_ok=True)
+        temporary_path.unlink(missing_ok=True)
 
         print(
             f"[{i:03d}] {name}: dt={dt:g}, nsteps={nsteps}, save_every={save_every}, "
@@ -351,9 +425,14 @@ def main() -> None:
                 "saved_dx": saved_dx,
             }
             _write_rejection(out_dir, name, case, diagnostics)
+            record = _manifest_record(name, case, "underresolved_geometry")
+            record["diagnostics"] = diagnostics
+            records.append(record)
             print(f"[{i:03d}] REJECT underresolved geometry: {diagnostics}", flush=True)
             continue
         if args.dry_run:
+            records.append(_manifest_record(name, case, "dry_run"))
+            print(f"[{i:03d}] dry-run: no trajectory generated", flush=True)
             continue
 
         t0 = time.time()
@@ -376,10 +455,13 @@ def main() -> None:
             )
             if not ok:
                 _write_rejection(out_dir, name, case, diagnostics)
-                print(f"[{i:03d}] REJECT {diagnostics} -> rejected/{name}.json", flush=True)
+                record = _manifest_record(name, case, "physics_validation_rejection")
+                record["diagnostics"] = diagnostics
+                records.append(record)
+                print(f"[{i:03d}] REJECT physics validation: {diagnostics}", flush=True)
                 continue
             _save_case(
-                path,
+                temporary_path,
                 case,
                 p,
                 solid,
@@ -391,16 +473,37 @@ def main() -> None:
                 diagnostics,
                 fingerprint,
                 feature_cells_min,
+                semantics,
             )
+            temporary_path.replace(path)
+            _remove_rejection(out_dir, name)
+            records.append(_manifest_record(name, case, "generated", fingerprint))
             print(f"[{i:03d}] saved T={phi.shape[0]} in {time.time() - t0:.1f}s -> {path}", flush=True)
-        except (FloatingPointError, ValueError, RuntimeError) as exc:
+        except Exception as exc:
+            # The destination was removed before integration and writes are
+            # atomic, so a failed regeneration cannot leave an old successful
+            # trajectory (or a half-written replacement) behind.
+            path.unlink(missing_ok=True)
+            temporary_path.unlink(missing_ok=True)
             diagnostics = {"exception": type(exc).__name__, "message": str(exc)}
             _write_rejection(out_dir, name, case, diagnostics)
+            record = _manifest_record(name, case, "exception")
+            record["diagnostics"] = diagnostics
+            records.append(record)
             print(f"[{i:03d}] REJECT {type(exc).__name__}: {exc}", flush=True)
         finally:
             # Each case has static JAX arguments.  Clear compiled executables so
             # a long sweep does not grow resident memory case by case.
             jax.clear_caches()
+
+    manifest = _write_manifest(out_dir, args.set, records)
+    print(
+        f"manifest expected={manifest['expected']} accepted={manifest['accepted']} "
+        f"rejected={manifest['rejected']} complete={str(manifest['complete']).lower()}",
+        flush=True,
+    )
+    if args.require_complete and not manifest["complete"]:
+        raise SystemExit("dataset generation failed --require-complete: manifest is incomplete")
 
 
 if __name__ == "__main__":

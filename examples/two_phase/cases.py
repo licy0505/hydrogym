@@ -269,6 +269,84 @@ def lowwe_test_cases(n: int = 12, seed: int = 3027):
     return out
 
 
+def smoke_cases():
+    """Small deterministic L0 smoke set for the dataset/training/evaluation contract.
+
+    The first four trajectories are deliberately simple training examples.  The
+    last four are geometry-OOD checks, one per complex surface family.  Unlike
+    the historical low-We sets this case set uses a comfortable impact speed
+    and geometry widths that remain visible on the N=64, ds=1 saved grid.
+    """
+    common = dict(
+        We=120.0,
+        Re=120.0,
+        R=0.65,
+        u_impact=1.0,
+        eps_factor=2.0,
+        impact_gap_eps=0.75,
+        velocity_mode="uniform",
+        dt=2.0e-3,
+    )
+    return [
+        dict(split="train", surface="flat", cos_theta=-0.25, seed=500, **common),
+        dict(split="train", surface="flat", cos_theta=0.25, seed=501, **common),
+        dict(
+            split="train",
+            surface="pillars",
+            n_pillars=4,
+            width=0.45,
+            height=0.45,
+            cos_theta=-0.25,
+            seed=502,
+            **common,
+        ),
+        dict(
+            split="train",
+            surface="pillars",
+            n_pillars=5,
+            width=0.40,
+            height=0.40,
+            cos_theta=0.25,
+            seed=503,
+            **common,
+        ),
+        dict(
+            split="test",
+            surface="random_pillars",
+            n_pillars=5,
+            width_range=(0.40, 0.55),
+            height_range=(0.30, 0.55),
+            seed=504,
+            cos_theta=0.0,
+            **common,
+        ),
+        dict(
+            split="test",
+            surface="hierarchical",
+            n_pillars=3,
+            width=0.65,
+            height=0.45,
+            n_sub=2,
+            sub_width=0.40,
+            sub_height=0.20,
+            seed=505,
+            cos_theta=0.0,
+            **common,
+        ),
+        dict(
+            split="test",
+            surface="grooves",
+            n_grooves=5,
+            width=0.40,
+            depth=0.25,
+            seed=506,
+            cos_theta=0.0,
+            **common,
+        ),
+        dict(split="test", surface="wedge", slope=0.35, seed=507, cos_theta=0.0, **common),
+    ]
+
+
 def spreading_cases():
     """High-inertia impact and dynamic spreading dataset across distinct surfaces."""
     return [
@@ -298,3 +376,4 @@ CASE_SETS = {
     "lowWe_all": lambda: lowwe_cases(48, 2027) + lowwe_test_cases(12, 3027),
     "spreading": spreading_cases,
 }
+CASE_SETS["smoke"] = smoke_cases

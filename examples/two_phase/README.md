@@ -1,14 +1,21 @@
 # 两相流相分布的学习与预测：液滴撞击（简单 case → 复杂表面）
 
+> **L0/development status.** The current JAX solver and tiny FNO runs are
+> regression, dataset-contract, and deterministic CPU diagnostics only. They
+> are **not publication-quality CFD evidence**, and they do not validate
+> geometry generalization for publication. `run_smoke.sh` is the CI entry point
+> for the eight-case L0 pipeline; `run_experiments.sh` is development-scale,
+> not a production training recipe. Production data and training will run
+> locally on GPU/HPC later.
+
 本目录是一个**可运行**的原型，回答这个问题：
 
 > 能否基于 HydroGym，用「简单液滴下落 + 少量微结构」的仿真 case，训练一个模型，
 > 去**预测液滴撞击复杂表面后的液相（相分布 φ(x,t)）演化**？
 
-结论先行（详见文末实验结果）：**可以，但泛化差距真实存在**。在简单表面（平壁、周期柱阵）
-上训练的代理模型，能在同类表面上高精度复现相分布；迁移到未见的复杂表面（随机柱、分级柱、
-凹槽、斜面）时误差明显上升——这正说明「相分布预测」是一个需要**几何感知**与
-**更多样训练分布**的问题，而本目录给出了完整的、可在 HydroGym 内扩展的流水线。
+结论先行：当前结果只说明数据、模型、评估和回归契约可以在 CPU 上运行；它们**不构成**
+出版级 CFD 或几何泛化证据。历史实验表格保留作诊断记录，不能替代更高分辨率、验证过的
+生产数据。这个目录提供的是可在 HydroGym 内扩展的 L0/development 流水线。
 
 ---
 
@@ -94,11 +101,26 @@ Nyquist 零模；数据生成在写盘前检查守恒、固体泄漏、相场越
 
 ## 运行
 
+The supported CI smoke entry point is deliberately small and CPU-only:
+
+```bash
+cd examples/two_phase
+JAX_PLATFORMS=cpu bash run_smoke.sh
+# Optional: exercise the resume/unroll path with a few additional steps.
+SMOKE_UNROLL=1 bash run_smoke.sh
+```
+
+It creates only ignored files below `artifacts/smoke/`, verifies the complete
+manifest, runs a kinematic check, trains a width-8/two-layer FNO for about 20
+steps, and evaluates persistence plus the model for five saved frames. A
+negative smoke skill is allowed: this is a pipeline test, not a model
+performance benchmark.
+
 ```bash
 cd examples/two_phase
 pytest test_two_phase.py test_surrogate.py test_dataset_contract.py test_train_operator.py
 
-# schema v3 + exact fingerprint；旧 schema-v2 数据/checkpoint 会 fail closed
+# schema v3 + exact fingerprint; old schema-v2 data/checkpoint fails closed
 bash run_experiments.sh
 
 # 高惯性撞击 / 动态铺展数据集（spreading）+ FNO 回归评测
@@ -138,7 +160,11 @@ python make_contact_closeup.py
 
 ![fno regression](figures/fig_fno_regression.png)
 
-### 结果（CPU, 192² 求解 / 64² 代理, FNO+SDF, full-horizon 自回归）
+### 历史诊断结果（非出版证据；CPU, 192² 求解 / 64² 代理, FNO+SDF）
+
+The following historical numbers are retained only to make regressions
+inspectable. They are not a validation of physical accuracy or geometry
+transfer.
 
 | 未见表面 | rollout RMSE | final IoU | 质量误差(相对) | persistence 基线 RMSE |
 |---------|--------------|-----------|----------------|----------------------|
@@ -179,7 +205,7 @@ python make_contact_closeup.py
 
 ---
 
-## 4. 实验结果（CPU, 192² 求解 / 64² 代理, 训练仅用简单 case）
+## 4. 历史实验结果（仅作回归诊断，非出版级验证）
 
 由 `evaluate_transfer.py` 产生（horizon=40 个保存帧；重跑有小幅波动）：
 
@@ -191,7 +217,7 @@ python make_contact_closeup.py
 **解读**
 
 1. **单步预测**（给真实当前态预测下一帧）在未见复杂表面上仅比训练域高约 18%
-   （0.017→0.020）——说明模型确实从「简单液滴/微结构」case 中学到了可迁移的
+   （0.017→0.020）——这个差异只适合作为诊断信号，不能据此声称模型学到了可发表的
    「撞击→相分布演化」算子。
 2. **自回归 rollout** 误差随时间累积，复杂表面更明显；主要失败模式是**飞溅卫星滴、
    薄液膜（lamella）与柱间渗透深度**的估计——这些是训练分布里没有的细几何/细尺度现象。

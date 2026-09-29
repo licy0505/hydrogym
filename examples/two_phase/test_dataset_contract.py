@@ -88,3 +88,27 @@ def test_spreading_schedule_is_integer_and_physical():
         assert dt > 0.0 and nsteps >= save_every > 0
         assert nsteps % save_every == 0
         assert dt <= float(c["dt"])
+
+
+def test_smoke_case_set_is_exactly_the_l0_transfer_contract():
+    smoke = C.CASE_SETS["smoke"]()
+    assert len(smoke) == 8
+    train = [c for c in smoke if c["split"] == "train"]
+    test = [c for c in smoke if c["split"] == "test"]
+    assert len(train) == len(test) == 4
+    assert {c["surface"] for c in train} <= {"flat", "pillars"}
+    assert {c["surface"] for c in train} == {"flat", "pillars"}
+    assert {c["surface"] for c in test} == {"random_pillars", "hierarchical", "grooves", "wedge"}
+    assert all(float(c["u_impact"]) == 1.0 for c in smoke)
+    assert all(float(c["Re"]) == 120.0 for c in smoke)
+    assert all(float(c["R"]) == pytest.approx(0.65) for c in smoke)
+    assert all(c["velocity_mode"] == "uniform" for c in smoke)
+    assert all(float(c["dt"]) == pytest.approx(2e-3) for c in smoke)
+
+
+def test_smoke_geometry_features_have_three_saved_grid_cells():
+    saved_dx = 6.0 / 64.0
+    smoke = C.CASE_SETS["smoke"]()
+    cells = [G._feature_cells(c, saved_dx) for c in smoke]
+    finite = [n for n in cells if np.isfinite(n)]
+    assert finite and min(finite) >= 3.0

@@ -79,6 +79,51 @@ jobs:
       - name: Import core package
         run: uv run --no-sync python -c "import hydrogym; print(hydrogym.__all__)"
 
+  two-phase-smoke:
+    name: Two-phase unit + E2E smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: "false"
+      PYTHONHASHSEED: "0"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install uv and Python 3.12
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: ${{ env.UV_VERSION }}
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Install two-phase CPU dependencies
+        run: uv sync --locked --no-default-groups --group dev --extra jaxfluids
+
+      - name: Run two-phase unit tests
+        run: >-
+          uv run --no-sync pytest -q
+          examples/two_phase/test_two_phase.py
+          examples/two_phase/test_surrogate.py
+          examples/two_phase/test_dataset_contract.py
+          examples/two_phase/test_train_operator.py
+
+      - name: Run two-phase L0 smoke
+        run: uv run --no-sync bash examples/two_phase/run_smoke.sh
+
+      - name: Upload two-phase smoke contracts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: two-phase-smoke-contracts
+          if-no-files-found: ignore
+          path: |
+            examples/two_phase/artifacts/smoke/data/manifest.json
+            examples/two_phase/artifacts/smoke/report.json
+
   package:
     name: Package distributions
     runs-on: ubuntu-latest
