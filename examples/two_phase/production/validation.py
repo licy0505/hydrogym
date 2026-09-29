@@ -10,7 +10,6 @@ from typing import Any
 import jax
 import jax.numpy as jnp
 import numpy as np
-
 import phasefield as pf
 from production import observables as obs
 

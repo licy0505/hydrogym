@@ -6,7 +6,6 @@ import math
 from dataclasses import asdict, dataclass
 from typing import Any, Callable
 
-
 MetricFunction = Callable[[dict[str, Any]], dict[str, Any]]
 
 

@@ -7,7 +7,6 @@ from pathlib import Path
 
 import numpy as np
 import pytest
-
 from production.config import (
     ValidationConfig,
     canonical_config_json,
@@ -30,7 +29,6 @@ from production.observables import (
     total_phase_mass,
 )
 from production.report import REPORT_SCHEMA_VERSION, validate_report_schema, write_report_atomic
-
 
 HERE = Path(__file__).resolve().parent
 
