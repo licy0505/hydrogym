@@ -14,18 +14,49 @@ with one-fluid properties, Korteweg/CSF capillary force and Brinkman volume
 penalization for the solid (wall + micro-structures):
 
     d(phi)/dt + div(u phi) = M * lap(mu) + wall_energy_term
-    mu = f'(phi)/eps - eps * lap(phi)
-    du/dt + div(u u) = -grad(p)/rho + div(nu grad u)
-                       - (1/We) mu grad(phi) / rho - (1/Fr^2) (rho-<rho>)/rho yhat
+    mu = f'(phi)/eps - eps * lap(phi) + wetting_mu            (mu = dF/dphi)
+    du/dt + div(u u) = -grad(P) + div(nu grad u)
+                       + (SIGMA_NORM/We) mu grad(phi) / rho_l - (1/Fr^2) (rho-<rho>)/rho yhat
                        - (chi/eta) u
     div(u) = 0
+
+  P is the projection pressure of a constant-coefficient projection and the
+  capillary acceleration divides by the constant ``rho_l``.  Neither is the
+  variable-density form (known blockers P-VARDENS-PROJ and P-CAP-RHO, see
+  ``production/validation.py``); they are documented here as implemented.
 
 * phi = 1 liquid, phi = 0 gas, f(phi) = phi^2 (1-phi)^2, so the equilibrium
   interface profile is phi = 0.5 (1 - tanh((r-R)/(sqrt(2) eps))) and the surface
   tension of that profile is sigma = sqrt(2)/6 per unit energy prefactor.  The
   Korteweg force therefore carries a factor 6/sqrt(2) = 3 sqrt(2) so that the
-  non-dimensional surface tension is exactly 1/We (verified by the Laplace test
-  in ``validate_physics.py``).
+  non-dimensional surface tension is exactly 1/We (checked by the static-droplet
+  Laplace benchmark in ``production/`` and analytically by
+  ``production/capillary_audit.py``).
+
+Capillary sign convention (SOLVER_CONTRACT_VERSION >= 5)
+--------------------------------------------------------
+* Orientation.  phi = 1 in the liquid, phi = 0 in the gas.  Across the interface
+  dphi/dr < 0, so grad(phi) points gas -> liquid (outside -> inside of a drop).
+  The outward normal (liquid -> gas) is n_out = -grad(phi) / |grad(phi)|.
+* Chemical potential.  mu = dF/dphi for F = int f(phi)/eps + eps/2 |grad phi|^2.
+  At the interface of a convex liquid drop mu = +eps |dphi/dr| / r > 0
+  (Gibbs-Thomson; the relaxed value is sigma/R).
+* Force.  Cahn-Hilliard advection changes the free energy at the rate
+  dF/dt = -int mu u.grad(phi), so a force that does not create free energy is
+  + mu grad(phi), equivalently - phi grad(mu): the two differ by the pure
+  gradient grad(mu phi), which the pressure absorbs.  The implemented form is
+  F = +(SIGMA_NORM/We) mu grad(phi) / rho_l.  It points toward the liquid
+  (F . n_out < 0), i.e. toward the centre of curvature.  Contract v4 used the
+  opposite sign, a negative surface tension: the capillary-driven flow raised the
+  interfacial free energy and the projection pressure of a convex drop was lower
+  in the liquid than in the gas.
+* Pressure.  The projection removes the irrotational part of the force,
+  u+ = u* - dt grad(P), lap(P) = div(u*)/dt, so a static drop has grad(P) = F and
+  P_liquid - P_gas = -int F_r dr.  With phi = 1 in liquid and phi = 0 in gas, this
+  sign yields positive p_liquid - p_gas for a convex liquid droplet under the
+  current mu convention: delta_p = +1/(We R) for a 2-D circle.
+  ``pressure_field`` re-evaluates ``rhs`` and the same projection, so it inherits
+  this convention; the capillary formula must not be duplicated anywhere else.
 * rho(phi) = rho_g + (rho_l - rho_g) phi, likewise for nu
 * solid geometry enters through the indicator chi in [0, 1] (1 = solid) and the
   surface delta ds = |grad chi|, which carries the wetting (contact angle) energy
@@ -57,7 +88,9 @@ from jax import lax
 SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 
 # Bump this whenever the solver/data contract changes in a trajectory-changing way.
-SOLVER_CONTRACT_VERSION = 4
+#   5: L1A-2a -- Korteweg capillary force sign corrected to +mu grad(phi) (see the module
+#      docstring); the static-drop projection pressure now has p_liquid > p_gas.
+SOLVER_CONTRACT_VERSION = 5
 
 
 #######################################################################################
@@ -547,12 +580,17 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
     adv_v = div_upwind(u, v, v, dx, dy)
     lap_u, lap_v = _lap(u, dx, dy), _lap(v, dx, dy)
 
-    # capillary (Korteweg/CSF) force.  The original implementation used
-    # ``mu * grad(mu)`` by mistake; it must use ``mu * grad(phi)``.  This removes
-    # a nonphysical force but does not by itself validate low-We trajectories.
+    # Capillary (Korteweg/CSF) acceleration  F = +(SIGMA_NORM/We) mu grad(phi) / rho_l.
+    # Sign (module docstring, "Capillary sign convention"): phi = 1 in the liquid, so
+    # grad(phi) points gas -> liquid and mu > 0 at a convex liquid interface; F is then
+    # directed toward the liquid (F . n_out < 0).  The free energy fixes the sign:
+    # advection changes it by -int mu u.grad(phi), so +mu grad(phi) (== -phi grad(mu) up to
+    # a gradient absorbed by the pressure) never creates free energy.  Contract v4 had
+    # the opposite sign.  This is the only place the force is evaluated: ``pressure_field``
+    # calls ``rhs``.  The denominator rho_l (not rho(phi)) is the open blocker P-CAP-RHO.
     phi_x, phi_y = _ddx(phi, dx), _ddy(phi, dy)
-    cap_x = -(SIGMA_NORM / p.We) * mu * phi_x / p.rho_l
-    cap_y = -(SIGMA_NORM / p.We) * mu * phi_y / p.rho_l
+    cap_x = (SIGMA_NORM / p.We) * mu * phi_x / p.rho_l
+    cap_y = (SIGMA_NORM / p.We) * mu * phi_y / p.rho_l
 
     if p.use_gravity:
         g_y = -(1.0 / p.Fr**2) * (rho - jnp.mean(rho)) / rho
@@ -793,7 +831,13 @@ def measure_contact_angle(phi, solid: Solid, p: PhaseFieldParams, level: float =
 
 
 def pressure_field(state: State, solid: Solid, p: PhaseFieldParams):
-    """Projection pressure of the current step (used for diagnostics, e.g. Laplace law)."""
+    """Projection pressure of the current step (used for diagnostics, e.g. Laplace law).
+
+    This is the pressure of the first substep of ``step``: momentum ``du/dt = rhs - grad(P)``
+    with the same constant-coefficient projection ``lap(P) = div(u*)/dt``.  The forces come
+    from ``rhs`` alone, so the capillary sign convention is inherited and must never be
+    re-implemented here.  For a convex liquid drop (phi = 1 liquid) P_liquid > P_gas.
+    """
     _, u_rhs, v_rhs, _, _ = rhs(state, solid, p)
     dt = p.dt / 3.0
     damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)

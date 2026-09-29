@@ -1,5 +1,6 @@
 """Regression tests for dataset resolution and exact provenance contracts."""
 
+import json
 from argparse import Namespace
 
 import numpy as np
@@ -31,6 +32,36 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
     fp2 = G._dataset_fingerprint(case, a2, dt2, n2, s2)
     fp3 = G._dataset_fingerprint(case, a3, dt3, n3, s3)
     assert fp2 != fp3
+
+
+def test_saved_contract_v4_trajectory_is_stale_under_contract_v5(tmp_path, monkeypatch):
+    """Same file schema (v3) + different solver contract (v4 -> v5) => fingerprint mismatch => regenerate."""
+    assert pf.SOLVER_CONTRACT_VERSION == 5
+    case = C.lowwe_cases(1)[0]
+    args = _args(3)
+    dt, nsteps, save_every = G._effective_schedule(case, args)
+    expected_v5 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+
+    path = tmp_path / "train_lowWe_000_flat.npz"
+    with monkeypatch.context() as as_v4:
+        # Only the contract constant changes: solver/generator source, case, grid and schedule are identical.
+        as_v4.setattr(pf, "SOLVER_CONTRACT_VERSION", 4)
+        saved_v4 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+        np.savez(
+            path,
+            dataset_schema_version=np.array(G.DATASET_SCHEMA_VERSION, dtype=np.int32),
+            dataset_fingerprint=np.array(saved_v4),
+        )
+        assert G._saved_case_is_current(path, saved_v4)  # a well-formed schema-3 file, current for v4
+
+    assert saved_v4 != expected_v5
+    assert not G._saved_case_is_current(path, expected_v5)  # generate_dataset removes and regenerates it
+
+
+def test_manifest_records_solver_contract_version(tmp_path):
+    manifest = G._write_manifest(tmp_path, "smoke", [])
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 5
+    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 5
 
 
 def test_coarse_geometry_is_signed_and_shape_correct():

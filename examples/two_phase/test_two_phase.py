@@ -7,12 +7,19 @@ learning pipeline relies on:
 
 1. liquid mass is (nearly) conserved by the Cahn--Hilliard + advection update;
 2. the pressure projection leaves the velocity divergence-free to round-off
-   (i.e. the discrete grad/div/Laplacian symbols are mutually consistent).
+   (i.e. the discrete grad/div/Laplacian symbols are mutually consistent);
+3. the capillary sign convention is physical (L1A-2a, solver contract v5): the
+   Korteweg force points toward the liquid, never creates interfacial free
+   energy, and gives a *positive* Laplace jump ``P_liquid - P_gas`` for a convex
+   drop.  Assertions on ``delta_p`` must stay signed -- never ``abs(delta_p)``.
 
 Run with::
 
     pytest examples/two_phase/test_two_phase.py
 """
+
+import ast
+import inspect
 
 import numpy as np
 import pytest
@@ -191,3 +198,138 @@ def test_liquid_mass_uses_geometric_fluid():
     phi = jnp.ones((p.Nx, p.Ny))
     expected = float(jnp.sum(solid.sdf >= 0.0) * p.dx * p.dy)
     assert float(pf.liquid_mass(phi, solid, p)) == pytest.approx(expected, rel=1e-6)
+
+
+# ---------------------------------------------------------------------------
+#  Capillary / pressure sign consistency (L1A-2a, SOLVER_CONTRACT_VERSION 5)
+# ---------------------------------------------------------------------------
+
+
+def _drop_setup(N, R, We=100.0, eps_factor=2.0):
+    """Circular liquid drop (phi = 1 inside) at rest in a periodic gas box, no solid."""
+    p = pf.PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, Re=200.0, We=We, dt=2e-3)
+    p.eps = eps_factor * p.dx
+    solid = pf.empty_solid(p)
+    state = pf.droplet_initial_state(p, x0=p.Lx / 2.0, y0=p.Ly / 2.0, R=R, u_impact=0.0)
+    return p, solid, state
+
+
+def _radial_offsets(p):
+    X, Y = [np.asarray(a, dtype=np.float64) for a in pf.grids(p)]
+    return X - p.Lx / 2.0, Y - p.Ly / 2.0
+
+
+def _elliptical_drop(p, R, aspect=1.3):
+    """Non-equilibrium elliptical drop at rest: curvature varies, so mu grad(phi) is not a gradient."""
+    X, Y = pf.grids(p)
+    rx, ry = X - p.Lx / 2.0, Y - p.Ly / 2.0
+    rho = jnp.sqrt(aspect * rx**2 + ry**2 / aspect)
+    phi = (0.5 * (1.0 - jnp.tanh((rho - R) / (jnp.sqrt(2.0) * p.eps)))).astype(p.dtype)
+    return pf.State(phi=phi, u=jnp.zeros_like(phi), v=jnp.zeros_like(phi), t=0.0)
+
+
+def test_solver_contract_is_v5():
+    """The capillary sign fix changes trajectories, so the solver contract must be 5 (v4 data is stale)."""
+    assert pf.SOLVER_CONTRACT_VERSION == 5
+
+
+def test_static_drop_pressure_jump_has_correct_sign():
+    """A convex liquid drop (phi = 1) has P_liquid > P_gas: the Laplace jump is +sigma/R.
+
+    The assertion is *signed* on purpose.  The coarse band on ``delta_p * R * We`` (Laplace: ~1)
+    only guards against a gross scaling change on this small grid; it is not an accuracy gate.
+    """
+    R = 0.8
+    p, solid, state = _drop_setup(N=64, R=R)
+    step = jax.jit(pf.step, static_argnums=(2,))
+    for _ in range(60):
+        state = step(state, solid, p)
+    pressure = np.asarray(pf.pressure_field(state, solid, p), dtype=np.float64)
+    rx, ry = _radial_offsets(p)
+    r = np.hypot(rx, ry)
+    liquid_core, far_gas = r < 0.3 * R, r > 2.5 * R
+    assert float(np.asarray(state.phi)[liquid_core].mean()) > 0.9  # "inside" really is liquid
+    assert float(np.asarray(state.phi)[far_gas].mean()) < 0.1  # "outside" really is gas
+    delta_p = float(pressure[liquid_core].mean() - pressure[far_gas].mean())  # P_liquid - P_gas
+    assert delta_p > 0.0
+    assert 0.7 < delta_p * R * p.We < 1.3
+
+
+def test_korteweg_force_points_toward_liquid():
+    """F . n_out < 0 with n_out = -grad(phi)/|grad(phi)| (liquid -> gas), and mu > 0 at the interface."""
+    p, solid, state = _drop_setup(N=64, R=0.8)
+    _, u_rhs, v_rhs, mu, _ = pf.rhs(state, solid, p)  # at rest: rhs is the capillary acceleration only
+    px, py = np.asarray(pf._ddx(state.phi, p.dx), np.float64), np.asarray(pf._ddy(state.phi, p.dy), np.float64)
+    gnorm = np.maximum(np.hypot(px, py), 1e-30)
+    n_out_x, n_out_y = -px / gnorm, -py / gnorm
+    net = float(np.sum((np.asarray(u_rhs, np.float64) * n_out_x + np.asarray(v_rhs, np.float64) * n_out_y) * gnorm))
+    assert net < 0.0
+    assert float(np.max(np.asarray(mu))) > 0.0
+    # n_out really is the outward radial direction of the drop
+    rx, ry = _radial_offsets(p)
+    r = np.maximum(np.hypot(rx, ry), 1e-12)
+    band = np.abs(r - 0.8) < 2.0 * p.eps
+    assert float(np.min((n_out_x * rx + n_out_y * ry)[band] / r[band])) > 0.9
+
+
+def test_capillary_flow_does_not_create_interface_free_energy():
+    """Energy consistency, independent of any pressure diagnostic.
+
+    Cahn-Hilliard advection changes the free energy by dF/dt = -int mu u.grad(phi).  The velocity
+    driven by the solenoidal part of the capillary force must therefore have int mu u.grad(phi) > 0.
+    """
+    p, solid, _ = _drop_setup(N=64, R=0.8)
+    state = _elliptical_drop(p, R=0.8)
+    _, u_rhs, v_rhs, mu, _ = pf.rhs(state, solid, p)
+    pressure = pf.pressure_field(state, solid, p)
+    dt = p.dt / 3.0
+    u = dt * (u_rhs - pf._ddx(pressure, p.dx))
+    v = dt * (v_rhs - pf._ddy(pressure, p.dy))
+    px, py = pf._ddx(state.phi, p.dx), pf._ddy(state.phi, p.dy)
+    minus_dF_dt = float(np.sum(np.asarray(mu, np.float64) * (np.asarray(u * px + v * py, np.float64))))
+    assert minus_dF_dt > 0.0
+
+
+def test_pressure_field_reuses_rhs_forces(monkeypatch):
+    """pressure_field() and step() take *all* forces from rhs(): no second copy of the capillary formula."""
+    p, solid, state = _drop_setup(N=32, R=0.8)
+    reference = np.asarray(pf.pressure_field(state, solid, p), dtype=np.float64)
+    assert np.abs(reference).max() > 1e-4  # a non-trivial Laplace pressure
+
+    real_rhs = pf.rhs
+
+    def negated(st, so, params):
+        phi_rhs, u_rhs, v_rhs, mu, mu_expl = real_rhs(st, so, params)
+        return phi_rhs, -u_rhs, -v_rhs, mu, mu_expl
+
+    monkeypatch.setattr(pf, "rhs", negated)
+    flipped = np.asarray(pf.pressure_field(state, solid, p), dtype=np.float64)
+    np.testing.assert_allclose(flipped, -reference, rtol=1e-5, atol=1e-9)
+
+    def force_free(st, so, params):
+        phi_rhs, u_rhs, v_rhs, mu, mu_expl = real_rhs(st, so, params)
+        return phi_rhs, jnp.zeros_like(u_rhs), jnp.zeros_like(v_rhs), mu, mu_expl
+
+    monkeypatch.setattr(pf, "rhs", force_free)
+    assert float(np.abs(np.asarray(pf.pressure_field(state, solid, p))).max()) == 0.0
+    out = pf.step(state, solid, p)
+    assert float(jnp.abs(out.u).max()) == 0.0 and float(jnp.abs(out.v).max()) == 0.0
+
+
+def test_capillary_formula_lives_only_in_rhs():
+    """Static guard against a stale duplicated capillary formula (e.g. in a diagnostic)."""
+    tree = ast.parse(inspect.getsource(pf))
+    functions = {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+
+    def names(fn):
+        return {n.id for n in ast.walk(fn) if isinstance(n, ast.Name)}
+
+    def calls(fn, target):
+        return any(
+            isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == target for n in ast.walk(fn)
+        )
+
+    assert {name for name, fn in functions.items() if "SIGMA_NORM" in names(fn)} == {"rhs"}
+    for name in ("step", "pressure_field"):
+        assert calls(functions[name], "rhs"), f"{name}() must obtain its forces from rhs()"
+    assert not names(functions["pressure_field"]) & {"SIGMA_NORM", "chemical_potential", "fprime", "_lap"}
