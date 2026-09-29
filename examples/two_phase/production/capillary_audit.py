@@ -19,9 +19,9 @@ Conventions (derivation)
   ``n_out = -grad(phi) / |grad(phi)| = +r_hat`` for a drop.
 * **Chemical potential.**  ``F[phi] = int f(phi)/eps + eps/2 |grad phi|^2 dV`` with
   ``f = phi^2 (1 - phi)^2`` and ``mu = dF/dphi = f'(phi)/eps - eps lap(phi)``.
-  On the tanh profile the planar part cancels and ``mu = -eps lap_r(phi) = +eps |dphi/dr| / r
-  > 0`` at the interface of a convex liquid drop (Gibbs-Thomson; equilibrium
-  ``mu = sigma_e / R``, ``sigma_e = sqrt(2) / 6``).
+  On the tanh profile the planar part ``f'/eps - eps phi_rr`` cancels and only the curvature term
+  ``-eps (dphi/dr) / r = +eps |dphi/dr| / r > 0`` survives at the interface of a convex liquid drop
+  (Gibbs-Thomson; equilibrium ``mu = sigma_e / R``, ``sigma_e = sqrt(2) / 6``).
 * **Korteweg force.**  Cahn-Hilliard is the gradient flow ``d(phi)/dt = -u.grad(phi) +
   M lap(mu)``, so advection changes the free energy at the rate
   ``dF/dt = int mu d(phi)/dt = - int mu u.grad(phi) dV``.  The kinetic energy changes by
