@@ -34,34 +34,37 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
     assert fp2 != fp3
 
 
-def test_saved_contract_v4_trajectory_is_stale_under_contract_v5(tmp_path, monkeypatch):
-    """Same file schema (v3) + different solver contract (v4 -> v5) => fingerprint mismatch => regenerate."""
-    assert pf.SOLVER_CONTRACT_VERSION == 5
+def test_v5_dataset_is_stale_under_v6(tmp_path, monkeypatch):
+    """Same file schema (v3) + different solver contract (v5 -> v6) => fingerprint mismatch => regenerate."""
+    assert pf.SOLVER_CONTRACT_VERSION == 6
+    assert pf.WETTING_MODELS == ("surface_energy", "legacy_affinity", "none")
+    assert pf.PhaseFieldParams(Nx=8, Ny=8, Lx=1.0, Ly=1.0).wetting_model == "surface_energy"
     case = C.lowwe_cases(1)[0]
     args = _args(3)
     dt, nsteps, save_every = G._effective_schedule(case, args)
-    expected_v5 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    expected_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
     path = tmp_path / "train_lowWe_000_flat.npz"
-    with monkeypatch.context() as as_v4:
+    with monkeypatch.context() as as_v5:
         # Only the contract constant changes: solver/generator source, case, grid and schedule are identical.
-        as_v4.setattr(pf, "SOLVER_CONTRACT_VERSION", 4)
-        saved_v4 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+        as_v5.setattr(pf, "SOLVER_CONTRACT_VERSION", 5)
+        saved_v5 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
         np.savez(
             path,
             dataset_schema_version=np.array(G.DATASET_SCHEMA_VERSION, dtype=np.int32),
-            dataset_fingerprint=np.array(saved_v4),
+            dataset_fingerprint=np.array(saved_v5),
         )
-        assert G._saved_case_is_current(path, saved_v4)  # a well-formed schema-3 file, current for v4
+        assert G._saved_case_is_current(path, saved_v5)  # a well-formed schema-3 file, current for v5
 
-    assert saved_v4 != expected_v5
-    assert not G._saved_case_is_current(path, expected_v5)  # generate_dataset removes and regenerates it
+    assert saved_v5 != expected_v6
+    assert not G._saved_case_is_current(path, expected_v6)  # generate_dataset removes and regenerates it
 
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 5
-    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 5
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 6
+    assert manifest["wetting_model"] == "surface_energy"
+    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 6
 
 
 def test_coarse_geometry_is_signed_and_shape_correct():

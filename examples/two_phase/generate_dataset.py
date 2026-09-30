@@ -282,6 +282,7 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
         "manifest_schema_version": 1,
         "dataset_schema_version": DATASET_SCHEMA_VERSION,
         "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        "wetting_model": str(getattr(pf.PhaseFieldParams, "wetting_model", None) or "surface_energy"),
         "case_set": set_name,
         "expected": len(records),
         "accepted": len(accepted),
@@ -326,6 +327,11 @@ def _save_case(
     case_meta = dict(case)
     case_meta.update(
         dataset_schema_version=DATASET_SCHEMA_VERSION,
+        solver_contract_version=int(pf.SOLVER_CONTRACT_VERSION),
+        wetting_model=str(getattr(p, "wetting_model", "legacy_affinity")),
+        cos_theta_semantics=(
+            "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
+        ),
         solver_dt=float(p.dt),
         solver_dx=float(p.dx),
         saved_dx=saved_dx,
@@ -411,6 +417,16 @@ def main() -> None:
             "u_impact_star": float(case.get("u_impact", 0.5)),
             "kinematic_We": float(case.get("We", 100.0)) * float(case.get("u_impact", 0.5)) ** 2,
             "kinematic_Re": float(case.get("Re", 200.0)) * abs(float(case.get("u_impact", 0.5))),
+            "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+            # ``_save_case`` records the actual instantiated value; the case
+            # pipeline never overrides the solver default, so this is the model
+            # every trajectory of this set is generated with.
+            "wetting_model": str(getattr(pf.PhaseFieldParams, "wetting_model", "legacy_affinity")),
+            "cos_theta": (
+                "target Young equilibrium contact-angle cosine"
+                if str(getattr(pf.PhaseFieldParams, "wetting_model", "")) == "surface_energy"
+                else "legacy wall-affinity cosine (contract <= 5)"
+            ),
         }
 
         if path.exists() and not args.overwrite and _saved_case_is_current(path, fingerprint):

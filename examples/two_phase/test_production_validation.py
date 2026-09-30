@@ -143,10 +143,10 @@ def test_report_schema_valid_missing_field_and_nan():
 
 @pytest.mark.parametrize(
     "version, valid",
-    [(4, True), (5, True), (3, False), (6, False), (True, False), ("5", False), (5.0, False), (None, False)],
+    [(4, True), (5, True), (6, True), (3, False), (7, False), (True, False), ("5", False), (5.0, False), (None, False)],
 )
 def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
-    """Historical (v4) and current (v5) reports validate; unknown or malformed contracts do not."""
+    """Historical (v4/v5) and current (v6) reports validate; unknown or malformed contracts do not."""
     report = _minimal_report()
     report["repository"]["solver_contract_version"] = version
     contract_errors = [e for e in validate_report_schema(report) if "solver_contract_version" in e]
@@ -306,7 +306,7 @@ def test_capillary_audit_reports_consistent_conventions():
     result = run_audit(N=64)
     assert [check.name for check in result.checks if not check.passed] == []
     assert result.diagnosis["three_conventions_consistent"] is True
-    assert result.to_dict()["settings"]["solver_contract_version"] == 5
+    assert result.to_dict()["settings"]["solver_contract_version"] == 6
 
 
 def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
@@ -386,10 +386,12 @@ def test_report_schema_allows_resolved_blocker_status_only_when_known():
     report["known_solver_blockers"] = [blocker]
     assert validate_report_schema(report) == []
     blocker["status"] = "resolved_in_contract_v6"
+    assert validate_report_schema(report) == []  # v6 may close evidence-gated blockers
+    blocker["status"] = "resolved_in_contract_v7"
     assert any("status is invalid" in error for error in validate_report_schema(report))
 
 
-def test_ci_profile_report_records_contract_v5_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
+def test_ci_profile_report_records_contract_v6_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
     pytest.importorskip("jax")
     import phasefield as pf
     from production.config import compute_file_sha256
@@ -401,7 +403,7 @@ def test_ci_profile_report_records_contract_v5_lineage_and_stays_baseline_only(t
     assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
     report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
     assert validate_report_schema(report) == []
-    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 5
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 6
     assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
     assert len(report["repository"]["validation_code_sha256"]) == 64
     assert len(report["config"]["sha256"]) == 64

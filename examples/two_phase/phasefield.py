@@ -13,8 +13,8 @@ Conservative phase-field (Cahn-Hilliard) coupled to incompressible Navier-Stokes
 with one-fluid properties, Korteweg/CSF capillary force and Brinkman volume
 penalization for the solid (wall + micro-structures):
 
-    d(phi)/dt + div(u phi) = M * lap(mu) + wall_energy_term
-    mu = f'(phi)/eps - eps * lap(phi) + wetting_mu            (mu = dF/dphi)
+    d(phi)/dt + div(u phi) = M * lap(mu)                      (conservative; no source)
+    mu = f'(phi)/eps - eps * lap(phi) + mu_wall               (mu = dF/dphi)
     du/dt + div(u u) = -grad(P) + div(nu grad u)
                        + (SIGMA_NORM/We) mu grad(phi) / rho_l - (1/Fr^2) (rho-<rho>)/rho yhat
                        - (chi/eta) u
@@ -67,9 +67,38 @@ Capillary sign convention (SOLVER_CONTRACT_VERSION >= 5)
   ``pressure_field`` re-evaluates ``rhs`` and the same projection, so it inherits
   this convention; the capillary formula must not be duplicated anywhere else.
 * rho(phi) = rho_g + (rho_l - rho_g) phi, likewise for nu
-* solid geometry enters through the indicator chi in [0, 1] (1 = solid) and the
-  surface delta ds = |grad chi|, which carries the wetting (contact angle) energy
+* solid geometry enters through the indicator chi in [0, 1] (1 = solid, used by
+  the Brinkman penalization) and the analytic signed distance sdf, which carries
+  the wetting (contact angle) energy
 * contact angle may vary in space, so mixed-wettability surfaces are supported
+
+Wall wetting (SOLVER_CONTRACT_VERSION >= 6)
+-------------------------------------------
+The bulk free energy is F_bulk = int [ f(phi)/eps + eps/2 |grad phi|^2 ] dV with
+f(phi) = phi^2 (1-phi)^2, whose equilibrium tanh profile carries the surface
+tension sigma_0 = sqrt(2)/6 (the Korteweg force is scaled by SIGMA_NORM = 1/sigma_0
+so the non-dimensional tension is exactly 1/We).  The wall free energy uses the
+same normalization:
+
+    F_wall  = int g_w(phi, theta) delta_wall(sdf) dV
+    g_w     = -sigma_0 cos(theta) h(phi),      h(phi) = phi^2 (3 - 2 phi)
+    mu_wall = dg_w/dphi * delta_wall = -sigma_0 cos(theta) h'(phi) delta_wall
+    delta_wall(sdf) = (1/2a) sech^2(sdf/a) |grad sdf|,   a = 1.5 dx
+
+so that g_w(0) = 0, g_w(1) = -sigma_0 cos(theta) and
+
+    gamma_SG - gamma_SL = g_w(0) - g_w(1) = sigma_0 cos(theta_e)   (Young),
+
+with theta = 90 deg exactly neutral (g_w == 0) and h'(0) = h'(1) = 0 so no wall
+force leaks into either bulk phase.  There is no empirical amplitude, no gain and
+no theta -> theta mapping: ``mu_wall`` is the exact variational derivative of
+``F_wall`` (checked by ``production/wetting_audit.py``).
+
+``wetting_model`` selects the semantics: ``surface_energy`` (default),
+``legacy_affinity`` (the contract-v5 volumetric band affinity,
+``wall_energy_amp``/``wet_band``; reproducibility only) or ``none`` (ablation).
+Unknown values fail closed.  The legacy parameters are ignored in
+``surface_energy`` mode and must never be used to fit the apparent angle.
 
 The solver is periodic in both directions; the wall is a solid slab inside the
 domain, so no special boundary treatment is needed for the FFT Poisson solve.
@@ -85,6 +114,7 @@ JAX-Fluids two-phase data for 3-D.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 from typing import NamedTuple, Tuple
 
@@ -99,7 +129,12 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 # Bump this whenever the solver/data contract changes in a trajectory-changing way.
 #   5: L1A-2a -- Korteweg capillary force sign corrected to +mu grad(phi) (see the module
 #      docstring); the static-drop projection pressure now has p_liquid > p_gas.
-SOLVER_CONTRACT_VERSION = 5
+#   6: L1A-2b -- the default wall wetting semantics are the Young-consistent diffuse wall
+#      surface energy ``g_w(phi, theta) = -sigma_0 cos(theta) h(phi)`` with
+#      ``mu_wall = dg_w/dphi * delta_wall``; the contract-v5 volumetric affinity is kept
+#      behind ``wetting_model='legacy_affinity'`` for reproducibility only.  Every v5
+#      trajectory is trajectory-stale under v6 (dataset fingerprints include this number).
+SOLVER_CONTRACT_VERSION = 6
 
 
 #######################################################################################
@@ -152,8 +187,20 @@ class PhaseFieldParams:
     # numerics
     dt: float = 2.0e-3
     eta_pen: float = None  # penalization timescale, defaults to 2*dt
-    wall_energy_amp: float = 5.0  # amplitude of the (conservative) wetting energy
-    wet_band: float = 0.15  # half-width of the near-wall wetting band
+    # Wall wetting model.  ``surface_energy`` (default, contract v6) uses the
+    # Young-consistent diffuse wall energy defined in the module docstring;
+    # ``legacy_affinity`` reproduces the contract-v5 volumetric band affinity for
+    # reproducibility only, and ``none`` switches wetting off (ablation).
+    wetting_model: str = "surface_energy"
+    # Width of the normalized diffuse wall delta.  Defaults to the solid smoothing
+    # width ``1.5 dx`` used by ``smooth_indicator``; it is a discretization width,
+    # never a contact-angle calibration knob.
+    wall_delta_width: float = None
+    # LEGACY ONLY (wetting_model='legacy_affinity'): amplitude and half-width of the
+    # contract-v5 near-wall affinity.  Both are ignored by ``surface_energy`` and must
+    # never be used as a hidden calibration factor for the Young angle.
+    wall_energy_amp: float = 5.0
+    wet_band: float = 0.15
     cfl: float = 0.4  # used by ``stable_dt``
     use_gravity: bool = False
     dtype: type = jnp.float32
@@ -173,6 +220,12 @@ class PhaseFieldParams:
             self.nu_g = 10.0 * self.nu_l
         if self.eta_pen is None:
             self.eta_pen = 2.0 * self.dt
+        if self.wall_delta_width is None:
+            # Match ``smooth_indicator``: the same width that smears the solid
+            # indicator is the width of the wall surface delta.
+            self.wall_delta_width = 1.5 * self.Lx / self.Nx
+        if self.wetting_model not in WETTING_MODELS:
+            raise ValueError(f"unknown wetting_model {self.wetting_model!r}; expected one of {sorted(WETTING_MODELS)}")
 
     @property
     def dx(self) -> float:
@@ -501,19 +554,101 @@ def fprime(phi):
     return 2.0 * phi * (1.0 - phi) * (1.0 - 2.0 * phi)
 
 
-def phi_wet_of(cos_theta):
-    """Map a (possibly patterned) contact-angle cosine to a wall target value in [0,1].
+#: Surface tension carried by the equilibrium tanh profile with
+#: f(phi) = phi^2 (1-phi)^2: sigma_0 = sqrt(2)/6.  The Korteweg force is scaled by
+#: SIGMA_NORM = 1/sigma_0 (see the module docstring), so ``sigma_0`` is the *actual*
+#: non-dimensional surface tension and is the correct prefactor for wall energies.
+#: Evaluated in pure Python: the constant must not depend on ``jax_enable_x64``.
+WALL_SIGMA0 = math.sqrt(2.0) / 6.0
 
-    phi_w = 1 is strongly solvophilic (liquid-loving -> small apparent angle),
-    phi_w = 0 is solvophobic (beading -> large angle), phi_w = 0.5 ~ neutral.
-    The linear map is a convenient control; the *achieved* apparent angle is
-    measured/calibrated by ``measure_contact_angle`` (see validation).
+#: Wall wetting models accepted by :func:`wetting_mu`.
+WETTING_MODELS = ("surface_energy", "legacy_affinity", "none")
+
+
+def phi_wet_of(cos_theta):
+    """LEGACY (``wetting_model='legacy_affinity'``) target wall value in [0, 1].
+
+    phi_w = 1 is strongly solvophilic, phi_w = 0 solvophobic, phi_w = 0.5 neutral.
+    This linear map is a *control*, not a thermodynamic relation, and the achieved
+    angle was measured to be non-monotonic in it; it is retained only so the
+    contract-v5 trajectories can be reproduced.  Do not use it in
+    ``surface_energy`` mode.
     """
     return 0.5 + 0.5 * jnp.clip(cos_theta, -1.0, 1.0)
 
 
+def wall_switch(phi):
+    """Smooth wall interpolation h(phi) = phi^2 (3 - 2 phi), h(0) = 0, h(1) = 1."""
+    return phi**2 * (3.0 - 2.0 * phi)
+
+
+def wall_switch_derivative(phi):
+    """h'(phi) = 6 phi (1 - phi); identically zero at both endpoints."""
+    return 6.0 * phi * (1.0 - phi)
+
+
+def wall_energy_density(phi, cos_theta):
+    """Young-consistent wall free-energy density g_w(phi, theta), per unit wall area.
+
+        g_w(phi, theta) = -sigma_0 cos(theta) h(phi)
+
+    with g_w(0) = 0 and g_w(1) = -sigma_0 cos(theta), so that the endpoint
+    difference obeys Young's relation
+
+        gamma_SG - gamma_SL = g_w(0) - g_w(1) = sigma_0 cos(theta_e).
+
+    ``theta = 90 deg`` is exactly neutral (g_w identically zero), which also makes
+    the model symmetric between liquid and gas.  There is no empirical amplitude.
+    """
+    return -WALL_SIGMA0 * jnp.asarray(cos_theta) * wall_switch(phi)
+
+
+def _ddy_nonperiodic(field, dy):
+    """y-derivative with one-sided edges: the solid slab is not periodic in y.
+
+    A periodic roll would see the sdf jump from the top of the domain to the solid
+    and inject a spurious |grad sdf| (and hence a fake wall surface) at the y seam.
+    """
+    interior = (field[:, 2:] - field[:, :-2]) / (2.0 * dy)
+    left = ((field[:, 1] - field[:, 0]) / dy)[:, None]
+    right = ((field[:, -1] - field[:, -2]) / dy)[:, None]
+    return jnp.concatenate([left, interior, right], axis=1)
+
+
+def wall_delta(sdf, p: PhaseFieldParams, width: float | None = None):
+    """Normalized, ghost-free diffuse wall surface measure.
+
+        delta_wall(sdf) = (1 / 2a) sech^2(sdf / a) |grad sdf|,   a = p.wall_delta_width
+
+    * localized at sdf = 0 and normalized: the normal integral is 1 (0.07 % on the
+      N = 128 baseline grid; the audit in ``production/wetting_audit.py`` reports it
+      for N = 64 / 96 / 128);
+    * evaluated from the analytic sdf, *never* from |grad chi| of the periodic solid
+      indicator, which carries a fake peak at the y seam;
+    * |grad sdf| uses one-sided differences at the y domain edges
+      (:func:`_ddy_nonperiodic`), so no material top ghost;
+    * geometry-safe on textured sdf's (it uses the local normal).
+
+    ``a`` is a discretization width tied to the solid smoothing, not a calibration
+    parameter of the contact angle.
+    """
+    import math
+
+    a = float(p.wall_delta_width if width is None else width)
+    # Plain Python check: jnp.isfinite() of a Python float becomes a tracer under jit.
+    if not math.isfinite(a) or a <= 0.0:
+        raise ValueError("wall_delta_width must be finite and positive")
+    sdf = jnp.asarray(sdf)
+    dx, dy = float(p.dx), float(p.dy)
+    gx = (jnp.roll(sdf, -1, axis=0) - jnp.roll(sdf, 1, axis=0)) / (2.0 * dx)
+    gy = _ddy_nonperiodic(sdf, dy)
+    grad = jnp.sqrt(gx**2 + gy**2 + 1e-30)
+    scaled = jnp.clip(sdf / a, -60.0, 60.0)
+    return (1.0 / (2.0 * a)) * (1.0 - jnp.tanh(scaled) ** 2) * grad
+
+
 def wet_band(solid: Solid, p: PhaseFieldParams):
-    """Fluid-side, wall-localised wetting envelope.
+    """LEGACY ONLY (``wetting_model='legacy_affinity'``) fluid-side wetting envelope.
 
     The previous ``0.5 * (1 - tanh(sdf / width))`` tends to one throughout
     the solid volume, so the wall free-energy acted as a bulk source inside
@@ -527,14 +662,35 @@ def wet_band(solid: Solid, p: PhaseFieldParams):
 
 
 def wetting_mu(phi, solid: Solid, p: PhaseFieldParams):
-    """Conservative surface-affinity contribution to the chemical potential.
+    """Wall contribution to the chemical potential, ``mu_wall = dF_wall/dphi``.
 
-    Enters mu (hence the Cahn-Hilliard flux M*grad(mu)) so it is in divergence form
-    and conserves liquid mass, while still biasing the contact line toward phi_w.
+    ``surface_energy`` (default, contract v6): the wall free energy
+
+        F_wall = int g_w(phi, theta) delta_wall(sdf) dV,
+        g_w(phi, theta) = -sigma_0 cos(theta) h(phi),  h(phi) = phi^2 (3 - 2 phi)
+
+    gives the variationally consistent chemical potential
+
+        mu_wall = dg_w/dphi * delta_wall = -sigma_0 cos(theta) h'(phi) delta_wall
+
+    with h'(phi) = 6 phi (1 - phi).  It enters ``mu`` and therefore the conservative
+    Cahn-Hilliard flux ``M grad(mu)``: liquid mass is unchanged, the wall free energy
+    is the only thing that moves, and ``theta`` is the Young equilibrium contact
+    angle (no amplitude parameter, no calibration factor).
+
+    ``legacy_affinity``: the contract-v5 volumetric band affinity, for reproducing
+    old trajectories only.  ``none``: no wall term (ablation).  Unknown names fail
+    closed here as well as in ``PhaseFieldParams.__post_init__``.
     """
-    phi_w = phi_wet_of(solid.cos_theta)
-    band = wet_band(solid, p)
-    return -p.wall_energy_amp * band * (phi_w - phi)
+    if p.wetting_model == "surface_energy":
+        return -WALL_SIGMA0 * solid.cos_theta * wall_switch_derivative(phi) * wall_delta(solid.sdf, p)
+    if p.wetting_model == "legacy_affinity":
+        phi_w = phi_wet_of(solid.cos_theta)
+        band = wet_band(solid, p)
+        return -p.wall_energy_amp * band * (phi_w - phi)
+    if p.wetting_model == "none":
+        return jnp.zeros_like(phi)
+    raise ValueError(f"unknown wetting_model {p.wetting_model!r}; expected one of {sorted(WETTING_MODELS)}")
 
 
 def chemical_potential(phi, solid: Solid, p: PhaseFieldParams):

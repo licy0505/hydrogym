@@ -14,9 +14,11 @@ from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # Solver contracts this report schema can interpret.  A report is a lineage record and states the
 # contract of the solver that produced it: 4 = L1A-1 baseline (historical reports stay valid, so
-# before/after runs can be compared), 5 = L1A-2a capillary-sign fix.  An unknown (e.g. future)
-# contract fails closed, so bumping SOLVER_CONTRACT_VERSION forces a review of this framework.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5)
+# before/after runs can be compared), 5 = L1A-2a capillary-sign fix, 6 = L1A-2b Young-consistent
+# wall surface energy (the default wetting semantics changed, so every v5 trajectory is stale).
+# An unknown (e.g. future) contract fails closed, so bumping SOLVER_CONTRACT_VERSION forces a
+# review of this framework.
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6)
 _REQUIRED_TOP = {
     "validation_report_schema_version",
     "physics_status",
@@ -155,6 +157,7 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
                 "confirmed_problem",
                 "acceptable_for_next_stage",
                 "resolved_in_contract_v5",
+                "resolved_in_contract_v6",
             }:
                 errors.append(f"known_solver_blockers[{index}].status is invalid")
     if not isinstance(report.get("provisional_readiness_targets"), dict):

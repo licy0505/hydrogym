@@ -182,7 +182,10 @@ def format_markdown(result: dict[str, Any]) -> str:
             lines.append(f"| {run['factor']} | {run['value']} | FAILED | | | | | | {metrics.get('error', '')} |")
             continue
         lines.append(
-            "| {factor} | {value} | {g05:.4f} | {g01:.4f} | {contact} | {beta:.4f} | {y:.4f} | {speed:.4g} | {mass:.3e} |".format(
+            (
+                "| {factor} | {value} | {g05:.4f} | {g01:.4f} | {contact} | "
+                "{beta:.4f} | {y:.4f} | {speed:.4g} | {mass:.3e} |"
+            ).format(
                 factor=run["factor"],
                 value=run["value"],
                 g05=metrics["minimum_gap_0.5"],
