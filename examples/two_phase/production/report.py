@@ -12,6 +12,11 @@ from typing import Any
 from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
+# Solver contracts this report schema can interpret.  A report is a lineage record and states the
+# contract of the solver that produced it: 4 = L1A-1 baseline (historical reports stay valid, so
+# before/after runs can be compared), 5 = L1A-2a capillary-sign fix.  An unknown (e.g. future)
+# contract fails closed, so bumping SOLVER_CONTRACT_VERSION forces a review of this framework.
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5)
 _REQUIRED_TOP = {
     "validation_report_schema_version",
     "physics_status",
@@ -90,8 +95,13 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
         for name in ("phasefield_sha256", "validation_code_sha256"):
             if not _is_sha(repository.get(name), 64):
                 errors.append(f"repository.{name} must be a 64-character lowercase SHA-256")
-        if repository.get("solver_contract_version") != 4:
-            errors.append("repository.solver_contract_version must remain 4")
+        contract = repository.get("solver_contract_version")
+        if (
+            isinstance(contract, bool)
+            or not isinstance(contract, int)
+            or contract not in KNOWN_SOLVER_CONTRACT_VERSIONS
+        ):
+            errors.append(f"repository.solver_contract_version must be one of {list(KNOWN_SOLVER_CONTRACT_VERSIONS)}")
 
     runtime = report.get("runtime")
     if not isinstance(runtime, dict):
@@ -144,6 +154,7 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
                 "measurement_required",
                 "confirmed_problem",
                 "acceptable_for_next_stage",
+                "resolved_in_contract_v5",
             }:
                 errors.append(f"known_solver_blockers[{index}].status is invalid")
     if not isinstance(report.get("provisional_readiness_targets"), dict):

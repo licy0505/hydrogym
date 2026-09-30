@@ -42,7 +42,11 @@ KNOWN_SOLVER_BLOCKERS = [
         "id": "P-LAPLACE-SIGN",
         "severity": "high",
         "status": "measurement_required",
-        "description": "Static projection-pressure Laplace response must have the expected positive pressure jump.",
+        "description": (
+            "Static projection-pressure jump p_liquid - p_gas must be positive and scale as 1/R "
+            "(phi=1 liquid). Corrected in solver contract v5; reported as resolved_in_contract_v5 only "
+            "when the multi-radius baseline measures it (see LAPLACE_SIGN_CLOSURE_CRITERIA)."
+        ),
     },
     {
         "id": "P-VARVISC",
@@ -57,6 +61,16 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": "The computational operators remain periodic in y.",
     },
 ]
+
+# Evidence needed before P-LAPLACE-SIGN may be reported as ``resolved_in_contract_v5``.  These gate the
+# *sign and 1/R scaling* only; the 5 % magnitude goal stays a provisional target (small radii are
+# interface-resolution sensitive and are handled by the convergence study, not by a calibration factor).
+LAPLACE_SIGN_CLOSURE_CRITERIA = {
+    "require_all_ratios_positive": True,
+    "min_radii": 3,  # a 1/R fit over fewer radii cannot establish scaling
+    "min_r_squared": 0.99,  # delta_p vs 1/R
+    "require_positive_slope": True,
+}
 
 PROVISIONAL_READINESS_TARGETS = {
     "mass_relative_drift": 0.001,
@@ -228,6 +242,9 @@ def run_static_droplet_case(
     outside_mask = radius_field > 2.5 * R
     if not inside_mask.any() or not outside_mask.any():
         raise ValueError("pressure probe regions are empty; choose a resolved radius away from domain boundaries")
+    # Sign convention (contract v5, see phasefield.py and production/capillary_audit.py): phi = 1 is liquid,
+    # so "inside" (r < 0.3 R) is the liquid core and "outside" (r > 2.5 R) is far gas.  delta_p is
+    # P_liquid - P_gas and is expected to be +1/(We R) for a 2-D circle.  It is never sign-flipped here.
     p_inside = float(pressure[inside_mask].mean())
     p_outside = float(pressure[outside_mask].mean())
     delta_p = p_inside - p_outside

@@ -217,27 +217,73 @@ def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
             "monotonic_target_to_measured": bool(angle_summary.get("monotonic_target_to_measured")),
         }
 
+    static = benchmarks.get("static_droplet", {})
+    static_records = static.get("cases", [])
     static_cases = [
         case
-        for case in benchmarks.get("static_droplet", {}).get("cases", [])
+        for case in static_records
         if case.get("finite") is True and isinstance(case.get("laplace_ratio"), (int, float))
     ]
     if static_cases:
-        ratios = [float(case["laplace_ratio"]) for case in static_cases]
-        laplace_blocker = indexed["P-LAPLACE-SIGN"]
-        laplace_blocker["status"] = (
-            "confirmed_problem"
-            if any(ratio <= 0.0 for ratio in ratios)
-            or max(abs(ratio - 1.0) for ratio in ratios) > PROVISIONAL_READINESS_TARGETS["laplace_relative_error"]
-            else "acceptable_for_next_stage"
-        )
-        laplace_blocker["evidence"] = {
-            "laplace_ratio_min": min(ratios),
-            "laplace_ratio_max": max(ratios),
-            "case_count": len(ratios),
-            "pressure_diagnostic_method": "projection_reconstructed",
-        }
+        status, evidence = _laplace_sign_assessment(static_cases, len(static_records), static.get("summary"))
+        indexed["P-LAPLACE-SIGN"]["status"] = status
+        indexed["P-LAPLACE-SIGN"]["evidence"] = evidence
     return blockers
+
+
+def _laplace_sign_assessment(
+    static_cases: list[dict[str, Any]], record_count: int, summary: dict[str, Any] | None
+) -> tuple[str, dict[str, Any]]:
+    """Evidence-gated status of P-LAPLACE-SIGN (never closed on a hunch or on too little data).
+
+    * any ratio <= 0                         -> ``confirmed_problem`` (sign still wrong)
+    * fewer than ``min_radii`` finite radii  -> ``measurement_required`` (scaling not established)
+    * positive but 1/R scaling fails         -> ``confirmed_problem``
+    * all positive and 1/R scaling holds     -> ``resolved_in_contract_v5``
+
+    The 5 % magnitude goal is *reported* (``provisional_laplace_target_met``) but does not gate this
+    sign blocker; small-radius interface sensitivity belongs to the convergence study.
+    """
+    from production.validation import LAPLACE_SIGN_CLOSURE_CRITERIA as criteria
+    from production.validation import PROVISIONAL_READINESS_TARGETS
+
+    ratios = [float(case["laplace_ratio"]) for case in static_cases]
+    fit = summary or {}
+    r_squared, slope = fit.get("r_squared"), fit.get("slope_delta_p_vs_inv_R")
+    all_positive = all(ratio > 0.0 for ratio in ratios)
+    complete = len(static_cases) == record_count and len(static_cases) >= int(criteria["min_radii"])
+    scaling_correct = (
+        complete
+        and isinstance(r_squared, (int, float))
+        and isinstance(slope, (int, float))
+        and float(r_squared) >= float(criteria["min_r_squared"])
+        and float(slope) > 0.0
+    )
+    max_error = max(abs(ratio - 1.0) for ratio in ratios)
+    if not all_positive:
+        status = "confirmed_problem"
+    elif not complete:
+        status = "measurement_required"
+    elif not scaling_correct:
+        status = "confirmed_problem"
+    else:
+        status = "resolved_in_contract_v5"
+    evidence = {
+        "laplace_ratio_min": min(ratios),
+        "laplace_ratio_max": max(ratios),
+        "case_count": len(ratios),
+        "expected_case_count": int(record_count),
+        "all_ratios_positive": bool(all_positive),
+        "r_squared_delta_p_vs_inv_R": None if r_squared is None else float(r_squared),
+        "slope_delta_p_vs_inv_R": None if slope is None else float(slope),
+        "scaling_correct": bool(scaling_correct),
+        "max_abs_error_from_ratio_1": float(max_error),
+        "provisional_laplace_target_met": bool(max_error <= PROVISIONAL_READINESS_TARGETS["laplace_relative_error"]),
+        "closure_criteria": dict(criteria),
+        "pressure_diagnostic_method": "projection_reconstructed",
+        "solver_contract_version": pf_contract_version(),
+    }
+    return status, evidence
 
 
 def _config_path_for_report(path: str) -> str:
@@ -282,14 +328,19 @@ def run_validation(
     git_sha = get_git_sha()
     notes = [
         (
-            "L1A-1 physics status is BASELINE_ONLY; a green contract does not imply validated "
-            "physics or production readiness."
+            "L1A physics status is BASELINE_ONLY; a green contract does not imply validated "
+            "physics or production readiness. Solver contract v5 (L1A-2a) corrects only the capillary-force "
+            "sign (P-LAPLACE-SIGN); wetting, variable-density projection, the capillary denominator, "
+            "timestep, viscosity and boundary blockers remain open."
         ),
         (
             "pressure_field() is a projection-reconstructed diagnostic, not an independently "
             "evolved thermodynamic pressure."
         ),
-        "Laplace comparison is a projection-pressure Laplace diagnostic under the current solver convention.",
+        (
+            "Laplace comparison is a projection-pressure diagnostic: delta_p = p_liquid - p_gas "
+            "(phi = 1 liquid) and laplace_ratio = delta_p * R * We, expected +1 for a 2-D circle."
+        ),
         (
             "Impact contact signal is diagnostic: g_0.5 <= 1.5*dx; g_0.1 is also recorded to expose "
             "diffuse-interface gap sensitivity."
