@@ -121,6 +121,10 @@ jobs:
         working-directory: examples/two_phase
         run: uv run --no-sync python -m production.capillary_audit --json artifacts/production_validation/capillary_audit.json
 
+      - name: Run two-phase wall wetting audit
+        working-directory: examples/two_phase
+        run: uv run --no-sync python -m production.wetting_audit --json artifacts/production_validation/wetting_audit.json
+
       - name: Run two-phase L0 smoke
         run: uv run --no-sync bash examples/two_phase/run_smoke.sh
 
@@ -135,6 +139,7 @@ jobs:
             examples/two_phase/artifacts/smoke/report.json
             examples/two_phase/artifacts/production_validation/ci/report.json
             examples/two_phase/artifacts/production_validation/capillary_audit.json
+            examples/two_phase/artifacts/production_validation/wetting_audit.json
 
   package:
     name: Package distributions
