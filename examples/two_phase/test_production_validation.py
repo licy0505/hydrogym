@@ -572,3 +572,28 @@ def test_compare_reports_target_mirrors_provisional_targets():
 
     assert compare_reports.LAPLACE_TARGET == PROVISIONAL_READINESS_TARGETS["laplace_relative_error"]
     assert compare_reports.LAPLACE_MIN_R_SQUARED == LAPLACE_SIGN_CLOSURE_CRITERIA["min_r_squared"]
+
+
+# ---------------------------------------------------------------------------
+#  L1A-2b: solid / gas-film ablation harness (diagnostic only)
+# ---------------------------------------------------------------------------
+
+
+def test_solid_gas_film_audit_variates_one_factor_at_a_time():
+    pytest.importorskip("jax")
+    from production.solid_gas_film_audit import QUICK_FACTORS, run_solid_gas_film_audit
+
+    result = run_solid_gas_film_audit(N=32, steps=30, save_every=10, factors=QUICK_FACTORS)
+    assert result["settings"]["diagnostic_only"] is True
+    assert result["settings"]["production_defaults_changed"] is False
+    factors = {run["factor"] for run in result["runs"]}
+    assert factors == {"wetting_model", "eta_pen_over_dt", "nu_g_over_nu_l", "enforce_solid_phi"}
+    for run in result["runs"]:
+        assert run["finite"] is True
+        metrics = run["metrics"]
+        for key in ("minimum_gap_0.5", "minimum_gap_0.1", "beta_max", "final_y_cm", "peak_speed", "mass_drift"):
+            assert metrics[key] is not None and np.isfinite(metrics[key])
+        others = [k for k in result["settings"]["baseline_case"]]
+        assert others  # the baseline case is recorded verbatim
+    # every quick grid contains exactly the baseline default of its factor
+    assert QUICK_FACTORS["eta_pen_over_dt"] == [2.0] and QUICK_FACTORS["nu_g_over_nu_l"] == [10.0]

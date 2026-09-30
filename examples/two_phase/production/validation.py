@@ -100,7 +100,16 @@ def _params(
     dtype: str = "float32",
     wall_energy_amp: float = 5.0,
     enforce_solid_phi: bool = False,
+    eta_pen_over_dt: float | None = None,
+    nu_g_over_nu_l: float | None = None,
+    wetting_model: str | None = None,
 ) -> pf.PhaseFieldParams:
+    """Solver parameters for a benchmark.
+
+    ``eta_pen_over_dt``, ``nu_g_over_nu_l`` and ``wetting_model`` are *diagnostic
+    overrides* used by the ablation harnesses; leaving them as ``None`` keeps the
+    production defaults bit-for-bit (``eta_pen = 2 dt``, ``nu_g = 10 nu_l``).
+    """
     p = pf.PhaseFieldParams(
         Nx=N,
         Ny=N,
@@ -115,6 +124,25 @@ def _params(
     )
     p.eps = float(eps) if eps is not None else float(eps_factor) * p.dx
     p.dt = min(float(p.dt), float(pf.stable_dt(p, u_max=2.0)))
+    if eta_pen_over_dt is not None:
+        p.eta_pen = float(eta_pen_over_dt) * float(p.dt)
+    if nu_g_over_nu_l is not None:
+        p.nu_g = float(nu_g_over_nu_l) * float(p.nu_l)
+    if wetting_model is not None:
+        model = str(wetting_model)
+        if model not in {"legacy_affinity", "surface_energy", "none"}:
+            raise ValueError(f"unknown wetting_model {model!r}")
+        if hasattr(p, "wetting_model"):
+            p.wetting_model = model
+        elif model == "legacy_affinity":
+            pass  # the contract-v5 default semantics
+        elif model == "none":
+            p.wall_energy_amp = 0.0
+        else:
+            raise ValueError(
+                "wetting_model='surface_energy' requires the surface-energy solver "
+                "(SOLVER_CONTRACT_VERSION >= 6); none is available in this build"
+            )
     return p
 
 
@@ -500,7 +528,10 @@ def _impact_params(
         eps=eps,
         dt=dt,
         dtype=dtype,
-        enforce_solid_phi=True,
+        enforce_solid_phi=bool(case.get("enforce_solid_phi", True)),
+        eta_pen_over_dt=case.get("eta_pen_over_dt"),
+        nu_g_over_nu_l=case.get("nu_g_over_nu_l"),
+        wetting_model=case.get("wetting_model"),
     )
     wall_height = float(case.get("wall_height", 0.25))
     sdf = pf.surface_flat(p, wall_height=wall_height)
@@ -646,6 +677,12 @@ def run_impact_case(
         "detachment_observed": bool(detachment),
         "minimum_gap": float(min(series["g_0.5"])),
         "minimum_gap_0.5": float(min(series["g_0.5"])),
+        "minimum_gap_0.1": float(min(series["g_0.1"])),
+        "peak_speed": float(max(series["max_speed"])),
+        "eta_pen_over_dt": float(p.eta_pen / p.dt),
+        "nu_g_over_nu_l": float(p.nu_g / p.nu_l),
+        "wetting_model": str(getattr(p, "wetting_model", "legacy_affinity")),
+        "enforce_solid_phi": bool(p.enforce_solid_phi),
         "final_y_cm": float(series["y_cm"][-1]),
         "time_series": series,
         "runtime": runtime,
