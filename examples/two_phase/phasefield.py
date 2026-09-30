@@ -33,6 +33,15 @@ penalization for the solid (wall + micro-structures):
   Laplace benchmark in ``production/`` and analytically by
   ``production/capillary_audit.py``).
 
+Contact-angle measurement (SOLVER_CONTRACT_VERSION >= 6)
+--------------------------------------------------------
+``measure_contact_angle`` fits a circle to the ``phi = 0.5`` contour and evaluates
+``theta = acos((y_w - y_c) / Rc)``.  The contract-v5 area/full-width inversion is
+retained as ``measure_contact_angle_area_width`` but is *diagnostic only*: it is
+only consistent for caps of at most half a circle, and on synthetic caps of known
+angle (N = 128) it shows MAE 11.9 deg / max 31.7 deg, while the circle fit
+recovers them with MAE 0.007 deg / max 0.016 deg.
+
 Capillary sign convention (SOLVER_CONTRACT_VERSION >= 5)
 --------------------------------------------------------
 * Orientation.  phi = 1 in the liquid, phi = 0 in the gas.  Across the interface
@@ -804,11 +813,216 @@ def penetration_depth(phi, solid: Solid, p: PhaseFieldParams, y_wall: float = 0.
     return jnp.sum(phi * zone) / jnp.maximum(jnp.sum(zone), 1.0)
 
 
-def measure_contact_angle(phi, solid: Solid, p: PhaseFieldParams, level: float = 0.5):
-    """Apparent contact angle of a (near-static) drop from its area and wetted width.
+#######################################################################################
+#                       CONTACT-ANGLE MEASUREMENT (L1A-2b)                            #
+#######################################################################################
+#
+# Contract v5 measured the apparent angle from the liquid area and the *full*
+# horizontal width of the thresholded field, inverted through the circular-cap
+# relation A = R^2 (theta - sin theta cos theta), w = 2 R sin theta.  That
+# inversion is only consistent for a cap that is at most half a circle: once
+# theta > 90 deg the widest point of the drop is its equator (w = 2R), not the
+# contact line, so the same formula is fed an inconsistent (A, w) pair.  On
+# synthetic circular caps at N=128 the legacy measurement shows MAE = 11.86 deg
+# and a maximum error of 31.7 deg (a true 150 deg cap is read as 118 deg).
+#
+# ``measure_contact_angle`` (contract v6) instead extracts the level-set contour
+# of phi and least-squares fits a circle to it, which is exact for the
+# equilibrium shape of a 2-D drop (constant mean curvature).  The same synthetic
+# caps are recovered with MAE = 0.007 deg / max error 0.016 deg; the audit lives
+# in ``production/wetting_audit.py`` and is run by the test suite.  The angle is
+# extracted from the fitted centre and radius through the cap relation
+# ``y_c = y_w - Rc cos(theta)`` (the circle centre sits on the wall plane for
+# theta = 90 deg).
 
-    Uses the 2-D circular-cap relation: with wetted width w and area A,
-    solve A = R^2 (theta - sin theta cos theta), w = 2 R sin theta for theta.
+
+def _periodic_centroid_x(phi, p: PhaseFieldParams, x0: float | None = None) -> float:
+    """Phase-weighted periodic x centroid (used to unwrap the contour around the drop)."""
+    import numpy as np
+
+    phase = np.asarray(phi, dtype=np.float64)
+    x_axis = (np.arange(p.Nx) + 0.5) * p.dx
+    weights = phase.sum(axis=1)
+    total = float(weights.sum())
+    if not np.isfinite(total) or total <= 0.0:
+        return float(x0 if x0 is not None else 0.5 * p.Lx)
+    angles = 2.0 * np.pi * x_axis / p.Lx
+    cos_mean = float((weights * np.cos(angles)).sum() / total)
+    sin_mean = float((weights * np.sin(angles)).sum() / total)
+    if abs(cos_mean) < 1e-12 and abs(sin_mean) < 1e-12:
+        return float(x0 if x0 is not None else 0.5 * p.Lx)
+    mean_angle = np.arctan2(sin_mean, cos_mean) % (2.0 * np.pi)
+    return float((mean_angle / (2.0 * np.pi)) * p.Lx)
+
+
+def contact_angle_contour_points(
+    phi,
+    sdf,
+    dx: float,
+    dy: float,
+    level: float = 0.5,
+    cutoff: float = 0.0,
+    x0: float | None = None,
+    period: float | None = None,
+):
+    """Level-set crossings of ``phi == level`` on grid edges, in physical coordinates.
+
+    The x direction is periodic (edges wrap), the y direction is not (the wall is
+    a slab, so an edge that wraps through the y seam would be a fake crossing).
+    Coordinates are cell centres, ``(i + t + 0.5) * dx``; the ``+0.5`` is not
+    cosmetic -- omitting it shifts the fitted circle by half a cell and the
+    measured angle by O(dx / R).  Points closer to the solid than ``cutoff`` are
+    dropped so the diffuse contact region cannot bias the fit.  The x coordinates
+    are unwrapped about the periodic centroid of the drop and returned in a
+    window centred on it.
+    """
+    import numpy as np
+
+    phase = np.asarray(phi, dtype=np.float64)
+    distance = np.asarray(sdf, dtype=np.float64)
+    if phase.ndim != 2 or phase.shape != distance.shape:
+        raise ValueError("phi and sdf must be matching two-dimensional fields")
+    nx, ny = phase.shape
+    if nx < 2 or ny < 2:
+        raise ValueError("contact-angle measurement needs at least a 2x2 grid")
+    if not all(np.isfinite(v) for v in (dx, dy, level, cutoff)) or dx <= 0 or dy <= 0:
+        raise ValueError("dx/dy must be finite and positive")
+
+    measured_x = (phase - level) * (np.roll(phase, -1, axis=0) - level) < 0.0
+    denom_x = np.roll(phase, -1, axis=0) - phase
+    t_x = np.where(np.abs(denom_x) > 1e-300, (level - phase) / np.where(denom_x == 0.0, 1.0, denom_x), 0.0)
+    sdf_x = distance + t_x * (np.roll(distance, -1, axis=0) - distance)
+    i_grid = np.broadcast_to(np.arange(nx)[:, None], phase.shape).astype(np.float64)
+    j_grid = np.broadcast_to(np.arange(ny)[None, :], phase.shape).astype(np.float64)
+    points_x = np.stack(
+        [
+            (i_grid + t_x + 0.5) * dx,
+            (j_grid + 0.5) * dy,
+            sdf_x,
+        ],
+        axis=-1,
+    )[measured_x]
+
+    measured_y = (phase[:, :-1] - level) * (phase[:, 1:] - level) < 0.0
+    denom_y = phase[:, 1:] - phase[:, :-1]
+    t_y = np.where(np.abs(denom_y) > 1e-300, (level - phase[:, :-1]) / np.where(denom_y == 0.0, 1.0, denom_y), 0.0)
+    sdf_y = distance[:, :-1] + t_y * (distance[:, 1:] - distance[:, :-1])
+    i_grid_y = np.broadcast_to(np.arange(nx)[:, None], t_y.shape).astype(np.float64)
+    j_grid_y = np.broadcast_to(np.arange(ny - 1)[None, :], t_y.shape).astype(np.float64)
+    points_y = np.stack(
+        [
+            (i_grid_y + 0.5) * dx,
+            (j_grid_y + t_y + 0.5) * dy,
+            sdf_y,
+        ],
+        axis=-1,
+    )[measured_y]
+
+    if points_x.size and points_y.size:
+        points = np.concatenate([points_x, points_y], axis=0)
+    else:
+        points = points_x if points_x.size else points_y
+    points = points[points[:, 2] >= float(cutoff)]
+    if points.size == 0:
+        return np.zeros((0, 3))
+    length = float(period) if period is not None else nx * dx
+    reference = 0.5 * length if x0 is None else float(x0)
+    points[:, 0] = ((points[:, 0] - reference + 0.5 * length) % length) - 0.5 * length
+    return points
+
+
+def fit_circle(x, y):
+    """Algebraic (Kasa) least-squares circle fit; returns ``(x_c, y_c, R)``."""
+    import numpy as np
+
+    x = np.asarray(x, dtype=np.float64)
+    y = np.asarray(y, dtype=np.float64)
+    if x.size < 3:
+        raise ValueError("a circle fit needs at least three points")
+    design = np.stack([x, y, np.ones_like(x)], axis=1)
+    rhs = x**2 + y**2
+    solution, *_ = np.linalg.lstsq(design, rhs, rcond=None)
+    x_c = 0.5 * solution[0]
+    y_c = 0.5 * solution[1]
+    radius_squared = solution[2] + x_c**2 + y_c**2
+    if not np.isfinite(radius_squared) or radius_squared <= 0.0:
+        raise ValueError("degenerate circle fit")
+    return float(x_c), float(y_c), float(np.sqrt(radius_squared))
+
+
+def wall_plane_height(solid: Solid, p: PhaseFieldParams, x0: float | None = None) -> float:
+    """Height of the solid surface beneath ``x0`` (sdf = 0 crossing of that column).
+
+    Valid for locally planar walls (the sessile benchmark); a strongly textured
+    surface has no single contact plane and the apparent-angle concept itself
+    changes meaning.
+    """
+    import numpy as np
+
+    distance = np.asarray(solid.sdf, dtype=np.float64)
+    if x0 is None:
+        x0 = 0.5 * p.Lx
+    index = int(np.clip(round((float(x0) - 0.5 * p.dx) / p.dx), 0, p.Nx - 1))
+    column = distance[index, :]
+    y_axis = (np.arange(p.Ny) + 0.5) * p.dy
+    crossings = []
+    for j in range(p.Ny - 1):
+        a, b = column[j], column[j + 1]
+        if a == 0.0:
+            crossings.append(y_axis[j])
+        elif (a < 0.0) != (b < 0.0) and np.isfinite(a) and np.isfinite(b):
+            t = -a / (b - a)
+            crossings.append(float(y_axis[j] + t * (y_axis[j + 1] - y_axis[j])))
+    if not crossings:
+        return float("nan")
+    return float(np.max(crossings))
+
+
+def measure_contact_angle(
+    phi,
+    solid: Solid,
+    p: PhaseFieldParams,
+    level: float = 0.5,
+    cutoff_factor: float = 1.0,
+) -> float:
+    """Apparent contact angle (deg) from a circle fitted to the interface contour.
+
+    ``theta = acos((y_w - y_c) / Rc)`` with the fitted centre ``(x_c, y_c)`` and
+    radius ``Rc`` and the wall plane ``y_w``.  Contour points closer to the solid
+    than ``max(cutoff_factor * eps, dx)`` are excluded; the defaults are the ones
+    validated on synthetic circular caps (N = 128: MAE 0.007 deg, max 0.016 deg).
+    Returns ``nan`` when the contour is too short or degenerate to fit.
+    """
+    import numpy as np
+
+    cutoff = max(float(cutoff_factor) * float(p.eps), float(p.dx))
+    reference = _periodic_centroid_x(np.asarray(phi), p)
+    try:
+        points = contact_angle_contour_points(
+            phi, solid.sdf, p.dx, p.dy, level=level, cutoff=cutoff, x0=reference, period=p.Lx
+        )
+    except (ValueError, FloatingPointError):
+        return float("nan")
+    if len(points) < 8:
+        return float("nan")
+    try:
+        _x_c, y_c, radius = fit_circle(points[:, 0], points[:, 1])
+    except (ValueError, np.linalg.LinAlgError):
+        return float("nan")
+    wall = wall_plane_height(solid, p, x0=reference)
+    if not np.isfinite(wall) or radius <= 0.0:
+        return float("nan")
+    cosine = (wall - y_c) / radius
+    if not np.isfinite(cosine):
+        return float("nan")
+    return float(np.rad2deg(np.arccos(np.clip(cosine, -1.0, 1.0))))
+
+
+def measure_contact_angle_area_width(phi, solid: Solid, p: PhaseFieldParams, level: float = 0.5):
+    """Legacy (contract <= v5) area + full-width measurement; retained for comparison only.
+
+    Documented as biased for ``theta > 90`` deg (see the section comment above);
+    never use it to accept or reject a wetting model.
     """
     import numpy as np
     from scipy.optimize import brentq
@@ -828,6 +1042,40 @@ def measure_contact_angle(phi, solid: Solid, p: PhaseFieldParams, level: float =
     except ValueError:
         return float("nan")
     return float(np.rad2deg(theta))
+
+
+def sessile_initial_state(
+    p: PhaseFieldParams,
+    solid: Solid,
+    R: float = 1.1,
+    wall_height: float | None = None,
+    theta0_deg: float = 90.0,
+    x0: float | None = None,
+) -> State:
+    """Clean, target-independent sessile initial state (L1A-2b).
+
+    A diffuse cap of geometric angle ``theta0_deg`` whose circle centre lies at
+    ``y_c = y_w - R cos(theta0)``, masked to the geometric fluid region so that
+    the solid holds no liquid at all (``theta0_deg = 90`` puts the centre on the
+    wall plane).  The same state is used for every target angle: no target knows
+    its own angle at t = 0.  ``u = v = 0``.  See ``production/README.md`` for why
+    this replaces the legacy overlapping seed.
+    """
+    import numpy as np
+
+    if wall_height is None:
+        wall_height = wall_plane_height(solid, p, x0=x0)
+    if not np.isfinite(wall_height):
+        raise ValueError("cannot determine the wall plane for the sessile initial state")
+    theta0 = np.deg2rad(float(theta0_deg))
+    X, Y = grids(p)
+    centre_x = 0.5 * p.Lx if x0 is None else float(x0)
+    y_c = float(wall_height) - float(R) * np.cos(theta0)
+    r = jnp.sqrt((X - centre_x) ** 2 + (Y - y_c) ** 2)
+    phi = 0.5 * (1.0 - jnp.tanh((r - float(R)) / (jnp.sqrt(2.0) * p.eps)))
+    phi = jnp.where(solid.sdf >= 0.0, phi, 0.0).astype(p.dtype)
+    zero = jnp.zeros_like(phi)
+    return State(phi=phi, u=zero, v=zero, t=0.0)
 
 
 def pressure_field(state: State, solid: Solid, p: PhaseFieldParams):

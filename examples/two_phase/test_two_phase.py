@@ -11,7 +11,10 @@ learning pipeline relies on:
 3. the capillary sign convention is physical (L1A-2a, solver contract v5): the
    Korteweg force points toward the liquid, never creates interfacial free
    energy, and gives a *positive* Laplace jump ``P_liquid - P_gas`` for a convex
-   drop.  Assertions on ``delta_p`` must stay signed -- never ``abs(delta_p)``.
+   drop.  Assertions on ``delta_p`` must stay signed -- never ``abs(delta_p)``;
+4. the contact-angle measurement is accurate on synthetic caps of known
+   geometric angle and the sessile initial state contains no liquid in the
+   solid (L1A-2b, commit 1).
 
 Run with::
 
@@ -333,3 +336,104 @@ def test_capillary_formula_lives_only_in_rhs():
     for name in ("step", "pressure_field"):
         assert calls(functions[name], "rhs"), f"{name}() must obtain its forces from rhs()"
     assert not names(functions["pressure_field"]) & {"SIGMA_NORM", "chemical_potential", "fprime", "_lap"}
+
+
+#######################################################################################
+#           L1A-2b: audited contact-angle measurement and clean sessile setup          #
+#######################################################################################
+
+
+def _synthetic_cap(p, solid_theta_deg: float, R: float = 1.1, wall_height: float = 0.25):
+    """Diffuse 2-D cap of known geometric contact angle on a flat wall (diagnostic only)."""
+    X, Y = pf.grids(p)
+    theta = np.deg2rad(solid_theta_deg)
+    y_c = wall_height - R * np.cos(theta)
+    r = jnp.sqrt((X - 0.5 * p.Lx) ** 2 + (Y - y_c) ** 2)
+    return (0.5 * (1.0 - jnp.tanh((r - R) / (jnp.sqrt(2.0) * p.eps)))).astype(p.dtype)
+
+
+def _flat_wall(p, theta_deg: float = 90.0, wall_height: float = 0.25):
+    sdf = pf.surface_flat(p, wall_height=wall_height)
+    solid = pf.make_solid(sdf, p, cos_theta=jnp.cos(jnp.deg2rad(theta_deg)))
+    return sdf, solid
+
+
+def test_synthetic_contact_angle_measurement():
+    """The measurement must recover known geometric angles on synthetic caps (no solver)."""
+    p = pf.PhaseFieldParams(Nx=128, Ny=128, Lx=6.0, Ly=6.0, dtype=jnp.float32)
+    p.eps = 2.0 * p.dx
+    sdf, solid = _flat_wall(p)
+    targets = (60.0, 90.0, 120.0, 150.0)
+    measured = []
+    for target in targets:
+        phi = _synthetic_cap(p, target)
+        phi = jnp.where(sdf >= 0.0, phi, 0.0)
+        measured.append(pf.measure_contact_angle(phi, solid, p))
+    assert all(np.isfinite(measured))
+    errors = np.abs(np.asarray(measured) - np.asarray(targets))
+    assert errors.mean() <= 2.0
+    assert errors.max() <= 3.0
+    assert all(b >= a for a, b in zip(measured, measured[1:])), measured
+
+
+def test_legacy_area_width_measurement_is_biased_for_obtuse_caps():
+    """Legacy measurement is retained, but documented as unusable for theta > 90 deg."""
+    p = pf.PhaseFieldParams(Nx=128, Ny=128, Lx=6.0, Ly=6.0, dtype=jnp.float32)
+    p.eps = 2.0 * p.dx
+    sdf, solid = _flat_wall(p)
+    errors = []
+    for target in (60.0, 90.0, 120.0, 150.0):
+        phi = jnp.where(sdf >= 0.0, _synthetic_cap(p, target), 0.0)
+        errors.append(abs(pf.measure_contact_angle_area_width(phi, solid, p) - target))
+    assert np.mean(errors) > 5.0  # contract-v5 measurement defect, in numbers
+    assert max(errors) > 10.0
+
+
+def test_clean_sessile_initial_state_has_no_solid_liquid():
+    """Target-independent clean start: no liquid in the geometric solid, same shape for all targets."""
+    p = pf.PhaseFieldParams(Nx=96, Ny=96, Lx=6.0, Ly=6.0, dtype=jnp.float32)
+    p.eps = 2.0 * p.dx
+    _, solid = _flat_wall(p)
+    states = []
+    for target in (60.0, 90.0, 120.0, 150.0):
+        solid_t = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p, cos_theta=jnp.cos(np.deg2rad(target)))
+        state = pf.sessile_initial_state(p, solid_t, R=1.1, wall_height=0.25)
+        phi = np.asarray(state.phi, dtype=np.float64)
+        distance = np.asarray(solid_t.sdf, dtype=np.float64)
+        total = phi.sum() * p.dx * p.dy
+        fluid = phi[distance >= 0.0].sum() * p.dx * p.dy
+        assert total > 0.0
+        assert abs(phi[distance < 0.0]).sum() * p.dx * p.dy / total < 1e-6
+        assert fluid / total == pytest.approx(1.0, rel=1e-12)
+        states.append(phi)
+    for other in states[1:]:
+        np.testing.assert_allclose(states[0], other, rtol=0, atol=0)
+
+
+def test_clean_sessile_initial_state_is_a_90deg_cap():
+    p = pf.PhaseFieldParams(Nx=128, Ny=128, Lx=6.0, Ly=6.0, dtype=jnp.float32)
+    p.eps = 2.0 * p.dx
+    _, solid = _flat_wall(p)
+    state = pf.sessile_initial_state(p, solid, R=1.1, wall_height=0.25)
+    assert float(jnp.max(jnp.abs(state.u))) == 0.0
+    assert float(jnp.max(jnp.abs(state.v))) == 0.0
+    assert pf.measure_contact_angle(state.phi, solid, p) == pytest.approx(90.0, abs=0.5)
+
+
+def test_contact_angle_measurement_is_rotation_invariant_across_the_x_seam():
+    """A drop crossing the periodic x seam must measure the same angle."""
+    p = pf.PhaseFieldParams(Nx=128, Ny=128, Lx=6.0, Ly=6.0, dtype=jnp.float32)
+    p.eps = 2.0 * p.dx
+    X, Y = pf.grids(p)
+    sdf, solid = _flat_wall(p)
+    theta = np.deg2rad(120.0)
+    y_c = 0.25 - 1.1 * np.cos(theta)
+    angles = []
+    for X0 in (3.0, 0.0, 5.9):
+        sx = (X - X0 + 0.5 * p.Lx) % p.Lx - 0.5 * p.Lx
+        r = jnp.sqrt(sx**2 + (Y - y_c) ** 2)
+        phi = jnp.where(sdf >= 0.0, 0.5 * (1.0 - jnp.tanh((r - 1.1) / (jnp.sqrt(2.0) * p.eps))), 0.0)
+        angles.append(pf.measure_contact_angle(phi, solid, p))
+    assert all(np.isfinite(angles))
+    assert max(angles) - min(angles) < 0.5
+    assert all(abs(a - 120.0) < 1.0 for a in angles)
