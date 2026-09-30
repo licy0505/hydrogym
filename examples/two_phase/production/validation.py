@@ -81,6 +81,18 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": "Viscous acceleration uses nu(phi)*lap(u) rather than divergence of variable-viscosity stress.",
     },
     {
+        "id": "D-FRESH-TRAIN-CONTRACT",
+        "severity": "medium",
+        "status": "open",
+        "description": (
+            "L1B prerequisite: a fresh training run pointed at a stale data directory validates the "
+            "file-level dataset_schema_version but not the manifest solver_contract_version, so "
+            "contract-5 trajectories can still be read as training data under contract 6. "
+            "generate_dataset.py already regenerates stale trajectories (the fingerprint contains the "
+            "contract); the training-side check is deliberately not fixed in this PR."
+        ),
+    },
+    {
         "id": "BC-Y-PERIODIC",
         "severity": "medium",
         "status": "open",

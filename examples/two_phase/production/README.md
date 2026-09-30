@@ -214,6 +214,12 @@ marked `resolved_in_contract_v6` until a sessile equilibrium can be measured at 
 (`measurement_required`) records the impact gas film; `P-SOLID-PIN` (`confirmed_problem`) records the
 wall phase-flux problem above. `P-LAPLACE-SIGN` stays `resolved_in_contract_v5`.
 
+**Lineage.** `SOLVER_CONTRACT_VERSION` is 6 and `DATASET_SCHEMA_VERSION` stays 3. The contract number is
+part of `generate_dataset._dataset_fingerprint`, so every contract-5 trajectory is stale and is
+regenerated; `test_v5_dataset_is_stale_under_v6` pins that. Fresh *training* does not check the manifest
+contract (only the per-file schema), which is recorded as `D-FRESH-TRAIN-CONTRACT` and is an L1B
+prerequisite, not part of this PR.
+
 **L1A-2c recommendation (evidence-based, not presupposed).** Give the wall a no-flux phase boundary
 condition before any further wetting comparison: a face-centred mobility mask
 (`M_face = M * active_i * active_j`, conservative by construction) with the natural wall condition
