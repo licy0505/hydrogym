@@ -112,6 +112,13 @@ def _run_benchmarks(config, dtype: str) -> tuple[dict[str, Any], dict[str, int],
                 R=spec.get("R", 1.1),
                 dt=spec.get("dt", 4e-3),
                 dtype=dtype,
+                wetting_model=spec.get("wetting_model", "surface_energy"),
+                enforce_solid_phi=spec.get("enforce_solid_phi", True),
+                sample_every=spec.get("sample_every", 200),
+                angle_tol_deg=spec.get("angle_tol_deg", 0.25),
+                speed_tol=spec.get("speed_tol", 5e-4),
+                windows=spec.get("windows", 3),
+                max_steps=spec.get("max_steps"),
             )
         except Exception as exc:
             errors.append(f"contact_angle suite: {type(exc).__name__}: {exc}")

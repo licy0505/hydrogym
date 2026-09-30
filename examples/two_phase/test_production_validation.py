@@ -599,3 +599,94 @@ def test_solid_gas_film_audit_variates_one_factor_at_a_time():
         assert others  # the baseline case is recorded verbatim
     # every quick grid contains exactly the baseline default of its factor
     assert QUICK_FACTORS["eta_pen_over_dt"] == [2.0] and QUICK_FACTORS["nu_g_over_nu_l"] == [10.0]
+
+
+# ---------------------------------------------------------------------------
+#  L1A-2b: clean sessile seed, equilibrium gating and the A/B/C matrix
+# ---------------------------------------------------------------------------
+
+
+def test_contact_angle_case_uses_the_clean_seed_and_gates_on_convergence():
+    from production import validation as V
+
+    pytest.importorskip("jax")
+    case = V.run_contact_angle_case(90.0, N=32, max_steps=20, dt=4e-3, eps_factor=2.0, R=0.6, dtype="float32")
+    assert case.converged is False  # 20 steps cannot satisfy 3 windows of 5e-4 speed
+    assert case.measured_deg is None and case.absolute_error_deg is None
+    assert case.signed_error_deg is None
+    assert isinstance(case.final_sampled_deg, float) and 0.0 <= case.final_sampled_deg <= 180.0
+    assert case.initial_solid_liquid_fraction == 0.0
+    assert case.wetting_model == "surface_energy" and case.enforce_solid_phi is True
+    assert case.relaxation_steps == 20
+    sample_fields = {"step", "time", "measured_angle_deg", "max_speed", "total_mass", "fluid_mass"}
+    assert case.samples and all(sample_fields <= set(row) for row in case.samples)
+    assert case.total_mass_relative_drift <= 1e-3
+
+
+def test_contact_angle_case_reports_the_angle_once_the_windows_converge():
+    from production import validation as V
+
+    pytest.importorskip("jax")
+    case = V.run_contact_angle_case(
+        90.0,
+        N=64,
+        max_steps=5,
+        dt=4e-3,
+        eps_factor=2.0,
+        R=0.6,
+        dtype="float32",
+        sample_every=5,
+        angle_tol_deg=180.0,
+        speed_tol=1e9,
+        windows=1,
+    )
+    assert case.converged is True
+    assert case.converged_step == 5
+    assert case.converged_time == pytest.approx(case.samples[-1]["time"])
+    assert case.measured_deg is not None and case.absolute_error_deg is not None
+    summary = V.summarize_contact_angles([case])
+    assert summary["converged_case_count"] == 1
+    assert summary["mae_deg"] == pytest.approx(case.absolute_error_deg)
+
+
+def test_contact_angle_summary_excludes_drifting_runs_from_the_error_statistics():
+    from production import validation as V
+
+    pytest.importorskip("jax")
+    cases = [
+        V.run_contact_angle_case(target, N=32, max_steps=10, dt=4e-3, eps_factor=2.0, R=0.6, dtype="float32")
+        for target in (60.0, 120.0)
+    ]
+    summary = V.summarize_contact_angles(cases)
+    assert summary["converged_case_count"] == 0
+    assert summary["mae_deg"] is None and summary["rmse_deg"] is None and summary["max_absolute_error_deg"] is None
+    assert summary["monotonic_target_to_measured"] is False
+    assert summary["non_converged_targets"] == [60.0, 120.0]
+    assert len(summary["final_angles_deg"]) == 2
+
+
+def test_contact_angle_matrix_reports_history_and_convergence_accounting():
+    from production import contact_angle_matrix as M
+
+    pytest.importorskip("jax")
+    matrix = M.build_matrix(
+        [60.0, 120.0],
+        ["surface_energy"],
+        N=32,
+        max_steps=20,
+        dt=4e-3,
+        R=0.6,
+        sample_every=20,
+        angle_tol_deg=0.25,
+        speed_tol=5e-4,
+        windows=3,
+    )
+    assert "history_recorded" in matrix["profiles"]
+    history = matrix["profiles"]["history_recorded"]["summary"]
+    assert history["mae_deg"] == pytest.approx(30.635, abs=1e-3)
+    assert history["monotonic_target_to_measured"] is False
+    summary = matrix["profiles"]["surface_energy"]["summary"]
+    assert summary["converged_case_count"] == 0 and summary["mae_deg"] is None
+    table = M.format_matrix(matrix)
+    assert "| surface_energy | 60 |" in table and "| history_recorded | 120 |" in table
+    assert "180" not in table.splitlines()[0]  # header only

@@ -39,6 +39,32 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": "Current wall-affinity model must be calibrated against measured apparent contact angle.",
     },
     {
+        "id": "I-CONTACT-GAP",
+        "severity": "high",
+        "status": "measurement_required",
+        "description": (
+            "Impact drops stop at a finite gas-film gap (min g_0.5 ~ 0.148, min g_0.1 ~ 0.055 at We=100, "
+            "gap ~ 0.15). L1A-2b only adds the one-factor solid/gas-film ablation evidence "
+            "(production/solid_gas_film_audit.py); it does not resolve the gap."
+        ),
+    },
+    {
+        "id": "P-SOLID-PIN",
+        "severity": "high",
+        "status": "confirmed_problem",
+        "description": (
+            "The Cahn-Hilliard phase field uses a spatially constant mobility, so the solid is not "
+            "impermeable to the phase flux: without the projection the drop leaks into the solid "
+            "(~7 % mean liquid fraction in the geometric solid), and with enforce_solid_phi the "
+            "mass-conserving projection re-injects the leaked liquid at the wall, which pumps the "
+            "contact line. A neutral wall (cos_theta = 0, g_w == 0) still drifts from 90 deg to "
+            ">120 deg and eventually detaches; the drift is unchanged for dt in [1e-3, 4e-3], "
+            "eps in [2, 6] dx and N in [96, 192] and is independent of the wetting model "
+            "(none / legacy_affinity / surface_energy). Sessile equilibrium angles cannot be measured "
+            "until the wall carries a no-flux phase boundary condition; that is L1A-2c, not this PR."
+        ),
+    },
+    {
         "id": "P-LAPLACE-SIGN",
         "severity": "high",
         "status": "measurement_required",
@@ -376,15 +402,36 @@ def run_static_droplet_suite(**kwargs: Any) -> dict[str, Any]:
 
 @dataclass
 class ContactAngleCase:
+    """One sessile relaxation.
+
+    ``measured_deg`` (and the signed/absolute error) is only set when the run met
+    the equilibrium criterion; a non-converged value is *not* an equilibrium
+    contact angle and is reported as ``None``.  ``final_sampled_deg`` keeps the
+    last sampled angle for diagnostics, and ``samples`` records the time,
+    measured angle, maximum speed, total mass and fluid-region mass of every
+    sample.
+    """
+
     target_deg: float
     measured_deg: float | None
     signed_error_deg: float | None
     absolute_error_deg: float | None
+    converged: bool
+    converged_step: int | None
+    converged_time: float | None
+    final_sampled_deg: float | None
     mass_initial: float
     mass_final: float
     mass_relative_drift: float
+    total_mass_initial: float
+    total_mass_final: float
+    total_mass_relative_drift: float
+    initial_solid_liquid_fraction: float
+    wetting_model: str
+    enforce_solid_phi: bool
     relaxation_steps: int
     relaxation_time: float
+    samples: list[dict[str, Any]]
     finite: bool
     runtime: dict[str, Any]
 
@@ -404,12 +451,34 @@ def run_contact_angle_case(
     dt: float = 4.0e-3,
     dtype: str = "float32",
     eps: float | None = None,
+    *,
+    wetting_model: str = "surface_energy",
+    enforce_solid_phi: bool = True,
+    sample_every: int = 200,
+    angle_tol_deg: float = 0.25,
+    speed_tol: float = 5e-4,
+    windows: int = 3,
+    max_steps: int | None = None,
 ) -> ContactAngleCase:
-    """Relax a sessile drop on a flat affinity wall and measure apparent angle."""
+    """Relax a clean sessile drop on a flat wall and measure the apparent angle.
+
+    The initial state is target-independent (:func:`phasefield.sessile_initial_state`,
+    geometric 90 deg cap with no liquid in the geometric solid) and ``u = v = 0``.
+    The run stops as soon as ``windows`` consecutive samples have both
+    ``|d(theta)| <= angle_tol_deg`` and ``max_speed <= speed_tol``; only then is the
+    angle reported as an equilibrium contact angle.  ``wall_energy_amp`` is a
+    legacy-only parameter (``wetting_model='legacy_affinity'``) and has no effect
+    in the default ``surface_energy`` model.
+    """
     if not (0.0 <= target_deg <= 180.0) or not math.isfinite(target_deg):
         raise ValueError("target_deg must lie in [0, 180]")
-    if relaxation_steps < 0 or N < 8 or R <= 0:
-        raise ValueError("relaxation_steps must be non-negative; N and R must be positive")
+    budget = int(relaxation_steps if max_steps is None else max_steps)
+    if budget < 0 or N < 8 or R <= 0:
+        raise ValueError("max_steps (or relaxation_steps) must be non-negative; N and R must be positive")
+    if int(windows) < 1 or int(sample_every) < 1:
+        raise ValueError("windows and sample_every must be positive")
+    if not (float(angle_tol_deg) > 0.0 and float(speed_tol) > 0.0):
+        raise ValueError("angle_tol_deg and speed_tol must be positive")
     benchmark_started = time.perf_counter()
     p = _params(
         N,
@@ -420,64 +489,136 @@ def run_contact_angle_case(
         dt=dt,
         dtype=dtype,
         wall_energy_amp=wall_energy_amp,
-        enforce_solid_phi=False,
+        enforce_solid_phi=bool(enforce_solid_phi),
+        wetting_model=wetting_model,
     )
     wall_height = 0.25
     sdf = pf.surface_flat(p, wall_height=wall_height)
     solid = pf.make_solid(sdf, p, cos_theta=math.cos(math.radians(target_deg)))
-    # Seed a sessile drop with a small geometric overlap, matching the legacy
-    # manual test; no wetting parameter is tuned by this benchmark.
-    y0 = wall_height + R - min(0.15, 0.14 * R)
-    state = pf.droplet_initial_state(p, x0=p.Lx / 2.0, y0=y0, R=R, u_impact=0.0)
+    # Clean, target-independent sessile seed (contract v6): geometric 90 deg cap with
+    # its centre on the wall plane, phi only in sdf >= 0, u = v = 0.
+    state = pf.sessile_initial_state(p, solid, R=R, wall_height=wall_height)
+    solid_cells = jnp.asarray(solid.sdf < 0.0, dtype=p.dtype)
+    solid_liquid = float(jnp.sum(jnp.where(solid_cells > 0.0, state.phi, 0.0)) / max(float(jnp.sum(solid_cells)), 1.0))
     _assert_state_finite(state, N)
     mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    total_initial = float(jnp.sum(state.phi) * p.dx * p.dy)
     if mass_initial <= 0:
         raise ValueError("contact-angle initial fluid-region mass must be positive")
     step_fn = jax.jit(pf.step, static_argnums=(2,))
+    every = max(1, min(int(sample_every), max(budget, 1)))
     relaxation_started = time.perf_counter()
-    for _ in range(relaxation_steps):
+    samples: list[dict[str, Any]] = []
+    converged = False
+    converged_step = None
+    applied = 0
+    while applied < budget:
         state = step_fn(state, solid, p)
-    _assert_state_finite(state, N)
+        applied += 1
+        if applied % every:
+            continue
+        angle = float(pf.measure_contact_angle(state.phi, solid, p))
+        max_speed = float(jnp.sqrt(jnp.max(state.u**2 + state.v**2)))
+        total_mass = float(jnp.sum(state.phi) * p.dx * p.dy)
+        fluid_mass = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+        samples.append(
+            {
+                "step": int(applied),
+                "time": float(applied * p.dt),
+                "measured_angle_deg": angle,
+                "max_speed": max_speed,
+                "total_mass": total_mass,
+                "fluid_mass": fluid_mass,
+            }
+        )
+        if len(samples) >= int(windows):
+            window = samples[-int(windows) :]
+            angles = [float(row["measured_angle_deg"]) for row in window]
+            speeds = [float(row["max_speed"]) for row in window]
+            calm = all(abs(a - b) <= float(angle_tol_deg) for a, b in zip(angles, angles[1:]))
+            slow = all(speed <= float(speed_tol) for speed in speeds)
+            if calm and slow:
+                converged = True
+                converged_step = int(applied)
+                break
+        if not math.isfinite(angle):
+            break
     elapsed = time.perf_counter() - relaxation_started
+    _assert_state_finite(state, N)
     mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
-    measured = float(pf.measure_contact_angle(state.phi, solid, p))
+    total_final = float(jnp.sum(state.phi) * p.dx * p.dy)
+    final_angle = float(samples[-1]["measured_angle_deg"]) if samples else None
     wall_seconds = time.perf_counter() - benchmark_started
-    finite = math.isfinite(measured) and 0.0 <= measured <= 180.0
+    measured = float(samples[-1]["measured_angle_deg"]) if converged and samples else None
+    finite = final_angle is not None and math.isfinite(final_angle) and 0.0 <= final_angle <= 180.0
     drift = abs(mass_final - mass_initial) / max(abs(mass_initial), 1e-12)
+    total_drift = abs(total_final - total_initial) / max(abs(total_initial), 1e-12)
     runtime = {
         "wall_seconds": float(wall_seconds),
-        "steps": int(relaxation_steps),
-        "steps_per_second": float(relaxation_steps / max(wall_seconds, 1e-12)),
+        "steps": int(applied),
+        "steps_per_second": float(applied / max(elapsed, 1e-12)),
         "N": int(N),
         "dtype": dtype,
+        "sample_every": int(every),
+        "max_steps": int(budget),
+        "convergence": {
+            "angle_tol_deg": float(angle_tol_deg),
+            "speed_tol": float(speed_tol),
+            "windows": int(windows),
+        },
     }
     return ContactAngleCase(
         target_deg=float(target_deg),
-        measured_deg=measured if finite else None,
-        signed_error_deg=(measured - target_deg) if finite else None,
-        absolute_error_deg=abs(measured - target_deg) if finite else None,
+        measured_deg=measured,
+        signed_error_deg=(measured - target_deg) if measured is not None else None,
+        absolute_error_deg=abs(measured - target_deg) if measured is not None else None,
+        converged=bool(converged),
+        converged_step=converged_step,
+        converged_time=(converged_step * float(p.dt)) if converged_step is not None else None,
+        final_sampled_deg=final_angle,
         mass_initial=float(mass_initial),
         mass_final=float(mass_final),
         mass_relative_drift=float(drift),
-        relaxation_steps=int(relaxation_steps),
+        total_mass_initial=float(total_initial),
+        total_mass_final=float(total_final),
+        total_mass_relative_drift=float(total_drift),
+        initial_solid_liquid_fraction=float(solid_liquid),
+        wetting_model=str(p.wetting_model),
+        enforce_solid_phi=bool(p.enforce_solid_phi),
+        relaxation_steps=int(applied),
         relaxation_time=float(elapsed),
+        samples=samples,
         finite=bool(finite),
         runtime=runtime,
     )
 
 
 def summarize_contact_angles(cases: list[ContactAngleCase]) -> dict[str, Any]:
+    """Statistics over converged cases only.
+
+    The MAE/RMSE/max error are computed from equilibrium angles, i.e. runs that met
+    the convergence criterion.  Non-converged runs are counted and their last
+    sampled angles are reported separately; they must never enter the error
+    statistics (a drifting angle is not an equilibrium contact angle).
+    """
     valid = sorted((case for case in cases if case.finite), key=lambda case: case.target_deg)
-    errors = np.asarray([case.absolute_error_deg for case in valid], dtype=np.float64)
-    measurements = [float(case.measured_deg) for case in valid]
+    converged = [case for case in valid if case.converged and case.measured_deg is not None]
+    errors = np.asarray([case.absolute_error_deg for case in converged], dtype=np.float64)
+    measurements = [float(case.measured_deg) for case in converged]
     monotonic = all(b >= a for a, b in zip(measurements, measurements[1:]))
     return {
         "mae_deg": float(errors.mean()) if errors.size else None,
         "rmse_deg": float(np.sqrt(np.mean(errors**2))) if errors.size else None,
         "max_absolute_error_deg": float(errors.max()) if errors.size else None,
-        "monotonic_target_to_measured": bool(monotonic) if len(valid) == len(cases) else False,
+        "monotonic_target_to_measured": bool(monotonic) if len(converged) == len(cases) else False,
         "valid_case_count": len(valid),
         "case_count": len(cases),
+        "converged_case_count": len(converged),
+        "converged_targets": [float(case.target_deg) for case in converged],
+        "non_converged_targets": [float(case.target_deg) for case in valid if not case.converged],
+        "final_angles_deg": [
+            {"target_deg": float(case.target_deg), "final_sampled_deg": case.final_sampled_deg} for case in valid
+        ],
     }
 
 

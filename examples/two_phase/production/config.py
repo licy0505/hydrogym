@@ -19,7 +19,24 @@ _BENCHMARK_KEYS = {"static_droplet", "contact_angle", "impact", "convergence"}
 _OUTPUT_KEYS = {"directory", "formats"}
 _BLOCK_KEYS = {
     "static_droplet": {"radii", "N", "steps", "We", "Re", "eps_factor", "dt", "save_every"},
-    "contact_angle": {"targets", "N", "relaxation_steps", "We", "Re", "eps_factor", "wall_energy_amp", "R", "dt"},
+    "contact_angle": {
+        "targets",
+        "N",
+        "relaxation_steps",
+        "max_steps",
+        "sample_every",
+        "angle_tol_deg",
+        "speed_tol",
+        "windows",
+        "wetting_model",
+        "enforce_solid_phi",
+        "We",
+        "Re",
+        "eps_factor",
+        "wall_energy_amp",
+        "R",
+        "dt",
+    },
     "impact": {"cases", "N", "steps", "save_every", "We", "Re", "eps_factor", "dt", "wall_height"},
     "convergence": {"grid_refinement", "interface_thickness"},
 }
@@ -224,6 +241,30 @@ def validate_config_data(data: Any) -> list[str]:
                             errors.append(f"contact_angle.targets[{i}] must be in [0, 180]")
                 _grid_size(block.get("N"), "contact_angle.N", errors)
                 _step_count(block.get("relaxation_steps"), "contact_angle.relaxation_steps", errors, allow_zero=True)
+                if "max_steps" in block:
+                    _step_count(block["max_steps"], "contact_angle.max_steps", errors)
+                sample_every = block.get("sample_every")
+                if sample_every is not None and (
+                    isinstance(sample_every, bool) or not isinstance(sample_every, int) or sample_every < 1
+                ):
+                    errors.append("contact_angle.sample_every must be a positive integer")
+                windows = block.get("windows")
+                if windows is not None and (isinstance(windows, bool) or not isinstance(windows, int) or windows < 1):
+                    errors.append("contact_angle.windows must be a positive integer")
+                for key in ("angle_tol_deg", "speed_tol"):
+                    if key in block:
+                        _positive_number(block[key], f"contact_angle.{key}", errors)
+                        _upper_bound(
+                            block[key], f"contact_angle.{key}", 180.0 if key == "angle_tol_deg" else 1e6, errors
+                        )
+                if "wetting_model" in block and block["wetting_model"] not in {
+                    "surface_energy",
+                    "legacy_affinity",
+                    "none",
+                }:
+                    errors.append("contact_angle.wetting_model must be one of surface_energy, legacy_affinity, none")
+                if "enforce_solid_phi" in block and not isinstance(block["enforce_solid_phi"], bool):
+                    errors.append("contact_angle.enforce_solid_phi must be a boolean")
                 for key in ("We", "Re", "eps_factor", "R", "dt"):
                     if key in block:
                         _positive_number(block[key], f"contact_angle.{key}", errors)

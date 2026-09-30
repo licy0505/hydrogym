@@ -25,7 +25,14 @@
       "eps_factor": 2.0,
       "wall_energy_amp": 5.0,
       "R": 0.6,
-      "dt": 0.004
+      "dt": 0.004,
+      "max_steps": 4,
+      "sample_every": 4,
+      "angle_tol_deg": 0.25,
+      "speed_tol": 0.0005,
+      "windows": 3,
+      "wetting_model": "surface_energy",
+      "enforce_solid_phi": true
     },
     "impact": {
       "N": 48,
