@@ -327,7 +327,11 @@ def audit_wall_energy(
         Check(
             "wall_energy_directional_derivative_matches_mu",
             variational_error <= DIRECTIONAL_DERIVATIVE_TOLERANCE,
-            f"central difference of F_wall matches sum(mu_wall dphi) to {DIRECTIONAL_DERIVATIVE_TOLERANCE:g} (float64)",
+            (
+                "central difference of F_wall matches sum(mu_wall dphi) within "
+                f"{DIRECTIONAL_DERIVATIVE_TOLERANCE:g} (float64; the aligned probe is FD-truncation limited, "
+                "2e-9 to 6e-7 at the fine amplitude)"
+            ),
             {"max_relative_error": variational_error, "cases": variational},
         ),
     ]
