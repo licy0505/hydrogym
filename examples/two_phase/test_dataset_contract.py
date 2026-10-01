@@ -34,37 +34,42 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
     assert fp2 != fp3
 
 
-def test_v5_dataset_is_stale_under_v6(tmp_path, monkeypatch):
-    """Same file schema (v3) + different solver contract (v5 -> v6) => fingerprint mismatch => regenerate."""
-    assert pf.SOLVER_CONTRACT_VERSION == 6
-    assert pf.WETTING_MODELS == ("surface_energy", "legacy_affinity", "none")
-    assert pf.PhaseFieldParams(Nx=8, Ny=8, Lx=1.0, Ly=1.0).wetting_model == "surface_energy"
+def test_v6_dataset_is_stale_under_v7(tmp_path, monkeypatch):
+    """Schema v3 is retained, but contract-6 phase semantics must fingerprint stale under v7."""
+    assert pf.SOLVER_CONTRACT_VERSION == 7
+    assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
+    params = pf.PhaseFieldParams(Nx=8, Ny=8, Lx=1.0, Ly=1.0)
+    assert params.wetting_model == "surface_energy"
+    assert params.phase_boundary_model == "impermeable_flux"
     case = C.lowwe_cases(1)[0]
     args = _args(3)
     dt, nsteps, save_every = G._effective_schedule(case, args)
-    expected_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    expected_v7 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
     path = tmp_path / "train_lowWe_000_flat.npz"
-    with monkeypatch.context() as as_v5:
-        # Only the contract constant changes: solver/generator source, case, grid and schedule are identical.
-        as_v5.setattr(pf, "SOLVER_CONTRACT_VERSION", 5)
-        saved_v5 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    with monkeypatch.context() as as_v6:
+        as_v6.setattr(pf, "SOLVER_CONTRACT_VERSION", 6)
+        saved_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
         np.savez(
             path,
             dataset_schema_version=np.array(G.DATASET_SCHEMA_VERSION, dtype=np.int32),
-            dataset_fingerprint=np.array(saved_v5),
+            dataset_fingerprint=np.array(saved_v6),
         )
-        assert G._saved_case_is_current(path, saved_v5)  # a well-formed schema-3 file, current for v5
+        assert G._saved_case_is_current(path, saved_v6)
 
-    assert saved_v5 != expected_v6
-    assert not G._saved_case_is_current(path, expected_v6)  # generate_dataset removes and regenerates it
+    assert saved_v6 != expected_v7
+    assert not G._saved_case_is_current(path, expected_v7)
+    # The explicit boundary-model key also makes otherwise identical custom cases stale.
+    legacy_case = {**case, "phase_boundary_model": "projection_legacy"}
+    assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v7
 
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 6
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 7
     assert manifest["wetting_model"] == "surface_energy"
-    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 6
+    assert manifest["phase_boundary_model"] == "impermeable_flux"
+    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 7
 
 
 def test_coarse_geometry_is_signed_and_shape_correct():
@@ -148,7 +153,7 @@ def test_smoke_geometry_features_have_three_saved_grid_cells():
     assert finite and min(finite) >= 3.0
 
 
-def test_diagnose_checks_startup_total_mass_against_raw_initial_state():
+def test_diagnose_checks_total_and_fluid_mass_against_raw_initial_state():
     p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0)
     solid = pf.make_solid(pf.surface_flat(p), p)
     raw = np.zeros((p.Nx, p.Ny), dtype=np.float32)
@@ -156,9 +161,8 @@ def test_diagnose_checks_startup_total_mass_against_raw_initial_state():
     raw[0, 4] = 0.5
     initial = pf.State(phi=raw, u=np.zeros_like(raw), v=np.zeros_like(raw), t=0.0)
 
-    # Simulate a startup loss: the first saved frame has no solid leakage but
-    # contains only 0.495 of the original total mass. Fluid mass is intentionally
-    # normalised from this first saved frame, not from the raw state.
+    # Simulate a loss after initialization: both the total phase mass and the
+    # fluid-region mass must be compared against the raw t=0 state.
     first_saved = np.zeros_like(raw)
     first_saved[0, 4] = 0.495
     history = first_saved[None, ...]
@@ -178,4 +182,4 @@ def test_diagnose_checks_startup_total_mass_against_raw_initial_state():
     assert not ok
     assert diagnostics["startup_total_mass_ratio"] == pytest.approx(0.495)
     assert diagnostics["min_total_mass_ratio"] == pytest.approx(0.495)
-    assert diagnostics["min_fluid_mass_ratio"] == pytest.approx(1.0)
+    assert diagnostics["min_fluid_mass_ratio"] == pytest.approx(0.99)

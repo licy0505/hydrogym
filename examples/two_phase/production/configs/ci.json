@@ -32,7 +32,8 @@
       "speed_tol": 0.0005,
       "windows": 3,
       "wetting_model": "surface_energy",
-      "enforce_solid_phi": true
+      "enforce_solid_phi": false,
+      "phase_boundary_model": "impermeable_flux"
     },
     "impact": {
       "N": 48,
@@ -49,7 +50,9 @@
           "cos_theta": 0.0,
           "impact_gap": 0.05,
           "u_impact": 1.0,
-          "velocity_mode": "streamfunction"
+          "velocity_mode": "streamfunction",
+          "phase_boundary_model": "impermeable_flux",
+          "enforce_solid_phi": false
         }
       ]
     }

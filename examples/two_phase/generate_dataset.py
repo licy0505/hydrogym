@@ -61,6 +61,8 @@ def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
     payload = dict(
         schema=DATASET_SCHEMA_VERSION,
         solver_contract=int(pf.SOLVER_CONTRACT_VERSION),
+        wetting_model=str(case.get("wetting_model", "surface_energy")),
+        phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
         solver_sha256=_source_sha256(pf.__file__),
         generator_sha256=_source_sha256(__file__),
         case=case,
@@ -174,10 +176,9 @@ def _diagnose(
 ) -> tuple[bool, dict]:
     """Validate finite values, conservative mass and *deep-solid* leakage."""
     # Histories begin at the first saved frame (after ``save_every`` steps).
-    # Keep the two reference states separate: the raw t=0 state is authoritative
-    # for total-mass conservation, while the first saved state is authoritative
-    # for fluid-region mass because the startup solid projection may redistribute
-    # a small diffuse-interface tail from solid to fluid cells.
+    # The hard-fluid initialization clips only the tiny diffuse tail in solid at
+    # t=0; from then on both total and fluid-region mass are audited against that
+    # same unprojected initial condition. No startup redistribution is expected in v7.
     raw_initial = np.asarray(initial.phi, dtype=np.float64)
     phi = np.asarray(phi, dtype=np.float64)
     first_saved = np.asarray(phi[0] if phi.shape[0] else raw_initial, dtype=np.float64)
@@ -189,7 +190,6 @@ def _diagnose(
     raw_total0 = float(np.sum(raw_initial))
     first_saved_total = float(np.sum(first_saved))
     total = np.sum(phi, axis=(1, 2))
-    first_saved_fluid0 = float(np.sum(first_saved * fluid))
     raw_initial_fluid0 = float(np.sum(raw_initial * fluid))
     fluid_mass = np.sum(phi * fluid[None], axis=(1, 2))
     denom = np.maximum(np.sum(np.abs(phi), axis=(1, 2)), 1e-12)
@@ -203,7 +203,7 @@ def _diagnose(
     )
     overshoot = float(max(np.max(-phi), np.max(phi - 1.0), 0.0)) if phi.size else 0.0
     total_ratio = total / max(raw_total0, 1e-12)
-    fluid_ratio = fluid_mass / max(first_saved_fluid0, 1e-12)
+    fluid_ratio = fluid_mass / max(raw_initial_fluid0, 1e-12)
     startup_total_mass_ratio = first_saved_total / max(raw_total0, 1e-12)
     startup_fluid_mass_ratio = fluid_mass[0] / max(raw_initial_fluid0, 1e-12)
     diag = {
@@ -282,7 +282,8 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
         "manifest_schema_version": 1,
         "dataset_schema_version": DATASET_SCHEMA_VERSION,
         "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
-        "wetting_model": str(getattr(pf.PhaseFieldParams, "wetting_model", None) or "surface_energy"),
+        "wetting_model": "surface_energy",
+        "phase_boundary_model": "impermeable_flux",
         "case_set": set_name,
         "expected": len(records),
         "accepted": len(accepted),
@@ -328,7 +329,8 @@ def _save_case(
     case_meta.update(
         dataset_schema_version=DATASET_SCHEMA_VERSION,
         solver_contract_version=int(pf.SOLVER_CONTRACT_VERSION),
-        wetting_model=str(getattr(p, "wetting_model", "legacy_affinity")),
+        wetting_model=str(p.wetting_model),
+        phase_boundary_model=str(p.phase_boundary_model),
         cos_theta_semantics=(
             "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
         ),
@@ -418,13 +420,13 @@ def main() -> None:
             "kinematic_We": float(case.get("We", 100.0)) * float(case.get("u_impact", 0.5)) ** 2,
             "kinematic_Re": float(case.get("Re", 200.0)) * abs(float(case.get("u_impact", 0.5))),
             "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
-            # ``_save_case`` records the actual instantiated value; the case
-            # pipeline never overrides the solver default, so this is the model
-            # every trajectory of this set is generated with.
-            "wetting_model": str(getattr(pf.PhaseFieldParams, "wetting_model", "legacy_affinity")),
+            # The case pipeline records the exact v7 production defaults; each
+            # trajectory file also carries the instantiated parameters.
+            "wetting_model": str(case.get("wetting_model", "surface_energy")),
+            "phase_boundary_model": str(case.get("phase_boundary_model", "impermeable_flux")),
             "cos_theta": (
                 "target Young equilibrium contact-angle cosine"
-                if str(getattr(pf.PhaseFieldParams, "wetting_model", "")) == "surface_energy"
+                if str(case.get("wetting_model", "surface_energy")) in {"surface_energy", "surface_energy_volume_v6"}
                 else "legacy wall-affinity cosine (contract <= 5)"
             ),
         }

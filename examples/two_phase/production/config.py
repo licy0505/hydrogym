@@ -29,6 +29,7 @@ _BLOCK_KEYS = {
         "speed_tol",
         "windows",
         "wetting_model",
+        "phase_boundary_model",
         "enforce_solid_phi",
         "We",
         "Re",
@@ -40,7 +41,20 @@ _BLOCK_KEYS = {
     "impact": {"cases", "N", "steps", "save_every", "We", "Re", "eps_factor", "dt", "wall_height"},
     "convergence": {"grid_refinement", "interface_thickness"},
 }
-_IMPACT_CASE_KEYS = {"name", "We", "Re", "R", "cos_theta", "impact_gap", "u_impact", "x0", "velocity_mode"}
+_IMPACT_CASE_KEYS = {
+    "name",
+    "We",
+    "Re",
+    "R",
+    "cos_theta",
+    "impact_gap",
+    "u_impact",
+    "x0",
+    "velocity_mode",
+    "wetting_model",
+    "phase_boundary_model",
+    "enforce_solid_phi",
+}
 _SWEEP_KEYS = {"base_case", "N_values", "eps_factor", "eps_mode", "fixed_eps", "N", "eps_factors"}
 _CASE_KEYS = {
     "R",
@@ -58,6 +72,9 @@ _CASE_KEYS = {
     "impact_gap",
     "u_impact",
     "velocity_mode",
+    "wetting_model",
+    "phase_boundary_model",
+    "enforce_solid_phi",
 }
 
 
@@ -149,6 +166,23 @@ def _validate_case(case: Any, label: str, errors: list[str]) -> None:
         errors.append(f"{label}.cos_theta must be in [-1, 1]")
     if "velocity_mode" in case and case["velocity_mode"] not in {"uniform", "streamfunction"}:
         errors.append(f"{label}.velocity_mode must be 'uniform' or 'streamfunction'")
+    if "wetting_model" in case and case["wetting_model"] not in {
+        "surface_energy",
+        "surface_energy_volume_v6",
+        "legacy_affinity",
+        "none",
+    }:
+        errors.append(f"{label}.wetting_model is unknown")
+    if "phase_boundary_model" in case and case["phase_boundary_model"] not in {
+        "impermeable_flux",
+        "projection_legacy",
+    }:
+        errors.append(f"{label}.phase_boundary_model must be impermeable_flux or projection_legacy")
+    if (
+        case.get("enforce_solid_phi", False)
+        and case.get("phase_boundary_model", "impermeable_flux") != "projection_legacy"
+    ):
+        errors.append(f"{label}.enforce_solid_phi is legacy-only and requires phase_boundary_model='projection_legacy'")
 
 
 def _validate_sweep(sweep: Any, label: str, mode: str, errors: list[str]) -> None:
@@ -259,12 +293,29 @@ def validate_config_data(data: Any) -> list[str]:
                         )
                 if "wetting_model" in block and block["wetting_model"] not in {
                     "surface_energy",
+                    "surface_energy_volume_v6",
                     "legacy_affinity",
                     "none",
                 }:
-                    errors.append("contact_angle.wetting_model must be one of surface_energy, legacy_affinity, none")
+                    errors.append(
+                        "contact_angle.wetting_model must be one of surface_energy, "
+                        "surface_energy_volume_v6, legacy_affinity, none"
+                    )
+                if "phase_boundary_model" in block and block["phase_boundary_model"] not in {
+                    "impermeable_flux",
+                    "projection_legacy",
+                }:
+                    errors.append("contact_angle.phase_boundary_model must be impermeable_flux or projection_legacy")
                 if "enforce_solid_phi" in block and not isinstance(block["enforce_solid_phi"], bool):
                     errors.append("contact_angle.enforce_solid_phi must be a boolean")
+                if (
+                    block.get("enforce_solid_phi", False)
+                    and block.get("phase_boundary_model", "impermeable_flux") != "projection_legacy"
+                ):
+                    errors.append(
+                        "contact_angle.enforce_solid_phi is legacy-only and requires "
+                        "phase_boundary_model='projection_legacy'"
+                    )
                 for key in ("We", "Re", "eps_factor", "R", "dt"):
                     if key in block:
                         _positive_number(block[key], f"contact_angle.{key}", errors)
@@ -299,6 +350,27 @@ def validate_config_data(data: Any) -> list[str]:
                             errors.append(f"impact.cases[{i}].cos_theta must be in [-1, 1]")
                         if "velocity_mode" in case and case["velocity_mode"] not in {"uniform", "streamfunction"}:
                             errors.append(f"impact.cases[{i}].velocity_mode must be 'uniform' or 'streamfunction'")
+                        if "wetting_model" in case and case["wetting_model"] not in {
+                            "surface_energy",
+                            "surface_energy_volume_v6",
+                            "legacy_affinity",
+                            "none",
+                        }:
+                            errors.append(f"impact.cases[{i}].wetting_model is unknown")
+                        if "phase_boundary_model" in case and case["phase_boundary_model"] not in {
+                            "impermeable_flux",
+                            "projection_legacy",
+                        }:
+                            errors.append(f"impact.cases[{i}].phase_boundary_model is invalid")
+                        if "enforce_solid_phi" in case and not isinstance(case["enforce_solid_phi"], bool):
+                            errors.append(f"impact.cases[{i}].enforce_solid_phi must be a boolean")
+                        if (
+                            case.get("enforce_solid_phi", False)
+                            and case.get("phase_boundary_model", "impermeable_flux") != "projection_legacy"
+                        ):
+                            errors.append(
+                                f"impact.cases[{i}].enforce_solid_phi requires phase_boundary_model='projection_legacy'"
+                            )
                 _grid_size(block.get("N"), "impact.N", errors)
                 _step_count(block.get("steps"), "impact.steps", errors)
                 _step_count(block.get("save_every"), "impact.save_every", errors)
@@ -406,7 +478,19 @@ def get_phasefield_sha256() -> str:
 def compute_validation_code_hash() -> str:
     """Fingerprint the required production source files in stable filename order."""
     root = Path(__file__).resolve().parent
-    names = ("config.py", "observables.py", "validation.py", "convergence.py", "report.py", "run_validation.py")
+    names = (
+        "config.py",
+        "observables.py",
+        "validation.py",
+        "convergence.py",
+        "report.py",
+        "run_validation.py",
+        "capillary_audit.py",
+        "wetting_audit.py",
+        "phase_boundary_audit.py",
+        "solid_gas_film_audit.py",
+        "contact_angle_matrix.py",
+    )
     digest = hashlib.sha256()
     for name in sorted(names):
         path = root / name

@@ -1,4 +1,4 @@
-"""Command-line entry point for the L1A-1 two-phase validation suite.
+"""Command-line entry point for the L1A two-phase validation suite.
 
 Run from ``examples/two_phase`` with ``python -m production.run_validation``.
 """
@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 from pathlib import Path
@@ -113,7 +114,8 @@ def _run_benchmarks(config, dtype: str) -> tuple[dict[str, Any], dict[str, int],
                 dt=spec.get("dt", 4e-3),
                 dtype=dtype,
                 wetting_model=spec.get("wetting_model", "surface_energy"),
-                enforce_solid_phi=spec.get("enforce_solid_phi", True),
+                phase_boundary_model=spec.get("phase_boundary_model", "impermeable_flux"),
+                enforce_solid_phi=spec.get("enforce_solid_phi", False),
                 sample_every=spec.get("sample_every", 200),
                 angle_tol_deg=spec.get("angle_tol_deg", 0.25),
                 speed_tol=spec.get("speed_tol", 5e-4),
@@ -189,6 +191,13 @@ def _strict_target_failures(benchmarks: dict[str, Any]) -> list[str]:
         failures.append(
             f"contact-angle max error {float(max_error):.6g} deg > {targets['contact_angle_max_error_deg']} deg"
         )
+    accepted, contact_evidence = _contact_angle_acceptance(benchmarks)
+    if not accepted:
+        failures.append(
+            "four-angle equilibrium contact acceptance not met: "
+            f"converged={contact_evidence['all_converged']}, monotonic={contact_evidence['monotonic']}, "
+            f"mass_ok={contact_evidence['mass_ok']}, v7_boundary_ok={contact_evidence['v7_boundary_model_ok']}"
+        )
     for study_name, study in benchmarks["convergence"].items():
         changes = study.get("relative_changes", {}) if isinstance(study, dict) else {}
         for metric, values in changes.items():
@@ -201,28 +210,149 @@ def _strict_target_failures(benchmarks: dict[str, Any]) -> list[str]:
     return failures
 
 
+def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[str, Any]]:
+    """Apply the frozen four-angle acceptance criteria; no partial-matrix closure."""
+    from production.validation import PROVISIONAL_READINESS_TARGETS
+
+    expected = (60.0, 90.0, 120.0, 150.0)
+    records = benchmarks.get("contact_angle", {}).get("cases", [])
+    by_target = {
+        round(float(case["target_deg"]), 8): case
+        for case in records
+        if isinstance(case, dict) and isinstance(case.get("target_deg"), (int, float))
+    }
+    complete = set(by_target) == {round(value, 8) for value in expected}
+    rows = [by_target.get(round(value, 8), {}) for value in expected]
+    all_finite = complete and all(row.get("finite") is True for row in rows)
+    all_converged = all_finite and all(row.get("converged") is True for row in rows)
+    measured = [row.get("measured_deg") for row in rows]
+    finite_angles = all(isinstance(value, (int, float)) and math.isfinite(float(value)) for value in measured)
+    errors = [
+        abs(float(row["measured_deg"]) - target)
+        for target, row in zip(expected, rows)
+        if isinstance(row.get("measured_deg"), (int, float)) and math.isfinite(float(row["measured_deg"]))
+    ]
+    partial_mae = float(sum(errors) / len(errors)) if errors else None
+    partial_max_error = float(max(errors)) if errors else None
+    complete_equilibrium_matrix = bool(complete and all_finite and all_converged and finite_angles and len(errors) == 4)
+    mae = partial_mae if complete_equilibrium_matrix else None
+    max_error = partial_max_error if complete_equilibrium_matrix else None
+    monotonic = finite_angles and all(float(b) >= float(a) for a, b in zip(measured, measured[1:]))
+    theta90_error = (
+        abs(float(rows[1]["measured_deg"]) - 90.0)
+        if len(rows) > 1
+        and isinstance(rows[1].get("measured_deg"), (int, float))
+        and math.isfinite(float(rows[1]["measured_deg"]))
+        else None
+    )
+    fluid_drifts = [
+        float(row["mass_relative_drift"])
+        for row in rows
+        if isinstance(row.get("mass_relative_drift"), (int, float)) and math.isfinite(float(row["mass_relative_drift"]))
+    ]
+    total_drifts = [
+        float(row["total_mass_relative_drift"])
+        for row in rows
+        if isinstance(row.get("total_mass_relative_drift"), (int, float))
+        and math.isfinite(float(row["total_mass_relative_drift"]))
+    ]
+    max_fluid_drift = max(fluid_drifts) if len(fluid_drifts) == len(rows) and rows else None
+    max_total_drift = max(total_drifts) if len(total_drifts) == len(rows) and rows else None
+    mass_ok = (
+        max_fluid_drift is not None
+        and max_total_drift is not None
+        and max_fluid_drift <= 1.0e-3
+        and max_total_drift <= 1.0e-3
+    )
+    v7_boundary_ok = (
+        all(
+            row.get("phase_boundary_model") == "impermeable_flux" and row.get("enforce_solid_phi") is False
+            for row in rows
+        )
+        if complete
+        else False
+    )
+    angle_ok = (
+        mae is not None
+        and max_error is not None
+        and mae <= PROVISIONAL_READINESS_TARGETS["contact_angle_mae_deg"]
+        and max_error <= PROVISIONAL_READINESS_TARGETS["contact_angle_max_error_deg"]
+        and theta90_error is not None
+        and theta90_error <= 3.0
+        and monotonic
+    )
+    accepted = bool(complete and all_finite and all_converged and angle_ok and mass_ok and v7_boundary_ok)
+    return accepted, {
+        "required_targets_deg": list(expected),
+        "case_count": len(records),
+        "complete_target_set": bool(complete),
+        "all_finite": bool(all_finite),
+        "all_converged": bool(all_converged),
+        "measured_angles_deg": measured,
+        "mae_deg": mae,
+        "max_absolute_error_deg": max_error,
+        "converged_subset_mae_deg": partial_mae,
+        "converged_subset_max_error_deg": partial_max_error,
+        "monotonic": bool(monotonic),
+        "theta_90_abs_error_deg": theta90_error,
+        "max_fluid_mass_drift": max_fluid_drift,
+        "max_total_mass_drift": max_total_drift,
+        "mass_ok": bool(mass_ok),
+        "v7_boundary_model_ok": bool(v7_boundary_ok),
+        "accepted": accepted,
+    }
+
+
 def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
-    """Attach evidence-based baseline status to measurement-dependent blockers only."""
-    from production.validation import KNOWN_SOLVER_BLOCKERS, PROVISIONAL_READINESS_TARGETS
+    """Attach evidence-based status; never close wetting on partial/non-equilibrium data."""
+    from production.validation import KNOWN_SOLVER_BLOCKERS
 
     blockers = [dict(item) for item in KNOWN_SOLVER_BLOCKERS]
     indexed = {item["id"]: item for item in blockers}
-    angle_summary = benchmarks.get("contact_angle", {}).get("summary") or {}
-    mae = angle_summary.get("mae_deg")
-    max_error = angle_summary.get("max_absolute_error_deg")
-    if mae is not None and max_error is not None:
-        angle_blocker = indexed["W-CONTACT-ANGLE"]
-        failed = (
-            float(mae) > PROVISIONAL_READINESS_TARGETS["contact_angle_mae_deg"]
-            or float(max_error) > PROVISIONAL_READINESS_TARGETS["contact_angle_max_error_deg"]
-            or angle_summary.get("monotonic_target_to_measured") is not True
-        )
-        angle_blocker["status"] = "confirmed_problem" if failed else "acceptable_for_next_stage"
-        angle_blocker["evidence"] = {
-            "mae_deg": float(mae),
-            "max_absolute_error_deg": float(max_error),
-            "monotonic_target_to_measured": bool(angle_summary.get("monotonic_target_to_measured")),
-        }
+    accepted, angle_evidence = _contact_angle_acceptance(benchmarks)
+    angle_cases = benchmarks.get("contact_angle", {}).get("cases", [])
+    all_measured = bool(
+        angle_evidence["complete_target_set"] and angle_evidence["all_finite"] and angle_evidence["all_converged"]
+    )
+    if accepted:
+        indexed["W-CONTACT-ANGLE"]["status"] = "resolved_in_contract_v7"
+    elif all_measured:
+        indexed["W-CONTACT-ANGLE"]["status"] = "confirmed_problem"
+    indexed["W-CONTACT-ANGLE"]["evidence"] = angle_evidence
+
+    neutral = next(
+        (case for case in angle_cases if isinstance(case, dict) and float(case.get("target_deg", -1.0)) == 90.0),
+        {},
+    )
+    samples = neutral.get("samples", [])
+    last_sample = samples[-1] if samples and isinstance(samples[-1], dict) else {}
+    neutral_ok = (
+        accepted
+        and neutral.get("finite") is True
+        and neutral.get("converged") is True
+        and neutral.get("phase_boundary_model") == "impermeable_flux"
+        and neutral.get("enforce_solid_phi") is False
+        and isinstance(neutral.get("measured_deg"), (int, float))
+        and abs(float(neutral["measured_deg"]) - 90.0) <= 3.0
+        and float(neutral.get("mass_relative_drift", math.inf)) <= 1.0e-3
+        and float(neutral.get("total_mass_relative_drift", math.inf)) <= 1.0e-3
+        and float(neutral.get("max_solid_liquid_fraction", math.inf)) <= 1.0e-6
+        and float(last_sample.get("max_speed", math.inf)) <= 5.0e-4
+    )
+    indexed["P-SOLID-PIN"]["status"] = "resolved_in_contract_v7" if neutral_ok else "confirmed_problem"
+    indexed["P-SOLID-PIN"]["evidence"] = {
+        "neutral_90_case_present": bool(neutral),
+        "neutral_case_converged": neutral.get("converged") is True,
+        "phase_boundary_model": neutral.get("phase_boundary_model"),
+        "enforce_solid_phi": neutral.get("enforce_solid_phi"),
+        "measured_angle_deg": neutral.get("measured_deg"),
+        "final_max_speed": last_sample.get("max_speed"),
+        "fluid_mass_drift": neutral.get("mass_relative_drift"),
+        "total_mass_drift": neutral.get("total_mass_relative_drift"),
+        "max_solid_phase_fraction": neutral.get("max_solid_liquid_fraction"),
+        "four_angle_acceptance_passed": bool(accepted),
+        "closure_criteria_passed": bool(neutral_ok),
+    }
 
     static = benchmarks.get("static_droplet", {})
     static_records = static.get("cases", [])
@@ -336,9 +466,15 @@ def run_validation(
     notes = [
         (
             "L1A physics status is BASELINE_ONLY; a green contract does not imply validated "
-            "physics or production readiness. Solver contract v5 (L1A-2a) corrects only the capillary-force "
-            "sign (P-LAPLACE-SIGN); wetting, variable-density projection, the capillary denominator, "
-            "timestep, viscosity and boundary blockers remain open."
+            "physics or production readiness. Solver contract v7 adds conservative impermeable phase-face "
+            "fluxes, a matrix-free fail-closed CH solve and the natural Young boundary condition. "
+            "P-VARDENS-PROJ, P-CAP-RHO, N-DT, P-VARVISC and the momentum/pressure BC-Y-PERIODIC "
+            "blocker are unchanged; contact-angle acceptance remains evidence-gated."
+        ),
+        (
+            "The v7 phase path uses phase_boundary_model='impermeable_flux'; it does not call the "
+            "post-step mass redistribution. phase_boundary_model='projection_legacy' exists only for "
+            "contract-v6 reproduction and diagnostics."
         ),
         (
             "pressure_field() is a projection-reconstructed diagnostic, not an independently "

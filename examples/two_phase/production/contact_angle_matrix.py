@@ -1,4 +1,4 @@
-"""L1A-2b contact-angle comparison matrix: historical v5 (A), clean v5 (B), v6 (C).
+"""Contact-angle comparison matrix: historical v5 (A), clean legacy v5 (B), v7 (C).
 
 The two model generations can only be compared on the *same* measurement and the
 *same* initial state:
@@ -11,7 +11,7 @@ The two model generations can only be compared on the *same* measurement and the
 * **B - clean v5**: ``wetting_model='legacy_affinity'`` on the clean sessile seed
   with the contour measurement.  This is the model-comparison baseline: only the
   wall model changes between B and C.
-* **C - clean v6**: the shipped ``surface_energy`` default on the clean seed.
+* **C - clean v7**: the shipped ``surface_energy`` natural-BC default on the clean seed.
 
 Only converged runs (``windows`` consecutive samples within ``angle_tol_deg`` and
 ``speed_tol``) contribute to MAE/RMSE/max error; the matrix reports the converged
@@ -69,6 +69,7 @@ def run_historical_case(
         wall_energy_amp=wall_energy_amp,
         enforce_solid_phi=False,
         wetting_model="legacy_affinity",
+        phase_boundary_model="projection_legacy",
     )
     solid = pf.make_solid(pf.surface_flat(p, wall_height=wall_height), p, cos_theta=math.cos(math.radians(target_deg)))
     y0 = wall_height + R - min(0.15, 0.14 * R)
@@ -122,7 +123,8 @@ def _profile_rows(
             eps_factor=eps_factor,
             dtype="float32",
             wetting_model="legacy_affinity" if name == "legacy_clean" else "surface_energy",
-            enforce_solid_phi=True,
+            phase_boundary_model="projection_legacy" if name == "legacy_clean" else "impermeable_flux",
+            enforce_solid_phi=name == "legacy_clean",
             sample_every=sample_every,
             angle_tol_deg=angle_tol_deg,
             speed_tol=speed_tol,
@@ -139,11 +141,12 @@ def _profile_rows(
 
 
 def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """MAE/RMSE/max error over reported angles, plus convergence accounting.
+    """Summarize equilibrium errors without treating a partial matrix as complete.
 
-    ``measured_deg`` is only present for converged runs (and for the historical
-    contract-v5 pipeline, which predates the criterion); the MAE therefore covers
-    exactly the runs that report an angle.
+    Historical contract-v5 values remain a separately identified recorded matrix.
+    For equilibrium profiles, only converged cases have ``measured_deg``; when only
+    a subset converges, overall MAE/RMSE/max remain ``None`` and the subset MAE is
+    reported separately as a diagnostic.
     """
     ordered = sorted(rows, key=lambda row: float(row["target_deg"]))
     reported = [
@@ -152,18 +155,34 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         if isinstance(row.get("measured_deg"), (int, float)) and math.isfinite(float(row["measured_deg"]))
     ]
     converged = [row for row in ordered if row.get("converged") is True]
-    errors = np.asarray([float(row["absolute_error_deg"]) for row in reported], dtype=np.float64)
+    converged_reported = [
+        row
+        for row in reported
+        if row.get("converged") is True
+        and isinstance(row.get("absolute_error_deg"), (int, float))
+        and math.isfinite(float(row["absolute_error_deg"]))
+    ]
+    reported_errors = np.asarray([float(row["absolute_error_deg"]) for row in reported], dtype=np.float64)
+    converged_errors = np.asarray([float(row["absolute_error_deg"]) for row in converged_reported], dtype=np.float64)
     angles = [float(row["measured_deg"]) for row in reported]
+    historical_complete = (
+        bool(ordered) and len(reported) == len(ordered) and all(row.get("converged") is None for row in ordered)
+    )
+    equilibrium_complete = bool(ordered) and len(converged_reported) == len(ordered)
+    reportable = historical_complete or equilibrium_complete
+    errors = reported_errors if historical_complete else (converged_errors if equilibrium_complete else np.asarray([]))
     monotonic = all(b >= a for a, b in zip(angles, angles[1:]))
     return {
         "case_count": len(ordered),
         "reported_case_count": len(reported),
         "converged_case_count": len(converged),
         "converged_targets": [float(row["target_deg"]) for row in converged],
+        "all_targets_converged": bool(equilibrium_complete),
+        "converged_subset_mae_deg": float(converged_errors.mean()) if converged_errors.size else None,
         "mae_deg": float(errors.mean()) if errors.size else None,
         "rmse_deg": float(np.sqrt(np.mean(errors**2))) if errors.size else None,
         "max_absolute_error_deg": float(errors.max()) if errors.size else None,
-        "monotonic_target_to_measured": bool(monotonic) if len(reported) == len(ordered) else False,
+        "monotonic_target_to_measured": bool(monotonic) if reportable and len(reported) == len(ordered) else False,
         "angles_deg": [
             {
                 "target_deg": float(row["target_deg"]),

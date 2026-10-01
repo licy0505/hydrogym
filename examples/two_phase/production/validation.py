@@ -1,4 +1,4 @@
-"""Physics benchmarks for the existing JAX phase-field solver (no solver edits)."""
+"""Physics benchmarks and recorded diagnostics for the JAX phase-field solver."""
 
 from __future__ import annotations
 
@@ -36,7 +36,10 @@ KNOWN_SOLVER_BLOCKERS = [
         "id": "W-CONTACT-ANGLE",
         "severity": "high",
         "status": "measurement_required",
-        "description": "Current wall-affinity model must be calibrated against measured apparent contact angle.",
+        "description": (
+            "Young wall-energy targets are not validated until clean sessile runs converge at 60/90/120/150 deg "
+            "and meet the angle, monotonicity and mass criteria."
+        ),
     },
     {
         "id": "I-CONTACT-GAP",
@@ -53,15 +56,11 @@ KNOWN_SOLVER_BLOCKERS = [
         "severity": "high",
         "status": "confirmed_problem",
         "description": (
-            "The Cahn-Hilliard phase field uses a spatially constant mobility, so the solid is not "
-            "impermeable to the phase flux: without the projection the drop leaks into the solid "
-            "(~7 % mean liquid fraction in the geometric solid), and with enforce_solid_phi the "
-            "mass-conserving projection re-injects the leaked liquid at the wall, which pumps the "
-            "contact line. A neutral wall (cos_theta = 0, g_w == 0) still drifts from 90 deg to "
-            ">120 deg and eventually detaches; the drift is unchanged for dt in [1e-3, 4e-3], "
-            "eps in [2, 6] dx and N in [96, 192] and is independent of the wetting model "
-            "(none / legacy_affinity / surface_energy). Sessile equilibrium angles cannot be measured "
-            "until the wall carries a no-flux phase boundary condition; that is L1A-2c, not this PR."
+            "The v6 Cahn-Hilliard and advective operators transported phase across fluid-solid faces; "
+            "the optional mass projection then deleted the solid phase and redistributed it near the wall. "
+            "Contract v7 adds conservative face apertures and matrix-free no-flux CH transport. This blocker "
+            "may close only after the projection-free neutral 90-degree sessile case and full four-angle "
+            "acceptance matrix pass."
         ),
     },
     {
@@ -87,9 +86,9 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": (
             "L1B prerequisite: a fresh training run pointed at a stale data directory validates the "
             "file-level dataset_schema_version but not the manifest solver_contract_version, so "
-            "contract-5 trajectories can still be read as training data under contract 6. "
-            "generate_dataset.py already regenerates stale trajectories (the fingerprint contains the "
-            "contract); the training-side check is deliberately not fixed in this PR."
+            "contract-5/6 trajectories can still be read as training data under contract 7. "
+            "generate_dataset.py regenerates stale trajectories (the fingerprint contains the solver "
+            "contract and phase_boundary_model); the training-side manifest check remains an L1B task."
         ),
     },
     {
@@ -141,6 +140,7 @@ def _params(
     eta_pen_over_dt: float | None = None,
     nu_g_over_nu_l: float | None = None,
     wetting_model: str | None = None,
+    phase_boundary_model: str = "impermeable_flux",
 ) -> pf.PhaseFieldParams:
     """Solver parameters for a benchmark.
 
@@ -158,6 +158,8 @@ def _params(
         dt=dt,
         wall_energy_amp=wall_energy_amp,
         enforce_solid_phi=enforce_solid_phi,
+        wetting_model=wetting_model or "surface_energy",
+        phase_boundary_model=phase_boundary_model,
         dtype=_dtype(dtype),
     )
     p.eps = float(eps) if eps is not None else float(eps_factor) * p.dx
@@ -168,19 +170,11 @@ def _params(
         p.nu_g = float(nu_g_over_nu_l) * float(p.nu_l)
     if wetting_model is not None:
         model = str(wetting_model)
-        if model not in {"legacy_affinity", "surface_energy", "none"}:
-            raise ValueError(f"unknown wetting_model {model!r}")
-        if hasattr(p, "wetting_model"):
-            p.wetting_model = model
-        elif model == "legacy_affinity":
-            pass  # the contract-v5 default semantics
-        elif model == "none":
+        if model not in pf.WETTING_MODELS:
+            raise ValueError(f"unknown wetting_model {model!r}; expected one of {sorted(pf.WETTING_MODELS)}")
+        p.wetting_model = model
+        if model == "none":
             p.wall_energy_amp = 0.0
-        else:
-            raise ValueError(
-                "wetting_model='surface_energy' requires the surface-energy solver "
-                "(SOLVER_CONTRACT_VERSION >= 6); none is available in this build"
-            )
     return p
 
 
@@ -439,8 +433,16 @@ class ContactAngleCase:
     total_mass_final: float
     total_mass_relative_drift: float
     initial_solid_liquid_fraction: float
+    final_solid_liquid_fraction: float
+    max_solid_liquid_fraction: float
     wetting_model: str
+    phase_boundary_model: str
     enforce_solid_phi: bool
+    free_energy_initial: float
+    free_energy_final: float
+    free_energy_max_relative_increase: float
+    implicit_iterations_max: int
+    implicit_relative_residual_max: float
     relaxation_steps: int
     relaxation_time: float
     samples: list[dict[str, Any]]
@@ -465,22 +467,20 @@ def run_contact_angle_case(
     eps: float | None = None,
     *,
     wetting_model: str = "surface_energy",
-    enforce_solid_phi: bool = True,
+    phase_boundary_model: str = "impermeable_flux",
+    enforce_solid_phi: bool = False,
     sample_every: int = 200,
     angle_tol_deg: float = 0.25,
     speed_tol: float = 5e-4,
     windows: int = 3,
     max_steps: int | None = None,
 ) -> ContactAngleCase:
-    """Relax a clean sessile drop on a flat wall and measure the apparent angle.
+    """Relax a clean, target-independent sessile drop and gate equilibrium reporting.
 
-    The initial state is target-independent (:func:`phasefield.sessile_initial_state`,
-    geometric 90 deg cap with no liquid in the geometric solid) and ``u = v = 0``.
-    The run stops as soon as ``windows`` consecutive samples have both
-    ``|d(theta)| <= angle_tol_deg`` and ``max_speed <= speed_tol``; only then is the
-    angle reported as an equilibrium contact angle.  ``wall_energy_amp`` is a
-    legacy-only parameter (``wetting_model='legacy_affinity'``) and has no effect
-    in the default ``surface_energy`` model.
+    The default v7 run uses conservative impermeable face fluxes and never calls
+    the redistribution projection. Only ``windows`` consecutive angle/speed
+    samples can mark the run converged. ``enforce_solid_phi`` is legacy-only and
+    is rejected unless ``phase_boundary_model='projection_legacy'``.
     """
     if not (0.0 <= target_deg <= 180.0) or not math.isfinite(target_deg):
         raise ValueError("target_deg must lie in [0, 180]")
@@ -503,44 +503,66 @@ def run_contact_angle_case(
         wall_energy_amp=wall_energy_amp,
         enforce_solid_phi=bool(enforce_solid_phi),
         wetting_model=wetting_model,
+        phase_boundary_model=phase_boundary_model,
     )
     wall_height = 0.25
     sdf = pf.surface_flat(p, wall_height=wall_height)
     solid = pf.make_solid(sdf, p, cos_theta=math.cos(math.radians(target_deg)))
-    # Clean, target-independent sessile seed (contract v6): geometric 90 deg cap with
-    # its centre on the wall plane, phi only in sdf >= 0, u = v = 0.
+    # The same clean 90-degree geometric cap is used for every target; its solid
+    # phase is exactly zero before the first step.
     state = pf.sessile_initial_state(p, solid, R=R, wall_height=wall_height)
-    solid_cells = jnp.asarray(solid.sdf < 0.0, dtype=p.dtype)
-    solid_liquid = float(jnp.sum(jnp.where(solid_cells > 0.0, state.phi, 0.0)) / max(float(jnp.sum(solid_cells)), 1.0))
-    _assert_state_finite(state, N)
-    mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    hard_solid = jnp.asarray(solid.sdf < 0.0)
     total_initial = float(jnp.sum(state.phi) * p.dx * p.dy)
-    if mass_initial <= 0:
+    mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    if mass_initial <= 0.0:
         raise ValueError("contact-angle initial fluid-region mass must be positive")
-    step_fn = jax.jit(pf.step, static_argnums=(2,))
+
+    def solid_fraction(phi):
+        total = jnp.sum(jnp.maximum(phi, 0.0))
+        leaked = jnp.sum(jnp.maximum(phi, 0.0) * hard_solid)
+        return float(leaked / jnp.maximum(total, 1e-30))
+
+    initial_solid_fraction = solid_fraction(state.phi)
+    energy_initial = float(pf.phase_free_energy(state.phi, solid, p))
+    step_fn = jax.jit(pf.step_with_diagnostics, static_argnums=(2,))
     every = max(1, min(int(sample_every), max(budget, 1)))
     relaxation_started = time.perf_counter()
     samples: list[dict[str, Any]] = []
     converged = False
     converged_step = None
     applied = 0
+    implicit_iterations_max = 0
+    implicit_residual_max = 0.0
+    max_solid_fraction = initial_solid_fraction
+    energies = [energy_initial]
     while applied < budget:
-        state = step_fn(state, solid, p)
+        state, solver_info = step_fn(state, solid, p)
         applied += 1
-        if applied % every:
+        implicit_iterations_max = max(implicit_iterations_max, int(jnp.max(solver_info.implicit_iterations)))
+        implicit_residual_max = max(implicit_residual_max, float(jnp.max(solver_info.implicit_relative_residuals)))
+        if applied % every and applied != budget:
             continue
+        _assert_state_finite(state, N)  # non-converged CG is NaN-poisoned and fails here
         angle = float(pf.measure_contact_angle(state.phi, solid, p))
-        max_speed = float(jnp.sqrt(jnp.max(state.u**2 + state.v**2)))
+        max_speed = _max_speed(state)
         total_mass = float(jnp.sum(state.phi) * p.dx * p.dy)
         fluid_mass = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+        energy = float(pf.phase_free_energy(state.phi, solid, p))
+        leak = solid_fraction(state.phi)
+        max_solid_fraction = max(max_solid_fraction, leak)
+        energies.append(energy)
         samples.append(
             {
                 "step": int(applied),
-                "time": float(applied * p.dt),
+                "time": float(state.t),
                 "measured_angle_deg": angle,
                 "max_speed": max_speed,
                 "total_mass": total_mass,
                 "fluid_mass": fluid_mass,
+                "solid_phase_fraction": leak,
+                "free_energy": energy,
+                "implicit_iterations_max": int(implicit_iterations_max),
+                "implicit_relative_residual_max": float(implicit_residual_max),
             }
         )
         if len(samples) >= int(windows):
@@ -560,6 +582,11 @@ def run_contact_angle_case(
     mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
     total_final = float(jnp.sum(state.phi) * p.dx * p.dy)
     final_angle = float(samples[-1]["measured_angle_deg"]) if samples else None
+    final_solid_fraction = solid_fraction(state.phi)
+    energy_final = float(pf.phase_free_energy(state.phi, solid, p))
+    energy_scale = max(1.0, abs(energy_initial))
+    energy_increases = [max(0.0, (b - a) / energy_scale) for a, b in zip(energies, energies[1:])]
+    max_energy_increase = max(energy_increases, default=0.0)
     wall_seconds = time.perf_counter() - benchmark_started
     measured = float(samples[-1]["measured_angle_deg"]) if converged and samples else None
     finite = final_angle is not None and math.isfinite(final_angle) and 0.0 <= final_angle <= 180.0
@@ -573,6 +600,15 @@ def run_contact_angle_case(
         "dtype": dtype,
         "sample_every": int(every),
         "max_steps": int(budget),
+        "phase_boundary_model": str(p.phase_boundary_model),
+        "ch_solver": {
+            "method": "matrix-free CG on I + dt*M*eps*L^T L",
+            "rtol": float(p.ch_solver_rtol),
+            "max_iterations": int(p.ch_solver_max_iterations),
+            "iterations_max": int(implicit_iterations_max),
+            "relative_residual_max": float(implicit_residual_max),
+            "converged": True,
+        },
         "convergence": {
             "angle_tol_deg": float(angle_tol_deg),
             "speed_tol": float(speed_tol),
@@ -586,7 +622,7 @@ def run_contact_angle_case(
         absolute_error_deg=abs(measured - target_deg) if measured is not None else None,
         converged=bool(converged),
         converged_step=converged_step,
-        converged_time=(converged_step * float(p.dt)) if converged_step is not None else None,
+        converged_time=(float(state.t) if converged_step is not None else None),
         final_sampled_deg=final_angle,
         mass_initial=float(mass_initial),
         mass_final=float(mass_final),
@@ -594,9 +630,17 @@ def run_contact_angle_case(
         total_mass_initial=float(total_initial),
         total_mass_final=float(total_final),
         total_mass_relative_drift=float(total_drift),
-        initial_solid_liquid_fraction=float(solid_liquid),
+        initial_solid_liquid_fraction=float(initial_solid_fraction),
+        final_solid_liquid_fraction=float(final_solid_fraction),
+        max_solid_liquid_fraction=float(max_solid_fraction),
         wetting_model=str(p.wetting_model),
+        phase_boundary_model=str(p.phase_boundary_model),
         enforce_solid_phi=bool(p.enforce_solid_phi),
+        free_energy_initial=float(energy_initial),
+        free_energy_final=float(energy_final),
+        free_energy_max_relative_increase=float(max_energy_increase),
+        implicit_iterations_max=int(implicit_iterations_max),
+        implicit_relative_residual_max=float(implicit_residual_max),
         relaxation_steps=int(applied),
         relaxation_time=float(elapsed),
         samples=samples,
@@ -618,18 +662,35 @@ def summarize_contact_angles(cases: list[ContactAngleCase]) -> dict[str, Any]:
     errors = np.asarray([case.absolute_error_deg for case in converged], dtype=np.float64)
     measurements = [float(case.measured_deg) for case in converged]
     monotonic = all(b >= a for a, b in zip(measurements, measurements[1:]))
+    full_matrix_converged = bool(cases) and len(converged) == len(cases)
+    measured_90 = next((float(case.measured_deg) for case in converged if case.target_deg == 90.0), None)
     return {
-        "mae_deg": float(errors.mean()) if errors.size else None,
-        "rmse_deg": float(np.sqrt(np.mean(errors**2))) if errors.size else None,
-        "max_absolute_error_deg": float(errors.max()) if errors.size else None,
-        "monotonic_target_to_measured": bool(monotonic) if len(converged) == len(cases) else False,
+        "mae_deg": float(errors.mean()) if full_matrix_converged else None,
+        "rmse_deg": float(np.sqrt(np.mean(errors**2))) if full_matrix_converged else None,
+        "max_absolute_error_deg": float(errors.max()) if full_matrix_converged else None,
+        "converged_subset_mae_deg": float(errors.mean()) if errors.size else None,
+        "converged_subset_max_error_deg": float(errors.max()) if errors.size else None,
+        "monotonic_target_to_measured": bool(monotonic) if full_matrix_converged else False,
         "valid_case_count": len(valid),
         "case_count": len(cases),
         "converged_case_count": len(converged),
+        "all_targets_converged": bool(len(converged) == len(cases) and len(cases) > 0),
+        "all_finite": bool(len(valid) == len(cases)),
+        "theta_90_measured_deg": measured_90,
+        "theta_90_abs_error_deg": abs(measured_90 - 90.0) if measured_90 is not None else None,
+        "max_fluid_mass_drift": max((case.mass_relative_drift for case in valid), default=None),
+        "max_total_mass_drift": max((case.total_mass_relative_drift for case in valid), default=None),
+        "max_solid_phase_fraction": max((case.max_solid_liquid_fraction for case in valid), default=None),
         "converged_targets": [float(case.target_deg) for case in converged],
         "non_converged_targets": [float(case.target_deg) for case in valid if not case.converged],
         "final_angles_deg": [
-            {"target_deg": float(case.target_deg), "final_sampled_deg": case.final_sampled_deg} for case in valid
+            {
+                "target_deg": float(case.target_deg),
+                "measured_deg": case.measured_deg,
+                "final_sampled_deg": case.final_sampled_deg,
+                "converged": bool(case.converged),
+            }
+            for case in valid
         ],
     }
 
@@ -681,10 +742,11 @@ def _impact_params(
         eps=eps,
         dt=dt,
         dtype=dtype,
-        enforce_solid_phi=bool(case.get("enforce_solid_phi", True)),
+        enforce_solid_phi=bool(case.get("enforce_solid_phi", False)),
         eta_pen_over_dt=case.get("eta_pen_over_dt"),
         nu_g_over_nu_l=case.get("nu_g_over_nu_l"),
         wetting_model=case.get("wetting_model"),
+        phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
     )
     wall_height = float(case.get("wall_height", 0.25))
     sdf = pf.surface_flat(p, wall_height=wall_height)
@@ -705,6 +767,13 @@ def _impact_params(
         u_impact=u_impact,
         velocity_mode=velocity_mode,
     )
+    if p.phase_boundary_model == "impermeable_flux":
+        state = pf.State(
+            phi=jnp.where(solid.sdf >= 0.0, state.phi, 0.0),
+            u=state.u,
+            v=state.v,
+            t=state.t,
+        )
     return p, solid, state, cos_theta
 
 
@@ -746,10 +815,13 @@ def run_impact_case(
         "bottom_height",
         "max_speed",
         "contact_signal",
+        "solid_phase_fraction",
+        "implicit_iterations",
+        "implicit_relative_residual",
     )
     series: dict[str, list[Any]] = {name: [] for name in names}
 
-    def sample(current: pf.State) -> None:
+    def sample(current: pf.State, implicit_iterations: int = 0, implicit_relative_residual: float = 0.0) -> None:
         _assert_state_finite(current, N)
         phi_np = np.asarray(current.phi)
         mass = obs.fluid_phase_mass(phi_np, sdf_np, p.dx, p.dy)
@@ -761,6 +833,8 @@ def run_impact_case(
         top = obs.top_height(phi_np, sdf_np, Y_np[0, :], 0.5)
         bottom = obs.bottom_height(phi_np, sdf_np, Y_np[0, :], 0.5)
         contact = bool(gap05 <= 1.5 * p.dx)
+        positive_total = max(float(np.maximum(phi_np, 0.0).sum()), 1e-30)
+        solid_fraction = float(np.maximum(phi_np[sdf_np < 0.0], 0.0).sum() / positive_total)
         values = {
             "time": float(current.t),
             "mass": float(mass),
@@ -775,6 +849,9 @@ def run_impact_case(
             "bottom_height": float(bottom),
             "max_speed": _max_speed(current),
             "contact_signal": contact,
+            "solid_phase_fraction": solid_fraction,
+            "implicit_iterations": int(implicit_iterations),
+            "implicit_relative_residual": float(implicit_relative_residual),
         }
         if not all(math.isfinite(value) for key, value in values.items() if key != "contact_signal"):
             raise FloatingPointError("impact observable contains non-finite value")
@@ -783,12 +860,27 @@ def run_impact_case(
 
     started = time.perf_counter()
     sample(state)
-    step_fn = jax.jit(pf.step, static_argnums=(2,))
+    step_fn = jax.jit(pf.step_with_diagnostics, static_argnums=(2,))
+    max_implicit_iterations = 0
+    max_implicit_residual = 0.0
     for i in range(steps):
-        state = step_fn(state, solid, p)
+        state, solver_info = step_fn(state, solid, p)
+        max_implicit_iterations = max(max_implicit_iterations, int(jnp.max(solver_info.implicit_iterations)))
+        max_implicit_residual = max(max_implicit_residual, float(jnp.max(solver_info.implicit_relative_residuals)))
         if (i + 1) % save_every == 0 or i + 1 == steps:
-            sample(state)
+            sample(state, max_implicit_iterations, max_implicit_residual)
     runtime = _runtime_record(started, steps, N, dtype)
+    runtime["phase_boundary_model"] = str(p.phase_boundary_model)
+    runtime["ch_solver"] = {
+        "method": "matrix-free CG on I + dt*M*eps*L^T L"
+        if p.phase_boundary_model == "impermeable_flux"
+        else "legacy FFT",
+        "rtol": float(p.ch_solver_rtol),
+        "max_iterations": int(p.ch_solver_max_iterations),
+        "iterations_max": int(max_implicit_iterations),
+        "relative_residual_max": float(max_implicit_residual),
+        "converged": True,
+    }
     mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
     beta_values = series["beta"]
     max_index = int(np.argmax(beta_values))
@@ -834,8 +926,13 @@ def run_impact_case(
         "peak_speed": float(max(series["max_speed"])),
         "eta_pen_over_dt": float(p.eta_pen / p.dt),
         "nu_g_over_nu_l": float(p.nu_g / p.nu_l),
-        "wetting_model": str(getattr(p, "wetting_model", "legacy_affinity")),
+        "wetting_model": str(p.wetting_model),
+        "phase_boundary_model": str(p.phase_boundary_model),
         "enforce_solid_phi": bool(p.enforce_solid_phi),
+        "solid_phase_fraction": float(series["solid_phase_fraction"][-1]),
+        "max_solid_phase_fraction": float(max(series["solid_phase_fraction"])),
+        "implicit_iterations_max": int(max_implicit_iterations),
+        "implicit_relative_residual_max": float(max_implicit_residual),
         "final_y_cm": float(series["y_cm"][-1]),
         "time_series": series,
         "runtime": runtime,

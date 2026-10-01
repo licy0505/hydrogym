@@ -224,7 +224,14 @@ def audit_wall_energy(
     import numpy as np
     import phasefield as pf
 
-    p = pf.PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dtype=pf.jnp.float64)
+    p = pf.PhaseFieldParams(
+        Nx=N,
+        Ny=N,
+        Lx=6.0,
+        Ly=6.0,
+        dtype=pf.jnp.float64,
+        wetting_model="surface_energy_volume_v6",
+    )
     p.eps = float(eps_factor) * p.dx
     sdf = pf.surface_flat(p, wall_height=wall_height)
 

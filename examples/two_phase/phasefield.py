@@ -72,36 +72,48 @@ Capillary sign convention (SOLVER_CONTRACT_VERSION >= 5)
   the wetting (contact angle) energy
 * contact angle may vary in space, so mixed-wettability surfaces are supported
 
-Wall wetting (SOLVER_CONTRACT_VERSION >= 6)
--------------------------------------------
-The bulk free energy is F_bulk = int [ f(phi)/eps + eps/2 |grad phi|^2 ] dV with
-f(phi) = phi^2 (1-phi)^2, whose equilibrium tanh profile carries the surface
-tension sigma_0 = sqrt(2)/6 (the Korteweg force is scaled by SIGMA_NORM = 1/sigma_0
-so the non-dimensional tension is exactly 1/We).  The wall free energy uses the
-same normalization:
+Wall wetting and conservative phase boundary (SOLVER_CONTRACT_VERSION >= 7)
+-----------------------------------------------------------------------------
+The bulk free energy is F_bulk = int [ f(phi)/eps + eps/2 |grad phi|^2 ] dV,
+with f(phi) = phi^2 (1-phi)^2 and sigma_0 = sqrt(2)/6. The Young wall energy is
 
-    F_wall  = int g_w(phi, theta) delta_wall(sdf) dV
-    g_w     = -sigma_0 cos(theta) h(phi),      h(phi) = phi^2 (3 - 2 phi)
-    mu_wall = dg_w/dphi * delta_wall = -sigma_0 cos(theta) h'(phi) delta_wall
-    delta_wall(sdf) = (1/2a) sech^2(sdf/a) |grad sdf|,   a = 1.5 dx
+    F_wall = int g_w(phi, theta) dA
+    g_w    = -sigma_0 cos(theta) h(phi),  h(phi) = phi^2 (3 - 2 phi)
 
-so that g_w(0) = 0, g_w(1) = -sigma_0 cos(theta) and
+so gamma_SG - gamma_SL = g_w(0) - g_w(1) = sigma_0 cos(theta_e). The production
+``wetting_model='surface_energy'`` imposes this energy through the single natural
+condition
 
-    gamma_SG - gamma_SL = g_w(0) - g_w(1) = sigma_0 cos(theta_e)   (Young),
+    eps * d(phi)/dn + g_w'(phi) = 0,      d(mu)/dn = 0,
 
-with theta = 90 deg exactly neutral (g_w == 0) and h'(0) = h'(1) = 0 so no wall
-force leaks into either bulk phase.  There is no empirical amplitude, no gain and
-no theta -> theta mapping: ``mu_wall`` is the exact variational derivative of
-``F_wall`` (checked by ``production/wetting_audit.py``).
+where n points from fluid into solid. The first condition is assembled into the
+SDF-based embedded-boundary Laplacian (the Robin normal derivative is supplied
+as its wall-face flux); it is not also added as a second ``mu_wall`` source.
+``wall_delta`` supplies the normalized embedded surface measure, and the normal
+comes from -grad(sdf). For a bottom wall, positive y points into fluid, therefore
+the y-slope of a compatible linear profile is ``+g_w'/eps``; the outward-normal
+derivative is ``-g_w'/eps``. This sign follows the stated normal convention.
+At 90 degrees g_w and the prescribed normal derivative are exactly zero.
 
-``wetting_model`` selects the semantics: ``surface_energy`` (default),
-``legacy_affinity`` (the contract-v5 volumetric band affinity,
-``wall_energy_amp``/``wet_band``; reproducibility only) or ``none`` (ablation).
-Unknown values fail closed.  The legacy parameters are ignored in
-``surface_energy`` mode and must never be used to fit the apparent angle.
+The phase equation is a face-flux finite-volume update. Fluid-solid faces have
+exactly zero advective and Cahn-Hilliard flux, x remains periodic, and the y seam
+is blocked by the same hard aperture when it connects fluid to solid. The stiff
+fourth-order term uses a deterministic matrix-free CG solve of
+``(I + dt M eps L^T L) phi_new = rhs`` with L the masked face Laplacian. Its
+relative residual is reported and a failed solve poisons the state with NaNs so
+that callers fail closed. The v7 production step does not call the old
+mass-redistribution projection.
 
-The solver is periodic in both directions; the wall is a solid slab inside the
-domain, so no special boundary treatment is needed for the FFT Poisson solve.
+``phase_boundary_model='projection_legacy'`` retains the contract-v6 FFT plus
+post-step redistribution only for reproduction. ``wetting_model`` accepts
+``surface_energy`` (v7 natural BC), ``surface_energy_volume_v6`` (v6 diffuse
+chemical-potential form, diagnostic/reproduction only), ``legacy_affinity``
+(contract-v5 reproduction only), and ``none`` (ablation). ``wall_energy_amp`` and
+``wet_band`` are legacy-only; they are never calibration knobs.
+
+The momentum and pressure projection remain periodic in both directions. The
+fluid-cell face apertures specifically govern phase transport; this stage does
+not change the Brinkman or momentum formulations.
 
 Intended use inside HydroGym
 ----------------------------
@@ -127,14 +139,14 @@ from jax import lax
 SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 
 # Bump this whenever the solver/data contract changes in a trajectory-changing way.
-#   5: L1A-2a -- Korteweg capillary force sign corrected to +mu grad(phi) (see the module
-#      docstring); the static-drop projection pressure now has p_liquid > p_gas.
-#   6: L1A-2b -- the default wall wetting semantics are the Young-consistent diffuse wall
-#      surface energy ``g_w(phi, theta) = -sigma_0 cos(theta) h(phi)`` with
-#      ``mu_wall = dg_w/dphi * delta_wall``; the contract-v5 volumetric affinity is kept
-#      behind ``wetting_model='legacy_affinity'`` for reproducibility only.  Every v5
-#      trajectory is trajectory-stale under v6 (dataset fingerprints include this number).
-SOLVER_CONTRACT_VERSION = 6
+#   5: L1A-2a -- capillary sign corrected to +mu grad(phi).
+#   6: L1A-2b -- Young-consistent diffuse wall surface energy became the default.
+#   7: L1A-2c -- conservative phase transport on hard fluid-cell faces, zero
+#      advective/CH cross-solid flux, matrix-free implicit CH solve, and one
+#      natural Young wall condition. The v6 FFT/projection path is retained only
+#      as ``phase_boundary_model='projection_legacy'``. Older trajectories are
+#      stale (fingerprints include this version and phase_boundary_model).
+SOLVER_CONTRACT_VERSION = 7
 
 
 #######################################################################################
@@ -163,6 +175,22 @@ class Solid(NamedTuple):
     chi_hard: jnp.ndarray  # (Nx, Ny) 0/1 mask of the solid interior (impermeable)
 
 
+class ImplicitSolveInfo(NamedTuple):
+    """CG iteration count, relative residual, and convergence flag."""
+
+    iterations: jnp.ndarray
+    relative_residual: jnp.ndarray
+    converged: jnp.ndarray
+
+
+class StepDiagnostics(NamedTuple):
+    """Per-internal-stage CH solver diagnostics returned by ``step_with_diagnostics``."""
+
+    implicit_iterations: jnp.ndarray
+    implicit_relative_residuals: jnp.ndarray
+    implicit_converged: jnp.ndarray
+
+
 @dataclass(eq=False)  # eq=False keeps identity hashing, so params can be a jit static arg
 class PhaseFieldParams:
     """Non-dimensional parameters of the two-phase solver."""
@@ -187,25 +215,26 @@ class PhaseFieldParams:
     # numerics
     dt: float = 2.0e-3
     eta_pen: float = None  # penalization timescale, defaults to 2*dt
-    # Wall wetting model.  ``surface_energy`` (default, contract v6) uses the
-    # Young-consistent diffuse wall energy defined in the module docstring;
-    # ``legacy_affinity`` reproduces the contract-v5 volumetric band affinity for
-    # reproducibility only, and ``none`` switches wetting off (ablation).
+    # Young-consistent wall energy. ``surface_energy`` (default) is the v7
+    # natural boundary condition; ``surface_energy_volume_v6`` and
+    # ``legacy_affinity`` are diagnostic/reproduction modes; ``none`` is an ablation.
     wetting_model: str = "surface_energy"
-    # Width of the normalized diffuse wall delta.  Defaults to the solid smoothing
-    # width ``1.5 dx`` used by ``smooth_indicator``; it is a discretization width,
-    # never a contact-angle calibration knob.
+    phase_boundary_model: str = "impermeable_flux"
+    # Width of the normalized SDF wall measure; fixed by solid smoothing and never
+    # a contact-angle fit parameter.
     wall_delta_width: float = None
-    # LEGACY ONLY (wetting_model='legacy_affinity'): amplitude and half-width of the
-    # contract-v5 near-wall affinity.  Both are ignored by ``surface_energy`` and must
-    # never be used as a hidden calibration factor for the Young angle.
+    # LEGACY ONLY: contract-v5 volumetric affinity amplitude and band width.
     wall_energy_amp: float = 5.0
     wet_band: float = 0.15
+    # Matrix-free CH implicit solve. Production float32 default is <=1e-6; audits
+    # may select 1e-8 or tighter in float64. Failure is fail-closed.
+    ch_solver_rtol: float = 1.0e-6
+    ch_solver_max_iterations: int = 200
     cfl: float = 0.4  # used by ``stable_dt``
     use_gravity: bool = False
     dtype: type = jnp.float32
-    # If enabled, each sub-step uses a bounded, mass-conserving projection that
-    # removes phi from the geometric solid without deleting liquid mass.
+    # LEGACY ONLY: mass-redistribution projection is valid only with
+    # phase_boundary_model='projection_legacy'.
     enforce_solid_phi: bool = False
 
     # extras that the RL / surrogate layer likes to have around
@@ -226,6 +255,24 @@ class PhaseFieldParams:
             self.wall_delta_width = 1.5 * self.Lx / self.Nx
         if self.wetting_model not in WETTING_MODELS:
             raise ValueError(f"unknown wetting_model {self.wetting_model!r}; expected one of {sorted(WETTING_MODELS)}")
+        if self.phase_boundary_model not in PHASE_BOUNDARY_MODELS:
+            raise ValueError(
+                f"unknown phase_boundary_model {self.phase_boundary_model!r}; "
+                f"expected one of {sorted(PHASE_BOUNDARY_MODELS)}"
+            )
+        if self.enforce_solid_phi and self.phase_boundary_model != "projection_legacy":
+            raise ValueError(
+                "enforce_solid_phi is legacy-only; use phase_boundary_model='projection_legacy' "
+                "to enable post-step mass redistribution"
+            )
+        if not math.isfinite(float(self.ch_solver_rtol)) or float(self.ch_solver_rtol) <= 0.0:
+            raise ValueError("ch_solver_rtol must be finite and positive")
+        if (
+            isinstance(self.ch_solver_max_iterations, bool)
+            or not isinstance(self.ch_solver_max_iterations, int)
+            or self.ch_solver_max_iterations < 1
+        ):
+            raise ValueError("ch_solver_max_iterations must be a positive integer")
 
     @property
     def dx(self) -> float:
@@ -237,14 +284,13 @@ class PhaseFieldParams:
 
     @property
     def m2(self):
-        """Fourier symbol of the 5-point Laplacian used by the finite-difference
-        stencils: m2 = (2-2cos(kx dx))/dx^2 + (2-2cos(ky dy))/dy^2.
+        """Fourier symbol of the 5-point Laplacian used by the periodic stencils.
 
         Inverting *this* symbol (rather than |k|^2) in the pressure Poisson solve
-        makes the projection exactly consistent with the central-difference
-        divergence/gradient, so the projected velocity is divergence-free to
-        machine precision and no odd-even (checkerboard) mode is excited.  The
-        same symbol is used for the implicit Cahn-Hilliard biharmonic operator.
+        makes the projection consistent with its central-difference divergence/
+        gradient. The same symbol is retained only by the contract-v6
+        ``projection_legacy`` CH reproduction path; v7 uses the face-aperture
+        matrix-free operator instead.
         """
         kx = jnp.fft.fftfreq(self.Nx, d=self.dx) * 2.0 * jnp.pi
         ky = jnp.fft.rfftfreq(self.Ny, d=self.dy) * 2.0 * jnp.pi
@@ -312,9 +358,8 @@ def make_solid(
         ds=ds,
         cos_theta=cos_theta.astype(params.dtype),
         sdf=sdf.astype(params.dtype),
-        # Exact geometric solid mask.  When ``enforce_solid_phi`` is enabled
-        # the phase projection below keeps phi out of these cells while
-        # preserving total liquid mass.
+        # Exact geometric solid mask. The v7 phase-face apertures use this hard
+        # geometry to close every fluid-solid phase-flux face.
         chi_hard=(sdf < 0.0).astype(params.dtype),
     )
 
@@ -554,6 +599,52 @@ def fprime(phi):
     return 2.0 * phi * (1.0 - phi) * (1.0 - 2.0 * phi)
 
 
+def fluid_face_apertures(solid: Solid, p: PhaseFieldParams):
+    """Hard 0/1 apertures for +x and +y phase faces.
+
+    Arrays are face-aligned with the left/lower cell: ``ax[i,j]`` connects
+    ``(i,j)`` to ``(i+1,j)`` and ``ay[i,j]`` connects ``(i,j)`` to
+    ``(i,j+1)``. Both axes are represented periodically, but an aperture is open
+    only when both adjacent cell centres are in the hard fluid (``sdf >= 0``).
+    In particular, the periodic-y seam is closed when it joins top fluid to the
+    bottom solid slab.
+    """
+    del p  # geometry is already sampled on the parameter grid
+    fluid = solid.sdf >= 0.0
+    return fluid & jnp.roll(fluid, -1, axis=0), fluid & jnp.roll(fluid, -1, axis=1)
+
+
+def divergence_from_face_fluxes(flux_x, flux_y, p: PhaseFieldParams):
+    """Finite-volume divergence of +axis face fluxes (flux density, not divided)."""
+    return (flux_x - jnp.roll(flux_x, 1, axis=0)) / p.dx + (flux_y - jnp.roll(flux_y, 1, axis=1)) / p.dy
+
+
+def phase_advective_fluxes(u, v, phi, solid: Solid, p: PhaseFieldParams):
+    """Conservative upwind ``u*phi`` face fluxes with exact solid-face blocking."""
+    aperture_x, aperture_y = fluid_face_apertures(solid, p)
+    u_face = 0.5 * (u + jnp.roll(u, -1, axis=0))
+    v_face = 0.5 * (v + jnp.roll(v, -1, axis=1))
+    phi_x = jnp.where(u_face >= 0.0, phi, jnp.roll(phi, -1, axis=0))
+    phi_y = jnp.where(v_face >= 0.0, phi, jnp.roll(phi, -1, axis=1))
+    return aperture_x * u_face * phi_x, aperture_y * v_face * phi_y
+
+
+def chemical_potential_fluxes(mu, solid: Solid, p: PhaseFieldParams):
+    """Conservative Cahn--Hilliard flux ``J_CH=-M grad(mu)`` on open fluid faces."""
+    aperture_x, aperture_y = fluid_face_apertures(solid, p)
+    grad_x = (jnp.roll(mu, -1, axis=0) - mu) / p.dx
+    grad_y = (jnp.roll(mu, -1, axis=1) - mu) / p.dy
+    return -p.M * aperture_x * grad_x, -p.M * aperture_y * grad_y
+
+
+def fluid_laplacian(phi, solid: Solid, p: PhaseFieldParams):
+    """Symmetric negative-semidefinite face Laplacian with zero solid-face flux."""
+    aperture_x, aperture_y = fluid_face_apertures(solid, p)
+    grad_x = aperture_x * (jnp.roll(phi, -1, axis=0) - phi) / p.dx
+    grad_y = aperture_y * (jnp.roll(phi, -1, axis=1) - phi) / p.dy
+    return divergence_from_face_fluxes(grad_x, grad_y, p)
+
+
 #: Surface tension carried by the equilibrium tanh profile with
 #: f(phi) = phi^2 (1-phi)^2: sigma_0 = sqrt(2)/6.  The Korteweg force is scaled by
 #: SIGMA_NORM = 1/sigma_0 (see the module docstring), so ``sigma_0`` is the *actual*
@@ -561,8 +652,9 @@ def fprime(phi):
 #: Evaluated in pure Python: the constant must not depend on ``jax_enable_x64``.
 WALL_SIGMA0 = math.sqrt(2.0) / 6.0
 
-#: Wall wetting models accepted by :func:`wetting_mu`.
-WETTING_MODELS = ("surface_energy", "legacy_affinity", "none")
+#: Wetting and phase-boundary semantics accepted by the v7 solver.
+WETTING_MODELS = ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
+PHASE_BOUNDARY_MODELS = ("impermeable_flux", "projection_legacy")
 
 
 def phi_wet_of(cos_theta):
@@ -647,6 +739,47 @@ def wall_delta(sdf, p: PhaseFieldParams, width: float | None = None):
     return (1.0 / (2.0 * a)) * (1.0 - jnp.tanh(scaled) ** 2) * grad
 
 
+def fluid_outward_normal(sdf, p: PhaseFieldParams):
+    """Return n pointing from fluid to solid, computed from the signed distance.
+
+    ``sdf`` is negative in solid and positive in fluid, so ``grad(sdf)`` points
+    from solid into fluid and the fluid-domain outward normal is its negative.
+    x is periodic; y uses one-sided physical-edge differences to avoid a seam ghost.
+    """
+    gx = (jnp.roll(sdf, -1, axis=0) - jnp.roll(sdf, 1, axis=0)) / (2.0 * p.dx)
+    gy = _ddy_nonperiodic(sdf, p.dy)
+    norm = jnp.sqrt(gx * gx + gy * gy + 1e-30)
+    return -gx / norm, -gy / norm
+
+
+def wall_energy_derivative(phi, cos_theta):
+    """g_w'(phi) for the Young wall free energy, per unit wall area."""
+    return -WALL_SIGMA0 * jnp.asarray(cos_theta) * wall_switch_derivative(phi)
+
+
+def natural_wall_normal_derivative(phi, solid: Solid, p: PhaseFieldParams):
+    """Prescribed fluid-outward derivative from ``eps*dphi/dn + g_w'(phi)=0``."""
+    return -wall_energy_derivative(phi, solid.cos_theta) / p.eps
+
+
+def natural_wall_gradient(phi, solid: Solid, p: PhaseFieldParams):
+    """Cartesian gradient target ``(dphi/dn) n`` on the embedded wall."""
+    nx, ny = fluid_outward_normal(solid.sdf, p)
+    derivative = natural_wall_normal_derivative(phi, solid, p)
+    return derivative * nx, derivative * ny
+
+
+def _natural_wall_laplacian_flux(phi, solid: Solid, p: PhaseFieldParams):
+    """Embedded boundary flux contribution to ``lap(phi)``.
+
+    The divergence theorem adds ``(dphi/dn) dA / dV`` to the cell Laplacian.
+    ``wall_delta`` approximates this SDF surface measure. This is the single
+    natural-BC representation in v7: ``chemical_potential`` consumes the returned
+    Laplacian and does not separately add a diffuse ``mu_wall`` term.
+    """
+    return natural_wall_normal_derivative(phi, solid, p) * wall_delta(solid.sdf, p)
+
+
 def wet_band(solid: Solid, p: PhaseFieldParams):
     """LEGACY ONLY (``wetting_model='legacy_affinity'``) fluid-side wetting envelope.
 
@@ -661,29 +794,24 @@ def wet_band(solid: Solid, p: PhaseFieldParams):
     return jnp.where(solid.sdf >= 0.0, band, 0.0).astype(p.dtype)
 
 
+def _surface_energy_volume_mu(phi, solid: Solid, p: PhaseFieldParams):
+    """Contract-v6 diffuse wall derivative; diagnostic/reproduction only."""
+    return wall_energy_derivative(phi, solid.cos_theta) * wall_delta(solid.sdf, p)
+
+
 def wetting_mu(phi, solid: Solid, p: PhaseFieldParams):
-    """Wall contribution to the chemical potential, ``mu_wall = dF_wall/dphi``.
+    """Standalone diffuse wall chemical-potential term for legacy/audit modes.
 
-    ``surface_energy`` (default, contract v6): the wall free energy
-
-        F_wall = int g_w(phi, theta) delta_wall(sdf) dV,
-        g_w(phi, theta) = -sigma_0 cos(theta) h(phi),  h(phi) = phi^2 (3 - 2 phi)
-
-    gives the variationally consistent chemical potential
-
-        mu_wall = dg_w/dphi * delta_wall = -sigma_0 cos(theta) h'(phi) delta_wall
-
-    with h'(phi) = 6 phi (1 - phi).  It enters ``mu`` and therefore the conservative
-    Cahn-Hilliard flux ``M grad(mu)``: liquid mass is unchanged, the wall free energy
-    is the only thing that moves, and ``theta`` is the Young equilibrium contact
-    angle (no amplitude parameter, no calibration factor).
-
-    ``legacy_affinity``: the contract-v5 volumetric band affinity, for reproducing
-    old trajectories only.  ``none``: no wall term (ablation).  Unknown names fail
-    closed here as well as in ``PhaseFieldParams.__post_init__``.
+    The v7 production mode ``surface_energy`` returns exact zeros here because
+    the Young energy is imposed once, through ``_natural_wall_laplacian_flux`` in
+    :func:`chemical_potential`. To reproduce the contract-v6 diffuse-domain form,
+    select ``surface_energy_volume_v6`` explicitly. ``legacy_affinity`` is the
+    contract-v5 volume control; ``none`` switches it off. Unknown modes fail closed.
     """
     if p.wetting_model == "surface_energy":
-        return -WALL_SIGMA0 * solid.cos_theta * wall_switch_derivative(phi) * wall_delta(solid.sdf, p)
+        return jnp.zeros_like(phi)
+    if p.wetting_model == "surface_energy_volume_v6":
+        return _surface_energy_volume_mu(phi, solid, p)
     if p.wetting_model == "legacy_affinity":
         phi_w = phi_wet_of(solid.cos_theta)
         band = wet_band(solid, p)
@@ -693,9 +821,31 @@ def wetting_mu(phi, solid: Solid, p: PhaseFieldParams):
     raise ValueError(f"unknown wetting_model {p.wetting_model!r}; expected one of {sorted(WETTING_MODELS)}")
 
 
+def _explicit_chemical_potential(phi, solid: Solid, p: PhaseFieldParams):
+    """All explicit terms, including exactly one selected wall-energy representation."""
+    mu = fprime(phi) / p.eps
+    if p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy":
+        # Robin boundary flux enters the Laplacian by the divergence theorem.
+        # This is the natural BC, not an additional mu_wall source.
+        return mu - p.eps * _natural_wall_laplacian_flux(phi, solid, p)
+    if p.phase_boundary_model == "projection_legacy" and p.wetting_model == "surface_energy":
+        # A historical contract-v6 trajectory used the diffuse-domain derivative.
+        return mu + _surface_energy_volume_mu(phi, solid, p)
+    return mu + wetting_mu(phi, solid, p)
+
+
 def chemical_potential(phi, solid: Solid, p: PhaseFieldParams):
-    """mu = f'(phi)/eps - eps lap(phi) + conservative wetting affinity."""
-    return fprime(phi) / p.eps - p.eps * _lap(phi, p.dx, p.dy) + wetting_mu(phi, solid, p)
+    """Return the bulk chemical potential with the selected wall treatment once.
+
+    v7 uses the symmetric face Laplacian and embeds ``eps*dphi/dn=-g_w'`` into
+    its boundary flux. The chemical-potential no-flux condition is imposed by the
+    face apertures used in the CH transport, not by modifying this scalar field.
+    The projection_legacy branch retains the fully-periodic contract-v6 operator.
+    """
+    mu_explicit = _explicit_chemical_potential(phi, solid, p)
+    if p.phase_boundary_model == "impermeable_flux":
+        return mu_explicit - p.eps * fluid_laplacian(phi, solid, p)
+    return mu_explicit - p.eps * _lap(phi, p.dx, p.dy)
 
 
 def poisson_solve(rhs, m2):
@@ -718,25 +868,25 @@ def nu_of(phi, p: PhaseFieldParams):
 
 
 def rhs(state: State, solid: Solid, p: PhaseFieldParams):
-    """Explicit right-hand sides and the explicitly-treated chemical potential.
+    """Momentum right-hand sides and explicit phase terms.
 
-    ``mu_expl`` contains every part of the chemical potential except the
-    stabilising ``-eps*lap(phi)`` term, which is integrated implicitly.
+    For the v7 ``impermeable_flux`` model, ``phi_rhs`` is the conservative
+    face-flux advection divergence and ``mu_expl`` contains f'(phi)/eps plus the
+    one selected wall representation. The stiff ``-eps*L(phi)`` term is handled
+    by :func:`solve_ch_implicit`. ``projection_legacy`` retains the v6 periodic
+    advection and FFT-compatible chemical-potential split for reproduction.
     """
     phi, u, v = state.phi, state.u, state.v
     dx, dy = p.dx, p.dy
 
     mu = chemical_potential(phi, solid, p)
+    mu_expl = _explicit_chemical_potential(phi, solid, p)
 
-    # Keep the spectral CH mobility spatially constant.  The old code multiplied
-    # ``mu_expl`` by a cell-centred mobility and then took a Laplacian, which
-    # computes Δ(mob*mu), not the conservative operator ∇·(mob∇mu).
-    # Solid impermeability is enforced after the semi-implicit CH update by the
-    # bounded, mass-conserving geometric projection below.
-    mu_expl = fprime(phi) / p.eps + wetting_mu(phi, solid, p)
-
-    # --- phase field: conservative advection, biharmonic diffusion implicit ---
-    phi_rhs = -div_upwind(u, v, phi, dx, dy)
+    if p.phase_boundary_model == "impermeable_flux":
+        adv_x, adv_y = phase_advective_fluxes(u, v, phi, solid, p)
+        phi_rhs = -divergence_from_face_fluxes(adv_x, adv_y, p)
+    else:
+        phi_rhs = -div_upwind(u, v, phi, dx, dy)
 
     # --- momentum ---
     rho = rho_of(phi, p)
@@ -813,46 +963,179 @@ def _project_phase_outside_solid(phi, solid: Solid, p: PhaseFieldParams):
     return _bounded_mass_project_2d(phi, active, jnp.sum(phi), weight)
 
 
-def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
-    """One step made of three semi-implicit Euler substeps.
+def _cg_solve_impl(rhs_field, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations):
+    """CG core for ``(I + alpha L^T L)x = rhs``; L is the masked face Laplacian."""
 
-    The 4th-order Cahn-Hilliard diffusion is integrated implicitly in Fourier
-    space inside every stage, which removes the O(eps^4/M) stability restriction;
-    the Brinkman penalization of the solid is implicit as well.
+    def laplacian(value):
+        grad_x = aperture_x * (jnp.roll(value, -1, axis=0) - value) / dx
+        grad_y = aperture_y * (jnp.roll(value, -1, axis=1) - value) / dy
+        return (grad_x - jnp.roll(grad_x, 1, axis=0)) / dx + (grad_y - jnp.roll(grad_y, 1, axis=1)) / dy
+
+    def operator(value):
+        lap = laplacian(value)
+        return value + alpha * laplacian(lap)
+
+    x0 = jnp.zeros_like(rhs_field)
+    residual0 = rhs_field - operator(x0)
+    direction0 = residual0
+    residual_sq0 = jnp.vdot(residual0, residual0).real
+    rhs_norm = jnp.sqrt(jnp.vdot(rhs_field, rhs_field).real)
+    scale = jnp.maximum(rhs_norm, jnp.asarray(1e-30, dtype=rhs_field.dtype))
+    rel0 = jnp.sqrt(residual_sq0) / scale
+
+    def condition(carry):
+        _x, _r, _d, _rr, rel, iteration = carry
+        return (iteration < max_iterations) & jnp.isfinite(rel) & (rel > rtol)
+
+    def body(carry):
+        x, residual, direction, residual_sq, _rel, iteration = carry
+        image = operator(direction)
+        denominator = jnp.vdot(direction, image).real
+        valid_denominator = jnp.isfinite(denominator) & (denominator > 0.0)
+        safe_denominator = jnp.where(valid_denominator, denominator, 1.0)
+        step_length = residual_sq / safe_denominator
+        x_new = x + step_length * direction
+        r_candidate = residual - step_length * image
+        r_new = jnp.where(valid_denominator, r_candidate, jnp.full_like(r_candidate, jnp.nan))
+        residual_sq_new = jnp.vdot(r_new, r_new).real
+        rel_new = jnp.sqrt(residual_sq_new) / scale
+        safe_rr = jnp.maximum(residual_sq, jnp.asarray(1e-30, dtype=rhs_field.dtype))
+        beta = residual_sq_new / safe_rr
+        direction_new = r_new + beta * direction
+        return x_new, r_new, direction_new, residual_sq_new, rel_new, iteration + 1
+
+    x, _residual, _direction, _residual_sq, relative_residual, iterations = lax.while_loop(
+        condition,
+        body,
+        (x0, residual0, direction0, residual_sq0, rel0, jnp.asarray(0, dtype=jnp.int32)),
+    )
+    converged = jnp.isfinite(relative_residual) & (relative_residual <= rtol)
+    solution = jnp.where(converged, x, jnp.full_like(x, jnp.nan))
+    return solution, ImplicitSolveInfo(iterations, relative_residual, converged)
+
+
+@jax.custom_vjp
+def _differentiable_ch_cg(rhs_field, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations):
+    """Implicitly differentiated matrix-free CG solve (adjoint uses the same SPD solve)."""
+    return _cg_solve_impl(rhs_field, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations)
+
+
+def _differentiable_ch_cg_fwd(rhs_field, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations):
+    output = _cg_solve_impl(rhs_field, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations)
+    return output, (aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations, output[1].converged)
+
+
+def _differentiable_ch_cg_bwd(residual, cotangents):
+    aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations, forward_converged = residual
+    solution_cotangent = cotangents[0]
+    adjoint, adjoint_info = _cg_solve_impl(
+        solution_cotangent, aperture_x, aperture_y, dx, dy, alpha, rtol, max_iterations
+    )
+    valid = forward_converged & adjoint_info.converged
+    rhs_cotangent = jnp.where(valid, adjoint, jnp.full_like(adjoint, jnp.nan))
+    # Geometry and physical coefficients are fixed/static for this solver path.
+    return rhs_cotangent, None, None, None, None, None, None, None
+
+
+_differentiable_ch_cg.defvjp(_differentiable_ch_cg_fwd, _differentiable_ch_cg_bwd)
+
+
+def solve_ch_implicit(rhs_field, solid: Solid, p: PhaseFieldParams, dt: float):
+    """Solve ``(I + dt*M*eps*L^T L) phi = rhs`` by matrix-free CG.
+
+    ``L`` is the symmetric face-aperture Laplacian. No dense matrix or FFT
+    assumption is used. The operator is SPD because ``L`` is symmetric and
+    negative semidefinite. The custom VJP differentiates the implicit equation
+    with a matching adjoint CG solve, so the v7 phase path remains usable in
+    gradient-based HydroGym/FNO/RL workflows. A failed solve returns NaNs and an
+    explicit ``converged=False`` diagnostic; it can never silently advance.
     """
-    # Three Euler substeps must sum to one requested step.  Previously each
-    # substep used p.dt and advanced time by 3*p.dt, while files and plots
-    # reported p.dt.  We do not claim SSP-RK3 accuracy for this integrator.
-    dt = p.dt / 3.0
+    aperture_x, aperture_y = fluid_face_apertures(solid, p)
+    alpha = jnp.asarray(float(dt) * float(p.M) * float(p.eps), dtype=rhs_field.dtype)
+    rtol = jnp.asarray(p.ch_solver_rtol, dtype=rhs_field.dtype)
+    max_iterations = jnp.asarray(p.ch_solver_max_iterations, dtype=jnp.int32)
+    return _differentiable_ch_cg(
+        rhs_field,
+        aperture_x,
+        aperture_y,
+        jnp.asarray(p.dx, dtype=rhs_field.dtype),
+        jnp.asarray(p.dy, dtype=rhs_field.dtype),
+        alpha,
+        rtol,
+        max_iterations,
+    )
+
+
+def _phase_update(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float, phi_rhs, mu_expl):
+    """One phase substep; v7 uses only conservative face fluxes and matrix-free CG."""
+    if p.phase_boundary_model == "impermeable_flux":
+        ch_x, ch_y = chemical_potential_fluxes(mu_expl, solid, p)
+        source = phi_rhs - divergence_from_face_fluxes(ch_x, ch_y, p)
+        return solve_ch_implicit(phi + dt * source, solid, p, dt)
+
+    # Reproduction-only contract-v6 path: constant-M periodic FFT biharmonic
+    # update followed, optionally, by the historical mass redistribution.
     m2 = p.m2
-    denom = 1.0 + dt * p.M * p.eps * m2**2
+    denominator = 1.0 + dt * p.M * p.eps * m2**2
+    source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)
+    phi_hat = (jnp.fft.rfft2(phi) + dt * source_hat) / denominator
+    phi_new = jnp.fft.irfft2(phi_hat, s=phi.shape)
+    if p.enforce_solid_phi:
+        phi_new = _project_phase_outside_solid(phi_new, solid, p)
+    zero = jnp.asarray(0, dtype=jnp.int32)
+    one = jnp.asarray(0.0, dtype=phi.dtype)
+    return phi_new, ImplicitSolveInfo(zero, one, jnp.asarray(True))
+
+
+def phase_transport_step(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float | None = None):
+    """Advance only the phase equation (useful for isolated CH-energy audits)."""
+    dt = p.dt / 3.0 if dt is None else float(dt)
+    if p.phase_boundary_model == "impermeable_flux":
+        adv_x, adv_y = phase_advective_fluxes(u, v, phi, solid, p)
+        ch_mu = _explicit_chemical_potential(phi, solid, p)
+        ch_x, ch_y = chemical_potential_fluxes(ch_mu, solid, p)
+        source = -divergence_from_face_fluxes(adv_x, adv_y, p) - divergence_from_face_fluxes(ch_x, ch_y, p)
+        return solve_ch_implicit(phi + dt * source, solid, p, dt)
+    advective_rhs = -div_upwind(u, v, phi, p.dx, p.dy)
+    mu_exp = _explicit_chemical_potential(phi, solid, p)
+    return _phase_update(phi, u, v, solid, p, dt, advective_rhs, mu_exp)
+
+
+def step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldParams):
+    """One public step and its per-substep CG residual/iteration diagnostics."""
+    dt = p.dt / 3.0
 
     def substep(carry, _):
         phi, u, v, t = carry
-        phi_rhs, u_rhs, v_rhs, mu, mu_expl = rhs(State(phi, u, v, t), solid, p)
+        phi_rhs, u_rhs, v_rhs, _mu, mu_expl = rhs(State(phi, u, v, t), solid, p)
+        phi_new, solve_info = _phase_update(phi, u, v, solid, p, dt, phi_rhs, mu_expl)
 
-        # implicit CH diffusion: (I + dt M eps lap^2) phi+ = phi + dt * explicit
-        # lap(mu_expl) == -k2 * rfft2(mu_expl)
-        source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)
-        phi_hat = (jnp.fft.rfft2(phi) + dt * source_hat) / denom
-        phi_new = jnp.fft.irfft2(phi_hat, s=phi.shape)
-        if p.enforce_solid_phi:
-            phi_new = _project_phase_outside_solid(phi_new, solid, p)
-
-        # Brinkman penalization, implicit -> unconditionally stable
+        # Brinkman penalization remains the existing implicit velocity damping.
         damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)
         u_new = (u + dt * u_rhs) * damp
         v_new = (v + dt * v_rhs) * damp
 
-        # pressure projection (inverts grad_c . grad_c, see PhaseFieldParams.m2_proj)
+        # Momentum/pressure projection is intentionally unchanged by L1A-2c.
         div = _ddx(u_new, p.dx) + _ddy(v_new, p.dy)
         pr = poisson_solve(div / dt, p.m2_proj)
         u_new = u_new - dt * _ddx(pr, p.dx)
         v_new = v_new - dt * _ddy(pr, p.dy)
-        return (phi_new, u_new, v_new, t + dt), None
+        return (phi_new, u_new, v_new, t + dt), solve_info
 
-    (phi, u, v, t), _ = lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)
-    return State(phi=phi, u=u, v=v, t=t)
+    (phi, u, v, t), info = lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)
+    diagnostics = StepDiagnostics(info.iterations, info.relative_residual, info.converged)
+    return State(phi=phi, u=u, v=v, t=t), diagnostics
+
+
+def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
+    """Advance one requested dt using three semi-implicit Euler substeps.
+
+    In the default v7 path the CH stiffness is treated by a fail-closed,
+    matrix-free iterative solve and solid boundaries are enforced in the face
+    fluxes. The legacy FFT/projection mechanism is unreachable unless explicitly
+    selected through ``phase_boundary_model='projection_legacy'``.
+    """
+    return step_with_diagnostics(state, solid, p)[0]
 
 
 def stable_dt(p: PhaseFieldParams, u_max: float = 2.0) -> float:
@@ -940,6 +1223,29 @@ def rollout(
 #                             DIAGNOSTICS / OBSERVABLES                               #
 #                                                                                     #
 #######################################################################################
+
+
+def phase_free_energy(phi, solid: Solid, p: PhaseFieldParams):
+    """Discrete bulk + wall free energy consistent with the v7 face Laplacian.
+
+    Each open +axis face is counted once. For Young modes the wall contribution
+    is the prescribed ``int g_w delta_wall dV``; its derivative enters the v7
+    chemical potential solely through the embedded natural boundary flux.
+    """
+    fluid = (solid.sdf >= 0.0).astype(phi.dtype)
+    aperture_x, aperture_y = fluid_face_apertures(solid, p)
+    grad_x = (jnp.roll(phi, -1, axis=0) - phi) / p.dx
+    grad_y = (jnp.roll(phi, -1, axis=1) - phi) / p.dy
+    bulk = jnp.sum(fluid * phi**2 * (1.0 - phi) ** 2 / p.eps)
+    bulk += 0.5 * p.eps * jnp.sum(aperture_x * grad_x**2 + aperture_y * grad_y**2)
+    if p.wetting_model in ("surface_energy", "surface_energy_volume_v6"):
+        wall = jnp.sum(wall_energy_density(phi, solid.cos_theta) * wall_delta(solid.sdf, p))
+    elif p.wetting_model == "legacy_affinity":
+        delta_phi = phi - phi_wet_of(solid.cos_theta)
+        wall = 0.5 * p.wall_energy_amp * jnp.sum(wet_band(solid, p) * delta_phi**2)
+    else:
+        wall = jnp.asarray(0.0, dtype=phi.dtype)
+    return (bulk + wall) * p.dx * p.dy
 
 
 def liquid_mass(phi, solid: Solid, p: PhaseFieldParams):
@@ -1279,8 +1585,10 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
         We=case.get("We", 100.0),
         dt=dt,
         eps=(float(case["eps_factor"]) * 6.0 / N) if "eps_factor" in case else case.get("eps"),
-        # Generated trajectories use the mass-conserving solid projection.
-        enforce_solid_phi=bool(case.get("enforce_solid_phi", True)),
+        # New production cases use impermeable face fluxes, not redistribution.
+        phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
+        enforce_solid_phi=bool(case.get("enforce_solid_phi", False)),
+        wetting_model=str(case.get("wetting_model", "surface_energy")),
         wall_energy_amp=float(case.get("wall_energy_amp", 5.0)),
         wet_band=float(case.get("wet_band", 0.15)),
     )
@@ -1340,6 +1648,16 @@ def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):
         u_impact=case.get("u_impact", 0.5),
         velocity_mode=case.get("velocity_mode", "uniform"),
     )
+    if p.phase_boundary_model == "impermeable_flux":
+        # Initial diffuse tails are clipped only at initialization (without
+        # redistribution); subsequent updates cannot transport phase through a
+        # fluid-solid face. Clearance validation keeps this mass correction tiny.
+        state = State(
+            phi=jnp.where(solid.sdf >= 0.0, state.phi, 0.0),
+            u=state.u,
+            v=state.v,
+            t=state.t,
+        )
     return p, solid, state
 
 

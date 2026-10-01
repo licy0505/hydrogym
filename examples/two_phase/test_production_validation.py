@@ -143,10 +143,21 @@ def test_report_schema_valid_missing_field_and_nan():
 
 @pytest.mark.parametrize(
     "version, valid",
-    [(4, True), (5, True), (6, True), (3, False), (7, False), (True, False), ("5", False), (5.0, False), (None, False)],
+    [
+        (4, True),
+        (5, True),
+        (6, True),
+        (7, True),
+        (3, False),
+        (8, False),
+        (True, False),
+        ("5", False),
+        (5.0, False),
+        (None, False),
+    ],
 )
 def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
-    """Historical (v4/v5) and current (v6) reports validate; unknown or malformed contracts do not."""
+    """Historical (v4-v6) and current (v7) reports validate; unknown contracts fail closed."""
     report = _minimal_report()
     report["repository"]["solver_contract_version"] = version
     contract_errors = [e for e in validate_report_schema(report) if "solver_contract_version" in e]
@@ -306,7 +317,7 @@ def test_capillary_audit_reports_consistent_conventions():
     result = run_audit(N=64)
     assert [check.name for check in result.checks if not check.passed] == []
     assert result.diagnosis["three_conventions_consistent"] is True
-    assert result.to_dict()["settings"]["solver_contract_version"] == 6
+    assert result.to_dict()["settings"]["solver_contract_version"] == 7
 
 
 def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
@@ -386,12 +397,14 @@ def test_report_schema_allows_resolved_blocker_status_only_when_known():
     report["known_solver_blockers"] = [blocker]
     assert validate_report_schema(report) == []
     blocker["status"] = "resolved_in_contract_v6"
-    assert validate_report_schema(report) == []  # v6 may close evidence-gated blockers
+    assert validate_report_schema(report) == []  # historical evidence-gated closure
     blocker["status"] = "resolved_in_contract_v7"
+    assert validate_report_schema(report) == []  # v7 natural-boundary evidence is supported
+    blocker["status"] = "resolved_in_contract_v8"
     assert any("status is invalid" in error for error in validate_report_schema(report))
 
 
-def test_ci_profile_report_records_contract_v6_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
+def test_ci_profile_report_records_contract_v7_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
     pytest.importorskip("jax")
     import phasefield as pf
     from production.config import compute_file_sha256
@@ -403,7 +416,7 @@ def test_ci_profile_report_records_contract_v6_lineage_and_stays_baseline_only(t
     assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
     report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
     assert validate_report_schema(report) == []
-    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 6
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 7
     assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
     assert len(report["repository"]["validation_code_sha256"]) == 64
     assert len(report["config"]["sha256"]) == 64
@@ -414,6 +427,51 @@ def test_ci_profile_report_records_contract_v6_lineage_and_stays_baseline_only(t
         assert blockers[name] == "open"
     static = report["benchmarks"]["static_droplet"]["cases"][0]
     assert static["delta_p"] > 0.0 and static["laplace_ratio"] > 0.0
+
+
+def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=90.0):
+    cases = []
+    for target in (60.0, 90.0, 120.0, 150.0):
+        angle = theta_90 if target == 90.0 else target
+        cases.append(
+            {
+                "target_deg": target,
+                "measured_deg": angle if converged else None,
+                "absolute_error_deg": abs(angle - target) if converged else None,
+                "finite": True,
+                "converged": bool(converged),
+                "mass_relative_drift": 5e-4,
+                "total_mass_relative_drift": 5e-4,
+                "max_solid_liquid_fraction": 0.0,
+                "phase_boundary_model": boundary,
+                "enforce_solid_phi": boundary == "projection_legacy",
+                "samples": [{"max_speed": 1e-4}],
+            }
+        )
+    return {
+        "static_droplet": {"cases": [], "summary": None},
+        "contact_angle": {"cases": cases, "summary": {}},
+        "impact": {"cases": []},
+        "convergence": {},
+    }
+
+
+def test_contact_angle_blockers_close_only_after_full_v7_acceptance():
+    good = _blockers(_angle_benchmarks())
+    assert good["W-CONTACT-ANGLE"]["status"] == "resolved_in_contract_v7"
+    assert good["P-SOLID-PIN"]["status"] == "resolved_in_contract_v7"
+
+    partial = _blockers(_angle_benchmarks(converged=False))
+    assert partial["W-CONTACT-ANGLE"]["status"] == "measurement_required"
+    assert partial["P-SOLID-PIN"]["status"] == "confirmed_problem"
+
+    legacy = _blockers(_angle_benchmarks(boundary="projection_legacy"))
+    assert legacy["W-CONTACT-ANGLE"]["status"] == "confirmed_problem"
+    assert legacy["P-SOLID-PIN"]["status"] == "confirmed_problem"
+
+    bad_neutral = _blockers(_angle_benchmarks(theta_90=94.0))
+    assert bad_neutral["W-CONTACT-ANGLE"]["status"] == "confirmed_problem"
+    assert bad_neutral["P-SOLID-PIN"]["status"] == "confirmed_problem"
 
 
 def _comparison_report(
@@ -581,6 +639,27 @@ def test_compare_reports_target_mirrors_provisional_targets():
 # ---------------------------------------------------------------------------
 
 
+def test_phase_boundary_audit_covers_v7_flux_and_thermodynamics():
+    pytest.importorskip("jax")
+    import jax
+    import jax.numpy as jnp
+    from production.phase_boundary_audit import run_phase_boundary_audit
+
+    previous_x64 = jax.config.jax_enable_x64
+    jax.config.update("jax_enable_x64", True)
+    try:
+        audit = run_phase_boundary_audit(
+            N=32, sessile_steps=8, energy_steps=4, ab_steps=8, sample_every=4, dtype=jnp.float64
+        )
+    finally:
+        jax.config.update("jax_enable_x64", previous_x64)
+    failed = [check.name for check in audit.checks if not check.passed]
+    assert failed == []
+    assert audit.settings["solver_contract_version"] == 7
+    assert audit.numbers["v7_variational_audit"]["relative_error"] <= 1e-4
+    assert audit.numbers["neutral_90_projection_ab"]["impermeable_v7"]["max_solid_phase_fraction"] <= 1e-6
+
+
 def test_solid_gas_film_audit_variates_one_factor_at_a_time():
     pytest.importorskip("jax")
     from production.solid_gas_film_audit import QUICK_FACTORS, run_solid_gas_film_audit
@@ -589,7 +668,7 @@ def test_solid_gas_film_audit_variates_one_factor_at_a_time():
     assert result["settings"]["diagnostic_only"] is True
     assert result["settings"]["production_defaults_changed"] is False
     factors = {run["factor"] for run in result["runs"]}
-    assert factors == {"wetting_model", "eta_pen_over_dt", "nu_g_over_nu_l", "enforce_solid_phi"}
+    assert factors == {"wetting_model", "eta_pen_over_dt", "nu_g_over_nu_l", "phase_boundary_model"}
     for run in result["runs"]:
         assert run["finite"] is True
         metrics = run["metrics"]
@@ -610,13 +689,16 @@ def test_contact_angle_case_uses_the_clean_seed_and_gates_on_convergence():
     from production import validation as V
 
     pytest.importorskip("jax")
-    case = V.run_contact_angle_case(90.0, N=32, max_steps=20, dt=4e-3, eps_factor=2.0, R=0.6, dtype="float32")
+    case = V.run_contact_angle_case(90.0, N=48, max_steps=20, dt=4e-3, eps_factor=2.0, R=0.8, dtype="float32")
     assert case.converged is False  # 20 steps cannot satisfy 3 windows of 5e-4 speed
     assert case.measured_deg is None and case.absolute_error_deg is None
     assert case.signed_error_deg is None
     assert isinstance(case.final_sampled_deg, float) and 0.0 <= case.final_sampled_deg <= 180.0
     assert case.initial_solid_liquid_fraction == 0.0
-    assert case.wetting_model == "surface_energy" and case.enforce_solid_phi is True
+    assert case.wetting_model == "surface_energy"
+    assert case.phase_boundary_model == "impermeable_flux" and case.enforce_solid_phi is False
+    assert case.final_solid_liquid_fraction <= 1e-6
+    assert case.implicit_relative_residual_max <= 1e-6
     assert case.relaxation_steps == 20
     sample_fields = {"step", "time", "measured_angle_deg", "max_speed", "total_mass", "fluid_mass"}
     assert case.samples and all(sample_fields <= set(row) for row in case.samples)
@@ -649,12 +731,38 @@ def test_contact_angle_case_reports_the_angle_once_the_windows_converge():
     assert summary["mae_deg"] == pytest.approx(case.absolute_error_deg)
 
 
+def test_contact_angle_summary_does_not_call_a_partial_subset_matrix_mae():
+    from types import SimpleNamespace
+
+    from production.validation import summarize_contact_angles
+
+    cases = [
+        SimpleNamespace(
+            target_deg=float(target),
+            finite=True,
+            converged=(target == 90),
+            measured_deg=float(target) + 0.5 if target == 90 else None,
+            absolute_error_deg=0.5 if target == 90 else None,
+            final_sampled_deg=float(target) + 0.5,
+            mass_relative_drift=1e-4,
+            total_mass_relative_drift=1e-4,
+            max_solid_liquid_fraction=0.0,
+        )
+        for target in (60, 90, 120, 150)
+    ]
+    summary = summarize_contact_angles(cases)
+    assert summary["converged_case_count"] == 1
+    assert summary["mae_deg"] is None
+    assert summary["converged_subset_mae_deg"] == pytest.approx(0.5)
+    assert summary["all_targets_converged"] is False
+
+
 def test_contact_angle_summary_excludes_drifting_runs_from_the_error_statistics():
     from production import validation as V
 
     pytest.importorskip("jax")
     cases = [
-        V.run_contact_angle_case(target, N=32, max_steps=10, dt=4e-3, eps_factor=2.0, R=0.6, dtype="float32")
+        V.run_contact_angle_case(target, N=48, max_steps=10, dt=4e-3, eps_factor=2.0, R=0.8, dtype="float32")
         for target in (60.0, 120.0)
     ]
     summary = V.summarize_contact_angles(cases)
@@ -684,9 +792,21 @@ def test_contact_angle_matrix_reports_history_and_convergence_accounting():
     assert "history_recorded" in matrix["profiles"]
     history = matrix["profiles"]["history_recorded"]["summary"]
     assert history["mae_deg"] == pytest.approx(30.635, abs=1e-3)
+    assert history["converged_subset_mae_deg"] is None
     assert history["monotonic_target_to_measured"] is False
     summary = matrix["profiles"]["surface_energy"]["summary"]
     assert summary["converged_case_count"] == 0 and summary["mae_deg"] is None
+    assert summary["converged_subset_mae_deg"] is None
     table = M.format_matrix(matrix)
     assert "| surface_energy | 60 |" in table and "| history_recorded | 120 |" in table
     assert "180" not in table.splitlines()[0]  # header only
+
+    partial_rows = [
+        {"target_deg": 60.0, "measured_deg": None, "absolute_error_deg": None, "converged": False},
+        {"target_deg": 90.0, "measured_deg": 91.0, "absolute_error_deg": 1.0, "converged": True},
+        {"target_deg": 120.0, "measured_deg": None, "absolute_error_deg": None, "converged": False},
+    ]
+    partial = M.summarize_rows(partial_rows)
+    assert partial["mae_deg"] is None
+    assert partial["rmse_deg"] is None and partial["max_absolute_error_deg"] is None
+    assert partial["converged_subset_mae_deg"] == pytest.approx(1.0)

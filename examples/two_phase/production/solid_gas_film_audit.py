@@ -39,17 +39,17 @@ BASE_CASE: dict[str, Any] = {
 }
 
 DEFAULT_FACTORS: dict[str, list[Any]] = {
-    "wetting_model": ["none", "legacy_affinity", "surface_energy"],
+    "wetting_model": ["none", "legacy_affinity", "surface_energy_volume_v6", "surface_energy"],
     "eta_pen_over_dt": [0.5, 2.0, 8.0],
     "nu_g_over_nu_l": [1.0, 10.0, 50.0],
-    "enforce_solid_phi": [False, True],
+    "phase_boundary_model": ["impermeable_flux", "projection_legacy"],
 }
 
 QUICK_FACTORS: dict[str, list[Any]] = {
-    "wetting_model": ["legacy_affinity"],
+    "wetting_model": ["surface_energy"],
     "eta_pen_over_dt": [2.0],
     "nu_g_over_nu_l": [10.0],
-    "enforce_solid_phi": [True],
+    "phase_boundary_model": ["impermeable_flux", "projection_legacy"],
 }
 
 METRIC_KEYS = (
@@ -61,6 +61,9 @@ METRIC_KEYS = (
     "final_y_cm",
     "peak_speed",
     "mass_drift",
+    "solid_phase_fraction",
+    "implicit_iterations_max",
+    "implicit_relative_residual_max",
     "finite",
 )
 
@@ -74,8 +77,11 @@ def _case_with_overrides(factor: str, value: Any) -> dict[str, Any]:
         case["eta_pen_over_dt"] = float(value)
     elif factor == "nu_g_over_nu_l":
         case["nu_g_over_nu_l"] = float(value)
-    elif factor == "enforce_solid_phi":
-        case["enforce_solid_phi"] = bool(value)
+    elif factor == "phase_boundary_model":
+        case["phase_boundary_model"] = str(value)
+        # The named legacy model is the archived v6 projection path. The new
+        # impermeable-flux path must never call the post-step redistribution.
+        case["enforce_solid_phi"] = value == "projection_legacy"
     else:
         raise ValueError(f"unknown audit factor {factor!r}")
     return case
@@ -95,6 +101,9 @@ def _metrics(record: dict[str, Any]) -> dict[str, Any]:
         "final_y_cm": record.get("final_y_cm"),
         "peak_speed": float(max(speeds)) if speeds else None,
         "mass_drift": record.get("mass_drift"),
+        "solid_phase_fraction": record.get("solid_phase_fraction"),
+        "implicit_iterations_max": record.get("implicit_iterations_max"),
+        "implicit_relative_residual_max": record.get("implicit_relative_residual_max"),
         "finite": True,
     }
 
@@ -125,7 +134,7 @@ def run_solid_gas_film_audit(
         "production_defaults_changed": False,
     }
     runs: list[dict[str, Any]] = []
-    for factor in ("wetting_model", "eta_pen_over_dt", "nu_g_over_nu_l", "enforce_solid_phi"):
+    for factor in ("wetting_model", "eta_pen_over_dt", "nu_g_over_nu_l", "phase_boundary_model"):
         for value in grid.get(factor, []):
             case = _case_with_overrides(factor, value)
             record = run_impact_case(
@@ -145,7 +154,8 @@ def run_solid_gas_film_audit(
                     "case_parameters": {
                         "eta_pen_over_dt": case.get("eta_pen_over_dt"),
                         "nu_g_over_nu_l": case.get("nu_g_over_nu_l"),
-                        "enforce_solid_phi": case.get("enforce_solid_phi"),
+                        "phase_boundary_model": case.get("phase_boundary_model", "impermeable_flux"),
+                        "enforce_solid_phi": case.get("enforce_solid_phi", False),
                     },
                     "metrics": _metrics(record),
                     "finite": bool(record.get("finite") is True),

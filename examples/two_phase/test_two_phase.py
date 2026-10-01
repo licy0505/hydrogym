@@ -156,7 +156,9 @@ def test_wetting_band_is_fluid_side_only():
 
 
 def test_solid_projection_is_bounded_and_mass_conserving():
-    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0, enforce_solid_phi=True)
+    p = pf.PhaseFieldParams(
+        Nx=64, Ny=64, Lx=6.0, Ly=6.0, phase_boundary_model="projection_legacy", enforce_solid_phi=True
+    )
     solid = pf.make_solid(pf.surface_flat(p), p, cos_theta=0.0)
     phi = np.asarray(pf.droplet_initial_state(p, x0=3.0, y0=0.4, R=0.5, u_impact=0.0).phi)
     before = float(phi.sum())
@@ -242,15 +244,14 @@ def _elliptical_drop(p, R, aspect=1.3):
     return pf.State(phi=phi, u=jnp.zeros_like(phi), v=jnp.zeros_like(phi), t=0.0)
 
 
-def test_solver_contract_is_v6():
-    """Wetting semantics changed (surface energy by default), so the solver contract must be 6.
-
-    v4 (capillary sign) and v5 (legacy affinity) trajectories are stale; the report
-    tooling keeps accepting their lineage records (4/5/6) but not an unknown contract.
-    """
-    assert pf.SOLVER_CONTRACT_VERSION == 6
-    assert pf.WETTING_MODELS == ("surface_energy", "legacy_affinity", "none")
-    assert pf.PhaseFieldParams(Nx=32, Ny=32).wetting_model == "surface_energy"
+def test_solver_contract_is_v7():
+    """Conservative impermeable phase-boundary semantics require a new data contract."""
+    assert pf.SOLVER_CONTRACT_VERSION == 7
+    assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
+    params = pf.PhaseFieldParams(Nx=32, Ny=32)
+    assert params.wetting_model == "surface_energy"
+    assert params.phase_boundary_model == "impermeable_flux"
+    assert params.enforce_solid_phi is False
 
 
 def test_static_drop_pressure_jump_has_correct_sign():
@@ -350,8 +351,9 @@ def test_capillary_formula_lives_only_in_rhs():
         )
 
     assert {name for name, fn in functions.items() if "SIGMA_NORM" in names(fn)} == {"rhs"}
-    for name in ("step", "pressure_field"):
+    for name in ("step_with_diagnostics", "pressure_field"):
         assert calls(functions[name], "rhs"), f"{name}() must obtain its forces from rhs()"
+    assert calls(functions["step"], "step_with_diagnostics")
     assert not names(functions["pressure_field"]) & {"SIGMA_NORM", "chemical_potential", "fprime", "_lap"}
 
 
@@ -522,7 +524,7 @@ def test_wall_energy_90deg_is_neutral(x64):
 
 def test_wall_energy_hydrophilic_hydrophobic_sign(x64):
     """cos(theta) > 0 pulls phi up at the wall (liquid favoured); cos(theta) < 0 pushes it down."""
-    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0, dtype=jnp.float64)
+    p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0, dtype=jnp.float64, wetting_model="surface_energy_volume_v6")
     sdf = pf.surface_flat(p, wall_height=0.25)
     phi = jnp.full((64, 64), 0.5, dtype=p.dtype)
     delta = np.asarray(pf.wall_delta(sdf, p), dtype=np.float64)
@@ -543,7 +545,7 @@ def test_wall_energy_hydrophilic_hydrophobic_sign(x64):
 
 def test_wall_energy_directional_derivative_matches_mu(x64):
     """mu_wall must be the variational derivative of F_wall = int g_w(phi) delta_wall dV (float64)."""
-    p = pf.PhaseFieldParams(Nx=32, Ny=32, Lx=6.0, Ly=6.0, dtype=jnp.float64)
+    p = pf.PhaseFieldParams(Nx=32, Ny=32, Lx=6.0, Ly=6.0, dtype=jnp.float64, wetting_model="surface_energy_volume_v6")
     sdf = pf.surface_flat(p, wall_height=0.25)
     x = np.linspace(0.0, 6.0, 32, endpoint=False)
     X, Y = np.meshgrid(x, x, indexing="ij")
@@ -622,7 +624,7 @@ def test_contact_angle_targets_have_correct_direction_ci():
     wall_height = 0.25
     measured = []
     for target in (60.0, 120.0):
-        p = pf.PhaseFieldParams(Nx=48, Ny=48, Lx=6.0, Ly=6.0, dt=4e-3, enforce_solid_phi=True)
+        p = pf.PhaseFieldParams(Nx=48, Ny=48, Lx=6.0, Ly=6.0, dt=4e-3)
         p.eps = 2.0 * p.dx
         p.dt = min(float(p.dt), float(pf.stable_dt(p, u_max=2.0)))
         sdf = pf.surface_flat(p, wall_height=wall_height)
@@ -639,3 +641,203 @@ def test_contact_angle_targets_have_correct_direction_ci():
         assert abs(mass1 - mass0) / mass0 <= 1e-3
         measured.append(angle)
     assert measured[0] < measured[1], measured
+
+
+# ---------------------------------------------------------------------------
+#  L1A-2c: conservative impermeable phase boundary and natural Young BC
+# ---------------------------------------------------------------------------
+
+
+def _phase_boundary_setup(N=64, *, dtype=jnp.float32, theta=90.0, rtol=1e-6):
+    import math
+
+    p = pf.PhaseFieldParams(
+        Nx=N,
+        Ny=N,
+        Lx=6.0,
+        Ly=6.0,
+        dt=4.0e-3,
+        dtype=dtype,
+        eps=2.0 * 6.0 / N,
+        ch_solver_rtol=rtol,
+    )
+    solid = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p, cos_theta=math.cos(math.radians(theta)))
+    return p, solid
+
+
+def test_phase_advective_flux_zero_across_solid_faces():
+    p, _flat_solid = _phase_boundary_setup()
+    X, Y = pf.grids(p)
+    pillar = pf.sdf_box(X, Y, 2.5, 3.5, 0.25, 0.8)
+    solid = pf.make_solid(pf.sdf_union(pf.surface_flat(p, 0.25), pillar), p, cos_theta=0.0)
+    rng = np.random.default_rng(17)
+    phi = jnp.asarray(rng.uniform(0.0, 1.0, (p.Nx, p.Ny)), dtype=p.dtype)
+    u = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
+    v = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
+    fluid = np.asarray(solid.sdf >= 0.0)
+    ax, ay = (np.asarray(item) for item in pf.fluid_face_apertures(solid, p))
+    fx, fy = (np.asarray(item) for item in pf.phase_advective_fluxes(u, v, phi, solid, p))
+    crossing_x = fluid ^ np.roll(fluid, -1, axis=0)
+    crossing_y = fluid ^ np.roll(fluid, -1, axis=1)
+    assert np.any(crossing_x) and np.any(crossing_y)
+    assert not ax[crossing_x].any() and not ay[crossing_y].any()
+    assert np.max(np.abs(fx[crossing_x])) == 0.0
+    assert np.max(np.abs(fy[crossing_y])) == 0.0
+
+
+def test_phase_ch_flux_zero_across_solid_faces():
+    p, _flat_solid = _phase_boundary_setup()
+    X, Y = pf.grids(p)
+    pillar = pf.sdf_box(X, Y, 2.5, 3.5, 0.25, 0.8)
+    solid = pf.make_solid(pf.sdf_union(pf.surface_flat(p, 0.25), pillar), p, cos_theta=0.0)
+    mu = (Y - 0.25).astype(p.dtype)  # a chemical-potential gradient points into the bottom wall
+    fluid = np.asarray(solid.sdf >= 0.0)
+    crossing_x = fluid ^ np.roll(fluid, -1, axis=0)
+    crossing_y = fluid ^ np.roll(fluid, -1, axis=1)
+    jx, jy = (np.asarray(item) for item in pf.chemical_potential_fluxes(mu, solid, p))
+    assert np.max(np.abs(jx[crossing_x]), initial=0.0) == 0.0
+    assert np.max(np.abs(jy[crossing_y]), initial=0.0) == 0.0
+
+
+def test_face_flux_divergence_conserves_fluid_mass(x64):
+    p, solid = _phase_boundary_setup(N=48, dtype=jnp.float64, rtol=1e-8)
+    rng = np.random.default_rng(23)
+    phi = jnp.asarray(rng.uniform(0.0, 1.0, (p.Nx, p.Ny)), dtype=p.dtype)
+    mu = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
+    u = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
+    v = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
+    ax, ay = pf.phase_advective_fluxes(u, v, phi, solid, p)
+    cx, cy = pf.chemical_potential_fluxes(mu, solid, p)
+    divergence = pf.divergence_from_face_fluxes(ax + cx, ay + cy, p)
+    fluid = jnp.asarray(solid.sdf >= 0.0)
+    assert abs(float(jnp.sum(jnp.where(fluid, divergence, 0.0)))) <= 1e-10
+
+
+def test_phase_boundary_blocks_periodic_y_wrap_at_bottom_wall():
+    p, solid = _phase_boundary_setup(N=48)
+    fluid = np.asarray(solid.sdf >= 0.0)
+    aperture_x, aperture_y = pf.fluid_face_apertures(solid, p)
+    aperture_y = np.asarray(aperture_y)
+    assert fluid[:, -1].all() and not fluid[:, 0].any()
+    assert np.asarray(aperture_x).any()  # x-periodic fluid-fluid faces remain available
+    assert not aperture_y[:, -1].any()
+    phi = jnp.ones((p.Nx, p.Ny), dtype=p.dtype)
+    velocity = jnp.ones_like(phi)
+    _, y_flux = pf.phase_advective_fluxes(velocity, velocity, phi, solid, p)
+    assert float(jnp.max(jnp.abs(y_flux[:, -1]))) == 0.0
+
+
+def _natural_bc_probe(sdf, p, theta_deg, *, region=None):
+    import math
+
+    cos_theta = math.cos(math.radians(theta_deg))
+    solid = pf.make_solid(sdf, p, cos_theta=cos_theta)
+    q_sdf = float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / p.eps
+    phi = 0.5 + q_sdf * sdf
+    gx = (jnp.roll(phi, -1, axis=0) - jnp.roll(phi, 1, axis=0)) / (2.0 * p.dx)
+    gy = pf._ddy_nonperiodic(phi, p.dy)
+    nx, ny = pf.fluid_outward_normal(sdf, p)
+    measured = nx * gx + ny * gy
+    prescribed = pf.natural_wall_normal_derivative(phi, solid, p)
+    weight = np.asarray(pf.wall_delta(sdf, p), dtype=np.float64)
+    peak = float(weight[region].max()) if region is not None else float(weight.max())
+    valid = weight > 0.9 * peak
+    if region is not None:
+        valid &= region
+    error = np.asarray(measured - prescribed, dtype=np.float64)[valid]
+    scale = max(float(np.max(np.abs(np.asarray(prescribed)[valid]))), 1e-30)
+    return float(np.max(np.abs(error)) / scale)
+
+
+def test_flat_wall_natural_contact_bc(x64):
+    p, solid = _phase_boundary_setup(N=64, dtype=jnp.float64, theta=60.0)
+    error = _natural_bc_probe(solid.sdf, p, 60.0)
+    assert error < 0.03
+
+
+@pytest.mark.parametrize("slope", [-0.45, 0.45])
+def test_inclined_wall_natural_contact_bc_orientation(slope, x64):
+    p = pf.PhaseFieldParams(Nx=96, Ny=96, Lx=6.0, Ly=6.0, eps=2.0 * 6.0 / 96, dtype=jnp.float64)
+    X, Y = pf.grids(p)
+    sdf = (Y - slope * (X - 3.0) - 0.25) / np.sqrt(1.0 + slope * slope)
+    region = (np.asarray(X) > 2.5) & (np.asarray(X) < 3.5)
+    error = _natural_bc_probe(sdf, p, 120.0, region=region)
+    assert error < 0.03
+
+
+def test_neutral_90_wall_has_zero_natural_contact_bc_source(x64):
+    p, solid = _phase_boundary_setup(N=48, dtype=jnp.float64, theta=90.0, rtol=1e-8)
+    phi = jnp.full((p.Nx, p.Ny), 0.5, dtype=p.dtype)
+    assert float(jnp.max(jnp.abs(pf.natural_wall_normal_derivative(phi, solid, p)))) <= 1e-14
+    assert float(jnp.max(jnp.abs(pf._natural_wall_laplacian_flux(phi, solid, p)))) <= 1e-14
+    assert float(jnp.max(jnp.abs(pf.wetting_mu(phi, solid, p)))) == 0.0
+
+
+def test_v7_path_does_not_call_mass_redistribution_projection(monkeypatch):
+    p, solid = _phase_boundary_setup(N=32)
+    state = pf.sessile_initial_state(p, solid, R=0.6, wall_height=0.25)
+
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError("v7 impermeable-flux path called the legacy mass projection")
+
+    monkeypatch.setattr(pf, "_project_phase_outside_solid", forbidden)
+    updated = pf.step(state, solid, p)
+    assert np.isfinite(np.asarray(updated.phi)).all()
+    with pytest.raises(ValueError, match="legacy-only"):
+        pf.PhaseFieldParams(Nx=32, Ny=32, enforce_solid_phi=True)
+
+
+def test_solid_phase_leak_remains_near_zero_without_projection():
+    p, solid = _phase_boundary_setup(N=48)
+    state = pf.sessile_initial_state(p, solid, R=0.8, wall_height=0.25)
+    initial_mass = float(pf.liquid_mass(state.phi, solid, p))
+    step_fn = jax.jit(pf.step, static_argnums=(2,))
+    for _ in range(150):
+        state = step_fn(state, solid, p)
+    solid_mass = float(jnp.sum(state.phi * solid.chi_hard) * p.dx * p.dy)
+    fluid_mass = float(pf.liquid_mass(state.phi, solid, p))
+    assert solid_mass / initial_mass <= 1e-6
+    assert abs(fluid_mass - initial_mass) / initial_mass <= 1e-3
+
+
+def test_ch_implicit_solver_converges_and_reports_residual(x64):
+    p, solid = _phase_boundary_setup(N=48, dtype=jnp.float64, rtol=1e-8)
+    rng = np.random.default_rng(31)
+    right = jnp.asarray(rng.normal(size=(p.Nx, p.Ny)), dtype=p.dtype)
+    right = jnp.where(solid.sdf >= 0.0, right, 0.0)
+    dt = p.dt / 3.0
+    solution, info = pf.solve_ch_implicit(right, solid, p, dt)
+    alpha = dt * p.M * p.eps
+    lap = pf.fluid_laplacian(solution, solid, p)
+    residual = solution + alpha * pf.fluid_laplacian(lap, solid, p) - right
+    relative = float(jnp.linalg.norm(residual) / jnp.linalg.norm(right))
+    assert bool(info.converged)
+    assert int(info.iterations) <= p.ch_solver_max_iterations
+    assert relative <= 1e-8
+    assert float(info.relative_residual) <= 1e-8
+
+
+def test_ch_implicit_solver_fail_closed_on_nonconvergence():
+    p, solid = _phase_boundary_setup(N=48)
+    p.ch_solver_max_iterations = 1
+    rng = np.random.default_rng(33)
+    right = jnp.asarray(rng.normal(size=(p.Nx, p.Ny)), dtype=p.dtype)
+    solution, info = pf.solve_ch_implicit(right, solid, p, p.dt / 3.0)
+    assert not bool(info.converged)
+    assert not np.isfinite(np.asarray(solution)).all()
+
+
+def test_v7_implicit_phase_solve_has_a_finite_custom_adjoint():
+    p, solid = _phase_boundary_setup(N=16)
+    rng = np.random.default_rng(37)
+    phi = jnp.asarray(rng.uniform(0.1, 0.9, size=(p.Nx, p.Ny)), dtype=p.dtype)
+    u = jnp.zeros_like(phi)
+    v = jnp.zeros_like(phi)
+
+    def objective(field):
+        updated, _info = pf.phase_transport_step(field, u, v, solid, p)
+        return jnp.sum(updated**2)
+
+    gradient = jax.grad(objective)(phi)
+    assert np.isfinite(np.asarray(gradient)).all()
+    assert float(jnp.linalg.norm(gradient)) > 0.0
