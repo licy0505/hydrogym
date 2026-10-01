@@ -115,6 +115,13 @@ The momentum and pressure projection remain periodic in both directions. The
 fluid-cell face apertures specifically govern phase transport; this stage does
 not change the Brinkman or momentum formulations.
 
+Diagnostic CH-only mode (L1A-2d)
+--------------------------------
+``phase_only_step_with_diagnostics`` advances the phase equation with ``u = v = 0`` by calling the exact v7
+:func:`phase_transport_step` (same face apertures, implicit CG solve and natural Young BC) and never touches
+momentum. It is an experiment mode for equilibration audits; ``step``/``step_with_diagnostics`` and every
+default are unchanged, so ``SOLVER_CONTRACT_VERSION`` stays 7.
+
 Intended use inside HydroGym
 ----------------------------
 ``PhaseFieldFlow``/``step``/``rollout`` are the pieces a ``hydrogym.jax``
@@ -1136,6 +1143,33 @@ def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
     selected through ``phase_boundary_model='projection_legacy'``.
     """
     return step_with_diagnostics(state, solid, p)[0]
+
+
+def phase_only_step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldParams):
+    """Advance one public dt with u = v = 0 using the exact v7 phase operator (L1A-2d).
+
+    Performs the same three ``dt = p.dt / 3.0`` substeps as :func:`step_with_diagnostics`,
+    calling :func:`phase_transport_step` with identically zero velocity fields so
+    that Cahn-Hilliard thermodynamic relaxation is isolated from Navier-Stokes,
+    Brinkman, capillary-momentum, and pressure-projection coupling.
+    """
+    dt = p.dt / 3.0
+    zero_u = jnp.zeros_like(state.phi)
+    zero_v = jnp.zeros_like(state.phi)
+
+    def substep(carry, _):
+        phi, t = carry
+        phi_new, solve_info = phase_transport_step(phi, zero_u, zero_v, solid, p, dt=dt)
+        return (phi_new, t + dt), solve_info
+
+    (phi, t), info = lax.scan(substep, (state.phi, state.t), None, length=3)
+    diagnostics = StepDiagnostics(info.iterations, info.relative_residual, info.converged)
+    return State(phi=phi, u=zero_u, v=zero_v, t=t), diagnostics
+
+
+def phase_only_step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
+    """Advance one public dt in CH-only mode (u = v = 0) using the v7 phase operator."""
+    return phase_only_step_with_diagnostics(state, solid, p)[0]
 
 
 def stable_dt(p: PhaseFieldParams, u_max: float = 2.0) -> float:

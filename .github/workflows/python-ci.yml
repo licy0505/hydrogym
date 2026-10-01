@@ -110,6 +110,7 @@ jobs:
           examples/two_phase/test_surrogate.py
           examples/two_phase/test_dataset_contract.py
           examples/two_phase/test_train_operator.py
+          examples/two_phase/test_nonneutral_wetting_audit.py
 
       - name: Run two-phase L1A validation contract
         working-directory: examples/two_phase
@@ -131,6 +132,12 @@ jobs:
           uv run --no-sync python -m production.phase_boundary_audit --quick
           --json artifacts/production_validation/phase_boundary_audit.json
 
+      - name: Run two-phase L1A-2d quick equilibration audit
+        working-directory: examples/two_phase
+        run: >-
+          uv run --no-sync python -m production.nonneutral_wetting_audit --profile quick
+          --out artifacts/production_validation/l1a2d_quick --overwrite
+
       - name: Run two-phase L0 smoke
         run: uv run --no-sync bash examples/two_phase/run_smoke.sh
 
@@ -147,6 +154,7 @@ jobs:
             examples/two_phase/artifacts/production_validation/capillary_audit.json
             examples/two_phase/artifacts/production_validation/wetting_audit.json
             examples/two_phase/artifacts/production_validation/phase_boundary_audit.json
+            examples/two_phase/artifacts/production_validation/l1a2d_quick/nonneutral_equilibration_report.json
 
   package:
     name: Package distributions

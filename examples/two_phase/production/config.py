@@ -490,6 +490,8 @@ def compute_validation_code_hash() -> str:
         "phase_boundary_audit.py",
         "solid_gas_film_audit.py",
         "contact_angle_matrix.py",
+        "contact_line_kinetics.py",
+        "nonneutral_wetting_audit.py",
     )
     digest = hashlib.sha256()
     for name in sorted(names):

@@ -1,0 +1,115 @@
+{
+  "stage": "L1A-2d",
+  "profile": "baseline",
+  "dtype": "float32",
+  "solver_contract_version": 7,
+  "dynamics": "both",
+  "targets_deg": [
+    60.0,
+    90.0,
+    120.0,
+    150.0
+  ],
+  "base_case": {
+    "N": 128,
+    "Lx": 6.0,
+    "Ly": 6.0,
+    "R": 1.1,
+    "wall_height": 0.25,
+    "Re": 200.0,
+    "We": 100.0,
+    "dt": 0.004,
+    "M_ref": 0.002,
+    "eps_factor": 2.0,
+    "sample_every": 200
+  },
+  "stage_step_budgets": [
+    10000,
+    25000,
+    50000
+  ],
+  "equilibrium_criteria": {
+    "window_samples": 5,
+    "angle_tol_deg": 0.1,
+    "energy_rel_tol": 0.0001,
+    "phase_rate_l2_tol": 0.001,
+    "chns_speed_tol": 0.0005,
+    "provisional_acceptance_error_deg": 5.0,
+    "window_mobility_time": 0.05,
+    "relaxing_rate_deg_per_Mt": 3.0,
+    "strict_energy_rel_tol": 1e-07
+  },
+  "sweeps": {
+    "mobility": {
+      "targets_deg": [
+        60.0,
+        120.0,
+        150.0
+      ],
+      "mobility_factors": [
+        0.5,
+        1.0,
+        2.0,
+        4.0
+      ]
+    },
+    "dt_sensitivity": {
+      "targets_deg": [
+        150.0
+      ],
+      "dt_values": [
+        0.004,
+        0.002,
+        0.001
+      ],
+      "physical_horizon": 40.0
+    },
+    "resolution_sweep_a_eps_factor": {
+      "targets_deg": [
+        60.0,
+        150.0
+      ],
+      "N": 128,
+      "eps_factors": [
+        1.5,
+        2.0,
+        2.5
+      ],
+      "max_steps": 10000
+    },
+    "resolution_sweep_b_coupled_grid": {
+      "targets_deg": [
+        60.0,
+        150.0
+      ],
+      "N_values": [
+        96,
+        128,
+        192
+      ],
+      "eps_factor": 2.0,
+      "max_steps": 10000
+    },
+    "gain_ablation_diagnostic": {
+      "targets_deg": [
+        60.0,
+        120.0,
+        150.0
+      ],
+      "mobility_factor": 4.0,
+      "grid_targets_deg": [
+        60.0,
+        150.0
+      ],
+      "N_values": [
+        96,
+        192
+      ],
+      "note": "diagnostic only: scales cos(theta) handed to the unchanged solver by 1/fluid-side wall-kernel fraction"
+    }
+  },
+  "output": {
+    "directory": "artifacts/production_validation/nonneutral_equilibration",
+    "report_filename": "nonneutral_equilibration_report.json"
+  }
+}
