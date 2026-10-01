@@ -72,6 +72,14 @@ python -m production.solid_gas_film_audit --quick --json artifacts/production_va
 python -m production.contact_angle_matrix --profiles legacy_clean surface_energy \
   --json artifacts/production_validation/contact_angle_matrix.json
 
+# L1A-2d: non-neutral equilibration / contact-line kinetics audit (diagnostic; no solver change).
+# quick = CI smoke (~1 min, never classifies); baseline = the staged 10k/25k/50k evidence matrix (~1.5 h on 2 CPUs)
+python -m production.nonneutral_wetting_audit --profile quick --out artifacts/production_validation/l1a2d_quick --overwrite
+python -m production.nonneutral_wetting_audit --profile baseline --out artifacts/production_validation/l1a2d \\
+  --sections primary dt        # sections are cached under <out>/sections and merged into the report;
+python -m production.nonneutral_wetting_audit --profile baseline --out artifacts/production_validation/l1a2d \\
+  --sections mobility gain_ablation                                    # run them in parallel processes
+
 # Strict before -> after comparison of two reports (exit 1 = a guard failed: STOP and investigate)
 python -m production.compare_reports \\
   --before artifacts/production_validation/<old>/report.json \\
@@ -314,3 +322,83 @@ The four-angle MAE/RMSE/max error are **n/a** because only 1/4 targets converged
 **Contract, tests, and blockers.** Contract 6 -> 7; schema stays 3; `generate_dataset._dataset_fingerprint` now explicitly contains `phase_boundary_model`, and v6 data are stale under v7. Report readers accept 4/5/6/7 and fail closed otherwise. CI runs the production-path phase-boundary audit; physics status remains `BASELINE_ONLY`. `P-SOLID-PIN` remains `confirmed_problem` by the agreed closure gate (no-projection neutral milestone passes, but the four-angle acceptance matrix does not). `W-CONTACT-ANGLE` remains `measurement_required`. `D-FRESH-TRAIN-CONTRACT` remains an L1B prerequisite; training-side manifest enforcement is not changed here. L0 smoke remains 8/8 accepted with `report status=PASS`.
 
 **L1A-2d handoff.** Do not select a downstream stage from the neutral 90-degree result alone. First decide whether to extend/model the non-neutral sessile relaxation or preserve the current open `W-CONTACT-ANGLE` blocker. Keep `I-CONTACT-GAP` separate from sessile equilibrium; if later impact evidence shows the gas film dominates, prioritize solid/gas-film and Brinkman consistency. If density-ratio artifacts dominate, revisit variable-density momentum/projection. No conclusion is preselected by this PR.
+
+## H. L1A-2d: non-neutral sessile equilibration and contact-line kinetics (diagnostic; contract stays 7)
+
+**Scope.** Diagnostic / falsifiable audit; no production default, `step()`, wall energy, Brinkman, gas, capillary, projection or
+`stable_dt` change (`SOLVER_CONTRACT_VERSION = 7`, `trajectory_semantics_changed = false`). New code: `contact_line_kinetics.py`
+(NumPy observables and classification), `nonneutral_wetting_audit.py` (runner + report), `configs/nonneutral_equilibration.example.json`
+(documents the `baseline` profile) and `pf.phase_only_step_with_diagnostics` (CH-only = three `phase_transport_step` substeps with
+`u = v = 0`; same face apertures, matrix-free CG and natural Young BC; test-pinned against `phase_transport_step`).
+Report: `nonneutral_equilibration_report.json` (+ `.md`) with `historical_v7_baseline` kept verbatim.
+
+**Convergence criterion (and two bugs found in the first draft).** CH-only cannot use `max_speed`. A run is `converged` only if, over the last
+`0.05` of mobility-scaled time `M*t` (>= 5 samples): max pairwise `|d theta| <= 0.10 deg`, consecutive `|dF|/max(1,|F|) <= 1e-4`, and the
+phase rate `||dphi/dt||_2 <= 1e-3` (in `M/M_ref` units); full CHNS also needs `max_speed <= 5e-4`. The strict `1e-7` energy gate is recorded
+(`energy_stationary_strict`) but cannot gate: even the neutral 90 deg control keeps `dF/F ~ 4e-5` per 200 steps with its angle fixed to 0.02 deg.
+A window fixed in *steps* is wrong: a `M = 0.5 M_ref` run "converged" at 82.6 deg for a 60 deg target (equilibrium ~72 deg) because it drifted only
+0.06 deg per window, and a 5-sample window at `M = 4 M_ref` stopped 2 deg early; the window is therefore fixed in `M*t`. A stable-but-wrong angle is
+`converged = true` with a signed `equilibrium_error_deg`. The old v7 gate (3 windows of 0.25 deg + speed) also fired too early: CHNS 60 deg
+"converged" at 72.3 deg (19,400 steps) but settles at 71.0 deg; the historical numbers are kept unchanged for reference.
+
+**CH-only vs CHNS (N = 128, eps = 2 dx, dt = 4e-3, M_ref = 2e-3, R = 1.1, float32, same clean 90 deg cap).**
+
+| target | CH-only M_ref (50k steps, `M t` = 0.40) | CH-only `M = 4 M_ref`, converged | CHNS M_ref, converged | CH-only vs CHNS equilibrium |
+|---:|---|---|---|---:|
+| 60 | 77.31 deg, not converged | 71.80 deg @ 36,650 (`M t` 1.17) | 71.01 deg @ 41,800 | 0.8 deg |
+| 90 | 89.04 deg, converged @ 44,400 | - | 88.53 deg @ 28,200 | 0.5 deg |
+| 120 | 100.88 deg, not converged | 105.99 deg @ 37,000 | 105.84 deg @ 42,200 | 0.15 deg |
+| 150 | 109.92 deg, not converged | 119.99 deg @ 44,650 | 119.49 deg @ 49,200 | 0.5 deg |
+
+Across all 54 audit cases there is no free-energy increase (0 violations), CG residual <= 1e-6 (max 36 iterations) and solid phase fraction 0. Hydrodynamics is *not* what blocks
+equilibrium; it speeds the relaxation up (fitted `tau` ~ 25 vs ~ 190 time units), and both dynamics end at the same wrong angle.
+
+**Why not equilibrated in 10,000 steps (kinetics) and why the end state is wrong (boundary).**
+
+* *Kinetics.* Mobility sweep (60/120/150 deg, `M/M_ref = 0.5, 1, 2, 4`, run to convergence or the staged budget): `theta(M t)`, `F(M t)` and contact
+  width collapse on the common `M t <= 0.2` (max angle spread 0.09 / 0.22 / 0.34 deg), so the relaxation is pure `M`-time scaling with
+  `tau_Mt ~ 0.36`; 10,000 steps at `M_ref` is `M t = 0.08` ~ 0.2 tau. `M = 4 M_ref` reaches the end state in 36-45k steps. 
+* *The end state is biased.* The converged CH-only equilibria are 71.8 / 106.0 / 120.0 deg for targets 60 / 120 / 150 (errors +11.8 / -14.0 / -30.0 deg) and
+  are `M`-independent in the sense that `M = 2 M_ref` (73.0 / 104.7 / 117.0 deg at 50k steps, still moving) heads to the same values and CHNS agrees within 0.8 deg. The 90 deg control is only 1-1.5 deg low.
+* *Mechanism: the embedded wall flux is not applied with unit strength.* `_natural_wall_laplacian_flux` multiplies `dphi/dn` by the two-sided
+  kernel `wall_delta(sdf)` but only fluid cells receive it. The fluid-side normal integral of that kernel is **0.614 at N = 128, 0.500 at N = 96 and 192,
+  0.386 at N = 64** (`observations.fluid_side_wall_kernel_fraction_by_N`; full kernel 0.9993), i.e. the effective wall energy is `f * cos(theta)`, set by
+  grid/wall alignment, not by resolution. `acos(f cos theta)` (diagnostic only, never an equilibrium angle) predicts the converged CH-only angles:
+
+| target | N | f | observed (converged) | `acos(f cos theta)` |
+|---:|---:|---:|---:|---:|
+| 60 | 96 / 128 / 192 | 0.500 / 0.614 / 0.500 | 75.73 / 71.80 / 76.06 | 75.52 / 72.13 / 75.52 |
+| 120 | 128 | 0.614 | 105.99 | 107.87 |
+| 150 | 96 / 128 / 192 | 0.500 / 0.614 / 0.500 | 114.69 / 119.99 / 115.06 | 115.66 / 122.10 / 115.66 |
+
+  Equal-`f` grids (N = 96, 192) agree to 0.3-0.4 deg although N doubles, and the finer-`f` grid N = 128 is *closer* to the target: the grid dependence is
+  non-monotone in N, which is not RESOLUTION_LIMITED. **Falsification (diagnostic only, `wall_gain_ablation`):** handing the unchanged solver
+  `cos(theta)/f` (a one-factor experiment, not a calibration) moves the same CH-only runs (`M = 4 M_ref`, N = 128) to 59.89 deg (converged, -0.11 deg),
+  117.92 deg (converged, -2.08 deg) and 145.65 deg after 50k steps (not converged, still rising, -4.35 deg) for targets 60 / 120 / 150, while the unmodified runs
+  sit at 71.8 / 106.0 / 120.0 deg. Secondary: the neutral control's -1 to -1.5 deg offset is ~ the 0.33 dy (0.0156) shift between the zero-flux face
+  and the angle-measurement wall plane, divided by R (0.8 deg).
+* *Not the cause.* dt (CH-only, 150 deg, fixed `t = 40`, dt = 4e-3 / 2e-3 / 1e-3): 96.091 / 96.092 / 96.087 deg, F 1.0504 / 1.0499 / 1.0495 (spread 0.005 deg).
+  CHNS at the same horizon moves 113.26 / 112.00 / 110.73 deg (2.5 deg) because the transient depends on dt through `eta_pen = 2 dt` (Brinkman); this is a
+  hydrodynamic-transient sensitivity, not a thermodynamic bias, and is left to L1A-2e/N-DT. Interface thickness (N = 128, eps/dx = 1.5 / 2 / 2.5, 10k steps): 86.39 / 86.45 / 86.56
+  (60 deg) and 95.77 / 96.09 / 95.85 deg (150 deg) for CH-only; 75.75 / 75.83 / 75.95 and 113.21 / 113.26 / 113.14 for CHNS. Coupled grid/interface refinement
+  (eps/dx = 2, N = 96 / 128 / 192, 10k steps, a transient): CH-only 86.99 / 86.45 / 86.99 (60) and 95.56 / 96.09 / 94.89 (150), non-monotone as `f` predicts. No fixed-physical-eps sweep (Sweep C)
+  was run: Sweep B is not "strong N sensitivity" once `f` is accounted for.
+
+**Young boundary residual `R_Y = eps dphi/dn + g_w'(phi)`.** Validated first on manufactured fields (`phi = 0.5 (1 - tanh((d_x + sdf cos theta)/(sqrt2 eps)))`):
+normalized L2 residual 1.7e-2 (150 deg) and 6.0e-3 (60/120 deg) at N = 128 (90 deg: absolute `|R_Y|_inf` 2.4e-16), scale invariant in N at fixed eps/dx, smaller by > 2x at eps/dx = 4, and 1.0
+when the wrong wall angle is supplied (non-vacuous). Caveat found on real trajectories: the band `|sdf| <= 2 dx` is ~ eps wide, and a true equilibrium satisfies the
+relation only at the wall plane, so the band-averaged residual is large (normalized L2 0.43 / 0.64 / 0.59 for 60 / 120 / 150 deg, unchanged by the ablation: 0.47 / 0.59 / 0.56) and **cannot by itself discriminate**
+the mechanism; the verdict rests on the ablation and the `f`-dependence. A first-fluid-layer residual is a recommended L1A-2e measurement.
+
+**Classification** (`classification_summary`; labels from the frozen list only). 60 / 120 / 150 deg: `BOUNDARY_DISCRETIZATION_LIMITED` (rule `wall_gain_ablation_restores_target`), with
+`KINETICS_LIMITED` as the secondary mechanism for the 10,000-step non-convergence. The 150 deg ablation did not converge within 50k steps, so it is recorded with
+`ablation_converged = false`, `ablation_still_approaching_target = true`; it is a falsification of "the wall term is irrelevant", not an equilibrium angle. 90 deg is the control (no label).
+The `quick` profile never classifies (all labels are `INCONCLUSIVE`, it only exercises the pipeline).
+
+**Caveats / new observation.** (1) Fluid-region mass drifts linearly with steps: -5.6e-4 per 10k steps in float32 (CG `rtol = 1e-6`, gate 1e-3 exceeded beyond ~18k steps; 31 of the audit's
+cases exceed it, max 4.9e-3) and -5.3e-6 per 10k steps in a one-off float64 / `rtol = 1e-8` probe (N = 128, 150 deg, CH-only). It is set by the implicit-solve tolerance, shifts R by < 0.3 %, and is far too small to
+explain 10-30 deg errors, but no run in this report may be read as "contact-angle model solved". (2) Wall energy normalisation (`f`) was *measured*, not tuned: nothing here changes `g_w`, the angle mapping, `M`, `dt`
+or the CG tolerance. (3) `W-CONTACT-ANGLE`, `P-SOLID-PIN`, `I-CONTACT-GAP`, `N-DT`, `P-VARDENS-PROJ`, `P-CAP-RHO`, `P-VARVISC`, `BC-Y-PERIODIC`, `D-FRESH-TRAIN-CONTRACT` stay as they were.
+
+**L1A-2e recommendation (decision tree, outcome B).** Change one subsystem: the embedded-boundary Young flux assembly (normalise the wall measure over the fluid half-space /
+use an exact face-based boundary flux, plus a first-fluid-layer `R_Y` metric), then rerun this frozen audit. Do not touch `M`, Brinkman or the wall-energy gain.
