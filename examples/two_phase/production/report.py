@@ -13,10 +13,9 @@ from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # Solver contracts this report schema can interpret.  A report is a lineage record and states the
-# contract of the solver that produced it: 4 = L1A-1 baseline (historical reports stay valid, so
-# before/after runs can be compared), 5 = L1A-2a capillary-sign fix.  An unknown (e.g. future)
-# contract fails closed, so bumping SOLVER_CONTRACT_VERSION forces a review of this framework.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5)
+# contract of the solver that produced it: 4/5/6 are historical lineage records and 7 is the
+# conservative impermeable-phase / natural-wetting contract. Unknown contracts fail closed.
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7)
 _REQUIRED_TOP = {
     "validation_report_schema_version",
     "physics_status",
@@ -155,6 +154,8 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
                 "confirmed_problem",
                 "acceptable_for_next_stage",
                 "resolved_in_contract_v5",
+                "resolved_in_contract_v6",
+                "resolved_in_contract_v7",
             }:
                 errors.append(f"known_solver_blockers[{index}].status is invalid")
     if not isinstance(report.get("provisional_readiness_targets"), dict):
@@ -224,15 +225,80 @@ def validate_benchmark_contract(benchmarks: dict[str, Any], expected: dict[str, 
     contact_cases = contact.get("cases", []) if isinstance(contact, dict) else []
     if len(contact_cases) != expected.get("contact_angle", 0):
         errors.append("contact_angle has missing benchmark records")
+    contact_fields = {
+        "target_deg",
+        "measured_deg",
+        "absolute_error_deg",
+        "converged",
+        "converged_step",
+        "final_sampled_deg",
+        "mass_relative_drift",
+        "total_mass_relative_drift",
+        "initial_solid_liquid_fraction",
+        "final_solid_liquid_fraction",
+        "max_solid_liquid_fraction",
+        "wetting_model",
+        "phase_boundary_model",
+        "enforce_solid_phi",
+        "free_energy_initial",
+        "free_energy_final",
+        "free_energy_max_relative_increase",
+        "implicit_iterations_max",
+        "implicit_relative_residual_max",
+        "samples",
+        "relaxation_steps",
+    }
+    sample_fields = {
+        "step",
+        "time",
+        "measured_angle_deg",
+        "max_speed",
+        "total_mass",
+        "fluid_mass",
+        "solid_phase_fraction",
+        "free_energy",
+        "implicit_iterations_max",
+        "implicit_relative_residual_max",
+    }
     for i, case in enumerate(contact_cases):
         if not isinstance(case, dict):
             errors.append(f"contact_angle.cases[{i}] must be an object")
             continue
-        measured = case.get("measured_deg")
-        if case.get("finite") is not True or not isinstance(measured, (int, float)) or not 0.0 <= measured <= 180.0:
-            errors.append(f"contact_angle.cases[{i}] angle is non-finite or outside [0, 180]")
-        if not {"target_deg", "absolute_error_deg", "mass_relative_drift", "relaxation_steps"}.issubset(case):
+        if not contact_fields.issubset(case):
             errors.append(f"contact_angle.cases[{i}] is missing required metrics")
+            continue
+        samples = case.get("samples")
+        if not isinstance(samples, list) or not samples:
+            errors.append(f"contact_angle.cases[{i}] has no equilibrium samples")
+        elif not all(isinstance(row, dict) and sample_fields.issubset(row) for row in samples):
+            errors.append(f"contact_angle.cases[{i}] samples are missing required fields")
+        converged = case.get("converged")
+        measured = case.get("measured_deg")
+        final = case.get("final_sampled_deg")
+        if case.get("finite") is not True:
+            errors.append(f"contact_angle.cases[{i}] angle is non-finite or outside [0, 180]")
+        if converged is True:
+            # Only a converged run may report an equilibrium contact angle.
+            if not isinstance(measured, (int, float)) or not 0.0 <= measured <= 180.0:
+                errors.append(f"contact_angle.cases[{i}] converged but has no finite equilibrium angle")
+            if not isinstance(case.get("converged_step"), int):
+                errors.append(f"contact_angle.cases[{i}] converged but has no converged_step")
+        elif converged is False:
+            if measured is not None:
+                errors.append(f"contact_angle.cases[{i}] reports an equilibrium angle without converging")
+            if case.get("absolute_error_deg") is not None:
+                errors.append(f"contact_angle.cases[{i}] reports an error without converging")
+            if not isinstance(final, (int, float)) or not 0.0 <= final <= 180.0:
+                errors.append(f"contact_angle.cases[{i}] has no finite final sampled angle")
+        else:
+            errors.append(f"contact_angle.cases[{i}] has no convergence flag")
+        if not 0.0 <= float(case.get("initial_solid_liquid_fraction", 1.0)) < 1e-6:
+            errors.append(f"contact_angle.cases[{i}] started with liquid in the geometric solid")
+        boundary_model = case.get("phase_boundary_model")
+        if boundary_model not in {"impermeable_flux", "projection_legacy"}:
+            errors.append(f"contact_angle.cases[{i}] has an unknown phase_boundary_model")
+        if boundary_model == "impermeable_flux" and case.get("enforce_solid_phi") is not False:
+            errors.append(f"contact_angle.cases[{i}] combines impermeable_flux with legacy projection")
         runtime = case.get("runtime")
         if not isinstance(runtime, dict) or not {"wall_seconds", "steps", "steps_per_second", "N", "dtype"}.issubset(
             runtime
@@ -256,6 +322,9 @@ def validate_benchmark_contract(benchmarks: dict[str, Any], expected: dict[str, 
         "bottom_height",
         "max_speed",
         "contact_signal",
+        "solid_phase_fraction",
+        "implicit_iterations",
+        "implicit_relative_residual",
     }
     for i, case in enumerate(impact_cases):
         if not isinstance(case, dict):
@@ -284,6 +353,11 @@ def validate_benchmark_contract(benchmarks: dict[str, Any], expected: dict[str, 
             "first_contact_time",
             "detachment_observed",
             "mass_drift",
+            "phase_boundary_model",
+            "solid_phase_fraction",
+            "max_solid_phase_fraction",
+            "implicit_iterations_max",
+            "implicit_relative_residual_max",
         }
         if not required_impact_fields.issubset(case):
             errors.append(f"impact.cases[{i}] is missing required impact metadata")

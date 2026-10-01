@@ -31,7 +31,15 @@
       "eps_factor": 2.0,
       "wall_energy_amp": 5.0,
       "R": 1.1,
-      "dt": 0.004
+      "dt": 0.004,
+      "max_steps": 8000,
+      "sample_every": 200,
+      "angle_tol_deg": 0.25,
+      "speed_tol": 0.0005,
+      "windows": 3,
+      "wetting_model": "surface_energy",
+      "enforce_solid_phi": false,
+      "phase_boundary_model": "impermeable_flux"
     },
     "impact": {
       "N": 128,
@@ -48,7 +56,9 @@
           "cos_theta": 0.0,
           "impact_gap": 0.1,
           "u_impact": 1.0,
-          "velocity_mode": "streamfunction"
+          "velocity_mode": "streamfunction",
+          "phase_boundary_model": "impermeable_flux",
+          "enforce_solid_phi": false
         },
         {
           "name": "flat_lower_We_hydrophobic",
@@ -58,7 +68,9 @@
           "cos_theta": -0.5,
           "impact_gap": 0.1,
           "u_impact": 1.0,
-          "velocity_mode": "streamfunction"
+          "velocity_mode": "streamfunction",
+          "phase_boundary_model": "impermeable_flux",
+          "enforce_solid_phi": false
         }
       ]
     }

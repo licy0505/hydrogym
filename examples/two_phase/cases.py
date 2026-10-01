@@ -210,6 +210,9 @@ def _low_common(rng):
         R=float(np.round(rng.uniform(0.55, 0.75), 3)),
         u_impact=u_impact,
         eps_factor=3.0,
+        # LEGACY ONLY (wetting_model='legacy_affinity', contract <= 5): both keys
+        # are ignored by the shipped 'surface_energy' default, which is set by
+        # cos_theta alone.  Kept for reproducing contract-5 trajectories.
         wall_energy_amp=0.5,
         wet_band=0.08,
         # Clearance must scale with the diffuse-interface thickness.  A fixed
