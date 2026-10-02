@@ -233,6 +233,117 @@ def young_boundary_residual(
     }
 
 
+def young_boundary_residual_first_layer(
+    phi: Any,
+    sdf: Any,
+    dx: float,
+    dy: float,
+    eps: float,
+    cos_theta: Any,
+    *,
+    wall_area: Any,
+    wall_normal_x: Any,
+    wall_normal_y: Any,
+    phi_min: float = 0.05,
+    phi_max: float = 0.95,
+    area_tolerance: float = 0.0,
+    tiny: float = 1.0e-10,
+) -> dict[str, Any]:
+    """First-fluid-layer Young residual, weighted by the embedded wall measure (L1A-2e).
+
+    ``R_Y = eps * dphi/dn + g_w'(phi)`` evaluated *only* on the wall-adjacent control
+    cells that carry the production wall flux (``A_wall,i > area_tolerance``), with
+    ``n`` the area-weighted cut-cell normal and ``dphi/dn`` from the fluid-aware
+    second-order stencils of :func:`_fluid_aware_gradients`. The primary norms are
+    restricted to the contact-line band ``phi_min <= phi <= phi_max``; the
+    measure-weighted mean over *all* wall cells is reported separately, because away
+    from the contact line both terms of ``R_Y`` must vanish individually.
+
+    Unlike the two-cell-band residual of :func:`young_boundary_residual` (kept for
+    comparison), this metric samples exactly the cells where the operator imposes the
+    condition, so a manufactured field satisfying the natural BC drives it to the
+    finite-difference truncation error instead of to an O(eps)-wide band average.
+    """
+    phase = np.asarray(phi, dtype=np.float64)
+    distance = np.asarray(sdf, dtype=np.float64)
+    area = np.asarray(wall_area, dtype=np.float64)
+    normal_x = np.asarray(wall_normal_x, dtype=np.float64)
+    normal_y = np.asarray(wall_normal_y, dtype=np.float64)
+    for name, array in (("phi", phase), ("sdf", distance), ("wall_area", area)):
+        if array.ndim != 2 or array.shape != phase.shape:
+            raise ValueError(f"{name} must match phi shape {phase.shape}; got {array.shape}")
+    if normal_x.shape != phase.shape or normal_y.shape != phase.shape:
+        raise ValueError("wall normals must match the phi shape")
+    if not (math.isfinite(dx) and math.isfinite(dy) and math.isfinite(eps) and dx > 0 and dy > 0 and eps > 0):
+        raise ValueError("dx, dy, and eps must be finite and positive")
+    if not (0.0 < phi_min < phi_max < 1.0 and tiny > 0 and area_tolerance >= 0.0):
+        raise ValueError("invalid contact-line band, area tolerance, or tiny")
+
+    wall_cells = area > float(area_tolerance)
+    band = wall_cells & (phase >= float(phi_min)) & (phase <= float(phi_max))
+    n_wall_cells = int(np.count_nonzero(wall_cells))
+    n_band = int(np.count_nonzero(band))
+    empty = {
+        "RY_first_l2": 0.0,
+        "RY_first_linf": 0.0,
+        "RY_first_normalized_l2": 0.0,
+        "RY_first_normalized_linf": 0.0,
+        "RY_first_over_sigma0_l2": 0.0,
+        "wall_measure_weighted_RY": 0.0,
+        "wall_measure_weighted_RY_all_wall": 0.0,
+        "n_wall_cells": n_wall_cells,
+        "n_wall_cells_band": n_band,
+        "n_points": n_band,
+        "n_wall_cells_nonfluid": int(np.count_nonzero(wall_cells & (distance < 0.0))),
+        "wall_area_total": float(np.sum(area)),
+        "wall_area_in_band": float(np.sum(area[band])),
+        "mean_eps_dphi_dn": 0.0,
+        "mean_gw_prime": 0.0,
+    }
+    if n_wall_cells == 0:
+        return empty
+
+    fluid = distance >= 0.0
+    grad_x, grad_y = _fluid_aware_gradients(phase, fluid, dx, dy)
+    dphi_dn = normal_x * grad_x + normal_y * grad_y
+    term_normal = float(eps) * dphi_dn
+    term_wall = wall_energy_derivative_np(phase, cos_theta)
+    residual = term_normal + term_wall
+
+    area_all = float(np.sum(area[wall_cells]))
+    weighted_all = float(np.sum(area[wall_cells] * np.abs(residual[wall_cells])) / max(area_all, tiny))
+    if n_band == 0:
+        out = dict(empty)
+        out["wall_measure_weighted_RY_all_wall"] = weighted_all
+        return out
+
+    res = residual[band]
+    weights = area[band]
+    normal_band = term_normal[band]
+    wall_band = term_wall[band]
+    ry_l2 = float(np.sqrt(np.mean(res**2)))
+    ry_linf = float(np.max(np.abs(res)))
+    denom_l2 = float(np.sqrt(np.mean(normal_band**2)) + np.sqrt(np.mean(wall_band**2)) + tiny)
+    denom_linf = float(np.max(np.abs(normal_band)) + np.max(np.abs(wall_band)) + tiny)
+    return {
+        "RY_first_l2": ry_l2,
+        "RY_first_linf": ry_linf,
+        "RY_first_normalized_l2": float(ry_l2 / denom_l2),
+        "RY_first_normalized_linf": float(ry_linf / denom_linf),
+        "RY_first_over_sigma0_l2": float(ry_l2 / WALL_SIGMA0),
+        "wall_measure_weighted_RY": float(np.sum(weights * np.abs(res)) / max(float(np.sum(weights)), tiny)),
+        "wall_measure_weighted_RY_all_wall": weighted_all,
+        "n_wall_cells": n_wall_cells,
+        "n_wall_cells_band": n_band,
+        "n_points": n_band,
+        "n_wall_cells_nonfluid": int(np.count_nonzero(wall_cells & (distance < 0.0))),
+        "wall_area_total": area_all,
+        "wall_area_in_band": float(np.sum(weights)),
+        "mean_eps_dphi_dn": float(np.mean(normal_band)),
+        "mean_gw_prime": float(np.mean(wall_band)),
+    }
+
+
 def manufactured_young_boundary_field(
     x: Any,
     y: Any,

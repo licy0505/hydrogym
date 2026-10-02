@@ -57,7 +57,17 @@
   推导与可运行的解析审计见 `production/capillary_audit.py`；contract v4 的符号相反。
 - 固体由**符号距离场 (SDF)** 描述 → 指示函数 `χ` 与表面测度 `ds=|∇χ|`，天然支持任意微结构
   （柱、随机柱、分级柱、凹槽、斜面）与**空间变化的润湿性**（`cos_theta` 可为场）。
-- 润湿（接触角）用在壁附近的**表面亲和反应项** `S_wet` 控制，单调调节铺展程度。
+- 润湿（接触角）自 contract v6 起用 **Young 壁面自由能** `g_w(φ,θ) = −σ₀cos(θ)h(φ)`，
+  `h(φ)=φ²(3−2φ)`、`σ₀=√2/6`，以自然边界条件 `ε∂φ/∂n + g_w'(φ) = 0` 嵌入壁面；contract v5 的
+  体积亲和项仅作复现保留（`wetting_model='legacy_affinity'`）。
+- **contract v8（L1A-2e）**：该自然条件所用的壁面测度改为**精确嵌入式切割单元面积** `A_wall,i`
+  （对 `sdf=0` 等值线做 marching squares，按段长度/质心/法向分配到流体侧控制单元），
+  `F_wall^h = Σ_i A_wall,i g_w(φ_i,θ_i)`，因此 `Σ_i A_wall,i` 就是几何壁面长度，且与壁面在单元内的
+  亚 cell 位置无关（平移 8 个偏移，测度变化为 0）。v7 用的是弥散核 `wall_delta`，只有其流体侧份额 `f`
+  起作用，而 `f` 随网格对齐在 0.39/0.50/0.61/0.50（N=64/96/128/192）之间变化，平衡角落在
+  `acos(f·cosθ)` 上——这正是非中性接触角偏差的根因。`g_w`、`h`、`σ₀`、`M`、`dt`、`ε`、Brinkman、
+  气体属性与 CG 容差均未改动，也不存在任何拟合因子；`wall_measure='diffuse_sdf_v7'` 仅用于复现/证伪。
+  详见 `production/README.md` 第 I 节与 `production/wall_measure_audit.py`。
 
 ### 数值要点（都是踩过的坑，已修复并验证）
 
@@ -264,7 +274,9 @@ python visualize.py --mode transfer   # fig_transfer / fig_metrics（需 ckpt）
 ## 局限与下一步
 
 - 当前 2-D、密度比 10、界面较厚（ε≈1.5dx），属原型量级；定量结论需更高分辨率 / 3-D。
-- 接触角为「亲和项」等效控制，非严格 Young 角标定；用于趋势研究足够。
+- 接触角自 contract v6/v8 起为严格 Young 壁能 + 精确嵌入式壁面测度（见 `production/README.md` 第 I 节）；
+  残余误差来自以控制单元中心值代替壁面值的一阶放置误差 `O(d/ε)`（`d ≤ dx`），以及浮点精度导致的
+  质量漂移（`N-CH-MASS-PRECISION`，仍为 `measurement_required`）。
 - 普通 U-Net 代理**不保证质量守恒**（rollout 中液体质量会漂移，见 `fig_metrics.png`）；
   unrolled 训练缓解但未根除。下一步可改为守恒型代理（预测通量/保守更新）或加质量正则。
 - 下一步：FNO/U-FNO 替换 U-Net；几何增强训练；JAX-Fluids 两相数据；包装成 RL 环境做

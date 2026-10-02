@@ -111,6 +111,7 @@ jobs:
           examples/two_phase/test_dataset_contract.py
           examples/two_phase/test_train_operator.py
           examples/two_phase/test_nonneutral_wetting_audit.py
+          examples/two_phase/test_wall_measure.py
 
       - name: Run two-phase L1A validation contract
         working-directory: examples/two_phase
@@ -131,6 +132,13 @@ jobs:
         run: >-
           uv run --no-sync python -m production.phase_boundary_audit --quick
           --json artifacts/production_validation/phase_boundary_audit.json
+
+      - name: Run two-phase embedded wall-measure audit
+        working-directory: examples/two_phase
+        run: >-
+          uv run --no-sync python -m production.wall_measure_audit --quick
+          --json artifacts/production_validation/wall_measure_audit.json
+          --markdown artifacts/production_validation/wall_measure_audit.md
 
       - name: Run two-phase L1A-2d quick equilibration audit
         working-directory: examples/two_phase
@@ -154,6 +162,8 @@ jobs:
             examples/two_phase/artifacts/production_validation/capillary_audit.json
             examples/two_phase/artifacts/production_validation/wetting_audit.json
             examples/two_phase/artifacts/production_validation/phase_boundary_audit.json
+            examples/two_phase/artifacts/production_validation/wall_measure_audit.json
+            examples/two_phase/artifacts/production_validation/wall_measure_audit.md
             examples/two_phase/artifacts/production_validation/l1a2d_quick/nonneutral_equilibration_report.json
 
   package:

@@ -41,29 +41,88 @@ def test_ch_only_step_keeps_velocity_zero():
     assert float(state.t) == pytest.approx(3 * p.dt, rel=1e-6)
 
 
-def test_ch_only_step_reuses_the_exact_v7_phase_operator():
-    """CH-only == three ``phase_transport_step`` substeps with u = v = 0 (to XLA fusion round-off)."""
-    p, solid, state = _tiny(target=120.0)
+def _ch_only_versus_substeps(target=120.0, N=32, dtype=jnp.float32):
+    """Max |phi| difference between the CH-only public step and three un-fused substeps."""
+    p = pf.PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dt=4.0e-3, M=2.0e-3, eps=2.0 * 6.0 / N, dtype=dtype)
+    solid = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p, cos_theta=math.cos(math.radians(target)))
+    state = pf.sessile_initial_state(p, solid, R=0.6, wall_height=0.25)
     zero = jnp.zeros_like(state.phi)
     expected = state.phi
     for _ in range(3):
         expected, _info = pf.phase_transport_step(expected, zero, zero, solid, p, dt=p.dt / 3.0)
     got, _ = pf.phase_only_step_with_diagnostics(state, solid, p)
-    np.testing.assert_allclose(np.asarray(got.phi), np.asarray(expected), rtol=0.0, atol=1e-10)
+    difference = np.asarray(got.phi, dtype=np.float64) - np.asarray(expected, dtype=np.float64)
+    return float(np.max(np.abs(difference))), got, expected, p, solid
+
+
+def test_ch_only_step_reuses_the_exact_production_phase_operator():
+    """CH-only == three ``phase_transport_step`` substeps with u = v = 0.
+
+    The two paths are the same code; what is left is XLA fusion round-off. In float32 the
+    scan-fused body and the un-fused loop differ by at most one float32 ulp of ``phi`` near the
+    wall (measured 1.9e-9 at N=32), which the contract-v8 wall term makes visible because it is
+    ~1/f stronger than the v7 kernel's and its ``A_wall/(dx dy)`` factor rounds differently under
+    fusion (the v7 expression happened to round identically, 7e-15). In float64 the same
+    comparison agrees to 3.4e-21, which is the round-off-immune statement of the identity.
+    """
+    difference, got, expected, p, solid = _ch_only_versus_substeps(dtype=jnp.float32)
+    ulp = float(np.spacing(np.max(np.abs(np.asarray(expected, dtype=np.float32))).astype(np.float32)))
+    assert difference <= 4.0 * max(ulp, 1e-9)  # a few float32 ulps of the largest phi
+    np.testing.assert_allclose(np.asarray(got.phi), np.asarray(expected), rtol=0.0, atol=1.0e-8)
     # and it differs from the legacy projection path by construction (no redistribution is called)
     assert p.phase_boundary_model == "impermeable_flux" and p.enforce_solid_phi is False
 
+    previous = jax.config.jax_enable_x64
+    jax.config.update("jax_enable_x64", True)
+    try:
+        difference64, *_rest = _ch_only_versus_substeps(dtype=jnp.float64)
+    finally:
+        jax.config.update("jax_enable_x64", previous)
+    assert difference64 <= 1.0e-15  # same operator, same math: float64 agrees to round-off
 
-def test_ch_only_mass_conservation():
-    p, solid, state = _tiny(target=60.0)
+
+def _ch_only_drift(rtol: float, steps: int = 30):
+    """Fluid-mass drift of the CH-only path at a given implicit-solve tolerance."""
+    p = pf.PhaseFieldParams(
+        Nx=32,
+        Ny=32,
+        Lx=6.0,
+        Ly=6.0,
+        dt=4.0e-3,
+        M=2.0e-3,
+        eps=2.0 * 6.0 / 32,
+        dtype=jnp.float32,
+        ch_solver_rtol=rtol,
+        ch_solver_max_iterations=400,
+    )
+    solid = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p, cos_theta=math.cos(math.radians(60.0)))
+    state = pf.sessile_initial_state(p, solid, R=0.6, wall_height=0.25)
     fluid = np.asarray(solid.sdf >= 0.0)
     mass0 = float(np.sum(np.asarray(state.phi, dtype=np.float64)[fluid]))
     step = jax.jit(pf.phase_only_step, static_argnums=(2,))
-    for _ in range(30):
+    for _ in range(steps):
         state = step(state, solid, p)
     phi = np.asarray(state.phi, dtype=np.float64)
-    assert abs(float(np.sum(phi[fluid])) - mass0) / mass0 <= 1.0e-5
-    assert float(np.sum(np.maximum(phi[~fluid], 0.0))) / float(np.sum(np.maximum(phi, 0.0))) <= 1e-6  # no solid leak
+    leak = float(np.sum(np.maximum(phi[~fluid], 0.0))) / float(np.sum(np.maximum(phi, 0.0)))
+    return abs(float(np.sum(phi[fluid])) - mass0) / mass0, leak
+
+
+def test_ch_only_mass_conservation():
+    """CH-only transport is conservative; the residual drift is set by the CG tolerance.
+
+    The production float32 default (``rtol = 1e-6``) leaves a small non-conservative residual in
+    the implicit solve. It is *not* a conservation-form defect: tightening the tolerance to 1e-8
+    shrinks it by ~3 orders of magnitude and no liquid ever enters the hard solid. Under the
+    contract-v8 wall measure the drift is about twice the contract-v7 value at the same tolerance
+    because the wall forcing is ~1/f stronger (blocker ``N-CH-MASS-PRECISION``, measured by the
+    L1A-2e precision matrix).
+    """
+    production_drift, production_leak = _ch_only_drift(1.0e-6)
+    tight_drift, tight_leak = _ch_only_drift(1.0e-8)
+    assert production_drift <= 1.0e-4  # a broken conservation form would drift by orders more
+    assert tight_drift <= production_drift / 50.0  # drift tracks the implicit-solve tolerance
+    assert tight_drift <= 1.0e-6
+    assert production_leak <= 1e-6 and tight_leak <= 1e-6  # no solid leak at either tolerance
 
 
 @pytest.mark.parametrize("target", [60.0, 120.0, 150.0])
@@ -335,7 +394,8 @@ def test_nonneutral_audit_report_schema(tmp_path):
     assert report["stage"] == "L1A-2d"
     assert all(row["classification"] in (None, "INCONCLUSIVE") for row in report["classification_summary"].values())
     assert report["recommended_next_stage"]["decision"] == "INCONCLUSIVE"  # smoke budgets never classify
-    assert report["solver_contract_version"] == 7 and report["trajectory_semantics_changed"] is False
+    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
+    assert report["trajectory_semantics_changed"] is False  # the L1A-2d stage itself changes no default
     assert len(report["historical_v7_baseline"]) == 4
     assert {row["final_sampled_angle_deg"] for row in report["historical_v7_baseline"]} == {
         75.829,
@@ -354,15 +414,20 @@ def test_nonneutral_audit_report_schema(tmp_path):
     broken["cases"][0]["equilibrium_angle_deg"] = 70.0
     assert any("without converging" in e for e in audit.validate_report(broken))
     broken = json.loads(json.dumps(report))
-    broken["solver_contract_version"] = 8
+    broken["solver_contract_version"] = 7  # a v8 tree cannot produce a v7-contract report
+    assert any("contract" in e for e in audit.validate_report(broken))
+    broken = json.loads(json.dumps(report))
+    broken["solver_contract_version"] = 9
     assert any("contract" in e for e in audit.validate_report(broken))
     broken = json.loads(json.dumps(report))
     broken["cases"][0]["classification"] = "VAGUE_NEW_LABEL"
     assert any("classification" in e for e in audit.validate_report(broken))
 
 
-def test_solver_contract_remains_v7():
-    assert pf.SOLVER_CONTRACT_VERSION == 7
+def test_solver_contract_is_v8_and_l1a2d_stage_is_frozen():
+    """The L1A-2d diagnostic stage is unchanged; the *solver* it diagnoses is now contract v8."""
+    assert pf.SOLVER_CONTRACT_VERSION == 8
+    assert audit.STAGE == "L1A-2d"
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
     assert p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy"
     assert p.M == 2.0e-3 and p.eps == pytest.approx(1.5 * p.dx)
@@ -376,7 +441,7 @@ def test_solver_contract_remains_v7():
 def test_example_config_documents_the_baseline_profile():
     cfg = json.loads((HERE / "production" / "configs" / "nonneutral_equilibration.example.json").read_text())
     base = audit.PROFILES["baseline"]
-    assert cfg["stage"] == "L1A-2d" and cfg["solver_contract_version"] == 7
+    assert cfg["stage"] == "L1A-2d" and cfg["solver_contract_version"] == 7  # historical profile document
     assert cfg["targets_deg"] == base["targets"] and cfg["stage_step_budgets"] == base["budgets"]
     assert cfg["base_case"]["N"] == base["N"] and cfg["base_case"]["dt"] == base["dt"]
     assert cfg["sweeps"]["mobility"]["mobility_factors"] == base["mobility"]["factors"]

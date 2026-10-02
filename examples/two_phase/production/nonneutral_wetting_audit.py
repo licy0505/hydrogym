@@ -1,7 +1,10 @@
 """Non-neutral sessile equilibration and contact-line kinetics audit (L1A-2d).
 
 Diagnostic / falsifiable physics audit. It never changes a production default and never feeds a result
-back into the solver (``SOLVER_CONTRACT_VERSION`` stays 7, trajectory semantics are unchanged).
+back into the solver (``trajectory_semantics_changed`` stays false for this stage). It reports the *live*
+solver contract: contract 7 for the frozen L1A-2d evidence, contract 8 once the L1A-2e embedded wall
+measure is in the tree, in which case the same frozen runner diagnoses the v8 operator and the pinned
+``wall_measure='diffuse_sdf_v7'`` option reproduces the v7 root cause with identical code.
 
 Question: why do the 60/120/150 deg sessile drops not reach equilibrium within 10,000 steps?  The audit
 separates mechanisms by running
@@ -187,8 +190,23 @@ def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: fl
     prev = np.asarray(prev_phi, dtype=np.float64)
     rate = (phi - prev) / float(p.dt)
     theta = float(pf.measure_contact_angle(state.phi, solid, p))
+    # Diagnostic reference plane: the bottom face of the lowest hard-fluid row, i.e. the wall the
+    # cell-centre fluid mask actually gives the phase field (see pf.discrete_fluid_boundary_height).
+    discrete_wall = float(pf.discrete_fluid_boundary_height(solid, p))
+    theta_discrete = float(pf.measure_contact_angle(state.phi, solid, p, wall_plane=discrete_wall))
     pos = clk.contact_line_positions(phi, sdf, p.dx, p.dy, eps=p.eps, Lx=p.Lx)
     ry = clk.young_boundary_residual(phi, sdf, p.dx, p.dy, p.eps, cos_eff)
+    ry_first = clk.young_boundary_residual_first_layer(
+        phi,
+        sdf,
+        p.dx,
+        p.dy,
+        p.eps,
+        cos_eff,
+        wall_area=np.asarray(solid.wall_area, dtype=np.float64),
+        wall_normal_x=np.asarray(solid.wall_normal_x, dtype=np.float64),
+        wall_normal_y=np.asarray(solid.wall_normal_y, dtype=np.float64),
+    )
     free_energy = float(pf.phase_free_energy(state.phi, solid, p))
     fluid_mass = obs.liquid_mass(phi, sdf, p.dx, p.dy)
     positive = max(float(np.maximum(phi, 0.0).sum()), 1e-30)
@@ -208,6 +226,9 @@ def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: fl
         "mobility_scaled_time": float(M) * float(state.t),
         "measured_angle_deg": theta if math.isfinite(theta) and pos["contact_line_exists"] else None,
         "raw_angle_deg": theta if math.isfinite(theta) else None,
+        "discrete_wall_plane": discrete_wall,
+        "geometric_wall_plane": float(pf.wall_plane_height(solid, p)),
+        "measured_angle_deg_discrete_wall": theta_discrete if math.isfinite(theta_discrete) else None,
         "contact_line_exists": bool(pos["contact_line_exists"]),
         "detachment_observed": bool(pos["detachment_observed"]),
         "contour_wall_intersection_count": int(pos["contour_wall_intersection_count"]),
@@ -228,6 +249,15 @@ def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: fl
         "RY_normalized_l2": ry["RY_normalized_l2"],
         "RY_normalized_linf": ry["RY_normalized_linf"],
         "RY_n_points": ry["n_points"],
+        # L1A-2e: first-fluid-layer residual on the cells that carry the wall measure.
+        "RY_first_l2": ry_first["RY_first_l2"],
+        "RY_first_linf": ry_first["RY_first_linf"],
+        "RY_first_normalized_l2": ry_first["RY_first_normalized_l2"],
+        "RY_first_normalized_linf": ry_first["RY_first_normalized_linf"],
+        "wall_measure_weighted_RY": ry_first["wall_measure_weighted_RY"],
+        "wall_measure_weighted_RY_all_wall": ry_first["wall_measure_weighted_RY_all_wall"],
+        "n_wall_cells": ry_first["n_wall_cells"],
+        "n_wall_cells_band": ry_first["n_wall_cells_band"],
         "phase_rate_l2": float(np.sqrt(np.sum(rate * rate) * dA)),
         "phase_rate_linf": float(np.max(np.abs(rate))),
         "max_speed": 0.0 if ch_only else float(np.sqrt(speed2.max())),
@@ -325,17 +355,43 @@ def run_relaxation(
     keep_samples: int = 80,
     label: str = "",
     group: str = "primary",
+    dtype: str = "float32",
+    ch_solver_rtol: float | None = None,
+    ch_solver_max_iterations: int | None = None,
+    wall_measure: str | None = None,
+    budgets_extra: Sequence[int] = (),
 ) -> dict[str, Any]:
     """One staged relaxation. ``fixed_steps`` disables the staged/convergence stop (dt sweep).
 
     ``wall_gain`` multiplies cos(theta) handed to the *unchanged* solver and is a diagnostic ablation knob
-    only; production runs always use 1.0.
+    only; production runs always use 1.0. ``wall_measure`` selects the embedded wall measure
+    (``sdf_cutcell_v1`` production default, ``diffuse_sdf_v7`` = the pinned contract-v7 kernel) and exists so
+    the v7 root cause can be reproduced with identical code; it is a geometry choice, never a fitted factor.
+    ``dtype``/``ch_solver_*`` are the precision-matrix knobs (L1A-2e): the production default stays
+    float32 with ``rtol = 1e-6``.
     """
     crit = dict(CRITERIA if criteria is None else criteria)
-    budgets = sorted(int(b) for b in budgets)
+    budgets = sorted({int(b) for b in budgets} | {int(b) for b in budgets_extra})
     started = time.perf_counter()
+    kwargs: dict[str, Any] = {}
+    if ch_solver_rtol is not None:
+        kwargs["ch_solver_rtol"] = float(ch_solver_rtol)
+    if ch_solver_max_iterations is not None:
+        kwargs["ch_solver_max_iterations"] = int(ch_solver_max_iterations)
+    if wall_measure is not None:
+        kwargs["wall_measure"] = str(wall_measure)
     p = pf.PhaseFieldParams(
-        Nx=N, Ny=N, Lx=6.0, Ly=6.0, Re=200.0, We=100.0, dt=dt, M=M, eps=eps_factor * 6.0 / N, dtype=jnp.float32
+        Nx=N,
+        Ny=N,
+        Lx=6.0,
+        Ly=6.0,
+        Re=200.0,
+        We=100.0,
+        dt=dt,
+        M=M,
+        eps=eps_factor * 6.0 / N,
+        dtype=jnp.float64 if str(dtype) == "float64" else jnp.float32,
+        **kwargs,
     )
     cos_target = math.cos(math.radians(float(target_deg)))
     cos_eff = float(wall_gain) * cos_target
@@ -451,6 +507,18 @@ def run_relaxation(
         "sample_every_steps": int(every),
         "wall_gain_diagnostic": float(wall_gain),
         "applied_cos_theta": cos_eff,
+        "dtype": str(dtype),
+        "ch_solver_rtol": float(p.ch_solver_rtol),
+        "ch_solver_max_iterations": int(p.ch_solver_max_iterations),
+        "wall_measure_method": str(p.wall_measure),
+        "wall_offset_cells": float((wall_height - 0.25) / p.dy),
+        "final_angle_deg_discrete_wall": final["measured_angle_deg_discrete_wall"],
+        "discrete_wall_plane": final["discrete_wall_plane"],
+        "geometric_wall_plane": final["geometric_wall_plane"],
+        "wall_area_total": float(np.sum(np.asarray(solid.wall_area, dtype=np.float64))),
+        "wall_area_expected_length": float(p.Lx),
+        "wall_area_relative_error": abs(float(np.sum(np.asarray(solid.wall_area, dtype=np.float64))) - p.Lx) / p.Lx,
+        "n_wall_cells": int(np.count_nonzero(np.asarray(solid.wall_area) > 0.0)),
         "converged": converged,
         "convergence_window": {k: v for k, v in verdict.items() if k != "converged"},
         "equilibrium_angle_deg": eq_angle,
@@ -471,6 +539,13 @@ def run_relaxation(
         "RY_normalized_l2": final["RY_normalized_l2"],
         "RY_normalized_linf": final["RY_normalized_linf"],
         "RY_n_points": final["RY_n_points"],
+        "RY_first_l2": final["RY_first_l2"],
+        "RY_first_linf": final["RY_first_linf"],
+        "RY_first_normalized_l2": final["RY_first_normalized_l2"],
+        "RY_first_normalized_linf": final["RY_first_normalized_linf"],
+        "wall_measure_weighted_RY": final["wall_measure_weighted_RY"],
+        "wall_measure_weighted_RY_all_wall": final["wall_measure_weighted_RY_all_wall"],
+        "n_wall_cells_band": final["n_wall_cells_band"],
         "contact_width": final["contact_width"],
         "contact_line_speed": final.get("mean_contact_line_speed"),
         "y_cm": final["y_cm"],
@@ -1011,6 +1086,17 @@ def _observations(cases: list[dict[str, Any]]) -> dict[str, Any]:
         ),
         "fluid_side_wall_kernel_fraction_by_N": kernels,
         "neutral_control_angle_offset_deg": [c["equilibrium_angle_deg"] - 90.0 for c in neutral],
+        # L1A-2e: the first-fluid-layer residual replaces the band diagnostic as the
+        # discriminating Young-BC metric; both are kept so the two can be compared.
+        "wall_measure_method_by_case": sorted({str(c.get("wall_measure_method")) for c in cases}),
+        "first_layer_residual_by_measure": {
+            str(measure): [c.get("RY_first_normalized_l2") for c in cases if c.get("wall_measure_method") == measure]
+            for measure in sorted({str(c.get("wall_measure_method")) for c in cases})
+        },
+        "max_first_layer_residual_normalized": max(
+            (c.get("RY_first_normalized_l2") or 0.0 for c in cases), default=None
+        ),
+        "max_wall_area_relative_error": max((c.get("wall_area_relative_error") or 0.0 for c in cases), default=None),
     }
 
 
@@ -1097,6 +1183,17 @@ REQUIRED_CASE_FIELDS = (
     "solid_phase_fraction_max",
     "implicit_iterations_max",
     "implicit_residual_max",
+    # L1A-2e additions: precision / wall-measure provenance and the first-fluid-layer residual
+    "dtype",
+    "ch_solver_rtol",
+    "wall_measure_method",
+    "wall_offset_cells",
+    "wall_area_total",
+    "wall_area_relative_error",
+    "n_wall_cells",
+    "RY_first_l2",
+    "RY_first_normalized_l2",
+    "wall_measure_weighted_RY",
 )
 REQUIRED_TOP = (
     "stage",
@@ -1117,10 +1214,15 @@ def validate_report(report: dict[str, Any]) -> list[str]:
         return errors
     if report["stage"] != STAGE:
         errors.append("stage must be L1A-2d")
-    if report["solver_contract_version"] != 7:
-        errors.append("solver_contract_version must remain 7")
+    # The L1A-2d audit itself changes no production default, but it always reports the
+    # *live* solver contract: contract 7 for the frozen L1A-2d evidence, 8 once the
+    # L1A-2e embedded wall measure is in the tree (a re-run then diagnoses v8, not v7).
+    if report["solver_contract_version"] not in (7, 8):
+        errors.append(f"solver_contract_version must be 7 or 8; got {report['solver_contract_version']!r}")
+    if report["solver_contract_version"] != int(pf.SOLVER_CONTRACT_VERSION):
+        errors.append("solver_contract_version must match the live solver contract")
     if report["trajectory_semantics_changed"] is not False:
-        errors.append("trajectory_semantics_changed must be false")
+        errors.append("trajectory_semantics_changed must be false for the L1A-2d diagnostic stage")
     for i, case in enumerate(report["cases"]):
         for key in REQUIRED_CASE_FIELDS:
             if key not in case:
@@ -1131,6 +1233,10 @@ def validate_report(report: dict[str, Any]) -> list[str]:
             errors.append(f"cases[{i}] has an unknown classification")
         if case.get("detachment_observed") and case.get("equilibrium_angle_deg") is not None:
             errors.append(f"cases[{i}] reports a sessile angle after detachment")
+        if case.get("wall_measure_method") not in pf.WALL_MEASURE_METHODS:
+            errors.append(f"cases[{i}] has an unknown wall_measure_method")
+        if case.get("wall_area_relative_error") is not None and case["wall_area_relative_error"] > 1.0e-6:
+            errors.append(f"cases[{i}] wall measure does not equal the geometric wall length")
     try:
         json.dumps(report, allow_nan=False)
     except ValueError as exc:

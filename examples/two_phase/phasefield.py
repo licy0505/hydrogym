@@ -89,10 +89,13 @@ condition
 where n points from fluid into solid. The first condition is assembled into the
 SDF-based embedded-boundary Laplacian (the Robin normal derivative is supplied
 as its wall-face flux); it is not also added as a second ``mu_wall`` source.
-``wall_delta`` supplies the normalized embedded surface measure, and the normal
-comes from -grad(sdf). For a bottom wall, positive y points into fluid, therefore
-the y-slope of a compatible linear profile is ``+g_w'/eps``; the outward-normal
-derivative is ``-g_w'/eps``. This sign follows the stated normal convention.
+Since contract v8 the surface measure multiplying that flux is the exact
+geometric cut-cell wall area ``A_wall,i / (dx dy)`` (see the L1A-2e section
+below); ``wall_delta`` remains only for the pinned legacy reproduction modes and
+for diagnostics. The normal comes from -grad(sdf). For a bottom wall, positive y
+points into fluid, therefore the y-slope of a compatible linear profile is
+``+g_w'/eps``; the outward-normal derivative is ``-g_w'/eps``. This sign follows
+the stated normal convention.
 At 90 degrees g_w and the prescribed normal derivative are exactly zero.
 
 The phase equation is a face-flux finite-volume update. Fluid-solid faces have
@@ -117,10 +120,50 @@ not change the Brinkman or momentum formulations.
 
 Diagnostic CH-only mode (L1A-2d)
 --------------------------------
-``phase_only_step_with_diagnostics`` advances the phase equation with ``u = v = 0`` by calling the exact v7
-:func:`phase_transport_step` (same face apertures, implicit CG solve and natural Young BC) and never touches
-momentum. It is an experiment mode for equilibration audits; ``step``/``step_with_diagnostics`` and every
-default are unchanged, so ``SOLVER_CONTRACT_VERSION`` stays 7.
+``phase_only_step_with_diagnostics`` advances the phase equation with ``u = v = 0`` by calling the exact
+production :func:`phase_transport_step` (same face apertures, implicit CG solve and natural Young BC) and
+never touches momentum. It is an experiment mode for equilibration audits; it changes no default.
+
+Embedded Young wall measure (SOLVER_CONTRACT_VERSION >= 8, L1A-2e)
+------------------------------------------------------------------
+Contract v7 applied the Young natural condition through the *diffuse* SDF kernel ``wall_delta``, i.e. the
+wall surface measure was ``delta_wall(sdf) dV`` spread symmetrically about ``sdf = 0``. Only the ``sdf >= 0``
+half of that kernel acts on the transported phase field, and that fluid-side share ``f`` depends on where the
+wall falls inside a cell: at N = 128 it is 0.614, at N = 96/192 it is 0.500, at N = 64 it is 0.386 (L1A-2d,
+``production/contact_line_kinetics.fluid_wall_delta_integral``). The effective wall forcing was therefore
+``f`` times the Young value, and the resulting equilibria followed ``acos(f cos(theta))`` rather than
+``theta``. Contract v8 replaces that kernel in the production path with an exact geometric measure:
+
+    F_wall^h = sum_i A_wall,i * g_w(phi_i, theta_i)
+
+where ``A_wall,i`` is the length of the ``sdf = 0`` contour assigned to the fluid-side control cell ``i``.
+The contour is built deterministically by marching squares on corner-sampled SDF values
+(:func:`wall_cut_segments`); each cut segment keeps its true length, centroid and unit normal
+(``n = -grad sdf``, fluid -> solid) and is assigned to the nearest control cell whose centre lies in the hard
+fluid (``sdf >= 0``), so the forcing always lands on a cell that participates in the open-face CH transport.
+Consequences, all audited in ``production/wall_measure_audit.py``:
+
+* ``sum_i A_wall,i`` equals the geometric wall length (exact for flat and inclined walls, chord-limited for
+  curved ones) and is independent of sub-cell wall placement -- a flat wall translated by ``k/8 dy`` changes
+  the total measure by round-off only, whereas the v7 fluid-side share ``f`` swings by tens of percent;
+* the measure density ``A_wall,i / (dx dy)`` replaces ``wall_delta`` in exactly one place, the embedded
+  boundary flux of the face Laplacian, so the production wall operator is the variational derivative of
+  ``F_bulk + F_wall^h`` (float64 centred directional derivative, relative error <= 1e-6);
+* ``g_w``, ``h``, ``sigma_0``, ``M``, ``dt``, ``eps``, the Brinkman/gas models and the CG tolerance are
+  unchanged. There is no fitted factor, no ``cos(theta)/f``, no angle remap and no global wall gain: the
+  measure is geometry only and is identical for every contact angle.
+
+What contract v8 does *not* remove: ``g_w`` is evaluated at the control-cell value, so the condition is
+imposed up to one cell away from the wall, and the phase-transport domain is still the cell-centre hard-fluid
+mask ``sdf >= 0`` (contract v7), whose boundary jumps by a full cell as the wall crosses a cell centre. Both
+are O(dx) sub-cell alignment effects of the *transport domain*, not of the measure; the L1A-2e translation
+sweep measures them and ``production/README.md`` section I records which one dominates.
+
+``wall_measure='diffuse_sdf_v7'`` retains the contract-v7 kernel for falsification/reproduction, and the
+legacy modes (``surface_energy_volume_v6``, ``projection_legacy``, ``legacy_affinity``) keep their historical
+measure pinned so their trajectories remain reproducible. The production default is ``sdf_cutcell_v1``
+(``WALL_MEASURE_METHOD``), reported in dataset and validation metadata together with
+``WALL_MEASURE_CONTRACT_VERSION``.
 
 Intended use inside HydroGym
 ----------------------------
@@ -153,7 +196,22 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 #      natural Young wall condition. The v6 FFT/projection path is retained only
 #      as ``phase_boundary_model='projection_legacy'``. Older trajectories are
 #      stale (fingerprints include this version and phase_boundary_model).
-SOLVER_CONTRACT_VERSION = 7
+#   8: L1A-2e -- the production Young wall condition is assembled with the exact
+#      embedded cut-cell wall measure ``A_wall,i`` (marching squares on the SDF
+#      zero contour, assigned to fluid-side control cells) instead of the
+#      grid-alignment-dependent fluid share of the diffuse ``wall_delta`` kernel.
+#      ``g_w``, ``h``, ``sigma_0`` and every transport default are unchanged; the
+#      wall measure is geometry only (``WALL_MEASURE_METHOD='sdf_cutcell_v1'``,
+#      ``WALL_MEASURE_CONTRACT_VERSION=1``). v7 trajectories are stale.
+SOLVER_CONTRACT_VERSION = 8
+
+#: Production embedded wall-measure construction (L1A-2e). ``sdf_cutcell_v1`` is the
+#: deterministic marching-squares cut-cell measure; ``diffuse_sdf_v7`` is the pinned
+#: contract-v7 kernel, retained for falsification/reproduction only. Neither option
+#: may carry a fitted factor: the measure is geometry, never a function of theta.
+WALL_MEASURE_METHOD = "sdf_cutcell_v1"
+WALL_MEASURE_CONTRACT_VERSION = 1
+WALL_MEASURE_METHODS = ("sdf_cutcell_v1", "diffuse_sdf_v7")
 
 
 #######################################################################################
@@ -173,13 +231,27 @@ class State(NamedTuple):
 
 
 class Solid(NamedTuple):
-    """Immutable description of the solid surface (wall + micro-structure)."""
+    """Immutable description of the solid surface (wall + micro-structure).
+
+    ``wall_area``/``wall_normal_*``/``wall_distance`` are the contract-v8 embedded wall
+    measure: the geometric length of the ``sdf = 0`` contour assigned to each fluid-side
+    control cell, the area-weighted unit normal (fluid -> solid) of that cell's wall, and
+    the area-weighted normal distance from the cell centre to that wall. They are pure
+    geometry -- identical for every contact angle -- and are built once per solid by
+    :func:`make_solid`. ``wall_area`` is what the production operator uses; the normal and the
+    distance are the geometric diagnostics that record *where* the condition is imposed relative
+    to the wall (see :func:`wall_plane_phi` and ``production/README.md`` section I).
+    """
 
     chi: jnp.ndarray  # (Nx, Ny) indicator, 1 = solid
     ds: jnp.ndarray  # (Nx, Ny) surface delta |grad chi|
     cos_theta: jnp.ndarray  # (Nx, Ny) cos(contact angle) evaluated on the solid surface
     sdf: jnp.ndarray  # (Nx, Ny) signed distance to the solid, <0 inside solid
     chi_hard: jnp.ndarray  # (Nx, Ny) 0/1 mask of the solid interior (impermeable)
+    wall_area: jnp.ndarray  # (Nx, Ny) cut-cell wall length assigned to this control cell
+    wall_normal_x: jnp.ndarray  # (Nx, Ny) area-weighted wall normal, x component
+    wall_normal_y: jnp.ndarray  # (Nx, Ny) area-weighted wall normal, y component
+    wall_distance: jnp.ndarray  # (Nx, Ny) area-weighted normal distance centre -> wall, >= 0
 
 
 class ImplicitSolveInfo(NamedTuple):
@@ -228,8 +300,12 @@ class PhaseFieldParams:
     wetting_model: str = "surface_energy"
     phase_boundary_model: str = "impermeable_flux"
     # Width of the normalized SDF wall measure; fixed by solid smoothing and never
-    # a contact-angle fit parameter.
+    # a contact-angle fit parameter. LEGACY/diagnostic since contract v8: the
+    # production measure is the exact cut-cell wall area.
     wall_delta_width: float = None
+    # Embedded wall-measure construction (contract v8). ``sdf_cutcell_v1`` is the
+    # production geometry measure; ``diffuse_sdf_v7`` reproduces contract v7.
+    wall_measure: str = WALL_MEASURE_METHOD
     # LEGACY ONLY: contract-v5 volumetric affinity amplitude and band width.
     wall_energy_amp: float = 5.0
     wet_band: float = 0.15
@@ -266,6 +342,10 @@ class PhaseFieldParams:
             raise ValueError(
                 f"unknown phase_boundary_model {self.phase_boundary_model!r}; "
                 f"expected one of {sorted(PHASE_BOUNDARY_MODELS)}"
+            )
+        if self.wall_measure not in WALL_MEASURE_METHODS:
+            raise ValueError(
+                f"unknown wall_measure {self.wall_measure!r}; expected one of {sorted(WALL_MEASURE_METHODS)}"
             )
         if self.enforce_solid_phi and self.phase_boundary_model != "projection_legacy":
             raise ValueError(
@@ -346,6 +426,332 @@ def surface_delta(chi: jnp.ndarray, dx: float, dy: float) -> jnp.ndarray:
     return jnp.sqrt(gx**2 + gy**2 + 1e-12)
 
 
+def sdf_corner_values(sdf: jnp.ndarray, p: PhaseFieldParams) -> jnp.ndarray:
+    """Corner samples of a cell-centre signed distance field, shape ``(Nx, Ny+1)``.
+
+    ``q[i, j]`` is the SDF at the grid corner ``(i*dx, j*dy)``. ``i`` is periodic
+    (``q[Nx, j] == q[0, j]``, so the x seam carries a continuous contour), and
+    ``j`` enumerates the ``Ny+1`` physical y-faces. Each corner is the average of
+    the four surrounding cell centres: exact for a locally linear SDF (flat walls,
+    inclined walls, box faces) and second-order accurate otherwise.
+
+    The two y-boundary rows are *linearly extrapolated* from the first/last two
+    cell rows, never periodically wrapped, so the y seam cannot create a ghost
+    contour (the v7 ``wall_delta`` needed the same one-sided treatment).
+    """
+    c = jnp.asarray(sdf)
+    if c.ndim != 2 or c.shape != (p.Nx, p.Ny):
+        raise ValueError(f"sdf must have shape ({p.Nx}, {p.Ny}); got {c.shape}")
+    bottom_ghost = 2.0 * c[:, :1] - c[:, 1:2]
+    top_ghost = 2.0 * c[:, -1:] - c[:, -2:-1]
+    extended = jnp.concatenate([bottom_ghost, c, top_ghost], axis=1)
+    extended_left = jnp.roll(extended, 1, axis=0)
+    return 0.25 * (extended_left[:, :-1] + extended[:, :-1] + extended_left[:, 1:] + extended[:, 1:])
+
+
+def _shift_cells(array: jnp.ndarray, di: int, dj: int) -> jnp.ndarray:
+    """Return ``out[i, j] = array[(i+di) % Nx, j+dj]`` with zeros outside the y range."""
+    out = jnp.roll(array, -di, axis=0)
+    if dj > 0:
+        out = jnp.concatenate([out[:, dj:], jnp.zeros_like(out[:, :dj])], axis=1)
+    elif dj < 0:
+        out = jnp.concatenate([jnp.zeros_like(out[:, :-dj]), out[:, :dj]], axis=1)
+    return out
+
+
+#: Marching-squares edge pairing. Edge 0 = bottom (a-b), 1 = right (b-c),
+#: 2 = top (d-c), 3 = left (a-d); corner bits are a=1, b=2, c=4, d=8 with
+#: "fluid" = ``sdf >= 0``. ``-1`` marks an unused slot. Cases 5 and 10 are the
+#: saddles: the table holds the ``centre >= 0`` variant and :func:`wall_cut_segments`
+#: flips the pairing deterministically when the bilinear centre value is negative.
+_MS_FIRST_A = (-1, 0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 1, 1, 0, 0, -1)
+_MS_SECOND_A = (-1, 3, 1, 3, 2, 1, 2, 3, 3, 2, 3, 2, 3, 1, 3, -1)
+_MS_FIRST_B = (-1, -1, -1, -1, -1, 2, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1)
+_MS_SECOND_B = (-1, -1, -1, -1, -1, 3, -1, -1, -1, -1, 2, -1, -1, -1, -1, -1)
+
+
+#: Deterministic control-cell search rings (offsets in cells), nearest first. Only
+#: hard-fluid cell centres (``sdf >= 0``) are eligible, so the wall forcing always
+#: lands on a cell that the open-face CH transport actually updates.
+#: Offsets covered when aggregating segments onto their control cells. It must span the
+#: widest search ring, otherwise a segment assigned further away would be dropped and the
+#: total measure would no longer equal the contour length.
+_CONTROL_CELL_GATHER_OFFSETS = (-2, -1, 0, 1, 2)
+
+_CONTROL_CELL_RINGS = (
+    ((0, 0),),
+    ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)),
+    (
+        (2, 0),
+        (-2, 0),
+        (0, 2),
+        (0, -2),
+        (2, 1),
+        (2, -1),
+        (-2, 1),
+        (-2, -1),
+        (1, 2),
+        (1, -2),
+        (-1, 2),
+        (-1, -2),
+        (2, 2),
+        (2, -2),
+        (-2, 2),
+        (-2, -2),
+    ),
+)
+
+
+def wall_cut_segments(sdf: jnp.ndarray, p: PhaseFieldParams) -> dict:
+    """Deterministic marching-squares segments of the ``sdf = 0`` contour.
+
+    Two fixed slots per cell (only the saddle cases use both), so every array has
+    the static shape ``(Nx, Ny, 2)`` and the whole construction is JAX-traceable
+    with no data-dependent shapes. Per segment:
+
+    * ``length`` -- the true cut length inside the cell (exact for a linear SDF);
+    * ``mid_x``/``mid_y`` -- the segment centroid;
+    * ``normal_x``/``normal_y`` -- the unit normal ``-grad(sdf)`` at the centroid
+      (fluid -> solid, the same convention as :func:`fluid_outward_normal`), from
+      the bilinear corner interpolation, so it follows curved and inclined walls;
+    * ``target_i``/``target_j`` -- the fluid-side control cell the segment is
+      assigned to: the cut cell when its centre is in the hard fluid, otherwise the
+      hard-fluid cell whose centre is nearest the segment centroid, searched over
+      deterministic rings of radius <= 2 (nearest ring first, ties broken by a static
+      priority). The assignment is unique, so no contour length is counted twice and
+      none is dropped.
+
+    Because the control cell is always a hard-fluid cell (``sdf >= 0``), the wall
+    forcing lands on a cell that participates in the open-face CH transport; a
+    solid-centred cut cell is isolated by the face apertures and would silently
+    swallow it.
+    """
+    tiny = 1.0e-30
+    q = sdf_corner_values(sdf, p)
+    nx_cells, ny_cells = int(p.Nx), int(p.Ny)
+    dx, dy = float(p.dx), float(p.dy)
+    left = jnp.roll(q, -1, axis=0)
+    a, b, d, c = q[:, :-1], left[:, :-1], q[:, 1:], left[:, 1:]  # BL, BR, TL, TR
+
+    def _crossing(v0, v1):
+        """Linear zero-crossing parameter in [0, 1] along an edge from v0 to v1."""
+        denominator = v0 - v1
+        safe = jnp.where(jnp.abs(denominator) > tiny, denominator, 1.0)
+        t = jnp.where(jnp.abs(denominator) > tiny, v0 / safe, 0.5)
+        return jnp.clip(t, 0.0, 1.0)
+
+    t0, t1, t2, t3 = _crossing(a, b), _crossing(b, c), _crossing(d, c), _crossing(a, d)
+    x = jnp.broadcast_to((jnp.arange(nx_cells) * dx)[:, None], (nx_cells, ny_cells))
+    y = jnp.broadcast_to((jnp.arange(ny_cells) * dy)[None, :], (nx_cells, ny_cells))
+    point_x = jnp.stack([x + t0 * dx, x + dx, x + t2 * dx, x], axis=-1)
+    point_y = jnp.stack([y, y + t1 * dy, y + dy, y + t3 * dy], axis=-1)
+
+    sa, sb, sc, sd = (a >= 0.0), (b >= 0.0), (c >= 0.0), (d >= 0.0)
+    index = sa.astype(jnp.int32) + 2 * sb.astype(jnp.int32) + 4 * sc.astype(jnp.int32) + 8 * sd.astype(jnp.int32)
+    centre = 0.25 * (a + b + c + d)
+    table = jnp.asarray
+    first_a = table(_MS_FIRST_A, dtype=jnp.int32)[index]
+    second_a = table(_MS_SECOND_A, dtype=jnp.int32)[index]
+    first_b = table(_MS_FIRST_B, dtype=jnp.int32)[index]
+    second_b = table(_MS_SECOND_B, dtype=jnp.int32)[index]
+    saddle_negative = ((index == 5) | (index == 10)) & (centre < 0.0)
+    second_a = jnp.where(saddle_negative & (index == 5), 3, jnp.where(saddle_negative & (index == 10), 1, second_a))
+    first_b = jnp.where(saddle_negative & (index == 5), 1, jnp.where(saddle_negative & (index == 10), 2, first_b))
+    second_b = jnp.where(saddle_negative & (index == 5), 2, jnp.where(saddle_negative & (index == 10), 3, second_b))
+
+    def _endpoints(first, second):
+        px = jnp.take_along_axis(point_x, first[..., None], axis=-1)[..., 0]
+        py = jnp.take_along_axis(point_y, first[..., None], axis=-1)[..., 0]
+        qx = jnp.take_along_axis(point_x, second[..., None], axis=-1)[..., 0]
+        qy = jnp.take_along_axis(point_y, second[..., None], axis=-1)[..., 0]
+        return px, py, qx, qy
+
+    ax_, ay, bx, by = _endpoints(first_a, second_a)
+    cx_, cy, ddx, ddy = _endpoints(first_b, second_b)
+    mid_x = jnp.stack([0.5 * (ax_ + bx), 0.5 * (cx_ + ddx)], axis=-1)
+    mid_y = jnp.stack([0.5 * (ay + by), 0.5 * (cy + ddy)], axis=-1)
+    length = jnp.stack(
+        [
+            jnp.sqrt((bx - ax_) ** 2 + (by - ay) ** 2),
+            jnp.sqrt((ddx - cx_) ** 2 + (ddy - cy) ** 2),
+        ],
+        axis=-1,
+    )
+    valid = jnp.stack([first_a >= 0, first_b >= 0], axis=-1)
+    length = jnp.where(valid, length, 0.0)
+
+    # Bilinear gradient of the SDF at each segment centroid -> unit normal.
+    u = (mid_x - x[..., None]) / dx
+    v = (mid_y - y[..., None]) / dy
+    du = ((b - a)[..., None] * (1.0 - v) + (c - d)[..., None] * v) / dx
+    dv = ((d - a)[..., None] * (1.0 - u) + (c - b)[..., None] * u) / dy
+    gradient = jnp.sqrt(du * du + dv * dv + tiny)
+    normal_x = jnp.where(valid, -du / gradient, 0.0)
+    normal_y = jnp.where(valid, -dv / gradient, 0.0)
+    fluid_x = du / gradient
+    fluid_y = dv / gradient
+
+    # Fluid-side control cell for each segment.
+    cell_sdf = jnp.reshape(jnp.asarray(sdf), (-1,))
+    i_index = jnp.broadcast_to(jnp.arange(nx_cells, dtype=jnp.int32)[:, None], (nx_cells, ny_cells))[..., None]
+    j_index = jnp.broadcast_to(jnp.arange(ny_cells, dtype=jnp.int32)[None, :], (nx_cells, ny_cells))[..., None]
+
+    def _probe(di, dj):
+        target_i = (i_index + di.astype(jnp.int32)) % nx_cells
+        target_j = j_index + dj.astype(jnp.int32)
+        inside = (target_j >= 0) & (target_j < ny_cells)
+        target_j = jnp.clip(target_j, 0, ny_cells - 1)
+        value = jnp.take(cell_sdf, target_i * ny_cells + target_j)
+        return (value >= 0.0) & inside, target_i, target_j
+
+    # Deterministic ring search for the hard-fluid control cell nearest to each segment
+    # centroid. Ring 0 keeps the cut cell itself whenever its centre is fluid (the
+    # flat/inclined-wall case), so the assignment never moves further from the contour
+    # than the geometry requires. Concave corners of textured SDFs can have every
+    # immediate neighbour solid-centred; the wider rings keep their measure on a
+    # transported cell instead of dropping it. Centroid offset relative to the cut-cell
+    # centre, in cell units (|offset| <= 0.5 per component).
+    cell_centre_x = (i_index + 0.5) * dx
+    cell_centre_y = (j_index + 0.5) * dy
+    centroid_offset_x = (mid_x - cell_centre_x) / dx
+    centroid_offset_y = (mid_y - cell_centre_y) / dy
+    target_i, target_j = _probe(jnp.round(fluid_x).astype(jnp.int32), jnp.round(fluid_y).astype(jnp.int32))[1:]
+    assigned_fluid = jnp.zeros(valid.shape, dtype=jnp.bool_)
+    for ring in _CONTROL_CELL_RINGS:
+        keys, fluid_flags, candidates_i, candidates_j = [], [], [], []
+        for priority, (di, dj) in enumerate(ring):
+            is_fluid, candidate_i, candidate_j = _probe(
+                jnp.full(valid.shape, di, dtype=jnp.int32), jnp.full(valid.shape, dj, dtype=jnp.int32)
+            )
+            # Rank fluid candidates by the distance from their centre to this segment's
+            # centroid, in cell units: the wall condition belongs on the hard-fluid cell
+            # that is geometrically nearest to the piece of wall it represents. Ranking by
+            # normal alignment instead prefers sideways neighbours (a cell above a vertical
+            # pillar face has zero normal offset) and ranking by ring order alone moves
+            # measure along an inclined wall. Fluid eligibility is carried *separately* from
+            # the rank: folding it into the key magnitude would let a large distance penalty
+            # mask a valid fluid cell and push the whole measure one cell off the wall.
+            distance_squared = (di - centroid_offset_x) ** 2 + (dj - centroid_offset_y) ** 2
+            keys.append(
+                is_fluid.astype(distance_squared.dtype) * 8.0 - distance_squared + (len(ring) - priority) * 1.0e-3
+            )
+            fluid_flags.append(is_fluid)
+            candidates_i.append(candidate_i)
+            candidates_j.append(candidate_j)
+        stacked_keys = jnp.stack(keys, axis=-1)
+        best = jnp.argmax(stacked_keys, axis=-1)[..., None]
+        ring_fluid = jnp.take_along_axis(jnp.stack(fluid_flags, axis=-1), best, axis=-1)[..., 0]
+        ring_i = jnp.take_along_axis(jnp.stack(candidates_i, axis=-1), best, axis=-1)[..., 0]
+        ring_j = jnp.take_along_axis(jnp.stack(candidates_j, axis=-1), best, axis=-1)[..., 0]
+        adopt = ring_fluid & (~assigned_fluid)
+        target_i = jnp.where(adopt, ring_i, target_i)
+        target_j = jnp.where(adopt, ring_j, target_j)
+        assigned_fluid = assigned_fluid | adopt
+    target_i = jnp.where(valid, target_i, 0)
+    target_j = jnp.where(valid, target_j, 0)
+    return {
+        "length": length,
+        "mid_x": mid_x,
+        "mid_y": mid_y,
+        "normal_x": normal_x,
+        "normal_y": normal_y,
+        "target_i": target_i,
+        "target_j": target_j,
+        "valid": valid,
+        "assigned_to_fluid_cell": assigned_fluid & valid,
+    }
+
+
+def wall_cut_measure(sdf: jnp.ndarray, p: PhaseFieldParams) -> tuple:
+    """Exact embedded wall measure: cut-contour length assigned to fluid cells.
+
+    Returns ``(wall_area, wall_normal_x, wall_normal_y, wall_distance, info)`` where
+    ``wall_area`` is the per-cell geometric wall length ``A_wall,i`` (units of length, so
+    ``sum(A_wall,i) == wall length``, not 1), the normals are the area-weighted unit
+    normals of the wall carried by each cell, and ``wall_distance`` is the area-weighted
+    normal distance from the control-cell centre to that wall (``>= 0``, fluid side).
+    The aggregation is a fixed 5x5 neighbourhood gather keyed on the segment target index
+    -- no scatter with duplicate indices -- so it is deterministic in every backend.
+    """
+    segments = wall_cut_segments(sdf, p)
+    length = segments["length"]
+    target_i, target_j = segments["target_i"], segments["target_j"]
+    nx_cells, ny_cells = int(p.Nx), int(p.Ny)
+    i_index = jnp.broadcast_to(jnp.arange(nx_cells, dtype=jnp.int32)[:, None], (nx_cells, ny_cells))
+    j_index = jnp.broadcast_to(jnp.arange(ny_cells, dtype=jnp.int32)[None, :], (nx_cells, ny_cells))
+    dtype = length.dtype
+    area = jnp.zeros((nx_cells, ny_cells), dtype=dtype)
+    normal_x_sum = jnp.zeros_like(area)
+    normal_y_sum = jnp.zeros_like(area)
+    centroid_x_sum = jnp.zeros_like(area)
+    centroid_y_sum = jnp.zeros_like(area)
+    distance_sum = jnp.zeros_like(area)
+    segment_count = jnp.zeros_like(area)
+    centre_x = (jnp.arange(nx_cells, dtype=dtype) + 0.5)[:, None, None] * jnp.asarray(p.dx, dtype=dtype)
+    centre_y = (jnp.arange(ny_cells, dtype=dtype) + 0.5)[None, :, None] * jnp.asarray(p.dy, dtype=dtype)
+    for di in _CONTROL_CELL_GATHER_OFFSETS:
+        for dj in _CONTROL_CELL_GATHER_OFFSETS:
+            contribution = _shift_cells(length, di, dj)
+            match = (_shift_cells(target_i, di, dj) == i_index[..., None]) & (
+                _shift_cells(target_j, di, dj) == j_index[..., None]
+            )
+            contribution = jnp.where(match, contribution, 0.0)
+            segment_normal_x = _shift_cells(segments["normal_x"], di, dj)
+            segment_normal_y = _shift_cells(segments["normal_y"], di, dj)
+            segment_mid_x = _shift_cells(segments["mid_x"], di, dj)
+            segment_mid_y = _shift_cells(segments["mid_y"], di, dj)
+            area += jnp.sum(contribution, axis=-1)
+            normal_x_sum += jnp.sum(contribution * segment_normal_x, axis=-1)
+            normal_y_sum += jnp.sum(contribution * segment_normal_y, axis=-1)
+            centroid_x_sum += jnp.sum(contribution * segment_mid_x, axis=-1)
+            centroid_y_sum += jnp.sum(contribution * segment_mid_y, axis=-1)
+            # Signed normal offset from this control-cell centre to the segment, area weighted.
+            distance_sum += jnp.sum(
+                contribution
+                * ((segment_mid_x - centre_x) * segment_normal_x + (segment_mid_y - centre_y) * segment_normal_y),
+                axis=-1,
+            )
+            segment_count += jnp.sum(jnp.where(match & (contribution > 0.0), 1.0, 0.0), axis=-1)
+    safe_area = jnp.maximum(area, jnp.asarray(1.0e-30, dtype=dtype))
+    has_wall = area > 0.0
+    normal_x = jnp.where(has_wall, normal_x_sum / safe_area, 0.0)
+    normal_y = jnp.where(has_wall, normal_y_sum / safe_area, 0.0)
+    distance = jnp.maximum(jnp.where(has_wall, distance_sum / safe_area, 0.0), 0.0)
+    cell_sdf = jnp.asarray(sdf)
+    fluid_cells = cell_sdf >= 0.0
+    total_length = jnp.sum(jnp.where(segments["valid"], segments["length"], 0.0))
+    info = {
+        "total_contour_length": total_length,
+        "total_assigned_length": jnp.sum(area),
+        "measure_conservation_error": jnp.sum(area) - total_length,
+        "n_wall_cells": jnp.sum(has_wall),
+        "n_segments": jnp.sum(segments["valid"]),
+        # Degenerate slots: the contour passes exactly through a grid corner, so the two
+        # crossing points coincide. They carry no measure and are not assignable; counting
+        # them separately keeps "every segment is assigned exactly once" an exact statement.
+        "n_positive_length_segments": jnp.sum(segments["valid"] & (segments["length"] > 0.0)),
+        "n_segments_multi_per_cell": jnp.sum(jnp.sum(segments["valid"].astype(dtype), axis=-1) > 1.0),
+        "length_on_fluid_cells": jnp.sum(jnp.where(fluid_cells, area, 0.0)),
+        "length_on_solid_cells": jnp.sum(jnp.where(fluid_cells, 0.0, area)),
+        "segments_assigned_to_fluid_cell": jnp.sum(segments["assigned_to_fluid_cell"]),
+        "max_cell_length": jnp.max(area),
+        "min_positive_cell_length": jnp.where(
+            jnp.any(has_wall),
+            jnp.min(jnp.where(has_wall, area, jnp.maximum(jnp.max(area), 1.0))),
+            jnp.asarray(0.0, dtype=dtype),
+        ),
+        "wall_centroid_x": jnp.sum(centroid_x_sum),
+        "wall_centroid_y": jnp.sum(centroid_y_sum) / jnp.maximum(jnp.sum(area), 1.0e-30),
+        "mean_segments_per_wall_cell": jnp.sum(segment_count) / jnp.maximum(jnp.sum(has_wall), 1.0),
+        "segment_count_field": segment_count,
+        "max_wall_distance_over_dx": jnp.max(distance) / jnp.asarray(p.dx, dtype=dtype),
+        "mean_wall_distance_over_dx": jnp.sum(distance_sum)
+        / jnp.maximum(jnp.sum(area), jnp.asarray(1.0e-30, dtype=dtype))
+        / jnp.asarray(p.dx, dtype=dtype),
+    }
+    return area, normal_x, normal_y, distance, info
+
+
 def make_solid(
     sdf: jnp.ndarray,
     params: PhaseFieldParams,
@@ -355,11 +761,17 @@ def make_solid(
 
     ``cos_theta`` may be a scalar (uniform wettability) or a full (Nx, Ny) array
     (spatially patterned wettability).
+
+    The contract-v8 embedded wall measure (cut-contour length per fluid-side
+    control cell and its area-weighted normal) is built here, once per geometry:
+    it is pure geometry, so it is identical for every contact angle and never
+    depends on ``phi``.
     """
     chi = smooth_indicator(sdf, params.dx).astype(params.dtype)
     ds = surface_delta(chi, params.dx, params.dy).astype(params.dtype)
     if jnp.ndim(cos_theta) == 0:
         cos_theta = jnp.full_like(chi, float(cos_theta))
+    wall_area, wall_normal_x, wall_normal_y, wall_distance, _ = wall_cut_measure(sdf.astype(params.dtype), params)
     return Solid(
         chi=chi,
         ds=ds,
@@ -368,6 +780,10 @@ def make_solid(
         # Exact geometric solid mask. The v7 phase-face apertures use this hard
         # geometry to close every fluid-solid phase-flux face.
         chi_hard=(sdf < 0.0).astype(params.dtype),
+        wall_area=wall_area.astype(params.dtype),
+        wall_normal_x=wall_normal_x.astype(params.dtype),
+        wall_normal_y=wall_normal_y.astype(params.dtype),
+        wall_distance=wall_distance.astype(params.dtype),
     )
 
 
@@ -769,9 +1185,179 @@ def natural_wall_normal_derivative(phi, solid: Solid, p: PhaseFieldParams):
     return -wall_energy_derivative(phi, solid.cos_theta) / p.eps
 
 
+def wall_measure_is_cutcell(p: PhaseFieldParams) -> bool:
+    """True when the production path uses the contract-v8 geometric cut-cell measure.
+
+    The legacy reproduction modes keep their historical measure *pinned* so their
+    trajectories stay reproducible: ``surface_energy_volume_v6`` (the v6 diffuse
+    volume form) and ``projection_legacy`` (the v6/v7 FFT path) always use
+    ``wall_delta``. Only ``impermeable_flux`` + ``surface_energy`` follows
+    ``p.wall_measure``.
+    """
+    return bool(
+        p.wall_measure == "sdf_cutcell_v1"
+        and p.wetting_model == "surface_energy"
+        and p.phase_boundary_model == "impermeable_flux"
+    )
+
+
+def wall_measure_density(solid: Solid, p: PhaseFieldParams):
+    """Wall surface measure per unit cell volume, ``dA/dV`` (units 1/length).
+
+    Contract v8 production: the exact cut-cell wall length divided by the cell
+    volume, ``A_wall,i / (dx dy)``. Its cell-volume integral is the geometric wall
+    length and it is independent of where the wall falls inside a cell. The pinned
+    legacy modes and ``wall_measure='diffuse_sdf_v7'`` return the v7 normalized
+    diffuse kernel ``wall_delta``, whose fluid-side share is grid-alignment
+    dependent (L1A-2d root cause).
+    """
+    if wall_measure_is_cutcell(p):
+        return solid.wall_area / (p.dx * p.dy)
+    return wall_delta(solid.sdf, p)
+
+
+def _pad_y(field: jnp.ndarray, count: int) -> jnp.ndarray:
+    """Replicate the first/last y rows so y-shifts never wrap into the other boundary."""
+    bottom = jnp.repeat(field[:, :1], count, axis=1)
+    top = jnp.repeat(field[:, -1:], count, axis=1)
+    return jnp.concatenate([bottom, field, top], axis=1)
+
+
+def fluid_aware_gradient(phi, solid: Solid, p: PhaseFieldParams):
+    """Second-order gradients of ``phi`` that never reach across the impermeable wall.
+
+    A centred difference at the first fluid cell above a wall would differentiate into a
+    hard-solid cell whose ``phi`` is frozen by the face apertures, which biases the wall
+    normal derivative. Where the neighbour in a direction is hard solid, this switches to the
+    three-point second-order one-sided stencil into the fluid, so the gradient stays
+    ``O(dx^2, dy^2)`` up to the wall. x remains periodic; y is padded by edge replication,
+    never wrapped. This is the JAX counterpart of the diagnostic stencil used by
+    ``production.contact_line_kinetics._fluid_aware_gradients``.
+    """
+    fluid = solid.sdf >= 0.0
+    dx, dy = p.dx, p.dy
+    phi_xp1 = jnp.roll(phi, -1, axis=0)
+    phi_xm1 = jnp.roll(phi, 1, axis=0)
+    phi_xp2 = jnp.roll(phi, -2, axis=0)
+    phi_xm2 = jnp.roll(phi, 2, axis=0)
+    fluid_xp1 = jnp.roll(fluid, -1, axis=0)
+    fluid_xm1 = jnp.roll(fluid, 1, axis=0)
+    fluid_xp2 = jnp.roll(fluid, -2, axis=0)
+    fluid_xm2 = jnp.roll(fluid, 2, axis=0)
+    grad_x = (phi_xp1 - phi_xm1) / (2.0 * dx)
+    grad_x = jnp.where(
+        fluid & (~fluid_xm1) & fluid_xp1 & fluid_xp2, (-3.0 * phi + 4.0 * phi_xp1 - phi_xp2) / (2.0 * dx), grad_x
+    )
+    grad_x = jnp.where(
+        fluid & (~fluid_xp1) & fluid_xm1 & fluid_xm2, (3.0 * phi - 4.0 * phi_xm1 + phi_xm2) / (2.0 * dx), grad_x
+    )
+
+    pad = 2
+    padded_phi = _pad_y(phi, pad)
+    padded_fluid = _pad_y(fluid.astype(phi.dtype), pad)
+
+    def shift_y(array, offset):
+        return array[:, pad + offset : pad + offset + array.shape[1] - 2 * pad]
+
+    phi_yp1, phi_ym1 = shift_y(padded_phi, 1), shift_y(padded_phi, -1)
+    phi_yp2, phi_ym2 = shift_y(padded_phi, 2), shift_y(padded_phi, -2)
+    fluid_yp1, fluid_ym1 = shift_y(padded_fluid, 1) > 0.5, shift_y(padded_fluid, -1) > 0.5
+    fluid_yp2, fluid_ym2 = shift_y(padded_fluid, 2) > 0.5, shift_y(padded_fluid, -2) > 0.5
+    grad_y = _ddy_nonperiodic(phi, dy)
+    grad_y = jnp.where(
+        fluid & (~fluid_ym1) & fluid_yp1 & fluid_yp2, (-3.0 * phi + 4.0 * phi_yp1 - phi_yp2) / (2.0 * dy), grad_y
+    )
+    grad_y = jnp.where(
+        fluid & (~fluid_yp1) & fluid_ym1 & fluid_ym2, (3.0 * phi - 4.0 * phi_ym1 + phi_ym2) / (2.0 * dy), grad_y
+    )
+    return grad_x, grad_y
+
+
+def wall_plane_phi(phi, solid: Solid, p: PhaseFieldParams):
+    """DIAGNOSTIC: ``phi`` extrapolated from each control-cell centre to the wall it represents.
+
+        phi_wall,i = phi_i + d_i * (n_i . grad phi_i)
+
+    with the *geometric* distance ``d_i = solid.wall_distance`` and the area-weighted wall
+    normal ``n_i`` (fluid -> solid). This is a geometry-only construction: ``d_i`` and ``n_i``
+    come from the cut contour, never from ``theta``, ``phi`` or any fitted quantity, and the
+    extrapolation is exact for a locally linear profile. It removes the ``O(d/eps)`` error of
+    imposing ``eps dphi/dn + g_w'(phi) = 0`` at a cell centre that sits up to one cell away
+    from the wall -- the error that made the equilibrium depend on where the wall falls inside
+    a cell (measured with cell-centre evaluation: about -1.8 deg/dx at 60 deg and -4.3 deg/dx
+    at 120 deg, i.e. a 3.7 deg spread across the eight sub-cell offsets).
+
+    The result is clamped to the physical volume-fraction range ``[0, 1]``. This is not a
+    limiter on the physics: ``h(phi) = phi^2 (3 - 2 phi)`` is an interpolation function on
+    ``[0, 1]``, and evaluating its cubic extension at an extrapolated ``phi > 1`` makes
+    ``F_wall`` unbounded below, which destabilizes the explicit wall term (without the clamp a
+    120 deg run at ``d = 0.92 dx`` overshoots to ``phi = 1.018`` in 10 steps and fails closed
+    with NaNs by step 50). The clamp has no angle dependence and no fitted parameter, and it is
+    inactive whenever the extrapolated wall value stays physical.
+    """
+    grad_x, grad_y = fluid_aware_gradient(phi, solid, p)
+    normal_derivative = solid.wall_normal_x * grad_x + solid.wall_normal_y * grad_y
+    return jnp.clip(phi + solid.wall_distance * normal_derivative, 0.0, 1.0)
+
+
+def wall_chemical_potential(phi, solid: Solid, p: PhaseFieldParams):
+    """``dF_wall^h/dphi`` per unit cell volume: the production wall operator.
+
+    Exactly variational by construction (the gradient of :func:`wall_free_energy`), which for the
+    shipped local energy is the analytic ``A_wall,i g_w'(phi_i)/(dx dy)``. The gradient form is
+    kept so that any future wall-energy expression -- including the diagnostic wall-plane
+    extrapolation of :func:`wall_plane_phi` -- cannot drift from the energy it is derived from.
+    """
+    return jax.grad(lambda field: wall_free_energy(field, solid, p))(phi) / (p.dx * p.dy)
+
+
+def wall_measure_normal(solid: Solid, p: PhaseFieldParams):
+    """Unit wall normal (fluid -> solid) attached to the active measure.
+
+    The cut-cell measure carries the area-weighted contour normal of each control
+    cell; the legacy diffuse kernel falls back to ``-grad(sdf)``.
+    """
+    if wall_measure_is_cutcell(p):
+        return solid.wall_normal_x, solid.wall_normal_y
+    return fluid_outward_normal(solid.sdf, p)
+
+
+def wall_free_energy(phi, solid: Solid, p: PhaseFieldParams):
+    """Discrete Young wall free energy ``F_wall^h`` (absolute, not a density).
+
+    Production (contract v8)::
+
+        F_wall^h = sum_i A_wall,i * g_w(phi_i, theta_i)
+
+    with the geometric cut-cell length ``A_wall,i``, so the total measure equals the wall length
+    and the variational derivative is exactly ``dF_wall^h/dphi_i = A_wall,i g_w'(phi_i)``, which
+    divided by the cell volume is the wall term of :func:`chemical_potential`. The pinned legacy
+    modes keep the diffuse volume form ``int g_w delta_wall dV``.
+
+    ``g_w`` is evaluated at the control-cell value ``phi_i``, so the condition is imposed at a
+    point ``d_i <= dx`` from the wall (a first-order wall-placement error, measured and reported
+    by ``production/phase_boundary_audit._normal_bc_linearization_deviation``). The geometric
+    distance ``solid.wall_distance`` and the extrapolated value :func:`wall_plane_phi` are
+    shipped as *diagnostics*: imposing the condition at the wall plane instead was implemented
+    and measured (L1A-2e), and it reduces the placement error but not the sub-cell alignment
+    spread of the equilibrium angle, whose dominant term is the cell-centre hard-fluid mask that
+    fixes the discrete transport domain (see ``production/README.md`` section I). Keeping the
+    production operator local also keeps it unconditionally stable: the extrapolated cubic
+    ``h`` needs a clamp to ``[0, 1]`` to avoid a runaway.
+    """
+    if p.wetting_model == "surface_energy" and wall_measure_is_cutcell(p):
+        return jnp.sum(wall_energy_density(phi, solid.cos_theta) * solid.wall_area)
+    if p.wetting_model in ("surface_energy", "surface_energy_volume_v6"):
+        return jnp.sum(wall_energy_density(phi, solid.cos_theta) * wall_delta(solid.sdf, p)) * p.dx * p.dy
+    if p.wetting_model == "legacy_affinity":
+        delta_phi = phi - phi_wet_of(solid.cos_theta)
+        return 0.5 * p.wall_energy_amp * jnp.sum(wet_band(solid, p) * delta_phi**2) * p.dx * p.dy
+    return jnp.asarray(0.0, dtype=jnp.asarray(phi).dtype)
+
+
 def natural_wall_gradient(phi, solid: Solid, p: PhaseFieldParams):
     """Cartesian gradient target ``(dphi/dn) n`` on the embedded wall."""
-    nx, ny = fluid_outward_normal(solid.sdf, p)
+    nx, ny = wall_measure_normal(solid, p)
     derivative = natural_wall_normal_derivative(phi, solid, p)
     return derivative * nx, derivative * ny
 
@@ -779,12 +1365,15 @@ def natural_wall_gradient(phi, solid: Solid, p: PhaseFieldParams):
 def _natural_wall_laplacian_flux(phi, solid: Solid, p: PhaseFieldParams):
     """Embedded boundary flux contribution to ``lap(phi)``.
 
-    The divergence theorem adds ``(dphi/dn) dA / dV`` to the cell Laplacian.
-    ``wall_delta`` approximates this SDF surface measure. This is the single
-    natural-BC representation in v7: ``chemical_potential`` consumes the returned
-    Laplacian and does not separately add a diffuse ``mu_wall`` term.
+    The divergence theorem adds ``(dphi/dn) dA / dV`` to the cell Laplacian;
+    :func:`wall_measure_density` supplies ``dA/dV``. Since contract v8 that measure
+    is the exact geometric cut-cell wall area assigned to fluid-side control cells,
+    so the total wall flux is proportional to the true wall length for every
+    sub-cell wall position. This is the single natural-BC representation:
+    ``chemical_potential`` consumes the returned Laplacian and does not separately
+    add a diffuse ``mu_wall`` term.
     """
-    return natural_wall_normal_derivative(phi, solid, p) * wall_delta(solid.sdf, p)
+    return natural_wall_normal_derivative(phi, solid, p) * wall_measure_density(solid, p)
 
 
 def wet_band(solid: Solid, p: PhaseFieldParams):
@@ -832,8 +1421,12 @@ def _explicit_chemical_potential(phi, solid: Solid, p: PhaseFieldParams):
     """All explicit terms, including exactly one selected wall-energy representation."""
     mu = fprime(phi) / p.eps
     if p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy":
-        # Robin boundary flux enters the Laplacian by the divergence theorem.
-        # This is the natural BC, not an additional mu_wall source.
+        if wall_measure_is_cutcell(p):
+            # Contract v8: the Young energy is imposed once, as the exact variational derivative
+            # of F_wall^h = sum_i A_wall,i g_w(phi_i) -- the discrete form of the embedded Robin
+            # boundary flux, not an additional mu_wall source on top of it.
+            return mu + wall_energy_derivative(phi, solid.cos_theta) * wall_measure_density(solid, p)
+        # Pinned contract-v7 reproduction: Robin boundary flux with the diffuse SDF kernel.
         return mu - p.eps * _natural_wall_laplacian_flux(phi, solid, p)
     if p.phase_boundary_model == "projection_legacy" and p.wetting_model == "surface_energy":
         # A historical contract-v6 trajectory used the diffuse-domain derivative.
@@ -1260,11 +1853,14 @@ def rollout(
 
 
 def phase_free_energy(phi, solid: Solid, p: PhaseFieldParams):
-    """Discrete bulk + wall free energy consistent with the v7 face Laplacian.
+    """Discrete bulk + wall free energy consistent with the production operator.
 
-    Each open +axis face is counted once. For Young modes the wall contribution
-    is the prescribed ``int g_w delta_wall dV``; its derivative enters the v7
-    chemical potential solely through the embedded natural boundary flux.
+    Each open +axis face is counted once. The wall contribution uses *the same*
+    measure as the operator (:func:`wall_free_energy`): the exact cut-cell wall
+    length ``sum_i A_wall,i g_w(phi_i)`` in the contract-v8 production path, the
+    pinned diffuse ``int g_w delta_wall dV`` for the legacy reproduction modes. Its
+    derivative enters the chemical potential solely through the embedded natural
+    boundary flux, so there is exactly one wall-energy contribution.
     """
     fluid = (solid.sdf >= 0.0).astype(phi.dtype)
     aperture_x, aperture_y = fluid_face_apertures(solid, p)
@@ -1272,14 +1868,9 @@ def phase_free_energy(phi, solid: Solid, p: PhaseFieldParams):
     grad_y = (jnp.roll(phi, -1, axis=1) - phi) / p.dy
     bulk = jnp.sum(fluid * phi**2 * (1.0 - phi) ** 2 / p.eps)
     bulk += 0.5 * p.eps * jnp.sum(aperture_x * grad_x**2 + aperture_y * grad_y**2)
-    if p.wetting_model in ("surface_energy", "surface_energy_volume_v6"):
-        wall = jnp.sum(wall_energy_density(phi, solid.cos_theta) * wall_delta(solid.sdf, p))
-    elif p.wetting_model == "legacy_affinity":
-        delta_phi = phi - phi_wet_of(solid.cos_theta)
-        wall = 0.5 * p.wall_energy_amp * jnp.sum(wet_band(solid, p) * delta_phi**2)
-    else:
-        wall = jnp.asarray(0.0, dtype=phi.dtype)
-    return (bulk + wall) * p.dx * p.dy
+    # ``wall_free_energy`` is the single definition of the wall term (absolute
+    # energy) shared with the operator, so the two can never drift apart.
+    return bulk * p.dx * p.dy + wall_free_energy(phi, solid, p)
 
 
 def liquid_mass(phi, solid: Solid, p: PhaseFieldParams):
@@ -1474,12 +2065,28 @@ def wall_plane_height(solid: Solid, p: PhaseFieldParams, x0: float | None = None
     return float(np.max(crossings))
 
 
+def discrete_fluid_boundary_height(solid: Solid, p: PhaseFieldParams):
+    """DIAGNOSTIC: the wall plane the cell-centre fluid mask actually gives the phase field.
+
+    The phase transport domain is ``sdf >= 0`` at cell *centres* (contract v7), so the lowest
+    hard-fluid row starts at its bottom face ``j_first * dy`` -- up to one cell away from the
+    geometric ``sdf = 0`` wall, and jumping by a full cell as the wall crosses a centre. The L1A-2e
+    translation study measures the same interface against both planes to separate the wall-measure
+    alignment error (zero by construction) from this transport-domain alignment error.
+    """
+    fluid = solid.sdf >= 0.0
+    rows = jnp.any(fluid, axis=0)
+    first_fluid_row = jnp.argmax(rows.astype(jnp.int32))
+    return first_fluid_row * p.dy
+
+
 def measure_contact_angle(
     phi,
     solid: Solid,
     p: PhaseFieldParams,
     level: float = 0.5,
     cutoff_factor: float = 1.0,
+    wall_plane: float | None = None,
 ) -> float:
     """Apparent contact angle (deg) from a circle fitted to the interface contour.
 
@@ -1488,6 +2095,12 @@ def measure_contact_angle(
     than ``max(cutoff_factor * eps, dx)`` are excluded; the defaults are the ones
     validated on synthetic circular caps (N = 128: MAE 0.007 deg, max 0.016 deg).
     Returns ``nan`` when the contour is too short or degenerate to fit.
+
+    ``y_w`` is the geometric ``sdf = 0`` crossing of the drop's column
+    (:func:`wall_plane_height`). ``wall_plane`` overrides it for diagnostics only -- the L1A-2e
+    alignment study uses it to measure the same interface against the *discrete* transport
+    boundary (the bottom face of the lowest hard-fluid row), which is what the cell-centre fluid
+    mask actually gives the phase field.
     """
     import numpy as np
 
@@ -1505,7 +2118,7 @@ def measure_contact_angle(
         _x_c, y_c, radius = fit_circle(points[:, 0], points[:, 1])
     except (ValueError, np.linalg.LinAlgError):
         return float("nan")
-    wall = wall_plane_height(solid, p, x0=reference)
+    wall = wall_plane_height(solid, p, x0=reference) if wall_plane is None else float(wall_plane)
     if not np.isfinite(wall) or radius <= 0.0:
         return float("nan")
     cosine = (wall - y_c) / radius
@@ -1594,7 +2207,17 @@ def pressure_field(state: State, solid: Solid, p: PhaseFieldParams):
 def empty_solid(p: PhaseFieldParams) -> Solid:
     """A solid-free domain (useful for validation cases)."""
     z = jnp.zeros((p.Nx, p.Ny), dtype=p.dtype)
-    return Solid(chi=z, ds=z, cos_theta=z, sdf=jnp.ones_like(z), chi_hard=jnp.zeros_like(z))
+    return Solid(
+        chi=z,
+        ds=z,
+        cos_theta=z,
+        sdf=jnp.ones_like(z),
+        chi_hard=jnp.zeros_like(z),
+        wall_area=z,
+        wall_normal_x=z,
+        wall_normal_y=z,
+        wall_distance=z,
+    )
 
 
 def build_case(case: dict, N: int = 192, dt: float | None = 4e-3):

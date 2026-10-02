@@ -148,8 +148,9 @@ def test_report_schema_valid_missing_field_and_nan():
         (5, True),
         (6, True),
         (7, True),
+        (8, True),
         (3, False),
-        (8, False),
+        (9, False),
         (True, False),
         ("5", False),
         (5.0, False),
@@ -157,7 +158,7 @@ def test_report_schema_valid_missing_field_and_nan():
     ],
 )
 def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
-    """Historical (v4-v6) and current (v7) reports validate; unknown contracts fail closed."""
+    """Historical (v4-v7) and current (v8) reports validate; unknown contracts fail closed."""
     report = _minimal_report()
     report["repository"]["solver_contract_version"] = version
     contract_errors = [e for e in validate_report_schema(report) if "solver_contract_version" in e]
@@ -304,6 +305,7 @@ def test_laplace_pressure_increases_with_curvature():
 
 def test_capillary_audit_reports_consistent_conventions():
     pytest.importorskip("jax")
+    import phasefield as pf
     from production.capillary_audit import CONVENTIONS, run_audit
 
     assert {
@@ -317,7 +319,7 @@ def test_capillary_audit_reports_consistent_conventions():
     result = run_audit(N=64)
     assert [check.name for check in result.checks if not check.passed] == []
     assert result.diagnosis["three_conventions_consistent"] is True
-    assert result.to_dict()["settings"]["solver_contract_version"] == 7
+    assert result.to_dict()["settings"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
 
 
 def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
@@ -401,10 +403,12 @@ def test_report_schema_allows_resolved_blocker_status_only_when_known():
     blocker["status"] = "resolved_in_contract_v7"
     assert validate_report_schema(report) == []  # v7 natural-boundary evidence is supported
     blocker["status"] = "resolved_in_contract_v8"
+    assert validate_report_schema(report) == []  # v8 embedded wall-measure evidence is supported
+    blocker["status"] = "resolved_in_contract_v9"
     assert any("status is invalid" in error for error in validate_report_schema(report))
 
 
-def test_ci_profile_report_records_contract_v7_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
+def test_ci_profile_report_records_contract_v8_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
     pytest.importorskip("jax")
     import phasefield as pf
     from production.config import compute_file_sha256
@@ -416,7 +420,9 @@ def test_ci_profile_report_records_contract_v7_lineage_and_stays_baseline_only(t
     assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
     report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
     assert validate_report_schema(report) == []
-    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 7
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
+    assert report["repository"]["wall_measure_method"] == pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
+    assert report["repository"]["wall_measure_contract_version"] == pf.WALL_MEASURE_CONTRACT_VERSION == 1
     assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
     assert len(report["repository"]["validation_code_sha256"]) == 64
     assert len(report["config"]["sha256"]) == 64
@@ -429,7 +435,10 @@ def test_ci_profile_report_records_contract_v7_lineage_and_stays_baseline_only(t
     assert static["delta_p"] > 0.0 and static["laplace_ratio"] > 0.0
 
 
-def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=90.0):
+def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=90.0, wall_measure=None):
+    pytest.importorskip("jax")
+    import phasefield as pf
+
     cases = []
     for target in (60.0, 90.0, 120.0, 150.0):
         angle = theta_90 if target == 90.0 else target
@@ -444,6 +453,7 @@ def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=9
                 "total_mass_relative_drift": 5e-4,
                 "max_solid_liquid_fraction": 0.0,
                 "phase_boundary_model": boundary,
+                "wall_measure_method": (pf.WALL_MEASURE_METHOD if wall_measure is None else wall_measure),
                 "enforce_solid_phi": boundary == "projection_legacy",
                 "samples": [{"max_speed": 1e-4}],
             }
@@ -456,10 +466,11 @@ def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=9
     }
 
 
-def test_contact_angle_blockers_close_only_after_full_v7_acceptance():
+def test_contact_angle_blockers_close_only_after_full_v8_acceptance():
     good = _blockers(_angle_benchmarks())
-    assert good["W-CONTACT-ANGLE"]["status"] == "resolved_in_contract_v7"
-    assert good["P-SOLID-PIN"]["status"] == "resolved_in_contract_v7"
+    assert good["W-CONTACT-ANGLE"]["status"] == "resolved_in_contract_v8"
+    assert good["W-CONTACT-ANGLE"]["evidence"]["wall_measure_ok"] is True
+    assert good["P-SOLID-PIN"]["status"] == "resolved_in_contract_v8"
 
     partial = _blockers(_angle_benchmarks(converged=False))
     assert partial["W-CONTACT-ANGLE"]["status"] == "measurement_required"
@@ -468,6 +479,13 @@ def test_contact_angle_blockers_close_only_after_full_v7_acceptance():
     legacy = _blockers(_angle_benchmarks(boundary="projection_legacy"))
     assert legacy["W-CONTACT-ANGLE"]["status"] == "confirmed_problem"
     assert legacy["P-SOLID-PIN"]["status"] == "confirmed_problem"
+
+    # Contract v8: a four-angle matrix reproduced with the pinned legacy wall measure is not
+    # evidence about the production wetting model, so it can never close the blocker.
+    legacy_measure = _blockers(_angle_benchmarks(wall_measure="diffuse_sdf_v7"))
+    assert legacy_measure["W-CONTACT-ANGLE"]["status"] == "confirmed_problem"
+    assert legacy_measure["W-CONTACT-ANGLE"]["evidence"]["wall_measure_ok"] is False
+    assert legacy_measure["W-CONTACT-ANGLE"]["evidence"]["accepted"] is False
 
     bad_neutral = _blockers(_angle_benchmarks(theta_90=94.0))
     assert bad_neutral["W-CONTACT-ANGLE"]["status"] == "confirmed_problem"
@@ -639,7 +657,7 @@ def test_compare_reports_target_mirrors_provisional_targets():
 # ---------------------------------------------------------------------------
 
 
-def test_phase_boundary_audit_covers_v7_flux_and_thermodynamics():
+def test_phase_boundary_audit_covers_v8_flux_and_thermodynamics():
     pytest.importorskip("jax")
     import jax
     import jax.numpy as jnp
@@ -655,9 +673,15 @@ def test_phase_boundary_audit_covers_v7_flux_and_thermodynamics():
         jax.config.update("jax_enable_x64", previous_x64)
     failed = [check.name for check in audit.checks if not check.passed]
     assert failed == []
-    assert audit.settings["solver_contract_version"] == 7
-    assert audit.numbers["v7_variational_audit"]["relative_error"] <= 1e-4
-    assert audit.numbers["neutral_90_projection_ab"]["impermeable_v7"]["max_solid_phase_fraction"] <= 1e-6
+    assert audit.settings["solver_contract_version"] == 8
+    assert audit.settings["wall_measure_method"] == "sdf_cutcell_v1"
+    variational = audit.numbers["v8_variational_audit"]
+    assert variational["relative_error"] <= 1e-6  # contract-v8 gate: mu == d(F_bulk + F_wall^h)/dphi
+    assert variational["worst_amplitude_relative_error"] <= 1e-4
+    assert variational["separate_wetting_mu_max_abs"] == 0.0  # exactly one wall contribution
+    assert variational["wall_measure_total_length"] == pytest.approx(6.0, rel=1e-9)
+    ab = audit.numbers["neutral_90_projection_ab"]["impermeable_v8"]
+    assert ab["max_solid_phase_fraction"] <= 1e-6
 
 
 def test_solid_gas_film_audit_variates_one_factor_at_a_time():

@@ -38,7 +38,24 @@ KNOWN_SOLVER_BLOCKERS = [
         "status": "measurement_required",
         "description": (
             "Young wall-energy targets are not validated until clean sessile runs converge at 60/90/120/150 deg "
-            "and meet the angle, monotonicity and mass criteria."
+            "and meet the angle, monotonicity and mass criteria. Contract v8 replaces the grid-alignment-dependent "
+            "fluid share of the diffuse wall kernel with the exact embedded cut-cell wall measure; the "
+            "thermodynamic evidence for that change is the CH-only four-target matrix in "
+            "production/embedded_young_audit.py, and the blocker resolves only when the production-default full "
+            "CHNS four-target matrix truly converges as well."
+        ),
+    },
+    {
+        "id": "N-CH-MASS-PRECISION",
+        "severity": "medium",
+        "status": "measurement_required",
+        "description": (
+            "Fluid-region mass drifts linearly with steps at the production float32 CG tolerance "
+            "(rtol = 1e-6): about -5.6e-4 per 10k steps (L1A-2d) and up to 6.1e-3 over a 59k-step "
+            "accelerated CH-only relaxation (L1A-2e). A float64 / rtol = 1e-8 probe drifts ~100x less. "
+            "Formal thermodynamic evidence must therefore be taken in float64 or with a tighter tolerance; "
+            "the production default stays float32/1e-6 and this blocker stays open until the drift is "
+            "measured down at production precision."
         ),
     },
     {
@@ -58,9 +75,25 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": (
             "The v6 Cahn-Hilliard and advective operators transported phase across fluid-solid faces; "
             "the optional mass projection then deleted the solid phase and redistributed it near the wall. "
-            "Contract v7 adds conservative face apertures and matrix-free no-flux CH transport. This blocker "
-            "may close only after the projection-free neutral 90-degree sessile case and full four-angle "
-            "acceptance matrix pass."
+            "Contract v7 adds conservative face apertures and matrix-free no-flux CH transport, and contract v8 "
+            "keeps them unchanged (only the wall measure changed). This blocker needs its own independent "
+            "evidence and may close only after the projection-free neutral 90-degree sessile case and the full "
+            "four-angle acceptance matrix pass; contact-angle progress alone does not close it."
+        ),
+    },
+    {
+        "id": "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN",
+        "severity": "high",
+        "status": "confirmed_problem",
+        "description": (
+            "L1A-2e: the phase-transport domain is the cell-centre hard-fluid mask (sdf >= 0), so the liquid's "
+            "discrete base sits on a cell face while measure_contact_angle references the geometric sdf = 0 plane. "
+            "The offset between them spans -0.458..+0.417 cells as the wall translates inside a cell, and the "
+            "measured equilibrium angle follows it linearly (+1.79/+4.16/+8.20 deg per cell at 60/120/150 deg, "
+            "R^2 >= 0.998): converged CH-only angles spread 1.57/3.63/7.24 deg across the eight sub-cell offsets "
+            "while the same interfaces measured against the discrete boundary spread 0.08/0.08/0.30 deg. The "
+            "contract-v8 wall measure itself is exactly invariant (0.0 % spread). Needs cut-cell fluid volumes / "
+            "partial apertures, or a measurement referenced to the same boundary it reports against."
         ),
     },
     {
@@ -437,6 +470,7 @@ class ContactAngleCase:
     max_solid_liquid_fraction: float
     wetting_model: str
     phase_boundary_model: str
+    wall_measure_method: str
     enforce_solid_phi: bool
     free_energy_initial: float
     free_energy_final: float
@@ -601,6 +635,8 @@ def run_contact_angle_case(
         "sample_every": int(every),
         "max_steps": int(budget),
         "phase_boundary_model": str(p.phase_boundary_model),
+        "wall_measure_method": str(p.wall_measure),
+        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
         "ch_solver": {
             "method": "matrix-free CG on I + dt*M*eps*L^T L",
             "rtol": float(p.ch_solver_rtol),
@@ -635,6 +671,7 @@ def run_contact_angle_case(
         max_solid_liquid_fraction=float(max_solid_fraction),
         wetting_model=str(p.wetting_model),
         phase_boundary_model=str(p.phase_boundary_model),
+        wall_measure_method=str(p.wall_measure),
         enforce_solid_phi=bool(p.enforce_solid_phi),
         free_energy_initial=float(energy_initial),
         free_energy_final=float(energy_final),
@@ -928,6 +965,8 @@ def run_impact_case(
         "nu_g_over_nu_l": float(p.nu_g / p.nu_l),
         "wetting_model": str(p.wetting_model),
         "phase_boundary_model": str(p.phase_boundary_model),
+        "wall_measure_method": str(p.wall_measure),
+        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
         "enforce_solid_phi": bool(p.enforce_solid_phi),
         "solid_phase_fraction": float(series["solid_phase_fraction"][-1]),
         "max_solid_phase_fraction": float(max(series["solid_phase_fraction"])),

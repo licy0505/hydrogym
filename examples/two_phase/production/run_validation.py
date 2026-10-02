@@ -272,6 +272,11 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         if complete
         else False
     )
+    # Contract v8: acceptance also requires the production embedded wall measure, so a run
+    # reproduced with the pinned legacy kernel can never be reported as validated wetting.
+    wall_measure_ok = (
+        all(row.get("wall_measure_method") == _production_wall_measure() for row in rows) if complete else False
+    )
     angle_ok = (
         mae is not None
         and max_error is not None
@@ -281,7 +286,9 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         and theta90_error <= 3.0
         and monotonic
     )
-    accepted = bool(complete and all_finite and all_converged and angle_ok and mass_ok and v7_boundary_ok)
+    accepted = bool(
+        complete and all_finite and all_converged and angle_ok and mass_ok and v7_boundary_ok and wall_measure_ok
+    )
     return accepted, {
         "required_targets_deg": list(expected),
         "case_count": len(records),
@@ -299,6 +306,8 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         "max_total_mass_drift": max_total_drift,
         "mass_ok": bool(mass_ok),
         "v7_boundary_model_ok": bool(v7_boundary_ok),
+        "wall_measure_ok": bool(wall_measure_ok),
+        "required_wall_measure_method": _production_wall_measure(),
         "accepted": accepted,
     }
 
@@ -315,7 +324,7 @@ def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
         angle_evidence["complete_target_set"] and angle_evidence["all_finite"] and angle_evidence["all_converged"]
     )
     if accepted:
-        indexed["W-CONTACT-ANGLE"]["status"] = "resolved_in_contract_v7"
+        indexed["W-CONTACT-ANGLE"]["status"] = _resolution_status()
     elif all_measured:
         indexed["W-CONTACT-ANGLE"]["status"] = "confirmed_problem"
     indexed["W-CONTACT-ANGLE"]["evidence"] = angle_evidence
@@ -339,7 +348,7 @@ def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
         and float(neutral.get("max_solid_liquid_fraction", math.inf)) <= 1.0e-6
         and float(last_sample.get("max_speed", math.inf)) <= 5.0e-4
     )
-    indexed["P-SOLID-PIN"]["status"] = "resolved_in_contract_v7" if neutral_ok else "confirmed_problem"
+    indexed["P-SOLID-PIN"]["status"] = _resolution_status() if neutral_ok else "confirmed_problem"
     indexed["P-SOLID-PIN"]["evidence"] = {
         "neutral_90_case_present": bool(neutral),
         "neutral_case_converged": neutral.get("converged") is True,
@@ -466,15 +475,24 @@ def run_validation(
     notes = [
         (
             "L1A physics status is BASELINE_ONLY; a green contract does not imply validated "
-            "physics or production readiness. Solver contract v7 adds conservative impermeable phase-face "
-            "fluxes, a matrix-free fail-closed CH solve and the natural Young boundary condition. "
+            "physics or production readiness. Solver contract v7 added conservative impermeable phase-face "
+            "fluxes, a matrix-free fail-closed CH solve and the natural Young boundary condition; contract v8 "
+            "supplies that boundary condition with the exact embedded wall measure. "
             "P-VARDENS-PROJ, P-CAP-RHO, N-DT, P-VARVISC and the momentum/pressure BC-Y-PERIODIC "
             "blocker are unchanged; contact-angle acceptance remains evidence-gated."
         ),
         (
-            "The v7 phase path uses phase_boundary_model='impermeable_flux'; it does not call the "
+            "The production phase path uses phase_boundary_model='impermeable_flux'; it does not call the "
             "post-step mass redistribution. phase_boundary_model='projection_legacy' exists only for "
             "contract-v6 reproduction and diagnostics."
+        ),
+        (
+            "Solver contract v8 (L1A-2e) changes one subsystem: the Young wall condition is assembled with the "
+            "exact embedded cut-cell wall measure A_wall,i (marching squares on the sdf = 0 contour, assigned "
+            "to fluid-side control cells) instead of the grid-alignment-dependent fluid share of the diffuse "
+            "wall_delta kernel. g_w, h(phi), sigma_0, M, dt, eps, Brinkman, gas properties and the CG tolerance "
+            "are unchanged, and there is no fitted factor. wall_measure='diffuse_sdf_v7' reproduces contract v7 "
+            "for falsification only; contract-v7 trajectories are stale."
         ),
         (
             "pressure_field() is a projection-reconstructed diagnostic, not an independently "
@@ -513,6 +531,8 @@ def run_validation(
         repository={
             "git_sha": git_sha,
             "solver_contract_version": int(pf_contract_version()),
+            "wall_measure_method": _production_wall_measure(),
+            "wall_measure_contract_version": int(_wall_measure_contract_version()),
             "phasefield_sha256": get_phasefield_sha256(),
             "validation_code_sha256": compute_validation_code_hash(),
         },
@@ -543,6 +563,31 @@ def pf_contract_version() -> int:
     import phasefield as pf
 
     return int(pf.SOLVER_CONTRACT_VERSION)
+
+
+def _production_wall_measure() -> str:
+    import phasefield as pf
+
+    return str(pf.WALL_MEASURE_METHOD)
+
+
+def _wall_measure_contract_version() -> int:
+    import phasefield as pf
+
+    return int(pf.WALL_MEASURE_CONTRACT_VERSION)
+
+
+def _resolution_status() -> str:
+    """Evidence-based resolution label for the *live* solver contract; fails closed if unknown."""
+    from production.report import KNOWN_RESOLVED_STATUSES
+
+    status = f"resolved_in_contract_v{pf_contract_version()}"
+    if status not in KNOWN_RESOLVED_STATUSES:
+        raise RuntimeError(
+            f"cannot claim {status}: the report schema does not know that contract; extend "
+            "production/report.KNOWN_RESOLVED_STATUSES with the closing evidence"
+        )
+    return status
 
 
 def main(argv: list[str] | None = None) -> int:

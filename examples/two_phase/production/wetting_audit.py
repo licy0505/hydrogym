@@ -40,7 +40,9 @@ CONVENTIONS = {
     "surface_tension": "sigma_0 = sqrt(2)/6 from f(phi) = phi^2 (1-phi)^2; Korteweg force scaled by 1/sigma_0",
     "wall_energy": "g_w(phi, theta) = -sigma_0 cos(theta) h(phi), h(phi) = phi^2 (3 - 2 phi)",
     "young_relation": "gamma_SG - gamma_SL = g_w(0) - g_w(1) = sigma_0 cos(theta_e)",
-    "wall_delta": "delta_wall(sdf) = (1/2a) sech^2(sdf/a) |grad sdf|, a = 1.5 dx (solid smoothing width)",
+    "wall_delta": "delta_wall(sdf) = (1/2a) sech^2(sdf/a) |grad sdf|, a = 1.5 dx (legacy/diagnostic since v8)",
+    "production_wall_measure": "A_wall,i = marching-squares length of sdf = 0 assigned to fluid-side control cells",
+    "production_wall_energy": "F_wall^h = sum_i A_wall,i g_w(phi_i, theta_i); dA/dV = A_wall,i/(dx dy) in the flux",
     "chemical_potential": "mu_wall = dg_w/dphi * delta_wall = -sigma_0 cos(theta) 6 phi (1-phi) delta_wall",
     "neutral_angle": "theta = 90 deg gives g_w == 0 and mu_wall == 0 identically",
 }
@@ -345,6 +347,88 @@ def audit_wall_energy(
     return checks, {"wall_energy": {"endpoints": endpoint_rows, "variational": variational, "signs": sign_rows}}
 
 
+def audit_production_wall_energy(
+    N: int = 128, targets=(60.0, 90.0, 120.0, 150.0), wall_height: float = 0.25, eps_factor: float = 2.0
+):
+    """Contract-v8 production path: one wall contribution, on the embedded geometric measure.
+
+    The ``wall_delta`` checks above audit the *legacy diffuse kernel*, which contract v8 keeps only
+    for the pinned reproduction modes. This check audits what the production solver does now:
+
+    * ``phase_free_energy`` equals an independently transcribed ``F_bulk + sum_i A_wall,i g_w(phi_i)``;
+    * ``wetting_mu`` is exactly zero in production mode, so the Young energy is not added twice;
+    * ``sum_i A_wall,i`` is the geometric wall length (no global gain, no fluid-share factor);
+    * the wall part of ``chemical_potential`` equals ``A_wall,i g_w'(phi_i)/(dx dy)`` = dF_wall^h/dphi / V.
+
+    The deeper geometry/translation/variational matrix lives in ``production/wall_measure_audit.py``.
+    """
+    import numpy as np
+    import phasefield as pf
+
+    p = pf.PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dtype=pf.jnp.float64)
+    p.eps = float(eps_factor) * p.dx
+    sdf = np.asarray(pf.surface_flat(p, wall_height=wall_height), dtype=np.float64)
+    X, Y = pf.grids(p)
+    fluid = sdf >= 0.0
+    phi = np.where(fluid, np.clip(0.5 - 0.45 * np.tanh((sdf - 0.5) / (math.sqrt(2.0) * p.eps)), 0.0, 1.0), 0.0)
+    rows: list[dict[str, Any]] = []
+    for target in targets:
+        cos_theta = math.cos(math.radians(float(target)))
+        solid = pf.make_solid(pf.jnp.asarray(sdf), p, cos_theta=cos_theta)
+        area = np.asarray(solid.wall_area, dtype=np.float64)
+        phase = pf.jnp.asarray(phi)
+        # independent transcription of F_bulk + F_wall^h
+        aperture_x, aperture_y = pf.fluid_face_apertures(solid, p)
+        grad_x = (np.roll(phi, -1, axis=0) - phi) / p.dx
+        grad_y = (np.roll(phi, -1, axis=1) - phi) / p.dy
+        bulk_density = np.sum(np.where(fluid, phi**2 * (1.0 - phi) ** 2 / p.eps, 0.0)) + 0.5 * p.eps * np.sum(
+            np.asarray(aperture_x) * grad_x**2 + np.asarray(aperture_y) * grad_y**2
+        )
+        wall = float(np.sum(_wall_energy_density_reference(phi, cos_theta) * area))
+        reference_energy = bulk_density * p.dx * p.dy + wall
+        solver_energy = float(pf.phase_free_energy(phase, solid, p))
+        mu = np.asarray(pf.chemical_potential(phase, solid, p), dtype=np.float64)
+        bulk_mu = np.asarray(pf.fprime(phase) / p.eps - p.eps * pf.fluid_laplacian(phase, solid, p), dtype=np.float64)
+        wall_mu_reference = _wall_energy_density_reference_derivative(phi, cos_theta) * area / (p.dx * p.dy)
+        rows.append(
+            {
+                "target_deg": float(target),
+                "energy_relative_error": abs(solver_energy - reference_energy) / max(abs(reference_energy), 1e-30),
+                "wall_operator_max_absolute_error": float(np.max(np.abs(mu - bulk_mu - wall_mu_reference))),
+                "wall_operator_scale": float(np.max(np.abs(wall_mu_reference))),
+                "separate_wetting_mu_max_abs": float(np.max(np.abs(pf.wetting_mu(phase, solid, p)))),
+                "measure_total": float(area.sum()),
+                "measure_relative_error": abs(float(area.sum()) - p.Lx) / p.Lx,
+                "n_wall_cells": int(np.count_nonzero(area > 0.0)),
+            }
+        )
+    checks = [
+        Check(
+            "production_wall_energy_is_single_embedded_contribution",
+            all(row["energy_relative_error"] <= 1.0e-12 for row in rows)
+            and all(
+                row["wall_operator_max_absolute_error"] <= 1.0e-12 * max(row["wall_operator_scale"], 1.0)
+                for row in rows
+            )
+            and all(row["separate_wetting_mu_max_abs"] == 0.0 for row in rows)
+            and all(row["measure_relative_error"] <= 1.0e-12 for row in rows),
+            "phase_free_energy == transcribed F_bulk + sum_i A_wall,i g_w(phi_i); the wall part of "
+            "chemical_potential == A_wall,i g_w'(phi_i)/(dx dy); wetting_mu is exactly zero (no double "
+            "counting); sum_i A_wall,i == Lx exactly (no global gain or fluid-share factor)",
+            rows,
+        )
+    ]
+    return checks, {"production_wall_energy": rows}
+
+
+def _wall_energy_density_reference_derivative(phi, cos_theta):
+    """Independent transcription of g_w'(phi, theta) (float64 numpy)."""
+    import numpy as np
+
+    phase = np.asarray(phi, dtype=np.float64)
+    return -WALL_SIGMA0 * np.asarray(cos_theta, dtype=np.float64) * 6.0 * phase * (1.0 - phase)
+
+
 def audit_model_dispatch(N: int = 32):
     """``wetting_model`` must fail closed on unknown names and honour ``none``."""
     import numpy as np
@@ -383,11 +467,20 @@ def audit_model_dispatch(N: int = 32):
 
 def run_audit(N: int = 128, dtype_independent: bool = True) -> WettingAudit:
     """Run every wetting audit; ``N`` sets the resolution of the measurement/delta checks."""
+    import phasefield as pf
+
     audit = WettingAudit()
     audit.settings = {
         "N": int(N),
         "wall_delta_width_factor": 1.5,
         "sigma_0": WALL_SIGMA0,
+        "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
+        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        "wall_delta_status": (
+            "legacy/diagnostic kernel since contract v8; the production measure is the exact cut-cell wall area "
+            "(see production/wall_measure_audit.py)"
+        ),
         "tolerances": {
             "measurement": MEASUREMENT_TOLERANCES,
             "wall_delta_normal_integral": WALL_DELTA_NORMAL_INTEGRAL_TOLERANCE,
@@ -401,8 +494,15 @@ def run_audit(N: int = 128, dtype_independent: bool = True) -> WettingAudit:
     delta_checks, delta_numbers = audit_wall_delta()
     energy_checks, energy_numbers = audit_wall_energy(N=N)
     dispatch_checks, dispatch_numbers = audit_model_dispatch()
-    audit.checks = [*measurement_checks, *delta_checks, *energy_checks, *dispatch_checks]
-    audit.numbers = {**measurement_numbers, **delta_numbers, **energy_numbers, **dispatch_numbers}
+    production_checks, production_numbers = audit_production_wall_energy(N=N)
+    audit.checks = [*measurement_checks, *delta_checks, *energy_checks, *production_checks, *dispatch_checks]
+    audit.numbers = {
+        **measurement_numbers,
+        **delta_numbers,
+        **energy_numbers,
+        **production_numbers,
+        **dispatch_numbers,
+    }
     layout = audit.numbers.pop("cases", None)
     if layout is not None:
         audit.numbers["synthetic_cases"] = layout
@@ -410,7 +510,7 @@ def run_audit(N: int = 128, dtype_independent: bool = True) -> WettingAudit:
 
 
 def format_markdown(audit: WettingAudit) -> str:
-    lines = ["# L1A-2b wetting audit", ""]
+    lines = ["# L1A-2b wetting audit (wall measure updated by L1A-2e)", ""]
     lines.append(f"- N = {audit.settings['N']}, sigma_0 = {audit.settings['sigma_0']:.12f}")
     lines.append("")
     lines.append("| check | result | detail |")
