@@ -65,6 +65,18 @@ def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
         phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
         wall_measure=str(pf.WALL_MEASURE_METHOD),
         wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        # contract v9 metadata: which phase-transport geometry produced the trajectory. The v9
+        # keys (partial cell volume, partial face aperture) make a contract-8 staircase dataset
+        # definitively stale even if every other input is identical, *in addition to* the solver
+        # contract version and the solver source hash above.
+        **pf.phase_transport_metadata(
+            pf.PhaseFieldParams(
+                Nx=2,
+                Ny=2,
+                phase_transport_geometry=str(case.get("phase_transport_geometry", pf.PHASE_TRANSPORT_GEOMETRY)),
+                phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
+            )
+        ),
         solver_sha256=_source_sha256(pf.__file__),
         generator_sha256=_source_sha256(__file__),
         case=case,
@@ -178,26 +190,33 @@ def _diagnose(
 ) -> tuple[bool, dict]:
     """Validate finite values, conservative mass and *deep-solid* leakage."""
     # Histories begin at the first saved frame (after ``save_every`` steps).
-    # The hard-fluid initialization clips only the tiny diffuse tail in solid at
-    # t=0; from then on both total and fluid-region mass are audited against that
-    # same unprojected initial condition. No startup redistribution is expected in v7.
+    # The initialization clips only the tiny diffuse tail in cells without a control volume at
+    # t=0; from then on both total and fluid-region mass are audited against that same unprojected
+    # initial condition. No startup redistribution is expected.
+    #
+    # Contract v9: the fluid region is the set of cells that own a transport control volume, and
+    # the fluid mass is the conserved sum_i V_i phi_i. The cell-centre hard mask is *not* the
+    # transported domain any more -- a cut cell with a solid centre legitimately holds its fluid --
+    # so measuring "solid leak" on the mask would flag the very configuration the contract change
+    # keeps, and the leak is measured on the cells with V_i = 0 (the cells phase can never enter).
     raw_initial = np.asarray(initial.phi, dtype=np.float64)
     phi = np.asarray(phi, dtype=np.float64)
     first_saved = np.asarray(phi[0] if phi.shape[0] else raw_initial, dtype=np.float64)
     u = np.asarray(u, dtype=np.float64)
     v = np.asarray(v, dtype=np.float64)
-    hard_solid = np.asarray(solid.sdf < 0.0, dtype=np.float64)
-    fluid = 1.0 - hard_solid
+    volume = np.asarray(pf.phase_control_volumes(solid, p), dtype=np.float64)
+    deep_solid = (volume <= 0.0).astype(np.float64)
+    fluid = np.asarray(volume > 0.0, dtype=np.float64)
 
     raw_total0 = float(np.sum(raw_initial))
     first_saved_total = float(np.sum(first_saved))
     total = np.sum(phi, axis=(1, 2))
-    raw_initial_fluid0 = float(np.sum(raw_initial * fluid))
-    fluid_mass = np.sum(phi * fluid[None], axis=(1, 2))
-    denom = np.maximum(np.sum(np.abs(phi), axis=(1, 2)), 1e-12)
-    raw_initial_denom = max(float(np.sum(np.abs(raw_initial))), 1e-12)
-    leak = np.sum(np.abs(phi) * hard_solid[None], axis=(1, 2)) / denom
-    raw_initial_solid_leak = float(np.sum(np.abs(raw_initial) * hard_solid) / raw_initial_denom)
+    raw_initial_fluid0 = float(np.sum(raw_initial * volume))
+    fluid_mass = np.sum(phi * volume[None], axis=(1, 2))
+    denom = np.maximum(np.sum(np.abs(phi * volume[None]), axis=(1, 2)), 1e-12)
+    raw_initial_denom = max(float(np.sum(np.abs(raw_initial) * volume)), 1e-12)
+    leak = np.sum(np.abs(phi) * deep_solid[None], axis=(1, 2)) / denom
+    raw_initial_solid_leak = float(np.sum(np.abs(raw_initial) * deep_solid) / raw_initial_denom)
     speed = np.sqrt(u * u + v * v)
 
     finite = bool(
@@ -214,24 +233,33 @@ def _diagnose(
         "first_saved_total_mass": first_saved_total * p.dx * p.dy,
         "startup_total_mass_ratio": float(startup_total_mass_ratio),
         "startup_fluid_mass_ratio": float(startup_fluid_mass_ratio),
-        "raw_initial_fluid_mass": raw_initial_fluid0 * p.dx * p.dy,
+        "raw_initial_fluid_mass": raw_initial_fluid0,
         "raw_initial_solid_leak": raw_initial_solid_leak,
         "final_total_mass_ratio": float(total_ratio[-1]),
         "min_total_mass_ratio": float(np.min(total_ratio)),
         "max_total_mass_ratio": float(np.max(total_ratio)),
+        "startup_relative_total_ratio_min": float(np.min(total_ratio)),
+        "startup_relative_total_ratio_max": float(np.max(total_ratio)),
         "final_fluid_mass_ratio": float(fluid_ratio[-1]),
         "min_fluid_mass_ratio": float(np.min(fluid_ratio)),
         "max_fluid_mass_ratio": float(np.max(fluid_ratio)),
+        "mass_metric": "sum_i V_i phi_i" if pf.phase_transport_is_cutcell(p) else "dx dy * #{sdf >= 0}",
         "initial_solid_leak": float(leak[0]),
         "max_solid_leak": float(np.max(leak)),
         "max_phi_overshoot": overshoot,
         "max_speed": float(np.max(speed)),
         "shape": list(phi.shape),
     }
+    # Contract v9: the *conserved* quantity is sum_i V_i phi_i, so the mass acceptance criterion is
+    # the drift of that quantity relative to the initial condition (measured 1.0000 on every
+    # geometry). ``sum_i phi_i`` is *not* conserved when V_i is non-uniform -- phase moving out of a
+    # small cut cell into a full cell raises sum_i phi_i without creating any liquid -- so it is
+    # reported as a diagnostic (``startup_relative_total_ratio_*``, final 1.019 on the worst smoke
+    # geometry) and deliberately does not gate: the pre-v9 ``dx dy * sum_i phi_i`` criterion was a
+    # statement about the cell-centre discretization, not about the cut-cell one.
+    total_ratio = total / max(total[0] if total.size else 1.0, 1e-12)
     ok = (
         finite
-        and diag["min_total_mass_ratio"] >= min_total_mass_ratio
-        and diag["max_total_mass_ratio"] <= max_total_mass_ratio
         and diag["min_fluid_mass_ratio"] >= min_total_mass_ratio
         and diag["max_fluid_mass_ratio"] <= max_total_mass_ratio
         and diag["max_solid_leak"] <= max_solid_leak
@@ -287,6 +315,9 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
         "wetting_model": "surface_energy",
         "phase_boundary_model": "impermeable_flux",
         "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
+        # the manifest is the generator's contract statement: the production transport geometry the
+        # set was generated under (the per-case records carry their own metadata as well)
+        **pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2)),
         "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
         "case_set": set_name,
         "expected": len(records),
@@ -337,6 +368,7 @@ def _save_case(
         phase_boundary_model=str(p.phase_boundary_model),
         wall_measure_method=str(p.wall_measure),
         wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        **pf.phase_transport_metadata(p),
         cos_theta_semantics=(
             "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
         ),
@@ -432,6 +464,9 @@ def main() -> None:
             "phase_boundary_model": str(case.get("phase_boundary_model", "impermeable_flux")),
             "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
             "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+            # the case-level semantics block describes the generator defaults (the instantiated
+            # parameters are recorded per trajectory in ``_save_case``)
+            **pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2)),
             "cos_theta": (
                 "target Young equilibrium contact-angle cosine"
                 if str(case.get("wetting_model", "surface_energy")) in {"surface_energy", "surface_energy_volume_v6"}

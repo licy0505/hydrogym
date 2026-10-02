@@ -332,7 +332,8 @@ def geometry_evidence(cfg: dict[str, Any]) -> dict[str, Any]:
         rows = []
         for offset in offsets:
             sdf = np.asarray(pf.surface_flat(p, wall_height=0.25 + offset * p.dy), dtype=np.float64)
-            area, _, _, _, info = pf.wall_cut_measure(pf.jnp.asarray(sdf), p)
+            # contract v9: the measure returns the wall centroid as well; ``info`` stays last
+            area, _, _, _, _, _, info = pf.wall_cut_measure(pf.jnp.asarray(sdf), p)
             area = np.asarray(area, dtype=np.float64)
             positive = area > 0.0
             legacy = clk.fluid_wall_delta_integral(sdf, p.dx, p.dy)
@@ -1186,6 +1187,9 @@ def assemble_report(
         "profile": profile,
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        # contract v9: which phase-transport geometry produced these numbers (the L1A-2e sections
+        # are re-measured on cut-cell control volumes unless the runner is pinned to hard_cell_v7)
+        **pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2)),
         "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
         "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
         "trajectory_semantics_changed": True,
@@ -1221,10 +1225,17 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
     contract = report.get("solver_contract_version")
-    if contract not in (7, 8):
-        errors.append(f"solver_contract_version must be 7 or 8; got {contract!r}")
+    if contract not in (8, 9):
+        errors.append(f"solver_contract_version must be 8 or 9; got {contract!r}")
     if contract == 7:
         errors.append("a v8 wall-measure report cannot be produced by contract 7")
+    if contract == 8:
+        # A contract-8 report is accepted only as *frozen* L1A-2e evidence: under contract 9 the
+        # same runner re-measures these sections on cut-cell control volumes, so a fresh report
+        # always carries 9 together with the phase-transport metadata below.
+        for key in ("phase_transport_geometry", "phase_control_volume", "phase_face_aperture"):
+            if key in report and report[key] not in (None, "hard_cell_v7", "hard_cell_volume", "binary_face_mask"):
+                errors.append(f"a contract-8 report cannot claim {key}={report[key]!r}")
     if report.get("wall_measure_method") not in pf.WALL_MEASURE_METHODS:
         errors.append("wall_measure_method must be one of the known methods")
     for key in ("gates", "not_ready_triggers", "geometry", "cases"):

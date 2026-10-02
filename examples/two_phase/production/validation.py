@@ -38,11 +38,14 @@ KNOWN_SOLVER_BLOCKERS = [
         "status": "measurement_required",
         "description": (
             "Young wall-energy targets are not validated until clean sessile runs converge at 60/90/120/150 deg "
-            "and meet the angle, monotonicity and mass criteria. Contract v8 replaces the grid-alignment-dependent "
-            "fluid share of the diffuse wall kernel with the exact embedded cut-cell wall measure; the "
-            "thermodynamic evidence for that change is the CH-only four-target matrix in "
-            "production/embedded_young_audit.py, and the blocker resolves only when the production-default full "
-            "CHNS four-target matrix truly converges as well."
+            "and meet the angle, monotonicity and mass criteria. Contract v8 replaced the grid-alignment-dependent "
+            "fluid share of the diffuse wall kernel with the exact embedded cut-cell wall measure (L1A-2e); "
+            "contract v9 transported the phase on that same cut-cell geometry (L1A-2f), so the wall energy, the "
+            "transport and the measurement finally reference one surface. The thermodynamic evidence is the "
+            "CH-only four-target matrix plus the full CHNS four-target matrix in "
+            "production/cutcell_alignment_audit.py; the blocker may be reported as "
+            "``thermodynamic_equilibrium_validated_v9`` only when the production-default full CHNS matrix "
+            "truly converges *and* its conserved mass drift stays clean."
         ),
     },
     {
@@ -50,12 +53,13 @@ KNOWN_SOLVER_BLOCKERS = [
         "severity": "medium",
         "status": "measurement_required",
         "description": (
-            "Fluid-region mass drifts linearly with steps at the production float32 CG tolerance "
-            "(rtol = 1e-6): about -5.6e-4 per 10k steps (L1A-2d) and up to 6.1e-3 over a 59k-step "
-            "accelerated CH-only relaxation (L1A-2e). A float64 / rtol = 1e-8 probe drifts ~100x less. "
-            "Formal thermodynamic evidence must therefore be taken in float64 or with a tighter tolerance; "
-            "the production default stays float32/1e-6 and this blocker stays open until the drift is "
-            "measured down at production precision."
+            "Mass drifts with steps at the production float32 CG tolerance (rtol = 1e-6). L1A-2e measured "
+            "3-6e-3 on the *hard-mask* metric over a 59k-step accelerated CH-only relaxation, while a float64 / "
+            "rtol = 1e-8 probe drifted ~100x less. Contract v9 conserves the cut-cell quantity sum_i V_i phi_i, "
+            "whose drift at the same precision is measured in the L1A-2f precision matrix "
+            "(production/cutcell_alignment_audit.py, section ``precision``) and is materially smaller than the "
+            "hard-mask number it replaces. The production default stays float32/1e-6 and this blocker stays open "
+            "until the drift is measured down at production precision."
         ),
     },
     {
@@ -75,10 +79,13 @@ KNOWN_SOLVER_BLOCKERS = [
         "description": (
             "The v6 Cahn-Hilliard and advective operators transported phase across fluid-solid faces; "
             "the optional mass projection then deleted the solid phase and redistributed it near the wall. "
-            "Contract v7 adds conservative face apertures and matrix-free no-flux CH transport, and contract v8 "
-            "keeps them unchanged (only the wall measure changed). This blocker needs its own independent "
-            "evidence and may close only after the projection-free neutral 90-degree sessile case and the full "
-            "four-angle acceptance matrix pass; contact-angle progress alone does not close it."
+            "Contract v7 adds conservative face apertures and matrix-free no-flux CH transport, contract v8 "
+            "adds the exact embedded wall measure and contract v9 moves the transport onto the same cut-cell "
+            "control volumes, so no phase can move through a zero-aperture wall face and no projection is "
+            "called in the production path (AST- and runtime-audited in "
+            "production/cutcell_phase_transport_audit.py). This blocker needs its own independent evidence and "
+            "may close only after the projection-free neutral 90-degree sessile case and the full four-angle "
+            "acceptance matrix pass; contact-angle progress alone does not close it."
         ),
     },
     {
@@ -86,14 +93,17 @@ KNOWN_SOLVER_BLOCKERS = [
         "severity": "high",
         "status": "confirmed_problem",
         "description": (
-            "L1A-2e: the phase-transport domain is the cell-centre hard-fluid mask (sdf >= 0), so the liquid's "
-            "discrete base sits on a cell face while measure_contact_angle references the geometric sdf = 0 plane. "
+            "L1A-2e: the phase-transport domain was the cell-centre hard-fluid mask (sdf >= 0), so the liquid's "
+            "discrete base sat on a cell face while measure_contact_angle references the geometric sdf = 0 plane. "
             "The offset between them spans -0.458..+0.417 cells as the wall translates inside a cell, and the "
-            "measured equilibrium angle follows it linearly (+1.79/+4.16/+8.20 deg per cell at 60/120/150 deg, "
-            "R^2 >= 0.998): converged CH-only angles spread 1.57/3.63/7.24 deg across the eight sub-cell offsets "
-            "while the same interfaces measured against the discrete boundary spread 0.08/0.08/0.30 deg. The "
-            "contract-v8 wall measure itself is exactly invariant (0.0 % spread). Needs cut-cell fluid volumes / "
-            "partial apertures, or a measurement referenced to the same boundary it reports against."
+            "measured equilibrium angle followed it linearly (+1.79/+4.16/+8.20 deg per cell at 60/120/150 deg, "
+            "R^2 >= 0.998): converged CH-only angles spread 1.57/3.63/7.24 deg across the eight sub-cell offsets. "
+            "Contract v9 resolves the cause by transporting the phase on the cut-cell control volumes of the same "
+            "corner reconstruction that defines the wall: V_i from exact polygon clipping, shared partial face "
+            "apertures A_f, wall measure hosted on the cell that owns the contour, and the implicit solve on the "
+            "Euclidean-SPD similarity transform of V^-1 K. The evidence is the translation and resolution "
+            "matrices in production/cutcell_alignment_audit.py; the blocker may be reported as "
+            "``resolved_in_contract_v9`` only when both spread gates pass on the true geometric wall."
         ),
     },
     {
@@ -246,7 +256,7 @@ def _record_diagnostics(state: pf.State, solid: pf.Solid, p: pf.PhaseFieldParams
     _assert_state_finite(state, p.Nx)
     max_speed = _max_speed(state)
     kinetic_energy = _kinetic_energy(state, p)
-    liquid = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    liquid = float(pf.liquid_mass(state.phi, solid, p))
     if not all(math.isfinite(v) for v in (max_speed, kinetic_energy, liquid)):
         raise FloatingPointError("non-finite static-droplet observable")
     return float(state.t), max_speed, kinetic_energy
@@ -300,7 +310,7 @@ def run_static_droplet_case(
     solid = pf.empty_solid(p)
     state = pf.droplet_initial_state(p, x0=p.Lx / 2.0, y0=p.Ly / 2.0, R=R, u_impact=0.0)
     _assert_state_finite(state, N)
-    mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_initial = float(pf.liquid_mass(state.phi, solid, p))
     if mass_initial <= 0.0:
         raise ValueError("static droplet initial fluid-region mass must be positive")
 
@@ -327,7 +337,7 @@ def run_static_droplet_case(
             _t, _speed, _energy = sample(state)
             max_speed_peak = max(max_speed_peak, _speed)
 
-    mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_final = float(pf.liquid_mass(state.phi, solid, p))
     pressure = np.asarray(pf.pressure_field(state, solid, p), dtype=np.float64)
     X, Y = pf.grids(p)
     radius_field = np.sqrt((np.asarray(X) - p.Lx / 2.0) ** 2 + (np.asarray(Y) - p.Ly / 2.0) ** 2)
@@ -547,7 +557,7 @@ def run_contact_angle_case(
     state = pf.sessile_initial_state(p, solid, R=R, wall_height=wall_height)
     hard_solid = jnp.asarray(solid.sdf < 0.0)
     total_initial = float(jnp.sum(state.phi) * p.dx * p.dy)
-    mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_initial = float(pf.liquid_mass(state.phi, solid, p))
     if mass_initial <= 0.0:
         raise ValueError("contact-angle initial fluid-region mass must be positive")
 
@@ -580,7 +590,7 @@ def run_contact_angle_case(
         angle = float(pf.measure_contact_angle(state.phi, solid, p))
         max_speed = _max_speed(state)
         total_mass = float(jnp.sum(state.phi) * p.dx * p.dy)
-        fluid_mass = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+        fluid_mass = float(pf.liquid_mass(state.phi, solid, p))
         energy = float(pf.phase_free_energy(state.phi, solid, p))
         leak = solid_fraction(state.phi)
         max_solid_fraction = max(max_solid_fraction, leak)
@@ -613,7 +623,7 @@ def run_contact_angle_case(
             break
     elapsed = time.perf_counter() - relaxation_started
     _assert_state_finite(state, N)
-    mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_final = float(pf.liquid_mass(state.phi, solid, p))
     total_final = float(jnp.sum(state.phi) * p.dx * p.dy)
     final_angle = float(samples[-1]["measured_angle_deg"]) if samples else None
     final_solid_fraction = solid_fraction(state.phi)
@@ -637,8 +647,9 @@ def run_contact_angle_case(
         "phase_boundary_model": str(p.phase_boundary_model),
         "wall_measure_method": str(p.wall_measure),
         "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        **pf.phase_transport_metadata(p),
         "ch_solver": {
-            "method": "matrix-free CG on I + dt*M*eps*L^T L",
+            "method": "Euclidean-SPD matrix-free CG on I + dt*M*eps*S^2, S = V^-1/2 K V^-1/2",
             "rtol": float(p.ch_solver_rtol),
             "max_iterations": int(p.ch_solver_max_iterations),
             "iterations_max": int(implicit_iterations_max),
@@ -805,8 +816,10 @@ def _impact_params(
         velocity_mode=velocity_mode,
     )
     if p.phase_boundary_model == "impermeable_flux":
+        # contract v9: the initialization clip uses the transported control volume, not the
+        # cell-centre mask (a cut cell with a solid centre keeps the phase its fluid holds)
         state = pf.State(
-            phi=jnp.where(solid.sdf >= 0.0, state.phi, 0.0),
+            phi=jnp.where(pf.phase_control_volumes(solid, p) > 0.0, state.phi, 0.0),
             u=state.u,
             v=state.v,
             t=state.t,
@@ -832,7 +845,7 @@ def run_impact_case(
     _assert_state_finite(state, N)
     R = float(case_cfg.get("R", 0.7))
     D0 = 2.0 * R
-    mass_initial = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_initial = float(pf.liquid_mass(state.phi, solid, p))
     if mass_initial <= 0:
         raise ValueError("impact initial fluid-region mass must be positive")
     X, Y = pf.grids(p)
@@ -861,7 +874,7 @@ def run_impact_case(
     def sample(current: pf.State, implicit_iterations: int = 0, implicit_relative_residual: float = 0.0) -> None:
         _assert_state_finite(current, N)
         phi_np = np.asarray(current.phi)
-        mass = obs.fluid_phase_mass(phi_np, sdf_np, p.dx, p.dy)
+        mass = float(pf.liquid_mass(phi_np, solid, p))
         total_mass = obs.total_phase_mass(phi_np, p.dx, p.dy)
         x_cm, y_cm = obs.center_of_mass(phi_np, sdf_np, X_np, Y_np)
         width = obs.periodic_spreading_width(phi_np, 0.5, p.dx, p.Lx)
@@ -908,8 +921,9 @@ def run_impact_case(
             sample(state, max_implicit_iterations, max_implicit_residual)
     runtime = _runtime_record(started, steps, N, dtype)
     runtime["phase_boundary_model"] = str(p.phase_boundary_model)
+    runtime.update(pf.phase_transport_metadata(p))
     runtime["ch_solver"] = {
-        "method": "matrix-free CG on I + dt*M*eps*L^T L"
+        "method": "Euclidean-SPD matrix-free CG on I + dt*M*eps*S^2, S = V^-1/2 K V^-1/2"
         if p.phase_boundary_model == "impermeable_flux"
         else "legacy FFT",
         "rtol": float(p.ch_solver_rtol),
@@ -918,7 +932,7 @@ def run_impact_case(
         "relative_residual_max": float(max_implicit_residual),
         "converged": True,
     }
-    mass_final = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
+    mass_final = float(pf.liquid_mass(state.phi, solid, p))
     beta_values = series["beta"]
     max_index = int(np.argmax(beta_values))
     contact_times = [float(t) for t, contacted in zip(series["time"], series["contact_signal"]) if contacted]
@@ -952,6 +966,10 @@ def run_impact_case(
         "mass_initial": float(mass_initial),
         "mass_final": float(mass_final),
         "mass_drift": float(abs(mass_final - mass_initial) / max(abs(mass_initial), 1e-12)),
+        # contract v9: the reported drift is the transported control-volume mass sum_i V_i phi_i;
+        # the legacy cell-centre hard-mask sum is reported alongside for comparability
+        "mass_metric": "sum_i V_i phi_i" if pf.phase_transport_is_cutcell(p) else "dx dy * #{sdf >= 0}",
+        "hard_mask_mass_final": float(obs.fluid_phase_mass(np.asarray(state.phi), np.asarray(solid.sdf), p.dx, p.dy)),
         "beta_max": float(beta_values[max_index]),
         "time_to_beta_max": float(series["time"][max_index]),
         "first_contact_time": first_contact,
@@ -967,6 +985,7 @@ def run_impact_case(
         "phase_boundary_model": str(p.phase_boundary_model),
         "wall_measure_method": str(p.wall_measure),
         "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        **pf.phase_transport_metadata(p),
         "enforce_solid_phi": bool(p.enforce_solid_phi),
         "solid_phase_fraction": float(series["solid_phase_fraction"][-1]),
         "max_solid_phase_fraction": float(max(series["solid_phase_fraction"])),
