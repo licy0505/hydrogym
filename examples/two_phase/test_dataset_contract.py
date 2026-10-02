@@ -34,42 +34,63 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
     assert fp2 != fp3
 
 
-def test_v6_dataset_is_stale_under_v7(tmp_path, monkeypatch):
-    """Schema v3 is retained, but contract-6 phase semantics must fingerprint stale under v7."""
-    assert pf.SOLVER_CONTRACT_VERSION == 7
+def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
+    """Schema v3 is retained, but contract-7 (and contract-6) trajectories fingerprint stale under v8.
+
+    The contract-v8 change is the embedded wall measure, so a dataset generated with the pinned
+    legacy kernel (``wall_measure='diffuse_sdf_v7'``) must also be stale even though the schema,
+    the case dict and every other default are identical.
+    """
+    assert pf.SOLVER_CONTRACT_VERSION == 8
+    assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
+    assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
     params = pf.PhaseFieldParams(Nx=8, Ny=8, Lx=1.0, Ly=1.0)
     assert params.wetting_model == "surface_energy"
     assert params.phase_boundary_model == "impermeable_flux"
+    assert params.wall_measure == "sdf_cutcell_v1"
     case = C.lowwe_cases(1)[0]
     args = _args(3)
     dt, nsteps, save_every = G._effective_schedule(case, args)
-    expected_v7 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    expected_v8 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
     path = tmp_path / "train_lowWe_000_flat.npz"
-    with monkeypatch.context() as as_v6:
-        as_v6.setattr(pf, "SOLVER_CONTRACT_VERSION", 6)
-        saved_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    with monkeypatch.context() as as_v7:
+        as_v7.setattr(pf, "SOLVER_CONTRACT_VERSION", 7)
+        as_v7.setattr(pf, "WALL_MEASURE_METHOD", "diffuse_sdf_v7")
+        saved_v7 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
         np.savez(
             path,
             dataset_schema_version=np.array(G.DATASET_SCHEMA_VERSION, dtype=np.int32),
-            dataset_fingerprint=np.array(saved_v6),
+            dataset_fingerprint=np.array(saved_v7),
         )
-        assert G._saved_case_is_current(path, saved_v6)
+        assert G._saved_case_is_current(path, saved_v7)
+    with monkeypatch.context() as as_v6:
+        as_v6.setattr(pf, "SOLVER_CONTRACT_VERSION", 6)
+        saved_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
-    assert saved_v6 != expected_v7
-    assert not G._saved_case_is_current(path, expected_v7)
-    # The explicit boundary-model key also makes otherwise identical custom cases stale.
+    assert saved_v7 != expected_v8
+    assert saved_v6 != saved_v7 != expected_v8
+    assert not G._saved_case_is_current(path, expected_v8)  # v7 data fails closed under v8
+    # The legacy wall measure alone (same contract number) also changes the fingerprint.
+    with monkeypatch.context() as legacy_measure:
+        legacy_measure.setattr(pf, "WALL_MEASURE_METHOD", "diffuse_sdf_v7")
+        assert G._dataset_fingerprint(case, args, dt, nsteps, save_every) != expected_v8
+    # The explicit boundary-model key still makes otherwise identical custom cases stale.
     legacy_case = {**case, "phase_boundary_model": "projection_legacy"}
-    assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v7
+    assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v8
 
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 7
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
     assert manifest["wetting_model"] == "surface_energy"
     assert manifest["phase_boundary_model"] == "impermeable_flux"
-    assert json.loads((tmp_path / "manifest.json").read_text())["solver_contract_version"] == 7
+    assert manifest["wall_measure_method"] == "sdf_cutcell_v1"
+    assert manifest["wall_measure_contract_version"] == 1
+    written = json.loads((tmp_path / "manifest.json").read_text())
+    assert written["solver_contract_version"] == 8
+    assert written["wall_measure_method"] == "sdf_cutcell_v1"
 
 
 def test_coarse_geometry_is_signed_and_shape_correct():

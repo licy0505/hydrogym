@@ -1,0 +1,210 @@
+{
+  "stage": "L1A-2e",
+  "profile": "baseline",
+  "solver_contract_version": 8,
+  "wall_measure_method": "sdf_cutcell_v1",
+  "wall_measure_contract_version": 1,
+  "trajectory_semantics_changed": true,
+  "semantics_change": "contract 7 -> 8: the production Young wall flux is assembled with the exact embedded cut-cell measure A_wall,i (marching squares on the sdf = 0 contour, assigned to fluid-side control cells) instead of the grid-alignment-dependent fluid share of the diffuse wall_delta kernel. g_w, h(phi), sigma_0, M, dt, eps, Brinkman, gas properties and the CG tolerance are unchanged; there is no fitted factor. wall_measure='diffuse_sdf_v7' reproduces contract v7 for falsification.",
+  "preflight_exceptions": {
+    "PREFLIGHT_EXCEPTION_PREVIOUS_REVIEW": "AUTHORIZED",
+    "PREFLIGHT_EXCEPTION_DEPENDENCY_AUDIT": "AUTHORIZED_FOR_DEVELOPMENT",
+    "PREVIOUS_PR_REVIEW_RECORD": "ABSENT",
+    "PREVIOUS_PR_DEPENDENCY_AUDIT": "FAIL_AT_AUDIT_LOCKED_DEPENDENCIES",
+    "scope": "development preflight only: not a physics acceptance waiver and not a CI pass. Two-phase unit/E2E smoke checks passed on the L1A-2d PR; its Quality job failed at 'Audit locked dependencies'."
+  },
+  "base_commit": "d53015849160ebfd51a77fcc108635dc763bca62",
+  "base_case": {
+    "N": 128,
+    "Lx": 6.0,
+    "Ly": 6.0,
+    "R": 1.1,
+    "wall_height": 0.25,
+    "Re": 200.0,
+    "We": 100.0,
+    "dt": 0.004,
+    "M_ref": 0.002,
+    "eps_factor": 2.0,
+    "sample_every": 200,
+    "dtype": "float32",
+    "ch_solver_rtol": 1e-06
+  },
+  "targets_deg": [
+    60.0,
+    90.0,
+    120.0,
+    150.0
+  ],
+  "stage_step_budgets": [
+    10000,
+    25000,
+    50000,
+    80000
+  ],
+  "neutral_control_budget": 100000,
+  "equilibrium_criteria": {
+    "window_samples": 5,
+    "window_mobility_time": 0.05,
+    "angle_tol_deg": 0.1,
+    "energy_rel_tol": 0.0001,
+    "strict_energy_rel_tol": 1e-07,
+    "phase_rate_l2_tol": 0.001,
+    "chns_speed_tol": 0.0005,
+    "acceptance_error_deg": 5.0,
+    "relaxing_rate_deg_per_Mt": 3.0
+  },
+  "sections": {
+    "primary": "CH-only, four Young targets, 4*M_ref, production precision (float32, rtol 1e-6)",
+    "primary_float64": "the same four targets in float64 with rtol 1e-8: the formal thermodynamic set",
+    "translation": {
+      "description": "primary merge gate: sub-cell wall offsets at fixed domain/N/theta, each to convergence",
+      "offsets_over_dy": [
+        0.0,
+        0.125,
+        0.25,
+        0.375,
+        0.5,
+        0.625,
+        0.75,
+        0.875
+      ],
+      "targets_deg": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ]
+    },
+    "resolution": {
+      "description": "wall-measure N sweep (geometry, instant) plus converged equilibria",
+      "measure_N_values": [
+        64,
+        96,
+        128,
+        192
+      ],
+      "equilibrium_N_values": [
+        96,
+        128,
+        192
+      ],
+      "targets_deg": [
+        60.0,
+        150.0
+      ]
+    },
+    "production_mobility": {
+      "description": "production default M_ref over comparable M*t: collapse and same equilibrium direction",
+      "targets_deg": [
+        60.0,
+        150.0
+      ],
+      "budget": 300000,
+      "sample_every": 1000
+    },
+    "precision": {
+      "description": "150 deg at equal mobility-scaled time in three precision settings",
+      "target_deg": 150.0,
+      "fixed_steps": 20000,
+      "mobility_factor": 4.0,
+      "settings": [
+        {
+          "label": "float32_rtol1e-6_production",
+          "dtype": "float32",
+          "ch_solver_rtol": 1e-06
+        },
+        {
+          "label": "float32_rtol1e-8",
+          "dtype": "float32",
+          "ch_solver_rtol": 1e-08
+        },
+        {
+          "label": "float64_rtol1e-8",
+          "dtype": "float64",
+          "ch_solver_rtol": 1e-08
+        }
+      ]
+    },
+    "chns": {
+      "description": "full CHNS, staged, production defaults; non-converged finals are never equilibrium angles",
+      "targets_deg": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ],
+      "budgets": [
+        10000,
+        25000,
+        50000
+      ]
+    },
+    "v7_falsification": {
+      "description": "pinned contract-v7 diffuse measure with identical code: reproduces acos(f cos(theta))",
+      "targets_deg": [
+        60.0,
+        120.0,
+        150.0
+      ]
+    }
+  },
+  "gates": {
+    "wall_measure_translation_spread_limit": 0.01,
+    "wall_measure_translation_spread_ideal": 0.005,
+    "wall_measure_translation_variation_not_ready": 0.05,
+    "inclined_measure_relative_error": 0.02,
+    "translation_angle_spread_deg": 2.0,
+    "resolution_angle_spread_deg": 3.0,
+    "ch_only_mae_deg": 5.0,
+    "ch_only_max_error_deg": 10.0,
+    "neutral_error_deg": 3.0,
+    "strong_60_120_error_deg": 5.0,
+    "strong_150_error_deg": 8.0,
+    "formal_mass_drift": 0.001,
+    "energy_increase_tolerance": 1e-06,
+    "variational_relative_error": 1e-06,
+    "variational_relative_error_ideal": 1e-08,
+    "solid_phase_fraction": 1e-06,
+    "production_mobility_angle_agreement_deg": 3.0,
+    "v7_reproduction_tolerance_deg": 3.0,
+    "laplace_ratio_change_vs_v7": 0.01,
+    "laplace_min_r_squared": 0.99
+  },
+  "geometry_gates": {
+    "flat_translation_spread_limit": 0.01,
+    "flat_translation_spread_ideal": 0.005,
+    "flat_length_relative_tolerance": 1e-09,
+    "inclined_length_relative_tolerance": 0.02,
+    "inclined_slopes": [
+      -0.5,
+      -0.25,
+      0.25,
+      0.5
+    ],
+    "textured_length_relative_tolerance": 0.05,
+    "control_cell_placement_limit_cells": 2.13,
+    "ghost_to_peak_limit": 1e-12,
+    "normal_unit_tolerance": 1e-09,
+    "conservation_relative_tolerance": 1e-12,
+    "directional_derivative_tolerance": 1e-06,
+    "directional_derivative_ideal": 1e-08,
+    "first_layer_manufactured_tolerance": 0.05
+  },
+  "forbidden_production_corrections": [
+    "cos(theta)/f",
+    "global wall gain",
+    "theta remap",
+    "wall_gain",
+    "contact_angle_gain",
+    "theta_scale",
+    "cos_theta_scale",
+    "angle lookup table",
+    "fitted calibration",
+    "global mass projection or post-step redistribution"
+  ],
+  "output": {
+    "directory": "artifacts/production_validation/l1a2e",
+    "report_filename": "embedded_young_report.json",
+    "section_cache": "artifacts/production_validation/l1a2e/sections"
+  }
+}

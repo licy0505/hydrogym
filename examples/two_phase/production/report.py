@@ -13,9 +13,17 @@ from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # Solver contracts this report schema can interpret.  A report is a lineage record and states the
-# contract of the solver that produced it: 4/5/6 are historical lineage records and 7 is the
-# conservative impermeable-phase / natural-wetting contract. Unknown contracts fail closed.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7)
+# contract of the solver that produced it: 4/5/6 are historical lineage records, 7 is the
+# conservative impermeable-phase / natural-wetting contract and 8 is the embedded cut-cell Young
+# wall measure (L1A-2e). Unknown contracts fail closed.
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8)
+#: Blocker statuses that claim resolution, one per contract that produced the closing evidence.
+KNOWN_RESOLVED_STATUSES = (
+    "resolved_in_contract_v5",
+    "resolved_in_contract_v6",
+    "resolved_in_contract_v7",
+    "resolved_in_contract_v8",
+)
 _REQUIRED_TOP = {
     "validation_report_schema_version",
     "physics_status",
@@ -101,6 +109,15 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
             or contract not in KNOWN_SOLVER_CONTRACT_VERSIONS
         ):
             errors.append(f"repository.solver_contract_version must be one of {list(KNOWN_SOLVER_CONTRACT_VERSIONS)}")
+        # Optional since contract 8: the embedded wall measure that produced the trajectories.
+        measure = repository.get("wall_measure_method")
+        if measure is not None and not isinstance(measure, str):
+            errors.append("repository.wall_measure_method must be a string")
+        measure_contract = repository.get("wall_measure_contract_version")
+        if measure_contract is not None and (
+            isinstance(measure_contract, bool) or not isinstance(measure_contract, int) or measure_contract < 1
+        ):
+            errors.append("repository.wall_measure_contract_version must be a positive integer")
 
     runtime = report.get("runtime")
     if not isinstance(runtime, dict):
@@ -153,9 +170,7 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
                 "measurement_required",
                 "confirmed_problem",
                 "acceptable_for_next_stage",
-                "resolved_in_contract_v5",
-                "resolved_in_contract_v6",
-                "resolved_in_contract_v7",
+                *KNOWN_RESOLVED_STATUSES,
             }:
                 errors.append(f"known_solver_blockers[{index}].status is invalid")
     if not isinstance(report.get("provisional_readiness_targets"), dict):

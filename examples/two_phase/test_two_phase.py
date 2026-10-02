@@ -244,14 +244,22 @@ def _elliptical_drop(p, R, aspect=1.3):
     return pf.State(phi=phi, u=jnp.zeros_like(phi), v=jnp.zeros_like(phi), t=0.0)
 
 
-def test_solver_contract_is_v7():
-    """Conservative impermeable phase-boundary semantics require a new data contract."""
-    assert pf.SOLVER_CONTRACT_VERSION == 7
+def test_solver_contract_is_v8():
+    """The embedded cut-cell Young wall measure changes trajectory semantics: contract 7 -> 8."""
+    assert pf.SOLVER_CONTRACT_VERSION == 8
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
+    assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
+    assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
+    assert pf.WALL_MEASURE_CONTRACT_VERSION == 1
     params = pf.PhaseFieldParams(Nx=32, Ny=32)
     assert params.wetting_model == "surface_energy"
     assert params.phase_boundary_model == "impermeable_flux"
+    assert params.wall_measure == "sdf_cutcell_v1"
     assert params.enforce_solid_phi is False
+    # production defaults that must not move to make the contact angle come out right
+    assert params.M == 2.0e-3 and params.ch_solver_rtol == 1.0e-6 and params.dtype is jnp.float32
+    with pytest.raises(ValueError, match="wall_measure"):
+        pf.PhaseFieldParams(Nx=32, Ny=32, wall_measure="cos_theta_over_f")
 
 
 def test_static_drop_pressure_jump_has_correct_sign():
@@ -610,12 +618,18 @@ def test_legacy_affinity_mode_still_available_for_reproducibility():
 
 
 def test_contact_angle_targets_have_correct_direction_ci():
-    """CI-sized direction check: a hydrophilic target relaxes to a smaller angle than a hydrophobic one.
+    """CI-sized direction check: a hydrophilic target spreads, a hydrophobic one retracts.
 
-    This is deliberately small (N=48, 300 steps) so it only asserts *direction* and
-    contract behaviour; the quantitative matrix lives in ``production/wetting_audit.py``
-    and the (slow) validation profile.  Both targets start from the same clean,
-    target-independent 90 deg sessile cap.
+    Deliberately small (N=48, R=0.6 -> the drop radius is only ~5 cells) so it asserts
+    *direction* and contract behaviour, never a quantitative angle; the matrices live in
+    ``production/wall_measure_audit.py`` and ``production/embedded_young_audit.py``.
+
+    Two signals are checked, at two horizons, because the seeded 90 deg cap first relaxes its
+    *shape*: at this resolution the circle fit of a 300-step transient is dominated by that
+    relaxation (with the contract-v8 measure both targets briefly move the wrong way before the
+    wetting signal takes over at ~500 steps). The contact width is a direct wetting-direction
+    observable and is correct from the start; the fitted angle ordering is asserted at 900 steps,
+    where the pinned contract-v7 measure and the v8 measure agree.
     """
     import math
 
@@ -623,6 +637,7 @@ def test_contact_angle_targets_have_correct_direction_ci():
 
     wall_height = 0.25
     measured = []
+    widths = []
     for target in (60.0, 120.0):
         p = pf.PhaseFieldParams(Nx=48, Ny=48, Lx=6.0, Ly=6.0, dt=4e-3)
         p.eps = 2.0 * p.dx
@@ -632,15 +647,21 @@ def test_contact_angle_targets_have_correct_direction_ci():
         state = pf.sessile_initial_state(p, solid, R=0.6, wall_height=wall_height)
         mass0 = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
         assert float(jnp.min(state.phi[solid.sdf < 0.0])) == 0.0
+        assert float(jnp.sum(solid.wall_area)) == pytest.approx(p.Lx, rel=1e-5)  # v8 measure is the wall length
         step_fn = jax.jit(pf.step, static_argnums=(2,))
-        for _ in range(300):
+        width_early = None
+        for index in range(900):
             state = step_fn(state, solid, p)
+            if index + 1 == 300:
+                width_early = float(pf.spreading_width(state.phi, p))
         mass1 = obs.liquid_mass(state.phi, solid.sdf, p.dx, p.dy)
         angle = float(pf.measure_contact_angle(state.phi, solid, p))
         assert math.isfinite(angle) and 0.0 < angle < 180.0
         assert abs(mass1 - mass0) / mass0 <= 1e-3
         measured.append(angle)
-    assert measured[0] < measured[1], measured
+        widths.append(width_early)
+    assert widths[0] > widths[1], widths  # hydrophilic spreads wider than hydrophobic by step 300
+    assert measured[0] < measured[1], measured  # and the fitted angle ordering follows by step 900
 
 
 # ---------------------------------------------------------------------------
@@ -727,23 +748,43 @@ def test_phase_boundary_blocks_periodic_y_wrap_at_bottom_wall():
     assert float(jnp.max(jnp.abs(y_flux[:, -1]))) == 0.0
 
 
-def _natural_bc_probe(sdf, p, theta_deg, *, region=None):
+def _natural_bc_probe(sdf, p, theta_deg, *, region=None, profile="exact"):
+    """Relative error of the natural Young BC on the cells the production measure forces.
+
+    ``profile='exact'`` uses the analytic solution of the *nonlinear* condition,
+    ``phi = 0.5 (1 - tanh(cos(theta) sdf / (sqrt(2) eps)))``, which satisfies
+    ``eps dphi/dn + g_w'(phi) = 0`` at every distance from the wall, so only the second-order
+    stencil error remains. ``profile='linear'`` uses the tangent linearization at ``phi = 0.5``
+    and is compared against the wall-plane value ``-g_w'(0.5)/eps``: a linear field is
+    differentiated exactly, so that error is round-off and it pins the sign/normal convention.
+    """
     import math
 
     cos_theta = math.cos(math.radians(theta_deg))
     solid = pf.make_solid(sdf, p, cos_theta=cos_theta)
-    q_sdf = float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / p.eps
-    phi = 0.5 + q_sdf * sdf
+    if profile == "exact":
+        phi = 0.5 * (1.0 - jnp.tanh(cos_theta * sdf / (math.sqrt(2.0) * p.eps)))
+    elif profile == "linear":
+        q_sdf = float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / p.eps
+        phi = 0.5 + q_sdf * sdf
+    else:
+        raise ValueError(profile)
     gx = (jnp.roll(phi, -1, axis=0) - jnp.roll(phi, 1, axis=0)) / (2.0 * p.dx)
     gy = pf._ddy_nonperiodic(phi, p.dy)
-    nx, ny = pf.fluid_outward_normal(sdf, p)
+    nx, ny = pf.wall_measure_normal(solid, p)
     measured = nx * gx + ny * gy
-    prescribed = pf.natural_wall_normal_derivative(phi, solid, p)
-    weight = np.asarray(pf.wall_delta(sdf, p), dtype=np.float64)
+    if profile == "exact":
+        prescribed = pf.natural_wall_normal_derivative(phi, solid, p)
+    else:
+        prescribed = jnp.full_like(
+            phi, -float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / p.eps
+        )
+    weight = np.asarray(pf.wall_measure_density(solid, p), dtype=np.float64)
     peak = float(weight[region].max()) if region is not None else float(weight.max())
     valid = weight > 0.9 * peak
     if region is not None:
         valid &= region
+    assert valid.any(), "the wall measure selected no active cell"
     error = np.asarray(measured - prescribed, dtype=np.float64)[valid]
     scale = max(float(np.max(np.abs(np.asarray(prescribed)[valid]))), 1e-30)
     return float(np.max(np.abs(error)) / scale)
@@ -751,8 +792,10 @@ def _natural_bc_probe(sdf, p, theta_deg, *, region=None):
 
 def test_flat_wall_natural_contact_bc(x64):
     p, solid = _phase_boundary_setup(N=64, dtype=jnp.float64, theta=60.0)
-    error = _natural_bc_probe(solid.sdf, p, 60.0)
-    assert error < 0.03
+    # linearized probe: exact stencil, so this pins the sign and normal convention
+    assert _natural_bc_probe(solid.sdf, p, 60.0, profile="linear") < 1.0e-9
+    # exact nonlinear natural-BC profile: only second-order truncation remains at eps/dx = 2
+    assert _natural_bc_probe(solid.sdf, p, 60.0) < 0.02
 
 
 @pytest.mark.parametrize("slope", [-0.45, 0.45])
@@ -761,8 +804,8 @@ def test_inclined_wall_natural_contact_bc_orientation(slope, x64):
     X, Y = pf.grids(p)
     sdf = (Y - slope * (X - 3.0) - 0.25) / np.sqrt(1.0 + slope * slope)
     region = (np.asarray(X) > 2.5) & (np.asarray(X) < 3.5)
-    error = _natural_bc_probe(sdf, p, 120.0, region=region)
-    assert error < 0.03
+    assert _natural_bc_probe(sdf, p, 120.0, region=region, profile="linear") < 1.0e-9
+    assert _natural_bc_probe(sdf, p, 120.0, region=region) < 0.02
 
 
 def test_neutral_90_wall_has_zero_natural_contact_bc_source(x64):

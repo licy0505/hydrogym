@@ -26,6 +26,17 @@ import jax.numpy as jnp
 import numpy as np
 import phasefield as pf
 
+#: Contract-v8 variational gates (L1A-2e): the production wall operator must be the exact
+#: variational derivative of the discrete bulk + wall energy in float64 (specification gate
+#: 1e-6, ideal 1e-8). The worst single centred amplitude is bounded separately because
+#: float64 cancellation inflates the smallest one.
+VARIATIONAL_RELATIVE_TOLERANCE = 1.0e-6
+VARIATIONAL_WORST_AMPLITUDE_TOLERANCE = 1.0e-4
+#: The exact nonlinear natural-BC profile is differentiated with second-order central stencils,
+#: so at eps/dx = 2 the residual is pure truncation (~9e-3 flat, ~7e-3 inclined) and falls to
+#: ~2.5e-3 / ~1.9e-3 at eps/dx = 4. The bound is that truncation level, not a fitted tolerance.
+NATURAL_BC_EXACT_PROFILE_TOLERANCE = 2.0e-2
+
 
 @dataclass
 class AuditCheck:
@@ -53,21 +64,54 @@ class PhaseBoundaryAudit:
         return result
 
 
-def _normal_bc_relative_error(sdf, p, theta_deg: float, *, region: np.ndarray | None = None) -> float:
+def _natural_bc_profile(sdf, p, theta_deg: float, profile: str):
+    """Phase fields that satisfy ``eps dphi/dn + g_w'(phi) = 0`` in a known way.
+
+    ``exact`` is the analytic solution of the *nonlinear* natural condition along the wall
+    normal, ``phi = 0.5 (1 - tanh(cos(theta) sdf / (sqrt(2) eps)))``: substituting
+    ``dphi/ds = -2 phi (1-phi) cos(theta)/(sqrt(2) eps)`` and
+    ``g_w'(phi) = -sqrt(2) cos(theta) phi (1-phi)`` (sigma_0 = sqrt(2)/6, h' = 6 phi (1-phi))
+    satisfies it identically at *every* distance from the wall, so the only error left is the
+    finite-difference stencil.
+
+    ``linear`` is the tangent linearization at ``phi = 0.5``, ``phi = 0.5 + (g_w'(0.5)/eps) sdf``.
+    It satisfies the condition only at the wall plane itself: because ``g_w'`` is nonlinear, a
+    control cell whose centre is ``d`` away from the wall sees a prescribed value that differs
+    by the analytic factor ``6 phi (1-phi) / 1.5``. That factor is the O(d/eps) wall-placement
+    error of any cell-centred embedded BC, and it is reported explicitly rather than hidden
+    inside a loose tolerance.
+    """
     cos_theta = math.cos(math.radians(theta_deg))
-    q_sdf = float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / float(p.eps)
-    # sdf is positive into the fluid. Consequently n_out=-grad(sdf), and a
-    # linear compatible field has q_sdf=+g_w'/eps while dphi/dn=-g_w'/eps.
-    phi = 0.5 + q_sdf * sdf
+    if profile == "exact":
+        return 0.5 * (1.0 - jnp.tanh(cos_theta * sdf / (math.sqrt(2.0) * p.eps)))
+    if profile == "linear":
+        q_sdf = float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / float(p.eps)
+        return 0.5 + q_sdf * sdf
+    raise ValueError(f"unknown natural-BC profile {profile!r}")
+
+
+def _normal_bc_relative_error(
+    sdf, p, theta_deg: float, *, region: np.ndarray | None = None, profile: str = "exact"
+) -> float:
+    """Relative error of the natural BC on the cells the production operator actually forces.
+
+    The active set is the contract-v8 embedded wall measure (``A_wall,i > 0``): exactly the
+    fluid-side control cells that receive the Robin flux, with the measure-weighted cell normal
+    the operator uses. ``profile='exact'`` leaves only the finite-difference truncation error;
+    ``profile='linear'`` is checked against the linearized wall value by
+    :func:`_normal_bc_linearization_deviation`.
+    """
+    cos_theta = math.cos(math.radians(theta_deg))
+    phi = _natural_bc_profile(sdf, p, theta_deg, profile)
     gx = (jnp.roll(phi, -1, axis=0) - jnp.roll(phi, 1, axis=0)) / (2.0 * p.dx)
     gy = pf._ddy_nonperiodic(phi, p.dy)
-    nx, ny = pf.fluid_outward_normal(sdf, p)
-    measured = nx * gx + ny * gy
     solid = pf.make_solid(sdf, p, cos_theta=cos_theta)
+    nx, ny = pf.wall_measure_normal(solid, p)
+    measured = nx * gx + ny * gy
     prescribed = pf.natural_wall_normal_derivative(phi, solid, p)
-    delta = np.asarray(pf.wall_delta(sdf, p), dtype=np.float64)
-    peak = float(delta[region].max()) if region is not None else float(delta.max())
-    active = delta > 0.9 * peak
+    measure = np.asarray(pf.wall_measure_density(solid, p), dtype=np.float64)
+    peak = float(measure[region].max()) if region is not None else float(measure.max())
+    active = measure > 0.9 * peak
     if region is not None:
         active &= region
     measured_np = np.asarray(measured, dtype=np.float64)
@@ -77,6 +121,38 @@ def _normal_bc_relative_error(sdf, p, theta_deg: float, *, region: np.ndarray | 
         return math.inf
     denominator = max(float(np.max(np.abs(prescribed_np[active]))), 1e-30)
     return float(np.max(np.abs(measured_np[active] - prescribed_np[active])) / denominator)
+
+
+def _normal_bc_linearization_deviation(sdf, p, theta_deg: float, *, region: np.ndarray | None = None) -> dict:
+    """Split the linear-probe error into stencil error and analytic wall-placement error.
+
+    Returns the linear probe's error against the *wall-plane* value ``-g_w'(0.5)/eps`` (which a
+    linear field satisfies exactly, so this is pure stencil/normal error) together with the
+    analytic deviation of ``-g_w'(phi_k)/eps`` from that wall value at the control-cell centres.
+    """
+    cos_theta = math.cos(math.radians(theta_deg))
+    phi = _natural_bc_profile(sdf, p, theta_deg, "linear")
+    gx = (jnp.roll(phi, -1, axis=0) - jnp.roll(phi, 1, axis=0)) / (2.0 * p.dx)
+    gy = pf._ddy_nonperiodic(phi, p.dy)
+    solid = pf.make_solid(sdf, p, cos_theta=cos_theta)
+    nx, ny = pf.wall_measure_normal(solid, p)
+    measured = np.asarray(nx * gx + ny * gy, dtype=np.float64)
+    wall_value = -float(pf.wall_energy_derivative(jnp.asarray(0.5, dtype=p.dtype), cos_theta)) / float(p.eps)
+    prescribed = np.asarray(pf.natural_wall_normal_derivative(phi, solid, p), dtype=np.float64)
+    measure = np.asarray(pf.wall_measure_density(solid, p), dtype=np.float64)
+    peak = float(measure[region].max()) if region is not None else float(measure.max())
+    active = measure > 0.9 * peak
+    if region is not None:
+        active &= region
+    if not active.any():
+        return {"stencil_relative_error": math.inf, "placement_relative_deviation": math.inf, "n_active": 0}
+    scale = max(abs(wall_value), 1e-30)
+    return {
+        "stencil_relative_error": float(np.max(np.abs(measured[active] - wall_value)) / scale),
+        "placement_relative_deviation": float(np.max(np.abs(prescribed[active] - wall_value)) / scale),
+        "n_active": int(np.count_nonzero(active)),
+        "max_abs_sdf_over_dx_on_active": float(np.max(np.abs(np.asarray(sdf, dtype=np.float64)[active])) / p.dx),
+    }
 
 
 def _solid_fraction(phi, solid) -> float:
@@ -213,13 +289,16 @@ def run_phase_boundary_audit(
     mass_sum = float(jnp.sum(jnp.where(solid.sdf >= 0.0, div_adv + div_ch, 0.0)))
 
     flat_bc_error = _normal_bc_relative_error(sdf, p, 60.0)
+    flat_bc_linear = _normal_bc_linearization_deviation(sdf, p, 60.0)
     X, Y = pf.grids(p)
     slope = 0.45
     inclined_sdf = (Y - slope * (X - 3.0) - 0.25) / math.sqrt(1.0 + slope**2)
     x_region = (np.asarray(X) > 2.5) & (np.asarray(X) < 3.5)
     inclined_bc_error = _normal_bc_relative_error(inclined_sdf, p, 120.0, region=x_region)
+    inclined_bc_linear = _normal_bc_linearization_deviation(inclined_sdf, p, 120.0, region=x_region)
     reversed_sdf = (Y + slope * (X - 3.0) - 0.25) / math.sqrt(1.0 + slope**2)
     reversed_bc_error = _normal_bc_relative_error(reversed_sdf, p, 120.0, region=x_region)
+    reversed_bc_linear = _normal_bc_linearization_deviation(reversed_sdf, p, 120.0, region=x_region)
 
     rhs = jnp.where(solid.sdf >= 0.0, phi, 0.0)
     implicit_solution, implicit_info = pf.solve_ch_implicit(rhs, solid, p, p.dt / 3.0)
@@ -251,16 +330,33 @@ def run_phase_boundary_audit(
     )
     mu_var = pf.chemical_potential(phi_var, solid_var, p_var)
     predicted_directional = float(jnp.sum(mu_var * direction_var) * p_var.dx * p_var.dy)
-    amplitude = 1.0e-5
-    fd_directional = float(
-        (
-            pf.phase_free_energy(phi_var + amplitude * direction_var, solid_var, p_var)
-            - pf.phase_free_energy(phi_var - amplitude * direction_var, solid_var, p_var)
+    variational_rows = []
+    for amplitude in (1.0e-6, 1.0e-5, 1.0e-4):
+        fd = float(
+            (
+                pf.phase_free_energy(phi_var + amplitude * direction_var, solid_var, p_var)
+                - pf.phase_free_energy(phi_var - amplitude * direction_var, solid_var, p_var)
+            )
+            / (2.0 * amplitude)
         )
-        / (2.0 * amplitude)
-    )
-    variational_relative_error = abs(fd_directional - predicted_directional) / max(abs(predicted_directional), 1e-30)
+        variational_rows.append(
+            {
+                "amplitude": float(amplitude),
+                "finite_difference": fd,
+                "mu_inner_product": predicted_directional,
+                "relative_error": abs(fd - predicted_directional) / max(abs(predicted_directional), 1e-30),
+            }
+        )
+    # Amplitude-optimized: float64 cancellation dominates the small amplitudes, FD truncation
+    # the large ones. Every amplitude is reported.
+    best = min(variational_rows, key=lambda row: row["relative_error"])
+    fd_directional = best["finite_difference"]
+    variational_relative_error = best["relative_error"]
+    variational_worst_amplitude = max(row["relative_error"] for row in variational_rows)
     separate_wall_mu_max = float(jnp.max(jnp.abs(pf.wetting_mu(phi_var, solid_var, p_var))))
+    wall_flux_total = float(np.sum(np.asarray(pf.wall_measure_density(solid_var, p_var), dtype=np.float64))) * (
+        p_var.dx * p_var.dy
+    )
 
     # Isolated u=0 neutral Cahn--Hilliard relaxation: test the actual discrete
     # bulk+wall energy without momentum exchanging kinetic and surface energy.
@@ -305,7 +401,7 @@ def run_phase_boundary_audit(
 
     ab = {
         "projection_v6": _neutral_trace(N, "projection_legacy", ab_steps, sample_every, dtype),
-        "impermeable_v7": _neutral_trace(N, "impermeable_flux", ab_steps, sample_every, dtype),
+        "impermeable_v8": _neutral_trace(N, "impermeable_flux", ab_steps, sample_every, dtype),
     }
     checks = [
         AuditCheck(
@@ -346,15 +442,34 @@ def run_phase_boundary_audit(
         ),
         AuditCheck(
             "flat_wall_natural_bc_sign",
-            flat_bc_error <= 0.03,
-            "flat SDF linear profile satisfies dphi/dn=-g_w'/eps (outward normal fluid->solid)",
-            {"relative_error": flat_bc_error, "target_deg": 60.0},
+            flat_bc_linear["stencil_relative_error"] <= 1.0e-9 and flat_bc_error <= NATURAL_BC_EXACT_PROFILE_TOLERANCE,
+            "on the measure-carrying control cells the linearized natural-BC profile reproduces "
+            "dphi/dn = -g_w'(0.5)/eps to round-off (sign and normal orientation), and the *exact* nonlinear "
+            f"natural-BC profile tanh(cos(theta) sdf/(sqrt(2) eps)) reproduces it to <= "
+            f"{NATURAL_BC_EXACT_PROFILE_TOLERANCE:g} (second-order stencil truncation at eps/dx = 2; it drops "
+            "~3.6x at eps/dx = 4)",
+            {
+                "linear_stencil_relative_error": flat_bc_linear["stencil_relative_error"],
+                "exact_profile_relative_error": flat_bc_error,
+                "linear_wall_placement_deviation": flat_bc_linear["placement_relative_deviation"],
+                "max_abs_sdf_over_dx_on_active": flat_bc_linear["max_abs_sdf_over_dx_on_active"],
+                "target_deg": 60.0,
+            },
         ),
         AuditCheck(
             "inclined_wall_natural_bc_orientation",
-            max(inclined_bc_error, reversed_bc_error) <= 0.03,
-            "the SDF normal BC has the same sign for positive and negative wall inclination",
-            {"positive_slope_relative_error": inclined_bc_error, "negative_slope_relative_error": reversed_bc_error},
+            max(inclined_bc_linear["stencil_relative_error"], reversed_bc_linear["stencil_relative_error"]) <= 1.0e-9
+            and max(inclined_bc_error, reversed_bc_error) <= NATURAL_BC_EXACT_PROFILE_TOLERANCE,
+            "the SDF normal BC has the same sign and magnitude for positive and negative wall inclination "
+            "(linearized stencil error at round-off for both slopes, exact profile within truncation)",
+            {
+                "positive_slope_exact_error": inclined_bc_error,
+                "negative_slope_exact_error": reversed_bc_error,
+                "positive_slope_stencil_error": inclined_bc_linear["stencil_relative_error"],
+                "negative_slope_stencil_error": reversed_bc_linear["stencil_relative_error"],
+                "positive_slope_placement_deviation": inclined_bc_linear["placement_relative_deviation"],
+                "negative_slope_placement_deviation": reversed_bc_linear["placement_relative_deviation"],
+            },
         ),
         AuditCheck(
             "neutral_90_wall_has_zero_bc_source",
@@ -378,14 +493,22 @@ def run_phase_boundary_audit(
             },
         ),
         AuditCheck(
-            "v7_energy_variational_derivative_no_double_count",
-            variational_relative_error <= 1e-4 and separate_wall_mu_max == 0.0,
-            "FD derivative of F_bulk+F_wall matches production mu; wall energy is not also added via wetting_mu",
+            "v8_energy_variational_derivative_no_double_count",
+            variational_relative_error <= VARIATIONAL_RELATIVE_TOLERANCE
+            and variational_worst_amplitude <= VARIATIONAL_WORST_AMPLITUDE_TOLERANCE
+            and separate_wall_mu_max == 0.0,
+            f"centred FD derivative of F_bulk + F_wall^h equals the production mu inner product within "
+            f"{VARIATIONAL_RELATIVE_TOLERANCE:g} (float64, amplitude-optimized; worst single amplitude "
+            f"{variational_worst_amplitude:.3e}), and the wall energy is not also added via wetting_mu",
             {
                 "finite_difference": fd_directional,
                 "mu_inner_product": predicted_directional,
                 "relative_error": variational_relative_error,
+                "worst_amplitude_relative_error": variational_worst_amplitude,
+                "amplitudes": variational_rows,
                 "separate_wetting_mu_max_abs": separate_wall_mu_max,
+                "wall_measure_total_length": wall_flux_total,
+                "expected_wall_length": float(p_var.Lx),
             },
         ),
         AuditCheck(
@@ -419,6 +542,8 @@ def run_phase_boundary_audit(
             "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
             "phase_boundary_model": "impermeable_flux",
             "wetting_model": "surface_energy",
+            "wall_measure_method": str(p.wall_measure),
+            "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
             "ch_solver_rtol": float(p.ch_solver_rtol),
             "ch_solver_max_iterations": int(p.ch_solver_max_iterations),
             "sessile_steps": int(sessile_steps),
@@ -430,7 +555,9 @@ def run_phase_boundary_audit(
         checks=checks,
         numbers={
             "wall_bc_relative_errors": {
-                "flat": flat_bc_error,
+                "flat_exact_profile": flat_bc_error,
+                "flat_linear_stencil": flat_bc_linear["stencil_relative_error"],
+                "flat_linear_placement_deviation": flat_bc_linear["placement_relative_deviation"],
                 "inclined_positive_slope": inclined_bc_error,
                 "inclined_negative_slope": reversed_bc_error,
             },
@@ -439,11 +566,14 @@ def run_phase_boundary_audit(
                 "relative_residual": implicit_rel,
                 "converged": bool(implicit_info.converged),
             },
-            "v7_variational_audit": {
+            "v8_variational_audit": {
                 "finite_difference": fd_directional,
                 "mu_inner_product": predicted_directional,
                 "relative_error": variational_relative_error,
+                "worst_amplitude_relative_error": variational_worst_amplitude,
+                "amplitudes": variational_rows,
                 "separate_wetting_mu_max_abs": separate_wall_mu_max,
+                "wall_measure_total_length": wall_flux_total,
             },
             "phase_energy": {
                 "trace": energy_trace,
@@ -457,7 +587,7 @@ def run_phase_boundary_audit(
 
 
 def format_markdown(audit: PhaseBoundaryAudit) -> str:
-    lines = ["# L1A-2c conservative phase-boundary audit", ""]
+    lines = ["# Conservative phase-boundary audit (L1A-2c; wall measure updated by L1A-2e)", ""]
     lines.append(
         f"- contract={audit.settings['solver_contract_version']} N={audit.settings['N']} "
         f"boundary={audit.settings['phase_boundary_model']} wetting={audit.settings['wetting_model']}"

@@ -63,6 +63,8 @@ def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
         solver_contract=int(pf.SOLVER_CONTRACT_VERSION),
         wetting_model=str(case.get("wetting_model", "surface_energy")),
         phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
+        wall_measure=str(pf.WALL_MEASURE_METHOD),
+        wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
         solver_sha256=_source_sha256(pf.__file__),
         generator_sha256=_source_sha256(__file__),
         case=case,
@@ -284,6 +286,8 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
         "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
         "wetting_model": "surface_energy",
         "phase_boundary_model": "impermeable_flux",
+        "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
+        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
         "case_set": set_name,
         "expected": len(records),
         "accepted": len(accepted),
@@ -331,6 +335,8 @@ def _save_case(
         solver_contract_version=int(pf.SOLVER_CONTRACT_VERSION),
         wetting_model=str(p.wetting_model),
         phase_boundary_model=str(p.phase_boundary_model),
+        wall_measure_method=str(p.wall_measure),
+        wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
         cos_theta_semantics=(
             "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
         ),
@@ -420,10 +426,12 @@ def main() -> None:
             "kinematic_We": float(case.get("We", 100.0)) * float(case.get("u_impact", 0.5)) ** 2,
             "kinematic_Re": float(case.get("Re", 200.0)) * abs(float(case.get("u_impact", 0.5))),
             "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
-            # The case pipeline records the exact v7 production defaults; each
+            # The case pipeline records the exact production defaults; each
             # trajectory file also carries the instantiated parameters.
             "wetting_model": str(case.get("wetting_model", "surface_energy")),
             "phase_boundary_model": str(case.get("phase_boundary_model", "impermeable_flux")),
+            "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
+            "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
             "cos_theta": (
                 "target Young equilibrium contact-angle cosine"
                 if str(case.get("wetting_model", "surface_energy")) in {"surface_energy", "surface_energy_volume_v6"}
