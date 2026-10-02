@@ -241,6 +241,9 @@ PHASE_FACE_APERTURE = "partial_open_length"
 #: and its measured value is recorded in every report either way.
 PHASE_ADVECTION_SUBCYCLING = "disabled"
 PHASE_ADVECTION_SUBCYCLINGS = ("disabled", "phase_only_fixed_substeps")
+#: Largest number of phase-only advective substeps a single phase update may take. It bounds the
+#: cost of the subcycled path; a run that would need more is reported by the CFL diagnostic.
+PHASE_ADVECTION_MAX_SUBSTEPS = 8
 
 #: Segment -> control-cell assignment of the embedded wall measure: the cut cell itself
 #: (v9, valid because a positive-length segment implies ``V_i > 0`` and therefore a live
@@ -361,6 +364,11 @@ class PhaseFieldParams:
     # geometry-conforming cut-cell control volume; ``hard_cell_v7`` pins the contract-v7/v8
     # cell-centre hard-fluid staircase domain for falsification/reproduction only.
     phase_transport_geometry: str = PHASE_TRANSPORT_GEOMETRY
+    #: Phase-only advective subcycling. ``"disabled"`` is the production default: the measured
+    #: cut-cell advective CFL ratio of the impact regressions is recorded either way, and this flag
+    #: is the sanctioned fix (phase-only, frozen velocity, conservative per substep, deterministic
+    #: ``n_sub``, momentum dt untouched) when that ratio is clearly violated.
+    phase_advection_subcycling: str = PHASE_ADVECTION_SUBCYCLING
     # LEGACY ONLY: contract-v5 volumetric affinity amplitude and band width.
     wall_energy_amp: float = 5.0
     wet_band: float = 0.15
@@ -401,6 +409,11 @@ class PhaseFieldParams:
         if self.wall_measure not in WALL_MEASURE_METHODS:
             raise ValueError(
                 f"unknown wall_measure {self.wall_measure!r}; expected one of {sorted(WALL_MEASURE_METHODS)}"
+            )
+        if self.phase_advection_subcycling not in PHASE_ADVECTION_SUBCYCLINGS:
+            raise ValueError(
+                f"unknown phase_advection_subcycling {self.phase_advection_subcycling!r}; "
+                f"expected one of {PHASE_ADVECTION_SUBCYCLINGS}"
             )
         if self.phase_transport_geometry not in PHASE_TRANSPORT_GEOMETRIES:
             raise ValueError(
@@ -1698,8 +1711,45 @@ def phase_transport_metadata(p: PhaseFieldParams) -> dict:
         "phase_transport_geometry_version": int(PHASE_TRANSPORT_GEOMETRY_VERSION),
         "phase_control_volume": str(PHASE_CONTROL_VOLUME if cutcell else "hard_cell_volume"),
         "phase_face_aperture": str(PHASE_FACE_APERTURE if cutcell else "binary_face_mask"),
-        "phase_advection_subcycling": str(PHASE_ADVECTION_SUBCYCLING),
+        "phase_advection_subcycling": str(
+            getattr(p, "phase_advection_subcycling", PHASE_ADVECTION_SUBCYCLING)
+        ),
         "wall_control_cell": str("positive_volume" if cutcell else "hard_fluid_ring"),
+    }
+
+
+def _cutcell_advective_cfl_traced(u, v, solid: Solid, p: PhaseFieldParams) -> dict:
+    """Jit-safe core of the cut-cell advective CFL diagnostic (traced arrays only).
+
+    The reported ratio is taken over cells whose throughput is significant (outflux >= 1e-3 of the
+    peak outflux): the unrestricted minimum is dominated by stagnant cells whose dt_adv is enormous
+    and would make the diagnostic meaningless. This is a *diagnostic* definition -- it changes no
+    update, no dt and no aperture -- and the unrestricted minimum is returned next to it.
+    """
+    operator = phase_transport_operator(solid, p)
+    volume = operator.volume
+    u_face = 0.5 * (u + jnp.roll(u, -1, axis=0))
+    v_face = 0.5 * (v + jnp.roll(v, -1, axis=1))
+    outflux = (
+        operator.aperture_x * jnp.abs(u_face)
+        + operator.aperture_y * jnp.abs(v_face)
+        + jnp.roll(operator.aperture_x * jnp.abs(u_face), 1, axis=0)
+        + jnp.roll(operator.aperture_y * jnp.abs(v_face), 1, axis=1)
+    )
+    active = (volume > 0.0) & (outflux > 0.0)
+    dt_adv = jnp.where(active, float(p.cfl) * volume / jnp.maximum(outflux, 1e-30), jnp.inf)
+    dt_global = jnp.asarray(float(p.dt), dtype=dt_adv.dtype)
+    throughput_floor = jnp.asarray(1.0e-3, dtype=outflux.dtype) * jnp.max(outflux)
+    significant = active & (outflux >= throughput_floor)
+    minimum_all = jnp.min(dt_adv)
+    minimum = jnp.min(jnp.where(significant, dt_adv, jnp.inf))
+    return {
+        "dt_adv_min": minimum,
+        "dt_adv_min_all_cells": minimum_all,
+        "cutcell_advective_cfl_ratio": dt_global / minimum,
+        "cutcell_advective_cfl_ratio_all_cells": dt_global / minimum_all,
+        "n_active_cells": jnp.sum(active.astype(jnp.int32)),
+        "n_significant_cells": jnp.sum(significant.astype(jnp.int32)),
     }
 
 
@@ -1710,40 +1760,85 @@ def cutcell_advective_cfl_diagnostic(u, v, solid: Solid, p: PhaseFieldParams) ->
 
         dt_adv,i = cfl_phase * V_i / sum_f A_f |u_n,f|
 
-    summed over the *open* faces of that cell (each face counted once, so the x-face of cell i and
-    the y-face below it), and reported as ``cutcell_advective_cfl_ratio = dt_global / min_i dt_adv,i``
-    over the cells that actually carry liquid (``V_i > 0`` and ``phi > phi_threshold``) -- a solid
-    cell with ``V_i = 0`` has no advection at all and a dry cut cell is not a constraint.
+    summed over the *open* faces of that cell (each face counted once), reported as
+    ``cutcell_advective_cfl_ratio = dt_global / min_i dt_adv,i`` over the cells that actually carry
+    significant throughput (``V_i > 0`` and outflux >= 0.1 % of the peak outflux) -- a solid cell has
+    no advection at all and a stagnant cell cannot constrain the CFL.
 
     This is a *measurement*, not a limiter: nothing here changes ``dt``, the momentum solver or the
     phase update. ``PHASE_ADVECTION_SUBCYCLING`` stays ``"disabled"`` unless a production run shows
-    the ratio clearly below one, in which case phase-only subcycling (frozen velocity, conservative
-    per substep, deterministic ``n_sub``) is the sanctioned fix and flux redistribution / cell
-    merging is explicitly out of scope for this stage.
+    the ratio clearly below one, in which case :func:`advective_phase_source` applies the sanctioned
+    phase-only subcycling (frozen velocity, conservative per substep, deterministic ``n_sub``, with
+    the momentum dt untouched). Flux redistribution and cell merging are out of scope.
     """
-    operator = phase_transport_operator(solid, p)
-    volume = operator.volume
-    u_face = 0.5 * (u + jnp.roll(u, -1, axis=0))
-    v_face = 0.5 * (v + jnp.roll(v, -1, axis=1))
-    # outgoing open area of each cell: its own +x/+y faces plus the -x/-y faces it shares
-    outflux = (
-        operator.aperture_x * jnp.abs(u_face)
-        + operator.aperture_y * jnp.abs(v_face)
-        + jnp.roll(operator.aperture_x * jnp.abs(u_face), 1, axis=0)
-        + jnp.roll(operator.aperture_y * jnp.abs(v_face), 1, axis=1)
-    )
-    active = (volume > 0.0) & (outflux > 0.0)
-    dt_adv = jnp.where(active, float(p.cfl) * volume / jnp.maximum(outflux, 1e-30), jnp.inf)
-    dt_global = jnp.asarray(float(p.dt), dtype=dt_adv.dtype)
-    minimum = jnp.min(dt_adv)
+    traced = _cutcell_advective_cfl_traced(u, v, solid, p)
     return {
-        "dt_adv_min": float(minimum),
-        "cutcell_advective_cfl_ratio": float(dt_global / minimum) if bool(jnp.isfinite(minimum)) else float("inf"),
-        "n_active_cells": int(jnp.sum(active)),
+        "dt_adv_min": float(traced["dt_adv_min"]),
+        "dt_adv_min_all_cells": float(traced["dt_adv_min_all_cells"]),
+        "cutcell_advective_cfl_ratio": float(traced["cutcell_advective_cfl_ratio"]),
+        "cutcell_advective_cfl_ratio_all_cells": float(traced["cutcell_advective_cfl_ratio_all_cells"]),
+        "n_active_cells": int(traced["n_active_cells"]),
+        "n_significant_cells": int(traced["n_significant_cells"]),
+        "throughput_floor_fraction": 1.0e-3,
         "cfl_phase": float(p.cfl),
         "dt_global": float(p.dt),
-        "subcycling": str(PHASE_ADVECTION_SUBCYCLING),
+        "subcycling": str(getattr(p, "phase_advection_subcycling", PHASE_ADVECTION_SUBCYCLING)),
     }
+
+
+def phase_advection_subcycles(p: PhaseFieldParams) -> bool:
+    """True when the conservative phase-only advective subcycling path is enabled."""
+    return str(getattr(p, "phase_advection_subcycling", PHASE_ADVECTION_SUBCYCLING)) != "disabled"
+
+
+def phase_advection_substeps(u, v, solid: Solid, p: PhaseFieldParams, dt: float):
+    """Deterministic number of phase-only advective substeps for one phase update of length ``dt``.
+
+    ``n_sub = clip(ceil(dt / dt_adv_min), 1, PHASE_ADVECTION_MAX_SUBSTEPS)`` with ``dt_adv_min`` the
+    throughput-significant cut-cell advection time of :func:`cutcell_advective_cfl_diagnostic`. It
+    is a pure function of the frozen velocity, the static geometry and ``dt`` -- no randomness and no
+    history -- so a run is reproducible and the momentum step ``dt`` itself never changes.
+    """
+    traced = _cutcell_advective_cfl_traced(u, v, solid, p)
+    minimum = traced["dt_adv_min"]
+    tiny = jnp.asarray(1.0e-30, dtype=minimum.dtype)
+    needed = jnp.asarray(float(dt)) / jnp.maximum(minimum, tiny)
+    substeps = jnp.clip(
+        jnp.ceil(jnp.where(jnp.isfinite(needed), needed, 1.0)), 1.0, float(PHASE_ADVECTION_MAX_SUBSTEPS)
+    )
+    return substeps.astype(jnp.int32), traced
+
+
+def advective_phase_source(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float):
+    """Effective advective rate ``(phi* - phi)/dt`` of a conservative phase-only advection of ``dt``.
+
+    With subcycling disabled this is exactly ``-div F_adv(u, v, phi)`` (one update). With
+    ``phase_advection_subcycling="phase_only_fixed_substeps"`` the *same* shared face fluxes are
+    applied ``n_sub`` times with the frozen velocity and a constant sub-step ``dt/n_sub``, so
+
+    * every sub-step conserves ``sum_i V_i phi_i`` by pairwise telescoping alone (no projection, no
+      redistribution, and any ``V_i = 0`` cell stays frozen because its divergence row is zero),
+    * the frozen velocity keeps the subcycling phase-only: the momentum step, the projection and the
+      Brinkman damping are untouched and ``dt`` itself never changes,
+    * ``n_sub`` is deterministic in the state, so the update is reproducible.
+
+    The returned value is a *rate*, so callers keep adding it to the CH source and hand the sum to
+    the implicit solve exactly as before.
+    """
+    volume_safe = phase_transport_operator(solid, p).volume_safe
+    if not phase_advection_subcycles(p):
+        flux_x, flux_y = phase_advective_fluxes(u, v, phi, solid, p)
+        return -control_volume_divergence(flux_x, flux_y, volume_safe)
+    substeps, _traced = phase_advection_substeps(u, v, solid, p, dt)
+    step_dt = jnp.asarray(float(dt), dtype=phi.dtype) / substeps.astype(phi.dtype)
+
+    def body(_index, carry):
+        value = carry
+        flux_x, flux_y = phase_advective_fluxes(u, v, value, solid, p)
+        return value - step_dt * control_volume_divergence(flux_x, flux_y, volume_safe)
+
+    advanced = lax.fori_loop(0, substeps, body, phi)
+    return (advanced - phi) / jnp.asarray(float(dt), dtype=phi.dtype)
 
 
 def fluid_face_apertures(solid: Solid, p: PhaseFieldParams):
@@ -2695,6 +2790,10 @@ def _phase_update(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float, phi_r
     """One phase substep; only conservative face fluxes and the weighted-SPD matrix-free CG."""
     if p.phase_boundary_model == "impermeable_flux":
         ch_x, ch_y = chemical_potential_fluxes(mu_expl, solid, p)
+        if phase_advection_subcycles(p):
+            # phase-only subcycling: recompute the advective rate with sub-steps at the frozen
+            # velocity instead of the single-step rate carried in ``phi_rhs``
+            phi_rhs = advective_phase_source(phi, u, v, solid, p, dt)
         source = phi_rhs - control_volume_divergence(ch_x, ch_y, phase_transport_operator(solid, p).volume_safe)
         return solve_ch_implicit(phi + dt * source, solid, p, dt)
 
@@ -2716,11 +2815,10 @@ def phase_transport_step(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float
     """Advance only the phase equation (useful for isolated CH-energy audits)."""
     dt = p.dt / 3.0 if dt is None else float(dt)
     if p.phase_boundary_model == "impermeable_flux":
-        adv_x, adv_y = phase_advective_fluxes(u, v, phi, solid, p)
         ch_mu = _explicit_chemical_potential(phi, solid, p)
         ch_x, ch_y = chemical_potential_fluxes(ch_mu, solid, p)
         volume_safe = phase_transport_operator(solid, p).volume_safe
-        source = -control_volume_divergence(adv_x, adv_y, volume_safe)
+        source = advective_phase_source(phi, u, v, solid, p, dt)
         source = source - control_volume_divergence(ch_x, ch_y, volume_safe)
         return solve_ch_implicit(phi + dt * source, solid, p, dt)
     advective_rhs = -div_upwind(u, v, phi, p.dx, p.dy)

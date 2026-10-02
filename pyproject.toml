@@ -180,3 +180,8 @@ module-root = ""
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13"]
 build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: long-running evidence-style tests; excluded from CI with -m 'not slow'",
+]

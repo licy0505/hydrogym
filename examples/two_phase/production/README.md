@@ -698,3 +698,146 @@ translation spread from 7.24 deg to the < 0.3 deg already measured on the discre
 150 deg equilibrium from 146.57 to the 149.2-149.7 deg already measured at the two alignments where the wall
 sits exactly on a cell face. Until then the residual contact-angle error at N=128 is dominated by an O(dx)
 reference-plane offset, not by the Young wall model.
+
+## J. L1A-2f: geometry-conforming cut-cell phase transport (contract 8 -> 9)
+
+### J.1 What changed
+
+L1A-2e corrected *where the wall energy is measured*; L1A-2f corrects *where the phase is transported*, so
+that the transport domain, the wall energy and the contact-angle measurement finally reference one surface.
+The blocker it resolves is `N-WALL-ALIGNMENT-TRANSPORT-DOMAIN`: contract v8 conserved `dx dy * #{sdf >= 0}`
+on the cell-centre hard-fluid staircase while `measure_contact_angle` referenced the geometric `sdf = 0`
+plane, and the gap between the two (`-0.458 .. +0.417` cells) drove the converged CH-only angle linearly
+with the sub-cell offset (`+1.79 / +4.16 / +8.20` deg per cell at 60 / 120 / 150 deg, `R^2 >= 0.998`).
+
+Contract v9 replaces the transported domain with the cut-cell control volumes of the *same* corner-sampled
+reconstruction that defines the wall measure:
+
+| quantity | contract v8 | contract v9 |
+|---|---|---|
+| control volume | `V_i = dx dy` on `sdf >= 0` centres, else 0 | `V_i =` exact fluid polygon area (Sutherland-Hodgman clipping of the cell square by the shared linear edge-crossing reconstruction) |
+| representative point | cell centre (= cell centre of a cell that may be half solid) | fluid polygon centroid (cell centre for a full cell) |
+| face aperture | 0/1 hard mask (`fluid & roll(fluid)`) | shared partial open length `A_f` of the face, `0 <= A_f <=` full length |
+| face weight | `A_f / dx` (or `dy`) | `w_f = A_f / d_ij`, `d_ij` the centroid-to-centroid distance (exactly `dx`/`dy` on a full-full face) |
+| wall measure host | ring-relocated to the nearest hard-fluid centre | the cut cell that owns the contour (`positive_volume`) |
+| wall density | `A_wall,i / (dx dy)` | `A_wall,i / V_i` |
+| implicit solve | Euclidean CG on `I + dt M eps (V^-1 K)^2` | Euclidean-SPD CG on `I + dt M eps S^2`, `S = V^-1/2 K V^-1/2`, `y = V^1/2 phi` |
+
+Nothing else moved: `g_w`, `h(phi)`, `sigma_0`, the contact-angle mapping, the measurement reference plane,
+the pressure projection, the momentum discretization, the Brinkman defaults, `rho`/`nu`, the capillary sign
+and the y-momentum BC are untouched. No global mass projection, angle remap, wall gain, `cos(theta)/f`, or
+`alpha`/`V` floor exists anywhere in the v9 path; the only threshold the reconstruction uses is the corner
+*sign* resolution `8 eps_mach max|sdf|` (`pf.CORNER_SIGN_TOLERANCE_FACTOR`), which decides whether the wall
+passes exactly through a grid corner and is not an `alpha` or volume floor.
+
+Also unchanged: `DATASET_SCHEMA_VERSION` stays 3 (the `.npz` layout is identical); every trajectory
+fingerprint, manifest and validation record now additionally carries `phase_transport_geometry =
+sdf_cutcell_fv_v1`, `phase_control_volume = partial_cell_volume`, `phase_face_aperture =
+partial_open_length`, `phase_advection_subcycling = disabled` and `wall_control_cell = positive_volume`,
+so a contract-8 staircase dataset or report is stale by version *and* by metadata.
+
+The tiny-cell degenerate case deserves its own line. Without the sign resolution, a wall exactly on a cell
+face (`y_wall/dy` an integer, e.g. `0.25` at N = 96 and 192) or through a grid corner (a wedge crest) leaves
+a cell with `0 < V_i ~ 1e-31 dx dy` and `A_wall,i > 0`; `A_wall/V ~ 1e16` then makes the implicit operator
+unsolvable. Snapping the *corner sign* at round-off resolution removes the degeneracy while keeping the
+geometry exact -- the volume, apertures and wall length of a face-aligned flat wall are unchanged and equal
+to the analytic values to the last bit (`production/cutcell_geometry_audit.py`, check
+`face_aligned_wall_is_not_degenerate`). Resolved small cut cells keep their true `V_i`, their true
+stiffness and their true wall measure: `alpha_min_positive`, `alpha_p01`, `alpha_p05` and `max(A_face/V)`
+are reported for every geometry, never floored.
+
+The pinned reproduction mode `phase_transport_geometry="hard_cell_v7"` still builds the contract-v7/v8
+operators (hard-mask volumes, 0/1 apertures, ring-relocated wall measure) from the same reconstruction, so
+the A/B evidence below can be produced by the same code.
+
+### J.2 Commands
+
+```bash
+# Geometry closure: one authority, flat-wall exactness, sub-cell offsets, inclined/textured invariants,
+# degenerate empty solid, small-cell report (AST-checked for alpha/V floors). --quick is the CI profile.
+python -m production.cutcell_geometry_audit            # full
+python -m production.cutcell_geometry_audit --quick    # CI (~1 min)
+
+# Transport closure: pairwise conservation, telescoping, manufactured advection/CH, the discrete energy
+# identity, weighted-SPD operator, dense-solve agreement, custom VJP, fail-closed CG, pinned v8 reproduction.
+python -m production.cutcell_phase_transport_audit
+python -m production.cutcell_phase_transport_audit --quick
+
+# L1A-2f evidence matrix (long; per-case caches under <out>/cases and per-section caches under <out>/sections
+# make it resumable, and --sections runs one part at a time)
+python -m production.cutcell_alignment_audit --profile baseline --out evidence/l1a2f
+python -m production.cutcell_alignment_audit --profile baseline --sections translation,resolution --out evidence/l1a2f
+python -m production.cutcell_alignment_audit --profile quick --allow-incomplete --out /tmp/l1a2f_quick
+```
+
+### J.3 What each gate measures
+
+| gate | definition | limit |
+|---|---|---|
+| `translation_spread_<target>` | spread of the *converged* CH-only equilibrium angle over the eight sub-cell wall offsets, measured against the true geometric `sdf = 0` plane (N = 128, eps = 2dx, M = 4 M_ref) | <= 2 deg (strong <= 1 deg) |
+| `translation_all_converged` | every offset run reaches the stationarity window (`nonneutral_wetting_audit.CRITERIA`) | required |
+| `ch_only_mass_drift_formal` | worst `sum_i V_i phi_i` drift of the drift-clean evidence (float64, rtol = 1e-8), exactly as the `N-CH-MASS-PRECISION` blocker prescribes; the float32/1e-6 drift and the cell-centre hard-mask drift are measured and reported alongside | <= 1e-3 |
+| `falsification_slope_<target>` | post-v9 angle regressed on the *old* hard-mask plane offset `(y_disc - y_geo)/dx` | <= 0.5 deg/cell (and < 1/4 of the v8 slope, else **the hypothesis is falsified** and reported as such) |
+| `resolution_spread_<target>` | same physical wall at N = 96/128/192 | <= 2 deg (strong <= 1 deg); L1A-2e measured 3.093 deg at 150 deg |
+| `ch_only_mae_deg` / `ch_only_max_error_deg` / `ch_only_neutral_error_deg` / `ch_only_monotonic` | four-target CH-only matrix at offset 0 (float32, 4 M_ref), with the float64 matrix reported alongside | 5 / 10 / 3 deg, monotonic |
+| `laplace_ratios_positive`, `laplace_ratio_change_vs_v8`, `laplace_r_squared` | static-droplet pressure jump on the empty solid: the cut-cell geometry must degenerate exactly, so the v9/v8 ratio stays 1 | positive, <= 0.01, R^2 >= 0.99 |
+| `cg_relative_residual_float32/64`, `cg_no_failed_solve` | worst reported relative residual of every solve, and the count of solves that failed closed | <= 1e-6 (f32), <= 1e-8 (f64), 0 failures |
+| `cutcell_advective_cfl_ratio` | `dt_global / min_i dt_adv,i` with `dt_adv,i = cfl_phase V_i / sum_f A_f abs(u_n,f)` over the impact runs, restricted to cells carrying significant throughput (>= 0.1 % of the peak outflux: stagnant cells cannot constrain a CFL), reported together with the unrestricted minimum and the deterministic substep count | <= 1 (above one would require the opt-in phase-only subcycling path; flux redistribution and cell merging are out of scope) |
+| `impact_cutcell_mass_drift` | `sum_i V_i phi_i` drift over the We = 100 neutral and We = 50 hydrophobic impact regressions | <= 1e-3 |
+| `ch_only_energy_non_increasing` | `F_h` non-increasing in every CH-only run (pairwise face telescoping only: no wall gain, no angle remap, no projection) | 0 violations |
+| `geometry_audit_passed`, `transport_audit_passed` | the two closure audits above | both pass |
+| `v8_pinned_reproduction` | `hard_cell_v7` re-measured under the v9 code: the frozen v8 spreads must still be reproduced, i.e. the improvement comes from the transport domain | <= 3 deg agreement and a strictly larger spread than v9 |
+
+### J.4 Evidence
+
+The evidence is produced by `production/cutcell_alignment_audit.py`, which writes
+`cutcell_alignment_report.json`, `cutcell_alignment_report.md` and a SHA256 `manifest.json` under the output
+directory (per-case JSON records under `<out>/cases` and per-section JSON under `<out>/sections`). Sections
+are independent and cached, so the long matrix can be run and resumed section by section:
+
+```bash
+python -m production.cutcell_alignment_audit --profile baseline --sections translation,translation_v8 \
+    --out evidence/l1a2f          # the primary alignment gate + the pinned-v8 A/B
+python -m production.cutcell_alignment_audit --profile baseline --sections resolution,primary_float64 \
+    --out evidence/l1a2f          # grid convergence + the float64 four-target matrix
+python -m production.cutcell_alignment_audit --profile baseline \
+    --sections production_mobility,precision,chns,laplace,impact,geometry,transport --out evidence/l1a2f
+python -m production.cutcell_alignment_audit --profile baseline --out evidence/l1a2f   # assemble the report
+```
+
+Because the runs are expensive (a converged 60 deg CH-only relaxation at N = 128 takes ~45k accelerated
+steps, ~9 min on two CPU cores), the section evidence may be committed only as the report + manifest; the
+report records `sections_run` and `sections_missing`, every gate records `measured`, and the report can never
+claim `not_ready = false` while a section is missing.
+
+### J.5 Tests
+
+`test_cutcell_transport.py` (CI, `-m "not slow"`) covers the closure statements on small grids: exact
+flat-wall volume and apertures, inclined area/length convergence, single geometry authority, positive-volume
+cells that a centre mask would drop, no open face to a zero-volume cell, exact empty-solid degeneracy,
+pairwise conservative advection and CH fluxes, mass telescoping, impermeable embedded walls, the discrete
+energy identity, Euclidean symmetry of `S` (and the *absence* of plain symmetry of `L`), SPD-ness of the
+implicit operator against a dense assembly, fail-closed CG, the contract/metadata freeze, and dataset
+staleness. The two `slow` tests are fast direction proxies for 60/150 deg and are excluded from CI; the full
+gate lives in the evidence runner.
+
+### J.6 Phase-only advective subcycling (opt-in)
+
+The §17 CFL diagnostic measures `cutcell_advective_cfl_ratio = dt_global / min_i dt_adv,i` over the
+cells that carry significant throughput; at the frozen impact case the measured minimum is ~0.12
+(We = 100 neutral) and ~0.16 (We = 50 hydrophobic), i.e. the global step is 6-8x *smaller* than the
+tightest local cut-cell advection time, so the cut-cell advection is resolved and no subcycling is
+needed for this stage. The contingency is implemented anyway, switched on with
+`PhaseFieldParams(..., phase_advection_subcycling="phase_only_fixed_substeps")`:
+
+* `n_sub = clip(ceil(dt_phase / dt_adv_min), 1, 8)` is a pure deterministic function of the frozen
+  velocity, the static geometry and `dt`, so a run is reproducible and `dt` (the momentum step) never
+  changes;
+* each sub-step applies the *same* shared face fluxes with the frozen velocity, so every sub-step
+  conserves `sum_i V_i phi_i` by pairwise telescoping alone -- no projection, no redistribution, and
+  `V_i = 0` cells stay frozen;
+* the momentum solver, the projection and the Brinkman damping are untouched, and the metadata key
+  `phase_advection_subcycling` records which mode produced a trajectory or a report;
+* the default stays `"disabled"`, because enabling it changes the impact/CHNS trajectories and would
+  therefore require re-running the full production-default CHNS acceptance matrix; the translation
+  gates are unaffected either way (the CH-only runs hold `u = v = 0`).
