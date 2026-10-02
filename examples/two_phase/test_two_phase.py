@@ -25,6 +25,9 @@ import ast
 import inspect
 
 import numpy as np
+import dataclasses
+import math
+
 import pytest
 
 jax = pytest.importorskip("jax")
@@ -209,11 +212,28 @@ def test_periodic_wedge_has_no_edge_cliff_and_normalised_levelset():
 
 
 def test_liquid_mass_uses_geometric_fluid():
+    """Contract v9: the liquid mass is the sum over the transported control volumes.
+
+    With ``phi = 1`` the mass must equal the *geometric* fluid area of the embedded reconstruction
+    (``sum_i V_i``), not the cell-centre staircase count ``dx dy * #{sdf >= 0}``: at N = 64 with
+    ``y_wall = 0.25`` the staircase loses 3/8 of a cell row (34.3125 instead of 34.5). The pinned
+    contract-v8 transport mode still reproduces the staircase, so both statements stay covered.
+    """
     p = pf.PhaseFieldParams(Nx=64, Ny=64, Lx=6.0, Ly=6.0)
     solid = pf.make_solid(pf.surface_flat(p), p)
     phi = jnp.ones((p.Nx, p.Ny))
-    expected = float(jnp.sum(solid.sdf >= 0.0) * p.dx * p.dy)
+    expected = float(jnp.sum(np.asarray(solid.geometry.volume)))
+    assert expected == pytest.approx(p.Lx * (p.Ly - 0.25), rel=1e-12)
     assert float(pf.liquid_mass(phi, solid, p)) == pytest.approx(expected, rel=1e-6)
+
+    p8 = dataclasses.replace(p, phase_transport_geometry="hard_cell_v7")
+    solid8 = pf.make_solid(pf.surface_flat(p8), p8)
+    staircase = float(jnp.sum(solid8.sdf >= 0.0) * p8.dx * p8.dy)
+    assert float(pf.liquid_mass(jnp.ones((p8.Nx, p8.Ny)), solid8, p8)) == pytest.approx(staircase, rel=1e-6)
+    # the staircase loses exactly the fluid sliver of the one cut row: Lx * (ceil(y/dy) dy - y)
+    deficit = p.Lx * (math.ceil(0.25 / p.dy) * p.dy - 0.25)
+    assert expected - staircase == pytest.approx(deficit, rel=1e-9)
+    assert deficit > 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -244,22 +264,34 @@ def _elliptical_drop(p, R, aspect=1.3):
     return pf.State(phi=phi, u=jnp.zeros_like(phi), v=jnp.zeros_like(phi), t=0.0)
 
 
-def test_solver_contract_is_v8():
-    """The embedded cut-cell Young wall measure changes trajectory semantics: contract 7 -> 8."""
-    assert pf.SOLVER_CONTRACT_VERSION == 8
+def test_solver_contract_is_v9():
+    """Contract v9: the phase is transported on the embedded cut-cell control volumes."""
+    assert pf.SOLVER_CONTRACT_VERSION == 9
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_CONTRACT_VERSION == 1
+    assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
+    assert pf.PHASE_TRANSPORT_GEOMETRY_VERSION == 1
+    assert pf.PHASE_CONTROL_VOLUME == "partial_cell_volume"
+    assert pf.PHASE_FACE_APERTURE == "partial_open_length"
     params = pf.PhaseFieldParams(Nx=32, Ny=32)
     assert params.wetting_model == "surface_energy"
     assert params.phase_boundary_model == "impermeable_flux"
     assert params.wall_measure == "sdf_cutcell_v1"
+    assert params.phase_transport_geometry == "sdf_cutcell_fv_v1"
     assert params.enforce_solid_phi is False
     # production defaults that must not move to make the contact angle come out right
     assert params.M == 2.0e-3 and params.ch_solver_rtol == 1.0e-6 and params.dtype is jnp.float32
+    assert params.dt == 2.0e-3 and params.eps == pytest.approx(1.5 * 6.0 / 32, rel=1e-12)
     with pytest.raises(ValueError, match="wall_measure"):
         pf.PhaseFieldParams(Nx=32, Ny=32, wall_measure="cos_theta_over_f")
+    with pytest.raises(ValueError, match="phase_transport_geometry"):
+        pf.PhaseFieldParams(Nx=32, Ny=32, phase_transport_geometry="cell_v7")
+    # the pinned contract-v7/v8 transport mode stays reachable for A/B evidence
+    pinned = pf.PhaseFieldParams(Nx=32, Ny=32, phase_transport_geometry="hard_cell_v7")
+    assert not pf.phase_transport_is_cutcell(pinned)
+    assert pf.phase_transport_is_cutcell(params)
 
 
 def test_static_drop_pressure_jump_has_correct_sign():
@@ -686,38 +718,89 @@ def _phase_boundary_setup(N=64, *, dtype=jnp.float32, theta=90.0, rtol=1e-6):
     return p, solid
 
 
+def _pillar_solid(p, module=pf, cos_theta=0.0, **extra):
+    """A flat wall plus an interior pillar: two disjoint embedded-solid features."""
+    X, Y = module.grids(p)
+    pillar = module.sdf_box(X, Y, 2.5, 3.5, 0.25, 0.8)
+    params = dataclasses.replace(p, **extra) if extra else p
+    return params, module.make_solid(
+        module.sdf_union(module.surface_flat(params, 0.25), pillar), params, cos_theta=cos_theta
+    )
+
+
 def test_phase_advective_flux_zero_across_solid_faces():
-    p, _flat_solid = _phase_boundary_setup()
-    X, Y = pf.grids(p)
-    pillar = pf.sdf_box(X, Y, 2.5, 3.5, 0.25, 0.8)
-    solid = pf.make_solid(pf.sdf_union(pf.surface_flat(p, 0.25), pillar), p, cos_theta=0.0)
+    """Contract v9: the flux is exactly zero on every face with zero open length.
+
+    A wall-crossing face is no longer automatically closed -- a cut cell straddles the wall, so
+    the face is *partially* open and carries a partial flux. What must stay exact is that a face
+    with ``A_f = 0`` carries exactly zero flux, that a face never connects to a zero-volume cell,
+    and that the pinned contract-v8 mode reproduces the hard-mask statement bit-for-bit.
+    """
+    p, solid = _pillar_solid(_phase_boundary_setup()[0])
     rng = np.random.default_rng(17)
     phi = jnp.asarray(rng.uniform(0.0, 1.0, (p.Nx, p.Ny)), dtype=p.dtype)
     u = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
     v = jnp.asarray(rng.normal(size=phi.shape), dtype=p.dtype)
-    fluid = np.asarray(solid.sdf >= 0.0)
-    ax, ay = (np.asarray(item) for item in pf.fluid_face_apertures(solid, p))
+    geometry = solid.geometry
+    volume = np.asarray(geometry.volume)
+    ax, ay = (np.asarray(item) for item in (geometry.aperture_x, geometry.aperture_y))
     fx, fy = (np.asarray(item) for item in pf.phase_advective_fluxes(u, v, phi, solid, p))
+    closed_x = ax == 0.0
+    closed_y = ay == 0.0
+    open_x = ~closed_x
+    open_y = ~closed_y
+    assert np.any(open_x) and np.any(open_y) and np.any(closed_x) and np.any(closed_y)
+    # zero aperture -> exactly zero flux (machine zero, not a small number)
+    assert np.max(np.abs(fx[closed_x]), initial=0.0) == 0.0
+    assert np.max(np.abs(fy[closed_y]), initial=0.0) == 0.0
+    # an open face always connects two existing control volumes (both sides, no orphans)
+    assert np.all((volume[:-1] > 0.0)[open_x[:-1]]) and np.all((volume[1:] > 0.0)[open_x[:-1]])
+    assert np.all((volume[:, :-1] > 0.0)[open_y[:, :-1]]) and np.all((volume[:, 1:] > 0.0)[open_y[:, :-1]])
+    assert not np.any((ax[:-1] > 0.0) & ((volume[:-1] <= 0.0) | (volume[1:] <= 0.0)))
+    assert not np.any((ay[:, :-1] > 0.0) & ((volume[:, :-1] <= 0.0) | (volume[:, 1:] <= 0.0)))
+    # an open face crossing the wall keeps a *partial* aperture strictly inside (0, dy)
+    fluid = np.asarray(solid.sdf >= 0.0)
     crossing_x = fluid ^ np.roll(fluid, -1, axis=0)
     crossing_y = fluid ^ np.roll(fluid, -1, axis=1)
-    assert np.any(crossing_x) and np.any(crossing_y)
-    assert not ax[crossing_x].any() and not ay[crossing_y].any()
-    assert np.max(np.abs(fx[crossing_x])) == 0.0
-    assert np.max(np.abs(fy[crossing_y])) == 0.0
+    partial = (crossing_x & (ax > 0.0))[:-1]
+    assert np.any(partial), "cut cells must keep the partially open part of a wall-crossing face"
+    assert np.all(ax[:-1][partial] < p.dy) and np.all(ax[:-1][partial] > 0.0)
+
+    # pinned contract-v7/v8 mode: the hard-mask statement, exactly as before
+    p8, solid8 = _pillar_solid(_phase_boundary_setup()[0], phase_transport_geometry="hard_cell_v7")
+    ax8, ay8 = (np.asarray(item) for item in pf.fluid_face_apertures(solid8, p8))
+    fx8, fy8 = (np.asarray(item) for item in pf.phase_advective_fluxes(u, v, phi, solid8, p8))
+    assert not ax8[crossing_x].any() and not ay8[crossing_y].any()
+    assert np.max(np.abs(fx8[crossing_x])) == 0.0
+    assert np.max(np.abs(fy8[crossing_y])) == 0.0
 
 
 def test_phase_ch_flux_zero_across_solid_faces():
-    p, _flat_solid = _phase_boundary_setup()
-    X, Y = pf.grids(p)
-    pillar = pf.sdf_box(X, Y, 2.5, 3.5, 0.25, 0.8)
-    solid = pf.make_solid(pf.sdf_union(pf.surface_flat(p, 0.25), pillar), p, cos_theta=0.0)
+    """Contract v9: no diffusive phase flux crosses the embedded wall (zero open length)."""
+    p, solid = _pillar_solid(_phase_boundary_setup()[0])
+    _X, Y = pf.grids(p)
     mu = (Y - 0.25).astype(p.dtype)  # a chemical-potential gradient points into the bottom wall
-    fluid = np.asarray(solid.sdf >= 0.0)
-    crossing_x = fluid ^ np.roll(fluid, -1, axis=0)
-    crossing_y = fluid ^ np.roll(fluid, -1, axis=1)
+    geometry = solid.geometry
     jx, jy = (np.asarray(item) for item in pf.chemical_potential_fluxes(mu, solid, p))
-    assert np.max(np.abs(jx[crossing_x]), initial=0.0) == 0.0
-    assert np.max(np.abs(jy[crossing_y]), initial=0.0) == 0.0
+    closed_x = np.asarray(geometry.aperture_x) == 0.0
+    closed_y = np.asarray(geometry.aperture_y) == 0.0
+    assert np.max(np.abs(np.asarray(jx)[closed_x]), initial=0.0) == 0.0
+    assert np.max(np.abs(np.asarray(jy)[closed_y]), initial=0.0) == 0.0
+    # every open face is shared: the flux leaving cell i through +x is exactly the flux
+    # entering cell i+1 through -x, so the volume-weighted divergence telescopes to zero
+    assert np.any(~closed_x) and np.any(~closed_y)
+    volume = np.asarray(geometry.volume)
+    divergence = pf.control_volume_divergence(jx, jy, pf.phase_transport_operator(solid, p).volume_safe)
+    scale = float(np.max(np.abs(volume * np.asarray(divergence))))
+    assert abs(float(np.sum(volume * divergence))) <= 1e-5 * max(scale, 1.0)
+
+    p8, solid8 = _pillar_solid(_phase_boundary_setup()[0], phase_transport_geometry="hard_cell_v7")
+    fluid = np.asarray(solid8.sdf >= 0.0)
+    jx8, jy8 = (np.asarray(item) for item in pf.chemical_potential_fluxes(mu, solid8, p8))
+    crossing_x8 = fluid ^ np.roll(fluid, -1, axis=0)
+    crossing_y8 = fluid ^ np.roll(fluid, -1, axis=1)
+    assert np.max(np.abs(np.asarray(jx8)[crossing_x8]), initial=0.0) == 0.0
+    assert np.max(np.abs(np.asarray(jy8)[crossing_y8]), initial=0.0) == 0.0
 
 
 def test_face_flux_divergence_conserves_fluid_mass(x64):
