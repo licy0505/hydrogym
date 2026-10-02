@@ -182,7 +182,20 @@ def _clean(value: Any) -> Any:
     return value
 
 
-def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: float, phi_ref_mass: float, M: float):
+def _sample(
+    state,
+    prev_phi,
+    solid,
+    p,
+    *,
+    ch_only: bool,
+    steps: int,
+    cos_eff: float,
+    phi_ref_mass: float,
+    M: float,
+    volume=None,
+    phi_ref_conserved_mass: float | None = None,
+):
     phi = np.asarray(state.phi, dtype=np.float64)
     if not np.isfinite(phi).all():
         raise FloatingPointError("non-finite phase field (implicit solve failed closed)")
@@ -209,10 +222,18 @@ def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: fl
     )
     free_energy = float(pf.phase_free_energy(state.phi, solid, p))
     fluid_mass = obs.liquid_mass(phi, sdf, p.dx, p.dy)
+    # Contract v9 conserved quantity: Q = sum_i V_i phi_i over the cut-cell control volumes.
+    # ``fluid_mass`` above stays as the hard-mask diagnostic so the two can be compared directly.
+    conserved_mass = None if volume is None else float(np.sum(phi * np.asarray(volume, dtype=np.float64)))
     positive = max(float(np.maximum(phi, 0.0).sum()), 1e-30)
     solid_fraction = float(np.maximum(phi[sdf < 0.0], 0.0).sum() / positive)
     u = np.asarray(state.u, dtype=np.float64)
     v = np.asarray(state.v, dtype=np.float64)
+    # §17 cut-cell advective CFL diagnostic: only meaningful when the velocity is live (the CH-only
+    # runs hold u = v = 0, where every dt_adv is infinite and the ratio is not a constraint).
+    cfl = None
+    if not ch_only and float(np.max(np.abs(u))) + float(np.max(np.abs(v))) > 0.0:
+        cfl = pf.cutcell_advective_cfl_diagnostic(state.u, state.v, solid, p)
     speed2 = u * u + v * v
     rho = np.asarray(pf.rho_of(state.phi, p), dtype=np.float64)
     chi = np.asarray(solid.chi, dtype=np.float64)
@@ -242,6 +263,14 @@ def _sample(state, prev_phi, solid, p, *, ch_only: bool, steps: int, cos_eff: fl
         "top_height": pos["top_height"],
         "fluid_mass": float(fluid_mass),
         "mass_drift": abs(float(fluid_mass) - phi_ref_mass) / max(abs(phi_ref_mass), 1e-30),
+        "cutcell_advective_cfl_ratio": None if cfl is None else cfl["cutcell_advective_cfl_ratio"],
+        "dt_adv_min": None if cfl is None else cfl["dt_adv_min"],
+        "conserved_liquid_mass": conserved_mass,
+        "conserved_mass_drift": (
+            None
+            if conserved_mass is None or phi_ref_conserved_mass is None
+            else abs(conserved_mass - phi_ref_conserved_mass) / max(abs(phi_ref_conserved_mass), 1e-30)
+        ),
         "solid_phase_fraction": solid_fraction,
         "free_energy": free_energy,
         "RY_l2": ry["RY_l2"],
@@ -360,6 +389,8 @@ def run_relaxation(
     ch_solver_max_iterations: int | None = None,
     wall_measure: str | None = None,
     budgets_extra: Sequence[int] = (),
+    phase_transport_geometry: str | None = None,
+    wall_offset_over_dy: float = 0.0,
 ) -> dict[str, Any]:
     """One staged relaxation. ``fixed_steps`` disables the staged/convergence stop (dt sweep).
 
@@ -380,6 +411,10 @@ def run_relaxation(
         kwargs["ch_solver_max_iterations"] = int(ch_solver_max_iterations)
     if wall_measure is not None:
         kwargs["wall_measure"] = str(wall_measure)
+    if phase_transport_geometry is not None:
+        # "sdf_cutcell_fv_v1" is the contract-v9 production transport; "hard_cell_v7" pins the
+        # contract-v7/v8 cell-centre staircase domain for the A/B falsification evidence.
+        kwargs["phase_transport_geometry"] = str(phase_transport_geometry)
     p = pf.PhaseFieldParams(
         Nx=N,
         Ny=N,
@@ -395,12 +430,21 @@ def run_relaxation(
     )
     cos_target = math.cos(math.radians(float(target_deg)))
     cos_eff = float(wall_gain) * cos_target
-    sdf = pf.surface_flat(p, wall_height=wall_height)
+    # sub-cell wall translation: the geometric wall sits at ``wall_height + offset * dy`` so the
+    # same physical wall can be placed anywhere inside a cell (the L1A-2f translation matrix).
+    height = float(wall_height) + float(wall_offset_over_dy) * float(p.dy)
+    sdf = pf.surface_flat(p, wall_height=height)
     solid = pf.make_solid(sdf, p, cos_theta=cos_eff)
-    state = pf.sessile_initial_state(p, solid, R=R, wall_height=wall_height)
+    state = pf.sessile_initial_state(p, solid, R=R, wall_height=height)
     mass0 = float(obs.liquid_mass(np.asarray(state.phi), np.asarray(solid.sdf), p.dx, p.dy))
+    cutcell = pf.phase_transport_is_cutcell(p)
+    volume = np.asarray(solid.geometry.volume, dtype=np.float64) if cutcell else None
+    mass0_conserved = float(np.sum(np.asarray(state.phi, dtype=np.float64) * volume)) if cutcell else None
+    sample_extra = {"volume": volume, "phi_ref_conserved_mass": mass0_conserved}
     kernel = clk.fluid_wall_delta_integral(np.asarray(solid.sdf), p.dx, p.dy)
-    initial = _sample(state, state.phi, solid, p, ch_only=ch_only, steps=0, cos_eff=cos_eff, phi_ref_mass=mass0, M=M)
+    initial = _sample(
+        state, state.phi, solid, p, ch_only=ch_only, steps=0, cos_eff=cos_eff, phi_ref_mass=mass0, M=M, **sample_extra
+    )
     samples = [initial]
     applied = 0
     it_max, res_max = 0, 0.0
@@ -426,7 +470,16 @@ def run_relaxation(
             break
         try:
             row = _sample(
-                state, prev_phi, solid, p, ch_only=ch_only, steps=applied, cos_eff=cos_eff, phi_ref_mass=mass0, M=M
+                state,
+                prev_phi,
+                solid,
+                p,
+                ch_only=ch_only,
+                steps=applied,
+                cos_eff=cos_eff,
+                phi_ref_mass=mass0,
+                M=M,
+                **sample_extra,
             )
         except FloatingPointError:
             cg_failed = True
@@ -559,6 +612,29 @@ def run_relaxation(
         "wall_kernel": kernel,
         "mass_drift": float(max(r["mass_drift"] for r in samples)),
         "mass_drift_final": final["mass_drift"],
+        # the contract-v9 conserved quantity: sum_i V_i phi_i on the cut-cell control volumes
+        "conserved_mass_drift": (
+            None
+            if not cutcell
+            else float(max(r["conserved_mass_drift"] for r in samples if r["conserved_mass_drift"] is not None))
+        ),
+        "conserved_mass_drift_final": None if not cutcell else final["conserved_mass_drift"],
+        "conserved_liquid_mass_initial": mass0_conserved,
+        "conserved_liquid_mass_final": final["conserved_liquid_mass"],
+        "wall_height": height,
+        "wall_offset_over_dy": float(wall_offset_over_dy),
+        # §17: the measured cut-cell advective CFL ratio (dt_global / min_i dt_adv,i) of the run
+        "cutcell_advective_cfl_ratio": (
+            None
+            if not any(r["cutcell_advective_cfl_ratio"] is not None for r in samples)
+            else max(r["cutcell_advective_cfl_ratio"] for r in samples if r["cutcell_advective_cfl_ratio"] is not None)
+        ),
+        "dt_adv_min": (
+            None
+            if not any(r["dt_adv_min"] is not None for r in samples)
+            else min(r["dt_adv_min"] for r in samples if r["dt_adv_min"] is not None)
+        ),
+        **pf.phase_transport_metadata(p),
         "solid_phase_fraction_max": float(max(r["solid_phase_fraction"] for r in samples)),
         "implicit_iterations_max": int(it_max),
         "implicit_residual_max": float(res_max),
@@ -1215,10 +1291,16 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if report["stage"] != STAGE:
         errors.append("stage must be L1A-2d")
     # The L1A-2d audit itself changes no production default, but it always reports the
-    # *live* solver contract: contract 7 for the frozen L1A-2d evidence, 8 once the
-    # L1A-2e embedded wall measure is in the tree (a re-run then diagnoses v8, not v7).
-    if report["solver_contract_version"] not in (7, 8):
-        errors.append(f"solver_contract_version must be 7 or 8; got {report['solver_contract_version']!r}")
+    # *live* solver contract: 7 for the frozen L1A-2d evidence, 8 once the L1A-2e embedded wall
+    # measure is in the tree, 9 once the phase transport runs on the cut-cell control volumes
+    # (a re-run then diagnoses the live contract, never a historical one).
+    if report["solver_contract_version"] not in (7, 8, 9):
+        errors.append(f"solver_contract_version must be 7, 8 or 9; got {report['solver_contract_version']!r}")
+    if report["solver_contract_version"] == 8:
+        # a contract-8 report cannot claim the v9 transport geometry
+        for key in ("phase_transport_geometry", "phase_control_volume", "phase_face_aperture"):
+            if key in report and report[key] not in (None, "hard_cell_v7", "hard_cell_volume", "binary_face_mask"):
+                errors.append(f"a contract-8 report cannot claim {key}={report[key]!r}")
     if report["solver_contract_version"] != int(pf.SOLVER_CONTRACT_VERSION):
         errors.append("solver_contract_version must match the live solver contract")
     if report["trajectory_semantics_changed"] is not False:
