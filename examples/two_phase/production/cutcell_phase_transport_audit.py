@@ -1000,18 +1000,39 @@ def audit_cutcell_cfl_diagnostic(N: int = 48):
                 "n_active_cells": diagnostic["n_active_cells"],
                 "subcycling": diagnostic["subcycling"],
                 "finite": bool(math.isfinite(diagnostic["dt_adv_min"])),
+                "cfl": float(p.cfl),
+                "dx": float(p.dx),
+                "dy": float(p.dy),
+                "manufactured_u": speed_x,
+                "manufactured_v": speed_y,
             }
         )
     empty = next(row for row in rows if row["surface"] == "empty")
-    uniform = float(p.cfl) * (p.dx * p.dy) / (2.0 * (p.dx + p.dy))
+    # Closed-form value the *measured* empty-solid diagnostic must reproduce. For a uniform velocity
+    # field every interior control volume is full (V = dx dy, aperture = 1 on all four faces), so the
+    # corner-averaged outgoing open length is the sum over the cell's own +x / +y faces and the
+    # shared -x / -y faces it also owns:
+    #     sum_f A_f |u_n,f| = 2 dy |u| + 2 dx |v|
+    # A unit-speed field would give cfl dx dy / (2 (dx + dy)); the manufactured fixture is u = 2,
+    # v = -1, so the two differ by exactly (|u| + |v|) / 2 = 1.5 and the analytic value is only equal
+    # to the measurement when the (unsigned) speeds are carried through.
+    uniform = (empty["cfl"] * empty["dx"] * empty["dy"]) / (
+        2.0 * (empty["dx"] * empty["manufactured_u"] + empty["dy"] * empty["manufactured_v"])
+    )
+    unit_speed = (empty["cfl"] * empty["dx"] * empty["dy"]) / (2.0 * (empty["dx"] + empty["dy"]))
+    uniform_relative_error = abs(empty["dt_adv_min"] - uniform) / uniform
     checks = [
         Check(
             "cutcell_advective_cfl_diagnostic_is_well_defined",
             all(row["finite"] and row["cutcell_advective_cfl_ratio"] > 0.0 for row in rows)
-            and all(abs(row["dt_adv_min"] - row["expected_dt_adv_min"]) <= 1e-5 * row["expected_dt_adv_min"] for row in rows),
+            and all(abs(row["dt_adv_min"] - row["expected_dt_adv_min"]) <= 1e-5 * row["expected_dt_adv_min"] for row in rows)
+            and uniform_relative_error <= 1.0e-6,
             f"dt_adv,i = cfl V_i / sum_f A_f |u_n,f| is finite and matches an independent numpy "
-            f"evaluation on empty, flat and pillar geometry; the empty solid reduces to the uniform "
-            f"cell value cfl dx dy / (2 (dx + dy)) = {uniform:.6g} (measured {empty['dt_adv_min']:.6g})",
+            f"evaluation on empty, flat and pillar geometry; for the manufactured uniform field "
+            f"(u, v) = ({speed_x:g}, {speed_y:g}) the empty solid reduces to the closed form "
+            f"cfl dx dy / (2 (dx |u| + dy |v|)) = {uniform:.10g} (measured {empty['dt_adv_min']:.10g}, "
+            f"relative difference {uniform_relative_error:.2e}), not to the unit-speed value "
+            f"cfl dx dy / (2 (dx + dy)) = {unit_speed:.10g}",
             rows,
         ),
         Check(
@@ -1022,7 +1043,14 @@ def audit_cutcell_cfl_diagnostic(N: int = 48):
             {"mode": pf.PHASE_ADVECTION_SUBCYCLING},
         ),
     ]
-    return checks, {"cfl_diagnostic": rows, "uniform_cell_dt_adv": uniform}
+    return checks, {
+        "cfl_diagnostic": rows,
+        "uniform_cell_dt_adv": uniform,
+        "uniform_cell_dt_adv_relative_error": uniform_relative_error,
+        "uniform_cell_dt_adv_unit_speed": unit_speed,
+        "manufactured_u": speed_x,
+        "manufactured_v": speed_y,
+    }
 
 
 def run_audit(quick: bool = False) -> Audit:

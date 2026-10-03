@@ -800,13 +800,18 @@ def evaluate_gates(numbers: dict[str, Any]) -> list[Gate]:
         GATES["formal_mass_drift"],
         {
             "float64_rtol1e-8_max": formal_drift,
+            "float64_rtol1e-8_evidence_status": mass.get("float64_rtol1e-8_evidence_status"),
+            "float64_rtol1e-8_targets": mass.get("float64_rtol1e-8_targets"),
             "float32_rtol1e-6_max_reported": mass.get("float32_rtol1e-6_conserved_mass_drift_max"),
             "hard_mask_metric_max_reported": mass.get("float32_rtol1e-6_hard_mask_mass_drift_max"),
             "float64_angles_deg": {k: v.get("angle_deg") for k, v in float64_matrix.items() if isinstance(v, dict)},
         },
         "formal mass criterion on the drift-clean evidence (float64, rtol = 1e-8), exactly as the "
         "N-CH-MASS-PRECISION blocker prescribes; the float32/1e-6 drift is measured and reported "
-        "alongside it and stays the blocker's subject, never a fitted setting",
+        "alongside it and stays the blocker's subject, never a fitted setting. The gate is only "
+        "*measured* when the primary_float64 section ran and every target converged with a recorded "
+        f"drift; otherwise it stays unmeasured ({mass.get('float64_rtol1e-8_evidence_status')}) and a "
+        "profile-limited run may not report it as zero",
     )
     add(
         "ch_only_energy_non_increasing",
@@ -1196,6 +1201,7 @@ def collect_numbers(sections: dict[str, Any]) -> dict[str, Any]:
     float64_matrix = {}
     for record in [r for r in records if r.get("_section") == "primary_float64"]:
         float64_matrix[str(record["target_deg"])] = {
+            "target_deg": float(record["target_deg"]),
             "angle_deg": equilibrium(record),
             "error_deg": None if equilibrium(record) is None else equilibrium(record) - float(record["target_deg"]),
             "converged": bool(record.get("converged")),
@@ -1203,11 +1209,39 @@ def collect_numbers(sections: dict[str, Any]) -> dict[str, Any]:
             "hard_mask_mass_drift": record.get("mass_drift"),
             "steps": record.get("steps"),
         }
-    f64_errors = [row["error_deg"] for row in float64_matrix.values() if row["error_deg"] is not None]
+    # Per-target rows only. The summary keys below (mae/max/neutral) are *derived* statistics, so they
+    # must never be mistaken for measurements: a profile that skips ``primary_float64`` (the CI smoke
+    # runs a section subset) leaves this dict empty and the formal gate stays *unmeasured*, never zero.
+    f64_rows = [row for row in float64_matrix.values() if isinstance(row, dict)]
+    f64_errors = [row["error_deg"] for row in f64_rows if row["error_deg"] is not None]
     float64_matrix["mae_deg"] = (sum(abs(e) for e in f64_errors) / len(f64_errors)) if f64_errors else None
     float64_matrix["max_error_deg"] = max((abs(e) for e in f64_errors), default=None)
-    float64_matrix["neutral_error_deg"] = float64_matrix.get("90.0", {}).get("error_deg")
+    float64_matrix["neutral_error_deg"] = (float64_matrix.get("90.0") or {}).get("error_deg")
+    float64_matrix["n_targets"] = len(f64_rows)
     numbers["ch_only_matrix_float64"] = float64_matrix
+
+    # The *formal* mass evidence (the N-CH-MASS-PRECISION criterion) is only a measurement when the
+    # float64 / rtol = 1e-8 target matrix actually ran and every target truly converged with a recorded
+    # drift. Anything less leaves the value ``None``, which the gate below turns into ``measured=False``
+    # -- fail closed, exactly like the missing sections themselves.
+    formal_drift = None
+    formal_status = "section primary_float64 not run"
+    if f64_rows:
+        missing_drift = sorted(str(r["target_deg"]) for r in f64_rows if r.get("conserved_mass_drift") is None)
+        unconverged = [r for r in f64_rows if not r.get("converged")]
+        missing_angle = sorted(str(r["target_deg"]) for r in f64_rows if r.get("error_deg") is None)
+        if missing_drift:
+            formal_status = f"conserved_mass_drift not recorded for {missing_drift}"
+        elif unconverged:
+            formal_status = (
+                f"only {len(f64_rows) - len(unconverged)}/{len(f64_rows)} float64 targets converged"
+            )
+        elif missing_angle:
+            formal_status = f"equilibrium angle missing for targets {missing_angle}"
+        else:
+            formal_drift = max(row["conserved_mass_drift"] for row in f64_rows)
+            formal_status = f"{len(f64_rows)} converged float64 / rtol 1e-8 targets"
+
     f32_drift = max((r.get("conserved_mass_drift") or 0.0) for r in primary.values()) if primary else None
     numbers["mass_precision"] = {
         "float32_rtol1e-6_conserved_mass_drift_max": f32_drift,
@@ -1216,11 +1250,9 @@ def collect_numbers(sections: dict[str, Any]) -> dict[str, Any]:
         )
         if primary
         else None,
-        "float64_rtol1e-8_conserved_mass_drift_max": max(
-            (row["conserved_mass_drift"] or 0.0) for row in float64_matrix.values() if isinstance(row, dict)
-        )
-        if float64_matrix
-        else None,
+        "float64_rtol1e-8_conserved_mass_drift_max": formal_drift,
+        "float64_rtol1e-8_evidence_status": formal_status,
+        "float64_rtol1e-8_targets": len(f64_rows),
         "formal_evidence_dtype": "float64",
         "formal_evidence_rtol": 1.0e-8,
         "production_default_dtype": "float32",
@@ -1515,7 +1547,8 @@ def format_markdown(report: dict[str, Any]) -> str:
                   f"- MAE = {float64_matrix.get('mae_deg')} deg, max = {float64_matrix.get('max_error_deg')} deg, "
                   f"90 deg = {float64_matrix.get('neutral_error_deg')} deg",
                   f"- conserved mass drift = "
-                  f"{(report['numbers'].get('mass_precision') or {}).get('float64_rtol1e-8_conserved_mass_drift_max')}"]
+                  f"{(report['numbers'].get('mass_precision') or {}).get('float64_rtol1e-8_conserved_mass_drift_max')} "
+                  f"({(report['numbers'].get('mass_precision') or {}).get('float64_rtol1e-8_evidence_status')})"]
     mass = report["numbers"].get("mass_precision") or {}
     if mass:
         lines += ["", "## Mass precision (`N-CH-MASS-PRECISION`)", "",
@@ -1523,8 +1556,10 @@ def format_markdown(report: dict[str, Any]) -> str:
                   f"{mass.get('float32_rtol1e-6_conserved_mass_drift_max')}",
                   f"- float32 / rtol 1e-6, cell-centre hard-mask metric = "
                   f"{mass.get('float32_rtol1e-6_hard_mask_mass_drift_max')}",
-                  f"- float64 / rtol 1e-8, conserved = {mass.get('float64_rtol1e-8_conserved_mass_drift_max')}",
-                  f"- formal criterion ({GATES['formal_mass_drift']:g}) is evaluated on the float64 evidence"]
+                  f"- float64 / rtol 1e-8, conserved = {mass.get('float64_rtol1e-8_conserved_mass_drift_max')} "
+                  f"({mass.get('float64_rtol1e-8_evidence_status')})",
+                  f"- formal criterion ({GATES['formal_mass_drift']:g}) is evaluated on the float64 evidence; "
+                  "when that section is not part of the profile the gate stays *unmeasured* (never zero)"]
     precision = report["numbers"].get("precision_matrix") or []
     if precision:
         lines += ["", "## Precision matrix (N-CH-MASS-PRECISION)", "",
@@ -1637,9 +1672,13 @@ def run_audit(
     report = assemble_report(cfg, loaded, numbers, gates)
     if allow_incomplete:
         # A profile-limited run (CI smoke) may leave gates unmeasured; it must never hide a *failed*
-        # measurement. The report still carries ``not_ready`` and the missing sections.
-        measured_failures = [gate.gate for gate in gates if gate.measured and not gate.passed]
-        report["not_ready_triggers"] = [t for t in report["not_ready_triggers"] if "gate failed" not in t]
+        # measurement. The report still carries ``not_ready`` and the missing sections, and the
+        # measured failures stay in the trigger list so the reason is never dropped.
+        failed_gates = [gate for gate in gates if gate.measured and not gate.passed]
+        measured_failures = [gate.gate for gate in failed_gates]
+        report["not_ready_triggers"] = [
+            f"gate failed: {gate.gate} ({gate.detail})" for gate in failed_gates
+        ] + [t for t in report["not_ready_triggers"] if not t.startswith("gate failed:")]
         report["not_ready"] = bool(measured_failures)
         report["allow_incomplete"] = True
         report["measured_failures"] = measured_failures

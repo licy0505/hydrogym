@@ -113,6 +113,7 @@ jobs:
           examples/two_phase/test_nonneutral_wetting_audit.py
           examples/two_phase/test_wall_measure.py
           examples/two_phase/test_cutcell_transport.py -m "not slow"
+          examples/two_phase/test_cutcell_alignment_audit.py
 
       - name: Run two-phase L1A validation contract
         working-directory: examples/two_phase
