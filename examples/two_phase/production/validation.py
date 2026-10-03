@@ -51,15 +51,23 @@ KNOWN_SOLVER_BLOCKERS = [
     {
         "id": "N-CH-MASS-PRECISION",
         "severity": "medium",
-        "status": "measurement_required",
+        "status": "confirmed_problem",
         "description": (
-            "Mass drifts with steps at the production float32 CG tolerance (rtol = 1e-6). L1A-2e measured "
-            "3-6e-3 on the *hard-mask* metric over a 59k-step accelerated CH-only relaxation, while a float64 / "
-            "rtol = 1e-8 probe drifted ~100x less. Contract v9 conserves the cut-cell quantity sum_i V_i phi_i, "
-            "whose drift at the same precision is measured in the L1A-2f precision matrix "
-            "(production/cutcell_alignment_audit.py, section ``precision``) and is materially smaller than the "
-            "hard-mask number it replaces. The production default stays float32/1e-6 and this blocker stays open "
-            "until the drift is measured down at production precision."
+            "Mass drifts with steps at the production float32 CG tolerance (rtol = 1e-6). L1A-2g localised the "
+            "mechanism with the M0-M8 ledger of M = sum_i V_i phi_i (production/mass_precision_audit.py): the "
+            "advective and Cahn-Hilliard fluxes and the rhs assembly are at the round-off floor, and the loss is "
+            "MULTIPLE_CONTRIBUTORS inside the contract-v9 sqrt(V) similarity pair -- PHI_TO_Y_TRANSFORM "
+            "(fl32(sqrt(V))^2 != V on the cut cells, +2.84e-9 mass-weighted), the tolerance-controlled "
+            "KRYLOV_NULL_MODE (c^T y != c^T b) and Y_TO_PHI_TRANSFORM (y * fl(1/sqrt(V)), a one-sided, "
+            "data-independent +1.8e-8..+2.2e-8 bias). Contract 10 removes the transform: the solve is posed for "
+            "the substep exchange d = phi_new - rhs in the V-weighted inner product, whose right-hand side has no "
+            "constant mode by telescoping, so the Krylov vectors are V-orthogonal to the mode by construction. "
+            "Measured: the quick gate at N = 48 falls from 1.4059e-4 to 8.5004e-7 (offset 0) and 1.2095e-4 to "
+            "1.0715e-6 (offset 0.5 dy), and in float64 the drift is 2.31e-16 over 1000 steps at N = 128 against "
+            "1.57e-5 in 200 for v9. A float32 residual remains (-0.0173 E_round per substep at N = 128, "
+            "rtol = 1e-6, i.e. 1.2e-3 over 150 000 substeps), which is the size of the remaining closure "
+            "failures (1.054e-3 at 60 deg over 50 000 steps), so this blocker stays open until the drift is "
+            "measured down at production precision."
         ),
     },
     {

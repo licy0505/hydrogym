@@ -266,7 +266,7 @@ def _elliptical_drop(p, R, aspect=1.3):
 
 def test_solver_contract_is_v9():
     """Contract v9: the phase is transported on the embedded cut-cell control volumes."""
-    assert pf.SOLVER_CONTRACT_VERSION == 9
+    assert pf.SOLVER_CONTRACT_VERSION == 10
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"

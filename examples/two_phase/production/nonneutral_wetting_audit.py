@@ -1294,8 +1294,10 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     # *live* solver contract: 7 for the frozen L1A-2d evidence, 8 once the L1A-2e embedded wall
     # measure is in the tree, 9 once the phase transport runs on the cut-cell control volumes
     # (a re-run then diagnoses the live contract, never a historical one).
-    if report["solver_contract_version"] not in (7, 8, 9):
-        errors.append(f"solver_contract_version must be 7, 8 or 9; got {report['solver_contract_version']!r}")
+    # 7/8 are the pinned reproduction contracts, 9 the cut-cell transport, 10 the L1A-2g weighted
+    # implicit solve. The audit records which one produced the trajectory; an unknown value fails.
+    if report["solver_contract_version"] not in (7, 8, 9, 10):
+        errors.append(f"solver_contract_version must be 7, 8, 9 or 10; got {report['solver_contract_version']!r}")
     if report["solver_contract_version"] == 8:
         # a contract-8 report cannot claim the v9 transport geometry
         for key in ("phase_transport_geometry", "phase_control_volume", "phase_face_aperture"):

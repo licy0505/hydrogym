@@ -213,7 +213,23 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 #      is no global mass projection, no alpha/V floor, and the implicit CH operator
 #      is solved in the volume-weighted SPD form ``S = V^-1/2 K V^-1/2``.
 #      ``PHASE_TRANSPORT_GEOMETRY='sdf_cutcell_fv_v1'``. v8 trajectories are stale.
-SOLVER_CONTRACT_VERSION = 9
+#  10: L1A-2g -- the weighted implicit phase solve is posed directly in the physical variable and
+#      conserves the cut-cell mass mode exactly. The v9 similarity transform ``y = V^1/2 phi`` could
+#      not be mass-consistent in floating point: ``fl(sqrt(V))^2`` disagrees with ``V`` on cut cells
+#      (the ``y``-space weight is not the physical weight) and ``phi = y * fl(1/sqrt(V))`` multiplies
+#      by an inexact reciprocal whose rounding bias is one-signed, so ``sum_i V_i phi_i`` gained a
+#      systematic ``O(0.2 eps)`` per substep that no solver tolerance could remove. The ledger of
+#      ``production/mass_precision_audit.py`` localizes it; contract 10 removes the transform instead
+#      of correcting its symptom: ``(I + dt M eps L^2) phi = rhs`` is solved by CG in the
+#      ``V``-weighted inner product (``L = V^-1 K`` is self-adjoint there), the conserved mode is
+#      literally ``<1, phi>_V = sum_i V_i phi_i`` with the control volume as its own weight, and the
+#      constant mode of the *current* RHS is carried exactly while every Krylov vector is kept
+#      ``V``-orthogonal to it. No ``sqrt(V)`` is formed anywhere in the mass-carrying path, and no
+#      mass projection, offset, rescale or redistribution is introduced. The v9 solve is retained
+#      below as the pinned ``_cg_solve_impl`` / ``_ch_cg_primal`` pair for falsification and
+#      reproduction. ``IMPLICIT_PHASE_SOLVER='weighted_spd_nullspace_preserving_v1'``. v9
+#      trajectories are stale.
+SOLVER_CONTRACT_VERSION = 10
 
 #: Production embedded wall-measure construction (L1A-2e). ``sdf_cutcell_v1`` is the
 #: deterministic marching-squares cut-cell measure; ``diffuse_sdf_v7`` is the pinned
@@ -232,9 +248,17 @@ WALL_MEASURE_METHODS = ("sdf_cutcell_v1", "diffuse_sdf_v7")
 PHASE_TRANSPORT_GEOMETRY = "sdf_cutcell_fv_v1"
 PHASE_TRANSPORT_GEOMETRY_VERSION = 1
 PHASE_TRANSPORT_GEOMETRIES = ("sdf_cutcell_fv_v1", "hard_cell_v7")
-#: Metadata strings recorded with every v9 trajectory/fingerprint (dataset + validation).
+#: Metadata strings recorded with every v9+ trajectory/fingerprint (dataset + validation).
 PHASE_CONTROL_VOLUME = "partial_cell_volume"
 PHASE_FACE_APERTURE = "partial_open_length"
+#: Implicit phase solve of contract v10 (L1A-2g): the volume-weighted SPD system is solved in the
+#: physical variable with the conserved constant mode carried exactly from the current RHS. The
+#: pinned contract-v9 alternative is ``"weighted_spd_similarity_transform_v9"``.
+IMPLICIT_PHASE_SOLVER = "weighted_spd_nullspace_preserving_v1"
+IMPLICIT_PHASE_SOLVERS = (IMPLICIT_PHASE_SOLVER, "weighted_spd_similarity_transform_v9")
+#: The invariant the implicit phase solve preserves: the componentwise cut-cell fluid mass
+#: ``sum_i V_i phi_i``, i.e. the ``V``-inner product of ``phi`` with the constant mode.
+PHASE_MASS_INVARIANT = "componentwise_cutcell_volume"
 #: Cut-cell advective subcycling of the phase transport (§17): measured, then enabled only if
 #: ``cutcell_advective_cfl_ratio`` is clearly violated. It stays off unless a production run shows
 #: a ratio below one; the diagnostic that decides this is :func:`cutcell_advective_cfl_diagnostic`
@@ -1715,6 +1739,8 @@ def phase_transport_metadata(p: PhaseFieldParams) -> dict:
             getattr(p, "phase_advection_subcycling", PHASE_ADVECTION_SUBCYCLING)
         ),
         "wall_control_cell": str("positive_volume" if cutcell else "hard_fluid_ring"),
+        "implicit_phase_solver": str(IMPLICIT_PHASE_SOLVER),
+        "phase_mass_invariant": str(PHASE_MASS_INVARIANT),
     }
 
 
@@ -2577,7 +2603,12 @@ def _project_phase_outside_solid(phi, solid: Solid, p: PhaseFieldParams):
 
 
 def _cg_solve_impl(rhs_field, inverse_sqrt_volume, weight_x, weight_y, alpha, rtol, max_iterations):
-    """Euclidean-SPD CG core for ``(I + alpha S^2) y = rhs`` with ``S = V^-1/2 K V^-1/2``.
+    """PINNED contract-v9 Euclidean-SPD CG for ``(I + alpha S^2) y = rhs`` with ``S = V^-1/2 K V^-1/2``.
+
+    Reproduction and falsification only since contract v10: this is the similarity-transform solve
+    whose ``y -> phi`` scaling carried the one-sided rounding bias in ``sum_i V_i phi_i``. It is kept
+    byte-for-byte so the L1A-2g ledger can measure the v9 mechanism with identical code. Production
+    calls :func:`solve_ch_implicit`, which uses :func:`_cg_solve_volume_weighted`.
 
     ``K`` is the symmetric graph stiffness assembled from the shared face weights ``w_f = A_f/d_ij``
     (:func:`graph_stiffness_apply`), so ``S`` is symmetric positive semidefinite in the *plain*
@@ -2633,7 +2664,7 @@ def _cg_solve_impl(rhs_field, inverse_sqrt_volume, weight_x, weight_y, alpha, rt
 
 
 def _ch_cg_primal(rhs_field, sqrt_volume, inverse_sqrt_volume, weight_x, weight_y, alpha, rtol, max_iterations):
-    """``phi_new = V^-1/2 A^-1 V^1/2 rhs`` with ``A = I + alpha S^2`` Euclidean SPD.
+    """PINNED contract-v9 ``phi_new = V^-1/2 A^-1 V^1/2 rhs`` with ``A = I + alpha S^2`` Euclidean SPD.
 
     ``I + alpha L^2 = V^-1/2 (I + alpha S^2) V^1/2`` with ``L = V^-1 K`` and
     ``S = V^-1/2 K V^-1/2``, so solving ``A y = V^1/2 rhs`` and mapping back with
@@ -2649,7 +2680,7 @@ def _ch_cg_primal(rhs_field, sqrt_volume, inverse_sqrt_volume, weight_x, weight_
 
 @jax.custom_vjp
 def _differentiable_ch_cg(rhs_field, sqrt_volume, inverse_sqrt_volume, weight_x, weight_y, alpha, rtol, max_iterations):
-    """Implicitly differentiated matrix-free weighted-SPD CG solve.
+    """PINNED contract-v9 implicitly differentiated matrix-free weighted-SPD CG solve.
 
     The forward Jacobian is ``J = V^-1/2 A^-1 V^1/2`` with ``A`` symmetric positive definite, so
     ``J^T = V^1/2 A^-1 V^-1/2``: the adjoint is the *same* SPD solve, sandwiched by the inverse
@@ -2708,31 +2739,225 @@ def _differentiable_ch_cg_bwd(residual, cotangents):
 _differentiable_ch_cg.defvjp(_differentiable_ch_cg_fwd, _differentiable_ch_cg_bwd)
 
 
+def volume_weighted_operator(value, volume_safe, weight_x, weight_y, alpha):
+    """``A x = x + alpha * L(L x)`` with ``L = V^-1 K``, the contract-v10 implicit operator.
+
+    ``K`` is the symmetric graph stiffness of the shared face weights ``w_f = A_f / d_ij`` and
+    ``L = V^-1 K`` is self-adjoint in the ``V``-weighted inner product ``<x, y>_V = y^T V x``
+    (``L^T V = K = V L``), so ``A`` is symmetric positive definite *in that inner product* and a
+    CG run with ``V``-weighted inner products is valid on it directly -- no similarity transform
+    and no ``sqrt(V)`` is needed. ``A 1 = 1`` holds exactly because ``K 1 = 0`` term by term.
+    """
+    lap = graph_stiffness_apply(value, weight_x, weight_y) / volume_safe
+    return value + alpha * (graph_stiffness_apply(lap, weight_x, weight_y) / volume_safe)
+
+
+def volume_weighted_inner(first, second, volume_safe):
+    """``<first, second>_V = sum_i V_i first_i second_i``: the inner product of the mass metric."""
+    return jnp.sum(volume_safe * first * second)
+
+
+def _cg_solve_volume_weighted(rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations):
+    """CG for the substep exchange ``d`` of ``(I + alpha L^2) phi = rhs``, ``phi = rhs + d``.
+
+    Contract v10 (L1A-2g). The conserved quantity of the phase transport is the cut-cell fluid mass
+    ``M = sum_i V_i phi_i``; in this formulation that is *literally* the ``V``-inner product of the
+    unknown with the constant mode, ``M = <1, phi>_V``, with the control volume ``V_i`` itself as
+    the weight. No ``sqrt(V)`` appears, so there is no ``fl(sqrt(V))^2 != V`` weight inconsistency
+    and no ``fl(1/sqrt(V)) * sqrt(V) != 1`` reciprocal round trip for the mass to leak through.
+
+    The solve is posed for the *exchange* ``d`` of this substep rather than for the new field:
+
+        A d = rhs - A rhs = -alpha L^2 rhs ,      phi_new = rhs + d ,      A = I + alpha L^2 .
+
+    This is the same solution ``A^-1 rhs`` in exact arithmetic, and it is the form production uses
+    because of what it does to the conserved mode in finite precision:
+
+    * The right-hand side ``-alpha L^2 rhs`` has *no* constant mode by construction:
+      ``sum_i V_i (L^2 rhs)_i = sum_i (K (K rhs / V))_i`` is the total of a face-flux divergence, i.e.
+      a telescoping sum whose raw float32 face pairs cancel to machine zero (measured: the audit's
+      ``flux_telescoping_machine_zero`` check, 4e-17 / 8e-19 of the flux scale). Together with
+      ``A 1 = 1`` *exactly* (``K 1 = 0`` term by term, so ``L 1 = 0`` and ``L^2 1 = 0``) that is the
+      whole invariant: every Krylov vector is ``V``-orthogonal to the constant mode as a property of
+      the right-hand side, with no projection step to inject whole-field roundings, and
+      ``<1, phi_new>_V = <1, rhs>_V``.
+    * ``|d| ~ alpha |L^2 rhs|`` is three orders of magnitude smaller than ``|rhs|``, and every
+      round-off inside the Krylov recurrence scales with the vector it acts on. Solving for the
+      correction therefore shrinks the *entire* float32 mode error of the recurrence by the same
+      factor.
+
+    L1A-2g measured four realisations of this solve against the pinned v9 transform solve and against
+    each other (``examples/two_phase/_variants.py``: 150 deg CH-only relaxation, ``M = 4 M_ref``,
+    7750 substeps, float32, ``rtol = 1e-6``; and ``production/mass_precision_audit.py``): v9
+    ``-6.72e-5`` / ``+1.53e-5`` (relative mass drift at N = 48 / N = 128), the split-once form
+    ``-2.41e-5`` / ``-2.34e-6``, the plain unsplit recurrence ``-6.71e-5`` / ``-1.06e-4``, and this
+    correction form ``-8.08e-7`` / ``-1.67e-6`` -- 30x better than the split-once form and 83x
+    better than v9 at N = 48, and the only form whose drift is a pure rounding walk rather than a
+    bias. A Neumaier-compensated constant-mode reduction on top of it measures the same
+    (``-7.28e-7``), so no extra precision machinery is added.
+
+    Zero-volume cells decouple (``K`` has no row or column there, so ``A = I`` and ``b = phi``),
+    which keeps the frozen solid frozen. A non-finite or non-positive ``<p, A p>_V`` poisons the
+    iterate, ``converged=False`` is reported, and a failed solve returns NaNs.
+
+    Precondition, checked by the audits and by :func:`production.validation` rather than here (it
+    is a static property of the geometry, and this kernel is traced): the fluid control volumes
+    must form a *single* connected component through open faces. With several components the null
+    space of ``K`` is spanned by one indicator per component, the exchange formulation pins only
+    the total mode, and the block-``Q`` generalisation is required. Contract v9 has the same
+    limitation (its CG also pinned nothing), so this is a documented precondition, not a
+    regression.
+    """
+
+    def operator(value):
+        return volume_weighted_operator(value, volume_safe, weight_x, weight_y, alpha)
+
+    # rhs - A rhs = -alpha L^2 rhs: the exchange of this substep, with no constant mode of its own
+    # (telescoping) and a magnitude ~1e-3 of rhs, so the recurrence below never rounds against the
+    # mode. A(0) = 0 exactly (K is linear and the zero field is exact), so the initial residual is
+    # this right-hand side itself and no operator application is spent on it.
+    correction_rhs = rhs_field - operator(rhs_field)
+
+    x0 = jnp.zeros_like(rhs_field)
+    residual0 = correction_rhs
+    direction0 = residual0
+    residual_sq0 = volume_weighted_inner(residual0, residual0, volume_safe)
+    rhs_norm = jnp.sqrt(volume_weighted_inner(rhs_field, rhs_field, volume_safe))
+    scale = jnp.maximum(rhs_norm, jnp.asarray(1.0e-30, dtype=rhs_field.dtype))
+    rel0 = jnp.sqrt(residual_sq0) / scale
+
+    def condition(carry):
+        _x, _r, _d, _rr, rel, iteration = carry
+        return (iteration < max_iterations) & jnp.isfinite(rel) & (rel > rtol)
+
+    def body(carry):
+        x, residual, direction, residual_sq, _rel, iteration = carry
+        image = operator(direction)
+        denominator = volume_weighted_inner(direction, image, volume_safe)
+        valid_denominator = jnp.isfinite(denominator) & (denominator > 0.0)
+        safe_denominator = jnp.where(valid_denominator, denominator, 1.0)
+        step_length = residual_sq / safe_denominator
+        x_new = x + step_length * direction
+        r_candidate = residual - step_length * image
+        r_new = jnp.where(valid_denominator, r_candidate, jnp.full_like(r_candidate, jnp.nan))
+        residual_sq_new = volume_weighted_inner(r_new, r_new, volume_safe)
+        rel_new = jnp.sqrt(residual_sq_new) / scale
+        safe_rr = jnp.maximum(residual_sq, jnp.asarray(1.0e-30, dtype=rhs_field.dtype))
+        beta = residual_sq_new / safe_rr
+        direction_new = r_new + beta * direction
+        return x_new, r_new, direction_new, residual_sq_new, rel_new, iteration + 1
+
+    x, _residual, _direction, _residual_sq, relative_residual, iterations = lax.while_loop(
+        condition,
+        body,
+        (x0, residual0, direction0, residual_sq0, rel0, jnp.asarray(0, dtype=jnp.int32)),
+    )
+    converged = jnp.isfinite(relative_residual) & (relative_residual <= rtol)
+    solution = rhs_field + x
+    solution = jnp.where(converged, solution, jnp.full_like(solution, jnp.nan))
+    return solution, ImplicitSolveInfo(iterations, relative_residual, converged)
+
+
+def _ch_volume_weighted_primal(rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations):
+    """``phi_new = (I + alpha L^2)^-1 rhs`` directly in the physical phase variable."""
+    return _cg_solve_volume_weighted(
+        rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations
+    )
+
+
+@jax.custom_vjp
+def _differentiable_ch_volume_weighted(
+    rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations
+):
+    """Implicitly differentiated volume-weighted CG solve (contract v10).
+
+    The forward Jacobian is ``J = A^-1`` with ``A = I + alpha L^2``. In the Euclidean matrix
+    representation ``A^T = V A V^-1`` (because ``L^T V = V L``), so
+
+        J^T = A^-T = V A^-1 V^-1,
+
+    i.e. the adjoint is the *same* V-inner-product solve, run on ``cotangent / V`` and scaled back
+    by ``V``. The adjoint shares the forward projector, the tolerance, the iteration cap and the
+    fail-closed semantics: ``converged=False`` on either solve propagates NaNs, exactly as in the
+    forward path.
+    """
+    return _ch_volume_weighted_primal(
+        rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations
+    )
+
+
+def _differentiable_ch_volume_weighted_fwd(
+    rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations
+):
+    solution, info = _ch_volume_weighted_primal(
+        rhs_field, volume_safe, weight_x, weight_y, alpha, rtol, max_iterations
+    )
+    return (solution, info), (
+        volume_safe,
+        weight_x,
+        weight_y,
+        alpha,
+        rtol,
+        max_iterations,
+        info.converged,
+    )
+
+
+def _differentiable_ch_volume_weighted_bwd(residual, cotangents):
+    (volume_safe, weight_x, weight_y, alpha, rtol, max_iterations, forward_converged) = residual
+    solution_cotangent = cotangents[0]
+    adjoint, adjoint_info = _cg_solve_volume_weighted(
+        solution_cotangent / volume_safe,
+        volume_safe,
+        weight_x,
+        weight_y,
+        alpha,
+        rtol,
+        max_iterations,
+    )
+    valid = forward_converged & adjoint_info.converged
+    rhs_cotangent = jnp.where(valid, adjoint * volume_safe, jnp.full_like(adjoint, jnp.nan))
+    # Geometry and physical coefficients are fixed/static for this solver path.
+    return rhs_cotangent, None, None, None, None, None, None
+
+
+_differentiable_ch_volume_weighted.defvjp(
+    _differentiable_ch_volume_weighted_fwd, _differentiable_ch_volume_weighted_bwd
+)
+
+
 def solve_ch_implicit(rhs_field, solid: Solid, p: PhaseFieldParams, dt: float):
-    """Solve ``(I + dt*M*eps*L^2) phi = rhs`` with ``L = V^-1 K`` by volume-weighted SPD CG.
+    """Solve ``(I + dt*M*eps*L^2) phi = rhs`` with ``L = V^-1 K``, conserving ``sum_i V_i phi_i``.
 
-    The stiff cut-cell Cahn--Hilliard operator is ``L = V^-1 K`` (``K`` the symmetric graph
-    stiffness of the shared face weights ``w_f = A_f/d_ij``), which is self-adjoint only in the
-    ``V``-weighted inner product. The solve is therefore performed on the similar Euclidean-SPD
-    operator::
+    Contract v10 (L1A-2g) solves the weighted problem *directly in the physical variable*, for the
+    substep exchange ``d = phi_new - rhs``, with a CG run in the ``V``-weighted inner product,
+    instead of the contract-v9 similarity transform ``y = sqrt(V) phi``, ``S = V^-1/2 K V^-1/2``::
 
-        S = V^-1/2 K V^-1/2,   y = V^1/2 phi,   (I + dt*M*eps*S^2) y = V^1/2 rhs
+        (I + dt*M*eps*L^2) phi = rhs,      <x, y>_V = y^T V x.
 
-    and mapped back with ``phi = V^-1/2 y``. No dense matrix, no FFT assumption, no naive
-    Euclidean CG on a nonsymmetric operator. Zero-volume cells decouple (``K`` has no row or
-    column there), so ``A = I`` and their ``phi`` is returned unchanged -- the frozen solid.
-    The custom VJP differentiates the implicit equation with a matching adjoint CG solve, so the
-    phase path stays usable in gradient-based HydroGym/FNO/RL workflows. A failed solve returns
-    NaNs and an explicit ``converged=False`` diagnostic; it can never silently advance.
+    ``L`` is self-adjoint and ``I + dt*M*eps*L^2`` is positive definite in ``<.,.>_V``, so the CG
+    is valid, and the conserved quantity is now the inner product of the unknown with the constant
+    mode itself, ``sum_i V_i phi_i = <1, phi>_V``. The v9 transform was not mass-consistent in
+    floating point: ``fl(sqrt(V))^2 != V`` made the ``y``-space weight disagree with ``V``, and
+    ``phi = y * fl(1/sqrt(V))`` multiplied by an *inexact reciprocal* whose rounding bias does not
+    average out. The L1A-2g ledger localized both as the first systematic, tolerance-independent
+    loss of ``sum_i V_i phi_i`` (see ``production/mass_precision_audit.py``); removing the transform
+    removes the mechanism rather than correcting its symptom.
+
+    No dense matrix, no FFT assumption, no naive Euclidean CG on a nonsymmetric operator. Zero-volume
+    cells decouple (``K`` has no row or column there), so ``A = I`` and their ``phi`` is returned
+    unchanged -- the frozen solid. The custom VJP differentiates the implicit equation with a
+    matching adjoint CG solve, so the phase path stays usable in gradient-based HydroGym/FNO/RL
+    workflows. A failed solve returns NaNs and an explicit ``converged=False`` diagnostic; it can
+    never silently advance.
     """
     operator = phase_transport_operator(solid, p)
     alpha = jnp.asarray(float(dt) * float(p.M) * float(p.eps), dtype=rhs_field.dtype)
     rtol = jnp.asarray(p.ch_solver_rtol, dtype=rhs_field.dtype)
     max_iterations = jnp.asarray(p.ch_solver_max_iterations, dtype=jnp.int32)
-    return _differentiable_ch_cg(
-        rhs_field.astype(operator.sqrt_volume.dtype),
-        operator.sqrt_volume,
-        operator.inverse_sqrt_volume,
+    return _differentiable_ch_volume_weighted(
+        rhs_field.astype(operator.volume_safe.dtype),
+        operator.volume_safe,
         operator.weight_x,
         operator.weight_y,
         alpha,

@@ -1,0 +1,13 @@
+{
+  "module": "production.mass_precision_audit",
+  "stage": "L1A-2g",
+  "profile": "forensic",
+  "passed": true,
+  "solver_contract_version": 10,
+  "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+  "first_loss_verdict": "MULTIPLE_CONTRIBUTORS",
+  "files": {
+    "mass_precision_report.json": "598cda4f6f2702b961d4b9a6cff50155ef097258fbfa44e438da4f8257702056",
+    "mass_precision_report.md": "8f68589d8951081ec5060c81ed8e8733a76dd008ad4401e60e4be2d19bdfec11"
+  }
+}

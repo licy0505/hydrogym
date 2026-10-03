@@ -1225,8 +1225,10 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
     contract = report.get("solver_contract_version")
-    if contract not in (8, 9):
-        errors.append(f"solver_contract_version must be 8 or 9; got {contract!r}")
+    if contract not in (8, 9, 10):
+        # 8/9 are the pinned reproduction contracts, 10 the L1A-2g weighted implicit solve. The
+        # report records which one produced it; an unknown value still fails.
+        errors.append(f"solver_contract_version must be 8, 9 or 10; got {contract!r}")
     if contract == 7:
         errors.append("a v8 wall-measure report cannot be produced by contract 7")
     if contract == 8:
