@@ -38,6 +38,7 @@ Run from ``examples/two_phase``::
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import json
 import math
 from dataclasses import asdict, dataclass, field
@@ -134,14 +135,30 @@ def _params(N: int, *, dtype=jnp.float64, eps_factor: float = 2.0, **kwargs) -> 
     return p
 
 
-def _measure(sdf, p) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
-    area, normal_x, normal_y, distance, info = pf.wall_cut_measure(jnp.asarray(sdf), p)
+def _measure(
+    sdf, p, control_cell: str = "positive_volume", volume=None
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
+    """Wall measure of the shipped cut-cell geometry (``area, nx, ny, distance, info``).
+
+    Contract v9 assigns the contour to the cell whose *control volume* hosts it
+    (``control_cell="positive_volume"``); ``"hard_fluid_ring"`` reproduces the pinned
+    contract-v7/v8 ring relocation and is used for the A/B regression sections below. The
+    wall centroid moved into ``info`` in contract v9 (it is the geometry authority's field).
+    """
+    area, normal_x, normal_y, distance, _centroid_x, _centroid_y, info = pf.wall_cut_measure(
+        jnp.asarray(sdf), p, control_cell=control_cell, volume=volume
+    )
     return (
         np.asarray(area, dtype=np.float64),
         np.asarray(normal_x, dtype=np.float64),
         np.asarray(normal_y, dtype=np.float64),
         np.asarray(distance, dtype=np.float64),
-        {key: (float(value) if np.ndim(value) == 0 else value) for key, value in info.items()},
+        {
+            # contract v9 adds string provenance keys (e.g. ``control_cell``) to the info dict;
+            # only scalars that are numbers become floats.
+            key: (value if isinstance(value, str) else (float(value) if np.ndim(value) == 0 else value))
+            for key, value in info.items()
+        },
     )
 
 
@@ -382,7 +399,10 @@ def audit_textured_geometry(N_values: Sequence[int] = (64, 128, 192), cases=TEXT
             p = _params(int(N))
             generator = getattr(pf, f"surface_{name}")
             sdf = np.asarray(generator(p, **kwargs), dtype=np.float64)
-            area, normal_x, normal_y, distance, info = _measure(sdf, p)
+            geometry, _geometry_info = pf.embedded_fluid_geometry(jnp.asarray(sdf), p)
+            volume = np.asarray(geometry.volume, dtype=np.float64)
+            area, normal_x, normal_y, distance, info = _measure(sdf, p, volume=volume)
+            _area8, _nx8, _ny8, _d8, info8 = _measure(sdf, p, control_cell="hard_fluid_ring", volume=volume)
             positive = area > 0.0
             magnitudes_full = np.sqrt(normal_x**2 + normal_y**2)
             magnitudes = magnitudes_full[area > 0.0]
@@ -433,6 +453,13 @@ def audit_textured_geometry(N_values: Sequence[int] = (64, 128, 192), cases=TEXT
                     if magnitudes.size
                     else [0.0, 0.0],
                     "length_on_solid_cells": float(info["length_on_solid_cells"]),
+                    # contract v9: the host must own a control volume; a solid *centre* is a cut cell
+                    "length_on_zero_volume_cells": float(info["length_on_zero_volume_cells"]),
+                    "length_on_positive_volume_cells": float(info["length_on_positive_volume_cells"]),
+                    # how many host cells are cut cells with a solid centre (v9 keeps their measure)
+                    "n_host_cells_with_solid_centre": int(np.count_nonzero(positive & (sdf < 0.0))),
+                    "n_positive_volume_solid_centre_cells": int(np.count_nonzero((volume > 0.0) & (sdf < 0.0))),
+                    "pinned_v8_length_on_solid_cells": float(info8["length_on_solid_cells"]),
                     "fluid_fraction_of_measure": float(info["length_on_fluid_cells"]) / max(float(area.sum()), 1e-30),
                     "max_control_cell_placement_cells": float(placement[valid_segments].max())
                     if valid_segments.any()
@@ -488,8 +515,13 @@ def audit_textured_geometry(N_values: Sequence[int] = (64, 128, 192), cases=TEXT
         all(_fine(series) <= _coarse(series) for series in corner_series.values()) if corner_series else False
     )
     corner_fine = max((_fine(series) for series in corner_series.values()), default=0.0)
+    # Contract v9: the measure must always be hosted by a cell that owns a positive control
+    # volume (a positive-length contour implies a positive fluid polygon), on *every* grid. A
+    # solid cell centre is now normal -- that is what a cut cell is -- so the hard-fluid host
+    # statement is audited on the pinned contract-v7/v8 ring mode instead, at N >= 96.
+    volume_hosted = all(grid["length_on_zero_volume_cells"] == 0.0 for row in rows for grid in row["grids"])
     fluid_only_fine = all(
-        grid["length_on_solid_cells"] == 0.0 for row in rows for grid in row["grids"] if grid["N"] >= 96
+        grid["pinned_v8_length_on_solid_cells"] == 0.0 for row in rows for grid in row["grids"] if grid["N"] >= 96
     )
     checks = [
         Check(
@@ -559,14 +591,19 @@ def audit_textured_geometry(N_values: Sequence[int] = (64, 128, 192), cases=TEXT
             },
         ),
         Check(
-            "wall_measure_lives_on_fluid_cells_only",
-            fluid_only_fine,
-            "at N >= 96 every geometry assigns 100 % of the measure to hard-fluid control cells (sdf >= 0), so "
-            "the wall forcing always reaches a cell that the open-face CH transport updates; coarse-grid "
-            "(N = 64) concave corners of composite SDFs can exceed the two-cell search radius and are reported",
+            "wall_measure_lives_on_positive_volume_control_cells",
+            volume_hosted and fluid_only_fine,
+            "contract v9 hosts every piece of wall measure on a cell with V_i > 0 (a positive-length contour "
+            "implies a positive fluid polygon), so the wall forcing always reaches a control volume that the "
+            "cut-cell CH transport actually updates -- including cells whose *centre* is solid; the pinned "
+            "contract-v7/v8 ring relocation still lands 100 % of the measure on hard-fluid centres at N >= 96",
             {
-                "N_ge_96_all_fluid": fluid_only_fine,
-                "length_on_solid_cells": _by_surface("length_on_solid_cells"),
+                "all_grids_volume_hosted": volume_hosted,
+                "N_ge_96_pinned_all_hard_fluid": fluid_only_fine,
+                "length_on_zero_volume_cells": _by_surface("length_on_zero_volume_cells"),
+                "length_on_solid_centre_cells": _by_surface("length_on_solid_cells"),
+                "pinned_v8_length_on_solid_cells": _by_surface("pinned_v8_length_on_solid_cells"),
+                "n_host_cells_with_solid_centre": _by_surface("n_host_cells_with_solid_centre"),
             },
         ),
         Check(
@@ -616,7 +653,12 @@ def audit_variational_derivative(
     p = _params(int(N), dtype=jnp.float64)
     sdf = np.asarray(pf.surface_flat(p, wall_height=0.25), dtype=np.float64)
     X, Y = pf.grids(p)
-    fluid = sdf >= 0.0
+    # Contract v9: the transported unknown lives on the cut-cell control volumes, so the probe
+    # support and the variational inner product are both volume-weighted (``mu = (1/V) dF/dphi``
+    # implies ``<dF, dir> = sum_i V_i mu_i dir_i``). The cell-centre hard mask is not the domain.
+    geometry, _geometry_info = pf.embedded_fluid_geometry(jnp.asarray(sdf), p)
+    volume = np.asarray(geometry.volume, dtype=np.float64)
+    fluid = volume > 0.0
     shifted_y = (Y - 0.25) / (p.Ly - 0.25)
     # Two x wavenumbers on purpose: with a single cos(2 pi X/Lx) mode every probe's *bulk*
     # directional derivative cancels exactly by symmetry at 90 deg, which would reduce the neutral
@@ -657,7 +699,7 @@ def audit_variational_derivative(
         for label, direction in probes.items():
             probe = jnp.asarray(direction, dtype=jnp.float64)
             mu = np.asarray(pf.chemical_potential(phi, solid, p), dtype=np.float64)
-            predicted = float(np.sum(mu * direction) * p.dx * p.dy)
+            predicted = float(np.sum(volume * mu * direction))
             for amplitude in amplitudes:
                 plus = float(pf.phase_free_energy(phi + amplitude * probe, solid, p))
                 minus = float(pf.phase_free_energy(phi - amplitude * probe, solid, p))
@@ -697,8 +739,9 @@ def audit_variational_derivative(
                     / max(abs(centred), degenerate_floor),
                 }
             )
+            # the wall term as the operator actually applies it: g_w'(phi) * A_wall,i / V_i
             dropped = mu - np.asarray(
-                pf.wall_energy_derivative(phi, solid.cos_theta) * solid.wall_area / (p.dx * p.dy), dtype=np.float64
+                pf.wall_energy_derivative(phi, solid.cos_theta) * pf.wall_measure_density(solid, p), dtype=np.float64
             )
             rows.append(
                 {
@@ -1017,7 +1060,16 @@ def audit_first_layer_residual(
                 theta = float(target)
                 sdf = Y - 0.25
                 phi = clk.manufactured_young_boundary_field(X, Y, sdf, p.eps, theta)
-                solid = pf.make_solid(jnp.asarray(sdf, dtype=np.float64), p, cos_theta=math.cos(math.radians(theta)))
+                # This metric is defined on the *first hard-fluid layer* that carries the wall
+                # measure, with ``dphi/dn`` from fluid-centre stencils: it audits where the wall
+                # condition is placed, not the cut-cell transport. It therefore uses the pinned
+                # contract-v7/v8 ring-relocated measure (the L1A-2e definition), which keeps the
+                # residual comparable across contract versions; the v9 host cells may have a solid
+                # centre, where a fluid-centre stencil is not defined.
+                pinned = dataclasses.replace(p, phase_transport_geometry="hard_cell_v7")
+                solid = pf.make_solid(
+                    jnp.asarray(sdf, dtype=np.float64), pinned, cos_theta=math.cos(math.radians(theta))
+                )
                 kwargs = {
                     "wall_area": np.asarray(solid.wall_area, dtype=np.float64),
                     "wall_normal_x": np.asarray(solid.wall_normal_x, dtype=np.float64),

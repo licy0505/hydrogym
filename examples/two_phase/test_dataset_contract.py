@@ -37,11 +37,12 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
 def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
     """Schema v3 is retained, but contract-7 (and contract-6) trajectories fingerprint stale under v8.
 
-    The contract-v8 change is the embedded wall measure, so a dataset generated with the pinned
-    legacy kernel (``wall_measure='diffuse_sdf_v7'``) must also be stale even though the schema,
-    the case dict and every other default are identical.
+    The contract-v9 change moves the phase transport onto the cut-cell control volumes, so a dataset
+    generated with the pinned legacy transport (``phase_transport_geometry='hard_cell_v7'``) must also
+    be stale even though the schema, the case dict and every other default are identical, and the same
+    holds for the pinned legacy wall-measure kernel (``wall_measure='diffuse_sdf_v7'``).
     """
-    assert pf.SOLVER_CONTRACT_VERSION == 8
+    assert pf.SOLVER_CONTRACT_VERSION == 9
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
@@ -79,17 +80,26 @@ def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
     # The explicit boundary-model key still makes otherwise identical custom cases stale.
     legacy_case = {**case, "phase_boundary_model": "projection_legacy"}
     assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v8
+    # Contract v9: pinning the legacy cell-centre transport changes the fingerprint too, and the
+    # manifest records the v9 metadata explicitly.
+    legacy_transport = {**case, "phase_transport_geometry": "hard_cell_v7"}
+    assert G._dataset_fingerprint(legacy_transport, args, dt, nsteps, save_every) != expected_v8
+    manifest = G._write_manifest(tmp_path, "smoke", [])
+    assert manifest["phase_transport_geometry"] == "sdf_cutcell_fv_v1"
+    assert manifest["phase_control_volume"] == "partial_cell_volume"
+    assert manifest["phase_face_aperture"] == "partial_open_length"
+    assert manifest["phase_advection_subcycling"] == "disabled"
 
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 9
     assert manifest["wetting_model"] == "surface_energy"
     assert manifest["phase_boundary_model"] == "impermeable_flux"
     assert manifest["wall_measure_method"] == "sdf_cutcell_v1"
     assert manifest["wall_measure_contract_version"] == 1
     written = json.loads((tmp_path / "manifest.json").read_text())
-    assert written["solver_contract_version"] == 8
+    assert written["solver_contract_version"] == 9
     assert written["wall_measure_method"] == "sdf_cutcell_v1"
 
 

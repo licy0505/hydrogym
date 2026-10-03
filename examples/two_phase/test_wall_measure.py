@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import ast
 import json
+import dataclasses
 import math
 from pathlib import Path
 
@@ -64,6 +65,13 @@ def _flat(N=64, *, offset=0.0, theta=90.0, dtype=jnp.float32, eps_factor=2.0):
     return p, solid, wall_height
 
 
+def _flat_pinned_v8(N=64, *, offset=0.0, theta=90.0, dtype=jnp.float32, eps_factor=2.0):
+    """The same wall with the pinned contract-v7/v8 transport geometry (hard-fluid ring)."""
+    p, solid, wall_height = _flat(N, offset=offset, theta=theta, dtype=dtype, eps_factor=eps_factor)
+    pinned = dataclasses.replace(p, phase_transport_geometry="hard_cell_v7")
+    return pinned, pf.make_solid(pf.surface_flat(pinned, wall_height=wall_height), pinned), wall_height
+
+
 # ---------------------------------------------------------------------------
 #  flat wall: exact length and grid-alignment independence
 # ---------------------------------------------------------------------------
@@ -76,12 +84,20 @@ def test_flat_wall_measure_equals_geometric_length(N, x64):
     positive = area > 0.0
     assert positive.sum() == N  # exactly one control cell per column
     assert np.allclose(area[positive], p.dx, rtol=1e-12, atol=0.0)  # each carries one cut of length dx
-    # one cell layer only, on hard-fluid cells, with the fluid->solid normal
+    # one cell layer only, and always on a cell that *owns* a control volume
     rows = np.unique(np.argwhere(positive)[:, 1])
     assert rows.size == 1
-    assert np.all(np.asarray(solid.sdf)[positive] >= 0.0)
+    # Contract v9 hosts the measure on the cut cell itself, which may have a solid centre but
+    # always has V_i > 0 (a positive-length contour implies a positive fluid polygon).
+    assert np.all(np.asarray(solid.geometry.volume)[positive] > 0.0)
     assert np.allclose(np.asarray(solid.wall_normal_x)[positive], 0.0, atol=1e-14)
     assert np.allclose(np.asarray(solid.wall_normal_y)[positive], -1.0, rtol=0.0, atol=1e-12)
+    # the pinned contract-v7/v8 mode still relocates the measure to a hard-fluid centre
+    _p8, solid8, _ = _flat_pinned_v8(N, dtype=jnp.float64)
+    area8 = np.asarray(solid8.wall_area, dtype=np.float64)
+    positive8 = area8 > 0.0
+    assert area8.sum() == pytest.approx(p.Lx, rel=1e-12, abs=0.0)
+    assert np.all(np.asarray(solid8.sdf)[positive8] >= 0.0)
 
 
 def test_flat_wall_measure_is_translation_invariant(x64):
@@ -144,7 +160,7 @@ def test_inclined_wall_measure_is_euclidean_length(slope, x64):
     X, Y = pf.grids(p)
     dx = p.dx
     sdf = (Y - slope * (X - 3.0) - 0.25) / math.sqrt(1.0 + slope * slope)
-    area, normal_x, normal_y, distance, info = pf.wall_cut_measure(sdf, p)
+    area, normal_x, normal_y, distance, _cx, _cy, info = pf.wall_cut_measure(sdf, p)
     area = np.asarray(area, dtype=np.float64)
     x_axis = (np.arange(p.Nx) + 0.5) * dx
     height = 0.25 + slope * (x_axis - 3.0)
@@ -206,13 +222,25 @@ def test_textured_geometry_measure_is_finite_positive_and_conserved(x64):
         ("wedge", {"wall_height": 1.5, "slope": 0.5}),
     ):
         sdf = np.asarray(getattr(pf, f"surface_{name}")(p, **kwargs), dtype=np.float64)
-        area, normal_x, normal_y, distance, info = pf.wall_cut_measure(jnp.asarray(sdf), p)
+        geometry, _geometry_info = pf.embedded_fluid_geometry(jnp.asarray(sdf), p)
+        area, normal_x, normal_y, distance, _cx, _cy, info = pf.wall_cut_measure(
+            jnp.asarray(sdf), p, volume=geometry.volume
+        )
         area = np.asarray(area, dtype=np.float64)
         positive = area > 0.0
         assert positive.any() and np.isfinite(area).all()
         assert area[positive].min() > 0.0
         assert float(info["measure_conservation_error"]) == pytest.approx(0.0, abs=1e-12)
-        assert float(info["length_on_solid_cells"]) == 0.0  # every control cell is hard fluid
+        # contract v9: every control cell that hosts wall measure owns a positive control volume.
+        # A solid *centre* is allowed (that is exactly what a cut cell is), a solid volume is not.
+        assert float(info["length_on_zero_volume_cells"]) == 0.0
+        assert float(info["length_on_positive_volume_cells"]) == pytest.approx(float(area.sum()), rel=1e-12)
+        # the pinned contract-v7/v8 ring relocation keeps the hard-fluid host statement
+        _a8, _nx8, _ny8, _d8, _cx8, _cy8, info8 = pf.wall_cut_measure(
+            jnp.asarray(sdf), p, control_cell="hard_fluid_ring", volume=geometry.volume
+        )
+        assert float(info8["length_on_solid_cells"]) == 0.0  # every control cell is hard fluid
+        assert float(np.asarray(_a8, dtype=np.float64).sum()) == pytest.approx(float(area.sum()), rel=1e-12)
         magnitude = np.sqrt(np.asarray(normal_x) ** 2 + np.asarray(normal_y) ** 2)
         counts = np.asarray(info["segment_count_field"], dtype=np.float64)
         single = positive & (counts <= 1.0 + 1e-9)
@@ -556,7 +584,14 @@ def test_wall_measure_option_fails_closed_and_legacy_is_pinned(x64):
     production = _params(64, dtype=jnp.float64)
     production_solid = pf.make_solid(jnp.asarray(sdf), production, cos_theta=math.cos(math.radians(60.0)))
     cut_density = np.asarray(pf.wall_measure_density(production_solid, production), dtype=np.float64)
-    assert float(cut_density.sum()) * production.dx * production.dy == pytest.approx(production.Lx, rel=1e-12)
+    # contract v9: the density is wall length per unit *control volume* (A_wall,i / V_i), so the
+    # volume-weighted integral reproduces the geometric wall length exactly -- including on the
+    # cut row, where V_i < dx dy and the density is correspondingly larger than 1/dy.
+    volume = np.asarray(production_solid.geometry.volume, dtype=np.float64)
+    assert float((cut_density * volume).sum()) == pytest.approx(production.Lx, rel=1e-12)
+    assert float(np.asarray(production_solid.wall_area, dtype=np.float64).sum()) == pytest.approx(
+        production.Lx, rel=1e-12
+    )
     legacy_total = float(legacy_density.sum()) * p.dx * p.dy
     legacy_fluid = float(np.sum(legacy_density[sdf >= 0.0])) * p.dx * p.dy
     # The falsified root cause: only the fluid half of the two-sided kernel acts on the transported
@@ -575,10 +610,12 @@ def test_wall_measure_option_fails_closed_and_legacy_is_pinned(x64):
 # ---------------------------------------------------------------------------
 #  contract v8 / v7 staleness
 # ---------------------------------------------------------------------------
-def test_contract_v8_metadata_and_v7_staleness():
-    assert pf.SOLVER_CONTRACT_VERSION == 8
+def test_contract_v9_metadata_and_v8_staleness():
+    """The wall measure and the transport geometry move to contract 9 together."""
+    assert pf.SOLVER_CONTRACT_VERSION == 9
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_CONTRACT_VERSION == 1
+    assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     import generate_dataset as G
 
     payload_defaults = {
@@ -586,12 +623,14 @@ def test_contract_v8_metadata_and_v7_staleness():
         "wall_measure_contract_version": pf.WALL_MEASURE_CONTRACT_VERSION,
         "solver_contract": int(pf.SOLVER_CONTRACT_VERSION),
     }
-    assert payload_defaults["solver_contract"] == 8
+    assert payload_defaults["solver_contract"] == 9
     source = (HERE / "generate_dataset.py").read_text()
     assert "wall_measure=str(pf.WALL_MEASURE_METHOD)" in source
     assert '"wall_measure_method": str(pf.WALL_MEASURE_METHOD)' in source
+    # contract v9: the fingerprints/manifests additionally carry the phase-transport metadata, so a
+    # contract-8 staircase dataset is stale by version and by geometry semantics at once
+    assert "phase_transport_metadata" in source
     assert G.DATASET_SCHEMA_VERSION == 3  # the .npz schema itself is unchanged
-    # a v7 fingerprint differs from a v8 one for the identical case (data fails closed)
     assert "DATASET_SCHEMA_VERSION" in source
 
 
@@ -666,7 +705,7 @@ def test_wall_measure_audit_module_passes_its_own_gates(x64):
     failed = [check.name for check in audit.checks if not check.passed]
     assert failed == []
     payload = audit.to_dict()
-    assert payload["solver_contract_version"] == 8
+    assert payload["solver_contract_version"] == 9
     assert payload["wall_measure_method"] == "sdf_cutcell_v1"
     json.dumps(payload, allow_nan=False)  # strict JSON
 
@@ -678,7 +717,7 @@ def test_example_config_documents_the_l1a2e_profile():
     cfg = json.loads((HERE / "production" / "configs" / "embedded_young.example.json").read_text())
     base = eya.PROFILES["baseline"]
     assert cfg["stage"] == "L1A-2e"
-    assert cfg["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 8
+    assert cfg["solver_contract_version"] == 8  # frozen L1A-2e profile document
     assert cfg["wall_measure_method"] == pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert cfg["wall_measure_contract_version"] == pf.WALL_MEASURE_CONTRACT_VERSION == 1
     assert cfg["trajectory_semantics_changed"] is True
@@ -704,6 +743,62 @@ def test_example_config_documents_the_l1a2e_profile():
     assert "not a physics acceptance waiver" in exceptions["scope"]
 
 
+def test_cutcell_alignment_config_documents_the_l1a2f_profile():
+    """The L1A-2f example config must match the runner's frozen baseline profile and gates."""
+    from production import cutcell_alignment_audit as caa
+
+    cfg = json.loads((HERE / "production" / "configs" / "cutcell_alignment.example.json").read_text())
+    base = caa.PROFILES["baseline"]
+    assert cfg["stage"] == "L1A-2f"
+    assert cfg["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 9
+    assert cfg["phase_transport_geometry"] == pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
+    assert cfg["phase_control_volume"] == pf.PHASE_CONTROL_VOLUME == "partial_cell_volume"
+    assert cfg["phase_face_aperture"] == pf.PHASE_FACE_APERTURE == "partial_open_length"
+    assert cfg["phase_advection_subcycling"] == pf.PHASE_ADVECTION_SUBCYCLING == "disabled"
+    assert cfg["trajectory_semantics_changed"] is True
+    assert cfg["base_case"]["N"] == base["N"] and cfg["base_case"]["dt"] == base["dt"]
+    assert cfg["base_case"]["R"] == base["R"] and cfg["base_case"]["eps_factor"] == base["eps_factor"]
+    assert cfg["base_case"]["M_ref"] == 2.0e-3
+    assert cfg["targets_deg"] == base["targets"]
+    assert cfg["sections"]["translation"]["offsets_over_dy"] == base["translation"]["offsets"]
+    assert cfg["sections"]["translation"]["targets_deg"] == base["translation"]["targets"]
+    assert cfg["sections"]["translation"]["budgets"] == base["budgets"]
+    assert cfg["sections"]["translation"]["neutral_budget"] == base["neutral_budget"]
+    assert cfg["sections"]["resolution"]["equilibrium_N_values"] == base["resolution"]["N_values"]
+    assert cfg["sections"]["resolution"]["targets_deg"] == base["resolution"]["targets"]
+    assert cfg["sections"]["translation_v8"]["offsets_over_dy"] == base["translation_v8"]["offsets"]
+    assert cfg["sections"]["translation_v8"]["targets_deg"] == base["translation_v8"]["targets"]
+    assert cfg["sections"]["primary_float64"]["targets_deg"] == base["float64"]["targets"]
+    assert cfg["sections"]["primary_float64"]["ch_solver_rtol"] == base["float64"]["rtol"]
+    assert cfg["sections"]["precision"]["target_deg"] == base["precision"]["target"]
+    assert cfg["sections"]["precision"]["fixed_steps"] == base["precision"]["fixed_steps"]
+    assert cfg["sections"]["precision"]["mobility_factor"] == base["precision"]["mobility_factor"]
+    assert cfg["sections"]["laplace"]["N"] == base["laplace"]["N"]
+    assert cfg["sections"]["laplace"]["radii"] == base["laplace"]["radii"]
+    assert [case["name"] for case in cfg["sections"]["impact"]["cases"]] == [
+        case["name"] for case in base["impact"]["cases"]
+    ]
+    assert cfg["evidence_runner"] == "production.cutcell_alignment_audit"
+    assert cfg["evidence_sections"] == list(caa.SECTIONS)
+    for name in ("production.cutcell_geometry_audit", "production.cutcell_phase_transport_audit"):
+        assert name in cfg["closure_audits"]
+    for key, value in caa.GATES.items():
+        if key in cfg["gates"]:
+            assert cfg["gates"][key] == pytest.approx(value) if isinstance(value, float) else True
+    assert cfg["gates"]["translation_angle_spread_deg"] == 2.0
+    assert cfg["gates"]["translation_angle_spread_strong_deg"] == 1.0
+    assert cfg["gates"]["resolution_angle_spread_deg"] == 2.0
+    assert cfg["gates"]["falsification_max_abs_slope_deg_per_cell"] == 0.5
+    assert cfg["gates"]["cg_relative_residual_float32"] == 1.0e-6
+    assert cfg["gates"]["cg_relative_residual_float64"] == 1.0e-8
+    assert cfg["gates"]["cutcell_advective_cfl_ratio_limit"] == 1.0
+    assert cfg["geometry_gates"]["cutcell_flat_wall_area_relative_error"] == 1.0e-12
+    assert cfg["geometry_gates"]["empty_solid_degeneracy_exact"] is True
+    # the same forbidden-correction statement as the L1A-2e config
+    assert "cos(theta)/f" in cfg["forbidden_production_corrections"]
+    assert "global wall gain" in cfg["forbidden_production_corrections"]
+
+
 def test_embedded_young_quick_profile_runs_end_to_end(tmp_path, x64):
     """The evidence runner's quick profile produces a schema-valid report and evaluates its gates."""
     from production import embedded_young_audit as eya
@@ -711,7 +806,11 @@ def test_embedded_young_quick_profile_runs_end_to_end(tmp_path, x64):
     report = eya.run_audit("quick", tmp_path / "l1a2e_quick", overwrite=True)
     assert eya.validate_report(report) == []
     assert report["stage"] == "L1A-2e"
-    assert report["solver_contract_version"] == 8
+    # the L1A-2e runner now runs under contract 9: its sections are re-measured on cut-cell control
+    # volumes, and the report carries the v9 transport metadata
+    assert report["solver_contract_version"] == 9
+    assert report["phase_transport_geometry"] == "sdf_cutcell_fv_v1"
+    assert report["phase_control_volume"] == "partial_cell_volume"
     assert report["trajectory_semantics_changed"] is True
     assert report["preflight_exceptions"]["PREFLIGHT_EXCEPTION_PREVIOUS_REVIEW"] == "AUTHORIZED"
     assert report["preflight_exceptions"]["PREFLIGHT_EXCEPTION_DEPENDENCY_AUDIT"] == "AUTHORIZED_FOR_DEVELOPMENT"
@@ -734,4 +833,8 @@ def test_embedded_young_quick_profile_runs_end_to_end(tmp_path, x64):
     assert any("wall_measure_method" in error for error in eya.validate_report(broken))
     broken = json.loads(json.dumps(report))
     broken["solver_contract_version"] = 7
+    assert any("contract" in error for error in eya.validate_report(broken))
+    # a contract-8 report may not claim the v9 transport geometry
+    broken = json.loads(json.dumps(report))
+    broken["solver_contract_version"] = 8
     assert any("contract" in error for error in eya.validate_report(broken))

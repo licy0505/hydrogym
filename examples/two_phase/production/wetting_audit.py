@@ -377,19 +377,33 @@ def audit_production_wall_energy(
         solid = pf.make_solid(pf.jnp.asarray(sdf), p, cos_theta=cos_theta)
         area = np.asarray(solid.wall_area, dtype=np.float64)
         phase = pf.jnp.asarray(phi)
-        # independent transcription of F_bulk + F_wall^h
-        aperture_x, aperture_y = pf.fluid_face_apertures(solid, p)
-        grad_x = (np.roll(phi, -1, axis=0) - phi) / p.dx
-        grad_y = (np.roll(phi, -1, axis=1) - phi) / p.dy
-        bulk_density = np.sum(np.where(fluid, phi**2 * (1.0 - phi) ** 2 / p.eps, 0.0)) + 0.5 * p.eps * np.sum(
-            np.asarray(aperture_x) * grad_x**2 + np.asarray(aperture_y) * grad_y**2
-        )
+        # independent transcription of the wall term: sum_i A_wall,i g_w(phi_i)
         wall = float(np.sum(_wall_energy_density_reference(phi, cos_theta) * area))
-        reference_energy = bulk_density * p.dx * p.dy + wall
+        # contract v9: the bulk and face terms of F_h are volume/face weighted, transcribed here
+        # independently as
+        #   F_h = sum_i V_i phi_i^2 (1-phi_i)^2 / eps
+        #       + 0.5 eps sum_f w_f (phi_i - phi_j)^2
+        #       + sum_i A_wall,i g_w(phi_i)
+        # with V_i the cut-cell control volume and w_f = A_f/d_ij the *shipped* face weight (the
+        # weight array is geometry, not a fitted quantity, and the same one the operator uses).
+        geometry = solid.geometry
+        volume = np.asarray(geometry.volume, dtype=np.float64)
+        weight_x = np.asarray(geometry.weight_x, dtype=np.float64)
+        weight_y = np.asarray(geometry.weight_y, dtype=np.float64)
+        difference_x = np.roll(phase, -1, axis=0) - phase
+        difference_y = np.roll(phase, -1, axis=1) - phase
+        transcribed_bulk_face = float(
+            np.sum(volume * phase**2 * (1.0 - phase) ** 2 / p.eps)
+            + 0.5 * p.eps * np.sum(weight_x * difference_x**2 + weight_y * difference_y**2)
+        )
+        reference_energy = transcribed_bulk_face + wall
         solver_energy = float(pf.phase_free_energy(phase, solid, p))
         mu = np.asarray(pf.chemical_potential(phase, solid, p), dtype=np.float64)
         bulk_mu = np.asarray(pf.fprime(phase) / p.eps - p.eps * pf.fluid_laplacian(phase, solid, p), dtype=np.float64)
-        wall_mu_reference = _wall_energy_density_reference_derivative(phi, cos_theta) * area / (p.dx * p.dy)
+        # mu_i = (1/V_i) dF_h/dphi_i, so the wall contribution is A_wall,i g_w'(phi_i) / V_i
+        wall_mu_reference = _wall_energy_density_reference_derivative(phi, cos_theta) * area / np.maximum(
+            volume, 1e-30
+        )
         rows.append(
             {
                 "target_deg": float(target),

@@ -1,0 +1,245 @@
+{
+  "stage": "L1A-2f",
+  "profile": "baseline",
+  "solver_contract_version": 9,
+  "dataset_schema_version": 3,
+  "phase_transport_geometry": "sdf_cutcell_fv_v1",
+  "phase_transport_geometry_version": 1,
+  "phase_control_volume": "partial_cell_volume",
+  "phase_face_aperture": "partial_open_length",
+  "phase_advection_subcycling": "disabled",
+  "wall_control_cell": "positive_volume",
+  "corner_sign_tolerance_factor": 8.0,
+  "wall_measure_method": "sdf_cutcell_v1",
+  "wall_measure_contract_version": 1,
+  "trajectory_semantics_changed": true,
+  "semantics_change": "contract 8 -> 9: the phase field is transported on the embedded cut-cell control volumes of the same corner reconstruction that defines the wall measure. Q_i = V_i phi_i with V_i the exact fluid polygon area, shared partial face apertures A_f (open length), w_f = A_f/d_ij, wall density A_wall,i/V_i, and an Euclidean-SPD matrix-free CG on I + dt M eps S^2 with S = V^-1/2 K V^-1/2 instead of a Euclidean CG on the nonsymmetric V^-1 K. g_w, h(phi), sigma_0, M, dt, eps, the measurement reference plane, Brinkman, gas properties and the CG tolerance are unchanged; there is no fitted factor and no mass projection. phase_transport_geometry='hard_cell_v7' reproduces contract 8 for falsification.",
+  "preflight_exceptions": {
+    "PREFLIGHT_EXCEPTION_PREVIOUS_REVIEW": "AUTHORIZED",
+    "PREFLIGHT_EXCEPTION_DEPENDENCY_AUDIT": "AUTHORIZED_FOR_DEVELOPMENT",
+    "PREVIOUS_PR_REVIEW_RECORD": "ABSENT",
+    "PREVIOUS_PR_DEPENDENCY_AUDIT": "FAIL_AT_AUDIT_LOCKED_DEPENDENCIES",
+    "scope": "development preflight only: not a physics acceptance waiver and not a CI pass. Two-phase unit/E2E smoke checks passed on the L1A-2d PR; its Quality job failed at 'Audit locked dependencies'."
+  },
+  "base_commit": "f20d4701805cd7f3416cfe21fe051f26fc4965dc",
+  "base_case": {
+    "N": 128,
+    "Lx": 6.0,
+    "Ly": 6.0,
+    "R": 1.1,
+    "wall_height": 0.25,
+    "Re": 200.0,
+    "We": 100.0,
+    "dt": 0.004,
+    "M_ref": 0.002,
+    "eps_factor": 2.0,
+    "sample_every": 200,
+    "dtype": "float32",
+    "ch_solver_rtol": 1e-06,
+    "ch_solver_max_iterations": 200
+  },
+  "targets_deg": [
+    60.0,
+    90.0,
+    120.0,
+    150.0
+  ],
+  "sections": {
+    "translation": {
+      "description": "primary alignment gate: eight sub-cell wall offsets at fixed domain/N/theta, each to convergence, measured against the true geometric sdf = 0 wall",
+      "offsets_over_dy": [
+        0.0,
+        0.125,
+        0.25,
+        0.375,
+        0.5,
+        0.625,
+        0.75,
+        0.875
+      ],
+      "targets_deg": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ],
+      "budgets": [
+        10000,
+        25000,
+        50000,
+        80000
+      ],
+      "neutral_budget": 100000,
+      "mobility_factor": 4.0
+    },
+    "translation_v8": {
+      "description": "pinned contract-7/8 transport (hard_cell_v7) re-measured under the v9 code: the reproduction guard for the A/B claim",
+      "offsets_over_dy": [
+        0.0,
+        0.375,
+        0.625
+      ],
+      "targets_deg": [
+        120.0,
+        150.0
+      ]
+    },
+    "resolution": {
+      "description": "same physical wall at N = 96/128/192 (L1A-2e measured a 3.093 deg spread at 150 deg)",
+      "equilibrium_N_values": [
+        96,
+        128,
+        192
+      ],
+      "targets_deg": [
+        60.0,
+        150.0
+      ]
+    },
+    "primary_float64": {
+      "description": "formal four-target CH-only matrix in float64 with rtol = 1e-8",
+      "targets_deg": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ],
+      "ch_solver_rtol": 1e-08
+    },
+    "production_mobility": {
+      "description": "the same equilibria at the production mobility M_ref",
+      "targets_deg": [
+        60.0,
+        150.0
+      ],
+      "budget": 150000
+    },
+    "precision": {
+      "description": "N-CH-MASS-PRECISION matrix at equal mobility-scaled time, mass measured as sum_i V_i phi_i",
+      "target_deg": 150.0,
+      "fixed_steps": 20000,
+      "mobility_factor": 4.0,
+      "configurations": [
+        "float32/rtol=1e-6",
+        "float32/rtol=1e-8",
+        "float64/rtol=1e-8"
+      ]
+    },
+    "chns": {
+      "description": "full CHNS at production defaults (M_ref, dt = 4e-3, N = 128, eps = 2dx)",
+      "targets_deg": [
+        60.0,
+        90.0,
+        120.0,
+        150.0
+      ],
+      "budgets": [
+        10000,
+        25000,
+        50000
+      ],
+      "nonconverged_samples_are_diagnostic_only": true
+    },
+    "laplace": {
+      "description": "static-droplet pressure jump on the empty solid: the cut-cell geometry must degenerate exactly, so the v9/v8 ratio stays 1",
+      "N": 128,
+      "radii": [
+        0.6,
+        0.8,
+        1.0,
+        1.2
+      ]
+    },
+    "impact": {
+      "description": "droplet impact regression plus the cut-cell advective CFL diagnostic; no geometry tuning to morphology",
+      "cases": [
+        {
+          "name": "we100_neutral",
+          "We": 100.0,
+          "theta_deg": 90.0
+        },
+        {
+          "name": "we50_hydrophobic",
+          "We": 50.0,
+          "theta_deg": 150.0
+        }
+      ]
+    },
+    "geometry": {
+      "description": "delegates to production.cutcell_geometry_audit"
+    },
+    "transport": {
+      "description": "delegates to production.cutcell_phase_transport_audit"
+    }
+  },
+  "gates": {
+    "translation_angle_spread_deg": 2.0,
+    "translation_angle_spread_strong_deg": 1.0,
+    "falsification_max_abs_slope_deg_per_cell": 0.5,
+    "falsification_slope_reduction_vs_v8": 4.0,
+    "resolution_angle_spread_deg": 2.0,
+    "resolution_angle_spread_strong_deg": 1.0,
+    "ch_only_mae_deg": 5.0,
+    "ch_only_max_error_deg": 10.0,
+    "neutral_error_deg": 3.0,
+    "strong_mae_deg": 2.0,
+    "strong_max_error_deg": 5.0,
+    "formal_mass_drift": 0.001,
+    "formal_mass_drift_ideal": 1e-05,
+    "energy_increase_tolerance": 1e-06,
+    "cg_relative_residual_float32": 1e-06,
+    "cg_relative_residual_float64": 1e-08,
+    "laplace_min_r_squared": 0.99,
+    "laplace_ratio_change_vs_v8": 0.01,
+    "cutcell_advective_cfl_ratio_limit": 1.0,
+    "flat_wall_area_relative_error": 1e-12,
+    "v8_reproduction_tolerance_deg": 3.0
+  },
+  "geometry_gates": {
+    "cutcell_flat_wall_area_relative_error": 1e-12,
+    "cutcell_flat_wall_measure_relative_error": 1e-12,
+    "cutcell_inclined_area_relative_error": 1e-12,
+    "cutcell_inclined_length_relative_error": 1e-12,
+    "cutcell_aperture_volume_closure_changes": 0.0,
+    "cutcell_stiffness_symmetry_relative": 1e-10,
+    "cutcell_directional_derivative_tolerance": 1e-06,
+    "cutcell_directional_derivative_ideal": 1e-08,
+    "empty_solid_degeneracy_exact": true,
+    "alpha_or_volume_floor_allowed": false
+  },
+  "forbidden_production_corrections": [
+    "cos(theta)/f",
+    "global wall gain",
+    "theta remap",
+    "wall_gain",
+    "contact_angle_gain",
+    "theta_scale",
+    "cos_theta_scale",
+    "angle lookup table",
+    "fitted calibration",
+    "global mass projection or post-step redistribution"
+  ],
+  "evidence_runner": "production.cutcell_alignment_audit",
+  "evidence_sections": [
+    "translation",
+    "translation_v8",
+    "resolution",
+    "primary_float64",
+    "production_mobility",
+    "precision",
+    "chns",
+    "laplace",
+    "impact",
+    "geometry",
+    "transport"
+  ],
+  "closure_audits": [
+    "production.cutcell_geometry_audit",
+    "production.cutcell_phase_transport_audit"
+  ],
+  "stopping_rules": [
+    "flux redistribution or complex cell merging would be required for the cut-cell advective CFL => STOP and defer to the next stage",
+    "a listed hard-fail condition fires => declare L1A-2f NOT READY",
+    "the post-v9 angle error still tracks the old hard-mask plane offset => report the hypothesis as falsified"
+  ]
+}

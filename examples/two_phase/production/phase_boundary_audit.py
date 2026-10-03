@@ -319,7 +319,11 @@ def run_phase_boundary_audit(
     )
     solid_var = pf.make_solid(sdf, p_var, cos_theta=math.cos(math.radians(60.0)))
     X_var, Y_var = pf.grids(p_var)
-    active_var = solid_var.sdf >= 0.0
+    # Contract v9: the transported unknown lives on the cut-cell control volumes, so the variational
+    # inner product is volume-weighted (mu = (1/V) dF/dphi implies <dF, dir> = sum_i V_i mu_i dir_i)
+    # and the support of the manufactured fields is the set of cells that own a control volume.
+    volume_var = np.asarray(pf.phase_control_volumes(solid_var, p_var), dtype=np.float64)
+    active_var = jnp.asarray(volume_var > 0.0)
     phi_var = jnp.where(
         active_var,
         0.5 + 0.15 * jnp.cos(2.0 * jnp.pi * X_var / p_var.Lx) * jnp.cos(2.0 * jnp.pi * Y_var / p_var.Ly),
@@ -329,7 +333,7 @@ def run_phase_boundary_audit(
         0.2 + 0.1 * jnp.sin(2.0 * jnp.pi * X_var / p_var.Lx) * jnp.cos(jnp.pi * Y_var / p_var.Ly)
     )
     mu_var = pf.chemical_potential(phi_var, solid_var, p_var)
-    predicted_directional = float(jnp.sum(mu_var * direction_var) * p_var.dx * p_var.dy)
+    predicted_directional = float(np.sum(volume_var * np.asarray(mu_var, dtype=np.float64) * np.asarray(direction_var, dtype=np.float64)))
     variational_rows = []
     for amplitude in (1.0e-6, 1.0e-5, 1.0e-4):
         fd = float(
@@ -354,8 +358,11 @@ def run_phase_boundary_audit(
     variational_relative_error = best["relative_error"]
     variational_worst_amplitude = max(row["relative_error"] for row in variational_rows)
     separate_wall_mu_max = float(jnp.max(jnp.abs(pf.wetting_mu(phi_var, solid_var, p_var))))
-    wall_flux_total = float(np.sum(np.asarray(pf.wall_measure_density(solid_var, p_var), dtype=np.float64))) * (
-        p_var.dx * p_var.dy
+    # contract v9: the density is wall length per unit *control volume*, so the geometric wall
+    # length is recovered by integrating it against V_i (never by multiplying by the full cell area,
+    # which would inflate the cut row by 1/alpha)
+    wall_flux_total = float(
+        np.sum(volume_var * np.asarray(pf.wall_measure_density(solid_var, p_var), dtype=np.float64))
     )
 
     # Isolated u=0 neutral Cahn--Hilliard relaxation: test the actual discrete

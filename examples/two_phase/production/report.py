@@ -14,15 +14,21 @@ from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # Solver contracts this report schema can interpret.  A report is a lineage record and states the
 # contract of the solver that produced it: 4/5/6 are historical lineage records, 7 is the
-# conservative impermeable-phase / natural-wetting contract and 8 is the embedded cut-cell Young
-# wall measure (L1A-2e). Unknown contracts fail closed.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8)
+# conservative impermeable-phase / natural-wetting contract, 8 is the embedded cut-cell Young
+# wall measure (L1A-2e) and 9 moves the phase transport onto the same cut-cell geometry
+# (L1A-2f: partial control volumes, shared partial face apertures, weighted-SPD implicit solve).
+# Unknown contracts fail closed.
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9)
 #: Blocker statuses that claim resolution, one per contract that produced the closing evidence.
 KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v5",
     "resolved_in_contract_v6",
     "resolved_in_contract_v7",
     "resolved_in_contract_v8",
+    "resolved_in_contract_v9",
+    # W-CONTACT-ANGLE is closed by thermodynamic equilibrium, not by a measurement alone: the
+    # contact angle is only claimed once a drift-clean full CHNS relaxation reaches it.
+    "thermodynamic_equilibrium_validated_v9",
 )
 _REQUIRED_TOP = {
     "validation_report_schema_version",
