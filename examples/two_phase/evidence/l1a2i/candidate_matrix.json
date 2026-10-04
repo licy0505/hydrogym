@@ -1,0 +1,424 @@
+{
+  "candidate_rows": [
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A0_float32",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "within the preferred envelope on the measured (CPU) device",
+      "cost_within_preferred_budget": true,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "the incumbent; kept as the reference row, not a candidate for selection.",
+        "persistent_state_dtype_only": false,
+        "production_files": [],
+        "rank": 0
+      },
+      "label": "contract-10 float32 phase state",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.0,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -1.2124792852672289e-05,
+        "quick_offset0.5": -1.9435099372554798e-05
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -1.0945900109765505e-05,
+          "solve_defect_mass": -4.610371199782968e-06,
+          "solve_defect_over_E_round": -18.7563029773501,
+          "storage_loss_mass": -1.7959549594172956e-05,
+          "storage_loss_over_E_round": -73.0645622506297
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -1.633953909617118e-05,
+          "solve_defect_mass": -1.1783640495804028e-05,
+          "solve_defect_over_E_round": -47.94066475773,
+          "storage_loss_mass": -2.19066793905787e-05,
+          "storage_loss_over_E_round": -89.12532362072432
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.0,
+      "status": "REFERENCE",
+      "storage_model": "float32_contract_10"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A1_phase_float64",
+      "causal": {
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "phi (and its update path) stored in float64; pf.State layout, restarts and datasets keep their shape and their field names.",
+        "persistent_state_dtype_only": true,
+        "production_files": [
+          "phasefield.py"
+        ],
+        "rank": 2
+      },
+      "label": "phase-only float64 storage",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": 1.9383588170446316e-15,
+        "quick_offset0.5": 1.7230380790794222e-15
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -1.2619545131082772e-16,
+          "solve_defect_mass": -2.602089664196906e-16,
+          "solve_defect_over_E_round": -1.0586041774294848e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": 5.227291503210617e-16,
+          "solve_defect_mass": 1.0778096115238538e-15,
+          "solve_defect_over_E_round": 4.384969931586379e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": true,
+      "rejection_reasons": [
+        "INCONCLUSIVE"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.2032944850920477,
+      "status": "CANDIDATE",
+      "storage_model": "phase_only_float64_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A2_float64_storage_f32_krylov",
+      "causal": {
+        "input_shift_over_E_round": 0.026686296596554342,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014125664725537538,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "identical persistent layout to A1 (phi in float64) but the Krylov recurrence stays float32: the exchange correction is mass-neutral by the telescoping of the cut-cell divergence, so the state is never rounded back onto the float32 grid. Chosen over A1 only if it clears the same gates -- the measurement decides.",
+        "persistent_state_dtype_only": true,
+        "production_files": [
+          "phasefield.py"
+        ],
+        "rank": 1
+      },
+      "label": "phase-only float64 storage with the float32 Krylov recurrence",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": -1.1875982013565323e-06,
+        "quick_offset0.5": -3.989208002587523e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -9.690334408035119e-07,
+          "solve_defect_mass": -1.9981004658918586e-06,
+          "solve_defect_over_E_round": -8.128841712184977,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -4.027775521853441e-06,
+          "solve_defect_mass": -8.30482701767786e-06,
+          "solve_defect_over_E_round": -33.787429959968996,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.137486962390728,
+      "status": "REJECTED",
+      "storage_model": "phase_only_float64_v1 + float32_krylov_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "B1_compensated",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "new persistent field; restart version bump required",
+      "hidden_state": true,
+      "hidden_state_serialized": true,
+      "invasiveness": {
+        "new_state_fields": [
+          "phase_lo (compensation pair member)"
+        ],
+        "notes": "second persistent phase array; operators must read phi_hi; checkpoints and datasets must serialize the pair and the restart version must reject old data.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py",
+          "generate_dataset.py",
+          "restart/checkpoint schema"
+        ],
+        "rank": 3
+      },
+      "label": "compensated local accumulation (phi_hi + phi_lo, operators read phi_hi)",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -3.814724403316125e-06,
+        "quick_offset0.5": -8.404726812151602e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -2.4066102885557955e-06,
+          "solve_defect_mass": -4.952504790939973e-06,
+          "solve_defect_over_E_round": -20.148199858618945,
+          "storage_loss_mass": -9.81014432644701e-09,
+          "storage_loss_over_E_round": -0.039910460842509626
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.642059291483999e-06,
+          "solve_defect_mass": -1.1629925824257455e-05,
+          "solve_defect_over_E_round": -47.315290660515906,
+          "storage_loss_mass": -3.3755332193670014e-09,
+          "storage_loss_over_E_round": -0.013733048501087416
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "DATASET_STATE_AMBIGUOUS",
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.01554418347214,
+      "status": "REJECTED",
+      "storage_model": "compensated_local_accumulator_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "C1_residual_feedback",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "new persistent field; restart version bump required",
+      "hidden_state": true,
+      "hidden_state_serialized": true,
+      "invasiveness": {
+        "new_state_fields": [
+          "phase_residual (local feedback memory)"
+        ],
+        "notes": "one extra persistent array AND a changed local update rule; restart state version must be bumped or a resumed run silently loses the memory.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py",
+          "generate_dataset.py",
+          "restart/checkpoint schema"
+        ],
+        "rank": 4
+      },
+      "label": "local residual feedback (phi + r_store, operators read phi)",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -3.74614843575425e-06,
+        "quick_offset0.5": -8.305968579884545e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -2.3347162616809894e-06,
+          "solve_defect_mass": -4.815514550162681e-06,
+          "solve_defect_over_E_round": -19.590884547201075,
+          "storage_loss_mass": 1.4416485208183007e-09,
+          "storage_loss_over_E_round": 0.005865036733829493
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.5671748867225144e-06,
+          "solve_defect_mass": -1.1476579416127347e-05,
+          "solve_defect_over_E_round": -46.69141480936572,
+          "storage_loss_mass": -2.31859275643267e-09,
+          "storage_loss_over_E_round": -0.009432982793850533
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "DATASET_STATE_AMBIGUOUS",
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": null,
+      "runtime_ratio_vs_A0": 1.0060895098617038,
+      "status": "REJECTED",
+      "storage_model": "residual_feedback_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "F_full_float64",
+      "causal": {
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "global promotion is forbidden without cost evidence (spec 76) and is used here only as the float64 reference ceiling.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py (global promotion)"
+        ],
+        "rank": 5
+      },
+      "label": "full float64 reference",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 2.0,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": 2.1537320189384798e-16,
+        "quick_offset0.5": 8.615190395397111e-16
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": 5.203897483440839e-16,
+          "solve_defect_mass": 1.0730186955668712e-15,
+          "solve_defect_over_E_round": 4.365345626695015e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.426323478056384e-16,
+          "solve_defect_mass": -1.1188478002985918e-15,
+          "solve_defect_over_E_round": -4.5519300532070885e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": true,
+      "rejection_reasons": [],
+      "restart_reproducible": null,
+      "runtime_ratio_vs_A0": 1.2913983169986245,
+      "status": "REFERENCE",
+      "storage_model": "full_float64_reference"
+    }
+  ],
+  "cost": {
+    "N": null,
+    "gpu_measured": false,
+    "gpu_note": "no GPU device in this environment; float64 throughput on the production GPU is unverified, so the cost envelope is *not* accepted silently (spec 42).",
+    "measured_on": "CPU",
+    "memory_preferred_fraction": 0.2,
+    "memory_within_preferred_budget": null,
+    "persistent_bytes_ratio_vs_A0": null,
+    "runtime_preferred_fraction": 0.15,
+    "runtime_ratio_vs_A0": null,
+    "runtime_within_preferred_budget": null,
+    "seconds_per_substep": null,
+    "selected": null,
+    "verdict": "NOT_MEASURED"
+  },
+  "gates": {
+    "angle_delta_bound_deg": 0.2,
+    "closure_horizon": 200000,
+    "long_horizon_projection_bound": 0.001,
+    "medium_bound": 0.0002,
+    "medium_strong_bound": 0.0001,
+    "memory_preferred_fraction": 0.2,
+    "quick_bound": 2e-06,
+    "quick_strong_bound": 5e-07,
+    "runtime_preferred_fraction": 0.15
+  },
+  "production_readiness": {
+    "blockers": [
+      "no candidate cleared every measured gate",
+      "GPU cost unverified (no GPU in this environment)"
+    ],
+    "ready_for_l1b_production_scale": false,
+    "selected": null,
+    "statement": "NOT READY FOR L1B PRODUCTION SCALE (no candidate cleared every measured gate; GPU cost unverified (no GPU in this environment))"
+  },
+  "profile": "quick",
+  "selection": {
+    "reason": "gates not yet measured: long_horizon, medium",
+    "rows_considered": [
+      "A2_float64_storage_f32_krylov",
+      "A1_phase_float64",
+      "B1_compensated",
+      "C1_residual_feedback"
+    ],
+    "selected": null
+  },
+  "stage": "L1A-2i",
+  "verdict": "NOT_READY_FOR_SELECTION"
+}
