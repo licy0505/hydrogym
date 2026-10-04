@@ -263,6 +263,31 @@ PHASE_MASS_INVARIANT = "componentwise_cutcell_volume"
 #: ``cutcell_advective_cfl_ratio`` is clearly violated. It stays off unless a production run shows
 #: a ratio below one; the diagnostic that decides this is :func:`cutcell_advective_cfl_diagnostic`
 #: and its measured value is recorded in every report either way.
+#: Phase *state* storage model (L1A-2i). ``float32_contract_10`` is the production default and is
+#: unchanged by this stage: the phase field is stored in ``p.dtype``. ``phase_only_float64_v1``
+#: stores the phase field in float64 (the phase transport, chemical potential and implicit solve
+#: follow it) while the velocity fields, the geometry arrays, the momentum terms and the pressure
+#: projection stay in the working dtype. The *only* difference between the two models is the
+#: persistent precision of ``phi`` -- no change to ``M``, ``dt``, the wall energy, the wall measure,
+#: the cut-cell geometry or the pressure projection is involved, and no global mass is read or
+#: corrected anywhere.
+PHASE_STORAGE_MODEL = "float32_contract_10"
+PHASE_STORAGE_MODELS = (PHASE_STORAGE_MODEL, "phase_only_float64_v1")
+#: Storage models that keep a second persistent phase field (compensated / residual-feedback
+#: storage). Declared here so the schema and restart audits have one authority for the names; the
+#: L1A-2i candidates are implemented in ``production/phase_storage_precision_audit.py`` until one is
+#: selected, which is why this tuple is *not* accepted by :class:`PhaseFieldParams`.
+PHASE_STORAGE_MODELS_WITH_HIDDEN_STATE = (
+    "compensated_local_accumulator_v1",
+    "residual_feedback_v1",
+)
+
+
+def phase_state_dtype(p: "PhaseFieldParams"):
+    """The dtype of the persistent phase field under the parameters' storage model."""
+    return jnp.float64 if getattr(p, "phase_storage_model", PHASE_STORAGE_MODEL) == "phase_only_float64_v1" else p.dtype
+
+
 PHASE_ADVECTION_SUBCYCLING = "disabled"
 PHASE_ADVECTION_SUBCYCLINGS = ("disabled", "phase_only_fixed_substeps")
 #: Largest number of phase-only advective substeps a single phase update may take. It bounds the
@@ -393,6 +418,9 @@ class PhaseFieldParams:
     #: is the sanctioned fix (phase-only, frozen velocity, conservative per substep, deterministic
     #: ``n_sub``, momentum dt untouched) when that ratio is clearly violated.
     phase_advection_subcycling: str = PHASE_ADVECTION_SUBCYCLING
+    #: Phase state storage model (L1A-2i). See :data:`PHASE_STORAGE_MODEL`. The default reproduces
+    #: contract 10 exactly; ``phase_only_float64_v1`` is the L1A-2i phase-only float64 candidate.
+    phase_storage_model: str = PHASE_STORAGE_MODEL
     # LEGACY ONLY: contract-v5 volumetric affinity amplitude and band width.
     wall_energy_amp: float = 5.0
     wet_band: float = 0.15
@@ -433,6 +461,13 @@ class PhaseFieldParams:
         if self.wall_measure not in WALL_MEASURE_METHODS:
             raise ValueError(
                 f"unknown wall_measure {self.wall_measure!r}; expected one of {sorted(WALL_MEASURE_METHODS)}"
+            )
+        if self.phase_storage_model not in PHASE_STORAGE_MODELS:
+            raise ValueError(
+                f"unknown phase_storage_model {self.phase_storage_model!r}; "
+                f"expected one of {sorted(PHASE_STORAGE_MODELS)} (the compensated and "
+                f"residual-feedback candidates live in production.phase_storage_precision_audit "
+                f"until one is selected)"
             )
         if self.phase_advection_subcycling not in PHASE_ADVECTION_SUBCYCLINGS:
             raise ValueError(
@@ -2554,7 +2589,18 @@ def rhs(state: State, solid: Solid, p: PhaseFieldParams):
     u_rhs = -adv_u + nu * lap_u + cap_x
     v_rhs = -adv_v + nu * lap_v + cap_y + g_y
 
-    return phi_rhs, u_rhs, v_rhs, mu, mu_expl
+    # The momentum right-hand sides are produced by the velocity/geometry path, not by the phase
+    # storage model: under phase_only_float64_v1 the float64 phase field would otherwise promote
+    # them and silently move the momentum solve, the Brinkman damping and the pressure projection to
+    # float64. They are cast back to the working dtype here so the storage model changes the phase
+    # state and nothing else.
+    return (
+        phi_rhs,
+        u_rhs.astype(p.dtype),
+        v_rhs.astype(p.dtype),
+        mu,
+        mu_expl,
+    )
 
 
 def _bounded_mass_project_2d(phi, active, target_mass, weight):
@@ -2955,8 +3001,12 @@ def solve_ch_implicit(rhs_field, solid: Solid, p: PhaseFieldParams, dt: float):
     alpha = jnp.asarray(float(dt) * float(p.M) * float(p.eps), dtype=rhs_field.dtype)
     rtol = jnp.asarray(p.ch_solver_rtol, dtype=rhs_field.dtype)
     max_iterations = jnp.asarray(p.ch_solver_max_iterations, dtype=jnp.int32)
+    # The rhs dtype is authoritative: under ``phase_only_float64_v1`` the solve runs in float64
+    # (the float32 geometry arrays promote exactly into it), under the default it is a float32
+    # no-op. The rejected contract-v9 form instead multiplied the *state* by a rounded
+    # ``sqrt(V)``; nothing of that kind is reintroduced here (see the L1A-2g evidence).
     return _differentiable_ch_volume_weighted(
-        rhs_field.astype(operator.volume_safe.dtype),
+        rhs_field,
         operator.volume_safe,
         operator.weight_x,
         operator.weight_y,
@@ -3157,7 +3207,12 @@ def droplet_initial_state(
         v = v - _ddy(pr, p.dy)
     else:
         raise ValueError(f"unknown velocity_mode={velocity_mode!r}")
-    return State(phi=phi.astype(p.dtype), u=u.astype(p.dtype), v=v.astype(p.dtype), t=0.0)
+    return State(
+        phi=phi.astype(phase_state_dtype(p)),
+        u=u.astype(p.dtype),
+        v=v.astype(p.dtype),
+        t=jnp.asarray(0.0, p.dtype),
+    )
 
 
 def advance(state: State, solid: Solid, p: PhaseFieldParams, n_steps: int) -> State:
@@ -3549,9 +3604,11 @@ def sessile_initial_state(
     y_c = float(wall_height) - float(R) * np.cos(theta0)
     r = jnp.sqrt((X - centre_x) ** 2 + (Y - y_c) ** 2)
     phi = 0.5 * (1.0 - jnp.tanh((r - float(R)) / (jnp.sqrt(2.0) * p.eps)))
-    phi = jnp.where(phase_control_volumes(solid, p) > 0.0, phi, 0.0).astype(p.dtype)
-    zero = jnp.zeros_like(phi)
-    return State(phi=phi, u=zero, v=zero, t=0.0)
+    phi = jnp.where(phase_control_volumes(solid, p) > 0.0, phi, 0.0).astype(phase_state_dtype(p))
+    # the velocities are not part of the phase storage model: they stay in the working dtype even
+    # when the phase field is stored in float64
+    zero = jnp.zeros(phi.shape, dtype=p.dtype)
+    return State(phi=phi, u=zero, v=zero, t=jnp.asarray(0.0, p.dtype))
 
 
 def pressure_field(state: State, solid: Solid, p: PhaseFieldParams):
