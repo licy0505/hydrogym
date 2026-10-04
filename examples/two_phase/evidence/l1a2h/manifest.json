@@ -1,0 +1,13 @@
+{
+  "module": "production.krylov_roundoff_audit",
+  "stage": "L1A-2h",
+  "profile": "forensic",
+  "passed": true,
+  "solver_contract_version": 10,
+  "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+  "drift_classification": "MIXED",
+  "files": {
+    "krylov_roundoff_report.json": "d66a60b96a4bc71ebfe76cd7d68c7f0cfe1b8ea59548796a557868f6a617893a",
+    "krylov_roundoff_report.md": "85eb43e12faaed61845fecd2a6d9738bafd99135c141cf547f41bf29cabf8b19"
+  }
+}
