@@ -413,6 +413,8 @@ def test_report_schema_allows_resolved_blocker_status_only_when_known():
     blocker["status"] = "thermodynamic_equilibrium_validated_v9"
     assert validate_report_schema(report) == []  # the W-CONTACT-ANGLE closure wording
     blocker["status"] = "resolved_in_contract_v10"
+    assert validate_report_schema(report) == []  # v10 weighted implicit-solve evidence is supported
+    blocker["status"] = "resolved_in_contract_v11"
     assert any("status is invalid" in error for error in validate_report_schema(report))
 
 
