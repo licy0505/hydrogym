@@ -68,7 +68,12 @@ def test_ch_only_step_reuses_the_exact_production_phase_operator():
     difference, got, expected, p, solid = _ch_only_versus_substeps(dtype=jnp.float32)
     ulp = float(np.spacing(np.max(np.abs(np.asarray(expected, dtype=np.float32))).astype(np.float32)))
     assert difference <= 4.0 * max(ulp, 1e-9)  # a few float32 ulps of the largest phi
-    np.testing.assert_allclose(np.asarray(got.phi), np.asarray(expected), rtol=0.0, atol=1.0e-8)
+    # The same "a few ulps of phi" bound has to govern the elementwise statement too: one ulp of
+    # the largest phi (~0.86) is 6e-8, so a flat 1e-8 is *below* one ulp and cannot be met by two
+    # differently fused programs. Contract v10 splits the RHS into its conserved and orthogonal
+    # parts, which changes how XLA fuses the recurrence and therefore which of the few-ulp
+    # roundings land where; the operator itself is the same code.
+    np.testing.assert_allclose(np.asarray(got.phi), np.asarray(expected), rtol=0.0, atol=4.0 * max(ulp, 1e-9))
     # and it differs from the legacy projection path by construction (no redistribution is called)
     assert p.phase_boundary_model == "impermeable_flux" and p.enforce_solid_phi is False
 
@@ -112,21 +117,20 @@ def _ch_only_drift(rtol: float, steps: int = 30):
 
 
 def test_ch_only_mass_conservation():
-    """CH-only transport is conservative; the residual drift is set by the CG tolerance.
+    """CH-only transport conserves ``sum_i V_i phi_i`` down to the float32 round-off floor.
 
-    The production float32 default (``rtol = 1e-6``) leaves a small non-conservative residual in
-    the implicit solve. It is *not* a conservation-form defect: tightening the tolerance shrinks it
-    by orders of magnitude and no liquid ever enters a cell without a control volume. Since
-    contract v9 the measured quantity is the conserved ``sum_i V_i phi_i`` on the cut-cell control
-    volumes (the drift of the old cell-centre hard-mask sum is a *metric* artifact, reported
-    alongside it in the evidence runner as part of blocker ``N-CH-MASS-PRECISION``). Measured on
-    this fixture: 1.4e-5 at rtol = 1e-6 and 2.1e-6 at 1e-8, both far inside the criteria.
+    Contract v10 poses the weighted solve for the substep exchange and removes the ``sqrt(V)``
+    similarity pair, so the residual is no longer a *truncation* term that follows the CG
+    tolerance: measured on this fixture the drift is 3.3e-9 at rtol = 1e-6 (v9: 1.4e-5) and
+    2.5e-7 at rtol = 1e-8 (v9: 2.1e-6). It is a rounding walk, so it is *not* monotone in the
+    tolerance, and the old "a tighter tolerance cannot drift more" premise -- a property of the
+    v9 Krylov truncation -- is exactly what the L1A-2g mass-precision audit falsified (the drift
+    matrix is non-monotone at every grid). Both rows are therefore bounded by the floor.
     """
     production_drift, production_leak = _ch_only_drift(1.0e-6)
     tight_drift, tight_leak = _ch_only_drift(1.0e-8)
-    assert production_drift <= 1.0e-4  # a broken conservation form would drift by orders more
-    assert tight_drift <= production_drift  # a tighter tolerance cannot drift more
-    assert tight_drift <= 1.0e-5
+    assert production_drift <= 1.0e-6  # round-off floor; v9 measured 1.4e-5 here
+    assert tight_drift <= 1.0e-6
     assert production_leak <= 1e-6 and tight_leak <= 1e-6  # no solid leak at either tolerance
 
 
@@ -399,7 +403,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
     assert report["stage"] == "L1A-2d"
     assert all(row["classification"] in (None, "INCONCLUSIVE") for row in report["classification_summary"].values())
     assert report["recommended_next_stage"]["decision"] == "INCONCLUSIVE"  # smoke budgets never classify
-    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 9
+    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
     assert report["trajectory_semantics_changed"] is False  # the L1A-2d stage itself changes no default
     assert len(report["historical_v7_baseline"]) == 4
     assert {row["final_sampled_angle_deg"] for row in report["historical_v7_baseline"]} == {
@@ -432,7 +436,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
 
 def test_solver_contract_is_v9_and_l1a2d_stage_is_frozen():
     """The L1A-2d diagnostic stage is unchanged; the *solver* it diagnoses is now contract v9."""
-    assert pf.SOLVER_CONTRACT_VERSION == 9
+    assert pf.SOLVER_CONTRACT_VERSION == 10
     assert audit.STAGE == "L1A-2d"
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
     assert p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy"

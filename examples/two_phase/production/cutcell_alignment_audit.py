@@ -1459,8 +1459,14 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
-    if report.get("solver_contract_version") != 9:
-        errors.append(f"solver_contract_version must be 9; got {report.get('solver_contract_version')!r}")
+    # The alignment matrix is a *closure* statement about the transport domain, which contract v10
+    # does not change (it changes only the implicit phase solve). Both contracts are accepted, and
+    # the version actually used is recorded, so a v9 matrix cannot be passed off as a v10 one.
+    if report.get("solver_contract_version") not in (9, 10):
+        errors.append(
+            "solver_contract_version must be 9 or 10; got "
+            f"{report.get('solver_contract_version')!r}"
+        )
     if report.get("phase_transport_geometry") != "sdf_cutcell_fv_v1":
         errors.append("phase_transport_geometry must be sdf_cutcell_fv_v1")
     if report.get("phase_control_volume") != "partial_cell_volume":

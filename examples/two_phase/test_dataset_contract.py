@@ -42,7 +42,7 @@ def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
     be stale even though the schema, the case dict and every other default are identical, and the same
     holds for the pinned legacy wall-measure kernel (``wall_measure='diffuse_sdf_v7'``).
     """
-    assert pf.SOLVER_CONTRACT_VERSION == 9
+    assert pf.SOLVER_CONTRACT_VERSION == 10
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
@@ -93,13 +93,13 @@ def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 9
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
     assert manifest["wetting_model"] == "surface_energy"
     assert manifest["phase_boundary_model"] == "impermeable_flux"
     assert manifest["wall_measure_method"] == "sdf_cutcell_v1"
     assert manifest["wall_measure_contract_version"] == 1
     written = json.loads((tmp_path / "manifest.json").read_text())
-    assert written["solver_contract_version"] == 9
+    assert written["solver_contract_version"] == 10
     assert written["wall_measure_method"] == "sdf_cutcell_v1"
 
 

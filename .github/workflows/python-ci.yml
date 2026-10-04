@@ -114,6 +114,27 @@ jobs:
           examples/two_phase/test_wall_measure.py
           examples/two_phase/test_cutcell_transport.py -m "not slow"
           examples/two_phase/test_cutcell_alignment_audit.py
+          examples/two_phase/test_mass_precision.py
+          examples/two_phase/test_krylov_roundoff.py
+
+      - name: Run the L1A-2g mass-precision audit (quick profile)
+        working-directory: examples/two_phase
+        env:
+          JAX_ENABLE_X64: "1"
+        run: >-
+          uv run --no-sync python -m production.mass_precision_audit --profile quick
+          --out artifacts/mass_precision_quick
+
+      - name: Run the L1A-2h Krylov roundoff audit (quick profile)
+        working-directory: examples/two_phase
+        env:
+          JAX_ENABLE_X64: "1"
+        run: >-
+          uv run --no-sync python -m production.krylov_roundoff_audit --profile quick
+          --out artifacts/krylov_roundoff_quick
+        # The audit exits 0 when its own integrity checks hold. The mass gates it reports are a
+        # *finding*, not a smoke test: the quick gate is NOT met by contract-v10 arithmetic, and this
+        # job must not be read as a claim that it is. See the report's Gates section.
 
       - name: Run two-phase L1A validation contract
         working-directory: examples/two_phase

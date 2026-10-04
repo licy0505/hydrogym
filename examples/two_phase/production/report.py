@@ -17,8 +17,10 @@ REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # conservative impermeable-phase / natural-wetting contract, 8 is the embedded cut-cell Young
 # wall measure (L1A-2e) and 9 moves the phase transport onto the same cut-cell geometry
 # (L1A-2f: partial control volumes, shared partial face apertures, weighted-SPD implicit solve).
+# 10 solves the weighted implicit phase system directly in the physical variable and carries the
+# cut-cell mass mode exactly (L1A-2g), instead of the contract-v9 sqrt(V) similarity transform.
 # Unknown contracts fail closed.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9)
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9, 10)
 #: Blocker statuses that claim resolution, one per contract that produced the closing evidence.
 KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v5",
@@ -26,6 +28,7 @@ KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v7",
     "resolved_in_contract_v8",
     "resolved_in_contract_v9",
+    "resolved_in_contract_v10",
     # W-CONTACT-ANGLE is closed by thermodynamic equilibrium, not by a measurement alone: the
     # contact angle is only claimed once a drift-clean full CHNS relaxation reaches it.
     "thermodynamic_equilibrium_validated_v9",

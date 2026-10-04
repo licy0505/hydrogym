@@ -841,3 +841,83 @@ needed for this stage. The contingency is implemented anyway, switched on with
 * the default stays `"disabled"`, because enabling it changes the impact/CHNS trajectories and would
   therefore require re-running the full production-default CHNS acceptance matrix; the translation
   gates are unaffected either way (the CH-only runs hold `u = v = 0`).
+
+## L1A-2g: the phase-mass conserved mode and the weighted implicit solve
+
+`M = sum_i V_i phi_i` (`V_i` the cut-cell fluid control volume) is the only conserved quantity of the
+phase transport, and contract v9 leaked it: the drift-clean CHNS closure lost 1.3e-3 … 2.2e-3 of `M`
+over 50 000 steps. `production/mass_precision_audit.py` is the L1A-2g forensic audit of that leak.
+
+```
+JAX_ENABLE_X64=1 python -m production.mass_precision_audit --profile quick      # ~40 s, CI
+JAX_ENABLE_X64=1 python -m production.mass_precision_audit --profile forensic   # default
+JAX_ENABLE_X64=1 python -m production.mass_precision_audit --profile baseline   # widest sweeps
+```
+
+It writes `mass_precision_report.json`, `mass_precision_report.md` and `manifest.json` (default
+`evidence/mass_precision`, `manifest.json` records the profile), and it refuses to run without
+`jax_enable_x64`, because its float64 reduction *is* the reference the ledger is judged against.
+
+The ledger is M0 (initial state) → M1 (advective flux) → M2 (Cahn-Hilliard flux) → M3 (physical
+`rhs = phi + dt source`) → M4 (transform into the solved variable) → M5 (Krylov solve) → M6 (inverse
+transform) → M7 (complete substep) → M8 (complete public step), each stage reduced three independent
+ways (working dtype, float64 device, host `math.fsum`) on the same float32 state, and normalised by
+`E_round = eps * sum_i |V_i phi_i|`.
+
+**Verdict: `MULTIPLE_CONTRIBUTORS`.** Advection and the explicit CH flux are clean (single shared
+face quantities, so the telescoping sum is machine zero: 3.7e-17 / 7.8e-19 of the flux scale); the
+`phi + dt source` assembly is bit-for-bit the array the solve receives. The two live mechanisms sit in
+the v9 similarity pair and *nearly cancel*, which is why neither horizon runs nor a tolerance sweep
+could separate them:
+
+| stage | label | per-substep mean, `E_round` | sign | tolerance controlled |
+| --- | --- | --- | --- | --- |
+| M3→M4 | `PHI_TO_Y_TRANSFORM` | +0.0177 | 96.7 % positive | no |
+| M4→M5 | `KRYLOV_NULL_MODE` | -0.1726 | 100 % negative | **yes** |
+| M5→M6 | `Y_TO_PHI_TRANSFORM` | +0.1579 | 100 % positive | no |
+
+* `fl32(sqrt(V))^2 != V` on exactly the cut cells (128 of 15744 at N = 128, 0 of 2208 at N = 48 where
+  the wall is cell aligned), a `+2.84e-9` mass-weighted weight-definition mismatch;
+* `phi = y * fl(1/sqrt(V))` is a double rounding whose bias is *data independent*
+  (+1.7700e-8 uniform random, +1.9679e-8 on the field, +2.2182e-8 near 1) although
+  `fl(1/s)*s == 1` exactly for 100 % of cells -- the reciprocal is honest, the product is not;
+* the truncated conserved mode `c^T y != c^T b`, which follows `rtol` and changes sign with it
+  (-79.2 `E_round` at 1e-4, -0.15 at 1e-6, +0.65 at 1e-8 at N = 128).
+
+**Contract 10 removes the transform** rather than correcting its symptom. The solve is posed for the
+substep exchange `d = phi_new - rhs`,
+
+```
+(I + dt M eps L^2) d = rhs - (I + dt M eps L^2) rhs = -dt M eps L^2 rhs ,   phi_new = rhs + d ,
+L = V^-1 K  self-adjoint in  <x, y>_V = y^T V x ,
+```
+
+with the CG in the `V`-weighted inner product, so `M = <1, phi>_V` is literally the inner product of
+the unknown with the constant mode. The right-hand side of the `d` equation has no constant mode (a
+telescoping face-flux divergence), and `A 1 = 1` exactly (`K 1 = 0` term by term), so every Krylov
+vector is `V`-orthogonal to the mode by construction: no projection, no offset, no rescale, nothing
+taken from a previous step or a target mass. Metadata: `implicit_phase_solver =
+"weighted_spd_nullspace_preserving_v1"`, `phase_mass_invariant = "componentwise_cutcell_volume"`.
+The v9 solve is pinned (`_cg_solve_impl`, `_ch_cg_primal`) so the falsification stays reproducible.
+
+Measured at the quick gate (N = 48, 150°, `M = 4 M_ref`, 2500 CH-only steps): `1.4059e-4` → `8.5004e-7`
+(offset 0) and `1.2095e-4` → `1.0715e-6` (offset 0.5 dy), with the drift series changing from a
+monotone ramp to a bounded walk; the translation spread is unchanged (1.7027° → 1.7002°, gate <= 2°).
+In float64 the new form conserves `M` to **2.31e-16** over 1000 steps at N = 128, where v9 loses
+1.57e-5 in 200.
+
+**Precondition (fail-closed).** The constant mode spans the *complete* null space of `K` only when
+the fluid control volumes form a single connected component through open faces. With several
+components the null space gains one indicator per component and the exchange formulation pins only
+the total, so a block-`Q` generalisation is required; the audit fails its `single_fluid_component`
+check instead of silently certifying, and `production/validation.py` records the same precondition.
+No case in the repository has more than one component.
+
+The `N-CH-MASS-PRECISION` blocker is `confirmed_problem` with the mechanism localised and the v9
+transform pair removed. The residual is the float32 round-off of the solve
+(`-0.0173 E_round` per substep at N = 128, `rtol = 1e-6`, i.e. 1.2e-3 over 150 000 substeps), which is
+exactly the size of the remaining closure failures: at 50 000 steps the conserved-mass drift is
+1.054e-3 at 60°, 4.783e-4 at 90°, 2.438e-4 at 120° and 3.119e-4 at 150° (the split-once build
+measured 2.497e-3 at the same 120° target, and every fitted angle moved by less than 0.05°), so
+`W-CONTACT-ANGLE` stays open — the 60° row is 5 % over the 1e-3 gate — and no target reached
+`converged = true` inside the first staged budget.

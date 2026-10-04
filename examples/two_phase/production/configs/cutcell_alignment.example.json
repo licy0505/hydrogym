@@ -1,7 +1,7 @@
 {
   "stage": "L1A-2f",
   "profile": "baseline",
-  "solver_contract_version": 9,
+  "solver_contract_version": 10,
   "dataset_schema_version": 3,
   "phase_transport_geometry": "sdf_cutcell_fv_v1",
   "phase_transport_geometry_version": 1,
@@ -13,7 +13,7 @@
   "wall_measure_method": "sdf_cutcell_v1",
   "wall_measure_contract_version": 1,
   "trajectory_semantics_changed": true,
-  "semantics_change": "contract 8 -> 9: the phase field is transported on the embedded cut-cell control volumes of the same corner reconstruction that defines the wall measure. Q_i = V_i phi_i with V_i the exact fluid polygon area, shared partial face apertures A_f (open length), w_f = A_f/d_ij, wall density A_wall,i/V_i, and an Euclidean-SPD matrix-free CG on I + dt M eps S^2 with S = V^-1/2 K V^-1/2 instead of a Euclidean CG on the nonsymmetric V^-1 K. g_w, h(phi), sigma_0, M, dt, eps, the measurement reference plane, Brinkman, gas properties and the CG tolerance are unchanged; there is no fitted factor and no mass projection. phase_transport_geometry='hard_cell_v7' reproduces contract 8 for falsification.",
+  "semantics_change": "contract 8 -> 9: the phase field is transported on the embedded cut-cell control volumes of the same corner reconstruction that defines the wall measure. Q_i = V_i phi_i with V_i the exact fluid polygon area, shared partial face apertures A_f (open length), w_f = A_f/d_ij, wall density A_wall,i/V_i, and an Euclidean-SPD matrix-free CG on I + dt M eps S^2 with S = V^-1/2 K V^-1/2 instead of a Euclidean CG on the nonsymmetric V^-1 K. g_w, h(phi), sigma_0, M, dt, eps, the measurement reference plane, Brinkman, gas properties and the CG tolerance are unchanged; there is no fitted factor and no mass projection. phase_transport_geometry='hard_cell_v7' reproduces contract 8 for falsification. contract 9 -> 10 (L1A-2g): the weighted implicit phase solve is posed for the substep exchange d = phi_new - rhs in the V-weighted inner product, (I + dt M eps L^2) d = -dt M eps L^2 rhs, instead of the contract-v9 sqrt(V) similarity transform, so the conserved mode sum_i V_i phi_i is carried by the construction of the right-hand side rather than reconstructed after the solve. The transport domain, the cut-cell geometry, the wall measure, g_w/h(phi)/sigma_0, M, dt, eps, Brinkman, the gas properties and the CG tolerance are unchanged.",
   "preflight_exceptions": {
     "PREFLIGHT_EXCEPTION_PREVIOUS_REVIEW": "AUTHORIZED",
     "PREFLIGHT_EXCEPTION_DEPENDENCY_AUDIT": "AUTHORIZED_FOR_DEVELOPMENT",

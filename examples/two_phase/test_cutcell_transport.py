@@ -529,7 +529,7 @@ def test_advection_subcycling_is_opt_in_and_conservative(x64):
 
 def test_contract_is_v9():
     """The contract, the geometry strings and the production defaults are frozen together."""
-    assert pf.SOLVER_CONTRACT_VERSION == 9
+    assert pf.SOLVER_CONTRACT_VERSION == 10
     assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     assert pf.PHASE_TRANSPORT_GEOMETRY_VERSION == 1
     assert pf.PHASE_TRANSPORT_GEOMETRIES == ("sdf_cutcell_fv_v1", "hard_cell_v7")
@@ -571,7 +571,8 @@ def test_v8_dataset_is_stale_under_v9(tmp_path):
     source = (HERE / "generate_dataset.py").read_text()
     for key in ("phase_transport_metadata", "phase_transport_geometry"):
         assert key in source, key
-    # the v9 metadata keys themselves come from the single source in phasefield.py
+    # the v9 metadata keys -- plus the v10 implicit-solver / mass-invariant pair -- come from the
+    # single source in phasefield.py
     metadata = pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2))
     assert set(metadata) == {
         "phase_transport_geometry",
@@ -580,14 +581,18 @@ def test_v8_dataset_is_stale_under_v9(tmp_path):
         "phase_face_aperture",
         "phase_advection_subcycling",
         "wall_control_cell",
+        "implicit_phase_solver",
+        "phase_mass_invariant",
     }
+    assert metadata["implicit_phase_solver"] == pf.IMPLICIT_PHASE_SOLVER
+    assert metadata["phase_mass_invariant"] == pf.PHASE_MASS_INVARIANT
     # the manifest of a contract-8 dataset lacks the v9 keys, so it fails closed on the version alone
     manifest = json.loads(json.dumps({"solver_contract_version": 8}))
     assert manifest["solver_contract_version"] != pf.SOLVER_CONTRACT_VERSION
     # the validation report schema knows contract 9 and rejects an unknown one
     from production.report import KNOWN_SOLVER_CONTRACT_VERSIONS, KNOWN_RESOLVED_STATUSES
 
-    assert 9 in KNOWN_SOLVER_CONTRACT_VERSIONS and 8 in KNOWN_SOLVER_CONTRACT_VERSIONS
+    assert 10 in KNOWN_SOLVER_CONTRACT_VERSIONS and 9 in KNOWN_SOLVER_CONTRACT_VERSIONS
     assert "resolved_in_contract_v9" in KNOWN_RESOLVED_STATUSES
     assert "thermodynamic_equilibrium_validated_v9" in KNOWN_RESOLVED_STATUSES
 
