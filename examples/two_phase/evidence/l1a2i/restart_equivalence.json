@@ -1,0 +1,85 @@
+{
+  "A0_float32": {
+    "aux_dropped_restart": null,
+    "candidate": "A0_float32",
+    "formal_restart": {
+      "aux_max_abs_difference": 0.0,
+      "disk_round_trip_dtypes": {
+        "aux": "float32",
+        "phi": "float32",
+        "t": "float32",
+        "u": "float32",
+        "v": "float32"
+      },
+      "disk_round_trip_phi_max_abs_difference": 0.0,
+      "mass_drift_interrupted": -1.0180611742745186e-07,
+      "mass_drift_uninterrupted": -1.0180611742745186e-07,
+      "phi_max_abs_difference": 0.0,
+      "u_max_abs_difference": 0.0,
+      "v_max_abs_difference": 0.0
+    }
+  },
+  "A1_phase_float64": {
+    "aux_dropped_restart": null,
+    "candidate": "A1_phase_float64",
+    "formal_restart": {
+      "aux_max_abs_difference": 0.0,
+      "disk_round_trip_dtypes": {
+        "aux": "float32",
+        "phi": "float64",
+        "t": "float32",
+        "u": "float32",
+        "v": "float32"
+      },
+      "disk_round_trip_phi_max_abs_difference": 0.0,
+      "mass_drift_interrupted": 2.1537320189384798e-16,
+      "mass_drift_uninterrupted": 2.1537320189384798e-16,
+      "phi_max_abs_difference": 0.0,
+      "u_max_abs_difference": 0.0,
+      "v_max_abs_difference": 0.0
+    }
+  },
+  "A2_float64_storage_f32_krylov": {
+    "aux_dropped_restart": null,
+    "candidate": "A2_float64_storage_f32_krylov",
+    "formal_restart": {
+      "aux_max_abs_difference": 0.0,
+      "disk_round_trip_dtypes": {
+        "aux": "float32",
+        "phi": "float64",
+        "t": "float32",
+        "u": "float32",
+        "v": "float32"
+      },
+      "disk_round_trip_phi_max_abs_difference": 0.0,
+      "mass_drift_interrupted": -2.1054894339683067e-08,
+      "mass_drift_uninterrupted": -2.1054894339683067e-08,
+      "phi_max_abs_difference": 0.0,
+      "u_max_abs_difference": 0.0,
+      "v_max_abs_difference": 0.0
+    }
+  },
+  "B1_compensated": {
+    "aux_dropped_restart": {
+      "note": "restarting with aux = 0 -- NOT an allowed formal path for a candidate whose hidden state influences the trajectory",
+      "phi_max_abs_difference_vs_uninterrupted": 2.384185791015625e-07
+    },
+    "candidate": "B1_compensated",
+    "formal_restart": {
+      "aux_max_abs_difference": 0.0,
+      "disk_round_trip_dtypes": {
+        "aux": "float32",
+        "phi": "float32",
+        "t": "float32",
+        "u": "float32",
+        "v": "float32"
+      },
+      "disk_round_trip_phi_max_abs_difference": 0.0,
+      "mass_drift_interrupted": -6.950560962387714e-08,
+      "mass_drift_uninterrupted": -6.950560962387714e-08,
+      "phi_max_abs_difference": 0.0,
+      "u_max_abs_difference": 0.0,
+      "v_max_abs_difference": 0.0
+    }
+  }
+}

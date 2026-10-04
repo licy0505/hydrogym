@@ -1,0 +1,46 @@
+{
+  "artifacts": {
+    "candidate_matrix.json": {
+      "bytes": 23186,
+      "sha256": "c19cf9c08316fdf0c2e93bc5ec98bb34b2f6adc90c7ebbed5e9051e51ce41f9c"
+    },
+    "long_run_series.json": {
+      "bytes": 34957,
+      "sha256": "2f8e249f645ed7bc6e366b2adb817d3d52cc1c6cc9a1a4dda31759fc85c228d5"
+    },
+    "performance.json": {
+      "bytes": 2327,
+      "sha256": "a59c18ff09cacaec644062a4192170ca7d850133cc302d0fd96707c3d00af74f"
+    },
+    "phase_storage_precision_report.json": {
+      "bytes": 120303,
+      "sha256": "e890c8e1a2f72e637136a3e248a9dfb203ccb9759828e1f0ee86dfcb22809620"
+    },
+    "phase_storage_precision_report.md": {
+      "bytes": 6601,
+      "sha256": "06e14095b8e3fa5e57cfcae20432db698b1c6f1703aa9c59b5bcff968f7b2d9b"
+    },
+    "restart_equivalence.json": {
+      "bytes": 3464,
+      "sha256": "41b5dbcebec68915ae88fc58cbcc01c7068c72f5041fb0c0c07af03976423348"
+    }
+  },
+  "contract_version": 10,
+  "environment": {
+    "devices": [
+      "cpu:cpu"
+    ],
+    "gpu_available": false,
+    "jax": "0.10.2",
+    "phasefield_sha256": "17abf24b37b1f2fa9c621d692169242246f27c678de3c78a0a63eb06cf3987f5",
+    "reduction_dtype": "float32",
+    "x64": true,
+    "xla_flags": "--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=2"
+  },
+  "generated_utc": "2026-10-04T14:29:23Z",
+  "module": "production.phase_storage_precision_audit",
+  "profile": "baseline",
+  "spec": "TWO_PHASE_L1A2I_PHASE_STATE_STORAGE_PRECISION_AGENT_SPEC.md",
+  "stage": "L1A-2i",
+  "verdict": "PHASE_STORAGE_MODEL_SELECTED_COST_ABOVE_PREFERRED_BUDGET"
+}

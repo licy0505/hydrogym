@@ -1,0 +1,42 @@
+{
+  "artifacts": {
+    "candidate_matrix.json": {
+      "bytes": 15866,
+      "sha256": "687c55fe9ca17ef508e0e5863b861bc6c2ef5fe1f82e9dd19bebeb89db16a2c4"
+    },
+    "performance.json": {
+      "bytes": 3550,
+      "sha256": "078a2012c589cc141c5f7de327384a41856fc563cb55062afaed2ea32e3818f6"
+    },
+    "phase_storage_precision_report.json": {
+      "bytes": 74006,
+      "sha256": "b09b36b34fd7b32ec3fb583a9e8905261275320bbe9084a8fcc9b854f157ed71"
+    },
+    "phase_storage_precision_report.md": {
+      "bytes": 5134,
+      "sha256": "5afc373e18fc390e48811e3a97008cd476af30b6ba0b0a412400ca6ffecf7499"
+    },
+    "restart_equivalence.json": {
+      "bytes": 2643,
+      "sha256": "1690653baae68bd6fa677c99b4cf303c72a8262fecbb92890568235fe93b92ea"
+    }
+  },
+  "contract_version": 10,
+  "environment": {
+    "devices": [
+      "cpu:cpu"
+    ],
+    "gpu_available": false,
+    "jax": "0.10.2",
+    "phasefield_sha256": "17abf24b37b1f2fa9c621d692169242246f27c678de3c78a0a63eb06cf3987f5",
+    "reduction_dtype": "float32",
+    "x64": true,
+    "xla_flags": "--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=2"
+  },
+  "generated_utc": "2026-10-04T14:31:46Z",
+  "module": "production.phase_storage_precision_audit",
+  "profile": "quick",
+  "spec": "TWO_PHASE_L1A2I_PHASE_STATE_STORAGE_PRECISION_AGENT_SPEC.md",
+  "stage": "L1A-2i",
+  "verdict": "NOT_READY_FOR_SELECTION"
+}

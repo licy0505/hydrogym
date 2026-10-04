@@ -1,0 +1,134 @@
+[
+  {
+    "N": 48,
+    "candidate": "A0_float32",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 36868,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 27648,
+    "persistent_bytes_ratio": 1.0,
+    "repeats": 3,
+    "runtime_ratio": 1.0,
+    "seconds_per_substep": 0.00025919984996107813,
+    "seconds_per_substep_samples": [
+      0.00031378459998450127,
+      0.0002915637499881996,
+      0.00025919984996107813
+    ],
+    "seconds_per_substep_spread": 5.4584750023423134e-05,
+    "substeps": 20
+  },
+  {
+    "N": 48,
+    "candidate": "A1_phase_float64",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 46084,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 36864,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.2032944850920477,
+    "seconds_per_substep": 0.00031189374999485153,
+    "seconds_per_substep_samples": [
+      0.00034096700001100543,
+      0.0003228171000046132,
+      0.00031189374999485153
+    ],
+    "seconds_per_substep_spread": 2.9073250016153896e-05,
+    "substeps": 20
+  },
+  {
+    "N": 48,
+    "candidate": "A2_float64_storage_f32_krylov",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 46084,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 36864,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.137486962390728,
+    "seconds_per_substep": 0.0002948364499843592,
+    "seconds_per_substep_samples": [
+      0.0003343019499880029,
+      0.0003437127500092174,
+      0.0002948364499843592
+    ],
+    "seconds_per_substep_spread": 4.88763000248582e-05,
+    "substeps": 20
+  },
+  {
+    "N": 48,
+    "candidate": "B1_compensated",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 36868,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 36864,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.01554418347214,
+    "seconds_per_substep": 0.00026322889998482425,
+    "seconds_per_substep_samples": [
+      0.0003005172000030143,
+      0.00034144534997722077,
+      0.00026322889998482425
+    ],
+    "seconds_per_substep_spread": 7.821644999239652e-05,
+    "substeps": 20
+  },
+  {
+    "N": 48,
+    "candidate": "C1_residual_feedback",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 36868,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 36864,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.0060895098617038,
+    "seconds_per_substep": 0.0002607782500035682,
+    "seconds_per_substep_samples": [
+      0.0002728452000155812,
+      0.0002607782500035682,
+      0.0002688865500203974
+    ],
+    "seconds_per_substep_spread": 1.2066950012012989e-05,
+    "substeps": 20
+  },
+  {
+    "N": 48,
+    "candidate": "F_full_float64",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 73736,
+      "temporary_bytes": 0
+    },
+    "persistent_bytes": 55296,
+    "persistent_bytes_ratio": 2.0,
+    "repeats": 3,
+    "runtime_ratio": 1.2913983169986245,
+    "seconds_per_substep": 0.0003347302500060323,
+    "seconds_per_substep_samples": [
+      0.0003469539999969129,
+      0.0003594378000343568,
+      0.0003347302500060323
+    ],
+    "seconds_per_substep_spread": 2.4707550028324487e-05,
+    "substeps": 20
+  }
+]

@@ -1,0 +1,1979 @@
+{
+  "candidate_rows": [
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A0_float32",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "within the preferred envelope on the measured (CPU) device",
+      "cost_within_preferred_budget": true,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "the incumbent; kept as the reference row, not a candidate for selection.",
+        "persistent_state_dtype_only": false,
+        "production_files": [],
+        "rank": 0
+      },
+      "label": "contract-10 float32 phase state",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.0,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -1.2124792852672289e-05,
+        "quick_offset0.5": -1.9435099372554798e-05
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -1.0945900109765505e-05,
+          "solve_defect_mass": -4.610371199782968e-06,
+          "solve_defect_over_E_round": -18.7563029773501,
+          "storage_loss_mass": -1.7959549594172956e-05,
+          "storage_loss_over_E_round": -73.0645622506297
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -1.633953909617118e-05,
+          "solve_defect_mass": -1.1783640495804028e-05,
+          "solve_defect_over_E_round": -47.94066475773,
+          "storage_loss_mass": -2.19066793905787e-05,
+          "storage_loss_over_E_round": -89.12532362072432
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.0,
+      "status": "REFERENCE",
+      "storage_model": "float32_contract_10"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A1_phase_float64",
+      "causal": {
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "phi (and its update path) stored in float64; pf.State layout, restarts and datasets keep their shape and their field names.",
+        "persistent_state_dtype_only": true,
+        "production_files": [
+          "phasefield.py"
+        ],
+        "rank": 2
+      },
+      "label": "phase-only float64 storage",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": 1.9383588170446316e-15,
+        "quick_offset0.5": 1.7230380790794222e-15
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -1.2619545131082772e-16,
+          "solve_defect_mass": -2.602089664196906e-16,
+          "solve_defect_over_E_round": -1.0586041774294848e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": 5.227291503210617e-16,
+          "solve_defect_mass": 1.0778096115238538e-15,
+          "solve_defect_over_E_round": 4.384969931586379e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": true,
+      "rejection_reasons": [
+        "INCONCLUSIVE"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.2032944850920477,
+      "status": "CANDIDATE",
+      "storage_model": "phase_only_float64_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "A2_float64_storage_f32_krylov",
+      "causal": {
+        "input_shift_over_E_round": 0.026686296596554342,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014125664725537538,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "identical persistent layout to A1 (phi in float64) but the Krylov recurrence stays float32: the exchange correction is mass-neutral by the telescoping of the cut-cell divergence, so the state is never rounded back onto the float32 grid. Chosen over A1 only if it clears the same gates -- the measurement decides.",
+        "persistent_state_dtype_only": true,
+        "production_files": [
+          "phasefield.py"
+        ],
+        "rank": 1
+      },
+      "label": "phase-only float64 storage with the float32 Krylov recurrence",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": -1.1875982013565323e-06,
+        "quick_offset0.5": -3.989208002587523e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -9.690334408035119e-07,
+          "solve_defect_mass": -1.9981004658918586e-06,
+          "solve_defect_over_E_round": -8.128841712184977,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -4.027775521853441e-06,
+          "solve_defect_mass": -8.30482701767786e-06,
+          "solve_defect_over_E_round": -33.787429959968996,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.137486962390728,
+      "status": "REJECTED",
+      "storage_model": "phase_only_float64_v1 + float32_krylov_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "B1_compensated",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "new persistent field; restart version bump required",
+      "hidden_state": true,
+      "hidden_state_serialized": true,
+      "invasiveness": {
+        "new_state_fields": [
+          "phase_lo (compensation pair member)"
+        ],
+        "notes": "second persistent phase array; operators must read phi_hi; checkpoints and datasets must serialize the pair and the restart version must reject old data.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py",
+          "generate_dataset.py",
+          "restart/checkpoint schema"
+        ],
+        "rank": 3
+      },
+      "label": "compensated local accumulation (phi_hi + phi_lo, operators read phi_hi)",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -3.814724403316125e-06,
+        "quick_offset0.5": -8.404726812151602e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -2.4066102885557955e-06,
+          "solve_defect_mass": -4.952504790939973e-06,
+          "solve_defect_over_E_round": -20.148199858618945,
+          "storage_loss_mass": -9.81014432644701e-09,
+          "storage_loss_over_E_round": -0.039910460842509626
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.642059291483999e-06,
+          "solve_defect_mass": -1.1629925824257455e-05,
+          "solve_defect_over_E_round": -47.315290660515906,
+          "storage_loss_mass": -3.3755332193670014e-09,
+          "storage_loss_over_E_round": -0.013733048501087416
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "DATASET_STATE_AMBIGUOUS",
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": true,
+      "runtime_ratio_vs_A0": 1.01554418347214,
+      "status": "REJECTED",
+      "storage_model": "compensated_local_accumulator_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "C1_residual_feedback",
+      "causal": {
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "new persistent field; restart version bump required",
+      "hidden_state": true,
+      "hidden_state_serialized": true,
+      "invasiveness": {
+        "new_state_fields": [
+          "phase_residual (local feedback memory)"
+        ],
+        "notes": "one extra persistent array AND a changed local update rule; restart state version must be bumped or a resumed run silently loses the memory.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py",
+          "generate_dataset.py",
+          "restart/checkpoint schema"
+        ],
+        "rank": 4
+      },
+      "label": "local residual feedback (phi + r_store, operators read phi)",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 1.3333333333333333,
+      "phase_dtype": "float32",
+      "quick": {
+        "quick_offset0.0": -3.74614843575425e-06,
+        "quick_offset0.5": -8.305968579884545e-06
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": -2.3347162616809894e-06,
+          "solve_defect_mass": -4.815514550162681e-06,
+          "solve_defect_over_E_round": -19.590884547201075,
+          "storage_loss_mass": 1.4416485208183007e-09,
+          "storage_loss_over_E_round": 0.005865036733829493
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.5671748867225144e-06,
+          "solve_defect_mass": -1.1476579416127347e-05,
+          "solve_defect_over_E_round": -46.69141480936572,
+          "storage_loss_mass": -2.31859275643267e-09,
+          "storage_loss_over_E_round": -0.009432982793850533
+        }
+      },
+      "quick_passed": false,
+      "rejection_reasons": [
+        "DATASET_STATE_AMBIGUOUS",
+        "MASS_GATE_FAIL"
+      ],
+      "restart_reproducible": null,
+      "runtime_ratio_vs_A0": 1.0060895098617038,
+      "status": "REJECTED",
+      "storage_model": "residual_feedback_v1"
+    },
+    {
+      "ad_ok": true,
+      "angle_delta_deg": null,
+      "candidate": "F_full_float64",
+      "causal": {
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "cost_note": "above the preferred envelope (spec 39-42): reported, not silently accepted",
+      "cost_within_preferred_budget": false,
+      "dataset_impact": "no new field",
+      "hidden_state": false,
+      "hidden_state_serialized": false,
+      "invasiveness": {
+        "new_state_fields": [],
+        "notes": "global promotion is forbidden without cost evidence (spec 76) and is used here only as the float64 reference ceiling.",
+        "persistent_state_dtype_only": false,
+        "production_files": [
+          "phasefield.py (global promotion)"
+        ],
+        "rank": 5
+      },
+      "label": "full float64 reference",
+      "long_horizon": [],
+      "long_horizon_clean": null,
+      "medium_final_relative_drift": null,
+      "medium_passed": null,
+      "persistent_bytes_ratio_vs_A0": 2.0,
+      "phase_dtype": "float64",
+      "quick": {
+        "quick_offset0.0": 2.1537320189384798e-16,
+        "quick_offset0.5": 8.615190395397111e-16
+      },
+      "quick_ledger": {
+        "quick_offset0.0": {
+          "explained_relative_drift": 5.203897483440839e-16,
+          "solve_defect_mass": 1.0730186955668712e-15,
+          "solve_defect_over_E_round": 4.365345626695015e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "quick_offset0.5": {
+          "explained_relative_drift": -5.426323478056384e-16,
+          "solve_defect_mass": -1.1188478002985918e-15,
+          "solve_defect_over_E_round": -4.5519300532070885e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        }
+      },
+      "quick_passed": true,
+      "rejection_reasons": [],
+      "restart_reproducible": null,
+      "runtime_ratio_vs_A0": 1.2913983169986245,
+      "status": "REFERENCE",
+      "storage_model": "full_float64_reference"
+    }
+  ],
+  "contract_version": 10,
+  "cost": {
+    "N": null,
+    "gpu_measured": false,
+    "gpu_note": "no GPU device in this environment; float64 throughput on the production GPU is unverified, so the cost envelope is *not* accepted silently (spec 42).",
+    "measured_on": "CPU",
+    "memory_preferred_fraction": 0.2,
+    "memory_within_preferred_budget": null,
+    "persistent_bytes_ratio_vs_A0": null,
+    "runtime_preferred_fraction": 0.15,
+    "runtime_ratio_vs_A0": null,
+    "runtime_within_preferred_budget": null,
+    "seconds_per_substep": null,
+    "selected": null,
+    "verdict": "NOT_MEASURED"
+  },
+  "dataset_lineage": {
+    "A0_float32": {
+      "candidate": "A0_float32",
+      "dataset_schema_version_now": 3,
+      "decision": "no new dataset field; the solver source hash and the contract-11 metadata already invalidate every contract-10 dataset, and the checkpoint layout is unchanged",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi (float32)",
+      "requires_new_persistent_field": false,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    },
+    "A1_phase_float64": {
+      "candidate": "A1_phase_float64",
+      "dataset_schema_version_now": 3,
+      "decision": "no new dataset field; the solver source hash and the contract-11 metadata already invalidate every contract-10 dataset, and the checkpoint layout is unchanged",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi (float64)",
+      "requires_new_persistent_field": false,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    },
+    "A2_float64_storage_f32_krylov": {
+      "candidate": "A2_float64_storage_f32_krylov",
+      "dataset_schema_version_now": 3,
+      "decision": "no new dataset field; the solver source hash and the contract-11 metadata already invalidate every contract-10 dataset, and the checkpoint layout is unchanged",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi (float64); only the exchange correction comes from the float32 Krylov recurrence and it is added in float64",
+      "requires_new_persistent_field": false,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    },
+    "B1_compensated": {
+      "candidate": "B1_compensated",
+      "dataset_schema_version_now": 3,
+      "decision": "storage model must be added to the trajectory fingerprint and to phase_transport_metadata; the restart state version must be bumped (old checkpoints cannot be resumed)",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi_hi only; phi_lo never enters a flux, a chemical potential, a divergence or the solve",
+      "requires_new_persistent_field": true,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    },
+    "C1_residual_feedback": {
+      "candidate": "C1_residual_feedback",
+      "dataset_schema_version_now": 3,
+      "decision": "storage model must be added to the trajectory fingerprint and to phase_transport_metadata; the restart state version must be bumped (old checkpoints cannot be resumed)",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi only; the residual memory enters the next local update and nothing else",
+      "requires_new_persistent_field": true,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    },
+    "F_full_float64": {
+      "candidate": "F_full_float64",
+      "dataset_schema_version_now": 3,
+      "decision": "no new dataset field; the solver source hash and the contract-11 metadata already invalidate every contract-10 dataset, and the checkpoint layout is unchanged",
+      "fingerprint_has_phase_storage_model": false,
+      "fingerprint_has_solver_contract": true,
+      "fingerprint_has_solver_sha256": true,
+      "fingerprint_payload_keys": [
+        "N",
+        "Nx",
+        "Ny",
+        "case",
+        "ds",
+        "dt",
+        "ensure_ascii",
+        "generator_sha256",
+        "max_phi_overshoot",
+        "max_solid_leak",
+        "max_speed",
+        "max_total_mass_ratio",
+        "min_feature_cells",
+        "min_total_mass_ratio",
+        "nsteps",
+        "phase_boundary_model",
+        "phase_transport_geometry",
+        "save_every",
+        "schema",
+        "separators",
+        "solver_contract",
+        "solver_sha256",
+        "sort_keys",
+        "validation",
+        "wall_measure",
+        "wall_measure_contract_version",
+        "wetting_model"
+      ],
+      "operator_read_semantics": "operators read phi (float64)",
+      "requires_new_persistent_field": false,
+      "silent_resume_possible": false,
+      "stale_dataset_guard": "Return True only when schema and exact generation fingerprint match."
+    }
+  },
+  "elapsed_seconds": 136.33993768692017,
+  "environment": {
+    "devices": [
+      "cpu:cpu"
+    ],
+    "gpu_available": false,
+    "jax": "0.10.2",
+    "phasefield_sha256": "17abf24b37b1f2fa9c621d692169242246f27c678de3c78a0a63eb06cf3987f5",
+    "reduction_dtype": "float32",
+    "x64": true,
+    "xla_flags": "--xla_cpu_multi_thread_eigen=false intra_op_parallelism_threads=2"
+  },
+  "fixed_state_causal": {
+    "E_round": 2.4580383486822537e-07,
+    "M_factor": 4.0,
+    "N": 48,
+    "candidates": {
+      "A0_float32": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 0.0,
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": -1.5224193280776355e-14
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": -0.0001324450188443294
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": -0.00013244501882910518
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.00013180821590833727
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.008296337887854437
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": -0.01548161167255888
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.001319614528235722
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.005601406021716056
+          }
+        },
+        "rhs_max_abs": 1.0034852027893066,
+        "solve_mass_defect_abs_total_over_E_round": 4679.334174015193,
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_abs_total_over_E_round": 0.15930143725224885,
+        "storage_loss_max_abs": 4.1105522541329265e-08,
+        "storage_loss_mean_ulps_of_working_dtype": 0.009092530676481442,
+        "storage_loss_nonzero_fraction": 0.9574652777777778,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "A1_phase_float64": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 7.078671138138759e-08,
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": 0.0
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": 0.0
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": 0.0
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.0
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.0
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": 0.0
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.0
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.0
+          }
+        },
+        "rhs_max_abs": 1.0034851836329326,
+        "solve_mass_defect_abs_total_over_E_round": 4679.33010863978,
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_abs_total_over_E_round": 0.0,
+        "storage_loss_max_abs": 0.0,
+        "storage_loss_mean_ulps_of_working_dtype": 0.0,
+        "storage_loss_nonzero_fraction": 0.0,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "A2_float64_storage_f32_krylov": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 4.980588963476862e-08,
+        "input_shift_over_E_round": 0.026686296596554342,
+        "krylov_dtype": "float32",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": 0.0
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": 0.0
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": 0.0
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.0
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.0
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": 0.0
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.0
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.0
+          }
+        },
+        "rhs_max_abs": 1.0034851836329326,
+        "solve_mass_defect_abs_total_over_E_round": 4679.334181429813,
+        "solve_mass_defect_over_E_round": -0.014125664725537538,
+        "storage_loss_abs_total_over_E_round": 0.0,
+        "storage_loss_max_abs": 0.0,
+        "storage_loss_mean_ulps_of_working_dtype": 0.0,
+        "storage_loss_nonzero_fraction": 0.0,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      },
+      "B1_compensated": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 0.0,
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": -1.5224193280776355e-14
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": -0.0001324450188443294
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": -0.00013244501882910518
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.00013180821590833727
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.008296337887854437
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": -0.01548161167255888
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.001319614528235722
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.005601406021716056
+          }
+        },
+        "rhs_max_abs": 1.0034852027893066,
+        "solve_mass_defect_abs_total_over_E_round": 4679.334174015193,
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_abs_total_over_E_round": 0.15930143725224885,
+        "storage_loss_max_abs": 4.1105522541329265e-08,
+        "storage_loss_mean_ulps_of_working_dtype": 0.009092530676481442,
+        "storage_loss_nonzero_fraction": 0.9574652777777778,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "C1_residual_feedback": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 0.0,
+        "input_shift_over_E_round": 0.0,
+        "krylov_dtype": "float32",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": -1.5224193280776355e-14
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": -0.0001324450188443294
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": -0.00013244501882910518
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.00013180821590833727
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.008296337887854437
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": -0.01548161167255888
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.001319614528235722
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.005601406021716056
+          }
+        },
+        "rhs_max_abs": 1.0034852027893066,
+        "solve_mass_defect_abs_total_over_E_round": 4679.334174015193,
+        "solve_mass_defect_over_E_round": -0.014118250105183052,
+        "storage_loss_abs_total_over_E_round": 0.15930143725224885,
+        "storage_loss_max_abs": 4.1105522541329265e-08,
+        "storage_loss_mean_ulps_of_working_dtype": 0.009092530676481442,
+        "storage_loss_nonzero_fraction": 0.9574652777777778,
+        "storage_loss_over_E_round": -0.0001324450188443294,
+        "working_dtype": "float32"
+      },
+      "F_full_float64": {
+        "cg_converged": true,
+        "cg_iterations": 3,
+        "input_shift_max_abs": 7.078671138138759e-08,
+        "input_shift_over_E_round": 0.040811961287521854,
+        "krylov_dtype": "float64",
+        "populations": {
+          "cut": {
+            "cells": 144,
+            "mass_over_E_round": 0.0
+          },
+          "fluid": {
+            "cells": 2304,
+            "mass_over_E_round": 0.0
+          },
+          "full": {
+            "cells": 2160,
+            "mass_over_E_round": 0.0
+          },
+          "gas": {
+            "cells": 1924,
+            "mass_over_E_round": 0.0
+          },
+          "interface": {
+            "cells": 170,
+            "mass_over_E_round": 0.0
+          },
+          "liquid": {
+            "cells": 16,
+            "mass_over_E_round": 0.0
+          },
+          "near_gas": {
+            "cells": 156,
+            "mass_over_E_round": 0.0
+          },
+          "near_liquid": {
+            "cells": 38,
+            "mass_over_E_round": 0.0
+          }
+        },
+        "rhs_max_abs": 1.0034851836329326,
+        "solve_mass_defect_abs_total_over_E_round": 4679.33010863978,
+        "solve_mass_defect_over_E_round": -3.377051821645598e-11,
+        "storage_loss_abs_total_over_E_round": 0.0,
+        "storage_loss_max_abs": 0.0,
+        "storage_loss_mean_ulps_of_working_dtype": 0.0,
+        "storage_loss_nonzero_fraction": 0.0,
+        "storage_loss_over_E_round": 0.0,
+        "working_dtype": "float64"
+      }
+    },
+    "note": "storage_loss is measured against the float64 evaluation of the candidate's own two terms; input_shift is the difference of that exact update from the float32 baseline's, so a candidate cannot hide a change of the equation inside the storage metric.",
+    "production_storage_residual": {
+      "mass_over_E_round": -0.0001324450188443294,
+      "nonzero_fraction": 0.9574652777777778,
+      "population_decomposition_over_E_round": {
+        "cut": -1.5224193280776355e-14,
+        "fluid": -0.0001324450188443294,
+        "full": -0.00013244501882910518,
+        "gas": 0.00013180821590833727,
+        "interface": 0.008296337887854437,
+        "liquid": -0.01548161167255888,
+        "near_gas": 0.001319614528235722,
+        "near_liquid": 0.005601406021716056
+      }
+    },
+    "target_deg": 150.0,
+    "warmup_substeps": 300
+  },
+  "gates": {
+    "angle_delta_bound_deg": 0.2,
+    "closure_horizon": 200000,
+    "long_horizon_projection_bound": 0.001,
+    "medium_bound": 0.0002,
+    "medium_strong_bound": 0.0001,
+    "memory_preferred_fraction": 0.2,
+    "quick_bound": 2e-06,
+    "quick_strong_bound": 5e-07,
+    "runtime_preferred_fraction": 0.15
+  },
+  "gradients": {
+    "A0_float32": {
+      "candidate": "A0_float32",
+      "finite_difference": -0.004927278979494076,
+      "forward_directional": -0.004935922068398213,
+      "forward_vs_finite_difference": 0.001754130208601286,
+      "frozen_correction_max_abs": 5.1658909796969965e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935856908559799,
+      "reverse_vs_finite_difference": 0.0017409059039323203,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.528317382913883
+    },
+    "A1_phase_float64": {
+      "candidate": "A1_phase_float64",
+      "finite_difference": -0.004935944573292161,
+      "forward_directional": -0.0049359445718779316,
+      "forward_vs_finite_difference": 2.8651655693124636e-10,
+      "frozen_correction_max_abs": 5.165988807346158e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935944571877751,
+      "reverse_vs_finite_difference": 2.8655310743111984e-10,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.528317341812779
+    },
+    "A2_float64_storage_f32_krylov": {
+      "candidate": "A2_float64_storage_f32_krylov",
+      "finite_difference": -0.004935944570627626,
+      "forward_directional": -0.004935944571877925,
+      "forward_vs_finite_difference": 2.533048047791086e-10,
+      "frozen_correction_max_abs": 5.165891707292758e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935944571877751,
+      "reverse_vs_finite_difference": 2.532696600676728e-10,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.5283173071366907
+    },
+    "B1_compensated": {
+      "candidate": "B1_compensated",
+      "finite_difference": -0.004927219659833781,
+      "forward_directional": -0.0049359220392943826,
+      "forward_vs_finite_difference": 0.0017661845952479259,
+      "frozen_correction_max_abs": 5.1658909796969965e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935856908559799,
+      "reverse_vs_finite_difference": 0.0017529660381143152,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.528317366178271
+    },
+    "C1_residual_feedback": {
+      "candidate": "C1_residual_feedback",
+      "finite_difference": -0.004927219659833781,
+      "forward_directional": -0.0049359220392943826,
+      "forward_vs_finite_difference": 0.0017661845952479259,
+      "frozen_correction_max_abs": 5.1658909796969965e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935856908559799,
+      "reverse_vs_finite_difference": 0.0017529660381143152,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.528317366178271
+    },
+    "F_full_float64": {
+      "candidate": "F_full_float64",
+      "finite_difference": -0.004935944574624429,
+      "forward_directional": -0.004935944571877952,
+      "forward_vs_finite_difference": 5.564237230967272e-10,
+      "frozen_correction_max_abs": 5.165988807346158e-05,
+      "full_step_reverse_mode": {
+        "available": false,
+        "error": "ValueError: Reverse-mode differentiation does not work for lax.while_loop or lax.fori_loop with dynamic start/stop values. Try using lax.scan, or using fori_loop with static start/stop.",
+        "note": "the shipped contract-10 CG uses lax.while_loop; this is identical for the float32 baseline and every candidate, so it is not a regression of any storage model"
+      },
+      "reverse_directional": -0.004935944571877751,
+      "reverse_vs_finite_difference": 5.564644909619597e-10,
+      "storage_rule_ad_ok": true,
+      "storage_rule_gradient_abs_max": 0.0625,
+      "storage_rule_reverse_mode_finite": true,
+      "value": 2.5283173418127785
+    }
+  },
+  "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+  "ledger_cross_check": {
+    "closure_ledger": {
+      "rows": {
+        "120": {
+          "angle_deg": 118.84678610623592,
+          "angle_error_deg": 1.1532138937640752,
+          "cg_failed": null,
+          "conserved_mass_drift": 0.00024381160062791923,
+          "conserved_mass_drift_final": 0.00019372881881320414,
+          "converged": null,
+          "done": true,
+          "elapsed_s": 1955.8,
+          "energy_change": NaN,
+          "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+          "solver_contract_version": 10,
+          "steps": 50000,
+          "stop_reason": "budget_exhausted",
+          "target_deg": 120.0
+        },
+        "150": {
+          "angle_deg": 147.41608963065093,
+          "angle_error_deg": 2.58391036934907,
+          "cg_failed": null,
+          "conserved_mass_drift": 0.00031188405901255673,
+          "conserved_mass_drift_final": 0.00031188405901255673,
+          "converged": null,
+          "done": true,
+          "elapsed_s": 1803.8,
+          "energy_change": NaN,
+          "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+          "solver_contract_version": 10,
+          "steps": 50000,
+          "stop_reason": "budget_exhausted",
+          "target_deg": 150.0
+        },
+        "60": {
+          "angle_deg": 59.658821355632845,
+          "angle_error_deg": 0.3411786443671545,
+          "cg_failed": null,
+          "conserved_mass_drift": 0.0010538352676442305,
+          "conserved_mass_drift_final": 0.0010538352676442305,
+          "converged": null,
+          "done": true,
+          "elapsed_s": 309.3,
+          "energy_change": NaN,
+          "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+          "solver_contract_version": 10,
+          "steps": 50000,
+          "stop_reason": "budget_exhausted",
+          "target_deg": 60.0
+        },
+        "90": {
+          "angle_deg": 89.4018256890792,
+          "angle_error_deg": 0.5981743109207969,
+          "cg_failed": null,
+          "conserved_mass_drift": 0.00047828781254730004,
+          "conserved_mass_drift_final": 0.00047643688621248686,
+          "converged": null,
+          "done": true,
+          "elapsed_s": 1927.2,
+          "energy_change": NaN,
+          "implicit_phase_solver": "weighted_spd_nullspace_preserving_v1",
+          "solver_contract_version": 10,
+          "steps": 50000,
+          "stop_reason": "budget_exhausted",
+          "target_deg": 90.0
+        }
+      },
+      "solver_contract_version": null,
+      "source": "evidence/mass_precision/closure.json"
+    },
+    "quick_gate_reference": {
+      "offset_0.0": {
+        "final_relative_drift": -1.242975042432493e-05,
+        "increment_autocorrelation": 0.5798895933635627,
+        "passed": false,
+        "slope_t_statistic": -25.91879586235013,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      },
+      "offset_0.5": {
+        "final_relative_drift": -1.9800228207289915e-05,
+        "increment_autocorrelation": 0.6191094092567617,
+        "passed": false,
+        "slope_t_statistic": -47.66877333034932,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      }
+    },
+    "quick_gate_reproduction": {
+      "note": "the audit's A0 runs the full CHNS substep chain (momentum on) while the L1A-2h quick gate runs the phase-only substep; the two agree to ~3e-07 in relative drift, which is the advective contribution the momentum path adds. The fixture (N, angle, dt, M, wall offsets) and the mass metric are the same.",
+      "rows": {
+        "offset_0.0": {
+          "absolute_difference": 3.049575716526414e-07,
+          "audit": -1.2124792852672289e-05,
+          "ledger": -1.242975042432493e-05
+        },
+        "offset_0.5": {
+          "absolute_difference": 3.6512883473511734e-07,
+          "audit": -1.9435099372554798e-05,
+          "ledger": -1.9800228207289915e-05
+        }
+      }
+    }
+  },
+  "medium_matrix": {},
+  "module": "production.phase_storage_precision_audit",
+  "notes": [
+    "CPU-only environment: GPU cost is not verified (no GPU device present). The performance section is a CPU measurement and is reported as such.",
+    "numpy.polyfit's RankWarning about its step-axis conditioning is silenced in series_classification (the coefficients are unchanged, the warning is about the x scale).",
+    "The audit's A0 row uses the full CHNS substep chain (momentum, Brinkmann damping and pressure projection on, as in step_with_diagnostics); the L1A-2h closure ledger's CH-only fixture is reproduced by the same chain to within 3.1e-07 relative drift at 2500 public steps, the difference being the phase advection the momentum path adds."
+  ],
+  "performance": [
+    {
+      "N": 48,
+      "candidate": "A0_float32",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 36868,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 27648,
+      "persistent_bytes_ratio": 1.0,
+      "repeats": 3,
+      "runtime_ratio": 1.0,
+      "seconds_per_substep": 0.00025919984996107813,
+      "seconds_per_substep_samples": [
+        0.00031378459998450127,
+        0.0002915637499881996,
+        0.00025919984996107813
+      ],
+      "seconds_per_substep_spread": 5.4584750023423134e-05,
+      "substeps": 20
+    },
+    {
+      "N": 48,
+      "candidate": "A1_phase_float64",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 46084,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 36864,
+      "persistent_bytes_ratio": 1.3333333333333333,
+      "repeats": 3,
+      "runtime_ratio": 1.2032944850920477,
+      "seconds_per_substep": 0.00031189374999485153,
+      "seconds_per_substep_samples": [
+        0.00034096700001100543,
+        0.0003228171000046132,
+        0.00031189374999485153
+      ],
+      "seconds_per_substep_spread": 2.9073250016153896e-05,
+      "substeps": 20
+    },
+    {
+      "N": 48,
+      "candidate": "A2_float64_storage_f32_krylov",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 46084,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 36864,
+      "persistent_bytes_ratio": 1.3333333333333333,
+      "repeats": 3,
+      "runtime_ratio": 1.137486962390728,
+      "seconds_per_substep": 0.0002948364499843592,
+      "seconds_per_substep_samples": [
+        0.0003343019499880029,
+        0.0003437127500092174,
+        0.0002948364499843592
+      ],
+      "seconds_per_substep_spread": 4.88763000248582e-05,
+      "substeps": 20
+    },
+    {
+      "N": 48,
+      "candidate": "B1_compensated",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 36868,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 36864,
+      "persistent_bytes_ratio": 1.3333333333333333,
+      "repeats": 3,
+      "runtime_ratio": 1.01554418347214,
+      "seconds_per_substep": 0.00026322889998482425,
+      "seconds_per_substep_samples": [
+        0.0003005172000030143,
+        0.00034144534997722077,
+        0.00026322889998482425
+      ],
+      "seconds_per_substep_spread": 7.821644999239652e-05,
+      "substeps": 20
+    },
+    {
+      "N": 48,
+      "candidate": "C1_residual_feedback",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 36868,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 36864,
+      "persistent_bytes_ratio": 1.3333333333333333,
+      "repeats": 3,
+      "runtime_ratio": 1.0060895098617038,
+      "seconds_per_substep": 0.0002607782500035682,
+      "seconds_per_substep_samples": [
+        0.0002728452000155812,
+        0.0002607782500035682,
+        0.0002688865500203974
+      ],
+      "seconds_per_substep_spread": 1.2066950012012989e-05,
+      "substeps": 20
+    },
+    {
+      "N": 48,
+      "candidate": "F_full_float64",
+      "gpu_measured": false,
+      "memory_analysis": {
+        "alias_bytes": 0,
+        "argument_bytes": 73736,
+        "temporary_bytes": 0
+      },
+      "persistent_bytes": 55296,
+      "persistent_bytes_ratio": 2.0,
+      "repeats": 3,
+      "runtime_ratio": 1.2913983169986245,
+      "seconds_per_substep": 0.0003347302500060323,
+      "seconds_per_substep_samples": [
+        0.0003469539999969129,
+        0.0003594378000343568,
+        0.0003347302500060323
+      ],
+      "seconds_per_substep_spread": 2.4707550028324487e-05,
+      "substeps": 20
+    }
+  ],
+  "population_series": {
+    "E_round": 2.4580383486822537e-07,
+    "N": 48,
+    "cell_fraction": {
+      "cut": 0.0625,
+      "fluid": 1.0,
+      "full": 0.9375,
+      "gas": 0.8394097222222222,
+      "interface": 0.07465277777777778,
+      "liquid": 0.006076388888888889,
+      "near_gas": 0.0625,
+      "near_liquid": 0.017361111111111112
+    },
+    "note": "accumulated storage residual (V_i times the float32 rounding of one update) over consecutive baseline updates at one fixed population assignment",
+    "per_cell_total_max_abs": 1.5396835806313902e-08,
+    "populations": {
+      "cut": {
+        "cells": 144,
+        "mean_per_cell_over_E_round": -1.579964355730437e-14,
+        "total_over_E_round": -2.27514867225183e-12
+      },
+      "fluid": {
+        "cells": 2304,
+        "mean_per_cell_over_E_round": 3.4502728757785816e-05,
+        "total_over_E_round": 0.07949428705793851
+      },
+      "full": {
+        "cells": 2160,
+        "mean_per_cell_over_E_round": 3.680291067602484e-05,
+        "total_over_E_round": 0.07949428706021366
+      },
+      "gas": {
+        "cells": 1934,
+        "mean_per_cell_over_E_round": -1.2597518690069141e-06,
+        "total_over_E_round": -0.002436360114659372
+      },
+      "interface": {
+        "cells": 172,
+        "mean_per_cell_over_E_round": -0.00043937937430777113,
+        "total_over_E_round": -0.07557325238093664
+      },
+      "liquid": {
+        "cells": 14,
+        "mean_per_cell_over_E_round": -0.001218962760366012,
+        "total_over_E_round": -0.017065478645124168
+      },
+      "near_gas": {
+        "cells": 144,
+        "mean_per_cell_over_E_round": 0.000130857465271798,
+        "total_over_E_round": 0.01884347499913891
+      },
+      "near_liquid": {
+        "cells": 40,
+        "mean_per_cell_over_E_round": 0.0038931475799879947,
+        "total_over_E_round": 0.1557259031995198
+      }
+    },
+    "target_deg": 150.0,
+    "total_over_E_round": 0.07949428705793851,
+    "updates": 150
+  },
+  "production_readiness": {
+    "blockers": [
+      "no candidate cleared every measured gate",
+      "GPU cost unverified (no GPU in this environment)"
+    ],
+    "ready_for_l1b_production_scale": false,
+    "selected": null,
+    "statement": "NOT READY FOR L1B PRODUCTION SCALE (no candidate cleared every measured gate; GPU cost unverified (no GPU in this environment))"
+  },
+  "profile": "quick",
+  "profiles": {
+    "baseline": {
+      "causal_N": "128",
+      "causal_warmup": "600",
+      "gradient_N": "32",
+      "long_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated', 'C1_residual_feedback')",
+      "long_horizons": "(5000, 10000, 25000, 50000)",
+      "medium": "True",
+      "performance_N": "128",
+      "performance_steps": "30",
+      "restart_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated', 'C1_residual_feedback')"
+    },
+    "forensic": {
+      "causal_N": "128",
+      "causal_warmup": "2000",
+      "gradient_N": "32",
+      "long_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated', 'C1_residual_feedback', 'F_full_float64')",
+      "long_horizons": "(5000, 10000, 25000, 50000, 100000)",
+      "medium": "True",
+      "performance_N": "128",
+      "performance_steps": "50",
+      "restart_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated', 'C1_residual_feedback', 'F_full_float64')"
+    },
+    "quick": {
+      "causal_N": "48",
+      "causal_warmup": "300",
+      "gradient_N": "24",
+      "long_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated', 'C1_residual_feedback')",
+      "long_horizons": "()",
+      "medium": "False",
+      "performance_N": "48",
+      "performance_steps": "20",
+      "restart_candidates": "('A0_float32', 'A1_phase_float64', 'A2_float64_storage_f32_krylov', 'B1_compensated')"
+    }
+  },
+  "quick_matrix": {
+    "A0_float32": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          0.33354410267881723,
+          -0.3440168520700202,
+          -0.477545061986059,
+          -3.5725220589826705,
+          -0.9592073864078117,
+          1.5068216922974145
+        ],
+        "bookkeeping_final_relative_drift": -1.2124792852672289e-05,
+        "final_cumulative_over_E_round": -49.3271102103527,
+        "final_relative_drift": -1.2124792852672289e-05,
+        "in_band": true,
+        "increment_autocorrelation": 0.6057243553244033,
+        "increment_mean_over_E_round": -1.0066757185786266,
+        "increment_positive_fraction": 0.22448979591836735,
+        "increment_std_over_E_round": 1.4488974814805629,
+        "ledger": {
+          "explained_relative_drift": -1.0945900109765505e-05,
+          "solve_defect_mass": -4.610371199782968e-06,
+          "solve_defect_over_E_round": -18.7563029773501,
+          "storage_loss_mass": -1.7959549594172956e-05,
+          "storage_loss_over_E_round": -73.0645622506297
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 10.14228237036394,
+        "random_walk_ratio": 4.863511822002514,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.027875612024805888,
+        "slope_t_statistic": -23.870762234341615,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          0.39409482255098205,
+          0.532105645791364,
+          -1.6315927733633657,
+          -1.2363843078897148,
+          -1.148382032741118,
+          0.5535270291722298
+        ],
+        "bookkeeping_final_relative_drift": -1.9435099372554798e-05,
+        "final_cumulative_over_E_round": -79.06992613060399,
+        "final_relative_drift": -1.9435099372554798e-05,
+        "in_band": true,
+        "increment_autocorrelation": 0.6290281849086793,
+        "increment_mean_over_E_round": -1.6136719618490607,
+        "increment_positive_fraction": 0.12244897959183673,
+        "increment_std_over_E_round": 1.2155718247252503,
+        "ledger": {
+          "explained_relative_drift": -1.633953909617118e-05,
+          "solve_defect_mass": -1.1783640495804028e-05,
+          "solve_defect_over_E_round": -47.94066475773,
+          "storage_loss_mass": -2.19066793905787e-05,
+          "storage_loss_over_E_round": -89.12532362072432
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 8.509002773076752,
+        "random_walk_ratio": 9.292502099163528,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.0391350664892375,
+        "slope_t_statistic": -48.46011576191557,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      }
+    },
+    "A1_phase_float64": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          1.7523990381135335e-09,
+          -6.133396633397367e-09,
+          5.2571971143406e-09,
+          3.5047980762270665e-09,
+          3.504798076227067e-09,
+          -3.504798076227067e-09
+        ],
+        "bookkeeping_final_relative_drift": 1.9383588170446316e-15,
+        "final_cumulative_over_E_round": 7.8857956715109e-09,
+        "final_relative_drift": 1.9383588170446316e-15,
+        "in_band": true,
+        "increment_autocorrelation": -0.21817310555567,
+        "increment_mean_over_E_round": 1.6093460554103875e-10,
+        "increment_positive_fraction": 0.4897959183673469,
+        "increment_std_over_E_round": 3.7202371443560514e-09,
+        "ledger": {
+          "explained_relative_drift": -1.2619545131082772e-16,
+          "solve_defect_mass": -2.602089664196906e-16,
+          "solve_defect_over_E_round": -1.0586041774294848e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": true,
+        "random_walk_expectation_over_E_round": 2.604166001049236e-08,
+        "random_walk_ratio": 0.30281463118455815,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": 1.5610656737480753e-12,
+        "slope_t_statistic": 2.760941274050514,
+        "steps": 2450,
+        "strong": true,
+        "verdict": "RANDOM_WALK_DOMINANT"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          5.257517250931292e-09,
+          0.0,
+          -1.7525057503104306e-09,
+          4.3812643757760765e-09,
+          -1.7525057503104306e-09,
+          1.7525057503104306e-09
+        ],
+        "bookkeeping_final_relative_drift": 1.7230380790794222e-15,
+        "final_cumulative_over_E_round": 7.0100230012417225e-09,
+        "final_relative_drift": 1.7230380790794222e-15,
+        "in_band": true,
+        "increment_autocorrelation": -0.35261371577774125,
+        "increment_mean_over_E_round": 1.4306169390289228e-10,
+        "increment_positive_fraction": 0.4489795918367347,
+        "increment_std_over_E_round": 2.932219469696604e-09,
+        "ledger": {
+          "explained_relative_drift": 5.227291503210617e-16,
+          "solve_defect_mass": 1.0778096115238538e-15,
+          "solve_defect_over_E_round": 4.384969931586379e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": true,
+        "random_walk_expectation_over_E_round": 2.052553628787623e-08,
+        "random_walk_ratio": 0.34152691081608016,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -7.331911812523141e-14,
+        "slope_t_statistic": -0.1632454244270949,
+        "steps": 2450,
+        "strong": true,
+        "verdict": "RANDOM_WALK_DOMINANT"
+      }
+    },
+    "A2_float64_storage_f32_krylov": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          0.07984938085191932,
+          -0.510715770756477,
+          0.4088918308101266,
+          -0.08550929065581236,
+          0.5170696402176578,
+          0.48493760939723085
+        ],
+        "bookkeeping_final_relative_drift": -1.1875982013565323e-06,
+        "final_cumulative_over_E_round": -4.831487686077802,
+        "final_relative_drift": -1.1875982013565323e-06,
+        "in_band": true,
+        "increment_autocorrelation": 0.14131042330373708,
+        "increment_mean_over_E_round": -0.09860178951179187,
+        "increment_positive_fraction": 0.4489795918367347,
+        "increment_std_over_E_round": 0.43087526002696613,
+        "ledger": {
+          "explained_relative_drift": -9.690334408035119e-07,
+          "solve_defect_mass": -1.9981004658918586e-06,
+          "solve_defect_over_E_round": -8.128841712184977,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": true,
+        "random_walk_expectation_over_E_round": 3.016126820188763,
+        "random_walk_ratio": 1.6018847926876714,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.0028254577620341914,
+        "slope_t_statistic": -10.529217210907701,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "RANDOM_WALK_DOMINANT"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          -0.0993810400084199,
+          -0.7667561896954056,
+          -0.6002188717167432,
+          -0.7531636516981557,
+          0.9514638798545754,
+          -0.16731003281408618
+        ],
+        "bookkeeping_final_relative_drift": -3.989208002587523e-06,
+        "final_cumulative_over_E_round": -16.22972828889354,
+        "final_relative_drift": -3.989208002587523e-06,
+        "in_band": true,
+        "increment_autocorrelation": 0.4870357134159733,
+        "increment_mean_over_E_round": -0.33121894467129676,
+        "increment_positive_fraction": 0.3673469387755102,
+        "increment_std_over_E_round": 0.6802285183723009,
+        "ledger": {
+          "explained_relative_drift": -4.027775521853441e-06,
+          "solve_defect_mass": -8.30482701767786e-06,
+          "solve_defect_over_E_round": -33.787429959968996,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 4.761599628606106,
+        "random_walk_ratio": 3.408461348029081,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.008619513048126545,
+        "slope_t_statistic": -11.524110830717863,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "INCONCLUSIVE"
+      }
+    },
+    "B1_compensated": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 5.651509127346799e-08,
+        "block_means_over_E_round": [
+          0.26121012571507696,
+          -0.11335482341066788,
+          -0.6296405785480541,
+          -0.7420176044722142,
+          0.3788752067732162,
+          -0.5807271072932867
+        ],
+        "bookkeeping_final_relative_drift": -3.8139266969398672e-06,
+        "final_cumulative_over_E_round": -15.519385225869996,
+        "final_relative_drift": -3.814724403316125e-06,
+        "in_band": true,
+        "increment_autocorrelation": -0.0257678019948359,
+        "increment_mean_over_E_round": -0.3167221474667346,
+        "increment_positive_fraction": 0.32653061224489793,
+        "increment_std_over_E_round": 0.5217797089908219,
+        "ledger": {
+          "explained_relative_drift": -2.4066102885557955e-06,
+          "solve_defect_mass": -4.952504790939973e-06,
+          "solve_defect_over_E_round": -20.148199858618945,
+          "storage_loss_mass": -9.81014432644701e-09,
+          "storage_loss_over_E_round": -0.039910460842509626
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 3.6524579629357534,
+        "random_walk_ratio": 4.249025008188159,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.008339487552389432,
+        "slope_t_statistic": -42.106449251070536,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "INCONCLUSIVE"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 5.748217546397427e-08,
+        "block_means_over_E_round": [
+          -0.17863087118678117,
+          -0.2225327017083727,
+          -1.0787300069606065,
+          -0.249981042617744,
+          -0.21450143840364788,
+          -0.7411435029374793
+        ],
+        "bookkeeping_final_relative_drift": -8.40517627137282e-06,
+        "final_cumulative_over_E_round": -34.19386314654976,
+        "final_relative_drift": -8.404726812151602e-06,
+        "in_band": true,
+        "increment_autocorrelation": 0.40090917206601995,
+        "increment_mean_over_E_round": -0.6978339417663216,
+        "increment_positive_fraction": 0.12244897959183673,
+        "increment_std_over_E_round": 0.6183107087291038,
+        "ledger": {
+          "explained_relative_drift": -5.642059291483999e-06,
+          "solve_defect_mass": -1.1629925824257455e-05,
+          "solve_defect_over_E_round": -47.315290660515906,
+          "storage_loss_mass": -3.3755332193670014e-09,
+          "storage_loss_over_E_round": -0.013733048501087416
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 4.328174961103726,
+        "random_walk_ratio": 7.900295957035433,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.015326156275012291,
+        "slope_t_statistic": -43.79133231777186,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      }
+    },
+    "C1_residual_feedback": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 5.5442797020077705e-08,
+        "block_means_over_E_round": [
+          0.26121012571507696,
+          -0.13971653815511176,
+          -0.6646531697771172,
+          -0.7686225995190714,
+          0.35372550816222414,
+          -0.6488252124442777
+        ],
+        "bookkeeping_final_relative_drift": -3.7472526082910826e-06,
+        "final_cumulative_over_E_round": -15.240398660836792,
+        "final_relative_drift": -3.74614843575425e-06,
+        "in_band": true,
+        "increment_autocorrelation": -0.01875044140693468,
+        "increment_mean_over_E_round": -0.31102854409871006,
+        "increment_positive_fraction": 0.32653061224489793,
+        "increment_std_over_E_round": 0.5250041609299994,
+        "ledger": {
+          "explained_relative_drift": -2.3347162616809894e-06,
+          "solve_defect_mass": -4.815514550162681e-06,
+          "solve_defect_over_E_round": -19.590884547201075,
+          "storage_loss_mass": 1.4416485208183007e-09,
+          "storage_loss_over_E_round": 0.005865036733829493
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 3.6750291265099957,
+        "random_walk_ratio": 4.147014387151236,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.008178567388241837,
+        "slope_t_statistic": -42.3198431249384,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "INCONCLUSIVE"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 5.878973752260208e-08,
+        "block_means_over_E_round": [
+          -0.17787009617314048,
+          -0.11762623803379268,
+          -1.0805460541878968,
+          -0.29516504139619215,
+          -0.11264340240111181,
+          -0.6948550040588621
+        ],
+        "bookkeeping_final_relative_drift": -8.307626579091155e-06,
+        "final_cumulative_over_E_round": -33.79207430150931,
+        "final_relative_drift": -8.305968579884545e-06,
+        "in_band": true,
+        "increment_autocorrelation": 0.39218086047515244,
+        "increment_mean_over_E_round": -0.6896341694185574,
+        "increment_positive_fraction": 0.14285714285714285,
+        "increment_std_over_E_round": 0.6277050973049422,
+        "ledger": {
+          "explained_relative_drift": -5.5671748867225144e-06,
+          "solve_defect_mass": -1.1476579416127347e-05,
+          "solve_defect_over_E_round": -46.69141480936572,
+          "storage_loss_mass": -2.31859275643267e-09,
+          "storage_loss_over_E_round": -0.009432982793850533
+        },
+        "passed": false,
+        "random_walk_expectation_over_E_round": 4.393935681134595,
+        "random_walk_ratio": 7.690616511888398,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -0.01513317604826426,
+        "slope_t_statistic": -42.12576359601524,
+        "steps": 2450,
+        "strong": false,
+        "verdict": "SYSTEMATIC_BIAS_DOMINANT"
+      }
+    },
+    "F_full_float64": {
+      "quick_offset0.0": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          -8.761995190567667e-10,
+          -8.761995190567667e-09,
+          -1.7523990381135335e-09,
+          8.761995190567667e-10,
+          -7.009596152454134e-09,
+          -1.7523990381135337e-09
+        ],
+        "bookkeeping_final_relative_drift": 2.1537320189384798e-16,
+        "final_cumulative_over_E_round": 8.761995190567667e-10,
+        "final_relative_drift": 2.1537320189384798e-16,
+        "in_band": true,
+        "increment_autocorrelation": -0.5546247970720543,
+        "increment_mean_over_E_round": 1.788162283789317e-11,
+        "increment_positive_fraction": 0.4489795918367347,
+        "increment_std_over_E_round": 3.9244357300715755e-09,
+        "ledger": {
+          "explained_relative_drift": 5.203897483440839e-16,
+          "solve_defect_mass": 1.0730186955668712e-15,
+          "solve_defect_over_E_round": 4.365345626695015e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": true,
+        "random_walk_expectation_over_E_round": 2.7471050110501027e-08,
+        "random_walk_ratio": 0.03189537769878817,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": 9.030219533136063e-13,
+        "slope_t_statistic": 1.649486880444871,
+        "steps": 2450,
+        "strong": true,
+        "verdict": "RANDOM_WALK_DOMINANT"
+      },
+      "quick_offset0.5": {
+        "aux_max_abs_final": 0.0,
+        "block_means_over_E_round": [
+          7.0100230012417225e-09,
+          0.0,
+          -2.628758625465646e-09,
+          -2.628758625465646e-09,
+          -2.628758625465646e-09,
+          -3.5050115006208612e-09
+        ],
+        "bookkeeping_final_relative_drift": 8.615190395397111e-16,
+        "final_cumulative_over_E_round": 3.5050115006208612e-09,
+        "final_relative_drift": 8.615190395397111e-16,
+        "in_band": true,
+        "increment_autocorrelation": -0.5126592059244583,
+        "increment_mean_over_E_round": 7.153084695144614e-11,
+        "increment_positive_fraction": 0.40816326530612246,
+        "increment_std_over_E_round": 3.767187521437634e-09,
+        "ledger": {
+          "explained_relative_drift": -5.426323478056384e-16,
+          "solve_defect_mass": -1.1188478002985918e-15,
+          "solve_defect_over_E_round": -4.5519300532070885e-09,
+          "storage_loss_mass": 0.0,
+          "storage_loss_over_E_round": 0.0
+        },
+        "passed": true,
+        "random_walk_expectation_over_E_round": 2.6370312650063437e-08,
+        "random_walk_ratio": 0.1329150528904491,
+        "sample_every": 50,
+        "slope_over_E_round_per_step": -2.861233878057835e-13,
+        "slope_t_statistic": -0.5423579640402,
+        "steps": 2450,
+        "strong": true,
+        "verdict": "RANDOM_WALK_DOMINANT"
+      }
+    }
+  },
+  "restart_equivalence": {
+    "A0_float32": {
+      "aux_dropped_restart": null,
+      "candidate": "A0_float32",
+      "formal_restart": {
+        "aux_max_abs_difference": 0.0,
+        "disk_round_trip_dtypes": {
+          "aux": "float32",
+          "phi": "float32",
+          "t": "float32",
+          "u": "float32",
+          "v": "float32"
+        },
+        "disk_round_trip_phi_max_abs_difference": 0.0,
+        "mass_drift_interrupted": -1.0180611742745186e-07,
+        "mass_drift_uninterrupted": -1.0180611742745186e-07,
+        "phi_max_abs_difference": 0.0,
+        "u_max_abs_difference": 0.0,
+        "v_max_abs_difference": 0.0
+      }
+    },
+    "A1_phase_float64": {
+      "aux_dropped_restart": null,
+      "candidate": "A1_phase_float64",
+      "formal_restart": {
+        "aux_max_abs_difference": 0.0,
+        "disk_round_trip_dtypes": {
+          "aux": "float32",
+          "phi": "float64",
+          "t": "float32",
+          "u": "float32",
+          "v": "float32"
+        },
+        "disk_round_trip_phi_max_abs_difference": 0.0,
+        "mass_drift_interrupted": 2.1537320189384798e-16,
+        "mass_drift_uninterrupted": 2.1537320189384798e-16,
+        "phi_max_abs_difference": 0.0,
+        "u_max_abs_difference": 0.0,
+        "v_max_abs_difference": 0.0
+      }
+    },
+    "A2_float64_storage_f32_krylov": {
+      "aux_dropped_restart": null,
+      "candidate": "A2_float64_storage_f32_krylov",
+      "formal_restart": {
+        "aux_max_abs_difference": 0.0,
+        "disk_round_trip_dtypes": {
+          "aux": "float32",
+          "phi": "float64",
+          "t": "float32",
+          "u": "float32",
+          "v": "float32"
+        },
+        "disk_round_trip_phi_max_abs_difference": 0.0,
+        "mass_drift_interrupted": -2.1054894339683067e-08,
+        "mass_drift_uninterrupted": -2.1054894339683067e-08,
+        "phi_max_abs_difference": 0.0,
+        "u_max_abs_difference": 0.0,
+        "v_max_abs_difference": 0.0
+      }
+    },
+    "B1_compensated": {
+      "aux_dropped_restart": {
+        "note": "restarting with aux = 0 -- NOT an allowed formal path for a candidate whose hidden state influences the trajectory",
+        "phi_max_abs_difference_vs_uninterrupted": 2.384185791015625e-07
+      },
+      "candidate": "B1_compensated",
+      "formal_restart": {
+        "aux_max_abs_difference": 0.0,
+        "disk_round_trip_dtypes": {
+          "aux": "float32",
+          "phi": "float32",
+          "t": "float32",
+          "u": "float32",
+          "v": "float32"
+        },
+        "disk_round_trip_phi_max_abs_difference": 0.0,
+        "mass_drift_interrupted": -6.950560962387714e-08,
+        "mass_drift_uninterrupted": -6.950560962387714e-08,
+        "phi_max_abs_difference": 0.0,
+        "u_max_abs_difference": 0.0,
+        "v_max_abs_difference": 0.0
+      }
+    }
+  },
+  "selection": {
+    "reason": "gates not yet measured: long_horizon, medium",
+    "rows_considered": [
+      "A2_float64_storage_f32_krylov",
+      "A1_phase_float64",
+      "B1_compensated",
+      "C1_residual_feedback"
+    ],
+    "selected": null
+  },
+  "stage": "L1A-2i",
+  "verdict": "NOT_READY_FOR_SELECTION"
+}

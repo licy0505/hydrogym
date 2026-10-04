@@ -1,0 +1,140 @@
+[
+  {
+    "N": 128,
+    "candidate": "A0_float32",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 262148,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 196608,
+    "persistent_bytes_ratio": 1.0,
+    "repeats": 3,
+    "runtime_ratio": 1.0,
+    "seconds_per_substep": 0.0026388764000027246,
+    "seconds_per_substep_samples": [
+      0.002747489399977591,
+      0.0027997341333199682,
+      0.0026388764000027246
+    ],
+    "seconds_per_substep_spread": 0.00016085773331724366,
+    "substeps": 30
+  },
+  {
+    "N": 128,
+    "candidate": "A1_phase_float64",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 327684,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 262144,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 2.1071081616396,
+    "seconds_per_substep": 0.005560398000003867,
+    "seconds_per_substep_samples": [
+      0.005560398000003867,
+      0.005591482199997699,
+      0.005873286866669029
+    ],
+    "seconds_per_substep_spread": 0.00031288886666516226,
+    "substeps": 30
+  },
+  {
+    "N": 128,
+    "candidate": "A2_float64_storage_f32_krylov",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 327684,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 262144,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.0353096618440907,
+    "seconds_per_substep": 0.002732054233335172,
+    "seconds_per_substep_samples": [
+      0.0027998855333256265,
+      0.002833636600007594,
+      0.002732054233335172
+    ],
+    "seconds_per_substep_spread": 0.00010158236667242183,
+    "substeps": 30
+  },
+  {
+    "N": 128,
+    "candidate": "B1_compensated",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 262148,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 262144,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 1.0917786701517385,
+    "seconds_per_substep": 0.0028810689666897817,
+    "seconds_per_substep_samples": [
+      0.0028810689666897817,
+      0.002952809899973848,
+      0.002898235266669265
+    ],
+    "seconds_per_substep_spread": 7.174093328406617e-05,
+    "substeps": 30
+  },
+  {
+    "N": 128,
+    "candidate": "C1_residual_feedback",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 262148,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 262144,
+    "persistent_bytes_ratio": 1.3333333333333333,
+    "repeats": 3,
+    "runtime_ratio": 0.978370958697679,
+    "seconds_per_substep": 0.0025818000333553454,
+    "seconds_per_substep_samples": [
+      0.002598817366682245,
+      0.0026721778333315643,
+      0.0025818000333553454
+    ],
+    "seconds_per_substep_spread": 9.037779997621894e-05,
+    "substeps": 30
+  },
+  {
+    "N": 128,
+    "candidate": "F_full_float64",
+    "gpu_measured": false,
+    "memory_analysis": {
+      "alias_bytes": 0,
+      "argument_bytes": 524296,
+      "temporary_bytes": 0
+    },
+    "method": "min of 3 timed repetitions after a warm compile",
+    "persistent_bytes": 393216,
+    "persistent_bytes_ratio": 2.0,
+    "repeats": 3,
+    "runtime_ratio": 2.0186902021397244,
+    "seconds_per_substep": 0.005327073933343248,
+    "seconds_per_substep_samples": [
+      0.005327073933343248,
+      0.0054312926666777155,
+      0.00555123453335303
+    ],
+    "seconds_per_substep_spread": 0.0002241606000097816,
+    "substeps": 30
+  }
+]
