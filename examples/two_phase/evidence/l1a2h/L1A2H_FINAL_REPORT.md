@@ -261,7 +261,11 @@ is *not* resolved in contract v10 (or v11, since nothing was shipped).
 mass gates are recorded as *findings* (`--require-gates` promotes them to a failure for callers that
 want that), because "the drift is systematic" is this stage's result, not a broken run. No job claims
 that all CI passed, and the pre-existing `Audit locked dependencies` failure in the Quality workflow
-is unchanged and unrelated to this stage.
+is unchanged and unrelated to this stage. Because that step fails first, the Quality job's
+lint/format/import-order/spelling steps are *skipped* in CI (as they already are on `main`); the new
+files were therefore checked locally with the pinned tool versions — `ruff 0.15.22` (`ruff check`
+and `ruff format --check`), `isort` with the repository's `black` profile, and `codespell` — and pass
+all four, so this stage adds no lint debt.
 
 ## L. How to reproduce
 
