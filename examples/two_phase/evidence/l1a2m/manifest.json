@@ -1,0 +1,52 @@
+{
+ "artifacts": [
+  {
+   "bytes": 76090,
+   "path": "evidence/l1a2m/stationarity_metric_domain_report.json",
+   "sha256": "c766c7d645ad12800e5af08e2f326d76f64786ea22c60402f30987ae3a06bcf6"
+  },
+  {
+   "bytes": 4626,
+   "path": "evidence/l1a2m/stationarity_metric_domain_report.md",
+   "sha256": "5f15f9d4a08fbf0d12a4d181ccd1f362ffe915b83cd621468839f26e986745eb"
+  },
+  {
+   "bytes": 1989,
+   "path": "evidence/l1a2m/mechanism_matrix.json",
+   "sha256": "54e143097df0a3482dc4cc57dc1730dfdccbf3bc636825723f587dd938303b3f"
+  },
+  {
+   "bytes": 4405,
+   "path": "evidence/l1a2m/operator_domain_map.json",
+   "sha256": "570651e63a44f9ec0ce03563b29bf7796c4c1f915d42bf32d5c866539587557a"
+  }
+ ],
+ "config_fingerprints": {
+  "authority_060": "2563f20daad7bcdcbb11150fc54daa6a66ef3ff04326b7434d01c0560d5c495f",
+  "ch_only_equilibrium_060": "e17af41512ac417b8e91d41c896c5478ca31c0e62544c71863e054447065e4a9",
+  "control_090": "c7857ca99258032c79ba00bfb9de8d24e5e5ef905fd551c854625a81d9ecdea0",
+  "control_150": "82a53cc0e10d6ec8000660b6f4e4632bf69c69c61c566ee43eedb8f15677c730"
+ },
+ "git_sha": "24abbbc9e36bb88da93aaa37b5b169a630254a17",
+ "manifest_self_hash": "omitted_to_avoid_recursive_hash",
+ "production_semantics_changed": false,
+ "runtime_versions": {
+  "jax": "0.10.2",
+  "jaxlib": "0.10.2",
+  "numpy": "2.4.6",
+  "python": "3.11.2",
+  "scipy": "1.17.1"
+ },
+ "solver_contract_version": 11,
+ "source_hashes": {
+  "capillary_pressure_balance_audit": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+  "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+  "contact_line_kinetics": "fca52869eb8fc6c8c327661ecbc485e838b42939b92c297636bbd56a5b1be5c5",
+  "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+  "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+  "phase_coupling_relaxation_audit": "9942fbb810447f8c64d3fa9d52a9d063464615cbb8ac380562f62c54a2a66841",
+  "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
+  "stationarity_metric_domain_audit": "80cd5afb8781983e50c9b893ac22bd1b36e02a8c78497585dc6b4fbddd2aa09f"
+ },
+ "stage": "L1A-2m"
+}

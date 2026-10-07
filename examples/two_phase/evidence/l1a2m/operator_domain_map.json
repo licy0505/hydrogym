@@ -1,0 +1,112 @@
+{
+ "grid": {
+  "Nx": 128,
+  "Ny": 128,
+  "dx": 0.046875,
+  "dy": 0.046875
+ },
+ "n_zero_volume_cells_with_open_phase_face": 0,
+ "operators": [
+  {
+   "evidence": "shared face fluxes are gated by A_f; A_f = 0 on every wall-crossing face",
+   "operator": "advective_phase_source / phase_advective_fluxes",
+   "periodic_stencil_axes": [
+    "x",
+    "y"
+   ],
+   "reads_all_grid_cells": false,
+   "reads_v_zero_phi_for_open_face_flux": false,
+   "source": "phasefield.phase_advective_fluxes (phasefield.rhs phi_rhs)",
+   "uses_cut_cell_face_apertures": true,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": false
+  },
+  {
+   "evidence": "f'(phi) is cell-local; the -eps*fluid_laplacian stencil is aperture-weighted and closed faces contribute zero",
+   "operator": "chemical_potential (mu) and mu_explicit",
+   "periodic_stencil_axes": [],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": false,
+   "source": "phasefield.chemical_potential / phasefield._explicit_chemical_potential",
+   "uses_cut_cell_face_apertures": true,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": false
+  },
+  {
+   "evidence": "K has no row/column at V=0 (A=I there) and every CG inner product is V-weighted, so V=0 contributions vanish exactly",
+   "operator": "solve_ch_implicit (implicit CH solve)",
+   "periodic_stencil_axes": [],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": false,
+   "source": "phasefield.solve_ch_implicit / _cg_solve_volume_weighted",
+   "uses_cut_cell_face_apertures": true,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": false
+  },
+  {
+   "evidence": "the centred periodic gradient stencil reads neighbour cells regardless of support class",
+   "operator": "capillary acceleration (Korteweg force in rhs)",
+   "periodic_stencil_axes": [
+    "x",
+    "y"
+   ],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": true,
+   "source": "phasefield.rhs: cap_x/cap_y = (SIGMA_NORM/We) * mu * (_ddx phi, _ddy phi) / rho_l",
+   "uses_cut_cell_face_apertures": false,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": true
+  },
+  {
+   "evidence": "cell-local, but evaluated at every momentum cell including V=0 cells whose predictor enters the global projection",
+   "operator": "rho(phi)/nu(phi) material coefficients",
+   "periodic_stencil_axes": [],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": true,
+   "source": "phasefield.rho_of / phasefield.nu_of (called in phasefield.rhs)",
+   "uses_cut_cell_face_apertures": false,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": true
+  },
+  {
+   "evidence": "the momentum grid is the full periodic grid; nu(phi) and mu at V=0 cells enter u_rhs/v_rhs there",
+   "operator": "momentum predictor + Brinkman damping",
+   "periodic_stencil_axes": [
+    "x",
+    "y"
+   ],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": true,
+   "source": "phasefield.step_with_diagnostics substep (div_upwind, _lap, damp)",
+   "uses_cut_cell_face_apertures": false,
+   "uses_solid_mask": true,
+   "zero_volume_phi_can_reach_physical_domain": true
+  },
+  {
+   "evidence": "global divergence/FFT couples every grid cell, including solid rows",
+   "operator": "pressure projection",
+   "periodic_stencil_axes": [
+    "x",
+    "y"
+   ],
+   "reads_all_grid_cells": true,
+   "reads_v_zero_phi_for_open_face_flux": true,
+   "source": "phasefield.poisson_solve (periodic FFT, null mode removed)",
+   "uses_cut_cell_face_apertures": false,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": true
+  },
+  {
+   "evidence": "the wall measure is assigned to fluid-side control cells (wall_measure_density == 0 wherever V_i == 0)",
+   "operator": "wetting wall-energy term",
+   "periodic_stencil_axes": [],
+   "reads_all_grid_cells": false,
+   "reads_v_zero_phi_for_open_face_flux": false,
+   "source": "phasefield.wall_energy_derivative * phasefield.wall_measure_density (in _explicit_chemical_potential)",
+   "uses_cut_cell_face_apertures": false,
+   "uses_solid_mask": false,
+   "zero_volume_phi_can_reach_physical_domain": false
+  }
+ ],
+ "policy": "static documentation of the unchanged production operators, anchored to source; stencil visibility of V=0 phase storage is explicit per operator"
+}

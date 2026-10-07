@@ -1,0 +1,61 @@
+{
+ "candidates": [
+  {
+   "candidate": "CLASSIFIER_DOMAIN_MISMATCH",
+   "scope": "production full-grid dxdy norm vs exact control-volume support; the metric measures a different domain than the conserved state",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "ZERO_VOLUME_RATE_DOMINANCE",
+   "scope": "max ZERO_VOLUME energy fraction over the late window = 0.0",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "PARTIAL_CELL_WEIGHTING_MISMATCH",
+   "scope": "partial cells carry a full dx*dy weight in R_prod but only V_i < dx*dy in R_V",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "INACTIVE_STATE_COUPLING",
+   "scope": "sections 13/14 counterfactual operator/one-step evidence on physical cells and faces",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "TRUE_PHYSICAL_PHASE_NONSTATIONARITY",
+   "scope": "matched 60/90/150/CH-only comparison restricted to V_i > 0 (sections 8/26)",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "ANGLE_WINDOW_ALIASING",
+   "scope": "angle window spread under the production cadence vs denser available sampling",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "ANGLE_TRUE_RESIDUAL_MOTION",
+   "scope": "late-window angle slope and left/right contact-line drift; no gate change",
+   "status": "SUSPECTED"
+  },
+  {
+   "candidate": "CLASSIFIER_FALSE_NEGATIVE",
+   "scope": "section 24 decision rule",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "MIXED_CLASSIFIER_AND_PHYSICS",
+   "scope": "section 27 decision rule",
+   "status": "FALSIFIED"
+  }
+ ],
+ "final_verdict": {
+  "decision_gates": {
+   "inactive_cells_causally_inactive": false,
+   "physical_activity_control_like": true,
+   "remaining_criteria_show_no_true_nonstationarity": true,
+   "robust_across_late_window": true,
+   "zero_cells_materially_inflate_R_prod": false
+  },
+  "rule": "section 25: counterfactual changes confined to V=0 phi measurably alter physical operators or the next physical state",
+  "verdict": "INACTIVE_STATE_COUPLING"
+ },
+ "stage": "L1A-2m"
+}
