@@ -14,6 +14,8 @@ import json
 import math
 from pathlib import Path
 
+import numpy as np
+
 import pytest
 
 jax = pytest.importorskip("jax")
@@ -346,6 +348,36 @@ def test_cutcell_mass_telescopes(surface, x64):
     assert abs(float(jnp.sum(volume * current)) - mass0) / abs(mass0) <= 1e-10
 
 
+def test_full_cell_reconstruction_is_not_the_cutcell_mass_invariant(x64):
+    """A shared face flux telescopes in sum(V_i phi_i), not in the unweighted full-cell sum."""
+    p, solid, _phi, _u, _v, _mu = _conservation_case(surface="flat")
+    volume = np.asarray(solid.geometry.volume, dtype=np.float64)
+    aperture_y = np.asarray(solid.geometry.aperture_y, dtype=np.float64)
+    # Select one real open face connecting a partial cut cell to a differently weighted fluid cell.
+    pair = next(
+        (i, j)
+        for i in range(p.Nx)
+        for j in range(p.Ny - 1)
+        if aperture_y[i, j] > 0.0
+        and volume[i, j] > 0.0
+        and volume[i, j + 1] > 0.0
+        and not np.isclose(volume[i, j], volume[i, j + 1], rtol=0.0, atol=1e-14)
+    )
+    i, j = pair
+    flux_x = jnp.zeros((p.Nx, p.Ny), dtype=jnp.float64)
+    flux_y = jnp.zeros_like(flux_x).at[i, j].set(1.0)
+    divergence = pf.control_volume_divergence(
+        flux_x, flux_y, pf.phase_transport_operator(solid, p).volume_safe
+    )
+
+    # The finite-volume mass rate is exactly the sum of shared face fluxes and cancels.
+    assert abs(float(jnp.sum(jnp.asarray(volume) * divergence))) <= 1e-12
+    # But sum(phi) weights the two cells equally despite unequal V_i. Multiplying by dx*dy
+    # (the historical total_mass reconstruction) therefore has a nonzero rate for this flux.
+    full_cell_reconstruction_rate = float(p.dx * p.dy * jnp.sum(divergence))
+    assert abs(full_cell_reconstruction_rate) > 1e-8
+
+
 def test_cutcell_embedded_wall_has_zero_phase_flux(x64):
     """The embedded wall is impermeable by aperture, not by clipping."""
     p, solid, phi, u, v, mu = _conservation_case(surface="flat")
@@ -527,9 +559,9 @@ def test_advection_subcycling_is_opt_in_and_conservative(x64):
         assert bool(jnp.all(jnp.isfinite(updated)))
 
 
-def test_contract_is_v9():
-    """The contract, the geometry strings and the production defaults are frozen together."""
-    assert pf.SOLVER_CONTRACT_VERSION == 10
+def test_contract_is_v11():
+    """The contract-11 storage default and existing geometry strings are frozen together."""
+    assert pf.SOLVER_CONTRACT_VERSION == 11
     assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     assert pf.PHASE_TRANSPORT_GEOMETRY_VERSION == 1
     assert pf.PHASE_TRANSPORT_GEOMETRIES == ("sdf_cutcell_fv_v1", "hard_cell_v7")
@@ -557,8 +589,8 @@ def test_contract_is_v9():
         pf.PhaseFieldParams(Nx=16, Ny=16, phase_transport_geometry="cell_v7")
 
 
-def test_v8_dataset_is_stale_under_v9(tmp_path):
-    """A contract-8 fingerprint can never be reused as contract-9 training data."""
+def test_contract10_dataset_is_stale_under_contract11():
+    """A contract-10 fingerprint can never be reused as contract-11 training data."""
     import generate_dataset as G
 
     args = type("Args", (), {"N": 64, "ds": 2, "max_phi_overshoot": 0.02, "max_solid_leak": 5e-4,
@@ -571,16 +603,22 @@ def test_v8_dataset_is_stale_under_v9(tmp_path):
     source = (HERE / "generate_dataset.py").read_text()
     for key in ("phase_transport_metadata", "phase_transport_geometry"):
         assert key in source, key
-    # the v9 metadata keys -- plus the v10 implicit-solver / mass-invariant pair -- come from the
-    # single source in phasefield.py
+    # The cut-cell geometry, contract-10 implicit-solver, and contract-11 storage lineage keys come
+    # from the single source in phasefield.py.
     metadata = pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2))
     assert set(metadata) == {
+        "solver_contract_version",
+        "phase_storage_model",
+        "phase_state_dtype",
+        "velocity_state_dtype",
         "phase_transport_geometry",
         "phase_transport_geometry_version",
         "phase_control_volume",
         "phase_face_aperture",
         "phase_advection_subcycling",
         "wall_control_cell",
+        "wall_measure_method",
+        "wall_measure_contract_version",
         "implicit_phase_solver",
         "phase_mass_invariant",
     }

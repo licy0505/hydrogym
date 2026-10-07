@@ -171,7 +171,7 @@ def _strict_target_failures(benchmarks: dict[str, Any]) -> list[str]:
         for case in benchmarks[section].get("cases", []):
             value = case.get(field)
             if case.get("finite") is True and isinstance(value, (int, float)):
-                mass_drifts.append(float(value))
+                mass_drifts.append(abs(float(value)))
     if mass_drifts:
         drift = max(mass_drifts)
         if drift > targets["mass_relative_drift"]:
@@ -212,7 +212,7 @@ def _strict_target_failures(benchmarks: dict[str, Any]) -> list[str]:
 
 def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[str, Any]]:
     """Apply the frozen four-angle acceptance criteria; no partial-matrix closure."""
-    from production.validation import PROVISIONAL_READINESS_TARGETS
+    from production.validation import PHASE_MASS_SEMANTICS, PROVISIONAL_READINESS_TARGETS
 
     expected = (60.0, 90.0, 120.0, 150.0)
     records = benchmarks.get("contact_angle", {}).get("cases", [])
@@ -246,24 +246,22 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         else None
     )
     fluid_drifts = [
-        float(row["mass_relative_drift"])
+        abs(float(row["mass_relative_drift"]))
         for row in rows
         if isinstance(row.get("mass_relative_drift"), (int, float)) and math.isfinite(float(row["mass_relative_drift"]))
     ]
     total_drifts = [
-        float(row["total_mass_relative_drift"])
+        abs(float(row["total_mass_relative_drift"]))
         for row in rows
         if isinstance(row.get("total_mass_relative_drift"), (int, float))
         and math.isfinite(float(row["total_mass_relative_drift"]))
     ]
     max_fluid_drift = max(fluid_drifts) if len(fluid_drifts) == len(rows) and rows else None
-    max_total_drift = max(total_drifts) if len(total_drifts) == len(rows) and rows else None
-    mass_ok = (
-        max_fluid_drift is not None
-        and max_total_drift is not None
-        and max_fluid_drift <= 1.0e-3
-        and max_total_drift <= 1.0e-3
-    )
+    # ``total_mass`` is dx*dy*sum(phi), an unweighted full-grid reconstruction. It remains useful
+    # diagnostically, but the production cut-cell equation conserves sum_i V_i phi_i, not this
+    # full-cell reconstruction. Never let the latter participate in formal mass acceptance.
+    max_total_drift = max(total_drifts) if total_drifts else None
+    mass_ok = max_fluid_drift is not None and max_fluid_drift <= 1.0e-3
     v7_boundary_ok = (
         all(
             row.get("phase_boundary_model") == "impermeable_flux" and row.get("enforce_solid_phi") is False
@@ -277,6 +275,18 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
     wall_measure_ok = (
         all(row.get("wall_measure_method") == _production_wall_measure() for row in rows) if complete else False
     )
+    storage_ok = (
+        all(
+            isinstance(row.get("runtime"), dict)
+            and row["runtime"].get("solver_contract_version") == pf_contract_version()
+            and row["runtime"].get("phase_storage_model") == "phase_only_float64_v1"
+            and row["runtime"].get("phase_state_dtype") == "float64"
+            and row["runtime"].get("velocity_state_dtype") == "float32"
+            for row in rows
+        )
+        if complete
+        else False
+    )
     angle_ok = (
         mae is not None
         and max_error is not None
@@ -287,7 +297,14 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         and monotonic
     )
     accepted = bool(
-        complete and all_finite and all_converged and angle_ok and mass_ok and v7_boundary_ok and wall_measure_ok
+        complete
+        and all_finite
+        and all_converged
+        and angle_ok
+        and mass_ok
+        and v7_boundary_ok
+        and wall_measure_ok
+        and storage_ok
     )
     return accepted, {
         "required_targets_deg": list(expected),
@@ -304,10 +321,22 @@ def _contact_angle_acceptance(benchmarks: dict[str, Any]) -> tuple[bool, dict[st
         "theta_90_abs_error_deg": theta90_error,
         "max_fluid_mass_drift": max_fluid_drift,
         "max_total_mass_drift": max_total_drift,
+        "max_full_cell_mass_reconstruction_drift_diagnostic": max_total_drift,
+        "mass_gate_quantity": PHASE_MASS_SEMANTICS["formal_conserved_quantity"],
+        "mass_gate_field": PHASE_MASS_SEMANTICS["formal_acceptance_field"],
+        "full_cell_mass_reconstruction_is_conserved": PHASE_MASS_SEMANTICS[
+            "full_grid_reconstruction_is_conserved"
+        ],
+        "full_cell_mass_reconstruction_in_formal_gate": PHASE_MASS_SEMANTICS[
+            "full_grid_reconstruction_in_formal_gate"
+        ],
+        "phase_mass_semantics": dict(PHASE_MASS_SEMANTICS),
         "mass_ok": bool(mass_ok),
         "v7_boundary_model_ok": bool(v7_boundary_ok),
         "wall_measure_ok": bool(wall_measure_ok),
+        "storage_lineage_ok": bool(storage_ok),
         "required_wall_measure_method": _production_wall_measure(),
+        "required_phase_storage_model": "phase_only_float64_v1",
         "accepted": accepted,
     }
 
@@ -343,8 +372,7 @@ def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
         and neutral.get("enforce_solid_phi") is False
         and isinstance(neutral.get("measured_deg"), (int, float))
         and abs(float(neutral["measured_deg"]) - 90.0) <= 3.0
-        and float(neutral.get("mass_relative_drift", math.inf)) <= 1.0e-3
-        and float(neutral.get("total_mass_relative_drift", math.inf)) <= 1.0e-3
+        and abs(float(neutral.get("mass_relative_drift", math.inf))) <= 1.0e-3
         and float(neutral.get("max_solid_liquid_fraction", math.inf)) <= 1.0e-6
         and float(last_sample.get("max_speed", math.inf)) <= 5.0e-4
     )
@@ -357,7 +385,7 @@ def _assessed_blockers(benchmarks: dict[str, Any]) -> list[dict[str, Any]]:
         "measured_angle_deg": neutral.get("measured_deg"),
         "final_max_speed": last_sample.get("max_speed"),
         "fluid_mass_drift": neutral.get("mass_relative_drift"),
-        "total_mass_drift": neutral.get("total_mass_relative_drift"),
+        "full_cell_mass_reconstruction_drift_diagnostic": neutral.get("total_mass_relative_drift"),
         "max_solid_phase_fraction": neutral.get("max_solid_liquid_fraction"),
         "four_angle_acceptance_passed": bool(accepted),
         "closure_criteria_passed": bool(neutral_ok),
@@ -487,6 +515,13 @@ def run_validation(
             "contract-v6 reproduction and diagnostics."
         ),
         (
+            "The formal phase-mass invariant is sum_i V_i*phi_i on the cut-cell fluid volumes: the "
+            "finite-volume update divides pairwise face-flux divergence by V_i, so multiplying by V_i and "
+            "summing telescopes. total_mass = dx*dy*sum_i(phi_i) is an unweighted full-grid reconstruction, "
+            "not a conserved quantity when cut-cell volumes are partial; it is retained for diagnosis and is "
+            "excluded from formal acceptance gates."
+        ),
+        (
             "Solver contract v8 (L1A-2e) changes one subsystem: the Young wall condition is assembled with the "
             "exact embedded cut-cell wall measure A_wall,i (marching squares on the sdf = 0 contour, assigned "
             "to fluid-side control cells) instead of the grid-alignment-dependent fluid share of the diffuse "
@@ -533,6 +568,7 @@ def run_validation(
             "solver_contract_version": int(pf_contract_version()),
             "wall_measure_method": _production_wall_measure(),
             "wall_measure_contract_version": int(_wall_measure_contract_version()),
+            **_phase_storage_lineage(),
             "phasefield_sha256": get_phasefield_sha256(),
             "validation_code_sha256": compute_validation_code_hash(),
         },
@@ -575,6 +611,13 @@ def _wall_measure_contract_version() -> int:
     import phasefield as pf
 
     return int(pf.WALL_MEASURE_CONTRACT_VERSION)
+
+
+def _phase_storage_lineage() -> dict[str, str]:
+    """Storage identifiers for contract-11 validation-report provenance."""
+    import phasefield as pf
+
+    return pf.phase_storage_metadata(pf.PhaseFieldParams(Nx=2, Ny=2))
 
 
 def _resolution_status() -> str:

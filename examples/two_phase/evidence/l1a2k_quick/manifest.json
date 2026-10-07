@@ -1,0 +1,156 @@
+{
+  "git_sha": "f4b10e20a868960d075b5975080e9f821ee171e8",
+  "mechanism_matrix": "mechanism_matrix.json",
+  "outputs": {
+    "matched_60_90_150": "unmeasured_by_design",
+    "small_grid_operator_checks": "complete"
+  },
+  "production_semantics_changed": false,
+  "profile": "quick",
+  "solver_contract_version": 11,
+  "source_functions": [
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 1741,
+      "line_start": 1740,
+      "name": "phasefield._ddx",
+      "sha256_source": "f0d4e8c3f2fd305c438c2678ef4ac80109cd4fb63f35f6cf2fb083bdc20bb62d"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 1745,
+      "line_start": 1744,
+      "name": "phasefield._ddy",
+      "sha256_source": "849125de5fd70299cdb6585bf57835bea188a9f3d0a542186eda881d91592499"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 1751,
+      "line_start": 1748,
+      "name": "phasefield._lap",
+      "sha256_source": "488c2a5aa3dce9ae7aca2db60719101c8d9d74a07305b8c7d84323c40c0864ad"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 573,
+      "line_start": 555,
+      "name": "PhaseFieldParams.m2_proj",
+      "sha256_source": "b867ee12d8b80bd006b6b9dfe63e4ce90e237d8168b77bde7aa3f5b70319ed92"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2579,
+      "line_start": 2571,
+      "name": "phasefield.poisson_solve",
+      "sha256_source": "a2dcb5a1e0590d43077be33ca8cdd98890bb26f80e1d107ca7209cd200f5d2c0"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2568,
+      "line_start": 2557,
+      "name": "phasefield.chemical_potential",
+      "sha256_source": "1d7e134d592d0c0ae743d28633d7757e1f1fabdb2bf1137d0a963e5033d82815"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2554,
+      "line_start": 2540,
+      "name": "phasefield._explicit_chemical_potential",
+      "sha256_source": "6ec023289eb4d0ab4c36e9a46bc4a2dd51cdcccdcb19dc6dcbe62c6e8cc43d3b"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2649,
+      "line_start": 2590,
+      "name": "phasefield.rhs",
+      "sha256_source": "15f98bdef39a4b083d8e093f5d1baa36c7b0dae3d979a181255a880618349f42"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2583,
+      "line_start": 2582,
+      "name": "phasefield.rho_of",
+      "sha256_source": "d01b2a919bd42cd09acc33cd85bb5508efb8793a8ebd9a9727ebf6a991189bbd"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2587,
+      "line_start": 2586,
+      "name": "phasefield.nu_of",
+      "sha256_source": "31892097f41625de90ddfa9ff970f511e1915aaff39ece3075a0bb19359b411c"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 3179,
+      "line_start": 3150,
+      "name": "phasefield.step_with_diagnostics",
+      "sha256_source": "21921d01ce8fcf3c32f68d6118f7a5f4d558413f93dbc86c9d3f4f8600c55f0f"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 3687,
+      "line_start": 3673,
+      "name": "phasefield.pressure_field",
+      "sha256_source": "ca2d55f51b42ffd8e0699679808f57a1c710a9a9244f851b7d288d6b096bed88"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2274,
+      "line_start": 2272,
+      "name": "phasefield.wall_energy_derivative",
+      "sha256_source": "b2f578e1465cc9ba9db30cc27593a8b5ad9b5cbab84c95a7977a1343ed6b2812"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+      "line_end": 2333,
+      "line_start": 2317,
+      "name": "phasefield.wall_measure_density",
+      "sha256_source": "ce95b0b23ac6e2f542e727db43b4953233dac9aea625c84d489aef096957d075"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+      "line_end": 514,
+      "line_start": 492,
+      "name": "chns_nonstationarity_audit._momentum_components",
+      "sha256_source": "e8b37cf149e65c6c64ba6a1c673268daba694e86ddea0f33e6f3d157a78e60fc"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+      "line_end": 656,
+      "line_start": 526,
+      "name": "chns_nonstationarity_audit._forensic_substep",
+      "sha256_source": "a2b45f5ff4c6e98f96ee9e6655c8b59706275bd32b90ef45fb2821fbd5a60462"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/production/nonneutral_wetting_audit.py",
+      "line_end": 763,
+      "line_start": 369,
+      "name": "nonneutral_wetting_audit.run_relaxation",
+      "sha256_source": "76344ee57819924f8ea9f6b9267afac82b810982699605b55e462231491b2bb0"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/production/nonneutral_wetting_audit.py",
+      "line_end": 341,
+      "line_start": 300,
+      "name": "nonneutral_wetting_audit._window_converged",
+      "sha256_source": "7b671c4a9ef6ef67e8a6c887d8eef3ca9812c3ce22a406bceac1847a49091e8e"
+    },
+    {
+      "file": "/home/user/hydrogym/examples/two_phase/production/contact_line_kinetics.py",
+      "line_end": 590,
+      "line_start": 439,
+      "name": "contact_line_kinetics.contact_line_positions",
+      "sha256_source": "117ba60f623f757891750a3731d1334a5fca62b8e576e578204e347f4f774531"
+    }
+  ],
+  "source_hashes": {
+    "capillary_audit": "83340302e5d3940cd0b8b5c9a8ba40cceab04a6835e5ce9845954a5ad2d1ea4b",
+    "capillary_pressure_balance_audit": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+    "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+    "contact_line_kinetics": "fca52869eb8fc6c8c327661ecbc485e838b42939b92c297636bbd56a5b1be5c5",
+    "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+    "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e"
+  },
+  "stage": "L1A-2k",
+  "status": "quick_complete"
+}

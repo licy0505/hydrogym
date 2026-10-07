@@ -153,8 +153,8 @@ def test_report_schema_valid_missing_field_and_nan():
         (8, True),
         (9, True),
         (10, True),
+        (11, True),
         (3, False),
-        (11, False),
         (True, False),
         ("5", False),
         (5.0, False),
@@ -162,9 +162,15 @@ def test_report_schema_valid_missing_field_and_nan():
     ],
 )
 def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
-    """Historical (v4-v9) and current (v10) reports validate; unknown contracts fail closed."""
+    """Historical reports and current contract-11 reports validate only with explicit storage lineage."""
     report = _minimal_report()
     report["repository"]["solver_contract_version"] = version
+    if version == 11:
+        report["repository"].update(
+            phase_storage_model="phase_only_float64_v1",
+            phase_state_dtype="float64",
+            velocity_state_dtype="float32",
+        )
     contract_errors = [e for e in validate_report_schema(report) if "solver_contract_version" in e]
     assert (not contract_errors) is valid
 
@@ -323,7 +329,7 @@ def test_capillary_audit_reports_consistent_conventions():
     result = run_audit(N=64)
     assert [check.name for check in result.checks if not check.passed] == []
     assert result.diagnosis["three_conventions_consistent"] is True
-    assert result.to_dict()["settings"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
+    assert result.to_dict()["settings"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
 
 
 def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
@@ -415,7 +421,7 @@ def test_report_schema_allows_resolved_blocker_status_only_when_known():
     blocker["status"] = "resolved_in_contract_v10"
     assert validate_report_schema(report) == []  # v10 weighted implicit-solve evidence is supported
     blocker["status"] = "resolved_in_contract_v11"
-    assert any("status is invalid" in error for error in validate_report_schema(report))
+    assert validate_report_schema(report) == []  # v11 may close only with measured A1 wetting evidence
 
 
 def test_ci_profile_report_records_contract_v9_lineage_and_stays_baseline_only(tmp_path, monkeypatch):
@@ -430,7 +436,7 @@ def test_ci_profile_report_records_contract_v9_lineage_and_stays_baseline_only(t
     assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
     report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
     assert validate_report_schema(report) == []
-    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
     assert report["repository"]["wall_measure_method"] == pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert report["repository"]["wall_measure_contract_version"] == pf.WALL_MEASURE_CONTRACT_VERSION == 1
     assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
@@ -465,6 +471,12 @@ def _angle_benchmarks(*, boundary="impermeable_flux", converged=True, theta_90=9
                 "phase_boundary_model": boundary,
                 "wall_measure_method": (pf.WALL_MEASURE_METHOD if wall_measure is None else wall_measure),
                 "enforce_solid_phi": boundary == "projection_legacy",
+                "runtime": {
+                    "solver_contract_version": pf.SOLVER_CONTRACT_VERSION,
+                    "phase_storage_model": pf.PHASE_STORAGE_MODEL,
+                    "phase_state_dtype": "float64",
+                    "velocity_state_dtype": "float32",
+                },
                 "samples": [{"max_speed": 1e-4}],
             }
         )
@@ -482,6 +494,34 @@ def test_contact_angle_blockers_close_only_after_full_acceptance():
     assert good["W-CONTACT-ANGLE"]["status"] == f"resolved_in_contract_v{pf.SOLVER_CONTRACT_VERSION}"
     assert good["W-CONTACT-ANGLE"]["evidence"]["wall_measure_ok"] is True
     assert good["P-SOLID-PIN"]["status"] == f"resolved_in_contract_v{pf.SOLVER_CONTRACT_VERSION}"
+
+    # The full-grid reconstruction sum is not the cut-cell finite-volume invariant. A large
+    # diagnostic drift must not fail either the four-angle formal mass gate or neutral closure.
+    diagnostic_drift = _angle_benchmarks()
+    for case in diagnostic_drift["contact_angle"]["cases"]:
+        case["total_mass_relative_drift"] = 0.25
+    from production.run_validation import _contact_angle_acceptance
+
+    accepted, diagnostic_evidence = _contact_angle_acceptance(diagnostic_drift)
+    assert accepted is True
+    assert diagnostic_evidence["mass_ok"] is True
+    assert diagnostic_evidence["max_fluid_mass_drift"] == pytest.approx(5.0e-4)
+    assert diagnostic_evidence["max_full_cell_mass_reconstruction_drift_diagnostic"] == pytest.approx(0.25)
+    assert diagnostic_evidence["full_cell_mass_reconstruction_is_conserved"] is False
+    assert diagnostic_evidence["full_cell_mass_reconstruction_in_formal_gate"] is False
+    diagnostic_blockers = _blockers(diagnostic_drift)
+    assert diagnostic_blockers["W-CONTACT-ANGLE"]["status"] == f"resolved_in_contract_v{pf.SOLVER_CONTRACT_VERSION}"
+    assert diagnostic_blockers["P-SOLID-PIN"]["status"] == f"resolved_in_contract_v{pf.SOLVER_CONTRACT_VERSION}"
+    assert diagnostic_blockers["P-SOLID-PIN"]["evidence"]["full_cell_mass_reconstruction_drift_diagnostic"] == 0.25
+
+    negative_mass = _angle_benchmarks()
+    for case in negative_mass["contact_angle"]["cases"]:
+        case["mass_relative_drift"] = -2.0e-3
+        case["total_mass_relative_drift"] = -2.0e-3
+    from production.run_validation import _contact_angle_acceptance
+
+    accepted, negative_evidence = _contact_angle_acceptance(negative_mass)
+    assert not accepted and negative_evidence["mass_ok"] is False
 
     partial = _blockers(_angle_benchmarks(converged=False))
     assert partial["W-CONTACT-ANGLE"]["status"] == "measurement_required"
@@ -684,7 +724,7 @@ def test_phase_boundary_audit_covers_v8_flux_and_thermodynamics():
         jax.config.update("jax_enable_x64", previous_x64)
     failed = [check.name for check in audit.checks if not check.passed]
     assert failed == []
-    assert audit.settings["solver_contract_version"] == 10
+    assert audit.settings["solver_contract_version"] == 11
     assert audit.settings["wall_measure_method"] == "sdf_cutcell_v1"
     variational = audit.numbers["v8_variational_audit"]
     assert variational["relative_error"] <= 1e-6  # wall-measure gate: mu == d(F_bulk + F_wall^h)/dphi
@@ -735,9 +775,19 @@ def test_contact_angle_case_uses_the_clean_seed_and_gates_on_convergence():
     assert case.final_solid_liquid_fraction <= 1e-6
     assert case.implicit_relative_residual_max <= 1e-6
     assert case.relaxation_steps == 20
-    sample_fields = {"step", "time", "measured_angle_deg", "max_speed", "total_mass", "fluid_mass"}
+    sample_fields = {
+        "step",
+        "time",
+        "measured_angle_deg",
+        "max_speed",
+        "total_mass",
+        "full_cell_mass_reconstruction",
+        "fluid_mass",
+    }
     assert case.samples and all(sample_fields <= set(row) for row in case.samples)
-    assert case.total_mass_relative_drift <= 1e-3
+    assert case.samples[-1]["full_cell_mass_reconstruction"] == pytest.approx(case.samples[-1]["total_mass"])
+    assert case.runtime["phase_mass_semantics"]["formal_conserved_quantity"] == "sum_i V_i phi_i"
+    assert case.runtime["phase_mass_semantics"]["full_grid_reconstruction_is_conserved"] is False
 
 
 def test_contact_angle_case_reports_the_angle_once_the_windows_converge():
@@ -790,6 +840,8 @@ def test_contact_angle_summary_does_not_call_a_partial_subset_matrix_mae():
     assert summary["mae_deg"] is None
     assert summary["converged_subset_mae_deg"] == pytest.approx(0.5)
     assert summary["all_targets_converged"] is False
+    assert summary["phase_mass_semantics"]["formal_acceptance_field"] == "mass_relative_drift"
+    assert summary["phase_mass_semantics"]["full_grid_reconstruction_is_conserved"] is False
 
 
 def test_contact_angle_summary_excludes_drifting_runs_from_the_error_statistics():

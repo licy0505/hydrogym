@@ -1,0 +1,24 @@
+{
+  "checkpoint": "artifacts/l1a2k/phase_only_060/nwa_resume_latest.npz",
+  "convergence_gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.09537505932090085,
+    "converged": true,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 3.8545370993903205e-06,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 7
+  },
+  "maximum_steps": 300000,
+  "state_hashes": {
+    "phi": "bf7afb791c338f76479cf86592e0425afee6eb668e84a700ddd01aedeb56b1ce",
+    "t": "073066d2d9cf82ec8d765ae40e1b686b80a517058f580e72145950f05ea0769e",
+    "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+    "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+  },
+  "status": "converged",
+  "step": 180000
+}

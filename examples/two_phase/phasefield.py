@@ -229,7 +229,15 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 #      below as the pinned ``_cg_solve_impl`` / ``_ch_cg_primal`` pair for falsification and
 #      reproduction. ``IMPLICIT_PHASE_SOLVER='weighted_spd_nullspace_preserving_v1'``. v9
 #      trajectories are stale.
-SOLVER_CONTRACT_VERSION = 10
+#  11: L1A-2i -- promote the already-selected ``phase_only_float64_v1`` storage model to production.
+#      ``phi`` and its complete phase update/implicit solve are float64; ``u``/``v``, geometry
+#      storage, momentum terms and the pressure projection remain in ``p.dtype`` (float32 by
+#      default). Contract-10's weighted exchange solve, cut-cell transport, embedded wall measure,
+#      Young wall energy, ``M``, ``dt`` and all momentum/capillary models are retained unchanged.
+#      No global mass correction, geometry change or wetting recalibration is introduced. Contract-10
+#      datasets/checkpoints are stale; schema-3 ML samples remain derived float32 observations with
+#      an explicit export cast policy and are not restart-authoritative.
+SOLVER_CONTRACT_VERSION = 11
 
 #: Production embedded wall-measure construction (L1A-2e). ``sdf_cutcell_v1`` is the
 #: deterministic marching-squares cut-cell measure; ``diffuse_sdf_v7`` is the pinned
@@ -263,16 +271,15 @@ PHASE_MASS_INVARIANT = "componentwise_cutcell_volume"
 #: ``cutcell_advective_cfl_ratio`` is clearly violated. It stays off unless a production run shows
 #: a ratio below one; the diagnostic that decides this is :func:`cutcell_advective_cfl_diagnostic`
 #: and its measured value is recorded in every report either way.
-#: Phase *state* storage model (L1A-2i). ``float32_contract_10`` is the production default and is
-#: unchanged by this stage: the phase field is stored in ``p.dtype``. ``phase_only_float64_v1``
-#: stores the phase field in float64 (the phase transport, chemical potential and implicit solve
-#: follow it) while the velocity fields, the geometry arrays, the momentum terms and the pressure
-#: projection stay in the working dtype. The *only* difference between the two models is the
-#: persistent precision of ``phi`` -- no change to ``M``, ``dt``, the wall energy, the wall measure,
-#: the cut-cell geometry or the pressure projection is involved, and no global mass is read or
-#: corrected anywhere.
-PHASE_STORAGE_MODEL = "float32_contract_10"
-PHASE_STORAGE_MODELS = (PHASE_STORAGE_MODEL, "phase_only_float64_v1")
+#: Production phase *state* storage model (contract 11). ``phase_only_float64_v1`` stores and
+#: computes the complete phase update in float64. Velocity/momentum, geometry storage and the
+#: pressure projection stay in ``p.dtype`` (float32 by default). The explicitly named
+#: ``float32_contract_10`` model is retained only for deterministic legacy/reference runs; using it
+#: under contract 11 does not relabel the resulting trajectory as contract 10.
+PHASE_ONLY_FLOAT64_STORAGE_MODEL = "phase_only_float64_v1"
+LEGACY_FLOAT32_STORAGE_MODEL = "float32_contract_10"
+PHASE_STORAGE_MODEL = PHASE_ONLY_FLOAT64_STORAGE_MODEL
+PHASE_STORAGE_MODELS = (PHASE_STORAGE_MODEL, LEGACY_FLOAT32_STORAGE_MODEL)
 #: Storage models that keep a second persistent phase field (compensated / residual-feedback
 #: storage). Declared here so the schema and restart audits have one authority for the names; the
 #: L1A-2i candidates are implemented in ``production/phase_storage_precision_audit.py`` until one is
@@ -283,9 +290,36 @@ PHASE_STORAGE_MODELS_WITH_HIDDEN_STATE = (
 )
 
 
+def validate_x64_for_phase_storage(phase_storage_model: str) -> None:
+    """Fail closed if the production A1 phase state cannot be represented by JAX."""
+    if phase_storage_model == PHASE_ONLY_FLOAT64_STORAGE_MODEL and not bool(jax.config.x64_enabled):
+        raise RuntimeError(
+            "phase storage model 'phase_only_float64_v1' requires JAX float64 support; "
+            "set JAX_ENABLE_X64=1 before importing JAX. The solver will not silently fall back to float32."
+        )
+
+
 def phase_state_dtype(p: "PhaseFieldParams"):
-    """The dtype of the persistent phase field under the parameters' storage model."""
-    return jnp.float64 if getattr(p, "phase_storage_model", PHASE_STORAGE_MODEL) == "phase_only_float64_v1" else p.dtype
+    """The authoritative persistent phase dtype, resolved from the storage-model enum."""
+    model = getattr(p, "phase_storage_model", PHASE_STORAGE_MODEL)
+    if model not in PHASE_STORAGE_MODELS:
+        raise ValueError(f"unknown phase_storage_model {model!r}; expected one of {PHASE_STORAGE_MODELS}")
+    validate_x64_for_phase_storage(model)
+    return jnp.float64 if model == PHASE_ONLY_FLOAT64_STORAGE_MODEL else p.dtype
+
+
+def _dtype_name(dtype) -> str:
+    """Return a stable, JSON-safe NumPy/JAX dtype name."""
+    return jnp.dtype(dtype).name
+
+
+def phase_storage_metadata(p: "PhaseFieldParams") -> dict:
+    """Canonical contract-11 storage identity for datasets, restarts and validation reports."""
+    return {
+        "phase_storage_model": str(p.phase_storage_model),
+        "phase_state_dtype": _dtype_name(phase_state_dtype(p)),
+        "velocity_state_dtype": _dtype_name(p.dtype),
+    }
 
 
 PHASE_ADVECTION_SUBCYCLING = "disabled"
@@ -418,8 +452,8 @@ class PhaseFieldParams:
     #: is the sanctioned fix (phase-only, frozen velocity, conservative per substep, deterministic
     #: ``n_sub``, momentum dt untouched) when that ratio is clearly violated.
     phase_advection_subcycling: str = PHASE_ADVECTION_SUBCYCLING
-    #: Phase state storage model (L1A-2i). See :data:`PHASE_STORAGE_MODEL`. The default reproduces
-    #: contract 10 exactly; ``phase_only_float64_v1`` is the L1A-2i phase-only float64 candidate.
+    #: Phase state storage model (L1A-2i). The contract-11 production default is
+    #: ``phase_only_float64_v1``; ``float32_contract_10`` is an explicit legacy/reference path.
     phase_storage_model: str = PHASE_STORAGE_MODEL
     # LEGACY ONLY: contract-v5 volumetric affinity amplitude and band width.
     wall_energy_amp: float = 5.0
@@ -466,9 +500,9 @@ class PhaseFieldParams:
             raise ValueError(
                 f"unknown phase_storage_model {self.phase_storage_model!r}; "
                 f"expected one of {sorted(PHASE_STORAGE_MODELS)} (the compensated and "
-                f"residual-feedback candidates live in production.phase_storage_precision_audit "
-                f"until one is selected)"
+                f"residual-feedback candidates remain rejected diagnostics)"
             )
+        validate_x64_for_phase_storage(self.phase_storage_model)
         if self.phase_advection_subcycling not in PHASE_ADVECTION_SUBCYCLINGS:
             raise ValueError(
                 f"unknown phase_advection_subcycling {self.phase_advection_subcycling!r}; "
@@ -1509,9 +1543,18 @@ def make_solid(
     )
 
 
-def grids(params: PhaseFieldParams):
-    x = (jnp.arange(params.Nx) + 0.5) * params.dx
-    y = (jnp.arange(params.Ny) + 0.5) * params.dy
+def grids(params: PhaseFieldParams, dtype=None):
+    """Cell-centre coordinates; an explicit dtype avoids quantizing an A1 seed through float32."""
+    if dtype is None:
+        x = (jnp.arange(params.Nx) + 0.5) * params.dx
+        y = (jnp.arange(params.Ny) + 0.5) * params.dy
+    else:
+        x = (jnp.arange(params.Nx, dtype=dtype) + jnp.asarray(0.5, dtype=dtype)) * jnp.asarray(
+            params.dx, dtype=dtype
+        )
+        y = (jnp.arange(params.Ny, dtype=dtype) + jnp.asarray(0.5, dtype=dtype)) * jnp.asarray(
+            params.dy, dtype=dtype
+        )
     X, Y = jnp.meshgrid(x, y, indexing="ij")
     return X, Y
 
@@ -1757,15 +1800,16 @@ def phase_transport_is_cutcell(p: PhaseFieldParams) -> bool:
 
 
 def phase_transport_metadata(p: PhaseFieldParams) -> dict:
-    """Contract-v9 metadata block for reports, datasets and fingerprints (single source).
+    """Canonical solver-contract metadata for validation, datasets and fingerprints.
 
-    Every consumer (``production.validation``, ``generate_dataset``, the audits) records these
-    keys verbatim, so a trajectory generated under the cut-cell control volumes can never be
-    confused with a contract-v8 staircase trajectory: the three strings change together with
-    ``SOLVER_CONTRACT_VERSION``.
+    The block includes the storage model as well as the existing cut-cell transport, wall measure
+    and implicit-solver identifiers. Consumers serialize these keys verbatim so state precision
+    cannot be confused with the derived ML sample representation.
     """
     cutcell = phase_transport_is_cutcell(p)
     return {
+        "solver_contract_version": int(SOLVER_CONTRACT_VERSION),
+        **phase_storage_metadata(p),
         "phase_transport_geometry": str(p.phase_transport_geometry),
         "phase_transport_geometry_version": int(PHASE_TRANSPORT_GEOMETRY_VERSION),
         "phase_control_volume": str(PHASE_CONTROL_VOLUME if cutcell else "hard_cell_volume"),
@@ -1774,6 +1818,8 @@ def phase_transport_metadata(p: PhaseFieldParams) -> dict:
             getattr(p, "phase_advection_subcycling", PHASE_ADVECTION_SUBCYCLING)
         ),
         "wall_control_cell": str("positive_volume" if cutcell else "hard_fluid_ring"),
+        "wall_measure_method": str(p.wall_measure),
+        "wall_measure_contract_version": int(WALL_MEASURE_CONTRACT_VERSION),
         "implicit_phase_solver": str(IMPLICIT_PHASE_SOLVER),
         "phase_mass_invariant": str(PHASE_MASS_INVARIANT),
     }
@@ -3103,6 +3149,7 @@ def phase_transport_step(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float
 
 def step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldParams):
     """One public step and its per-substep CG residual/iteration diagnostics."""
+    validate_x64_for_phase_storage(p.phase_storage_model)
     dt = p.dt / 3.0
 
     def substep(carry, _):
@@ -3124,7 +3171,12 @@ def step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldParams):
 
     (phi, u, v, t), info = lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)
     diagnostics = StepDiagnostics(info.iterations, info.relative_residual, info.converged)
-    return State(phi=phi, u=u, v=v, t=t), diagnostics
+    return State(
+        phi=phi.astype(phase_state_dtype(p)),
+        u=u.astype(p.dtype),
+        v=v.astype(p.dtype),
+        t=t.astype(p.dtype),
+    ), diagnostics
 
 
 def step(state: State, solid: Solid, p: PhaseFieldParams) -> State:
@@ -3146,9 +3198,10 @@ def phase_only_step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldPa
     that Cahn-Hilliard thermodynamic relaxation is isolated from Navier-Stokes,
     Brinkman, capillary-momentum, and pressure-projection coupling.
     """
+    validate_x64_for_phase_storage(p.phase_storage_model)
     dt = p.dt / 3.0
-    zero_u = jnp.zeros_like(state.phi)
-    zero_v = jnp.zeros_like(state.phi)
+    zero_u = jnp.zeros(state.phi.shape, dtype=p.dtype)
+    zero_v = jnp.zeros(state.phi.shape, dtype=p.dtype)
 
     def substep(carry, _):
         phi, t = carry
@@ -3179,7 +3232,8 @@ def droplet_initial_state(
     velocity_mode: str = "uniform",
 ) -> State:
     """Circular droplet of radius R centred at (x0, y0) moving downwards at u_impact."""
-    X, Y = grids(p)
+    phase_dtype = phase_state_dtype(p)
+    X, Y = grids(p, dtype=phase_dtype)
     r = jnp.sqrt((X - x0) ** 2 + (Y - y0) ** 2)
     phi = 0.5 * (1.0 - jnp.tanh((r - R) / (jnp.sqrt(2.0) * p.eps)))
     if velocity_mode == "uniform":
@@ -3243,9 +3297,9 @@ def rollout(
 
     save_every = max(1, min(save_every, n_steps))
     n_saved = n_steps // save_every
-    buf_phi = jnp.zeros((n_saved, p.Nx, p.Ny), dtype=p.dtype)
-    buf_u = jnp.zeros_like(buf_phi)
-    buf_v = jnp.zeros_like(buf_phi)
+    buf_phi = jnp.zeros((n_saved, p.Nx, p.Ny), dtype=phase_state_dtype(p))
+    buf_u = jnp.zeros((n_saved, p.Nx, p.Ny), dtype=p.dtype)
+    buf_v = jnp.zeros_like(buf_u)
     (final, phi_hist, u_hist, v_hist, _), _ = lax.scan(body, (state, buf_phi, buf_u, buf_v, 0), None, length=n_steps)
     return final, phi_hist, u_hist, v_hist
 
@@ -3599,7 +3653,12 @@ def sessile_initial_state(
     # fluid polygon centroid of a cut cell and the cell centre of a full cell, so no seed is
     # evaluated inside the solid and no partial fluid volume is emptied because its centre happens
     # to lie below ``sdf = 0``. For a full cell the two coincide, so this is the historical seed.
+    phase_dtype = phase_state_dtype(p)
     X, Y = phase_sample_coordinates(solid, p)
+    # Geometry/centroids retain their existing storage dtype; promote their coordinates before
+    # evaluating the analytic seed so the phase profile itself is created natively in float64.
+    X = X.astype(phase_dtype)
+    Y = Y.astype(phase_dtype)
     centre_x = 0.5 * p.Lx if x0 is None else float(x0)
     y_c = float(wall_height) - float(R) * np.cos(theta0)
     r = jnp.sqrt((X - centre_x) ** 2 + (Y - y_c) ** 2)

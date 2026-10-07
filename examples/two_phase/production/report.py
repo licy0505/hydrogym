@@ -12,15 +12,11 @@ from typing import Any
 from production.config import VALIDATION_REPORT_SCHEMA_VERSION
 
 REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
-# Solver contracts this report schema can interpret.  A report is a lineage record and states the
-# contract of the solver that produced it: 4/5/6 are historical lineage records, 7 is the
-# conservative impermeable-phase / natural-wetting contract, 8 is the embedded cut-cell Young
-# wall measure (L1A-2e) and 9 moves the phase transport onto the same cut-cell geometry
-# (L1A-2f: partial control volumes, shared partial face apertures, weighted-SPD implicit solve).
-# 10 solves the weighted implicit phase system directly in the physical variable and carries the
-# cut-cell mass mode exactly (L1A-2g), instead of the contract-v9 sqrt(V) similarity transform.
+# Solver contracts this report schema can interpret. A report is a lineage record and states the
+# contract of the solver that produced it. Contract 11 promotes the selected phase-only float64
+# state while retaining contract-10's weighted exchange solve and existing physics operators.
 # Unknown contracts fail closed.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9, 10)
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9, 10, 11)
 #: Blocker statuses that claim resolution, one per contract that produced the closing evidence.
 KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v5",
@@ -29,6 +25,7 @@ KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v8",
     "resolved_in_contract_v9",
     "resolved_in_contract_v10",
+    "resolved_in_contract_v11",
     # W-CONTACT-ANGLE is closed by thermodynamic equilibrium, not by a measurement alone: the
     # contact angle is only claimed once a drift-clean full CHNS relaxation reaches it.
     "thermodynamic_equilibrium_validated_v9",
@@ -118,6 +115,18 @@ def validate_report_schema(report: dict[str, Any]) -> list[str]:
             or contract not in KNOWN_SOLVER_CONTRACT_VERSIONS
         ):
             errors.append(f"repository.solver_contract_version must be one of {list(KNOWN_SOLVER_CONTRACT_VERSIONS)}")
+        if contract == 11:
+            storage_fields = {"phase_storage_model", "phase_state_dtype", "velocity_state_dtype"}
+            errors.extend(
+                f"contract-11 repository missing phase-storage field: {key}"
+                for key in sorted(storage_fields - set(repository))
+            )
+            if repository.get("phase_storage_model") != "phase_only_float64_v1":
+                errors.append("contract-11 repository.phase_storage_model must be phase_only_float64_v1")
+            if repository.get("phase_state_dtype") != "float64":
+                errors.append("contract-11 repository.phase_state_dtype must be float64")
+            if repository.get("velocity_state_dtype") != "float32":
+                errors.append("contract-11 repository.velocity_state_dtype must be float32")
         # Optional since contract 8: the embedded wall measure that produced the trajectories.
         measure = repository.get("wall_measure_method")
         if measure is not None and not isinstance(measure, str):

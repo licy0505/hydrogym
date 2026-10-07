@@ -15,6 +15,7 @@ transfer protocol here are identical.
 from __future__ import annotations
 
 import hashlib
+import json
 from typing import Sequence
 
 import jax
@@ -22,7 +23,7 @@ import jax.numpy as jnp
 import numpy as np
 from flax import linen as nn
 
-DATASET_SCHEMA_VERSION = 3
+from production.dataset_lineage import DATASET_SCHEMA_VERSION, validate_training_sample_lineage
 
 
 def _require_current_dataset(d, path):
@@ -35,6 +36,13 @@ def _require_current_dataset(d, path):
         )
     if "dataset_fingerprint" not in d.files:
         raise RuntimeError(f"dataset {path} has no exact fingerprint; regenerate with generate_dataset.py")
+    if "case" not in d.files or "phi" not in d.files:
+        raise RuntimeError(f"stale two_phase dataset: {path} lacks solver/sample lineage; regenerate")
+    try:
+        metadata = json.loads(str(np.asarray(d["case"]).item()))
+        validate_training_sample_lineage(metadata, phi_dtype=np.asarray(d["phi"]).dtype.name)
+    except (TypeError, ValueError, json.JSONDecodeError, RuntimeError) as exc:
+        raise RuntimeError(f"stale two_phase dataset: {path} has invalid contract-11 lineage: {exc}") from exc
 
 
 def combine_fingerprints(fingerprints) -> str:
@@ -131,7 +139,7 @@ def load_arrays(data_dir, split):
         if str(d["split"]) != split:
             continue
         _require_current_dataset(d, f)
-        phi = d["phi"].astype(np.float32)
+        phi = np.asarray(d["phi"])  # validated float32 export; no second solver-to-sample cast here
         u = d["u"].astype(np.float32)
         v = d["v"].astype(np.float32)
         chi = d["chi"].astype(np.float32)
@@ -193,7 +201,7 @@ def load_windows(data_dir, split, K):
         if str(d["split"]) != split:
             continue
         _require_current_dataset(d, f)
-        phi = d["phi"].astype(np.float32)
+        phi = np.asarray(d["phi"])  # validated float32 export; no second solver-to-sample cast here
         u = d["u"].astype(np.float32)
         v = d["v"].astype(np.float32)
         chi = d["chi"].astype(np.float32)
@@ -455,7 +463,7 @@ class TrajectoryStore:
                 fam = "simple" if str(d["surface"]) in ("flat", "pillars") else "complex"
                 if families and fam not in families:
                     continue
-                phis.append(d["phi"].astype(np.float32))
+                phis.append(np.asarray(d["phi"]))
                 vels.append(np.stack([d["u"], d["v"]], axis=-1).astype(np.float16))
                 scal = d["scalars"].astype(np.float32)
                 geoms.append(geometry_features(d["chi"], d["sdf"], float(scal[3]), geom))
@@ -466,7 +474,7 @@ class TrajectoryStore:
         if not phis:
             raise RuntimeError(f"no '{split}' trajectories found in {dirs}")
         T = min(s.shape[0] for s in phis)
-        self.phi = np.stack([s[:T] for s in phis]).astype(np.float32)
+        self.phi = np.stack([s[:T] for s in phis])
         self.vel = np.stack([s[:T] for s in vels]).astype(np.float16)
         self.geom = np.stack(geoms).astype(np.float32)
         self.scal = np.stack(scals).astype(np.float32)

@@ -6,7 +6,8 @@ from argparse import Namespace
 import numpy as np
 import pytest
 
-pytest.importorskip("jax")
+jax = pytest.importorskip("jax")
+jax.config.update("jax_enable_x64", True)
 pytest.importorskip("scipy")
 
 import cases as C  # noqa: E402
@@ -34,15 +35,9 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
     assert fp2 != fp3
 
 
-def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
-    """Schema v3 is retained, but contract-7 (and contract-6) trajectories fingerprint stale under v8.
-
-    The contract-v9 change moves the phase transport onto the cut-cell control volumes, so a dataset
-    generated with the pinned legacy transport (``phase_transport_geometry='hard_cell_v7'``) must also
-    be stale even though the schema, the case dict and every other default are identical, and the same
-    holds for the pinned legacy wall-measure kernel (``wall_measure='diffuse_sdf_v7'``).
-    """
-    assert pf.SOLVER_CONTRACT_VERSION == 10
+def test_v10_dataset_is_stale_under_v11(tmp_path, monkeypatch):
+    """Schema v3 remains; contract-10 files without A1 storage/sample lineage fail closed in v11."""
+    assert pf.SOLVER_CONTRACT_VERSION == 11
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
@@ -53,37 +48,44 @@ def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
     case = C.lowwe_cases(1)[0]
     args = _args(3)
     dt, nsteps, save_every = G._effective_schedule(case, args)
-    expected_v8 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+    expected_v11 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
     path = tmp_path / "train_lowWe_000_flat.npz"
     with monkeypatch.context() as as_v7:
         as_v7.setattr(pf, "SOLVER_CONTRACT_VERSION", 7)
         as_v7.setattr(pf, "WALL_MEASURE_METHOD", "diffuse_sdf_v7")
         saved_v7 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
+        sample_params = pf.PhaseFieldParams(Nx=2, Ny=2)
+        lineage = {
+            **pf.phase_transport_metadata(sample_params),
+            **G.sample_lineage_metadata(sample_params),
+        }
         np.savez(
             path,
             dataset_schema_version=np.array(G.DATASET_SCHEMA_VERSION, dtype=np.int32),
             dataset_fingerprint=np.array(saved_v7),
+            case=np.array(json.dumps(lineage)),
+            phi=np.zeros((1, 2, 2), dtype=np.float32),
         )
         assert G._saved_case_is_current(path, saved_v7)
     with monkeypatch.context() as as_v6:
         as_v6.setattr(pf, "SOLVER_CONTRACT_VERSION", 6)
         saved_v6 = G._dataset_fingerprint(case, args, dt, nsteps, save_every)
 
-    assert saved_v7 != expected_v8
-    assert saved_v6 != saved_v7 != expected_v8
-    assert not G._saved_case_is_current(path, expected_v8)  # v7 data fails closed under v8
+    assert saved_v7 != expected_v11
+    assert saved_v6 != saved_v7 != expected_v11
+    assert not G._saved_case_is_current(path, expected_v11)  # v7 data fails closed under v11
     # The legacy wall measure alone (same contract number) also changes the fingerprint.
     with monkeypatch.context() as legacy_measure:
         legacy_measure.setattr(pf, "WALL_MEASURE_METHOD", "diffuse_sdf_v7")
-        assert G._dataset_fingerprint(case, args, dt, nsteps, save_every) != expected_v8
+        assert G._dataset_fingerprint(case, args, dt, nsteps, save_every) != expected_v11
     # The explicit boundary-model key still makes otherwise identical custom cases stale.
     legacy_case = {**case, "phase_boundary_model": "projection_legacy"}
-    assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v8
+    assert G._dataset_fingerprint(legacy_case, args, dt, nsteps, save_every) != expected_v11
     # Contract v9: pinning the legacy cell-centre transport changes the fingerprint too, and the
     # manifest records the v9 metadata explicitly.
     legacy_transport = {**case, "phase_transport_geometry": "hard_cell_v7"}
-    assert G._dataset_fingerprint(legacy_transport, args, dt, nsteps, save_every) != expected_v8
+    assert G._dataset_fingerprint(legacy_transport, args, dt, nsteps, save_every) != expected_v11
     manifest = G._write_manifest(tmp_path, "smoke", [])
     assert manifest["phase_transport_geometry"] == "sdf_cutcell_fv_v1"
     assert manifest["phase_control_volume"] == "partial_cell_volume"
@@ -93,14 +95,61 @@ def test_v7_dataset_is_stale_under_v8(tmp_path, monkeypatch):
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
     assert manifest["wetting_model"] == "surface_energy"
     assert manifest["phase_boundary_model"] == "impermeable_flux"
     assert manifest["wall_measure_method"] == "sdf_cutcell_v1"
     assert manifest["wall_measure_contract_version"] == 1
+    assert manifest["phase_storage_model"] == "phase_only_float64_v1"
+    assert manifest["phase_state_dtype"] == "float64"
+    assert manifest["velocity_state_dtype"] == "float32"
+    assert manifest["solver_phase_dtype"] == "float64"
+    assert manifest["stored_sample_phase_dtype"] == "float32"
+    assert manifest["sample_cast_policy"] == "downsample_mean_then_float32_v1"
+    assert manifest["dataset_schema_decision"]["selected_version"] == 3
     written = json.loads((tmp_path / "manifest.json").read_text())
-    assert written["solver_contract_version"] == 10
+    assert written["solver_contract_version"] == 11
     assert written["wall_measure_method"] == "sdf_cutcell_v1"
+
+
+def test_save_case_preserves_schema3_layout_and_records_single_sample_cast(tmp_path):
+    p = pf.PhaseFieldParams(Nx=8, Ny=8, Lx=6.0, Ly=6.0)
+    solid = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p)
+    phi64 = np.linspace(0.0, 1.0, 2 * p.Nx * p.Ny, dtype=np.float64).reshape(2, p.Nx, p.Ny)
+    u = np.zeros_like(phi64, dtype=np.float32)
+    v = np.zeros_like(phi64, dtype=np.float32)
+    case = {"split": "train", "surface": "flat", "cos_theta": 0.0}
+    path = tmp_path / "sample.npz"
+    G._save_case(
+        path,
+        case,
+        p,
+        solid,
+        phi64,
+        u,
+        v,
+        save_every=1,
+        ds=1,
+        diagnostics={},
+        dataset_fingerprint="test-fingerprint",
+        feature_cells_min=2.0,
+        parameter_semantics={},
+    )
+    with np.load(path, allow_pickle=False) as archive:
+        expected_fields = {
+            "phi", "u", "v", "chi", "sdf", "scalars", "time", "dataset_schema_version",
+            "dataset_fingerprint", "solver_sha256", "feature_cells_min", "surface", "split", "case",
+        }
+        assert set(archive.files) == expected_fields
+        assert int(archive["dataset_schema_version"]) == 3
+        assert archive["phi"].dtype == np.float32
+        np.testing.assert_array_equal(archive["phi"], phi64.astype(np.float32))
+        metadata = json.loads(str(archive["case"].item()))
+    assert metadata["solver_phase_dtype"] == "float64"
+    assert metadata["phase_state_dtype"] == "float64"
+    assert metadata["stored_sample_phase_dtype"] == "float32"
+    assert metadata["sample_cast_policy"] == "downsample_mean_then_float32_v1"
+    assert metadata["sample_representation"] == "derived_training_observable_not_restart_authoritative"
 
 
 def test_coarse_geometry_is_signed_and_shape_correct():

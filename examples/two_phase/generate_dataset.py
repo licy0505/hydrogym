@@ -41,7 +41,13 @@ import numpy as np
 import phasefield as pf
 from scipy.ndimage import distance_transform_edt
 
-DATASET_SCHEMA_VERSION = 3
+from production.dataset_lineage import (
+    DATASET_SAMPLE_CAST_POLICY,
+    DATASET_SAMPLE_REPRESENTATION,
+    DATASET_SCHEMA_VERSION,
+    sample_lineage_metadata,
+    validate_training_sample_lineage,
+)
 
 
 def _case_name(case: dict, set_name: str, index: int) -> str:
@@ -57,56 +63,76 @@ def _source_sha256(path: str | Path) -> str:
 
 
 def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
-    """Hash every input that can change the generated trajectory or saved grid."""
-    payload = dict(
-        schema=DATASET_SCHEMA_VERSION,
-        solver_contract=int(pf.SOLVER_CONTRACT_VERSION),
-        wetting_model=str(case.get("wetting_model", "surface_energy")),
-        phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
-        wall_measure=str(pf.WALL_MEASURE_METHOD),
-        wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
-        # contract v9 metadata: which phase-transport geometry produced the trajectory. The v9
-        # keys (partial cell volume, partial face aperture) make a contract-8 staircase dataset
-        # definitively stale even if every other input is identical, *in addition to* the solver
-        # contract version and the solver source hash above.
-        **pf.phase_transport_metadata(
-            pf.PhaseFieldParams(
-                Nx=2,
-                Ny=2,
-                phase_transport_geometry=str(case.get("phase_transport_geometry", pf.PHASE_TRANSPORT_GEOMETRY)),
-                phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
-            )
-        ),
-        solver_sha256=_source_sha256(pf.__file__),
-        generator_sha256=_source_sha256(__file__),
-        case=case,
-        N=int(args.N),
-        ds=int(args.ds),
+    """Hash the complete solver trajectory identity and the derived sample representation."""
+    params = pf.PhaseFieldParams(
+        Nx=int(args.N),
+        Ny=int(args.N),
+        Lx=6.0,
+        Ly=6.0,
+        Re=float(case.get("Re", 200.0)),
+        We=float(case.get("We", 100.0)),
         dt=float(dt),
-        nsteps=int(nsteps),
-        save_every=int(save_every),
-        validation=dict(
-            max_phi_overshoot=float(getattr(args, "max_phi_overshoot", 0.02)),
-            max_solid_leak=float(getattr(args, "max_solid_leak", 5e-4)),
-            min_total_mass_ratio=float(getattr(args, "min_total_mass_ratio", 0.995)),
-            max_total_mass_ratio=float(getattr(args, "max_total_mass_ratio", 1.005)),
-            max_speed=float(getattr(args, "max_speed", 5.0)),
-            min_feature_cells=float(getattr(args, "min_feature_cells", 2.0)),
-        ),
+        eps=(float(case["eps_factor"]) * 6.0 / int(args.N)) if "eps_factor" in case else case.get("eps"),
+        phase_boundary_model=str(case.get("phase_boundary_model", "impermeable_flux")),
+        wetting_model=str(case.get("wetting_model", "surface_energy")),
+        wall_energy_amp=float(case.get("wall_energy_amp", 5.0)),
+        wet_band=float(case.get("wet_band", 0.15)),
+        phase_transport_geometry=str(case.get("phase_transport_geometry", pf.PHASE_TRANSPORT_GEOMETRY)),
+        wall_measure=str(case.get("wall_measure", pf.WALL_MEASURE_METHOD)),
     )
+    payload = {
+        "dataset_schema_version": DATASET_SCHEMA_VERSION,
+        "wetting_model": str(params.wetting_model),
+        "phase_boundary_model": str(params.phase_boundary_model),
+        "wall_measure_method": str(params.wall_measure),
+        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        "solver_grid": {"Nx": int(params.Nx), "Ny": int(params.Ny), "Lx": float(params.Lx), "Ly": float(params.Ly)},
+        "solver_parameters": {
+            "dt": float(params.dt),
+            "M": float(params.M),
+            "eps": float(params.eps),
+            "We": float(params.We),
+            "Re": float(params.Re),
+            "wetting_target_cosine": float(case.get("cos_theta", 0.0)),
+        },
+        **pf.phase_transport_metadata(params),
+        **sample_lineage_metadata(params),
+        "solver_sha256": _source_sha256(pf.__file__),
+        "generator_sha256": _source_sha256(__file__),
+        "case": case,
+        "N": int(args.N),
+        "ds": int(args.ds),
+        "dt": float(dt),
+        "nsteps": int(nsteps),
+        "save_every": int(save_every),
+        "validation": {
+            "max_phi_overshoot": float(getattr(args, "max_phi_overshoot", 0.02)),
+            "max_solid_leak": float(getattr(args, "max_solid_leak", 5e-4)),
+            "min_total_mass_ratio": float(getattr(args, "min_total_mass_ratio", 0.995)),
+            "max_total_mass_ratio": float(getattr(args, "max_total_mass_ratio", 1.005)),
+            "max_speed": float(getattr(args, "max_speed", 5.0)),
+            "min_feature_cells": float(getattr(args, "min_feature_cells", 2.0)),
+        },
+    }
     raw = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()
     return hashlib.sha256(raw).hexdigest()
 
 
 def _saved_case_is_current(path: Path, expected_fingerprint: str) -> bool:
-    """Return True only when schema and exact generation fingerprint match."""
+    """Return True only for a schema-3 file with current contract/storage/sample lineage."""
     try:
         with np.load(path, allow_pickle=True) as d:
-            if "dataset_schema_version" not in d.files or "dataset_fingerprint" not in d.files:
+            if "dataset_schema_version" not in d.files or "dataset_fingerprint" not in d.files or "case" not in d.files:
                 return False
             version = int(np.asarray(d["dataset_schema_version"]).item())
             fingerprint = str(np.asarray(d["dataset_fingerprint"]).item())
-            return version == DATASET_SCHEMA_VERSION and fingerprint == expected_fingerprint
+            if version != DATASET_SCHEMA_VERSION or fingerprint != expected_fingerprint:
+                return False
+            metadata = json.loads(str(np.asarray(d["case"]).item()))
+            if not isinstance(metadata, dict) or "phi" not in d.files:
+                return False
+            validate_training_sample_lineage(metadata, phi_dtype=np.asarray(d["phi"]).dtype.name)
+            return True
     except Exception:
         return False
 
@@ -308,17 +334,24 @@ def _write_manifest(out_dir: Path, set_name: str, records: list[dict]) -> dict:
     for record in accepted:
         surface = record["surface"]
         accepted_by_surface[surface] = accepted_by_surface.get(surface, 0) + 1
+    default_params = pf.PhaseFieldParams(Nx=2, Ny=2)
     manifest = {
         "manifest_schema_version": 1,
         "dataset_schema_version": DATASET_SCHEMA_VERSION,
-        "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
         "wetting_model": "surface_energy",
         "phase_boundary_model": "impermeable_flux",
-        "wall_measure_method": str(pf.WALL_MEASURE_METHOD),
-        # the manifest is the generator's contract statement: the production transport geometry the
-        # set was generated under (the per-case records carry their own metadata as well)
-        **pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2)),
-        "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+        # The manifest is the generator's contract statement; per-case records repeat the same
+        # solver-state and derived-sample identifiers.
+        **pf.phase_transport_metadata(default_params),
+        **sample_lineage_metadata(default_params),
+        "dataset_schema_decision": {
+            "current_version": 3,
+            "selected_version": 3,
+            "reason": (
+                "The existing NPZ field layout is unchanged. Solver phi64 is exported once as a "
+                "derived, non-restart-authoritative float32 training sample with explicit lineage."
+            ),
+        },
         "case_set": set_name,
         "expected": len(records),
         "accepted": len(accepted),
@@ -348,8 +381,9 @@ def _save_case(
     parameter_semantics: dict,
 ) -> None:
     """Write one validated trajectory with explicit physical-time metadata."""
-    # Keep phi/geometry in float32: thin low-We films can sit near the plotting
-    # threshold and should not lose additional information to float16 quantisation.
+    # This is the single solver-state -> ML-sample phase conversion point. ``phi`` here is the
+    # authoritative float64 solver history; the downsampled float32 field is a derived observable,
+    # never a restart-authoritative state. Geometry keeps its existing float32 representation.
     phi_d = _downsample_history(phi, ds).astype(np.float32)
     u_d = _downsample_history(u, ds).astype(np.float16)
     v_d = _downsample_history(v, ds).astype(np.float16)
@@ -362,26 +396,28 @@ def _save_case(
     )
     case_meta = dict(case)
     case_meta.update(
-        dataset_schema_version=DATASET_SCHEMA_VERSION,
-        solver_contract_version=int(pf.SOLVER_CONTRACT_VERSION),
-        wetting_model=str(p.wetting_model),
-        phase_boundary_model=str(p.phase_boundary_model),
-        wall_measure_method=str(p.wall_measure),
-        wall_measure_contract_version=int(pf.WALL_MEASURE_CONTRACT_VERSION),
-        **pf.phase_transport_metadata(p),
-        cos_theta_semantics=(
-            "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
-        ),
-        solver_dt=float(p.dt),
-        solver_dx=float(p.dx),
-        saved_dx=saved_dx,
-        save_every=int(save_every),
-        frame_dt=float(p.dt * save_every),
-        feature_cells_min=float(feature_cells_min),
-        dataset_fingerprint=dataset_fingerprint,
-        solver_sha256=_source_sha256(pf.__file__),
-        parameter_semantics=parameter_semantics,
-        diagnostics=diagnostics,
+        {
+            "dataset_schema_version": DATASET_SCHEMA_VERSION,
+            "wetting_model": str(p.wetting_model),
+            "phase_boundary_model": str(p.phase_boundary_model),
+            "wall_measure_method": str(p.wall_measure),
+            "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
+            **pf.phase_transport_metadata(p),
+            **sample_lineage_metadata(p),
+            "cos_theta_semantics": (
+                "target Young equilibrium contact-angle cosine (surface_energy) or legacy wall-affinity cosine"
+            ),
+            "solver_dt": float(p.dt),
+            "solver_dx": float(p.dx),
+            "saved_dx": saved_dx,
+            "save_every": int(save_every),
+            "frame_dt": float(p.dt * save_every),
+            "feature_cells_min": float(feature_cells_min),
+            "dataset_fingerprint": dataset_fingerprint,
+            "solver_sha256": _source_sha256(pf.__file__),
+            "parameter_semantics": parameter_semantics,
+            "diagnostics": diagnostics,
+        }
     )
     times = np.arange(1, phi_d.shape[0] + 1, dtype=np.float32) * float(p.dt * save_every)
     np.savez_compressed(

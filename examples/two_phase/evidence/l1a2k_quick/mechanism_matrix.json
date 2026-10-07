@@ -1,0 +1,245 @@
+{
+  "candidates": {
+    "BRINKMAN_WALL_COUPLING": {
+      "claim_tested": "causal contribution of Brinkman damping to the residual/dynamics",
+      "evidence": {},
+      "scope_caveat": "spatial overlap is measured; no Brinkman retuning or on/off A/B was run without a separate evidence trigger",
+      "status": "NOT_TESTED"
+    },
+    "CAPILLARY_DENSITY_SCALING": {
+      "claim_tested": "constant division by rho_l alone creates spatial curl or changes the residual/source fraction",
+      "evidence": {},
+      "scope_caveat": "does not clear the separate model-choice caveat about density-dependent inertia or projection; local-density scaling was not run",
+      "status": "NOT_TESTED"
+    },
+    "CAPILLARY_PRESSURE_IMBALANCE": {
+      "claim_tested": "the exact production-dtype capillary acceleration has a nonzero component outside the exact production pressure-gradient range in all three matched states",
+      "evidence": {},
+      "scope_caveat": "support establishes the force-subspace property only; it does not establish that this component caused the 60-degree contact-angle nonstationarity",
+      "status": "NOT_TESTED"
+    },
+    "CONTACT_LINE_PINNING": {
+      "claim_tested": "static pinning threshold or unpinning-force mechanism",
+      "evidence": {},
+      "scope_caveat": "2dx and 4dx neighborhoods/exclusions are measured; no force-threshold test was run",
+      "status": "NOT_TESTED"
+    },
+    "DISCRETE_PRODUCT_RULE_IN_CAPILLARY_FORCE": {
+      "claim_tested": "the production centred-difference operator has a measurable product-rule defect in the Form-A/Form-B identity; the projected residual is explicitly split into the Form-B term and defect",
+      "evidence": {},
+      "scope_caveat": "this is an exact algebraic decomposition, not evidence that Form B is a better model; no force replacement or variant trajectory was used",
+      "status": "NOT_TESTED"
+    },
+    "MOMENTUM_VISCOSITY_DISCRETIZATION": {
+      "claim_tested": "causal effect of the production viscosity operator",
+      "evidence": "unmeasured; no viscosity A/B was run",
+      "scope_caveat": "production nu(phi) and Laplacian remain unchanged",
+      "status": "NOT_TESTED"
+    },
+    "MULTIPLE_CONTRIBUTORS": {
+      "claim_tested": "joint causal attribution across multiple mechanisms",
+      "evidence": "no matched causal factorial ablation was run",
+      "scope_caveat": "mechanism closure is limited to the measured production-force subspace property",
+      "status": "NOT_TESTED"
+    },
+    "PHASE_KINETICS_LIMITED": {
+      "claim_tested": "whether phase kinetics also contributes to the observed L1A-2j nonstationarity",
+      "evidence": "L1A-2j retains PHASE_KINETICS_LIMITED=SUSPECTED; L1A-2k does not repeat or upgrade that classification",
+      "scope_caveat": "no phase-mobility or phase-equation ablation was run",
+      "status": "SUSPECTED"
+    },
+    "PRESSURE_PROJECTION_LIMITED": {
+      "claim_tested": "production Poisson solve fails to remove the divergence of a production-gradient field or leaves a solve/reconstruction residual beyond dtype-aware roundoff tolerance",
+      "evidence": {},
+      "scope_caveat": "the nonzero solenoidal residual is outside the projectable subspace by definition; it is not a Poisson convergence failure",
+      "status": "NOT_TESTED"
+    },
+    "TIME_SPLITTING_OR_DT_SENSITIVITY": {
+      "claim_tested": "matched-physical-time dt/2 effect",
+      "evidence": "unmeasured; frozen-state diagnostics were sufficient to localize the algebraic force residual",
+      "scope_caveat": "dt/2 was not run",
+      "status": "NOT_TESTED"
+    },
+    "VARIABLE_DENSITY_COUPLING": {
+      "claim_tested": "whether a variable-density inertial/pressure model would improve the coupled dynamics",
+      "evidence": {},
+      "scope_caveat": "the one-step equal-density blend A/B is identical under the current gravity-off velocity formulation; no variable-density projection or inertia prototype was justified or run",
+      "status": "NOT_TESTED"
+    },
+    "WALL_ENERGY_MOMENTUM_CONSISTENCY": {
+      "claim_tested": "whether wall-energy thermodynamics and the full momentum/wall traction balance are energetically consistent",
+      "evidence": {},
+      "scope_caveat": "wall-energy-derived force is measured and localized; no wall-energy, momentum, or contact-angle formulation was modified",
+      "status": "NOT_TESTED"
+    },
+    "Y_PERIODIC_TOPOLOGY_COUPLING": {
+      "claim_tested": "causal contribution of y-periodic seam coupling",
+      "evidence": {},
+      "scope_caveat": "seam overlap is localized only; no boundary-topology ablation was run",
+      "status": "NOT_TESTED"
+    }
+  },
+  "causal_root_cause_of_l1a2j_nonstationarity": "INCONCLUSIVE",
+  "diagnostic_variants_are_not_production_validation": true,
+  "equal_density_ablation": {
+    "local_density_scaling": "NOT_TESTED; no evidence trigger after rho_l is constant and equal-density blend A/B is unchanged",
+    "passed_exactly": false,
+    "status": "unmeasured",
+    "variable_density_projection": "NOT_TESTED; equal-density A/B did not justify a prototype"
+  },
+  "final_root_cause": "INCONCLUSIVE",
+  "final_root_cause_scope": "the measured structural non-projectable capillary-acceleration component only; not a causal explanation of the 60-degree angle-cycle/production-gate failure",
+  "identified_discrete_force_choice": {
+    "discrete_identity": "mu_h G_h(phi) = G_h(mu_h phi) - phi G_h(mu_h) - E_h, where E_h is the measured centred-difference product-rule defect",
+    "force_variant_or_trajectory_used": false,
+    "interpretation": "The product-form capillary source is not generally a pure production pressure gradient when mu_h varies spatially. The measured residual is split algebraically into the diagnostic -phi G_h(mu_h) term and E_h. This identifies the force/operator choice behind the subspace residual, but does not show that either term causes the CHNS angle nonstationarity or that an alternate form is preferable.",
+    "pressure_projectable_subspace": "range(G_h) for the exact centred periodic production gradient and constant-coefficient m2_proj pressure solve",
+    "production_form": "+(SIGMA_NORM/We) * mu_h * G_h(phi) / rho_l, evaluated pointwise in pf.rhs and cast through the production momentum RHS",
+    "status": "NOT_TESTED"
+  },
+  "scope": "diagnostic mechanism evidence only; not production validation and not a repair decision",
+  "stage": "L1A-2k",
+  "static_laplace_sign_magnitude": {
+    "all_passed": true,
+    "checks": [
+      {
+        "expectation": "phi=1 inside (liquid), phi=0 outside (gas); dphi/dr<0; n_out=-grad(phi)/|grad(phi)| = +r_hat",
+        "name": "phi_orientation_and_normal",
+        "note": "",
+        "observed": {
+          "dphi_dr_band_max": -0.013515727960343444,
+          "n_out_dot_r_hat_band_min": 0.9997294361010891,
+          "phi_inside_min": 0.9998099352615308,
+          "phi_outside_max": 1.3521809005823116e-08
+        },
+        "passed": true
+      },
+      {
+        "expectation": "mu = +dF/dphi (directional derivative); mu>0 at a convex liquid interface; int mu dphi = sigma_e/R",
+        "name": "chemical_potential_sign",
+        "note": "",
+        "observed": {
+          "int_mu_dphi_times_R_over_sigma_e": 0.9850637205414132,
+          "mu_max": 0.48093571649952127,
+          "mu_max_analytic_sqrt2_over_4R": 0.4419417382415922,
+          "variational_relative_error": 9.600792741408645e-06
+        },
+        "passed": true
+      },
+      {
+        "expectation": "net capillary force at a convex liquid interface points toward the liquid: int F.n_out dr < 0",
+        "name": "korteweg_force_direction",
+        "note": "",
+        "observed": {
+          "laplace_ratio_from_force_integral": 0.9850637194290468,
+          "net_radial_force_integral_F_dot_n_out": -0.012313296492863083
+        },
+        "passed": true
+      },
+      {
+        "expectation": "F = +grad(psi) is balanced by grad(P) with P = +psi (momentum carries -grad(P))",
+        "name": "pressure_gradient_convention",
+        "note": "",
+        "observed": {
+          "gradient_force_residual_after_projection": 6.152700162192384e-07,
+          "pressure_vs_psi_relative_error": 9.231820702490151e-08
+        },
+        "passed": true
+      },
+      {
+        "expectation": "pressure_field() is the projection pressure of step(): u* - dt grad(P) is divergence free",
+        "name": "diagnostic_equals_projection",
+        "note": "",
+        "observed": {
+          "div_after_over_div_before": 1.01958134455995e-06
+        },
+        "passed": true
+      },
+      {
+        "expectation": "delta_p = P_liquid - P_gas > 0 and delta_p R We ~ +1 (probes: liquid core, far gas)",
+        "name": "laplace_jump_sign_and_scale",
+        "note": "",
+        "observed": {
+          "laplace_ratio": 0.9850772536075545,
+          "phi_mean_inside_probe": 0.9999174751504804,
+          "phi_mean_outside_probe": 5.052422088479835e-10
+        },
+        "passed": true
+      },
+      {
+        "expectation": "the force integral -int F_r dr and the projection-pressure jump are the same quantity (catches any compensating sign in the diagnostic)",
+        "name": "force_integral_matches_projection_jump",
+        "note": "",
+        "observed": {
+          "abs_difference": 1.3534178507690342e-05,
+          "ratio_from_force_integral": 0.9850637194290468,
+          "ratio_from_projection_pressure": 0.9850772536075545
+        },
+        "passed": true
+      },
+      {
+        "expectation": "flow driven by the capillary force lowers F: -dF/dt = int mu u.grad(phi) > 0 (cos(mu grad phi, u) > 0)",
+        "name": "free_energy_consistency",
+        "note": "",
+        "observed": {
+          "cosine_mu_grad_phi_vs_driven_velocity": 0.1478616011894152,
+          "minus_dF_dt_per_unit": 0.002290152461666128
+        },
+        "passed": true
+      },
+      {
+        "expectation": "Form A (+mu grad phi) and Form B (-phi grad mu) drive the same flow (cos ~ +1); the solver force belongs to that class, not to its negative",
+        "name": "force_form_equivalence_class",
+        "note": "Form A and Form B differ by grad(mu phi) only in the continuum; on the grid the difference is O((dx/eps)^2).",
+        "observed": {
+          "cos_solenoidal_FormA_vs_FormB": 0.9595237419437721,
+          "cos_solver_vs_FormA": 0.9999999999999999,
+          "cos_solver_vs_FormB": 0.9595237419437721,
+          "nongradient_part_of_A_minus_B_over_solenoidal_A": 0.2843375384272293
+        },
+        "passed": true
+      },
+      {
+        "expectation": "informational: for uniform (relaxed) mu Form A keeps delta_p R We = +1, Form B loses it (reduced pressure)",
+        "name": "relaxed_mu_form_choice",
+        "note": "Form A is retained: its projection pressure is the mechanical pressure whose jump is the Young-Laplace value for any admissible mu; this is a design argument, not a benchmark fit.",
+        "observed": {
+          "laplace_ratio_FormA": 0.9999173806830213,
+          "laplace_ratio_FormB": 0.0
+        },
+        "passed": true
+      }
+    ],
+    "conventions": {
+      "chemical_potential": "mu = dF/dphi = f'(phi)/eps - eps lap(phi); mu = +eps |dphi/dr| / r > 0 at a convex liquid interface",
+      "grad_phi_direction": "dphi/dr < 0 across the interface: grad(phi) points gas -> liquid (outside -> inside)",
+      "korteweg_force": "F_cap = +(SIGMA_NORM/We) mu grad(phi) / rho_l  ~  -(SIGMA_NORM/We) phi grad(mu) / rho_l (up to a pure gradient); F . n_out < 0 (toward the liquid / centre of curvature)",
+      "laplace_jump": "delta_p = P_liquid - P_gas = +sigma/R = +1/(We R); laplace_ratio = delta_p R We -> +1 (2-D)",
+      "outward_normal": "n_out (liquid -> gas) = -grad(phi) / |grad(phi)| = +r_hat for a drop",
+      "phase_orientation": "phi = 1 liquid, phi = 0 gas; phi(r) = 0.5 (1 - tanh((r - R) / (sqrt(2) eps)))",
+      "pressure_gradient": "du/dt = ... - grad(P) + F; u+ = u* - dt grad(P), lap(P) = div(u*)/dt; static balance grad(P) = F"
+    },
+    "diagnosis": {
+      "diagnostic_pressure_convention_consistent": true,
+      "force_convention_consistent": true,
+      "projection_convention_consistent": true,
+      "three_conventions_consistent": true
+    },
+    "settings": {
+      "N": 128,
+      "R": 0.8,
+      "We": 100.0,
+      "eps": 0.09375,
+      "eps_over_dx": 2.0,
+      "sigma_norm": 4.242640687119285,
+      "solver_contract_version": 11
+    },
+    "status": "measured"
+  },
+  "statuses": [
+    "SUPPORTED",
+    "SUSPECTED",
+    "FALSIFIED",
+    "NOT_TESTED"
+  ]
+}

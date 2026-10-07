@@ -391,6 +391,12 @@ def run_relaxation(
     budgets_extra: Sequence[int] = (),
     phase_transport_geometry: str | None = None,
     wall_offset_over_dy: float = 0.0,
+    checkpoint_in: str | Path | None = None,
+    checkpoint_out: str | Path | None = None,
+    start_step: int = 0,
+    mass_reference: float | None = None,
+    conserved_mass_reference: float | None = None,
+    prior_samples: Sequence[dict[str, Any]] = (),
 ) -> dict[str, Any]:
     """One staged relaxation. ``fixed_steps`` disables the staged/convergence stop (dt sweep).
 
@@ -399,7 +405,8 @@ def run_relaxation(
     (``sdf_cutcell_v1`` production default, ``diffuse_sdf_v7`` = the pinned contract-v7 kernel) and exists so
     the v7 root cause can be reproduced with identical code; it is a geometry choice, never a fitted factor.
     ``dtype``/``ch_solver_*`` are the precision-matrix knobs (L1A-2e): the production default stays
-    float32 with ``rtol = 1e-6``.
+    float32 with ``rtol = 1e-6``. ``checkpoint_in``/``checkpoint_out`` and the reference/sample arguments
+    resume the exact fluid and velocity state for staged audits; they do not alter the production step.
     """
     crit = dict(CRITERIA if criteria is None else criteria)
     budgets = sorted({int(b) for b in budgets} | {int(b) for b in budgets_extra})
@@ -435,24 +442,106 @@ def run_relaxation(
     height = float(wall_height) + float(wall_offset_over_dy) * float(p.dy)
     sdf = pf.surface_flat(p, wall_height=height)
     solid = pf.make_solid(sdf, p, cos_theta=cos_eff)
-    state = pf.sessile_initial_state(p, solid, R=R, wall_height=height)
-    mass0 = float(obs.liquid_mass(np.asarray(state.phi), np.asarray(solid.sdf), p.dx, p.dy))
+    seed_state = pf.sessile_initial_state(p, solid, R=R, wall_height=height)
+    step_offset = int(start_step)
+    if step_offset < 0:
+        raise ValueError("start_step must be non-negative")
+
+    checkpoint_signature = {
+        "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        "N": int(N),
+        "target_deg": float(target_deg),
+        "dynamics_mode": "ch_only" if ch_only else "chns",
+        "M": float(M),
+        "dt": float(p.dt),
+        "eps": float(p.eps),
+        "R": float(R),
+        "wall_height": float(height),
+        "wall_gain": float(wall_gain),
+        "phase_boundary_model": str(p.phase_boundary_model),
+        "phase_transport_geometry": str(p.phase_transport_geometry),
+        "phase_storage_model": str(p.phase_storage_model),
+        "wall_measure_method": str(p.wall_measure),
+    }
+    if checkpoint_in is not None:
+        with np.load(Path(checkpoint_in), allow_pickle=False) as data:
+            metadata = json.loads(str(np.asarray(data["metadata_json"]).item()))
+            for key, expected in checkpoint_signature.items():
+                actual = metadata.get(key)
+                if isinstance(expected, float):
+                    matches = isinstance(actual, (int, float)) and math.isclose(
+                        float(actual), expected, rel_tol=1e-12, abs_tol=1e-14
+                    )
+                else:
+                    matches = actual == expected
+                if not matches:
+                    raise ValueError(
+                        f"checkpoint {checkpoint_in} metadata mismatch for {key}: {actual!r} != {expected!r}"
+                    )
+            checkpoint_step = int(metadata["steps"])
+            if step_offset not in (0, checkpoint_step):
+                raise ValueError(f"start_step {step_offset} does not match checkpoint step {checkpoint_step}")
+            step_offset = checkpoint_step
+            state = pf.State(
+                phi=jnp.asarray(data["phi"]),
+                u=jnp.asarray(data["u"]),
+                v=jnp.asarray(data["v"]),
+                t=jnp.asarray(data["time"]),
+            )
+        for name in ("phi", "u", "v"):
+            values = np.asarray(getattr(state, name))
+            if values.shape != (N, N) or not np.isfinite(values).all():
+                raise ValueError(f"checkpoint {checkpoint_in} has invalid state.{name}")
+    else:
+        if step_offset != 0 or prior_samples:
+            raise ValueError("a nonzero start_step or prior_samples requires checkpoint_in")
+        state = seed_state
+
     cutcell = pf.phase_transport_is_cutcell(p)
     volume = np.asarray(solid.geometry.volume, dtype=np.float64) if cutcell else None
-    mass0_conserved = float(np.sum(np.asarray(state.phi, dtype=np.float64) * volume)) if cutcell else None
+    computed_mass_reference = float(obs.liquid_mass(np.asarray(seed_state.phi), np.asarray(solid.sdf), p.dx, p.dy))
+    computed_conserved_reference = (
+        float(np.sum(np.asarray(seed_state.phi, dtype=np.float64) * volume)) if cutcell else None
+    )
+    if checkpoint_in is not None and (mass_reference is None or (cutcell and conserved_mass_reference is None)):
+        raise ValueError("resumed runs require both original fluid-mass and conserved-mass references")
+    mass0 = computed_mass_reference if mass_reference is None else float(mass_reference)
+    mass0_conserved = (
+        computed_conserved_reference if conserved_mass_reference is None else float(conserved_mass_reference)
+    )
     sample_extra = {"volume": volume, "phi_ref_conserved_mass": mass0_conserved}
     kernel = clk.fluid_wall_delta_integral(np.asarray(solid.sdf), p.dx, p.dy)
     initial = _sample(
-        state, state.phi, solid, p, ch_only=ch_only, steps=0, cos_eff=cos_eff, phi_ref_mass=mass0, M=M, **sample_extra
+        state,
+        state.phi,
+        solid,
+        p,
+        ch_only=ch_only,
+        steps=step_offset,
+        cos_eff=cos_eff,
+        phi_ref_mass=mass0,
+        M=M,
+        **sample_extra,
     )
-    samples = [initial]
-    applied = 0
+    samples = list(prior_samples) if prior_samples else [initial]
+    if prior_samples:
+        if not checkpoint_in:
+            raise ValueError("prior_samples require checkpoint_in")
+        if int(samples[-1].get("step", -1)) != step_offset:
+            raise ValueError("the last prior sample step must match the checkpoint step")
+        if not math.isclose(float(samples[-1].get("time", math.nan)), float(state.t), rel_tol=1e-7, abs_tol=1e-9):
+            raise ValueError("the last prior sample time must match the checkpoint state time")
+    applied = step_offset
     it_max, res_max = 0, 0.0
     verdict: dict[str, Any] = {"converged": False}
     stop_reason = "budget_exhausted"
     stage_log = []
     cg_failed = False
-    total_budget = int(fixed_steps) if fixed_steps is not None else budgets[-1]
+    if fixed_steps is not None and int(fixed_steps) < 0:
+        raise ValueError("fixed_steps must be non-negative")
+    total_budget = step_offset + int(fixed_steps) if fixed_steps is not None else budgets[-1]
+    if total_budget < step_offset:
+        raise ValueError("final step budget must be at least the continuation start step")
     next_budget_idx = 0
     # The stationarity window must span the same *mobility-scaled* time at every M: with a fixed step cadence a
     # slow (small-M) run drifts < 0.1 deg per window while still tens of degrees from equilibrium (observed:
@@ -552,7 +641,9 @@ def run_relaxation(
         "M_over_M_ref": float(M / M_REF),
         "dt": float(p.dt),
         "R": float(R),
+        "continuation_start_step": int(step_offset),
         "steps": int(applied),
+        "mass_reference_initial": float(mass0),
         "physical_time": float(final["time"]),
         "mobility_scaled_time": float(M * final["time"]),
         "stop_reason": stop_reason,
@@ -619,6 +710,7 @@ def run_relaxation(
             else float(max(r["conserved_mass_drift"] for r in samples if r["conserved_mass_drift"] is not None))
         ),
         "conserved_mass_drift_final": None if not cutcell else final["conserved_mass_drift"],
+        "conserved_mass_reference_initial": mass0_conserved,
         "conserved_liquid_mass_initial": mass0_conserved,
         "conserved_liquid_mass_final": final["conserved_liquid_mass"],
         "wall_height": height,
@@ -645,6 +737,29 @@ def run_relaxation(
         "classification": None,
         "classification_evidence": {},
     }
+    if checkpoint_out is not None:
+        checkpoint_path = Path(checkpoint_out)
+        checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+        checkpoint_metadata = {
+            **checkpoint_signature,
+            "steps": int(applied),
+            "phase_state_dtype": np.asarray(state.phi).dtype.name,
+            "velocity_state_dtype": np.asarray(state.u).dtype.name,
+        }
+        temporary = checkpoint_path.with_suffix(checkpoint_path.suffix + ".tmp")
+        with temporary.open("wb") as handle:
+            np.savez_compressed(
+                handle,
+                phi=np.asarray(state.phi),
+                u=np.asarray(state.u),
+                v=np.asarray(state.v),
+                time=np.asarray(state.t),
+                metadata_json=np.asarray(json.dumps(checkpoint_metadata, sort_keys=True)),
+            )
+        temporary.replace(checkpoint_path)
+        record["checkpoint_out"] = str(checkpoint_path)
+    else:
+        record["checkpoint_out"] = None
     return _clean(record)
 
 
@@ -1199,6 +1314,7 @@ def assemble_report(
         "stage": STAGE,
         "profile": profile,
         "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+        **pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2)),
         "trajectory_semantics_changed": False,
         "git_sha": get_git_sha(),
         "criteria": dict(CRITERIA),
@@ -1290,14 +1406,19 @@ def validate_report(report: dict[str, Any]) -> list[str]:
         return errors
     if report["stage"] != STAGE:
         errors.append("stage must be L1A-2d")
-    # The L1A-2d audit itself changes no production default, but it always reports the
-    # *live* solver contract: 7 for the frozen L1A-2d evidence, 8 once the L1A-2e embedded wall
-    # measure is in the tree, 9 once the phase transport runs on the cut-cell control volumes
-    # (a re-run then diagnoses the live contract, never a historical one).
-    # 7/8 are the pinned reproduction contracts, 9 the cut-cell transport, 10 the L1A-2g weighted
-    # implicit solve. The audit records which one produced the trajectory; an unknown value fails.
-    if report["solver_contract_version"] not in (7, 8, 9, 10):
-        errors.append(f"solver_contract_version must be 7, 8, 9 or 10; got {report['solver_contract_version']!r}")
+    # The diagnostic audit records the live contract, never silently labels a current trajectory
+    # with a historical solver version. Contracts 7-10 remain recognized for frozen evidence.
+    if report["solver_contract_version"] not in (7, 8, 9, 10, 11):
+        errors.append(f"solver_contract_version must be 7, 8, 9, 10 or 11; got {report['solver_contract_version']!r}")
+    if report["solver_contract_version"] == 11:
+        expected_storage = {
+            "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,
+            "phase_state_dtype": "float64",
+            "velocity_state_dtype": "float32",
+        }
+        for key, value in expected_storage.items():
+            if report.get(key) != value:
+                errors.append(f"contract-11 report {key} must be {value!r}")
     if report["solver_contract_version"] == 8:
         # a contract-8 report cannot claim the v9 transport geometry
         for key in ("phase_transport_geometry", "phase_control_volume", "phase_face_aperture"):

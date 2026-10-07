@@ -62,6 +62,8 @@ SECTIONS = (
 )
 
 #: Merge gates, transcribed from the L1A-2e specification. Frozen: none is tuned to a result.
+FORMAL_ANGLE_TARGETS = (60.0, 90.0, 120.0, 150.0)
+
 GATES: dict[str, Any] = {
     "wall_measure_translation_spread_limit": 0.01,
     "wall_measure_translation_spread_ideal": 0.005,
@@ -619,6 +621,8 @@ def evaluate_gates(sections: dict[str, list[dict[str, Any]]], geometry: dict[str
                     ),
                     "mass_drift": case["mass_drift"],
                     "mass_drift_final": case["mass_drift_final"],
+                    "conserved_mass_drift": case.get("conserved_mass_drift"),
+                    "conserved_mass_drift_final": case.get("conserved_mass_drift_final"),
                     "solid_phase_fraction_max": case["solid_phase_fraction_max"],
                     "free_energy_monotonic_violations": case["free_energy_monotonic_violations"],
                     "free_energy_initial": case["free_energy_initial"],
@@ -649,7 +653,17 @@ def evaluate_gates(sections: dict[str, list[dict[str, Any]]], geometry: dict[str
             "monotonic_in_target": monotonic,
             "neutral_error_deg": abs(neutral[0]["final_sampled_angle_deg"] - 90.0) if neutral else None,
             "error_by_target": {str(row["target_deg"]): row["error_deg"] for row in rows},
-            "max_mass_drift": max((row["mass_drift"] for row in rows), default=None),
+            # The formal phase-mass invariant is the cut-cell finite-volume measure. Keep the
+            # hard-mask ``mass_drift`` above as a diagnostic, never as the conserved-mass gate.
+            "max_mass_drift": max(
+                (row["conserved_mass_drift"] for row in rows if row["conserved_mass_drift"] is not None),
+                default=None,
+            ),
+            "max_conserved_mass_drift": max(
+                (row["conserved_mass_drift"] for row in rows if row["conserved_mass_drift"] is not None),
+                default=None,
+            ),
+            "max_hard_mask_mass_drift_diagnostic": max((row["mass_drift"] for row in rows), default=None),
             "max_solid_fraction": max((row["solid_phase_fraction_max"] for row in rows), default=None),
             "energy_violations": sum(int(row["free_energy_monotonic_violations"]) for row in rows),
         }
@@ -666,7 +680,13 @@ def evaluate_gates(sections: dict[str, list[dict[str, Any]]], geometry: dict[str
             if t in by_target
         )
         neutral_ok = summary["neutral_error_deg"] is None or summary["neutral_error_deg"] <= GATES["neutral_error_deg"]
-        converged_ok = all(row["converged"] or abs(row["target_deg"] - 90.0) < 1e-9 for row in summary["cases"])
+        # Formal thermodynamic matrices require the complete four-target set and genuine convergence
+        # at every target, including the nominally neutral 90-degree control; a final sampled angle is
+        # not an equilibrium result and a quick-profile subset cannot close the four-angle gate.
+        matrix_targets = {float(row["target_deg"]) for row in summary["cases"]}
+        converged_ok = matrix_targets == set(FORMAL_ANGLE_TARGETS) and all(
+            row["converged"] for row in summary["cases"]
+        )
         basic_ok = (
             summary["mae_deg"] is not None
             and summary["mae_deg"] <= GATES["ch_only_mae_deg"]
@@ -689,23 +709,36 @@ def evaluate_gates(sections: dict[str, list[dict[str, Any]]], geometry: dict[str
                 "max_error_deg": summary["max_error_deg"],
                 "neutral_error_deg": summary["neutral_error_deg"],
                 "all_converged": summary["all_converged"],
-                "converged_or_neutral": converged_ok,
+                "all_required_targets_converged": converged_ok,
                 "monotonic": summary["monotonic_in_target"],
                 "strong_targets_ok": strong_ok,
                 "errors_deg": summary["error_by_target"],
             },
-            "CH-only 4*M_ref staged equilibria (never extrapolated); the neutral 90 deg control is gated on "
-            "proximity and reported with its own stop reason",
+            "CH-only 4*M_ref staged equilibria (never extrapolated); all four targets, including the neutral "
+            "90 deg control, must satisfy the genuine stationarity convergence window",
             summary["cases"],
         )
         if label.endswith("float64"):
+            formal_drifts = [row["conserved_mass_drift"] for row in summary["cases"]]
+            formal_targets = {float(row["target_deg"]) for row in summary["cases"]}
+            formal_mass_complete = formal_targets == set(FORMAL_ANGLE_TARGETS) and all(
+                value is not None and math.isfinite(float(value)) for value in formal_drifts
+            )
             add(
                 "formal_mass_drift_float64",
-                bool(summary["max_mass_drift"] is not None and summary["max_mass_drift"] <= GATES["formal_mass_drift"]),
+                bool(
+                    formal_mass_complete
+                    and summary["max_conserved_mass_drift"] is not None
+                    and summary["max_conserved_mass_drift"] <= GATES["formal_mass_drift"]
+                ),
                 GATES["formal_mass_drift"],
-                summary["max_mass_drift"],
-                "formal thermodynamic evidence must not be polluted by mass drift: float64 + rtol 1e-8 set",
-                {row["target_deg"]: row["mass_drift"] for row in summary["cases"]},
+                {
+                    "max_conserved_mass_drift": summary["max_conserved_mass_drift"],
+                    "complete_four_angle_ledger": bool(formal_mass_complete),
+                },
+                "formal thermodynamic mass gate uses the conserved cut-cell quantity sum_i V_i phi_i; "
+                "the hard-mask mass_drift is reported as a diagnostic only",
+                {row["target_deg"]: row["conserved_mass_drift"] for row in summary["cases"]},
             )
             add(
                 "ch_only_energy_nonincreasing",
@@ -1115,6 +1148,12 @@ def assess_blockers(gates: list[dict[str, Any]], derived: dict[str, Any]) -> lis
             "evidence": {
                 "float32_ch_only_cases_over_gate": float32_drift_over_gate,
                 "float64_ch_only_max_drift": (derived.get("primary_float64") or {}).get("max_mass_drift"),
+                "float64_ch_only_max_conserved_mass_drift": (derived.get("primary_float64") or {}).get(
+                    "max_conserved_mass_drift"
+                ),
+                "float64_ch_only_hard_mask_mass_drift_diagnostic": (derived.get("primary_float64") or {}).get(
+                    "max_hard_mask_mass_drift_diagnostic"
+                ),
                 "production_mobility_max_drift": max(
                     (row["mass_drift"] for row in derived.get("production_mobility", [])), default=None
                 ),
@@ -1225,10 +1264,18 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
     contract = report.get("solver_contract_version")
-    if contract not in (8, 9, 10):
-        # 8/9 are the pinned reproduction contracts, 10 the L1A-2g weighted implicit solve. The
-        # report records which one produced it; an unknown value still fails.
-        errors.append(f"solver_contract_version must be 8, 9 or 10; got {contract!r}")
+    if contract not in (8, 9, 10, 11):
+        # 8/9/10 are frozen reproduction contracts; 11 is the live A1 production default.
+        errors.append(f"solver_contract_version must be 8, 9, 10 or 11; got {contract!r}")
+    if contract == 11:
+        expected_storage = {
+            "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,
+            "phase_state_dtype": "float64",
+            "velocity_state_dtype": "float32",
+        }
+        for key, value in expected_storage.items():
+            if report.get(key) != value:
+                errors.append(f"contract-11 report {key} must be {value!r}")
     if contract == 7:
         errors.append("a v8 wall-measure report cannot be produced by contract 7")
     if contract == 8:
@@ -1283,8 +1330,8 @@ def format_markdown(report: dict[str, Any]) -> str:
         lines += [
             f"### {label}",
             "",
-            "| target | converged | steps | angle | error | mass drift | RY_first (norm) |",
-            "|---:|---|---:|---:|---:|---:|---:|",
+            "| target | converged | steps | angle | error | conserved-mass drift | hard-mask mass diagnostic | RY_first (norm) |",
+            "|---:|---|---:|---:|---:|---:|---:|---:|",
         ]
         for row in summary["cases"]:
             angle = row["equilibrium_angle_deg"]
@@ -1302,9 +1349,12 @@ def format_markdown(report: dict[str, Any]) -> str:
                 )
             )
             error_text = f"{error:+.3f}" if error is not None else "n/a"
+            conserved_drift = row.get("conserved_mass_drift")
+            conserved_text = f"{conserved_drift:.2e}" if isinstance(conserved_drift, (int, float)) else "n/a"
+            hard_mask_text = f"{row['mass_drift']:.2e}"
             lines.append(
                 f"| {row['target_deg']:.0f} | {converged} | {row['steps']} | "
-                f"{angle_text} | {error_text} | {row['mass_drift']:.2e} | "
+                f"{angle_text} | {error_text} | {conserved_text} | {hard_mask_text} | "
                 f"{row['RY_first_normalized_l2']:.3e} |"
             )
         lines.append("")

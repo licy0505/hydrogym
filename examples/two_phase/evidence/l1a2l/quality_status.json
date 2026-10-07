@@ -1,0 +1,40 @@
+{
+  "contract_11": "unchanged",
+  "diagnostic_only": true,
+  "production_semantics_changed": false,
+  "production_solver_source_integrity": {
+    "changed_during_l1a2l": [],
+    "hashes_after_audit": {
+      "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+      "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+      "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e"
+    },
+    "hashes_at_audit_import": {
+      "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+      "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+      "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e"
+    },
+    "interpretation": "Git-relative modifications may predate L1A-2l; the before/after SHA-256 guard verifies this diagnostic stage did not modify production sources.",
+    "passed": true,
+    "working_tree_modifications_vs_git_head": [
+      "examples/two_phase/phasefield.py",
+      "examples/two_phase/production/nonneutral_wetting_audit.py"
+    ]
+  },
+  "py_compile": {
+    "passed": true,
+    "scope": "phase_coupling_relaxation_audit.py and test_phase_coupling_relaxation_audit.py"
+  },
+  "pytest": {
+    "exit_code": 0,
+    "passed": true,
+    "stderr_tail": "",
+    "stdout_tail": "........                                                                 [100%]\n8 passed in 23.80s\n"
+  },
+  "ruff": {
+    "exit_code": 0,
+    "passed": true,
+    "stderr_tail": "",
+    "stdout_tail": "All checks passed!\n"
+  }
+}

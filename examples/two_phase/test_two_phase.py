@@ -257,16 +257,19 @@ def _radial_offsets(p):
 
 def _elliptical_drop(p, R, aspect=1.3):
     """Non-equilibrium elliptical drop at rest: curvature varies, so mu grad(phi) is not a gradient."""
-    X, Y = pf.grids(p)
+    phase_dtype = pf.phase_state_dtype(p)
+    X, Y = pf.grids(p, dtype=phase_dtype)
     rx, ry = X - p.Lx / 2.0, Y - p.Ly / 2.0
     rho = jnp.sqrt(aspect * rx**2 + ry**2 / aspect)
-    phi = (0.5 * (1.0 - jnp.tanh((rho - R) / (jnp.sqrt(2.0) * p.eps)))).astype(p.dtype)
-    return pf.State(phi=phi, u=jnp.zeros_like(phi), v=jnp.zeros_like(phi), t=0.0)
+    phi = 0.5 * (1.0 - jnp.tanh((rho - R) / (jnp.sqrt(2.0) * p.eps)))
+    u = jnp.zeros(phi.shape, dtype=p.dtype)
+    v = jnp.zeros_like(u)
+    return pf.State(phi=phi, u=u, v=v, t=0.0)
 
 
-def test_solver_contract_is_v9():
-    """Contract v9: the phase is transported on the embedded cut-cell control volumes."""
-    assert pf.SOLVER_CONTRACT_VERSION == 10
+def test_solver_contract_is_v11():
+    """Contract 11 preserves embedded transport and promotes A1 phase-only float64 storage."""
+    assert pf.SOLVER_CONTRACT_VERSION == 11
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
@@ -281,6 +284,8 @@ def test_solver_contract_is_v9():
     assert params.wall_measure == "sdf_cutcell_v1"
     assert params.phase_transport_geometry == "sdf_cutcell_fv_v1"
     assert params.enforce_solid_phi is False
+    assert params.phase_storage_model == "phase_only_float64_v1"
+    assert pf.phase_state_dtype(params) == jnp.float64
     # production defaults that must not move to make the contact angle come out right
     assert params.M == 2.0e-3 and params.ch_solver_rtol == 1.0e-6 and params.dtype is jnp.float32
     assert params.dt == 2.0e-3 and params.eps == pytest.approx(1.5 * 6.0 / 32, rel=1e-12)
