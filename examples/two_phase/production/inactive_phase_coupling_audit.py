@@ -2266,9 +2266,19 @@ def _report_markdown(report: dict[str, Any]) -> str:
             "",
             "## Matched-control sensitivity",
             "",
-            f"- S_60 = `{report['matched_control_sensitivity']['S_60']:.6e}`",
-            f"- S_90 = `{report['matched_control_sensitivity']['S_90']:.6e}`",
-            f"- S_150 = `{report['matched_control_sensitivity']['S_150']:.6e}`",
+        ]
+        mcs = report["matched_control_sensitivity"]
+        cl_response = {key: float(f"{value:.3e}") for key, value in mcs["one_step_contact_line_response"].items()}
+        lines += [
+            f"- first-stage read (storage read stencil): S_60 = `{mcs['first_stage_read']['S_60']:.6e}`"
+            f", S_90 = `{mcs['first_stage_read']['S_90']:.6e}`"
+            f", S_150 = `{mcs['first_stage_read']['S_150']:.6e}`",
+            f"- capillary force: S_60 = `{mcs['capillary_force']['S_60']:.6e}`"
+            f", S_90 = `{mcs['capillary_force']['S_90']:.6e}`"
+            f", S_150 = `{mcs['capillary_force']['S_150']:.6e}`"
+            f", S_60/S_90 = `{mcs['capillary_force']['S_60_over_S_90']}`"
+            f", S_60/S_150 = `{mcs['capillary_force']['S_60_over_S_150']}`",
+            f"- one-step contact-line response: `{cl_response}`",
             "",
             "## Repair candidates",
             "",
