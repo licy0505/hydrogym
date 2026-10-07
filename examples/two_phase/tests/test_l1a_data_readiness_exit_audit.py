@@ -389,3 +389,111 @@ def test_zero_frame_signal_is_handled_without_divide_by_zero(tmp_path):
         assert entry["representation_ratio_class"] == "ZERO_FRAME_SIGNAL"
 
 
+# ---------------------------------------------------------------------------
+# section 55: current reader compatibility
+# ---------------------------------------------------------------------------
+
+
+def test_fresh_canary_loads_through_current_training_reader(canary_env):
+    results = audit.reader_compatibility(Path(canary_env["record"]["canary_npz"]), "train")
+    assert results["load_arrays"]["n_cases"] == 1
+    assert results["load_full"]["n_cases"] == 1
+    assert results["load_windows"]["n_windows"] >= 1
+
+
+def test_loaded_shapes_match_current_model_contract(canary_env):
+    results = audit.reader_compatibility(Path(canary_env["record"]["canary_npz"]), "train")
+    assert results["shapes_match_current_model_contract"] is True
+    assert results["model_output_shape"][-1] == 3
+
+
+def test_geometry_features_match_declared_mode(canary_env):
+    results = audit.reader_compatibility(Path(canary_env["record"]["canary_npz"]), "train")
+    assert results["geometry_features"]["mode"] == "sdf"
+    assert len(results["geometry_features"]["shape"]) == 3 and results["geometry_features"]["shape"][-1] == 6
+
+
+def test_current_dataset_fingerprint_is_required(canary_env, tmp_path):
+    import surrogate as surrogate_module
+
+    with np.load(canary_env["record"]["canary_npz"], allow_pickle=True) as data:
+        payload = {name: np.asarray(data[name]) for name in data.files if name != "dataset_fingerprint"}
+    tampered = tmp_path / "tampered.npz"
+    np.savez_compressed(tampered, **payload)
+    with np.load(tampered, allow_pickle=True) as data:
+        with pytest.raises(RuntimeError, match="fingerprint"):
+            surrogate_module._require_current_dataset(data, tampered)
+
+
+# ---------------------------------------------------------------------------
+# section 56: anti-cheating
+# ---------------------------------------------------------------------------
+
+
+def test_l1a2o_keeps_contract11():
+    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert lineage.DATASET_SCHEMA_VERSION == 3
+
+
+def test_phasefield_source_unchanged():
+    assert audit._file_sha256(Path("phasefield.py")).startswith(FROZEN_PHASEFIELD_FILE_SHA256_PREFIX)
+
+
+def test_no_production_threshold_change():
+    discovered = audit.discover_generator_defaults()
+    assert discovered["threshold_drift"] == {}
+    for name, value in audit.EXPECTED_GENERATOR_THRESHOLDS.items():
+        assert float(discovered["acceptance_thresholds"][name]) == float(value)
+
+
+def test_no_generator_acceptance_threshold_relaxation():
+    args = audit.GeneratorArgs()
+    for name, value in audit.EXPECTED_GENERATOR_THRESHOLDS.items():
+        assert getattr(args, name) == value, name
+
+
+def test_no_contact_angle_threshold_change():
+    args = vars(audit.GeneratorArgs())
+    assert "wall_energy_amp" not in args and "wet_band" not in args
+    case = cases_module.train_cases()[6]
+    assert case.get("wetting_model", "surface_energy") == "surface_energy"
+
+
+def test_no_inactive_state_repair_promotion():
+    source = Path("production/l1a_data_readiness_exit_audit.py").read_text()
+    assert "inactive_phase_ghost_prototypes" not in source
+    seed = audit.l1b_contract_seed(
+        {},
+        {name: {"status": "PASS", "detail": {}} for name in audit.CATEGORY_STATUSES},
+        audit.assemble_headline({name: {"status": "PASS", "detail": {}} for name in audit.CATEGORY_STATUSES}),
+    )
+    assert not any("repair" in str(key) for key in seed)
+
+
+def test_no_dt_default_change():
+    assert audit.GeneratorArgs().dt == pytest.approx(4e-3)
+    assert audit.discover_generator_defaults()["defaults"]["dt"] == pytest.approx(4e-3)
+
+
+def test_no_sample_dtype_change_in_this_stage():
+    assert lineage.DATASET_SAMPLE_CAST_POLICY == "downsample_mean_then_float32_v1"
+    assert lineage.DATASET_SAMPLE_REPRESENTATION == "derived_training_observable_not_restart_authoritative"
+    contract = audit.discover_ml_task_contract()
+    assert contract["saved_dtype_per_field"]["phi"] == "float32"
+    assert contract["saved_dtype_per_field"]["u"] == "float16"
+
+
+def test_w_contact_angle_remains_open_unless_original_gate_passes():
+    assert audit.BLOCKER_GLOBAL_STATUS["W-CONTACT-ANGLE"] == "open"
+    rows = audit.blocker_relevance_matrix({})
+    row = next(entry for entry in rows if entry["blocker_id"] == "W-CONTACT-ANGLE")
+    assert row["exit_classification"] != "TARGET_CRITICAL" or "remain open" in row["required_future_action"]
+    assert "remain open" in row["required_future_action"]
+
+
+def test_d_fresh_train_contract_not_falsely_closed():
+    assert audit.BLOCKER_GLOBAL_STATUS["D-FRESH-TRAIN-CONTRACT"] == "open_l1b_blocker"
+    rows = audit.blocker_relevance_matrix({})
+    row = next(entry for entry in rows if entry["blocker_id"] == "D-FRESH-TRAIN-CONTRACT")
+    assert row["exit_classification"] == "UNMEASURED"
+    assert "L1B-1" in row["required_future_action"]
