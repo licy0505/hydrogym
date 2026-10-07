@@ -1,0 +1,87 @@
+{
+ "all_checks_passed": true,
+ "branch_git_sha": "0aaff5083a639afb3dca147b3d036a74e8c0ad38",
+ "checks": {
+  "contact_line_masks_deterministic": true,
+  "diagnostic_prototype_unreachable_from_production": true,
+  "formal_mass_neutral": true,
+  "noop_noise_floor_bitwise_zero": true,
+  "normalized_sensitivity_linear": true,
+  "operator_dependency_capture": true,
+  "partition_disjoint_complete": true,
+  "perturbation_nonvacuous_and_confined": true,
+  "report_schema_complete": true,
+  "stencil_shells_deterministic": true,
+  "unmeasured_sections_remain_unmeasured": true
+ },
+ "created_at_local": "2026-10-07T10:53:51+00:00",
+ "diagnostic_only": true,
+ "elapsed_seconds": 17.3155931350002,
+ "first_changed_stage_small_case": "3_phase_gradients_and_ch_ingredients",
+ "inherited_mechanism": "INACTIVE_STATE_COUPLING",
+ "machine_status": {
+  "first_causal_operator": null,
+  "inactive_coupling_60deg_specific": null,
+  "inherited_mechanism": "INACTIVE_STATE_COUPLING",
+  "production_repair_selected": false,
+  "production_semantics_changed": false,
+  "root_cause": null,
+  "solver_contract_version": 11,
+  "stage": "L1A-2n"
+ },
+ "merged_main_sha": "ee15098ab0600b2bdf450162a3c89ec7ce2950d1",
+ "open_faces_P_to_I0": {
+  "x_faces": 0,
+  "y_faces": 0
+ },
+ "out_dir": "artifacts/l1a2n",
+ "partition_counts": {
+  "I0_1": 48,
+  "I0_2": 48,
+  "I0_CL_left_2dx": 8,
+  "I0_CL_left_4dx": 16,
+  "I0_CL_right_2dx": 8,
+  "I0_CL_right_4dx": 16,
+  "I0_all": 96,
+  "I0_deep": 0,
+  "I0_interface_adjacent": 0,
+  "I0_remaining": 0,
+  "I0_seam": 4,
+  "I0_wall": 96,
+  "P": 2208
+ },
+ "production_repair_selected": false,
+ "production_semantics_changed": false,
+ "profile": "quick",
+ "quick_case": {
+  "N": 48,
+  "config_fingerprint": "e6ddb27d59bc0e881272859b21701c1914a5bfc79f0f8f2b83156dff001ebcbf",
+  "steps_evolved": 8
+ },
+ "quick_note": "methodology validation only; no 50k physics, no provenance states, no classification",
+ "runtime_versions": {
+  "jax": "0.10.2",
+  "numpy": "2.4.6",
+  "platform": "cpu",
+  "python": "3.11.2"
+ },
+ "sensitivity_linearity_ratio_1e6_over_1e4": 1.000000000009902,
+ "solver_contract_version": 11,
+ "source_hashes": {
+  "capillary_pressure_balance_audit": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+  "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+  "contact_line_kinetics": "fca52869eb8fc6c8c327661ecbc485e838b42939b92c297636bbd56a5b1be5c5",
+  "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+  "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+  "phase_coupling_relaxation_audit": "9942fbb810447f8c64d3fa9d52a9d063464615cbb8ac380562f62c54a2a66841",
+  "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e"
+ },
+ "stage": "L1A-2n",
+ "status": "complete",
+ "unmeasured_sections": {
+  "matched_control_comparison": "quick profile measures methodology, not the 60-degree question",
+  "repair_candidates": "measured in the forensic profile",
+  "root_cause": null
+ },
+ "w_contact_angle_not_closed": true
+}

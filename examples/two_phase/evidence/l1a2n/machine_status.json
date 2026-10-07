@@ -1,0 +1,10 @@
+{
+ "first_causal_operator": "CAPILLARY_STENCIL_LEAKAGE",
+ "inactive_coupling_60deg_specific": false,
+ "inherited_mechanism": "INACTIVE_STATE_COUPLING",
+ "production_repair_selected": false,
+ "production_semantics_changed": false,
+ "root_cause": "INACTIVE_COUPLING_BACKGROUND_ONLY",
+ "solver_contract_version": 11,
+ "stage": "L1A-2n"
+}

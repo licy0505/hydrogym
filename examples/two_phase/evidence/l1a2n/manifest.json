@@ -1,0 +1,60 @@
+{
+ "artifact_directory": "artifacts/l1a2n",
+ "artifact_note": "large arrays stay under the git-ignored artifact tree; the persisted reports retain numeric results and hashes",
+ "branch_git_sha": "0aaff5083a639afb3dca147b3d036a74e8c0ad38",
+ "created_at_local": "2026-10-07T10:53:51+00:00",
+ "files": {
+  "inactive_phase_coupling_quick_report.json": {
+   "bytes": 3093,
+   "sha256": "f6b3dd4eb8ea020027f2955e383042f94efa1cbf0025fbc084b362a7d30626f4"
+  },
+  "inactive_phase_coupling_quick_report.md": {
+   "bytes": 604,
+   "sha256": "18672ef0b2d0c8b95d23ffe2a6135546d8201180433854ea2d6f5ca7859086d4"
+  },
+  "inactive_phase_coupling_report.json": {
+   "bytes": 525698,
+   "sha256": "9557992199be9a845a3cba1874d3e7b60a14f2cae5ffcecf8114bcd50dd12304"
+  },
+  "inactive_phase_coupling_report.md": {
+   "bytes": 2799,
+   "sha256": "8bd8ea9c70ce3ce194a31a1769f3dd00c1714adcfcddfbf01a4b2d0a1b7cabc1"
+  },
+  "machine_status.json": {
+   "bytes": 334,
+   "sha256": "ad7b35ac7c21cfa6676b73b5274934f2be4350054339f12cd68187646ae7425e"
+  },
+  "manifest.json": {
+   "bytes": 1962,
+   "sha256": "cf072ec0f01d61bad28b1b31d62eedbfb188279bab251840e5ca78f239389557"
+  },
+  "mechanism_matrix.json": {
+   "bytes": 1556,
+   "sha256": "2cff73b2cdb1d8f2ec2173e4c3d397adcfe728948f537ded4b8c3e87f92959b4"
+  },
+  "operator_dependency_map.json": {
+   "bytes": 14943,
+   "sha256": "e56d99cd682d356e7d1f66094c4e1b64b37b278856fec15a51c023bba4d485e3"
+  },
+  "quality_status.json": {
+   "bytes": 796,
+   "sha256": "90d73549c69f5dad081bbeed7525b3139ba2661cd3fd69b04322e58d1a03d443"
+  },
+  "repair_candidate_matrix.json": {
+   "bytes": 6138,
+   "sha256": "04b828b3aa3aca69339e7fa0decd4eca3d5e3f4ee82ba49b160df6651e0b94d2"
+  },
+  "sensitivity_matrix.json": {
+   "bytes": 26941,
+   "sha256": "348710d2a7b9c7a6cd3661b53079209bcffafdc07ef822c365b3c1ac948a8d07"
+  }
+ },
+ "merged_main_sha": "ee15098ab0600b2bdf450162a3c89ec7ce2950d1",
+ "profile": "forensic",
+ "profiles_run": [
+  "forensic",
+  "quick"
+ ],
+ "solver_contract_version": 11,
+ "stage": "L1A-2n"
+}

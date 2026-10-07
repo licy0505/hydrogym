@@ -1,0 +1,605 @@
+{
+ "entries": [
+  {
+   "downstream_consumers": [
+    "gravity term (use_gravity=False in contract-11 cases)"
+   ],
+   "inputs": [
+    "phi (full grid)"
+   ],
+   "masking": "none (pointwise); consumed only through gravity (disabled in production cases)",
+   "operator": "rho(phi)",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "none (pointwise)",
+   "reads_raw_phi_I0_at_P": false,
+   "source_function": "phasefield.rho_of",
+   "stencil_radius": 0
+  },
+  {
+   "downstream_consumers": [
+    "momentum viscous term nu*lap(u) (evaluated at every cell)"
+   ],
+   "inputs": [
+    "phi (full grid)"
+   ],
+   "masking": "none (pointwise)",
+   "operator": "nu(phi)",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "none (pointwise)",
+   "reads_raw_phi_I0_at_P": false,
+   "source_function": "phasefield.nu_of",
+   "stencil_radius": 0
+  },
+  {
+   "downstream_consumers": [
+    "CH face flux (mu_expl)",
+    "capillary force mu*grad(phi)",
+    "implicit CH RHS"
+   ],
+   "inputs": [
+    "phi (full grid)",
+    "solid geometry (apertures/weights, wall measure, cos_theta)"
+   ],
+   "masking": "aperture weighting before the stencil (A_f = 0 kills wall-crossing couplings)",
+   "operator": "chemical_potential mu",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "x periodic through A_f; y open (wall faces closed, no y wrap face is open)",
+   "reads_raw_phi_I0_at_P": "MEASURED (section 8 influence probe)",
+   "source_function": "phasefield.chemical_potential",
+   "stencil_radius": "1 through the cut-cell face Laplacian, gated by A_f (closed faces contribute zero)"
+  },
+  {
+   "downstream_consumers": [
+    "capillary force (the only consumer inside rhs)"
+   ],
+   "inputs": [
+    "phi (full grid)"
+   ],
+   "masking": "NONE before the stencil: raw neighbour storage enters verbatim",
+   "operator": "grad(phi)",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "FULLY PERIODIC central difference on both axes (raw jnp.roll, no aperture)",
+   "reads_raw_phi_I0_at_P": "MEASURED (section 8 influence probe)",
+   "source_function": "phasefield._ddx/_ddy via rhs capillary term",
+   "stencil_radius": 1
+  },
+  {
+   "downstream_consumers": [
+    "_phase_update CH source",
+    "phase_transport_step"
+   ],
+   "inputs": [
+    "mu_expl (full grid)",
+    "face weights w_f = A_f / d_ij"
+   ],
+   "masking": "aperture weighting before the stencil",
+   "operator": "grad(mu) / CH ingredients",
+   "output_location": "+x/+y faces, aperture weighted",
+   "periodic_boundary_behaviour": "x periodic; closed faces contribute exactly zero",
+   "reads_raw_phi_I0_at_P": "MEASURED",
+   "source_function": "phasefield.chemical_potential_fluxes",
+   "stencil_radius": 1
+  },
+  {
+   "downstream_consumers": [
+    "phi update (implicit solve)"
+   ],
+   "inputs": [
+    "mu_expl",
+    "apertures",
+    "V_i"
+   ],
+   "masking": "aperture weighting (A_f = 0 on wall-crossing faces)",
+   "operator": "CH face flux",
+   "output_location": "cell centres via conservative face divergence",
+   "periodic_boundary_behaviour": "x periodic; pairwise antisymmetric; telescoping",
+   "reads_raw_phi_I0_at_P": "MEASURED",
+   "source_function": "phasefield.chemical_potential_fluxes + control_volume_divergence",
+   "stencil_radius": 1
+  },
+  {
+   "downstream_consumers": [
+    "phi_rhs (conservative divergence)"
+   ],
+   "inputs": [
+    "u, v (cell centres)",
+    "phi (full grid)",
+    "apertures"
+   ],
+   "masking": "aperture weighting after the upwind selection",
+   "operator": "advective phase flux",
+   "output_location": "+x/+y faces, aperture weighted, upwind phi",
+   "periodic_boundary_behaviour": "x periodic; closed faces contribute exactly zero",
+   "reads_raw_phi_I0_at_P": "MEASURED",
+   "source_function": "phasefield.phase_advective_fluxes",
+   "stencil_radius": 1
+  },
+  {
+   "downstream_consumers": [
+    "mu_expl -> CH flux, capillary force"
+   ],
+   "inputs": [
+    "phi at the wall-measure cells",
+    "cos_theta",
+    "A_wall,i / V_i"
+   ],
+   "masking": "wall measure is exactly zero on non-wall cells",
+   "operator": "wall / wetting terms",
+   "output_location": "cell centres (wall measure only)",
+   "periodic_boundary_behaviour": "none (pointwise at the wall-measure cells)",
+   "reads_raw_phi_I0_at_P": "MEASURED (wall measure must sit on V>0 cells)",
+   "source_function": "phasefield.wall_energy_derivative * wall_measure_density (inside _explicit_chemical_potential)",
+   "stencil_radius": 0
+  },
+  {
+   "downstream_consumers": [
+    "u_rhs/v_rhs",
+    "momentum predictor",
+    "pressure projection"
+   ],
+   "inputs": [
+    "mu",
+    "grad(phi) (raw periodic central difference)",
+    "We",
+    "rho_l"
+   ],
+   "masking": "NONE before the stencil",
+   "operator": "capillary force / acceleration",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "FULLY PERIODIC central difference on both axes",
+   "reads_raw_phi_I0_at_P": "MEASURED",
+   "source_function": "phasefield.rhs (Korteweg term)",
+   "stencil_radius": "1 (through grad(phi)); mu carries its own support"
+  },
+  {
+   "downstream_consumers": [
+    "velocity predictor damping"
+   ],
+   "inputs": [
+    "chi (solid indicator)",
+    "u, v",
+    "eta_pen"
+   ],
+   "masking": "chi weighting; not a phi consumer",
+   "operator": "Brinkman acceleration",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "none (pointwise)",
+   "reads_raw_phi_I0_at_P": false,
+   "source_function": "phasefield.step_with_diagnostics substep damp factor",
+   "stencil_radius": 0
+  },
+  {
+   "downstream_consumers": [
+    "pressure projection",
+    "next state"
+   ],
+   "inputs": [
+    "u, v (full grid)",
+    "nu(phi)",
+    "cap",
+    "chi"
+   ],
+   "masking": "none; Brinkman damping suppresses solid-cell response",
+   "operator": "momentum predictor",
+   "output_location": "cell centres, full grid",
+   "periodic_boundary_behaviour": "raw jnp.roll on both axes (y wrap reads the opposite wall slab)",
+   "reads_raw_phi_I0_at_P": "through nu(phi) pointwise (no) and cap (measured); upwind stencils read u/v[I0], not phi[I0]",
+   "source_function": "phasefield.rhs + substep update",
+   "stencil_radius": "3rd-order upwind reaches 2 cells; viscous/advective stencils are periodic in x AND y"
+  },
+  {
+   "downstream_consumers": [
+    "projected velocity"
+   ],
+   "inputs": [
+    "u_new, v_new (full grid)"
+   ],
+   "masking": "none (operates on velocity, not phi)",
+   "operator": "pressure RHS / projection inputs",
+   "output_location": "global (elliptic)",
+   "periodic_boundary_behaviour": "periodic FFT on both axes",
+   "reads_raw_phi_I0_at_P": false,
+   "source_function": "phasefield.poisson_solve (periodic FFT) over the full-grid divergence",
+   "stencil_radius": "global"
+  },
+  {
+   "downstream_consumers": [
+    "production acceptance records (nwa gates)"
+   ],
+   "inputs": [
+    "phi (contour extraction near the wall)",
+    "sdf",
+    "wall plane"
+   ],
+   "masking": "contour threshold at phi = 0.5",
+   "operator": "contact-angle observable",
+   "output_location": "scalar observables",
+   "periodic_boundary_behaviour": "x periodic with unwrap handling",
+   "reads_raw_phi_I0_at_P": "MEASURED",
+   "source_function": "phasefield.measure_contact_angle (+ clk.contact_line_positions)",
+   "stencil_radius": "contour based"
+  }
+ ],
+ "influence_probe": {
+  "authority_060": {
+   "advective_phase_flux": {
+    "adv_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "adv_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "capillary_force": {
+    "cap_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "cap_y": {
+     "l2_on_P": 0.4082688749862499,
+     "linf_on_P": 0.05709966037630214,
+     "reads_inactive_storage": true
+    }
+   },
+   "ch_flux": {
+    "ch_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "ch_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "chemical_potential": {
+    "mu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "grad_phi": {
+    "grad_phi_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "grad_phi_y": {
+     "l2_on_P": 90.57104681401466,
+     "linf_on_P": 8.0,
+     "reads_inactive_storage": true
+    }
+   },
+   "momentum_predictor_inputs": {
+    "u_rhs": {
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "v_rhs": {
+     "linf_on_P": 0.05709966037630214,
+     "reads_inactive_storage": true
+    }
+   },
+   "mu_expl": {
+    "mu_expl": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "nu_of": {
+    "nu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "rho_of": {
+    "rho": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "wall_energy_term": {
+    "wall_term": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   }
+  },
+  "ch_only_equilibrium_060": {
+   "advective_phase_flux": {
+    "adv_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "adv_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "capillary_force": {
+    "cap_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "cap_y": {
+     "l2_on_P": 0.5112881760181863,
+     "linf_on_P": 0.04877136174177922,
+     "reads_inactive_storage": true
+    }
+   },
+   "ch_flux": {
+    "ch_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "ch_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "chemical_potential": {
+    "mu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "grad_phi": {
+    "grad_phi_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "grad_phi_y": {
+     "l2_on_P": 90.57104681401468,
+     "linf_on_P": 8.0,
+     "reads_inactive_storage": true
+    }
+   },
+   "momentum_predictor_inputs": {
+    "u_rhs": {
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "v_rhs": {
+     "linf_on_P": 0.04877136174177922,
+     "reads_inactive_storage": true
+    }
+   },
+   "mu_expl": {
+    "mu_expl": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "nu_of": {
+    "nu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "rho_of": {
+    "rho": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "wall_energy_term": {
+    "wall_term": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   }
+  },
+  "control_090": {
+   "advective_phase_flux": {
+    "adv_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "adv_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "capillary_force": {
+    "cap_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "cap_y": {
+     "l2_on_P": 0.5799655503245295,
+     "linf_on_P": 0.09287001259918456,
+     "reads_inactive_storage": true
+    }
+   },
+   "ch_flux": {
+    "ch_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "ch_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "chemical_potential": {
+    "mu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "grad_phi": {
+    "grad_phi_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "grad_phi_y": {
+     "l2_on_P": 90.57104681401468,
+     "linf_on_P": 8.0,
+     "reads_inactive_storage": true
+    }
+   },
+   "momentum_predictor_inputs": {
+    "u_rhs": {
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "v_rhs": {
+     "linf_on_P": 0.09287001259918456,
+     "reads_inactive_storage": true
+    }
+   },
+   "mu_expl": {
+    "mu_expl": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "nu_of": {
+    "nu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "rho_of": {
+    "rho": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "wall_energy_term": {
+    "wall_term": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   }
+  },
+  "control_150": {
+   "advective_phase_flux": {
+    "adv_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "adv_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "capillary_force": {
+    "cap_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "cap_y": {
+     "l2_on_P": 1.0701219604185117,
+     "linf_on_P": 0.13116755437054015,
+     "reads_inactive_storage": true
+    }
+   },
+   "ch_flux": {
+    "ch_flux_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "ch_flux_y": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "chemical_potential": {
+    "mu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "grad_phi": {
+    "grad_phi_x": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "grad_phi_y": {
+     "l2_on_P": 90.57104681401468,
+     "linf_on_P": 8.0,
+     "reads_inactive_storage": true
+    }
+   },
+   "momentum_predictor_inputs": {
+    "u_rhs": {
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    },
+    "v_rhs": {
+     "linf_on_P": 0.13116755437054015,
+     "reads_inactive_storage": true
+    }
+   },
+   "mu_expl": {
+    "mu_expl": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "nu_of": {
+    "nu": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "rho_of": {
+    "rho": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   },
+   "wall_energy_term": {
+    "wall_term": {
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0,
+     "reads_inactive_storage": false
+    }
+   }
+  }
+ }
+}

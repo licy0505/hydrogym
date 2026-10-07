@@ -1,0 +1,41 @@
+{
+ "candidates": {
+  "BRINKMAN_AMPLIFIED_INACTIVE_COUPLING": {
+   "scope": "the leaked capillary delta is multiplied by the pointwise Brinkman damp at chi>0 cells; Brinkman never reads phi[I0]",
+   "status": "SUSPECTED"
+  },
+  "CAPILLARY_STENCIL_LEAKAGE": {
+   "scope": "raw periodic central-difference grad(phi) inside the Korteweg force reads the inactive row below the wall-adjacent partial cells",
+   "status": "SUPPORTED"
+  },
+  "CHEMICAL_POTENTIAL_STENCIL_LEAKAGE": {
+   "scope": "mu[P] and wall term under I0-only perturbation (aperture-isolated cut-cell Laplacian)",
+   "status": "FALSIFIED"
+  },
+  "INACTIVE_COUPLING_BACKGROUND_ONLY": {
+   "scope": "60/90/150 matched-control differential (section 33/37)",
+   "status": "SUPPORTED"
+  },
+  "MULTIPLE_OPERATOR_LEAKAGE": {
+   "scope": "only one independent first path was measured (the capillary gradient read)",
+   "status": "FALSIFIED"
+  },
+  "PERIODIC_SEAM_INACTIVE_COUPLING": {
+   "scope": "seam-column perturbation versus interior per-cell response",
+   "status": "FALSIFIED"
+  },
+  "PHASE_TRANSPORT_GHOST_COUPLING": {
+   "scope": "CH face fluxes on physical apertures under I0-only perturbation",
+   "status": "FALSIFIED"
+  },
+  "PROPERTY_INTERPOLATION_LEAKAGE": {
+   "scope": "pointwise rho/nu on P; directly measured, not inferred",
+   "status": "FALSIFIED"
+  },
+  "WALL_WETTING_GHOST_COUPLING": {
+   "scope": "Young wall measure reads only V>0 cells; no inactive ghost path through the wall energy",
+   "status": "FALSIFIED"
+  }
+ },
+ "final_root_cause": "INACTIVE_COUPLING_BACKGROUND_ONLY"
+}
