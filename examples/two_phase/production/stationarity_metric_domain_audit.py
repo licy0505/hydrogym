@@ -446,9 +446,10 @@ def _rehydrate_chns_case(
                     and saved.get("runtime_versions") == _runtime_versions()
                     and 0 < candidate_step <= window_start
                 ):
-                    latest, current = _load_checkpoint(
+                    latest, _resume_meta = _load_checkpoint(
                         candidate_path, case_name=case_name, step=candidate_step, config=config, p=p
                     )
+                    current = candidate_step
             except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
                 print(f"[{STAGE}] discard trajectory resume for {case_name}: {exc}", flush=True)
                 latest, current = seed, 0
