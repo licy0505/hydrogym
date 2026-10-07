@@ -309,3 +309,83 @@ def test_contact_gap_refinement_classification_is_fail_closed():
     assert audit.contact_gap_classification(contact, film, contact)["classification"] == "FINITE_GAS_FILM_PERSISTS"
 
 
+# ---------------------------------------------------------------------------
+# section 54: sample representation
+# ---------------------------------------------------------------------------
+
+
+def test_phi_export_matches_current_single_cast_policy(small_export):
+    with np.load(small_export["path"], allow_pickle=True) as data:
+        stored = np.asarray(data["phi"])
+    pooled = audit.generator._downsample_history(small_export["phi"], 2)
+    assert stored.dtype == np.float32
+    assert np.array_equal(stored, pooled.astype(np.float32))
+
+
+def test_velocity_export_uses_actual_dataset_dtype(small_export):
+    with np.load(small_export["path"], allow_pickle=True) as data:
+        assert np.asarray(data["u"]).dtype == np.float16
+        assert np.asarray(data["v"]).dtype == np.float16
+    contract = audit.discover_ml_task_contract(small_export["path"])
+    assert contract["saved_dtype_per_field"]["u"] == "float16"
+
+
+def test_npz_roundtrip_preserves_declared_lineage(small_export):
+    with np.load(small_export["path"], allow_pickle=True) as data:
+        metadata = json.loads(str(np.asarray(data["case"]).item()))
+        assert str(np.asarray(data["dataset_fingerprint"]).item()) == small_export["fingerprint"]
+        phi_dtype = np.asarray(data["phi"]).dtype.name
+    lineage.validate_training_sample_lineage(metadata, phi_dtype=phi_dtype)
+
+
+def test_representation_error_separates_downsample_and_cast(small_export):
+    result = audit.representation_fidelity(
+        small_export["phi"], small_export["u"], small_export["v"], small_export["path"], 2
+    )
+    for name in ("phi", "u", "v"):
+        entry = result["per_field"][name]
+        assert "downsample_reconstruction_l2_fine_grid" in entry and "cast_l2_saved_grid" in entry
+        assert np.isfinite(entry["cast_linf_saved_grid"]) and entry["cast_linf_saved_grid"] >= 0.0
+
+
+def test_representation_noise_ratio_uses_frame_signal(small_export):
+    result = audit.representation_fidelity(
+        small_export["phi"], small_export["u"], small_export["v"], small_export["path"], 2
+    )
+    for name in ("phi", "u", "v"):
+        entry = result["per_field"][name]
+        if entry["frame_signal_l2"] > 0:
+            assert entry["representation_noise_ratio"] == pytest.approx(
+                entry["cast_l2_saved_grid"] / entry["frame_signal_l2"]
+            )
+
+
+def test_zero_frame_signal_is_handled_without_divide_by_zero(tmp_path):
+    constant = np.full((3, 32, 32), 0.5)
+    path = tmp_path / "constant.npz"
+    pooled = audit.generator._downsample_history(constant, 2).astype(np.float32)
+    metadata = {
+        "solver_contract_version": 11,
+        "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,
+        "phase_state_dtype": "float64",
+        "solver_phase_dtype": "float64",
+        "stored_sample_phase_dtype": "float32",
+        "sample_cast_policy": lineage.DATASET_SAMPLE_CAST_POLICY,
+        "sample_representation": lineage.DATASET_SAMPLE_REPRESENTATION,
+    }
+    np.savez_compressed(
+        path,
+        phi=pooled,
+        u=pooled.astype(np.float16),
+        v=pooled.astype(np.float16),
+        time=np.arange(3, dtype=np.float32) * 0.08,
+        dataset_fingerprint=np.array("0" * 64),
+        case=np.array(json.dumps(metadata)),
+    )
+    result = audit.representation_fidelity(constant, constant.copy(), constant.copy(), path, 2)
+    for name in ("phi", "u", "v"):
+        entry = result["per_field"][name]
+        assert entry["representation_noise_ratio"] is None
+        assert entry["representation_ratio_class"] == "ZERO_FRAME_SIGNAL"
+
+
