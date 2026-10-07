@@ -1946,6 +1946,9 @@ def run_forensic(out: Path) -> dict[str, Any]:
             "operator_dependency_map": {"entries": _static_dependency_entries(), "influence_probe": influence_by_case},
             "noise_floor": noise_by_case,
             "experiments": experiments_by_case,
+            "shell_localization_interpretations": {
+                name: _shell_localization_consistent(case_runs)[1] for name, case_runs in experiments_by_case.items()
+            },
             "one_step_response": one_step_by_case,
             "path_tests": path_tests_by_case,
             "sensitivity_matrix": sensitivity_matrix,
