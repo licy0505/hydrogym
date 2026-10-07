@@ -2322,8 +2322,13 @@ def _write_deliverables(report: dict[str, Any], out: Path) -> None:
     evidence = EVIDENCE_ROOT
     evidence.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(report, indent=1, sort_keys=True, default=_json_default)
-    (evidence / "inactive_phase_coupling_report.json").write_text(payload)
-    (evidence / "inactive_phase_coupling_report.md").write_text(_report_markdown(report))
+    # the forensic report is the canonical stage deliverable; the quick report is kept
+    # under a profile-suffixed name so a CI quick run never overwrites the stage evidence
+    stem = (
+        "inactive_phase_coupling_report" if report["profile"] == "forensic" else "inactive_phase_coupling_quick_report"
+    )
+    (evidence / f"{stem}.json").write_text(payload)
+    (evidence / f"{stem}.md").write_text(_report_markdown(report))
     if report["profile"] == "forensic":
         (evidence / "mechanism_matrix.json").write_text(
             json.dumps(report["mechanism_matrix"], indent=1, sort_keys=True, default=_json_default)
@@ -2427,7 +2432,17 @@ def main(argv: list[str] | None = None) -> int:
     quality = _run_quality_checks()
     quality["quick_profile_in_quality"] = args.profile == "quick"
     EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
-    (EVIDENCE_ROOT / "quality_status.json").write_text(json.dumps(quality, indent=1, sort_keys=True))
+    quality_path = EVIDENCE_ROOT / "quality_status.json"
+    if quality_path.is_file():
+        previous = json.loads(quality_path.read_text())
+        for key, value in previous.items():
+            if key not in quality:
+                quality[key] = value
+        profiles = set(previous.get("profiles_run", [])) | {args.profile}
+    else:
+        profiles = {args.profile}
+    quality["profiles_run"] = sorted(profiles)
+    quality_path.write_text(json.dumps(quality, indent=1, sort_keys=True))
     print(
         f"[{STAGE}] profile={args.profile} status={report['status']}"
         + (
