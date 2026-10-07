@@ -1,0 +1,174 @@
+{
+ "definition": [
+  {
+   "angle_deg_label": 60,
+   "case": {
+    "We": 100.0,
+    "cos_theta": 0.5,
+    "seed": 6,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": 90,
+   "case": {
+    "We": 100.0,
+    "cos_theta": 0.0,
+    "seed": 4,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": 120,
+   "case": {
+    "We": 100.0,
+    "cos_theta": -0.5,
+    "seed": 1,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": 60,
+   "case": {
+    "We": 200.0,
+    "cos_theta": 0.5,
+    "seed": 7,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": 90,
+   "case": {
+    "We": 200.0,
+    "cos_theta": 0.0,
+    "seed": 5,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": 120,
+   "case": {
+    "We": 200.0,
+    "cos_theta": -0.5,
+    "seed": 2,
+    "split": "train",
+    "surface": "flat"
+   },
+   "mandatory": true,
+   "role": "flat_impact_canary"
+  },
+  {
+   "angle_deg_label": null,
+   "case": {
+    "We": 100.0,
+    "cos_theta": -0.5,
+    "height": 0.4,
+    "n_pillars": 4,
+    "seed": 8,
+    "split": "train",
+    "surface": "pillars",
+    "width": 0.3
+   },
+   "mandatory": true,
+   "role": "pillar_training_canary"
+  },
+  {
+   "angle_deg_label": null,
+   "case": {
+    "We": 100.0,
+    "cos_theta": -0.5,
+    "n_pillars": 7,
+    "seed": 100,
+    "split": "test",
+    "surface": "random_pillars",
+    "width_range": [
+     0.2,
+     0.4
+    ]
+   },
+   "mandatory": true,
+   "role": "complex_heldout_canary"
+  },
+  {
+   "angle_deg_label": null,
+   "case": null,
+   "exclusion_reason": "the default ``--set base`` generation targeted for the immediate L1B run contains no low-We case; the separate lowWe sets are outside the audited envelope (section 9 optional)",
+   "mandatory": false,
+   "role": "optional_low_we"
+  }
+ ],
+ "executed": {
+  "complex_quick__random_pillars_R=0.65_Re=120.0_We=120.0_cos_theta=0.0_dt=0.002_eps_factor=2.0_height_range=(0.3, 0.55)_impact_gap_eps=0.75_n_pillars=5_u_impact=1.0_velocity_mode=uniform_width_range=(0.4, 0.55)": {
+   "accepted": true,
+   "cache": "miss",
+   "fingerprint": "82ec731b4da5638c8a2425d735145c65cd61aa7a4c37f9107557d5ab2570a885",
+   "mandatory": true,
+   "role": "complex_quick",
+   "schedule": {
+    "effective_dt": 0.002,
+    "frame_dt": 0.04,
+    "n_frames": 2,
+    "nsteps": 40,
+    "physical_horizon": 0.08,
+    "requested_dt": 0.002,
+    "requested_frame_dt": 0.04,
+    "requested_horizon": 0.08,
+    "save_every": 20,
+    "stable_dt_cap_N": 0.018750000000000003
+   }
+  },
+  "flat_quick__flat_We=100.0_cos_theta=0.5": {
+   "accepted": true,
+   "cache": "miss",
+   "fingerprint": "5d46ccc633313a886053f387ab5cb3669f4bfe5a2274b66e76c793f34c1a38ef",
+   "mandatory": true,
+   "role": "flat_quick",
+   "schedule": {
+    "effective_dt": 0.002,
+    "frame_dt": 0.04,
+    "n_frames": 2,
+    "nsteps": 40,
+    "physical_horizon": 0.08,
+    "requested_dt": 0.002,
+    "requested_frame_dt": 0.04,
+    "requested_horizon": 0.08,
+    "save_every": 20,
+    "stable_dt_cap_N": 0.018750000000000003
+   }
+  },
+  "pillar_quick__pillars_R=0.65_Re=120.0_We=120.0_cos_theta=-0.25_dt=0.002_eps_factor=2.0_height=0.45_impact_gap_eps=0.75_n_pillars=4_u_impact=1.0_velocity_mode=uniform_width=0.45": {
+   "accepted": true,
+   "cache": "miss",
+   "fingerprint": "3048d68ab700825e42a137f970b4cde6f251e7d9a14347592ad9bcb567229be5",
+   "mandatory": true,
+   "role": "pillar_quick",
+   "schedule": {
+    "effective_dt": 0.002,
+    "frame_dt": 0.04,
+    "n_frames": 2,
+    "nsteps": 40,
+    "physical_horizon": 0.08,
+    "requested_dt": 0.002,
+    "requested_frame_dt": 0.04,
+    "requested_horizon": 0.08,
+    "save_every": 20,
+    "stable_dt_cap_N": 0.018750000000000003
+   }
+  }
+ }
+}

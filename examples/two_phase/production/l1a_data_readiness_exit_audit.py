@@ -59,7 +59,7 @@ from production import observables as observables_module
 from production import validation as validation_module
 
 STAGE = "L1A-2o"
-SECTION_VERSION = 1
+SECTION_VERSION = 2
 
 EVIDENCE_ROOT = Path("evidence/l1a2o")
 ARTIFACT_ROOT = Path("artifacts/l1a2o")
@@ -508,7 +508,39 @@ def extract_observables(
     for k in range(phi_hist.shape[0]):
         phi, u, v = phi_hist[k], u_hist[k], v_hist[k]
         row: dict[str, Any] = {"frame": k, "t": float((k + 1) * save_every * p.dt)}
-        row["formal_mass"] = float(np.sum(phi * volume) * dx * dy)
+        # Fail-closed frame extraction: a non-finite solver frame is recorded as
+        # such (finite=False, observables None) instead of crashing the audit.
+        frame_finite = bool(np.isfinite(phi).all() and np.isfinite(u).all() and np.isfinite(v).all())
+        row["finite"] = frame_finite
+        if not frame_finite:
+            for key in (
+                "formal_mass",
+                "total_mass_plain_sum",
+                "spread_width",
+                "beta",
+                "drop_bottom_height",
+                "drop_top_height",
+                "drop_vertical_extent",
+                "centroid_x",
+                "centroid_y",
+                "contact_line_left",
+                "contact_line_right",
+                "max_speed",
+                "max_abs_u",
+                "max_abs_v",
+                "phi_min",
+                "phi_max",
+                "gap05",
+                "gap05_over_dx",
+                "gap05_over_eps",
+                "gap01",
+                "gap01_over_dx",
+                "gap01_over_eps",
+            ):
+                row[key] = None
+            rows.append(row)
+            continue
+        row["formal_mass"] = float(np.sum(phi * volume))
         row["total_mass_plain_sum"] = float(np.sum(phi) * dx * dy)
         width = observables_module.periodic_spreading_width(phi, threshold=0.5, dx=dx, Lx=p.Lx)
         row["spread_width"] = float(width)
@@ -540,7 +572,6 @@ def extract_observables(
                 row[name] = row[f"{name}_over_dx"] = row[f"{name}_over_eps"] = None
         row["phi_min"] = float(np.min(phi))
         row["phi_max"] = float(np.max(phi))
-        row["finite"] = bool(np.isfinite(phi).all() and np.isfinite(u).all() and np.isfinite(v).all())
         rows.append(row)
     force_block = {
         "F": "unmeasured_not_current_contract",
@@ -559,7 +590,7 @@ def extract_observables(
         "eps": eps,
         "R": float(R),
         "force_observables": force_block,
-        "formal_mass_definition": "sum_i V_i phi_i (cut-cell control volumes, contract v9)",
+        "formal_mass_definition": "sum_i V_i phi_i (cut-cell control volumes in physical area units, contract v9)",
     }
 
 
@@ -641,7 +672,10 @@ def _case_display_name(case: dict, role: str) -> str:
 def _cache_entry_valid(entry: dict[str, Any], binding: dict[str, Any]) -> bool:
     """Fail-closed cache validation (section 48): every binding must match."""
 
-    if not isinstance(entry, dict) or entry.get("binding") != binding:
+    if not isinstance(entry, dict):
+        return False
+    stored_binding = entry.get("binding")
+    if not isinstance(stored_binding, dict) or {key: stored_binding.get(key) for key in binding} != binding:
         return False
     required = (
         "fingerprint",
@@ -662,7 +696,6 @@ def _cache_binding(case: dict, args: GeneratorArgs, schedule: dict[str, Any], fi
         "solver_source_hash": _file_sha256(Path("phasefield.py")),
         "generator_source_hash": _file_sha256(Path("generate_dataset.py")),
         "observables_source_hash": _file_sha256(Path("production/observables.py")),
-        "audit_source_hash": _file_sha256(Path("production/l1a_data_readiness_exit_audit.py")),
         "case": case,
         "config_fingerprint": _canonical_hash({"case": case, "schedule": schedule}),
         "N": int(args.N),
@@ -758,12 +791,33 @@ def run_canary(
         "elapsed_seconds": time.perf_counter() - started,
     }
     if not ok:
-        record["observables"] = None
+        # The trajectory is rejected as *training data*, but it is still a solver
+        # output and the exit audit measures it (section 11: a rejected canary
+        # must never be declared usable -- which is why no sample .npz is written).
+        record["observables"] = _canary_observables_from_history(phi, u, v, solid, p, case, schedule["save_every"])
         record["diagnostics"] = diagnostics
+        record["frame_signal"] = frame_signal_audit(
+            {
+                name_: generator._downsample_history(array.astype(np.float64), args.ds)
+                for name_, array in (("phi", phi), ("u", u), ("v", v))
+            }
+        )
+        final_fields_path = CANARY_DIR / f"{name}_final_fields.npz"
+        CANARY_DIR.mkdir(parents=True, exist_ok=True)
+        np.savez_compressed(
+            final_fields_path,
+            phi=np.asarray(phi[-1], dtype=np.float64),
+            u=np.asarray(u[-1], dtype=np.float64),
+            v=np.asarray(v[-1], dtype=np.float64),
+        )
+        record["final_fields_path"] = str(final_fields_path)
         record["cache"] = "stored_rejected"
         cache[name] = record
         if use_cache:
             _write_json(CACHE_PATH, cache)
+        import jax
+
+        jax.clear_caches()
         return record
     if save_sample_file:
         CANARY_DIR.mkdir(parents=True, exist_ok=True)
@@ -830,6 +884,51 @@ def canary_record_fingerprint(record: dict[str, Any]) -> str:
     return str(record.get("fingerprint", ""))
 
 
+def characterize_overshoot(case: dict, role: str, args: GeneratorArgs) -> dict[str, Any]:
+    """Per-frame phi-overshoot characterisation of one rejected canary.
+
+    This is exit-audit evidence for the single next blocker (section 42/69): it
+    records WHEN the over/undershoot occurs and WHERE it lives (interface band
+    vs wall band), without changing any solver semantics and without relaxing
+    the generator gate.
+    """
+
+    schedule = effective_schedule(case, args)
+    p, solid, initial = pf.build_case(case, N=args.N, dt=schedule["effective_dt"])
+    _final, phi, u, v = pf.rollout(initial, solid, p, schedule["nsteps"], save_every=schedule["save_every"])
+    del _final, u, v
+    phi = np.asarray(phi, dtype=np.float64)
+    undershoot = np.maximum(-phi, 0.0)
+    overshoot = np.maximum(phi - 1.0, 0.0)
+    total = np.maximum(undershoot, overshoot)
+    per_frame = total.reshape(total.shape[0], -1).max(axis=1)
+    frame = int(np.argmax(per_frame))
+    location = np.unravel_index(np.argmax(total[frame]), total[frame].shape)
+    dx = float(p.dx)
+    y_of = (np.arange(phi.shape[2]) + 0.5) * dx
+    wall_band = y_of < 4.0 * float(p.eps)
+    at_frame = total[frame]
+    total_wall = float(at_frame[:, wall_band].max()) if wall_band.any() else 0.0
+    total_outside_wall = float(np.max(at_frame[:, ~wall_band])) if (~wall_band).any() else 0.0
+    import jax
+
+    jax.clear_caches()
+    return {
+        "case": case,
+        "role": role,
+        "frame_of_max": frame,
+        "t_of_max": float((frame + 1) * schedule["frame_dt"]),
+        "per_frame_overshoot": [float(value) for value in per_frame],
+        "max_overshoot": float(per_frame.max()),
+        "location_at_max": {"cell_i": int(location[0]), "cell_j": int(location[1]), "y": float(y_of[location[1]])},
+        "max_in_wall_band_4eps": total_wall,
+        "max_outside_wall_band": total_outside_wall,
+        "overshoot_definition": "max(phi - 1, -phi) over saved solver frames (float64)",
+        "gate": EXPECTED_GENERATOR_THRESHOLDS["max_phi_overshoot"],
+        "note": "diagnostic only; the generator gate and solver are unchanged (sections 3/63)",
+    }
+
+
 # ---------------------------------------------------------------------------
 # section 15-17/52: spatial refinement comparisons
 # ---------------------------------------------------------------------------
@@ -872,8 +971,19 @@ def compare_fields_on_common_grid(
 ) -> dict[str, Any]:
     """Normalized field error on the explicitly mapped common grid (section 17)."""
 
-    fine_pooled = _pool_to_grid(np.asarray(fine_field, dtype=np.float64), common_shape)
-    coarse_pooled = _pool_to_grid(np.asarray(coarse_field, dtype=np.float64), common_shape)
+    fine_array = np.asarray(fine_field, dtype=np.float64)
+    coarse_array = np.asarray(coarse_field, dtype=np.float64)
+    if not (np.isfinite(fine_array).all() and np.isfinite(coarse_array).all()):
+        return {
+            "mapping_rule": f"integer average-pool {fine_shape}->{common_shape} and {coarse_shape}->{common_shape}",
+            "common_shape": list(common_shape),
+            "status": "UNMEASURED",
+            "reason": "non-finite solver field on at least one side of the refinement pair",
+            "fine_finite": bool(np.isfinite(fine_array).all()),
+            "coarse_finite": bool(np.isfinite(coarse_array).all()),
+        }
+    fine_pooled = _pool_to_grid(fine_array, common_shape)
+    coarse_pooled = _pool_to_grid(coarse_array, common_shape)
     difference = fine_pooled - coarse_pooled
     norm = float(np.sqrt(np.mean(difference**2)))
     scale = float(np.sqrt(np.mean(coarse_pooled**2))) or 1.0
@@ -946,6 +1056,8 @@ def spatial_refinement_audit(production_record: dict[str, Any], refined_record: 
         "note": (
             "production contract ties eps to N (eps=1.5*Lx/N); the audit compares what production produces at each N"
         ),
+        "production_trajectory_finite": bool((production_record.get("diagnostics") or {}).get("finite", True)),
+        "refined_trajectory_finite": bool((refined_record.get("diagnostics") or {}).get("finite", True)),
         "equal_physical_times": bool(
             abs(
                 production_record["schedule"]["effective_dt"] * production_record["schedule"]["save_every"]
@@ -1299,7 +1411,11 @@ def _late60_pair_valid(start_path: Path, end_path: Path, frozen: dict[str, str])
 
 
 def _array_sha256(array: np.ndarray) -> str:
-    return hashlib.sha256(np.ascontiguousarray(array).tobytes()).hexdigest()
+    """Hash in the frozen L1A-2l/2k evidence domain (dtype + shape + bytes)."""
+
+    from production import phase_coupling_relaxation_audit as l1a2l
+
+    return l1a2l._hash_array(array)
 
 
 def late60_replay(*, force_rerun: bool = False) -> dict[str, Any]:
@@ -1413,14 +1529,20 @@ def late60_residual_and_export(frame_signal: dict[str, float], saved_dx_producti
                 np.asarray(start_data[name])[None].astype(np.float64), LATE60_EXPORT_DS
             )[0]
             residual_saved[f"{name}_saved_grid_l2"] = float(np.sqrt(np.mean((saved_end - saved_start) ** 2)))
+    frame_dt = 0.08
+    window_steps = LATE60_ENDPOINT_STEP - LATE60_WINDOW_START_STEP
+    window_time = window_steps * 0.004
     ratios = {}
     for name in ("phi", "u", "v"):
         signal = frame_signal.get(name, 0.0)
         residual = residual_saved.get(f"{name}_saved_grid_l2", 0.0)
+        rate_matched = residual * (frame_dt / window_time)
         ratios[name] = {
             "late60_window_residual_saved_l2": residual,
             "impact_frame_signal_l2": signal,
             "ratio_residual_to_frame_signal": (None if signal <= 0 else residual / signal),
+            "rate_matched_residual_per_frame_dt": rate_matched,
+            "rate_matched_ratio": (None if signal <= 0 else rate_matched / signal),
         }
     horizon = 2000 * 0.004
     window_time = (LATE60_ENDPOINT_STEP - LATE60_WINDOW_START_STEP) * 0.004
@@ -1492,7 +1614,38 @@ def reader_compatibility(npz_path: Path, split: str) -> dict[str, Any]:
         )
     with np.load(Path(npz_path), allow_pickle=True) as data:
         results["dataset_fingerprint_present"] = "dataset_fingerprint" in data.files
+        results["file_fingerprint"] = (
+            str(np.asarray(data["dataset_fingerprint"]).item()) if "dataset_fingerprint" in data.files else None
+        )
     return results
+
+
+def reader_compatibility_by_split(canary_dir: Path, preferred: dict[str, Path]) -> dict[str, Any]:
+    """Reader proof per split on files this audit produced (section 30).
+
+    Rejected canaries intentionally have no sample file; a split with no
+    accepted file is reported UNMEASURED instead of being faked.
+    """
+
+    out: dict[str, Any] = {}
+    for split in ("train", "test"):
+        path = preferred.get(split)
+        if path is None or not Path(path).is_file():
+            available = sorted(
+                str(candidate)
+                for candidate in Path(canary_dir).glob("*.npz")
+                if not candidate.name.endswith("_final_fields.npz")
+            )
+            out[split] = {
+                "status": "UNMEASURED",
+                "reason": "no accepted sample file for this split in this audit run",
+                "files_available": available,
+            }
+            continue
+        entry = reader_compatibility(path, split)
+        entry["status"] = "MEASURED" if entry.get("shapes_match_current_model_contract") else "FAIL"
+        out[split] = entry
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -1511,6 +1664,7 @@ BLOCKER_GLOBAL_STATUS = {
     "BC-Y-PERIODIC": "open",
     "N-INACTIVE-PHASE-STATE-COUPLING": "confirmed_problem_in_contract_v11",
     "D-FRESH-TRAIN-CONTRACT": "open_l1b_blocker",
+    "IMPACT-PHI-OVERSHOOT": "new_target_critical_blocker_created_in_L1A2o",
 }
 
 EXIT_CLASSIFICATIONS = (
@@ -1528,6 +1682,34 @@ def blocker_relevance_matrix(audit: dict[str, Any]) -> list[dict[str, Any]]:
     gap = audit.get("contact_gap", {})
     late60 = audit.get("late60", {})
     rows = []
+    characterization = audit.get("overshoot_characterization", {})
+    rows.append(
+        {
+            "blocker_id": "IMPACT-PHI-OVERSHOOT",
+            "global_status": "new_target_critical_blocker_created_in_L1A2o",
+            "evidence_used": (
+                "exit canaries: the generator's own physics validation rejects the flat We=100/200"
+                " base cases at production settings on max_phi_overshoot"
+            ),
+            "current_l1b_target_relevance": (
+                "direct label corruption risk: the dataset contract rejects the samples, so the"
+                " default base generation cannot produce accepted phi/u/v labels at all"
+            ),
+            "effect_measured_in_exit_canaries": {
+                name: (record.get("diagnostics") or {}).get("max_phi_overshoot")
+                for name, record in audit.get("canaries", {}).items()
+                if not record.get("accepted_by_generator")
+            },
+            "exit_classification": "TARGET_CRITICAL",
+            "required_future_action": (
+                "one bounded repair stage: characterise and remove the impact-window interface"
+                " over/undershoot (or re-examine the dataset overshoot gate with evidence) BEFORE"
+                " any L1B production generation; no gate relaxation without a solver-quality basis"
+            ),
+        }
+    )
+    if characterization:
+        rows[0]["overshoot_characterization"] = characterization
     rows.append(
         {
             "blocker_id": "W-CONTACT-ANGLE",
@@ -1794,14 +1976,29 @@ def assemble_category_statuses(audit: dict[str, Any], profile: str) -> dict[str,
         )
     else:
         ratios = late60.get("ratios_to_impact_frame_signal", {})
-        phi_ratio = (ratios.get("phi") or {}).get("ratio_residual_to_frame_signal")
+        phi_ratio = (ratios.get("phi") or {}).get("rate_matched_ratio")
+        raw_ratio = (ratios.get("phi") or {}).get("ratio_residual_to_frame_signal")
         outside = late60.get("horizon_to_window_start_ratio", 1.0) < 1.0
         if phi_ratio is None:
             wetting_status, wetting_detail = "UNMEASURED", {"reason": "residual ratio undefined"}
         elif outside and phi_ratio <= REPRESENTATION_RATIO_SUBDOMINANT_MAX:
-            wetting_status, wetting_detail = "PASS", {"phi_ratio": phi_ratio, "outside_horizon": True}
+            wetting_status, wetting_detail = (
+                "PASS",
+                {
+                    "phi_rate_matched_ratio": phi_ratio,
+                    "phi_window_total_ratio": raw_ratio,
+                    "outside_horizon": True,
+                },
+            )
         else:
-            wetting_status, wetting_detail = "PASS_WITH_CAVEAT", {"phi_ratio": phi_ratio, "outside_horizon": outside}
+            wetting_status, wetting_detail = (
+                "PASS_WITH_CAVEAT",
+                {
+                    "phi_rate_matched_ratio": phi_ratio,
+                    "phi_window_total_ratio": raw_ratio,
+                    "outside_horizon": outside,
+                },
+            )
     phi_status, phi_detail = _representation_category(audit.get("representation_summary", {}), ("phi",))
     velocity_status, velocity_detail = _representation_category(audit.get("representation_summary", {}), ("u", "v"))
     geom_entries = [record for record in accepted if record.get("case", {}).get("surface") not in ("flat",)]
@@ -1814,6 +2011,16 @@ def assemble_category_statuses(audit: dict[str, Any], profile: str) -> dict[str,
     else:
         cadence_status = "UNMEASURED"
     generator_status = "PASS" if len(mandatory_accepted) == len(mandatory) and mandatory else "FAIL"
+    rejected_detail = {
+        record["name"]: {
+            "max_phi_overshoot": (record.get("diagnostics") or {}).get("max_phi_overshoot"),
+            "max_solid_leak": (record.get("diagnostics") or {}).get("max_solid_leak"),
+            "min_fluid_mass_ratio": (record.get("diagnostics") or {}).get("min_fluid_mass_ratio"),
+            "max_speed": (record.get("diagnostics") or {}).get("max_speed"),
+        }
+        for record in canaries.values()
+        if record.get("mandatory") and not record.get("accepted_by_generator")
+    }
     lineage_ok = all(
         record.get("representation", {}).get("lineage_valid") for record in accepted if record.get("representation")
     )
@@ -1832,15 +2039,25 @@ def assemble_category_statuses(audit: dict[str, Any], profile: str) -> dict[str,
         "VELOCITY_SAMPLE_FIDELITY": (velocity_status, velocity_detail),
         "GEOMETRY_SAMPLE_FIDELITY": (geometry_status, {"n_geometry_canaries_accepted": len(geom_entries)}),
         "FRAME_CADENCE": (cadence_status, {"frame_signal": frame_signal, "cadence_diagnostic": cadence}),
-        "GENERATOR_ACCEPTANCE": (generator_status, {"mandatory": len(mandatory), "accepted": len(mandatory_accepted)}),
+        "GENERATOR_ACCEPTANCE": (
+            generator_status,
+            {"mandatory": len(mandatory), "accepted": len(mandatory_accepted), "rejected_diagnostics": rejected_detail},
+        ),
         "DATASET_LINEAGE_PER_FILE": (lineage_status, {"per_file_validated": lineage_ok}),
         "FRESH_TRAINING_AGGREGATE_LINEAGE": (
             "UNMEASURED",
             {"reason": "deferred by design to L1B-1 (section 31); this stage only seeds the envelope"},
         ),
         "SIMPLE_SURFACE_COVERAGE": (
-            "PASS" if any(record.get("case", {}).get("surface") == "flat" for record in accepted) else "UNMEASURED",
-            {"flat_accepted": sum(1 for r in accepted if r.get("case", {}).get("surface") == "flat")},
+            "PASS"
+            if any(record.get("case", {}).get("surface") == "flat" for record in accepted)
+            else (
+                "FAIL" if any(record.get("case", {}).get("surface") == "flat" for record in mandatory) else "UNMEASURED"
+            ),
+            {
+                "flat_accepted": sum(1 for r in accepted if r.get("case", {}).get("surface") == "flat"),
+                "flat_mandatory": sum(1 for r in mandatory if r.get("case", {}).get("surface") == "flat"),
+            },
         ),
         "COMPLEX_SURFACE_CANARY": (geometry_status, {"accepted": len(geom_entries)}),
         "EXTERNAL_DYNAMIC_VALIDATION": (
@@ -2115,7 +2332,13 @@ def run_forensic() -> dict[str, Any]:
     )
     pillar_case = _find_case("train", "pillars", 8)
     pillar_record = next(record for record in canaries.values() if record["case"].get("seed") == 8)
-    complex_record = next(record for record in canaries.values() if record["role"] == "complex_heldout_canary")
+
+    # section 42/69: if the generator rejected representative canaries, characterise the
+    # single dominant rejection on one case (the primary flat impact canary).
+    overshoot_characterization: dict[str, Any] = {}
+    rejected = [record for record in canaries.values() if not record.get("accepted_by_generator")]
+    if rejected:
+        overshoot_characterization = characterize_overshoot(primary["case"], primary["role"], production_args)
 
     # spatial refinement subset (section 15)
     spatial_audits = {}
@@ -2185,11 +2408,28 @@ def run_forensic() -> dict[str, Any]:
         contact_gap["production"][primary["name"]], refined_metrics, temporal_metrics
     )
 
-    # reader compatibility (section 30)
-    reader = {
-        "flat_train": reader_compatibility(CANARY_DIR / f"{primary['name']}.npz", "train"),
-        "complex_test": reader_compatibility(CANARY_DIR / f"{complex_record['name']}.npz", "test"),
-    }
+    # reader compatibility (section 30): only accepted canaries produce sample files
+    accepted_train = next(
+        (record for record in canaries.values() if record.get("accepted_by_generator") and record.get("canary_npz")),
+        None,
+    )
+    accepted_test = next(
+        (
+            record
+            for record in canaries.values()
+            if record.get("accepted_by_generator")
+            and record.get("case", {}).get("split") == "test"
+            and record.get("canary_npz")
+        ),
+        None,
+    )
+    reader = reader_compatibility_by_split(
+        CANARY_DIR,
+        {
+            "train": Path(accepted_train["canary_npz"]) if accepted_train else None,
+            "test": Path(accepted_test["canary_npz"]) if accepted_test else None,
+        },
+    )
 
     # representation summaries across accepted canaries
     representation_summary: dict[str, Any] = {}
@@ -2260,6 +2500,7 @@ def run_forensic() -> dict[str, Any]:
         "representation_summary": representation_summary,
         "frame_signal_summary": frame_signal_summary,
         "boundedness": boundedness,
+        "overshoot_characterization": overshoot_characterization,
         "canary_matrix_definition": matrix,
     }
     return audit
@@ -2333,7 +2574,9 @@ def run_quick() -> dict[str, Any]:
             "min_across_canaries": signal.get("min"),
             "median_of_medians": signal.get("median"),
         }
-    reader = {"flat_train": reader_compatibility(CANARY_DIR / f"{primary['name']}.npz", "train")}
+    reader = reader_compatibility_by_split(
+        CANARY_DIR, {"train": Path(primary["canary_npz"]) if primary.get("canary_npz") else None}
+    )
     audit = {
         "stage": STAGE,
         "profile": "quick",
@@ -2368,7 +2611,7 @@ def run_quick() -> dict[str, Any]:
         "sample_export_roundtrip": bool(primary.get("representation")),
         "representation_noise_calculation": bool(primary.get("representation", {}).get("per_field")),
         "contact_gap_metric_plumbing": bool(gap_production.get("n_frames_total")),
-        "reader_compatibility": bool(audit["reader"]["flat_train"].get("shapes_match_current_model_contract")),
+        "reader_compatibility": bool(audit["reader"]["train"].get("shapes_match_current_model_contract")),
         "verdict_schema": all(name in CATEGORY_STATUSES for name in CATEGORY_STATUSES),
         "fail_closed_unmeasured_handling": assemble_headline(
             {**{name: {"status": "UNMEASURED", "detail": {}} for name in CATEGORY_STATUSES}}

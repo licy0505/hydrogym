@@ -1,0 +1,32 @@
+{
+ "phi": {
+  "frame_increment_norm_median": null,
+  "late60_residual_norm_saved_grid": null,
+  "representation_norm_saved_grid": 3.543613757715673e-09,
+  "representation_over_frame_signal": null,
+  "space_over_frame_signal": null,
+  "space_refinement_norm": 0.29374012948633244,
+  "time_over_frame_signal": null,
+  "time_refinement_norm": 0.01378187687339209
+ },
+ "u": {
+  "frame_increment_norm_median": null,
+  "late60_residual_norm_saved_grid": null,
+  "representation_norm_saved_grid": 2.0514514128634608e-08,
+  "representation_over_frame_signal": null,
+  "space_over_frame_signal": null,
+  "space_refinement_norm": 0.5629535218540477,
+  "time_over_frame_signal": null,
+  "time_refinement_norm": 0.39946509846589706
+ },
+ "v": {
+  "frame_increment_norm_median": null,
+  "late60_residual_norm_saved_grid": null,
+  "representation_norm_saved_grid": 4.9177262950016694e-05,
+  "representation_over_frame_signal": null,
+  "space_over_frame_signal": null,
+  "space_refinement_norm": 0.061182178630052333,
+  "time_over_frame_signal": null,
+  "time_refinement_norm": 1.0899010206262745
+ }
+}

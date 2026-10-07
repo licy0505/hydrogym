@@ -1,0 +1,200 @@
+{
+ "complex_quick__random_pillars_R=0.65_Re=120.0_We=120.0_cos_theta=0.0_dt=0.002_eps_factor=2.0_height_range=(0.3, 0.55)_impact_gap_eps=0.75_n_pillars=5_u_impact=1.0_velocity_mode=uniform_width_range=(0.4, 0.55)": {
+  "dataset_fingerprint": "82ec731b4da5638c8a2425d735145c65cd61aa7a4c37f9107557d5ab2570a885",
+  "interface_band": {
+   "cells_fine_last_frame": 279,
+   "cells_saved_last_frame": 73,
+   "interface_band_l2_saved_grid": 1.2461041730536266e-08
+  },
+  "lineage_valid": true,
+  "mass_change": {
+   "definition": "plain cell sum times cell area on each grid (export is not restart-authoritative)",
+   "mass_saved_final": 1.5054340945601286,
+   "mass_solver_final": 1.5054341019206037,
+   "relative_mass_change": 4.889270881335492e-09
+  },
+  "per_field": {
+   "phi": {
+    "cast_l2_saved_grid": 3.394904575588066e-09,
+    "cast_linf_saved_grid": 2.96852948888926e-08,
+    "cast_relative_l2": 2.0966052078099228e-08,
+    "downsample_reconstruction_l2_fine_grid": 0.017971897741612116,
+    "downsample_reconstruction_relative_l2": 0.11031241453846227,
+    "frame_signal_l2": 0.005561895486598591,
+    "representation_noise_ratio": 6.10386258384053e-07,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float32",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "u": {
+    "cast_l2_saved_grid": 1.3115429655503486e-05,
+    "cast_linf_saved_grid": 0.00012198463082313538,
+    "cast_relative_l2": 0.00021237264333405923,
+    "downsample_reconstruction_l2_fine_grid": 0.018938925101048568,
+    "downsample_reconstruction_relative_l2": 0.29319292159587,
+    "frame_signal_l2": 0.020051530138844333,
+    "representation_noise_ratio": 0.000654086225075459,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "v": {
+    "cast_l2_saved_grid": 0.00010591990426891464,
+    "cast_linf_saved_grid": 0.0003758668899536133,
+    "cast_relative_l2": 0.00021513936465270242,
+    "downsample_reconstruction_l2_fine_grid": 0.030257705366527242,
+    "downsample_reconstruction_relative_l2": 0.06134224321692123,
+    "frame_signal_l2": 0.22576365744453442,
+    "representation_noise_ratio": 0.00046916277609888136,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   }
+  },
+  "saved_time_first_last": [
+   0.03999999910593033,
+   0.07999999821186066
+  ]
+ },
+ "flat_quick__flat_We=100.0_cos_theta=0.5": {
+  "dataset_fingerprint": "5d46ccc633313a886053f387ab5cb3669f4bfe5a2274b66e76c793f34c1a38ef",
+  "interface_band": {
+   "cells_fine_last_frame": 234,
+   "cells_saved_last_frame": 62,
+   "interface_band_l2_saved_grid": 1.0283968796759013e-08
+  },
+  "lineage_valid": true,
+  "mass_change": {
+   "definition": "plain cell sum times cell area on each grid (export is not restart-authoritative)",
+   "mass_saved_final": 1.6467236871406234,
+   "mass_solver_final": 1.6467236860228796,
+   "relative_mass_change": 6.787683367439231e-10
+  },
+  "per_field": {
+   "phi": {
+    "cast_l2_saved_grid": 3.543613757715673e-09,
+    "cast_linf_saved_grid": 2.9794490874479607e-08,
+    "cast_relative_l2": 1.955537144789595e-08,
+    "downsample_reconstruction_l2_fine_grid": 0.020747480342323748,
+    "downsample_reconstruction_relative_l2": 0.11375145542863721,
+    "frame_signal_l2": 0.0040183127491728345,
+    "representation_noise_ratio": 8.818660912954379e-07,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float32",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "u": {
+    "cast_l2_saved_grid": 2.0514514128634608e-08,
+    "cast_linf_saved_grid": 1.5454133972525597e-07,
+    "cast_relative_l2": 0.0003269649975412006,
+    "downsample_reconstruction_l2_fine_grid": 0.0005277837465796885,
+    "downsample_reconstruction_relative_l2": 0.9930079529235085,
+    "frame_signal_l2": 4.4018859330539626e-05,
+    "representation_noise_ratio": 0.0004660392032103827,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "v": {
+    "cast_l2_saved_grid": 4.9177262950016694e-05,
+    "cast_linf_saved_grid": 0.00012192875146865845,
+    "cast_relative_l2": 0.00016658850997106674,
+    "downsample_reconstruction_l2_fine_grid": 0.013719494111844345,
+    "downsample_reconstruction_relative_l2": 0.046424824745996844,
+    "frame_signal_l2": 0.10699599628090892,
+    "representation_noise_ratio": 0.00045961778626656233,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   }
+  },
+  "saved_time_first_last": [
+   0.03999999910593033,
+   0.07999999821186066
+  ]
+ },
+ "pillar_quick__pillars_R=0.65_Re=120.0_We=120.0_cos_theta=-0.25_dt=0.002_eps_factor=2.0_height=0.45_impact_gap_eps=0.75_n_pillars=4_u_impact=1.0_velocity_mode=uniform_width=0.45": {
+  "dataset_fingerprint": "3048d68ab700825e42a137f970b4cde6f251e7d9a14347592ad9bcb567229be5",
+  "interface_band": {
+   "cells_fine_last_frame": 268,
+   "cells_saved_last_frame": 72,
+   "interface_band_l2_saved_grid": 1.2468135380972409e-08
+  },
+  "lineage_valid": true,
+  "mass_change": {
+   "definition": "plain cell sum times cell area on each grid (export is not restart-authoritative)",
+   "mass_saved_final": 1.4940535409362132,
+   "mass_solver_final": 1.494053546453007,
+   "relative_mass_change": 3.692500648079043e-09
+  },
+  "per_field": {
+   "phi": {
+    "cast_l2_saved_grid": 3.5976652622153324e-09,
+    "cast_linf_saved_grid": 2.861849346391665e-08,
+    "cast_relative_l2": 2.223985365061052e-08,
+    "downsample_reconstruction_l2_fine_grid": 0.021230275375342677,
+    "downsample_reconstruction_relative_l2": 0.13012432930569767,
+    "frame_signal_l2": 0.005276010198533966,
+    "representation_noise_ratio": 6.818912638218569e-07,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float32",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "u": {
+    "cast_l2_saved_grid": 1.0722683039817018e-05,
+    "cast_linf_saved_grid": 9.967014193534851e-05,
+    "cast_relative_l2": 0.00018602915815841545,
+    "downsample_reconstruction_l2_fine_grid": 0.01996964776421523,
+    "downsample_reconstruction_relative_l2": 0.3273654195553513,
+    "frame_signal_l2": 0.01740564618056934,
+    "representation_noise_ratio": 0.0006160462489342798,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   },
+   "v": {
+    "cast_l2_saved_grid": 0.00012124844108546035,
+    "cast_linf_saved_grid": 0.00038614869117736816,
+    "cast_relative_l2": 0.00023076243929862346,
+    "downsample_reconstruction_l2_fine_grid": 0.03148833458903699,
+    "downsample_reconstruction_relative_l2": 0.059821894051572254,
+    "frame_signal_l2": 0.22064260861061827,
+    "representation_noise_ratio": 0.0005495241460793051,
+    "representation_ratio_class": "SUBDOMINANT",
+    "stored_dtype": "float16",
+    "thresholds": {
+     "dominant_min": 1.0,
+     "subdominant_max": 0.25
+    }
+   }
+  },
+  "saved_time_first_last": [
+   0.03999999910593033,
+   0.07999999821186066
+  ]
+ }
+}

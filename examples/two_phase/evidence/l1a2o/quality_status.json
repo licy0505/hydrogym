@@ -1,0 +1,46 @@
+{
+ "all_checks_passed": true,
+ "checks": {
+  "canary_matrix_construction": true,
+  "contact_gap_metric_plumbing": true,
+  "current_ml_contract_discovery": true,
+  "effective_schedule_calculation": true,
+  "fail_closed_unmeasured_handling": true,
+  "observable_extraction": true,
+  "reader_compatibility": true,
+  "representation_noise_calculation": true,
+  "sample_export_roundtrip": true,
+  "space_time_comparison_alignment": true,
+  "verdict_schema": true
+ },
+ "elapsed_seconds": 88.9520096110009,
+ "forensic_profile": {
+  "ran": true,
+  "status": "complete",
+  "verdict": "L1B_DATA_NOT_READY"
+ },
+ "git_diff_check": {
+  "passed": true
+ },
+ "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+ "notes": {
+  "dependency_audit": "PRE_EXISTING_FAILURE (uv audit --locked, unchanged; kept separate per stage spec)"
+ },
+ "profile": "quick",
+ "profiles_run": [
+  "forensic",
+  "quick"
+ ],
+ "py_compile": {
+  "passed": true
+ },
+ "pytest": {
+  "note": "focused test file: 41 passed (sections 49-56 + the section-2 overshoot blocker test)",
+  "passed": true
+ },
+ "ruff": {
+  "note": "ruff check + ruff format --check clean on module and tests",
+  "passed": true
+ },
+ "stage": "L1A-2o"
+}

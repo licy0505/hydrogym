@@ -1,0 +1,92 @@
+[
+ {
+  "blocker_id": "IMPACT-PHI-OVERSHOOT",
+  "current_l1b_target_relevance": "direct label corruption risk: the dataset contract rejects the samples, so the default base generation cannot produce accepted phi/u/v labels at all",
+  "effect_measured_in_exit_canaries": {},
+  "evidence_used": "exit canaries: the generator's own physics validation rejects the flat We=100/200 base cases at production settings on max_phi_overshoot",
+  "exit_classification": "TARGET_CRITICAL",
+  "global_status": "new_target_critical_blocker_created_in_L1A2o",
+  "required_future_action": "one bounded repair stage: characterise and remove the impact-window interface over/undershoot (or re-examine the dataset overshoot gate with evidence) BEFORE any L1B production generation; no gate relaxation without a solver-quality basis"
+ },
+ {
+  "blocker_id": "W-CONTACT-ANGLE",
+  "current_l1b_target_relevance": "static-equilibrium wetting residual; impact labels live at t<=8",
+  "effect_measured_in_exit_canaries": null,
+  "evidence_used": "frozen L1A-2j late-window records + frozen 50k authority (this stage late60 section)",
+  "exit_classification": "BOUNDED_CAVEAT",
+  "global_status": "open",
+  "required_future_action": "remain open unless the original formal closure criteria pass (section 34)"
+ },
+ {
+  "blocker_id": "I-CONTACT-GAP",
+  "current_l1b_target_relevance": "directly relevant to droplet-impact labels inside the horizon",
+  "effect_measured_in_exit_canaries": null,
+  "evidence_used": "exit contact-gap audit with spatial + temporal refinement (section 20-22)",
+  "exit_classification": "BOUNDED_CAVEAT",
+  "global_status": "open",
+  "required_future_action": "physical-publication claims require external/contact validation; solver-surrogate data may carry the behaviour as an explicit solver-model caveat (section 22)"
+ },
+ {
+  "blocker_id": "P-VARDENS-PROJ",
+  "current_l1b_target_relevance": "model-form constant-coefficient projection with variable density; the surrogate emulates THIS solver, so a self-consistent solver artifact is inside the learned map",
+  "effect_measured_in_exit_canaries": "unmeasured_not_current_contract (no per-canary decomposition run)",
+  "evidence_used": "frozen L1A-2k capillary decomposition (structural background on the static case); no new forensic campaign (section 33)",
+  "exit_classification": "NOT_MATERIAL_TO_CURRENT_L1B_TASK",
+  "global_status": "open",
+  "required_future_action": "physical-publication claims require the model-form repair stage"
+ },
+ {
+  "blocker_id": "P-CAP-RHO",
+  "current_l1b_target_relevance": "model-form capillary acceleration divided by rho_l; the surrogate emulates THIS solver, so a self-consistent solver artifact is inside the learned map",
+  "effect_measured_in_exit_canaries": "unmeasured_not_current_contract (no per-canary decomposition run)",
+  "evidence_used": "frozen L1A-2k capillary decomposition (structural background on the static case); no new forensic campaign (section 33)",
+  "exit_classification": "NOT_MATERIAL_TO_CURRENT_L1B_TASK",
+  "global_status": "open",
+  "required_future_action": "physical-publication claims require the model-form repair stage"
+ },
+ {
+  "blocker_id": "P-VARVISC",
+  "current_l1b_target_relevance": "model-form viscosity treatment; the surrogate emulates THIS solver, so a self-consistent solver artifact is inside the learned map",
+  "effect_measured_in_exit_canaries": "unmeasured_not_current_contract (no per-canary decomposition run)",
+  "evidence_used": "frozen L1A-2k capillary decomposition (structural background on the static case); no new forensic campaign (section 33)",
+  "exit_classification": "NOT_MATERIAL_TO_CURRENT_L1B_TASK",
+  "global_status": "open",
+  "required_future_action": "physical-publication claims require the model-form repair stage"
+ },
+ {
+  "blocker_id": "N-DT",
+  "current_l1b_target_relevance": "direct label accuracy at the production dt",
+  "effect_measured_in_exit_canaries": 1.357571669118939e-16,
+  "evidence_used": "dt/2 exit subset at equal physical times and equal save times (section 18-19)",
+  "exit_classification": "BOUNDED_CAVEAT",
+  "global_status": "open_until_measured_here",
+  "required_future_action": "none if within the existing provisional target; else a dt-policy contract decision"
+ },
+ {
+  "blocker_id": "BC-Y-PERIODIC",
+  "current_l1b_target_relevance": "geometry/topology of the embedded wall; identical across training and evaluation",
+  "effect_measured_in_exit_canaries": "none separable from solver-native behaviour",
+  "evidence_used": "L1A-2n seam negative control: seam cells respond identically to interior cells (seam-specific coupling falsified)",
+  "exit_classification": "NOT_MATERIAL_TO_CURRENT_L1B_TASK",
+  "global_status": "open",
+  "required_future_action": "document the periodic-y domain as part of the audited solver envelope"
+ },
+ {
+  "blocker_id": "N-INACTIVE-PHASE-STATE-COUPLING",
+  "current_l1b_target_relevance": "generic structural background at O(delta/2dy) in one operator; identical mechanism at every angle",
+  "effect_measured_in_exit_canaries": "not separated per impact canary (no production repair allowed in this stage)",
+  "evidence_used": "L1A-2n: INACTIVE_COUPLING_BACKGROUND_ONLY; first causal operator measured (capillary stencil leakage); not 60-deg-specific; bitwise-suppressible by diagnostic closures",
+  "exit_classification": "BOUNDED_CAVEAT",
+  "global_status": "confirmed_problem_in_contract_v11",
+  "required_future_action": "contract-12 candidate (ghost/one-sided closure + inactive-momentum handling); never reopened as a 60-deg root cause"
+ },
+ {
+  "blocker_id": "D-FRESH-TRAIN-CONTRACT",
+  "current_l1b_target_relevance": "process blocker for fresh training, not for label fidelity",
+  "effect_measured_in_exit_canaries": "per-file lineage validated on every canary (dataset_lineage schema 3)",
+  "evidence_used": "section 31: aggregate dataset/checkpoint lineage enforcement is not implemented or tested yet",
+  "exit_classification": "UNMEASURED",
+  "global_status": "open_l1b_blocker",
+  "required_future_action": "close in L1B-1 (fresh generation + aggregate lineage contract); this stage only seeds the envelope"
+ }
+]

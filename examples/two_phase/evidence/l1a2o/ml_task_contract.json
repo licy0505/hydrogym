@@ -1,0 +1,171 @@
+{
+ "actual_stored_dtypes": {
+  "chi": "float32",
+  "dataset_fingerprint": "<U64",
+  "dataset_schema_version": "int32",
+  "feature_cells_min": "float32",
+  "phi": "float32",
+  "scalars": "float32",
+  "sdf": "float32",
+  "solver_sha256": "<U64",
+  "split": "<U4",
+  "surface": "<U14",
+  "time": "float32",
+  "u": "float16",
+  "v": "float16"
+ },
+ "conditioning_fields": [
+  "We_over_100",
+  "Re_over_200",
+  "cos_theta",
+  "saved_dx"
+ ],
+ "conditioning_source": "generate_dataset._save_case scalars vector",
+ "dataset_schema_version": 3,
+ "discovered_from": {
+  "cases": "cases.py CASES / CASE_SETS",
+  "generator": "generate_dataset.py main() argparse defaults (AST)",
+  "lineage": "production/dataset_lineage.py constants",
+  "reader": "surrogate.py load_arrays / load_full / load_windows",
+  "sample_dtypes": "actual generated .npz"
+ },
+ "downsampling_rule": "average_pool_mean_per_block (generate_dataset._downsample_history)",
+ "dtype_agreement": {
+  "chi": true,
+  "phi": true,
+  "scalars": true,
+  "sdf": true,
+  "time": true,
+  "u": true,
+  "v": true
+ },
+ "dynamic_input_fields": [
+  "phi",
+  "u",
+  "v",
+  "chi"
+ ],
+ "effective_schedule_note": "requested dt is min(case dt, stable_dt(N, u_max=2.0)); nsteps/save_every are re-rounded so the physical horizon and frame spacing stay at the nominal request",
+ "generator_cli_defaults": {
+  "acceptance_thresholds": {
+   "max_phi_overshoot": 0.02,
+   "max_solid_leak": 0.0005,
+   "max_speed": 5.0,
+   "max_total_mass_ratio": 1.005,
+   "min_feature_cells": 2.0,
+   "min_total_mass_ratio": 0.995
+  },
+  "defaults": {
+   "N": 192,
+   "ds": 3,
+   "dt": 0.004,
+   "limit": 0,
+   "max_phi_overshoot": 0.02,
+   "max_solid_leak": 0.0005,
+   "max_speed": 5.0,
+   "max_total_mass_ratio": 1.005,
+   "min_feature_cells": 2.0,
+   "min_total_mass_ratio": 0.995,
+   "nsteps": 2000,
+   "out": "data",
+   "save_every": 20,
+   "set": "base"
+  },
+  "source": "generate_dataset.py main() argparse defaults",
+  "threshold_drift": {},
+  "threshold_status": "current_defaults_match_frozen_stage_expectations"
+ },
+ "geometry_downsampling_rule": "hard-mask mean then EDT reinitialisation (generate_dataset._coarsen_geometry)",
+ "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+ "model_input_channels": 4,
+ "model_output_channels": 3,
+ "nominal_schedule": {
+  "dt": 0.004,
+  "nominal_horizon": 8.0,
+  "nsteps": 2000,
+  "save_every": 20
+ },
+ "non_targets": {
+  "derived_observables": "audit-only (spread, gaps, contact lines); never labels",
+  "impact_force": "not stored; not a training target",
+  "pressure": "not stored in the schema-3 sample and not a training target"
+ },
+ "reader_dtype_per_field": {
+  "chi": "float32",
+  "phi": "float32 (kept as stored; no second solver-to-sample cast)",
+  "sdf": "float32",
+  "u": "float16 stored, cast to float32 on load",
+  "v": "float16 stored, cast to float32 on load"
+ },
+ "sample_cast_policy": "downsample_mean_then_float32_v1",
+ "sample_representation": "derived_training_observable_not_restart_authoritative",
+ "saved_dtype_per_field": {
+  "chi": "float32",
+  "phi": "float32",
+  "scalars": "float32",
+  "sdf": "float32",
+  "time": "float32",
+  "u": "float16",
+  "v": "float16"
+ },
+ "saved_resolution": {
+  "factor_ds": 3,
+  "saved_N": 64
+ },
+ "section_version": 2,
+ "solver_contract_version": 11,
+ "solver_dtype_per_field": {
+  "chi": "float32",
+  "phi": "float64",
+  "sdf": "float32",
+  "u": "float32",
+  "v": "float32"
+ },
+ "solver_resolution": {
+  "Lx": 6.0,
+  "Ly": 6.0,
+  "N": 192
+ },
+ "source_hashes": {
+  "cases.py": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+  "generate_dataset.py": "15a656d7962152386a487bb728c54c30c5528e2e694328f5048d1d569291d09b",
+  "phasefield.py": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
+  "production/dataset_lineage.py": "cd256032aab6a5d0948c434b013a814f1d4f0bc6a3071f6748edc9097112dc7f",
+  "production/l1a_data_readiness_exit_audit.py": "fc24a570dd8cc9f151912a48d627ef2a41d72439fcd8e36ba6b51e1e7ce650f9",
+  "production/observables.py": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+  "surrogate.py": "f69b1e74f3fee07e9182aa0fd668f5debc2feb86f1f455b620b22028b785c029"
+ },
+ "stage": "L1A-2o",
+ "static_geometry_fields": [
+  "chi",
+  "sdf"
+ ],
+ "stored_targets_are_next_frame": "surrogate.load_arrays: Y = (phi, u, v) at frame i+1; X = (phi,u,v,chi) at frame i",
+ "surface_families": {
+  "case_sets": [
+   "aug",
+   "base",
+   "large",
+   "lowWe",
+   "lowWe_all",
+   "lowWe_test",
+   "smoke",
+   "spreading"
+  ],
+  "test_complex": [
+   "grooves",
+   "hierarchical",
+   "random_pillars",
+   "wedge"
+  ],
+  "train_simple": [
+   "flat",
+   "pillars"
+  ]
+ },
+ "target_fields": [
+  "phi",
+  "u",
+  "v"
+ ]
+}

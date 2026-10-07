@@ -191,7 +191,7 @@ def test_formal_mass_uses_sum_V_phi():
     u = np.zeros_like(phi)
     volume = np.asarray(pf.phase_control_volumes(solid, p), dtype=np.float64)
     observable = audit.extract_observables(phi, u, u, solid, p, 0.7, save_every=20)
-    expected = np.sum(phi[0] * volume) * p.dx * p.dy
+    expected = np.sum(phi[0] * volume)
     assert observable["rows"][0]["formal_mass"] == pytest.approx(float(expected))
 
 
@@ -497,3 +497,11 @@ def test_d_fresh_train_contract_not_falsely_closed():
     row = next(entry for entry in rows if entry["blocker_id"] == "D-FRESH-TRAIN-CONTRACT")
     assert row["exit_classification"] == "UNMEASURED"
     assert "L1B-1" in row["required_future_action"]
+
+
+def test_new_overshoot_blocker_is_target_critical_row():
+    rows = audit.blocker_relevance_matrix({})
+    row = next(entry for entry in rows if entry["blocker_id"] == "IMPACT-PHI-OVERSHOOT")
+    assert row["exit_classification"] == "TARGET_CRITICAL"
+    assert audit.BLOCKER_GLOBAL_STATUS["IMPACT-PHI-OVERSHOOT"] == "new_target_critical_blocker_created_in_L1A2o"
+    assert "repair stage" in row["required_future_action"] or "re-examine" in row["required_future_action"]

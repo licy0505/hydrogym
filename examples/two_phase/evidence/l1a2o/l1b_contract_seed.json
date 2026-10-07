@@ -1,0 +1,94 @@
+{
+ "audited_parameter_envelope": {
+  "R": [
+   0.7
+  ],
+  "Re": [
+   200.0
+  ],
+  "We": [
+   100.0,
+   200.0
+  ],
+  "cos_theta": [
+   -0.5,
+   0.0,
+   0.5
+  ],
+  "phase_boundary_model": "impermeable_flux",
+  "u_impact": [
+   0.5
+  ],
+  "velocity_mode": "uniform",
+  "wetting_model": "surface_energy"
+ },
+ "audited_surfaces": {
+  "complex_heldout": [
+   "random_pillars"
+  ],
+  "simple": [
+   "flat",
+   "pillars"
+  ]
+ },
+ "blocking_reason": {
+  "failing_categories": [
+   "SPATIAL_REFINEMENT",
+   "TEMPORAL_REFINEMENT"
+  ],
+  "unmeasured_blocking_categories": [
+   "WETTING_RESIDUAL_RELEVANCE"
+  ]
+ },
+ "downsample_factor": 3,
+ "dt_policy": {
+  "effective_dt_rule": "min(requested, stable_dt(N, u_max=2.0))",
+  "requested_dt": 0.004
+ },
+ "excluded_claims": [
+  "no claim of long-time equilibrium wetting closure (W-CONTACT-ANGLE stays open)",
+  "no physical-publication ground-truth claim while model-form blockers remain open",
+  "no extrapolation beyond the audited We/Re/cos_theta/surface envelope"
+ ],
+ "excluded_target_regions_times": [
+  "t beyond the audited horizon of 8.0 physical time units"
+ ],
+ "generation_allowed": false,
+ "known_caveats": [
+  "IMPACT_CONTACT_GAP",
+  "WETTING_RESIDUAL_RELEVANCE",
+  "FRESH_TRAINING_AGGREGATE_LINEAGE",
+  "EXTERNAL_DYNAMIC_VALIDATION"
+ ],
+ "mandatory_lineage_fields": [
+  "case",
+  "dataset_fingerprint",
+  "dataset_schema_version",
+  "phase_storage_model",
+  "sample_cast_policy",
+  "sample_representation",
+  "solver_contract_version",
+  "solver_sha256"
+ ],
+ "next_l1b_requirement": "D-FRESH-TRAIN-CONTRACT closure (fresh generation + aggregate training lineage)",
+ "physical_horizon": 8.0,
+ "production_resolution": {
+  "Lx": 6.0,
+  "Ly": 6.0,
+  "N": 192,
+  "eps_rule": "1.5*Lx/N"
+ },
+ "sample_dtypes": {
+  "chi": "float32",
+  "phi": "float32",
+  "sdf": "float32",
+  "u": "float16",
+  "v": "float16"
+ },
+ "save_cadence": {
+  "frame_dt": 0.08,
+  "save_every": 20
+ },
+ "solver_contract": 11,
+ "stage": "L1A-2o"
+}
