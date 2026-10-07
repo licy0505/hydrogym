@@ -1458,3 +1458,340 @@ def _one_step_counterfactual(
             "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced"
         ),
     }
+
+
+def _series_summary(values: list[float]) -> dict[str, float]:
+    array = np.asarray([value for value in values if value is not None], dtype=np.float64)
+    if array.size == 0:
+        return {"mean": 0.0, "median": 0.0, "min": 0.0, "max": 0.0, "std": 0.0, "n": 0}
+    return {
+        "mean": float(np.mean(array)),
+        "median": float(np.median(array)),
+        "min": float(np.min(array)),
+        "max": float(np.max(array)),
+        "std": float(np.std(array)),
+        "n": int(array.size),
+    }
+
+
+def _process_sample_row(
+    case_name: str,
+    target_deg: float,
+    row_arrays: dict[str, Any],
+    solid: pf.Solid,
+    p: pf.PhaseFieldParams,
+    partition: dict[str, Any],
+    distance_cells: np.ndarray,
+    *,
+    ch_only: bool,
+    phi_ref_mass: float,
+    phi_ref_conserved: float,
+    with_localization: bool,
+) -> dict[str, Any]:
+    phi = np.asarray(row_arrays["phi"], dtype=np.float64)
+    phi_prev = np.asarray(row_arrays["phi_prev"], dtype=np.float64)
+    r = _production_rate_field(phi, phi_prev, p.dt)
+    area = partition["cell_area"]
+    volume = partition["volume"]
+    R_prod = _production_phase_rate(r, area)
+    ledger = _support_ledger(r, partition)
+    shadow = _shadow_volume_metric(r, volume)
+    cross_masks = _state_cross_masks(phi, solid, p, partition)
+    cross_ledger = _support_ledger(r, partition, cross_masks)
+    crosscheck = _gate_crosscheck(
+        phi,
+        phi_prev,
+        row_arrays["u"],
+        row_arrays["v"],
+        float(row_arrays["t"]),
+        solid,
+        p,
+        step=int(row_arrays["step"]),
+        target_deg=target_deg,
+        volume=volume,
+        phi_ref_mass=phi_ref_mass,
+        phi_ref_conserved=phi_ref_conserved,
+        ch_only=ch_only,
+        r=r,
+        R_prod=R_prod,
+    )
+    sample = crosscheck["sample_row"]
+    contacts = l1a2l._contact_metrics(phi, solid, p)
+    processed = {
+        "case": case_name,
+        "step": int(row_arrays["step"]),
+        "time": float(row_arrays["t"]),
+        "state_hashes": {
+            "phi": _hash_array(phi),
+            "u": _hash_array(row_arrays["u"]),
+            "v": _hash_array(row_arrays["v"]),
+            "t": _hash_array(row_arrays["t"]),
+        },
+        "R_prod": R_prod,
+        "Q_prod": R_prod * R_prod,
+        "R_V": shadow["R_V"],
+        "Q_V": shadow["Q_V"],
+        "R_prod_over_R_V": (R_prod / shadow["R_V"]) if shadow["R_V"] and shadow["R_V"] > 0.0 else None,
+        "ledger": ledger,
+        "cross_mask_energy_fraction": cross_ledger["cross_mask_energy_fraction"],
+        "gate_crosscheck": {key: value for key, value in crosscheck.items() if key != "sample_row"},
+        "production_sample": sample,
+        "contacts": contacts,
+    }
+    if with_localization:
+        processed["zero_volume_activity_localization"] = _zero_volume_activity_localization(
+            r, solid, p, partition, phi, distance_cells
+        )
+    return processed
+
+
+def _window_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    fractions = {
+        "ZERO_VOLUME_fraction": [row["ledger"]["classes"]["ZERO_VOLUME"]["f"] for row in rows],
+        "PARTIAL_VOLUME_fraction": [row["ledger"]["classes"]["PARTIAL_VOLUME"]["f"] for row in rows],
+        "FULL_VOLUME_fraction": [row["ledger"]["classes"]["FULL_VOLUME"]["f"] for row in rows],
+    }
+    summary: dict[str, Any] = {
+        "steps": [row["step"] for row in rows],
+        "R_prod": _series_summary([row["R_prod"] for row in rows]),
+        "R_V": _series_summary([row["R_V"] for row in rows]),
+    }
+    for name, values in fractions.items():
+        summary[name] = _series_summary(values)
+    summary["R_prod_last"] = rows[-1]["R_prod"] if rows else None
+    summary["R_V_last"] = rows[-1]["R_V"] if rows else None
+    return summary
+
+
+def _production_window_angle_audit(
+    rows: list[dict[str, Any]],
+    dense_rows: list[dict[str, Any]],
+    *,
+    M: float,
+    window_mobility_time: float,
+) -> dict[str, Any]:
+    """Section 18: audit the late-window angle signal without changing any threshold."""
+
+    def spread(values: list[float]) -> dict[str, float]:
+        clean = [value for value in values if value is not None]
+        if len(clean) < 2:
+            return {
+                "spread_deg": 0.0,
+                "n": len(clean),
+                "min_deg": clean[0] if clean else 0.0,
+                "max_deg": clean[0] if clean else 0.0,
+            }
+        return {
+            "spread_deg": float(max(clean) - min(clean)),
+            "n": len(clean),
+            "min_deg": float(min(clean)),
+            "max_deg": float(max(clean)),
+        }
+
+    angles = [row["production_sample"]["measured_angle_deg"] for row in rows]
+    times = [row["production_sample"]["mobility_scaled_time"] for row in rows]
+    last_mt = times[-1]
+    production_window_rows = [
+        row for row, mt in zip(rows, times) if mt >= last_mt - float(window_mobility_time) - 1.0e-12
+    ]
+    production_window_spread = spread(
+        [row["production_sample"]["measured_angle_deg"] for row in production_window_rows]
+    )
+    full_window_spread = spread(angles)
+    dense_angles = [row["production_sample"]["measured_angle_deg"] for row in dense_rows]
+    dense_spread = spread(dense_angles)
+    cadence_in_dense = spread(
+        [angle for angle, row in zip(dense_angles, dense_rows) if row["step"] % SAMPLE_CADENCE_STEPS == 0]
+    )
+
+    def slope_deg_per_step(row_list: list[dict[str, Any]]) -> float | None:
+        steps = np.asarray([row["step"] for row in row_list], dtype=np.float64)
+        values = np.asarray([row["production_sample"]["measured_angle_deg"] for row in row_list], dtype=np.float64)
+        keep = np.isfinite(values)
+        if int(keep.sum()) < 2:
+            return None
+        steps_kept, values_kept = steps[keep], values[keep]
+        if float(steps_kept.max() - steps_kept.min()) <= 0.0:
+            return None
+        return float(np.polyfit(steps_kept, values_kept, 1)[0])
+
+    left = [row["contacts"].get("left_contact_x_wrapped") for row in rows]
+    right = [row["contacts"].get("right_contact_x_wrapped") for row in rows]
+    left_values = [value for value in left if value is not None]
+    right_values = [value for value in right if value is not None]
+    result = {
+        "threshold_recorded_not_changed_deg": PRODUCTION_ANGLE_TOL_DEG,
+        "production_window": {
+            "definition": (
+                f"last {window_mobility_time} M*t (nwa.CRITERIA window_mobility_time) at the frozen 1000-step cadence"
+            ),
+            "steps": [row["step"] for row in production_window_rows],
+            **production_window_spread,
+            "exceeds_recorded_threshold": bool(production_window_spread["spread_deg"] > PRODUCTION_ANGLE_TOL_DEG),
+        },
+        "full_late_window_1000_step_cadence": {"steps": [row["step"] for row in rows], **full_window_spread},
+        "dense_window": {
+            "cadence_steps": DENSE_CADENCE_STEPS,
+            **dense_spread,
+            "cadence_only_subset": cadence_in_dense,
+        },
+        "slope_deg_per_step_cadence": slope_deg_per_step(rows),
+        "slope_deg_per_Mt_cadence": (None if slope_deg_per_step(rows) is None else slope_deg_per_step(rows) / float(M)),
+        "peak_to_peak_deg_full_window": full_window_spread["spread_deg"],
+        "sampling_sensitivity": {
+            "spread_production_window_vs_full_window_deg": abs(
+                production_window_spread["spread_deg"] - full_window_spread["spread_deg"]
+            ),
+            "spread_dense_vs_cadence_in_dense_deg": abs(dense_spread["spread_deg"] - cadence_in_dense["spread_deg"]),
+            "cadence_changes_classifier_outcome": bool(
+                (production_window_spread["spread_deg"] > PRODUCTION_ANGLE_TOL_DEG)
+                != (cadence_in_dense["spread_deg"] > PRODUCTION_ANGLE_TOL_DEG)
+            ),
+        },
+        "left_right_symmetry": {
+            "left_contact_x_min": float(min(left_values)) if left_values else None,
+            "left_contact_x_max": float(max(left_values)) if left_values else None,
+            "right_contact_x_min": float(min(right_values)) if right_values else None,
+            "right_contact_x_max": float(max(right_values)) if right_values else None,
+            "left_contact_x_spread": (float(max(left_values) - min(left_values)) if len(left_values) >= 2 else None),
+            "right_contact_x_spread": (
+                float(max(right_values) - min(right_values)) if len(right_values) >= 2 else None
+            ),
+        },
+    }
+    return result
+
+
+def _cross_metric_coupling(rows: list[dict[str, Any]], two_l: dict[str, Any], case_name: str) -> dict[str, Any]:
+    """Section 19: correlations over the late window; correlation is not causality."""
+    steps = [row["step"] for row in rows]
+    r_prod = np.asarray([row["R_prod"] for row in rows], dtype=np.float64)
+    r_v = np.asarray([row["R_V"] for row in rows], dtype=np.float64)
+    f_zero = np.asarray([row["ledger"]["classes"]["ZERO_VOLUME"]["f"] for row in rows], dtype=np.float64)
+    angles = np.asarray(
+        [
+            row["production_sample"]["measured_angle_deg"]
+            if row["production_sample"]["measured_angle_deg"] is not None
+            else np.nan
+            for row in rows
+        ],
+        dtype=np.float64,
+    )
+    left_x = np.asarray(
+        [
+            row["contacts"].get("left_contact_x_wrapped")
+            if row["contacts"].get("left_contact_x_wrapped") is not None
+            else np.nan
+            for row in rows
+        ],
+        dtype=np.float64,
+    )
+    right_x = np.asarray(
+        [
+            row["contacts"].get("right_contact_x_wrapped")
+            if row["contacts"].get("right_contact_x_wrapped") is not None
+            else np.nan
+            for row in rows
+        ],
+        dtype=np.float64,
+    )
+    angle_velocity = np.full_like(angles, np.nan)
+    line_speed = np.full_like(angles, np.nan)
+    dt = rows[1]["time"] - rows[0]["time"] if len(rows) > 1 else 1.0
+    if len(rows) > 1:
+        angle_velocity[1:] = (angles[1:] - angles[:-1]) / dt
+        line_speed[1:] = np.sqrt((left_x[1:] - left_x[:-1]) ** 2 + (right_x[1:] - right_x[:-1]) ** 2) / dt
+    l1a2l_series: dict[int, float] = {}
+    for window in two_l.get("windows", {}).values():
+        if window.get("case") != case_name:
+            continue
+        for metric_row in window.get("metric_rows", []):
+            value = metric_row.get("regions", {}).get("whole_fluid", {}).get("net_rate_l2_volume")
+            if value is not None:
+                l1a2l_series[int(metric_row["step"])] = float(value)
+    net_physical = np.asarray([l1a2l_series.get(step, np.nan) for step in steps], dtype=np.float64)
+
+    def safe_corr(a: np.ndarray, b: np.ndarray) -> dict[str, Any]:
+        keep = np.isfinite(a) & np.isfinite(b)
+        n = int(keep.sum())
+        if n < 3 or float(np.std(a[keep])) == 0.0 or float(np.std(b[keep])) == 0.0:
+            return {"pearson_r": None, "spearman_rho": None, "n": n}
+        pearson = float(np.corrcoef(a[keep], b[keep])[0, 1])
+        from scipy.stats import spearmanr
+
+        rho = float(spearmanr(a[keep], b[keep]).statistic)
+        return {
+            "pearson_r": pearson if math.isfinite(pearson) else None,
+            "spearman_rho": rho if math.isfinite(rho) else None,
+            "n": n,
+        }
+
+    return {
+        "pairs": {
+            "R_prod_vs_R_V": safe_corr(r_prod, r_v),
+            "R_prod_vs_zero_volume_fraction": safe_corr(r_prod, f_zero),
+            "R_prod_vs_angle_velocity": safe_corr(r_prod, angle_velocity),
+            "R_prod_vs_contact_line_speed": safe_corr(r_prod, line_speed),
+            "R_V_vs_angle_velocity": safe_corr(r_v, angle_velocity),
+            "R_prod_vs_l1a2l_whole_fluid_net_rate_volume": safe_corr(r_prod, net_physical),
+            "R_V_vs_l1a2l_whole_fluid_net_rate_volume": safe_corr(r_v, net_physical),
+        },
+        "l1a2l_reference_series_steps": sorted(l1a2l_series.keys()),
+        "caveat": "correlation over a late window cannot establish causality; see the counterfactual sections",
+    }
+
+
+def _matched_control_calibration(
+    authority_rows: list[dict[str, Any]],
+    control_windows: dict[str, dict[str, Any]],
+    ch_only_endpoint: dict[str, Any],
+) -> dict[str, Any]:
+    """Section 17: calibrate R_V against converged controls; never emit a reused threshold."""
+    authority_median = _series_summary([row["R_V"] for row in authority_rows])["median"]
+    calibration: dict[str, Any] = {
+        "policy": (
+            "report-only calibration against converged controls; the production 0.001 tolerance is NOT "
+            "reapplied to R_V and no new acceptance threshold is proposed in L1A-2m"
+        ),
+        "authority_060_R_V": _series_summary([row["R_V"] for row in authority_rows]),
+        "authority_060_R_prod": _series_summary([row["R_prod"] for row in authority_rows]),
+        "controls": {},
+        "effect_sizes": {},
+    }
+    control_medians: list[float] = []
+    for name, window in control_windows.items():
+        summary_rv = window["summary"]["R_V"]
+        summary_rp = window["summary"]["R_prod"]
+        calibration["controls"][name] = {"R_V": summary_rv, "R_prod": summary_rp}
+        control_medians.append(summary_rv["median"])
+    if ch_only_endpoint is not None:
+        calibration["controls"]["ch_only_equilibrium_060"] = {
+            "R_V_endpoint_only": ch_only_endpoint["R_V"],
+            "R_prod_endpoint_only": ch_only_endpoint["R_prod"],
+            "R_prod_window_from_l1a2k_samples": ch_only_endpoint.get("R_prod_window"),
+            "note": (
+                "window arrays were not retained for the CH-only control; endpoint ledger plus the L1A-2k scalar "
+                "sample window are reported"
+            ),
+        }
+        if ch_only_endpoint.get("R_V") is not None:
+            control_medians.append(float(ch_only_endpoint["R_V"]))
+    if control_medians and authority_median is not None:
+        pooled_control = float(np.median(control_medians))
+        spread = float(np.std(control_medians))
+        calibration["effect_sizes"] = {
+            "authority_median_R_V_over_pooled_control_median_R_V": (
+                authority_median / pooled_control if pooled_control > 0.0 else None
+            ),
+            "authority_minus_control_median_R_V": authority_median - pooled_control,
+            "control_median_R_V_std": spread,
+            "effect_size_d": ((authority_median - pooled_control) / spread) if spread > 0.0 else None,
+            "control_like": bool(
+                pooled_control > 0.0
+                and authority_median / pooled_control <= CONTROL_LIKE_RATIO_LIMIT
+                and (spread == 0.0 or abs(authority_median - pooled_control) / spread <= CONTROL_LIKE_EFFECT_SIZE_LIMIT)
+            ),
+        }
+    return calibration
+
+
