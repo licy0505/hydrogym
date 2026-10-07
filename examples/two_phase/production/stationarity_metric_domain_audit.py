@@ -293,7 +293,6 @@ def _load_checkpoint(
         "section": "production_state",
         "case": case_name,
         "step": int(step),
-        "git_sha": chns.get_git_sha(),
         "solver_contract_version": SOLVER_CONTRACT,
         "config": config,
         "config_fingerprint": _canonical_hash(config),
@@ -301,7 +300,12 @@ def _load_checkpoint(
         "runtime_versions": _runtime_versions(),
         "production_semantics_changed": False,
     }
+    # git_sha is recorded for provenance but is not an equality gate: the trajectory integrity
+    # is bound by the production source hashes, the config fingerprint, the state-hash self-check
+    # and (at required steps) the frozen upstream per-field hashes, so diagnostic-only commits
+    # must not invalidate saved production states.
     checks = {name: metadata.get(name) == value for name, value in expected.items()}
+    checks["git_sha_recorded"] = isinstance(metadata.get("git_sha"), str) and len(metadata["git_sha"]) == 40
     stored_hashes = metadata.get("state_hashes")
     checks["state_hashes"] = stored_hashes == {name: _hash_array(value) for name, value in arrays.items()}
     if upstream_state_hashes is not None and int(step) == int(metadata.get("step", -1)):
