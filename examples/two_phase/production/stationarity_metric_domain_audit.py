@@ -110,12 +110,12 @@ def _sha256(data: bytes) -> str:
 
 
 def _hash_array(value: Any) -> str:
-    array = np.ascontiguousarray(np.asarray(value))
-    return _sha256(array.tobytes() + str(array.dtype).encode() + str(array.shape).encode())
+    """Hash in the frozen evidence domain: delegated to the unchanged L1A-2l implementation."""
+    return l1a2l._hash_array(value)
 
 
 def _state_hashes(state: pf.State) -> dict[str, str]:
-    return {name: _hash_array(np.asarray(getattr(state, name))) for name in ("phi", "u", "v", "t")}
+    return l1a2l._state_hashes(state)
 
 
 def _canonical_hash(value: Any) -> str:
@@ -336,10 +336,14 @@ def _load_sample_arrays(path: Path) -> dict[str, Any]:
         if required - set(archive.files):
             raise ValueError("sample arrays are incomplete")
         row = {name: np.array(archive[name], copy=True) for name in ("phi", "phi_prev", "u", "v", "t")}
-        row["metadata"] = json.loads(str(np.asarray(archive["metadata_json"]).item()))
+        metadata = json.loads(str(np.asarray(archive["metadata_json"]).item()))
     for name in ("phi", "phi_prev", "u", "v", "t"):
         if not np.isfinite(row[name]).all():
             raise ValueError(f"sample array {name} contains non-finite values")
+    row["metadata"] = metadata
+    for key in ("step", "time", "case", "stage"):
+        if key in metadata:
+            row[key] = metadata[key]
     return row
 
 
@@ -1801,14 +1805,54 @@ def _matched_control_calibration(
 
 
 def _production_classifier_verdict(rows: list[dict[str, Any]], *, ch_only: bool, M: float) -> dict[str, Any]:
-    """The unchanged production window classifier, evaluated on the exact production sample rows."""
+    """The unchanged production window classifier, evaluated on the exact production sample rows.
+
+    The criteria and thresholds are unchanged; the sample cadence here is the frozen forensic
+    1000-step cadence. The consecutive-sample energy criterion is cadence-sensitive (the frozen
+    production controls were sampled more densely), so the frozen recorded gate of each upstream
+    run is reported alongside and remains the production acceptance record.
+    """
     samples = [row["production_sample"] for row in rows]
     gate = nwa._window_converged(samples, ch_only=ch_only, crit=dict(nwa.CRITERIA), M=M)
     return {
         "classifier": "nwa._window_converged (unchanged production criteria and thresholds)",
         "gate": gate,
+        "sample_cadence_steps": SAMPLE_CADENCE_STEPS,
+        "cadence_note": (
+            "this window evaluation uses the frozen 1000-step forensic cadence; the frozen "
+            "production acceptance record of each state is reported beside it"
+        ),
         "authoritative_in_this_stage": True,
     }
+
+
+def _frozen_production_gate_records(two_j: dict[str, Any], two_k: dict[str, Any]) -> dict[str, Any]:
+    """The production acceptance records frozen in the L1A-2j/L1A-2k evidence (report-only)."""
+    controls = two_j.get("controls", {})
+    records: dict[str, Any] = {}
+    for case_name, key in (("control_090", "90"), ("control_150", "150")):
+        entry = controls.get(key, {})
+        records[case_name] = {
+            "source": "evidence/l1a2j/chns_nonstationarity_report.json controls",
+            "step": entry.get("steps"),
+            "converged": entry.get("converged"),
+            "stop_reason": entry.get("stop_reason"),
+            "production_gate": entry.get("production_gate"),
+        }
+    records["authority_060"] = {
+        "source": "evidence/l1a2j/chns_nonstationarity_report.json acceptance",
+        "step": CASE_STEPS["authority_060"],
+        "production_stationarity_gate_at_50k": two_j.get("acceptance", {}).get(
+            "production_60_degree_stationarity_gate_at_50k"
+        ),
+        "status": two_j.get("acceptance", {}).get("status"),
+    }
+    records["ch_only_equilibrium_060"] = {
+        "source": "evidence/l1a2k/capillary_pressure_balance_report.json phase_only_comparison",
+        "step": CH_ONLY_STEP,
+        "convergence_gate": two_k.get("phase_only_comparison", {}).get("ch_only_convergence_gate"),
+    }
+    return records
 
 
 def _shadow_classifier_report(
@@ -2628,20 +2672,26 @@ def run_forensic(out: Path) -> dict[str, Any]:
         "note": "R_V is a shadow metric; the production threshold is not applied to it (section 7/17)",
     }
 
+    authority_end = rehydrated[authority]["step"]
     counterfactual = _run_counterfactual_suite(
-        rehydrated[authority], analyses[authority], analyses[authority]["partition"], list(PERTURBATION_POLICIES)
+        rehydrated[authority],
+        analyses[authority],
+        analyses[authority]["partition"],
+        list(PERTURBATION_POLICIES),
+        checkpoint_path=out / "checkpoints" / f"{authority}_production_step_{authority_end:06d}.npz",
     )
     report["inactive_state_causality"] = counterfactual
 
     production_classifiers = {
         name: _production_classifier_verdict(
-            windows[name]["rows" if name != authority else "rows"],
+            windows[name]["rows"],
             ch_only=(name == "ch_only_equilibrium_060"),
             M=rehydrated[name]["p"].M,
         )
         for name in windows
     }
     report["production_classifier_verdicts"] = production_classifiers
+    report["frozen_production_gate_records"] = _frozen_production_gate_records(two_j, two_k)
 
     controls = {name: windows[name] for name in ("control_090", "control_150")}
     ch_only_endpoint_metrics = {
