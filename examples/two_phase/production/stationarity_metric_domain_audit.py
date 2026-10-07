@@ -1071,3 +1071,390 @@ def _gate_crosscheck(
     }
 
 
+# ---------------------------------------------------------------------------
+# sections 10/11/12: spatial localization and inactive-state counterfactuals
+# ---------------------------------------------------------------------------
+
+
+def _zero_volume_activity_localization(
+    r: np.ndarray,
+    solid: pf.Solid,
+    p: pf.PhaseFieldParams,
+    partition: dict[str, Any],
+    phi: np.ndarray,
+    distance_cells: np.ndarray | None = None,
+) -> dict[str, Any]:
+    """Section 10: where do nonzero-rate zero-volume cells sit, if any exist?"""
+    volume = partition["volume"]
+    zero = partition["classes"]["ZERO_VOLUME"]
+    rate = np.asarray(r, dtype=np.float64)
+    active = zero & (rate != 0.0)
+    n_active = int(np.count_nonzero(active))
+    distance = (
+        distance_cells
+        if distance_cells is not None
+        else _distance_to_positive_volume(volume, float(p.dx))["distance_cells"]
+    )
+    stencil_adjacent = np.zeros_like(zero)
+    for shift, axis in ((1, 0), (-1, 0), (1, 1), (-1, 1)):
+        stencil_adjacent |= np.roll(volume > 0.0, shift, axis=axis)
+    deep = ~(volume > 0.0) & ~stencil_adjacent
+    result: dict[str, Any] = {
+        "definition": {
+            "stencil_adjacent_inactive": "zero-volume cell with a 5-point (periodic-x) V>0 neighbour",
+            "deep_inactive": "zero-volume cell with no V>0 5-point neighbour",
+        },
+        "zero_volume_cell_count": int(np.count_nonzero(zero)),
+        "nonzero_rate_zero_volume_cell_count": n_active,
+        "nonzero_rate_zero_volume_energy_fraction": None,
+        "stencil_adjacent_inactive_cell_count": int(np.count_nonzero(zero & stencil_adjacent)),
+        "deep_inactive_cell_count": int(np.count_nonzero(zero & deep)),
+        "distance_to_nearest_positive_volume_cell": {
+            "max_over_inactive_cells": int(distance[~(volume > 0.0)].max()) if np.any(~(volume > 0.0)) else 0,
+            "median_over_inactive_cells": (
+                float(np.median(distance[~(volume > 0.0)])) if np.any(~(volume > 0.0)) else 0.0
+            ),
+        },
+    }
+    if n_active == 0:
+        result["spatial_overlap"] = "not_applicable_no_active_zero_volume_cells"
+        result["interpretation"] = (
+            "every zero-volume cell has bitwise-zero phase rate; there is no zero-volume activity to localize"
+        )
+        return result
+    energy = rate * rate * partition["cell_area"]
+    e_active = float(np.sum(energy[active]))
+    e_all = float(np.sum(energy))
+    masks = _state_cross_masks(phi, solid, p, partition)
+    overlap = {
+        name: {
+            "cell_count": int(np.count_nonzero(active & mask)),
+            "fraction_of_active": float(np.count_nonzero(active & mask) / n_active),
+        }
+        for name, mask in masks.items()
+    }
+    overlap["solid_brinkman_region_chi_gt_0p5"] = overlap.pop("chi_gt_0p5")
+    distances = distance[active]
+    result["nonzero_rate_zero_volume_energy_fraction"] = (e_active / e_all) if e_all > 0.0 else 0.0
+    result["spatial_overlap"] = overlap
+    result["distance_cells_active"] = {
+        "min": int(distances.min()),
+        "median": float(np.median(distances)),
+        "max": int(distances.max()),
+    }
+    result["stencil_adjacent_active_count"] = int(np.count_nonzero(active & stencil_adjacent))
+    result["deep_active_count"] = int(np.count_nonzero(active & deep))
+    result["interpretation"] = (
+        "stencil-adjacent inactive state"
+        if result["stencil_adjacent_active_count"] > 0
+        else "deep inactive-state noise"
+    )
+    return result
+
+
+PERTURBATION_POLICIES: dict[str, dict[str, Any]] = {
+    "ZERO_CLAMP": {
+        "value": 0.0,
+        "description": "phi[V==0] = 0.0, the gas-phase reference of the double well (the seeded deep-solid value)",
+    },
+    "INACTIVE_FREEZE": {
+        "value": "previous_step",
+        "description": "phi[V==0] = the exact previous-step (step n-1) values of the authority trajectory",
+    },
+    "ZERO_CLAMP_LIQUID": {
+        "value": 1.0,
+        "description": "phi[V==0] = 1.0, the liquid-phase reference of the double well; excites the "
+        "nu(phi) momentum and capillary-gradient stencils at wall-adjacent cells",
+    },
+    "ZERO_CLAMP_MIDPOINT": {
+        "value": 0.5,
+        "description": "phi[V==0] = 0.5, the double-well maximum; maximizes f'(phi) so mu is nonzero "
+        "on inactive storage and the capillary stencil response is largest",
+    },
+}
+
+
+def _build_counterfactual(
+    state: pf.State,
+    phi_prev: np.ndarray,
+    partition: dict[str, Any],
+    policy_name: str,
+    p: pf.PhaseFieldParams,
+) -> tuple[pf.State, dict[str, Any]]:
+    """Section 11: a diagnostic copy whose phi differs from ``state`` only on ``V_i == 0`` cells."""
+    if policy_name not in PERTURBATION_POLICIES:
+        raise AuditValidationError(f"unknown perturbation policy {policy_name}")
+    zero = partition["classes"]["ZERO_VOLUME"]
+    phi_a = np.asarray(state.phi, dtype=np.float64)
+    phi_b = np.array(phi_a, copy=True)
+    policy = PERTURBATION_POLICIES[policy_name]
+    if policy["value"] == "previous_step":
+        phi_b[zero] = np.asarray(phi_prev, dtype=np.float64)[zero]
+    else:
+        phi_b[zero] = float(policy["value"])
+    state_b = pf.State(
+        phi=jnp.asarray(phi_b, dtype=jnp.float64),
+        u=jnp.asarray(state.u, dtype=p.dtype),
+        v=jnp.asarray(state.v, dtype=p.dtype),
+        t=jnp.asarray(state.t, dtype=p.dtype),
+    )
+    changed = phi_b != phi_a
+    outside = int(np.count_nonzero(changed & ~zero))
+    if outside != 0:
+        raise AuditValidationError(f"perturbation {policy_name} leaked onto {outside} cells with V>0")
+    record = {
+        "policy": policy_name,
+        "description": policy["description"],
+        "changed_cell_count": int(np.count_nonzero(changed)),
+        "changed_value_min": float(phi_b[changed].min()) if np.any(changed) else 0.0,
+        "changed_value_max": float(phi_b[changed].max()) if np.any(changed) else 0.0,
+        "phi_hash": _hash_array(phi_b),
+        "state_hashes": _state_hashes(state_b),
+        "confined_to_zero_volume": True,
+    }
+    return state_b, record
+
+
+def _counterfactual_admissibility(
+    state_a: pf.State,
+    state_b: pf.State,
+    solid: pf.Solid,
+    p: pf.PhaseFieldParams,
+    partition: dict[str, Any],
+    config: dict[str, Any],
+    config_b: dict[str, Any],
+) -> dict[str, Any]:
+    """Section 12: B must equal A bitwise outside the V==0 phi entries before any operator runs."""
+    zero = partition["classes"]["ZERO_VOLUME"]
+    physical = ~zero
+    phi_a = np.asarray(state_a.phi, dtype=np.float64)
+    phi_b = np.asarray(state_b.phi, dtype=np.float64)
+    phi_physical_equal = bool(np.array_equal(phi_a[physical], phi_b[physical]))
+    u_equal = bool(np.array_equal(np.asarray(state_a.u), np.asarray(state_b.u)))
+    v_equal = bool(np.array_equal(np.asarray(state_a.v), np.asarray(state_b.v)))
+    t_equal = bool(np.array_equal(np.asarray(state_a.t), np.asarray(state_b.t)))
+    geometry = {
+        "volume": partition["volume"],
+        "aperture_x": partition["aperture_x"],
+        "aperture_y": partition["aperture_y"],
+        "sdf": np.asarray(solid.sdf, dtype=np.float64),
+        "chi": np.asarray(solid.chi, dtype=np.float64),
+        "wall_area": np.asarray(solid.wall_area, dtype=np.float64),
+    }
+    geometry_hashes = {name: _hash_array(value) for name, value in geometry.items()}
+    config_equal = config == config_b
+    admissible = phi_physical_equal and u_equal and v_equal and t_equal and config_equal
+    return {
+        "phi_v_positive_bitwise_equal": phi_physical_equal,
+        "u_bitwise_equal": u_equal,
+        "v_bitwise_equal": v_equal,
+        "t_bitwise_equal": t_equal,
+        "config_bitwise_equal": config_equal,
+        "geometry_hashes": geometry_hashes,
+        "state_a_hashes": _state_hashes(state_a),
+        "state_b_hashes": _state_hashes(state_b),
+        "admissible": admissible,
+        "pressure_note": (
+            "p is not an independent state variable: it is reconstructed from (phi,u,v) by the "
+            "unchanged projection, so bitwise u/v/phi equality implies bitwise reconstructed pressure"
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
+# section 13/14: operator dependency audit and one-public-step replay
+# ---------------------------------------------------------------------------
+
+
+def _field_delta_report(
+    delta: np.ndarray,
+    physical_mask: np.ndarray,
+    reference_norm: float | None = None,
+) -> dict[str, Any]:
+    phys = np.asarray(delta)[physical_mask] if physical_mask is not None else np.asarray(delta)
+    linf = float(np.max(np.abs(phys))) if phys.size else 0.0
+    l2 = float(np.sqrt(np.sum(np.asarray(phys) * np.asarray(phys)))) if phys.size else 0.0
+    bitwise = bool(np.all(np.asarray(delta) == 0.0))
+    report = {
+        "l2_delta_physical": l2,
+        "linf_delta_physical": linf,
+        "bitwise_equal_physical": bitwise,
+        "l2_delta_full_grid": float(np.sqrt(np.sum(np.asarray(delta) * np.asarray(delta)))),
+        "linf_delta_full_grid": float(np.max(np.abs(delta))),
+    }
+    if reference_norm is not None:
+        report["l2_delta_over_reference_l2"] = (l2 / reference_norm) if reference_norm > 0.0 else 0.0
+    return report
+
+
+def _operator_dependency_audit(
+    state_a: pf.State,
+    state_b: pf.State,
+    solid: pf.Solid,
+    p: pf.PhaseFieldParams,
+    partition: dict[str, Any],
+) -> dict[str, Any]:
+    """Section 13: evaluate the production diagnostic operators on A and B without advancing either."""
+    physical = ~(partition["classes"]["ZERO_VOLUME"])
+    aperture_x_open = partition["aperture_x"] > 0.0
+    aperture_y_open = partition["aperture_y"] > 0.0
+    out: dict[str, Any] = {
+        "policy": "evaluate unchanged production operators on A and B; compare on physical cells/faces"
+    }
+    phi_a = jnp.asarray(state_a.phi, dtype=jnp.float64)
+    phi_b = jnp.asarray(state_b.phi, dtype=jnp.float64)
+
+    rhs_a = pf.rhs(state_a, solid, p)
+    rhs_b = pf.rhs(state_b, solid, p)
+    phi_rhs_a, u_rhs_a, v_rhs_a, mu_a, mu_expl_a = (np.asarray(x, dtype=np.float64) for x in rhs_a)
+    phi_rhs_b, u_rhs_b, v_rhs_b, mu_b, mu_expl_b = (np.asarray(x, dtype=np.float64) for x in rhs_b)
+    u_rhs_a32, v_rhs_a32 = np.asarray(rhs_a[1]), np.asarray(rhs_a[2])
+
+    out["chemical_potential_mu"] = _field_delta_report(mu_a - mu_b, physical)
+    out["chemical_potential_mu_explicit"] = _field_delta_report(mu_expl_a - mu_expl_b, physical)
+    out["rho_of_phi"] = _field_delta_report(
+        np.asarray(pf.rho_of(phi_a, p), dtype=np.float64) - np.asarray(pf.rho_of(phi_b, p), dtype=np.float64),
+        physical,
+    )
+    out["nu_of_phi"] = _field_delta_report(
+        np.asarray(pf.nu_of(phi_a, p), dtype=np.float64) - np.asarray(pf.nu_of(phi_b, p), dtype=np.float64),
+        physical,
+    )
+
+    # Capillary acceleration, decomposed exactly as in pf.rhs: (SIGMA_NORM/We) * mu * grad(phi) / rho_l
+    # with the production jax scalar kept unconverted so the decomposition is bitwise the rhs term.
+    def _capillary(mu: Any, phi: Any, state: pf.State) -> tuple[Any, Any, Any, Any]:
+        cap_x = (pf.SIGMA_NORM / p.We) * mu * pf._ddx(phi, p.dx) / p.rho_l
+        cap_y = (pf.SIGMA_NORM / p.We) * mu * pf._ddy(phi, p.dy) / p.rho_l
+        u_rhs = (
+            -pf.div_upwind(state.u, state.v, state.u, p.dx, p.dy)
+            + pf.nu_of(phi, p) * pf._lap(state.u, p.dx, p.dy)
+            + cap_x
+        ).astype(p.dtype)
+        v_rhs = (
+            -pf.div_upwind(state.u, state.v, state.v, p.dx, p.dy)
+            + pf.nu_of(phi, p) * pf._lap(state.v, p.dx, p.dy)
+            + cap_y
+        ).astype(p.dtype)
+        return cap_x, cap_y, u_rhs, v_rhs
+
+    cap_x_a, cap_y_a, mirror_u, mirror_v = _capillary(rhs_a[3], phi_a, state_a)
+    cap_x_b, cap_y_b, _mirror_u_b, _mirror_v_b = _capillary(rhs_b[3], phi_b, state_b)
+    out["capillary_acceleration_x"] = _field_delta_report(
+        np.asarray(cap_x_a, dtype=np.float64) - np.asarray(cap_x_b, dtype=np.float64), physical
+    )
+    out["capillary_acceleration_y"] = _field_delta_report(
+        np.asarray(cap_y_a, dtype=np.float64) - np.asarray(cap_y_b, dtype=np.float64), physical
+    )
+    out["momentum_mirror_selfcheck"] = {
+        "u_rhs_bitwise_equal": bool(np.array_equal(np.asarray(mirror_u), np.asarray(u_rhs_a32))),
+        "v_rhs_bitwise_equal": bool(np.array_equal(np.asarray(mirror_v), np.asarray(v_rhs_a32))),
+        "note": "the capillary decomposition above is applied to the same mu the production rhs produced",
+    }
+
+    wetting_a = np.asarray(pf.wall_energy_derivative(phi_a, solid.cos_theta), dtype=np.float64) * np.asarray(
+        pf.wall_measure_density(solid, p), dtype=np.float64
+    )
+    wetting_b = np.asarray(pf.wall_energy_derivative(phi_b, solid.cos_theta), dtype=np.float64) * np.asarray(
+        pf.wall_measure_density(solid, p), dtype=np.float64
+    )
+    out["wetting_wall_energy_mu_term"] = _field_delta_report(wetting_a - wetting_b, physical)
+
+    out["phase_rhs_advective"] = _field_delta_report(phi_rhs_a - phi_rhs_b, physical)
+    adv_x_a, adv_y_a = pf.phase_advective_fluxes(state_a.u, state_a.v, phi_a, solid, p)
+    adv_x_b, adv_y_b = pf.phase_advective_fluxes(state_b.u, state_b.v, phi_b, solid, p)
+    out["advective_phase_flux_x_faces"] = _field_delta_report(
+        np.asarray(adv_x_a, dtype=np.float64) - np.asarray(adv_x_b, dtype=np.float64), aperture_x_open
+    )
+    out["advective_phase_flux_y_faces"] = _field_delta_report(
+        np.asarray(adv_y_a, dtype=np.float64) - np.asarray(adv_y_b, dtype=np.float64), aperture_y_open
+    )
+    ch_x_a, ch_y_a = pf.chemical_potential_fluxes(rhs_a[4], solid, p)
+    ch_x_b, ch_y_b = pf.chemical_potential_fluxes(rhs_b[4], solid, p)
+    out["ch_flux_x_faces"] = _field_delta_report(
+        np.asarray(ch_x_a, dtype=np.float64) - np.asarray(ch_x_b, dtype=np.float64), aperture_x_open
+    )
+    out["ch_flux_y_faces"] = _field_delta_report(
+        np.asarray(ch_y_a, dtype=np.float64) - np.asarray(ch_y_b, dtype=np.float64), aperture_y_open
+    )
+    out["momentum_predictor_u_rhs"] = _field_delta_report(
+        u_rhs_a.astype(np.float64) - u_rhs_b.astype(np.float64), physical
+    )
+    out["momentum_predictor_v_rhs"] = _field_delta_report(
+        v_rhs_a.astype(np.float64) - v_rhs_b.astype(np.float64), physical
+    )
+    pressure_a = np.asarray(pf.pressure_field(state_a, solid, p), dtype=np.float64)
+    pressure_b = np.asarray(pf.pressure_field(state_b, solid, p), dtype=np.float64)
+    out["pressure_rhs_projection_reconstruction"] = _field_delta_report(pressure_a - pressure_b, physical)
+    out["all_physical_bitwise_equal"] = bool(
+        all(
+            value.get("bitwise_equal_physical", True)
+            for value in out.values()
+            if isinstance(value, dict) and "bitwise_equal_physical" in value
+        )
+    )
+    out["coupling_channels"] = {
+        "phase_transport": (
+            "aperture-gated; closed faces carry machine-zero flux so V=0 phi cannot enter V>0 phase updates"
+        ),
+        "momentum_projection": (
+            "full-grid periodic stencils (capillary mu*grad(phi), nu(phi), global FFT projection) read every cell "
+            "including V=0"
+        ),
+    }
+    return out
+
+
+def _one_step_counterfactual(
+    state_a: pf.State,
+    state_b: pf.State,
+    solid: pf.Solid,
+    p: pf.PhaseFieldParams,
+    partition: dict[str, Any],
+) -> dict[str, Any]:
+    """Section 14: matched one-public-step replay from A and B; compare physical-domain outputs only."""
+    physical = ~(partition["classes"]["ZERO_VOLUME"])
+    out_a, _info_a = pf.step_with_diagnostics(state_a, solid, p)
+    out_b, _info_b = pf.step_with_diagnostics(state_b, solid, p)
+    phi_a = np.asarray(out_a.phi, dtype=np.float64)
+    phi_b = np.asarray(out_b.phi, dtype=np.float64)
+    volume = partition["volume"]
+    mass_a = float(np.sum(volume * phi_a))
+    mass_b = float(np.sum(volume * phi_b))
+    pressure_a = np.asarray(pf.pressure_field(out_a, solid, p), dtype=np.float64)
+    pressure_b = np.asarray(pf.pressure_field(out_b, solid, p), dtype=np.float64)
+    angle_a = float(pf.measure_contact_angle(out_a.phi, solid, p))
+    angle_b = float(pf.measure_contact_angle(out_b.phi, solid, p))
+    return {
+        "phi_v_positive": _field_delta_report(phi_a - phi_b, physical),
+        "u": _field_delta_report(
+            np.asarray(out_a.u, dtype=np.float64) - np.asarray(out_b.u, dtype=np.float64), physical
+        ),
+        "v": _field_delta_report(
+            np.asarray(out_a.v, dtype=np.float64) - np.asarray(out_b.v, dtype=np.float64), physical
+        ),
+        "pressure_reconstructed": _field_delta_report(pressure_a - pressure_b, physical),
+        "formal_phase_mass_sum_V_phi": {
+            "A": mass_a,
+            "B": mass_b,
+            "abs_difference": abs(mass_a - mass_b),
+            "bitwise_equal": bool(mass_a == mass_b),
+        },
+        "contact_angle_deg": {
+            "A": angle_a if math.isfinite(angle_a) else None,
+            "B": angle_b if math.isfinite(angle_b) else None,
+            "abs_difference": abs(angle_a - angle_b) if math.isfinite(angle_a) and math.isfinite(angle_b) else None,
+        },
+        "next_physical_state_changed": bool(
+            not _field_delta_report(phi_a - phi_b, physical)["bitwise_equal_physical"]
+            or not _field_delta_report(
+                np.asarray(out_a.u, dtype=np.float64) - np.asarray(out_b.u, dtype=np.float64), physical
+            )["bitwise_equal_physical"]
+            or not _field_delta_report(
+                np.asarray(out_a.v, dtype=np.float64) - np.asarray(out_b.v, dtype=np.float64), physical
+            )["bitwise_equal_physical"]
+        ),
+        "policy": (
+            "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced"
+        ),
+    }
