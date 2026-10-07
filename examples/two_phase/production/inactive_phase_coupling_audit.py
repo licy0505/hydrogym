@@ -1030,7 +1030,7 @@ def _first_changed_operator(
                 active = (pert - base)[physical] != 0.0
                 physical_cells = np.argwhere(physical)
                 active_cells = physical_cells[active]
-                first_detail["changed_cell_count"] = int(active_cells.sum())
+                first_detail["changed_cell_count"] = int(len(active_cells))
                 if active_cells.size:
                     first_detail["changed_row_range"] = [
                         int(active_cells[:, 1].min()),
