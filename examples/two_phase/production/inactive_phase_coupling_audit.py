@@ -1622,7 +1622,15 @@ def _classify_root_cause(
     s60 = authority.get("sensitivity_scalar", 0.0)
     s90 = per_case.get("control_090", {}).get("sensitivity_scalar", 0.0)
     s150 = per_case.get("control_150", {}).get("sensitivity_scalar", 0.0)
-    specific = bool(s60 > SPECIFICITY_FACTOR * max(s90, s150) and s60 > 0.0)
+    c60 = authority.get("capillary_sensitivity_scalar", 0.0)
+    c90 = per_case.get("control_090", {}).get("capillary_sensitivity_scalar", 0.0)
+    c150 = per_case.get("control_150", {}).get("capillary_sensitivity_scalar", 0.0)
+    cl60 = authority.get("one_step_cl_response", 0.0)
+    cl90 = per_case.get("control_090", {}).get("one_step_cl_response", 0.0)
+    cl150 = per_case.get("control_150", {}).get("one_step_cl_response", 0.0)
+    capillary_specific = bool(c60 > SPECIFICITY_FACTOR * max(c90, c150) and c60 > 0.0)
+    cl_specific = bool(cl60 > SPECIFICITY_FACTOR * max(cl90, cl150) and cl60 > 0.0)
+    specific = bool(capillary_specific or cl_specific)
     # section 36 support rule for the identified path.
     support = {
         "admissible_I0_only_perturbation": bool(authority.get("all_admissible", False)),
@@ -1657,11 +1665,19 @@ def _classify_root_cause(
         "sixty_degree_specific": specific,
         "support_rule": support,
         "sensitivity": {
-            "S_60": s60,
-            "S_90": s90,
-            "S_150": s150,
-            "S_60_over_S_90": (s60 / s90 if s90 else None),
-            "S_60_over_S_150": (s60 / s150 if s150 else None),
+            "S_first_stage_60": s60,
+            "S_first_stage_90": s90,
+            "S_first_stage_150": s150,
+            "S_capillary_60": c60,
+            "S_capillary_90": c90,
+            "S_capillary_150": c150,
+            "S_60_over_S_90_capillary": (c60 / c90 if c90 else None),
+            "S_60_over_S_150_capillary": (c60 / c150 if c150 else None),
+            "one_step_contact_line_response_60": cl60,
+            "one_step_contact_line_response_90": cl90,
+            "one_step_contact_line_response_150": cl150,
+            "capillary_stage_specific": capillary_specific,
+            "contact_line_response_specific": cl_specific,
         },
     }
 
@@ -1754,6 +1770,12 @@ def run_forensic(out: Path) -> dict[str, Any]:
                 "first_changed_stage": classification["first_changed_stage"],
                 "note": "diagnostic control only; never the physical effect size",
             }
+        primary_run = case_runs["shells"][f"I0_1@{PRIMARY_AMPLITUDE:g}"]
+        cap_delta = primary_run["per_stage_delta"].get("5_capillary_force", {})
+        case_runs["capillary_stage_sensitivity"] = {
+            field: _sensitivity(item, context.partition["shells"]["I0_1"], PRIMARY_AMPLITUDE)["S_l2"]
+            for field, item in cap_delta.items()
+        }
         experiments_by_case[name] = case_runs
 
         if name != "ch_only_equilibrium_060":
@@ -1790,6 +1812,28 @@ def run_forensic(out: Path) -> dict[str, Any]:
             else 0.0
         )
         for name in sensitivity_matrix
+    }
+    # The first-changed stage is the raw storage read itself (a fixed linear stencil), so its
+    # sensitivity is case-independent by construction; the section 37 differential question is
+    # decided at the capillary force (the first case-dependent physical operator) and at the
+    # one-step contact-line response.
+    capillary_scalar_by_case = {
+        name: max(experiments_by_case[name].get("capillary_stage_sensitivity", {"cap_y": 0.0}).values())
+        for name in experiments_by_case
+    }
+    one_step_cl_by_case = {
+        name: (
+            max(
+                max(
+                    one_step_by_case[name][mask]["observable_deltas"][key]["linf"]
+                    for key in ("left_contact_x", "right_contact_x")
+                )
+                for mask in one_step_by_case[name]
+            )
+            if name in one_step_by_case
+            else 0.0
+        )
+        for name in experiments_by_case
     }
 
     # section 30/31: candidate suppression and baseline shift on the authority state.
@@ -1877,6 +1921,8 @@ def run_forensic(out: Path) -> dict[str, Any]:
                     for key, runs in experiments_by_case[name]["shells"].items()
                 },
                 "sensitivity_scalar": scalar_by_case.get(name, 0.0),
+                "capillary_sensitivity_scalar": capillary_scalar_by_case.get(name, 0.0),
+                "one_step_cl_response": one_step_cl_by_case.get(name, 0.0),
                 "all_admissible": all(
                     run["admissibility"]["admissible"]
                     for group in experiments_by_case[name].values()
@@ -1903,19 +1949,28 @@ def run_forensic(out: Path) -> dict[str, Any]:
             "path_tests": path_tests_by_case,
             "sensitivity_matrix": sensitivity_matrix,
             "matched_control_sensitivity": {
-                "S_60": scalar_by_case.get("authority_060", 0.0),
-                "S_90": scalar_by_case.get("control_090", 0.0),
-                "S_150": scalar_by_case.get("control_150", 0.0),
-                "S_60_over_S_90": (
-                    scalar_by_case["authority_060"] / scalar_by_case["control_090"]
-                    if scalar_by_case.get("control_090")
-                    else None
-                ),
-                "S_60_over_S_150": (
-                    scalar_by_case["authority_060"] / scalar_by_case["control_150"]
-                    if scalar_by_case.get("control_150")
-                    else None
-                ),
+                "first_stage_read": {
+                    "S_60": scalar_by_case.get("authority_060", 0.0),
+                    "S_90": scalar_by_case.get("control_090", 0.0),
+                    "S_150": scalar_by_case.get("control_150", 0.0),
+                    "note": "the raw storage read is a fixed linear stencil: case-independent by construction",
+                },
+                "capillary_force": {
+                    "S_60": capillary_scalar_by_case.get("authority_060", 0.0),
+                    "S_90": capillary_scalar_by_case.get("control_090", 0.0),
+                    "S_150": capillary_scalar_by_case.get("control_150", 0.0),
+                    "S_60_over_S_90": (
+                        capillary_scalar_by_case["authority_060"] / capillary_scalar_by_case["control_090"]
+                        if capillary_scalar_by_case.get("control_090")
+                        else None
+                    ),
+                    "S_60_over_S_150": (
+                        capillary_scalar_by_case["authority_060"] / capillary_scalar_by_case["control_150"]
+                        if capillary_scalar_by_case.get("control_150")
+                        else None
+                    ),
+                },
+                "one_step_contact_line_response": one_step_cl_by_case,
             },
             "repair_candidates": candidates,
             "control_state_baseline_shift": control_shift,
