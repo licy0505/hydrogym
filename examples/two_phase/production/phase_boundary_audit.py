@@ -155,9 +155,11 @@ def _normal_bc_linearization_deviation(sdf, p, theta_deg: float, *, region: np.n
     }
 
 
-def _solid_fraction(phi, solid) -> float:
+def _solid_fraction(phi, solid, p: pf.PhaseFieldParams) -> float:
+    """Fraction of positive phase stored in zero-volume cells (not cut cells with solid centroids)."""
     positive = jnp.maximum(phi, 0.0)
-    return float(jnp.sum(positive * solid.chi_hard) / jnp.maximum(jnp.sum(positive), 1e-30))
+    fully_solid = pf.phase_control_volumes(solid, p) <= 0.0
+    return float(jnp.sum(positive * fully_solid) / jnp.maximum(jnp.sum(positive), 1e-30))
 
 
 def _case_params(N: int, *, boundary: str, wetting: str, projection: bool, dt: float, dtype):
@@ -221,7 +223,7 @@ def _neutral_trace(N: int, boundary: str, steps: int, sample_every: int, dtype) 
         trace["max_speed"].append(float(jnp.sqrt(jnp.max(state.u**2 + state.v**2))))
         trace["fluid_mass"].append(float(pf.liquid_mass(state.phi, solid, p)))
         trace["total_mass"].append(float(jnp.sum(state.phi) * p.dx * p.dy))
-        trace["solid_phase_fraction"].append(_solid_fraction(state.phi, solid))
+        trace["solid_phase_fraction"].append(_solid_fraction(state.phi, solid, p))
         trace["free_energy"].append(float(pf.phase_free_energy(state.phi, solid, p)))
         trace["implicit_iterations"].append(int(solver_max_iterations))
         trace["implicit_relative_residual"].append(float(solver_max_residual))
@@ -272,10 +274,16 @@ def run_phase_boundary_audit(
     )
     sdf = pf.surface_flat(p, wall_height=0.25)
     solid = pf.make_solid(sdf, p, cos_theta=0.0)
-    fluid = np.asarray(solid.sdf >= 0.0)
-    crossing_x = fluid ^ np.roll(fluid, -1, axis=0)
-    crossing_y = fluid ^ np.roll(fluid, -1, axis=1)
-    aperture_x, aperture_y = (np.asarray(value) for value in pf.fluid_face_apertures(solid, p))
+    # The production contract transports on cut-cell control volumes. A face between cell centres
+    # on opposite sides of sdf=0 may still have a positive open segment, so impermeability is
+    # tested on exactly closed geometric faces rather than on the obsolete hard-mask staircase.
+    operator = pf.phase_transport_operator(solid, p)
+    volume = np.asarray(operator.volume, dtype=np.float64)
+    aperture_x, aperture_y = (
+        np.asarray(value, dtype=np.float64) for value in pf.phase_face_apertures(solid, p)
+    )
+    closed_x = aperture_x == 0.0
+    closed_y = aperture_y == 0.0
 
     rng = np.random.default_rng(2026)
     phi = jnp.asarray(rng.uniform(0.0, 1.0, size=(N, N)), dtype=p.dtype)
@@ -284,9 +292,9 @@ def run_phase_boundary_audit(
     mu = (pf.grids(p)[1] - 0.25).astype(p.dtype)
     adv_x, adv_y = (np.asarray(value) for value in pf.phase_advective_fluxes(u, v, phi, solid, p))
     ch_x, ch_y = (np.asarray(value) for value in pf.chemical_potential_fluxes(mu, solid, p))
-    div_adv = pf.divergence_from_face_fluxes(*pf.phase_advective_fluxes(u, v, phi, solid, p), p)
-    div_ch = pf.divergence_from_face_fluxes(*pf.chemical_potential_fluxes(mu, solid, p), p)
-    mass_sum = float(jnp.sum(jnp.where(solid.sdf >= 0.0, div_adv + div_ch, 0.0)))
+    div_adv = pf.control_volume_divergence(adv_x, adv_y, operator.volume_safe)
+    div_ch = pf.control_volume_divergence(ch_x, ch_y, operator.volume_safe)
+    mass_sum = float(jnp.sum(operator.volume * (div_adv + div_ch)))
 
     flat_bc_error = _normal_bc_relative_error(sdf, p, 60.0)
     flat_bc_linear = _normal_bc_linearization_deviation(sdf, p, 60.0)
@@ -300,7 +308,7 @@ def run_phase_boundary_audit(
     reversed_bc_error = _normal_bc_relative_error(reversed_sdf, p, 120.0, region=x_region)
     reversed_bc_linear = _normal_bc_linearization_deviation(reversed_sdf, p, 120.0, region=x_region)
 
-    rhs = jnp.where(solid.sdf >= 0.0, phi, 0.0)
+    rhs = jnp.where(operator.volume > 0.0, phi, 0.0)
     implicit_solution, implicit_info = pf.solve_ch_implicit(rhs, solid, p, p.dt / 3.0)
     implicit_alpha = (p.dt / 3.0) * p.M * p.eps
     implicit_lap = pf.fluid_laplacian(implicit_solution, solid, p)
@@ -401,7 +409,7 @@ def run_phase_boundary_audit(
     sessile_fn = jax.jit(pf.step_with_diagnostics, static_argnums=(2,))
     for _ in range(sessile_steps):
         sessile, _ = sessile_fn(sessile, solid, p)
-    sessile_solid_fraction = _solid_fraction(sessile.phi, solid)
+    sessile_solid_fraction = _solid_fraction(sessile.phi, solid, p)
     sessile_mass0 = float(pf.liquid_mass(pf.sessile_initial_state(p, solid, R=1.1, wall_height=0.25).phi, solid, p))
     sessile_mass = float(pf.liquid_mass(sessile.phi, solid, p))
     sessile_mass_drift = abs(sessile_mass - sessile_mass0) / max(abs(sessile_mass0), 1e-30)
@@ -414,36 +422,41 @@ def run_phase_boundary_audit(
         AuditCheck(
             "advective_cross_wall_flux_zero",
             bool(
-                np.max(np.abs(adv_x[crossing_x]), initial=0.0) == 0.0
-                and np.max(np.abs(adv_y[crossing_y]), initial=0.0) == 0.0
+                np.max(np.abs(adv_x[closed_x]), initial=0.0) == 0.0
+                and np.max(np.abs(adv_y[closed_y]), initial=0.0) == 0.0
             ),
-            "all fluid-solid advective face fluxes are exactly zero",
+            "all geometrically closed cut-cell advective face fluxes are exactly zero",
             {
-                "crossing_x_max_abs": float(np.max(np.abs(adv_x[crossing_x]), initial=0.0)),
-                "crossing_y_max_abs": float(np.max(np.abs(adv_y[crossing_y]), initial=0.0)),
+                "closed_x_max_abs": float(np.max(np.abs(adv_x[closed_x]), initial=0.0)),
+                "closed_y_max_abs": float(np.max(np.abs(adv_y[closed_y]), initial=0.0)),
             },
         ),
         AuditCheck(
             "ch_cross_wall_flux_zero",
             bool(
-                np.max(np.abs(ch_x[crossing_x]), initial=0.0) == 0.0
-                and np.max(np.abs(ch_y[crossing_y]), initial=0.0) == 0.0
+                np.max(np.abs(ch_x[closed_x]), initial=0.0) == 0.0
+                and np.max(np.abs(ch_y[closed_y]), initial=0.0) == 0.0
             ),
-            "all fluid-solid Cahn-Hilliard fluxes are exactly zero",
+            "all geometrically closed cut-cell Cahn-Hilliard face fluxes are exactly zero",
             {
-                "crossing_x_max_abs": float(np.max(np.abs(ch_x[crossing_x]), initial=0.0)),
-                "crossing_y_max_abs": float(np.max(np.abs(ch_y[crossing_y]), initial=0.0)),
+                "closed_x_max_abs": float(np.max(np.abs(ch_x[closed_x]), initial=0.0)),
+                "closed_y_max_abs": float(np.max(np.abs(ch_y[closed_y]), initial=0.0)),
             },
         ),
         AuditCheck(
             "fluid_mass_flux_telescoping",
             abs(mass_sum) <= (1e-10 if dtype == jnp.float64 else 1e-5),
-            "sum of advective+CH phase RHS over hard fluid cells is zero to round-off",
-            {"sum_rhs_fluid": mass_sum},
+            "volume-weighted sum of advective+CH phase RHS is zero to round-off",
+            {"sum_rhs_cutcell_volume": mass_sum},
         ),
         AuditCheck(
             "periodic_y_seam_is_blocked",
-            bool(not aperture_y[:, -1].any() and fluid[:, -1].all() and not fluid[:, 0].any() and aperture_x.any()),
+            bool(
+                not aperture_y[:, -1].any()
+                and (np.asarray(solid.sdf >= 0.0)[:, -1]).all()
+                and not (np.asarray(solid.sdf >= 0.0)[:, 0]).any()
+                and aperture_x.any()
+            ),
             "bottom wall blocks top-to-bottom periodic y transport; x fluid faces remain periodic",
             {"y_seam_open_faces": int(aperture_y[:, -1].sum()), "x_open_faces": int(aperture_x.sum())},
         ),
@@ -534,7 +547,7 @@ def run_phase_boundary_audit(
         AuditCheck(
             "solid_phase_leak_projection_free",
             sessile_solid_fraction <= 1e-6 and sessile_mass_drift <= 1e-3,
-            "v7 neutral sessile run does not use projection, solid phase fraction <=1e-6 and fluid-mass drift <=1e-3",
+            "neutral sessile run without projection keeps zero-volume solid cells empty and fluid-mass drift <=1e-3",
             {
                 "solid_phase_fraction": sessile_solid_fraction,
                 "fluid_mass_relative_drift": sessile_mass_drift,
@@ -546,11 +559,9 @@ def run_phase_boundary_audit(
         settings={
             "N": int(N),
             "dtype": str(np.dtype(dtype)),
-            "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+            **pf.phase_transport_metadata(p),
             "phase_boundary_model": "impermeable_flux",
             "wetting_model": "surface_energy",
-            "wall_measure_method": str(p.wall_measure),
-            "wall_measure_contract_version": int(pf.WALL_MEASURE_CONTRACT_VERSION),
             "ch_solver_rtol": float(p.ch_solver_rtol),
             "ch_solver_max_iterations": int(p.ch_solver_max_iterations),
             "sessile_steps": int(sessile_steps),

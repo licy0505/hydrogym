@@ -27,6 +27,68 @@ def _tiny(target=150.0, N=32, R=0.6, dt=4.0e-3, M=2.0e-3):
     return p, solid, state
 
 
+def test_chns_milestone_extension_requires_clean_mass_and_active_relaxation():
+    from production.contract11_chns_stage_audit import MILESTONES, _should_extend
+
+    assert _should_extend(
+        MILESTONES[0], complete=True, drift_clean=True, stationary=False, still_relaxing=True
+    ) is True
+    assert _should_extend(
+        MILESTONES[0], complete=True, drift_clean=False, stationary=False, still_relaxing=True
+    ) is False
+    assert _should_extend(
+        MILESTONES[0], complete=True, drift_clean=True, stationary=True, still_relaxing=True
+    ) is False
+    assert _should_extend(
+        MILESTONES[0], complete=True, drift_clean=True, stationary=False, still_relaxing=False
+    ) is False
+    assert _should_extend(
+        MILESTONES[-1], complete=True, drift_clean=True, stationary=False, still_relaxing=True
+    ) is False
+
+
+def test_run_relaxation_checkpoints_resume_the_exact_chns_state(tmp_path):
+    """A staged audit continues from phi/u/v/t, not from a newly initialized droplet."""
+    previous = jax.config.jax_enable_x64
+    jax.config.update("jax_enable_x64", True)
+    try:
+        common = dict(
+            target_deg=90.0,
+            ch_only=False,
+            N=32,
+            eps_factor=2.0,
+            M=audit.M_REF,
+            dt=4.0e-3,
+            R=0.6,
+            budgets=(20,),
+            sample_every=5,
+            keep_samples=20,
+            fixed_steps=10,
+        )
+        checkpoint_10 = tmp_path / "chns_10.npz"
+        first = audit.run_relaxation(**common, checkpoint_out=checkpoint_10)
+        continued = audit.run_relaxation(
+            **{**common, "fixed_steps": 10},
+            checkpoint_in=checkpoint_10,
+            checkpoint_out=tmp_path / "chns_20.npz",
+            start_step=10,
+            mass_reference=first["mass_reference_initial"],
+            conserved_mass_reference=first["conserved_mass_reference_initial"],
+            prior_samples=first["samples"],
+        )
+        direct = audit.run_relaxation(**{**common, "fixed_steps": 20}, checkpoint_out=tmp_path / "direct_20.npz")
+
+        assert continued["continuation_start_step"] == 10
+        assert continued["steps"] == direct["steps"] == 20
+        with np.load(tmp_path / "chns_20.npz", allow_pickle=False) as split, np.load(
+            tmp_path / "direct_20.npz", allow_pickle=False
+        ) as whole:
+            for name in ("phi", "u", "v", "time"):
+                np.testing.assert_array_equal(split[name], whole[name])
+    finally:
+        jax.config.update("jax_enable_x64", previous)
+
+
 # ---------------------------------------------------------------------------
 #  CH-only path
 # ---------------------------------------------------------------------------
@@ -43,7 +105,22 @@ def test_ch_only_step_keeps_velocity_zero():
 
 def _ch_only_versus_substeps(target=120.0, N=32, dtype=jnp.float32):
     """Max |phi| difference between the CH-only public step and three un-fused substeps."""
-    p = pf.PhaseFieldParams(Nx=N, Ny=N, Lx=6.0, Ly=6.0, dt=4.0e-3, M=2.0e-3, eps=2.0 * 6.0 / N, dtype=dtype)
+    storage_model = (
+        pf.LEGACY_FLOAT32_STORAGE_MODEL
+        if jnp.dtype(dtype) == jnp.dtype(jnp.float32)
+        else pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL
+    )
+    p = pf.PhaseFieldParams(
+        Nx=N,
+        Ny=N,
+        Lx=6.0,
+        Ly=6.0,
+        dt=4.0e-3,
+        M=2.0e-3,
+        eps=2.0 * 6.0 / N,
+        dtype=dtype,
+        phase_storage_model=storage_model,
+    )
     solid = pf.make_solid(pf.surface_flat(p, wall_height=0.25), p, cos_theta=math.cos(math.radians(target)))
     state = pf.sessile_initial_state(p, solid, R=0.6, wall_height=0.25)
     zero = jnp.zeros_like(state.phi)
@@ -97,6 +174,7 @@ def _ch_only_drift(rtol: float, steps: int = 30):
         M=2.0e-3,
         eps=2.0 * 6.0 / 32,
         dtype=jnp.float32,
+        phase_storage_model=pf.LEGACY_FLOAT32_STORAGE_MODEL,
         ch_solver_rtol=rtol,
         ch_solver_max_iterations=400,
     )
@@ -403,7 +481,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
     assert report["stage"] == "L1A-2d"
     assert all(row["classification"] in (None, "INCONCLUSIVE") for row in report["classification_summary"].values())
     assert report["recommended_next_stage"]["decision"] == "INCONCLUSIVE"  # smoke budgets never classify
-    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 10
+    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
     assert report["trajectory_semantics_changed"] is False  # the L1A-2d stage itself changes no default
     assert len(report["historical_v7_baseline"]) == 4
     assert {row["final_sampled_angle_deg"] for row in report["historical_v7_baseline"]} == {
@@ -436,7 +514,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
 
 def test_solver_contract_is_v9_and_l1a2d_stage_is_frozen():
     """The L1A-2d diagnostic stage is unchanged; the *solver* it diagnoses is now contract v9."""
-    assert pf.SOLVER_CONTRACT_VERSION == 10
+    assert pf.SOLVER_CONTRACT_VERSION == 11
     assert audit.STAGE == "L1A-2d"
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
     assert p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy"

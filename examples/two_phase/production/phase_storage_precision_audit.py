@@ -23,8 +23,10 @@ Rules this module obeys (spec 19, 32, 33):
   (``phi_phys``), never on a hidden bookkeeping sum. The compensated sum is reported separately and
   labelled as bookkeeping.
 
-Nothing in this module changes a production default; the phase-only float64 model is the opt-in
-``phase_storage_model`` of :mod:`phasefield` and the default stays ``float32_contract_10``.
+This is the frozen Stage-1 comparison harness. Its A0 row explicitly pins
+``float32_contract_10`` as the contract-10 reference; the contract-11 production default is the
+already-selected ``phase_only_float64_v1`` model. Stage 2 does not use this historical candidate
+matrix to re-select a storage representation.
 
 Profiles: ``quick`` (small N, short horizons), ``baseline`` (contract-10 reproduction), ``forensic``
 (the full matrix, plus the long-horizon and restart matrices).
@@ -1294,6 +1296,34 @@ def dataset_lineage(candidate: str) -> dict[str, Any]:
                 for sub in ast.walk(node):
                     if isinstance(sub, ast.keyword) and sub.arg:
                         payload_keys.append(sub.arg)
+                    if isinstance(sub, ast.Dict):
+                        for key, value in zip(sub.keys, sub.values):
+                            if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                                payload_keys.append(key.value)
+                            elif key is None and isinstance(value, ast.Call):
+                                helper = getattr(value.func, "attr", None)
+                                if helper == "phase_transport_metadata":
+                                    payload_keys.extend(
+                                        (
+                                            "solver_contract_version",
+                                            "phase_storage_model",
+                                            "phase_state_dtype",
+                                            "velocity_state_dtype",
+                                            "phase_transport_geometry",
+                                            "phase_transport_geometry_version",
+                                        )
+                                    )
+                                elif helper == "sample_lineage_metadata":
+                                    payload_keys.extend(
+                                        (
+                                            "solver_contract_version",
+                                            "phase_storage_model",
+                                            "solver_phase_dtype",
+                                            "stored_sample_phase_dtype",
+                                            "sample_cast_policy",
+                                            "sample_representation",
+                                        )
+                                    )
             if isinstance(node, ast.FunctionDef) and node.name == "_saved_case_is_current":
                 current_check = ast.get_docstring(node) or ""
     hidden = candidate in HIDDEN_STATE_CANDIDATES

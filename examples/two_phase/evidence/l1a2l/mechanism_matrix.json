@@ -1,0 +1,246 @@
+{
+  "allowed_final_root_cause_labels": [
+    "INCONCLUSIVE",
+    "suspected_in_contract_v11",
+    "confirmed_problem_in_contract_v11"
+  ],
+  "candidates": [
+    {
+      "candidate": "STATE_PROVENANCE_MISMATCH",
+      "control_or_falsification": "L1A-2k per-field state hashes and strict current-source/config checkpoint checks",
+      "effect_sizes": "required production and CH-only reference state hashes were accepted against saved provenance",
+      "production_repair_or_contract_change": false,
+      "scope": "evidence admissibility blocker only; not a physics root-cause claim",
+      "status": "FALSIFIED"
+    },
+    {
+      "candidate": "ADVECTIVE_CH_NEAR_CANCELLATION",
+      "control_or_falsification": {
+        "authority_C_mag_strictly_below_all_controls": true,
+        "control_C_mag_last_values_90_150": [
+          0.2645884148507427,
+          0.17570630669657544
+        ],
+        "status_basis": "direct measured signs and magnitude ordering; no post-measurement cutoff"
+      },
+      "effect_sizes": {
+        "C_dir_by_window": [
+          -0.9572552112923786,
+          -0.9572474720011884,
+          -0.9565372954503907
+        ],
+        "C_mag_by_window": [
+          0.14652558250753975,
+          0.14653876131589144,
+          0.1477432304609049
+        ],
+        "net_to_CH_norm_by_window": [
+          0.2960034647507349,
+          0.296029980345393,
+          0.29845391231135016
+        ],
+        "net_to_adv_norm_by_window": [
+          0.29015717540262326,
+          0.29018337607923794,
+          0.2925774378244195
+        ]
+      },
+      "production_repair_or_contract_change": false,
+      "scope": "60-degree differential mechanism candidate; C_dir is a cut-cell-volume cosine and C_mag is the cut-cell-volume norm ratio",
+      "status": "SUPPORTED"
+    },
+    {
+      "candidate": "HYDRODYNAMICALLY_DRIVEN_PHASE_NONEQUILIBRIUM",
+      "control_or_falsification": {
+        "control_effects_are_differential_falsification": false,
+        "control_late_window_advective_rates_volume": {
+          "control_090": {
+            "late_stationary_1000_step_samples": 0.0012296118889018894
+          },
+          "control_150": {
+            "late_stationary_1000_step_samples": 0.001105955721292069
+          }
+        },
+        "matched_90_150_control_counterfactual_effects": {
+          "control_090": 0.00019609754601596506,
+          "control_150": 0.00020790582478249443
+        },
+        "matched_zero_velocity_counterfactual": {
+          "D_phi_end": 0.06031189296808337,
+          "D_phi_start": 0.060347868156744186,
+          "D_phi_zero_velocity_change": -3.5975188660816726e-05,
+          "delta_phi_l2_volume": 0.00012758586750368495,
+          "endpoint_morphology": {
+            "contact_line": {
+              "bottom_gap": 0.0078125,
+              "contact_line_exists": true,
+              "contact_width": 2.9512160168864323,
+              "contour_wall_intersection_count": 12,
+              "detachment_observed": false,
+              "left_angle_deg": 59.91651486791242,
+              "left_contact_x": 1.524391990727645,
+              "left_contact_x_wrapped": 1.524391990727645,
+              "overall_circle_fit_angle_deg": 59.642699622512886,
+              "raw_circle_fit_angle_deg": 59.6426996225129,
+              "right_angle_deg": 59.91651486949989,
+              "right_contact_x": 4.475608007614078,
+              "right_contact_x_wrapped": 4.475608007614078,
+              "sessile_angle_deg": 59.6426996225129,
+              "side_angle_method": "independent_bulk_contour_half_circle_fits_diagnostic",
+              "top_height": 1.0546875,
+              "x_cm": 2.99999999916985,
+              "y_cm": 0.7380433939330997
+            },
+            "formal_volume_weighted_liquid_mass_clipped_phi": 1.919289062149144,
+            "hard_mask_liquid_mass": 1.969668760584386,
+            "liquid_centroid_x_periodic_first_moment": 2.9999999992259188,
+            "liquid_centroid_y": 0.7502501014980302,
+            "phi_ge_0_5_connected_components_nonperiodic_diagnostic": 1
+          },
+          "endpoint_state_hashes": {
+            "phi": "fee572c3f3554aba50bfad06d95ea6624067232dc616371cc86c3c701c41428e",
+            "t": "fb42c78e18637a9b25d789cbe51a66319b9b2debf81a662216770cbf6c47fc43",
+            "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+            "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+          },
+          "formal_mass_increment_CH": 1.7535614887237427e-16,
+          "formal_mass_increment_adv": 0.0,
+          "formal_phase_mass_increment": 1.7535614887237427e-16,
+          "implicit_iterations_max": 7,
+          "implicit_last_step_converged": true,
+          "implicit_relative_residual_max": 5.562191519821654e-07,
+          "last_public_step_previous_phi_hash": "dc85632421affa0b14226f99731b5b6cad48caf73b17d101ddf21297d1c8a60c",
+          "phase_free_energy_end": {
+            "bulk": 0.4230299708080556,
+            "component_sum_minus_production_total": 0.0,
+            "gradient": 0.41819786579176127,
+            "total": 0.49611829506247296,
+            "wall": -0.34510954153734397
+          },
+          "phase_free_energy_start": {
+            "bulk": 0.42302005072143667,
+            "component_sum_minus_production_total": 0.0,
+            "gradient": 0.41823359017208006,
+            "total": 0.4961282061615263,
+            "wall": -0.3451254347319904
+          },
+          "trajectory": "pf.phase_only_step_with_diagnostics over the same matched public-step count; u=v=0 at every phase substep"
+        },
+        "support_rule": "requires advection away from and CH toward the provenance-checked 60-degree equilibrium, larger production-minus-zero D_phi growth, and a matched 90/150 differential control"
+      },
+      "effect_sizes": {
+        "CH_increment_points_toward_equilibrium": true,
+        "advective_increment_points_away_from_equilibrium": false,
+        "matched_control_phase_change_l2_volume_differences": {
+          "control_090": 0.00019609754601596506,
+          "control_150": 0.00020790582478249443
+        },
+        "matched_production_D_phi_change": -7.867103440751394e-05,
+        "matched_production_minus_zero_D_phi_change": -4.2695845746697214e-05,
+        "matched_production_minus_zero_phase_change_l2_volume": 0.00014056758039464039,
+        "matched_zero_velocity_CH_D_phi_change": -3.5975188660816726e-05,
+        "one_step_CH_direction_cosine_to_equilibrium": 0.0838718117713347,
+        "one_step_advective_direction_cosine_to_equilibrium": 0.18106739922662582,
+        "one_step_production_D_phi_change": -7.871219393218443e-07,
+        "one_step_zero_velocity_CH_D_phi_change": -2.5400054790014615e-07
+      },
+      "production_repair_or_contract_change": false,
+      "scope": "causal one-step plus matched 100-step production-velocity/zero-velocity counterfactual",
+      "status": "FALSIFIED"
+    },
+    {
+      "candidate": "MREF_INTRINSIC_CH_RELAXATION_LIMITED",
+      "control_or_falsification": {
+        "M4_not_used_as_production_closure": true,
+        "comparison_window_steps": 10000,
+        "converged": true,
+        "longer_than_matched_production_window": false
+      },
+      "effect_sizes": {
+        "M": 0.002,
+        "dt": 0.004,
+        "energy_monotone_exact_sample_order": true,
+        "max_sample_D_phi_increase": -0.0006239213452312251,
+        "max_sample_energy_increase": -7.148502600418105e-05,
+        "mobility_scaled_time": 0.056,
+        "physical_time": 28.0,
+        "raw_unaligned_D_phi_monotone_exact_sample_order": true,
+        "status": "converged",
+        "steps_to_gate_or_budget": 7000
+      },
+      "production_repair_or_contract_change": false,
+      "scope": "matched freeze-u, M_ref continuation only; diagnostic and not production closure",
+      "status": "FALSIFIED"
+    },
+    {
+      "candidate": "CHEMICAL_POTENTIAL_UNIFORMITY_LIMITATION",
+      "control_or_falsification": "fail-closed componentwise chemical-potential precondition",
+      "effect_sizes": {
+        "authority": {
+          "linf_deviation_from_mean": 0.08481211541522796,
+          "mean_volume_weighted": 0.08417599111524651,
+          "std_volume_weighted": 0.028625152297189857
+        },
+        "equilibrium": {
+          "linf_deviation_from_mean": 0.014074334681546785,
+          "mean_volume_weighted": 0.1324384090508715,
+          "std_volume_weighted": 0.004717633568719574
+        }
+      },
+      "production_repair_or_contract_change": false,
+      "scope": "no cross-component averaging",
+      "status": "NOT_TESTED"
+    },
+    {
+      "candidate": "N-CAPILLARY-PRESSURE-BALANCE",
+      "control_or_falsification": "structural L1A-2k evidence retained only as a background; no differential 60-degree causal evidence is inferred",
+      "effect_sizes": {
+        "L1A2k_causal_root_cause_of_L1A2j_nonstationarity": "INCONCLUSIVE",
+        "L1A2k_final_root_cause": "CAPILLARY_PRESSURE_IMBALANCE",
+        "not_reused_as_causal_60_degree_evidence": true,
+        "scope": "the measured structural non-projectable capillary-acceleration component only; not a causal explanation of the 60-degree angle-cycle/production-gate failure"
+      },
+      "production_repair_or_contract_change": false,
+      "scope": "structural background only; explicitly not the 60-degree root cause",
+      "status": "SUPPORTED"
+    },
+    {
+      "candidate": "N-CH-MASS-PRECISION",
+      "control_or_falsification": "N-CH-MASS-PRECISION remains resolved_in_contract_v11",
+      "effect_sizes": "contract-11 cut-cell mass ledger and per-increment sums are directly reported",
+      "production_repair_or_contract_change": false,
+      "scope": "historical resolved constraint, not reopened",
+      "status": "FALSIFIED"
+    },
+    {
+      "candidate": "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN",
+      "control_or_falsification": "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN remains resolved_in_contract_v9",
+      "effect_sizes": "contract-9 cut-cell-volume regional masks/operators are used without changing geometry",
+      "production_repair_or_contract_change": false,
+      "scope": "historical resolved constraint, not reopened",
+      "status": "FALSIFIED"
+    },
+    {
+      "candidate": "W-CONTACT-ANGLE",
+      "control_or_falsification": "90/150 controls and converged CH-only reference",
+      "effect_sizes": "left/right contact metrics are measured separately; equilibrium target and side-specific residual remain open",
+      "production_repair_or_contract_change": false,
+      "scope": "open condition; do not upgrade angle-cycle classification",
+      "status": "NOT_TESTED"
+    },
+    {
+      "candidate": "MULTIPLE_CONTRIBUTORS",
+      "control_or_falsification": "each individual mechanism matrix row",
+      "effect_sizes": "unmeasured until distinct causal candidates independently pass their counterfactuals",
+      "production_repair_or_contract_change": false,
+      "scope": "composite label is not a way to bypass candidate-level evidence",
+      "status": "NOT_TESTED"
+    }
+  ],
+  "final_root_cause": "INCONCLUSIVE",
+  "final_root_cause_scope": "No sole 60-degree root cause is assigned without provenance-checked, differential causal evidence; the L1A-2k capillary result remains a structural background only.",
+  "no_contract_bump": true,
+  "production_semantics_changed": false,
+  "solver_contract_version": 11,
+  "stage": "L1A-2l"
+}

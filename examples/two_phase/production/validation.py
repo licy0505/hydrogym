@@ -13,6 +13,25 @@ import numpy as np
 import phasefield as pf
 from production import observables as obs
 
+# The contract-v9+ production phase equation is a finite-volume update on embedded cut-cell
+# control volumes.  This metadata keeps the conserved invariant distinct from the historical
+# full-grid reconstruction sampled as ``total_mass``.
+PHASE_MASS_SEMANTICS = {
+    "formal_conserved_quantity": "sum_i V_i phi_i",
+    "formal_cell_measure": "phase_control_volumes(solid, p): partial fluid volume V_i",
+    "formal_acceptance_field": "mass_relative_drift",
+    "full_grid_reconstruction_formula": "dx * dy * sum_i phi_i",
+    "full_grid_reconstruction_field": "total_mass_relative_drift",
+    "full_grid_reconstruction_is_conserved": False,
+    "full_grid_reconstruction_in_formal_gate": False,
+    "theoretical_basis": (
+        "The update is dphi_i/dt = -(1/V_i) sum_f F_if. Multiplying by V_i and summing cancels "
+        "each shared periodic face flux pair, so sum_i V_i phi_i is invariant. The unweighted "
+        "sum_i phi_i (and therefore dx*dy*sum_i phi_i) weights cut cells incorrectly when V_i "
+        "is partial, so the same pairwise cancellation does not apply."
+    ),
+}
+
 KNOWN_SOLVER_BLOCKERS = [
     {
         "id": "P-VARDENS-PROJ",
@@ -37,37 +56,23 @@ KNOWN_SOLVER_BLOCKERS = [
         "severity": "high",
         "status": "measurement_required",
         "description": (
-            "Young wall-energy targets are not validated until clean sessile runs converge at 60/90/120/150 deg "
-            "and meet the angle, monotonicity and mass criteria. Contract v8 replaced the grid-alignment-dependent "
-            "fluid share of the diffuse wall kernel with the exact embedded cut-cell wall measure (L1A-2e); "
-            "contract v9 transported the phase on that same cut-cell geometry (L1A-2f), so the wall energy, the "
-            "transport and the measurement finally reference one surface. The thermodynamic evidence is the "
-            "CH-only four-target matrix plus the full CHNS four-target matrix in "
-            "production/cutcell_alignment_audit.py; the blocker may be reported as "
-            "``thermodynamic_equilibrium_validated_v9`` only when the production-default full CHNS matrix "
-            "truly converges *and* its conserved mass drift stays clean."
+            "Young wall-energy targets remain open until contract-11 production-default CHNS runs converge at "
+            "60/90/120/150 deg and meet the angle, monotonicity, energy and mass criteria. Contract 11 promotes "
+            "the selected phase-only float64 state without changing the cut-cell wall/transport geometry or the "
+            "Young model. Closure requires all four production storage lineages to be explicit and all runs to be "
+            "finite, stationary and drift-clean; a sampled but unconverged angle is not equilibrium evidence."
         ),
     },
     {
         "id": "N-CH-MASS-PRECISION",
         "severity": "medium",
-        "status": "confirmed_problem",
+        "status": "measurement_required",
         "description": (
-            "Mass drifts with steps at the production float32 CG tolerance (rtol = 1e-6). L1A-2g localised the "
-            "mechanism with the M0-M8 ledger of M = sum_i V_i phi_i (production/mass_precision_audit.py): the "
-            "advective and Cahn-Hilliard fluxes and the rhs assembly are at the round-off floor, and the loss is "
-            "MULTIPLE_CONTRIBUTORS inside the contract-v9 sqrt(V) similarity pair -- PHI_TO_Y_TRANSFORM "
-            "(fl32(sqrt(V))^2 != V on the cut cells, +2.84e-9 mass-weighted), the tolerance-controlled "
-            "KRYLOV_NULL_MODE (c^T y != c^T b) and Y_TO_PHI_TRANSFORM (y * fl(1/sqrt(V)), a one-sided, "
-            "data-independent +1.8e-8..+2.2e-8 bias). Contract 10 removes the transform: the solve is posed for "
-            "the substep exchange d = phi_new - rhs in the V-weighted inner product, whose right-hand side has no "
-            "constant mode by telescoping, so the Krylov vectors are V-orthogonal to the mode by construction. "
-            "Measured: the quick gate at N = 48 falls from 1.4059e-4 to 8.5004e-7 (offset 0) and 1.2095e-4 to "
-            "1.0715e-6 (offset 0.5 dy), and in float64 the drift is 2.31e-16 over 1000 steps at N = 128 against "
-            "1.57e-5 in 200 for v9. A float32 residual remains (-0.0173 E_round per substep at N = 128, "
-            "rtol = 1e-6, i.e. 1.2e-3 over 150 000 substeps), which is the size of the remaining closure "
-            "failures (1.054e-3 at 60 deg over 50 000 steps), so this blocker stays open until the drift is "
-            "measured down at production precision."
+            "The contract-10 float32 state path showed a systematic mass-storage bias. Stage 1 selected "
+            "phase_only_float64_v1 as the only tested phase representation that removed both the storage loss "
+            "and solve defect at the float64 floor. Contract 11 makes that model the default, but this blocker "
+            "stays open until the reproduced quick/medium/long gates and all four production-default CHNS mass "
+            "gates pass with the phase-storage precision ledger reported for any failure."
         ),
     },
     {
@@ -99,19 +104,13 @@ KNOWN_SOLVER_BLOCKERS = [
     {
         "id": "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN",
         "severity": "high",
-        "status": "confirmed_problem",
+        "status": "resolved_in_contract_v9",
         "description": (
-            "L1A-2e: the phase-transport domain was the cell-centre hard-fluid mask (sdf >= 0), so the liquid's "
-            "discrete base sat on a cell face while measure_contact_angle references the geometric sdf = 0 plane. "
-            "The offset between them spans -0.458..+0.417 cells as the wall translates inside a cell, and the "
-            "measured equilibrium angle followed it linearly (+1.79/+4.16/+8.20 deg per cell at 60/120/150 deg, "
-            "R^2 >= 0.998): converged CH-only angles spread 1.57/3.63/7.24 deg across the eight sub-cell offsets. "
-            "Contract v9 resolves the cause by transporting the phase on the cut-cell control volumes of the same "
-            "corner reconstruction that defines the wall: V_i from exact polygon clipping, shared partial face "
-            "apertures A_f, wall measure hosted on the cell that owns the contour, and the implicit solve on the "
-            "Euclidean-SPD similarity transform of V^-1 K. The evidence is the translation and resolution "
-            "matrices in production/cutcell_alignment_audit.py; the blocker may be reported as "
-            "``resolved_in_contract_v9`` only when both spread gates pass on the true geometric wall."
+            "Resolved in contract v9: phase transport, cut-cell wall measure and geometric wall location share one "
+            "corner reconstruction, with partial cell volumes and shared face apertures. The translation and "
+            "resolution matrices in production/cutcell_alignment_audit.py established the alignment gates. "
+            "Contract 11 changes only phase storage precision and does not reopen this geometry blocker unless a "
+            "new translation regression exceeds the frozen spread limit."
         ),
     },
     {
@@ -135,11 +134,10 @@ KNOWN_SOLVER_BLOCKERS = [
         "severity": "medium",
         "status": "open",
         "description": (
-            "L1B prerequisite: a fresh training run pointed at a stale data directory validates the "
-            "file-level dataset_schema_version but not the manifest solver_contract_version, so "
-            "contract-5/6 trajectories can still be read as training data under contract 7. "
-            "generate_dataset.py regenerates stale trajectories (the fingerprint contains the solver "
-            "contract and phase_boundary_model); the training-side manifest check remains an L1B task."
+            "Contract-11 training readers now reject per-file data without matching solver contract, "
+            "phase_storage_model, solver phi dtype and explicit sample-cast metadata. The independent L1B "
+            "fresh-training contract remains open: aggregate manifest/fingerprint reconciliation and checkpoint "
+            "training-provenance enforcement are not claimed as resolved by this per-file compatibility audit."
         ),
     },
     {
@@ -465,8 +463,9 @@ class ContactAngleCase:
     the equilibrium criterion; a non-converged value is *not* an equilibrium
     contact angle and is reported as ``None``.  ``final_sampled_deg`` keeps the
     last sampled angle for diagnostics, and ``samples`` records the time,
-    measured angle, maximum speed, total mass and fluid-region mass of every
-    sample.
+    measured angle, maximum speed, the full-grid reconstruction diagnostic
+    ``dx * dy * sum(phi)`` (historically named ``total_mass``) and the conserved
+    cut-cell fluid mass ``sum_i V_i phi_i`` (``fluid_mass``).
     """
 
     target_deg: float
@@ -609,7 +608,9 @@ def run_contact_angle_case(
                 "time": float(state.t),
                 "measured_angle_deg": angle,
                 "max_speed": max_speed,
+                # Keep the legacy field for report compatibility and expose its actual measure by name.
                 "total_mass": total_mass,
+                "full_cell_mass_reconstruction": total_mass,
                 "fluid_mass": fluid_mass,
                 "solid_phase_fraction": leak,
                 "free_energy": energy,
@@ -669,6 +670,7 @@ def run_contact_angle_case(
             "speed_tol": float(speed_tol),
             "windows": int(windows),
         },
+        "phase_mass_semantics": dict(PHASE_MASS_SEMANTICS),
     }
     return ContactAngleCase(
         target_deg=float(target_deg),
@@ -736,6 +738,10 @@ def summarize_contact_angles(cases: list[ContactAngleCase]) -> dict[str, Any]:
         "theta_90_abs_error_deg": abs(measured_90 - 90.0) if measured_90 is not None else None,
         "max_fluid_mass_drift": max((case.mass_relative_drift for case in valid), default=None),
         "max_total_mass_drift": max((case.total_mass_relative_drift for case in valid), default=None),
+        "max_full_cell_mass_reconstruction_drift_diagnostic": max(
+            (case.total_mass_relative_drift for case in valid), default=None
+        ),
+        "phase_mass_semantics": dict(PHASE_MASS_SEMANTICS),
         "max_solid_phase_fraction": max((case.max_solid_liquid_fraction for case in valid), default=None),
         "converged_targets": [float(case.target_deg) for case in converged],
         "non_converged_targets": [float(case.target_deg) for case in valid if not case.converged],

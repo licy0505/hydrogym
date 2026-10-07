@@ -1459,14 +1459,20 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
-    # The alignment matrix is a *closure* statement about the transport domain, which contract v10
-    # does not change (it changes only the implicit phase solve). Both contracts are accepted, and
-    # the version actually used is recorded, so a v9 matrix cannot be passed off as a v10 one.
-    if report.get("solver_contract_version") not in (9, 10):
-        errors.append(
-            "solver_contract_version must be 9 or 10; got "
-            f"{report.get('solver_contract_version')!r}"
-        )
+    # The alignment matrix is a closure statement about the transport domain. Contracts 9-11
+    # retain that geometry; contract 11 additionally records the A1 phase-storage lineage.
+    contract = report.get("solver_contract_version")
+    if contract not in (9, 10, 11):
+        errors.append(f"solver_contract_version must be 9, 10 or 11; got {contract!r}")
+    if contract == 11:
+        expected_storage = {
+            "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,
+            "phase_state_dtype": "float64",
+            "velocity_state_dtype": "float32",
+        }
+        for key, value in expected_storage.items():
+            if report.get(key) != value:
+                errors.append(f"contract-11 report {key} must be {value!r}")
     if report.get("phase_transport_geometry") != "sdf_cutcell_fv_v1":
         errors.append("phase_transport_geometry must be sdf_cutcell_fv_v1")
     if report.get("phase_control_volume") != "partial_cell_volume":
@@ -1525,8 +1531,9 @@ def format_markdown(report: dict[str, Any]) -> str:
                   "| target | slope (deg/cell) | R^2 | v8 slope | reduction |", "| --- | --- | --- | --- | --- |"]
         for target, row in sorted(falsification.items()):
             lines.append(
-                f"| {target} | {row['slope_deg_per_cell']} | {row['r_squared']} | "
-                f"{row['v8_slope_deg_per_cell']} | {row['slope_reduction_vs_v8']} |"
+                f"| {target} | {row.get('slope_deg_per_cell', 'not fit')} | {row.get('r_squared', 'not fit')} | "
+                f"{row.get('v8_slope_deg_per_cell', row.get('v8_slope', 'not available'))} | "
+                f"{row.get('slope_reduction_vs_v8', 'not available')} |"
             )
         lines += ["", f"Hypothesis falsified: **{report['numbers'].get('falsified')}**"]
     resolution = report["numbers"].get("resolution") or {}
@@ -1628,10 +1635,27 @@ def run_audit(
     max_steps: int | None = None,
     overwrite: bool = False,
     allow_incomplete: bool = False,
+    translation_targets: Sequence[float] | None = None,
+    translation_offsets: Sequence[float] | None = None,
 ) -> dict[str, Any]:
     if profile not in PROFILES:
         raise ValueError(f"unknown profile {profile!r}; expected one of {sorted(PROFILES)}")
     cfg = dict(PROFILES[profile])
+    if translation_targets is not None:
+        targets = [float(target) for target in translation_targets]
+        if not targets or any(target not in (60.0, 90.0, 120.0, 150.0) for target in targets):
+            raise ValueError("translation_targets must be a nonempty subset of 60/90/120/150 deg")
+        cfg["translation"] = dict(cfg["translation"])
+        cfg["translation"]["targets"] = sorted(set(targets))
+    if translation_offsets is not None:
+        offsets = [float(offset) for offset in translation_offsets]
+        allowed_offsets = set(float(value) for value in wma.TRANSLATION_OFFSETS)
+        if not offsets or any(offset not in allowed_offsets for offset in offsets):
+            raise ValueError(
+                f"translation_offsets must be a nonempty subset of {sorted(allowed_offsets)} dy"
+            )
+        cfg["translation"] = dict(cfg["translation"])
+        cfg["translation"]["offsets"] = sorted(set(offsets))
     cfg["_profile"] = profile
     wanted = tuple(sections) if sections else SECTIONS
     unknown = [name for name in wanted if name not in SECTIONS]
@@ -1738,6 +1762,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--profile", default="quick", choices=sorted(PROFILES))
     parser.add_argument("--out", default=None, help="output directory (default evidence/l1a2f_<profile>)")
     parser.add_argument("--sections", default=None, help=f"comma-separated subset of {','.join(SECTIONS)}")
+    parser.add_argument(
+        "--translation-targets",
+        nargs="+",
+        type=float,
+        default=None,
+        help="optional subset of translation targets (e.g. 60 150); resolution targets remain profile-defined",
+    )
+    parser.add_argument(
+        "--translation-offsets",
+        nargs="+",
+        type=float,
+        default=None,
+        help="optional subset of sub-cell offsets from 0/0.125/0.25/0.375/0.5/0.625/0.75/0.875 dy",
+    )
     parser.add_argument("--max-steps", type=int, default=None, help="cap every step budget (smoke use only)")
     parser.add_argument("--overwrite", action="store_true", help="ignore cached sections and cases")
     parser.add_argument(
@@ -1757,6 +1795,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         max_steps=args.max_steps,
         overwrite=args.overwrite,
         allow_incomplete=args.allow_incomplete,
+        translation_targets=args.translation_targets,
+        translation_offsets=args.translation_offsets,
     )
     print(format_markdown(report))
     return 1 if report["not_ready"] else 0

@@ -135,7 +135,11 @@ class Audit:
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
         payload["passed"] = self.passed
-        payload["phase_transport"] = pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2))
+        legacy_params = pf.PhaseFieldParams(
+            Nx=2, Ny=2, phase_storage_model=pf.LEGACY_FLOAT32_STORAGE_MODEL
+        )
+        payload["reference_solver_contract_version"] = 10
+        payload["phase_transport"] = pf.phase_transport_metadata(legacy_params)
         payload["implicit_phase_solver"] = str(pf.IMPLICIT_PHASE_SOLVER)
         payload["phase_mass_invariant"] = str(pf.PHASE_MASS_INVARIANT)
         payload["conserved_quantity"] = CONSERVED_QUANTITY
@@ -193,6 +197,7 @@ def build_case(
     wall_height: float = 0.25,
     R: float = 1.1,
     dtype=jnp.float32,
+    phase_storage_model: str = pf.LEGACY_FLOAT32_STORAGE_MODEL,
     max_iterations: int | None = None,
 ):
     """The hard, fixed-step CH-only fixture: flat wall, ``eps = 2 dx``, sessile cap of radius R."""
@@ -210,6 +215,7 @@ def build_case(
         M=float(M),
         eps=2.0 * 6.0 / N,
         dtype=dtype,
+        phase_storage_model=str(phase_storage_model),
         ch_solver_rtol=float(rtol),
         **kwargs,
     )

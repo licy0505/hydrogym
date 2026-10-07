@@ -2,8 +2,8 @@
 
 These tests pin (a) the *harness* -- the audit's exchange correction must be the shipped solve, its
 mass metric must be the field the operators read, and its numbers must add up to the observed drift;
-(b) the *contract* -- the production default stays contract-10 float32 and only the opt-in storage
-model promotes the phase field; and (c) the *anti-cheating* rules of the stage: no global mass
+(b) the *contract* -- contract 11 defaults to A1 phase-only float64 while momentum remains float32,
+and the explicit legacy model reproduces the contract-10 storage dtype; and (c) the *anti-cheating* rules of the stage: no global mass
 target, no post-step correction, no cross-cell redistribution, no angle calibration, and the hidden
 compensation state of the B1/C1 candidates is never advected, never read by an operator and never
 counted as physical mass (so B/C can never "pass" by hiding mass in a bookkeeping field).
@@ -14,6 +14,9 @@ from __future__ import annotations
 import ast
 import inspect
 import math
+import os
+import subprocess
+import sys
 import tokenize
 from pathlib import Path
 
@@ -87,31 +90,84 @@ def test_production_correction_matches_shipped_solve(N):
 
 
 # --------------------------------------------------------------------------- the production default
-def test_default_storage_model_is_contract_10():
-    """The shipped default path is unchanged: float32 phase state, no opt-in model."""
-    assert pf.SOLVER_CONTRACT_VERSION == 10
-    assert pf.PHASE_STORAGE_MODEL == "float32_contract_10"
-    assert pf.PHASE_STORAGE_MODELS[0] == "float32_contract_10"
+def test_contract11_default_phase_storage_is_a1():
+    """The promoted default is phase-only float64; contract-10 float32 remains explicit."""
+    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.PHASE_STORAGE_MODEL == "phase_only_float64_v1"
+    assert pf.PHASE_STORAGE_MODELS[0] == pf.PHASE_STORAGE_MODEL
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
-    assert p.phase_storage_model == "float32_contract_10"
-    assert pf.phase_state_dtype(p) == jnp.float32
-    promoted = pf.PhaseFieldParams(Nx=16, Ny=16, phase_storage_model="phase_only_float64_v1")
-    assert pf.phase_state_dtype(promoted) == jnp.float64
-    with pytest.raises((KeyError, ValueError)):
-        pf.phase_state_dtype(pf.PhaseFieldParams(Nx=16, Ny=16, phase_storage_model="not_a_model"))
+    assert p.phase_storage_model == "phase_only_float64_v1"
+    assert pf.phase_state_dtype(p) == jnp.float64
+    legacy = pf.PhaseFieldParams(Nx=16, Ny=16, phase_storage_model="float32_contract_10")
+    assert pf.phase_state_dtype(legacy) == jnp.float32
+    assert pf.phase_storage_metadata(p) == {
+        "phase_storage_model": "phase_only_float64_v1",
+        "phase_state_dtype": "float64",
+        "velocity_state_dtype": "float32",
+    }
+    with pytest.raises(ValueError):
+        pf.PhaseFieldParams(Nx=16, Ny=16, phase_storage_model="not_a_model")
 
 
-def test_default_path_keeps_every_field_float32():
-    """A default (contract-10) step must not silently promote anything to float64."""
-    p, solid, state = mpa.build_case(32, M=mpa.M_REF, rtol=1.0e-6, target_deg=150.0, wall_height=0.25)
+def test_contract11_default_step_keeps_momentum_float32():
+    """A production step stores phi in float64 and u/v/t in the working float32 dtype."""
+    p, solid, state = mpa.build_case(
+        32,
+        M=mpa.M_REF,
+        rtol=1.0e-6,
+        target_deg=150.0,
+        wall_height=0.25,
+        phase_storage_model=pf.PHASE_STORAGE_MODEL,
+    )
     stepped, _diagnostics = pf.step_with_diagnostics(state, solid, p)
-    for name in ("phi", "u", "v", "t"):
+    assert stepped.phi.dtype == jnp.float64
+    for name in ("u", "v", "t"):
         assert getattr(stepped, name).dtype == jnp.float32, name
 
 
+def test_default_matches_stage1_a1_candidate():
+    """Contract-11 default state construction matches the frozen Stage-1 A1 representation."""
+    p_default, solid_default, state_default = mpa.build_case(
+        32, target_deg=150.0, wall_height=0.25, phase_storage_model=pf.PHASE_STORAGE_MODEL
+    )
+    p_candidate, solid_candidate, state_candidate, *_ = psa.build_case(
+        32, target_deg=150.0, candidate="A1_phase_float64"
+    )
+    assert p_default.phase_storage_model == p_candidate.phase_storage_model == pf.PHASE_STORAGE_MODEL
+    for name in ("phi", "u", "v", "t"):
+        np.testing.assert_array_equal(getattr(state_default, name), getattr(psa.to_state(state_candidate), name))
+    np.testing.assert_array_equal(solid_default.geometry.volume, solid_candidate.geometry.volume)
+
+
 def test_unknown_storage_model_fails_closed():
-    with pytest.raises((KeyError, ValueError)):
+    with pytest.raises(ValueError):
         pf.PhaseFieldParams(Nx=8, Ny=8, phase_storage_model="bogus_model")
+
+
+def test_a1_default_fails_closed_when_jax_x64_is_disabled():
+    """A fresh process without x64 must fail rather than warn-and-demote the default phase."""
+    script = r'''
+import jax
+import phasefield as pf
+assert not bool(jax.config.x64_enabled)
+try:
+    pf.PhaseFieldParams(Nx=8, Ny=8)
+except RuntimeError as exc:
+    assert "requires JAX float64 support" in str(exc)
+else:
+    raise AssertionError("contract-11 default silently accepted without x64")
+'''
+    env = dict(os.environ)
+    env["JAX_ENABLE_X64"] = "0"
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=PHASEFIELD_PATH.parent,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 # --------------------------------------------------------------------------- the A1 candidate
@@ -355,12 +411,14 @@ def test_hidden_state_candidates_are_flagged_for_the_dataset_contract():
     for candidate in psa.CANDIDATES:
         row = psa.dataset_lineage(candidate)
         assert row["fingerprint_has_solver_sha256"], "the generator must hash the solver source"
+        assert row["fingerprint_has_phase_storage_model"], "the training fingerprint must freeze A1 lineage"
         assert row["silent_resume_possible"] is False
 
 
-def test_contract_version_is_not_bumped_by_the_audit():
-    """Stage 1 selects a candidate; the contract only moves when production ships it (spec 50)."""
-    assert pf.SOLVER_CONTRACT_VERSION == 10
+def test_frozen_stage1_selection_is_the_contract11_production_default():
+    """Stage 2 promotes the selected A1 model without re-opening candidate selection."""
+    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.PHASE_STORAGE_MODEL == psa.PHASE_STORAGE_MODEL_OF["A1_phase_float64"]
     assert psa.PHASE_STORAGE_MODEL_OF["A1_phase_float64"] == "phase_only_float64_v1"
     hidden_models = {psa.PHASE_STORAGE_MODEL_OF[name] for name in psa.HIDDEN_STATE_CANDIDATES}
     assert set(pf.PHASE_STORAGE_MODELS_WITH_HIDDEN_STATE) == hidden_models
@@ -374,7 +432,7 @@ def test_report_is_json_serialisable_on_a_synthetic_run(tmp_path):
     report = {
         "stage": psa.STAGE,
         "profile": "quick",
-        "contract_version": 10,
+        "contract_version": 11,
         "verdict": "V",
         "gates": {},
         "selection": {"selected": None, "reason": "r"},

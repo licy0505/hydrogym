@@ -1,0 +1,1095 @@
+{
+  "candidates": {
+    "BRINKMAN_WALL_COUPLING": {
+      "claim_tested": "changing only Brinkman chi damping changes the short frozen-phi momentum response on all three exact matched states",
+      "evidence": {
+        "frozen_phi_on_off_ab": {
+          "authority_060": {
+            "all_other_solid_field_hashes_identical": true,
+            "brinkman_off_last_substep_l2": 0.0,
+            "brinkman_on_last_substep_l2": 0.008080254821109176,
+            "case": "authority_060",
+            "config_fingerprint": "2563f20daad7bcdcbb11150fc54daa6a66ef3ff04326b7434d01c0560d5c495f",
+            "diagnostic_only": true,
+            "field_artifact": {
+              "path": "artifacts/l1a2k/fields/brinkman_ab_authority_060_step_0100.npz",
+              "sha256": "20c8fc4fde1033215224ae153c49f6f7dc517e93eb8aafd5c55ea63c9a877415"
+            },
+            "kinetic_energy": {
+              "brinkman_off": 1.843975670144232e-07,
+              "brinkman_on": 1.2132440507233587e-08,
+              "off_minus_on": 1.722651265071896e-07
+            },
+            "matched_state_hashes": {
+              "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+              "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+              "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+              "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+            },
+            "matched_state_step": 50000,
+            "only_solid_field_changed": [
+              "chi"
+            ],
+            "phase_frozen_bitwise": true,
+            "physical_time_advanced": 0.4,
+            "production_acceptance_evidence": false,
+            "projection_observations_last_internal_substep": {
+              "divergence_after_l2_off": 6.587330583569904e-10,
+              "divergence_after_l2_on": 5.087611820033938e-10,
+              "poisson_residual_l2_off": 3.4174250176818313e-07,
+              "poisson_residual_l2_on": 3.673248746490511e-07
+            },
+            "regional_velocity_difference": {
+              "all_momentum_cells": {
+                "difference_energy_fraction": 1.0,
+                "n_cells": 16384,
+                "velocity_difference_l2_off_minus_on": 0.0009206293535123461,
+                "velocity_difference_linf_off_minus_on": 0.000674606143904438
+              },
+              "brinkman_chi_gt_010": {
+                "difference_energy_fraction": 0.22711732784823851,
+                "n_cells": 896,
+                "velocity_difference_l2_off_minus_on": 0.0004387427497869566,
+                "velocity_difference_linf_off_minus_on": 0.000674606143904438
+              },
+              "brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.15630011345769712,
+                "n_cells": 640,
+                "velocity_difference_l2_off_minus_on": 0.000363969057895812,
+                "velocity_difference_linf_off_minus_on": 0.0006420089140277338
+              },
+              "brinkman_chi_gt_090": {
+                "difference_energy_fraction": 0.12444166439519289,
+                "n_cells": 512,
+                "velocity_difference_l2_off_minus_on": 0.00032476388158636174,
+                "velocity_difference_linf_off_minus_on": 0.000584533148375448
+              },
+              "outside_brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.8436998865423031,
+                "n_cells": 15744,
+                "velocity_difference_l2_off_minus_on": 0.0008456269457881504,
+                "velocity_difference_linf_off_minus_on": 0.000674606143904438
+              }
+            },
+            "same_chemical_potential_and_capillary_force_bitwise": true,
+            "same_geometry_wall_energy_wetting_contact_angle_density_viscosity_dt_M_force_and_projection": true,
+            "same_start_state": true,
+            "state_hashes_after_off": {
+              "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+              "t": "fb42c78e18637a9b25d789cbe51a66319b9b2debf81a662216770cbf6c47fc43",
+              "u": "c27f4adbe3d34d2358ed13092f1f6422eb4fe31278f1a205446e9249253fd3de",
+              "v": "463ae326397a1152aabf9515f8c849796151e6659db2f10d715b1e6bf09b58ba"
+            },
+            "state_hashes_after_on": {
+              "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+              "t": "fb42c78e18637a9b25d789cbe51a66319b9b2debf81a662216770cbf6c47fc43",
+              "u": "0c49a11049f695577df131112d6f3a58e89db538dc75f69a38f9e8be67505c7a",
+              "v": "eafa465bd6952b126b2ef82ed4800dceba4f146c808cc5f317ab1e04fd259e42"
+            },
+            "steps": 100,
+            "target_deg": 60.0,
+            "velocity_l2": {
+              "brinkman_off": 0.0012092633821037659,
+              "brinkman_on": 0.0003344933238172659,
+              "off_minus_on": 0.0009206293535123461,
+              "off_minus_on_linf": 0.000674606143904438,
+              "off_minus_on_over_on": 2.7523100999626737,
+              "off_over_on": 3.6152093210816605,
+              "start": 0.0003345268562184489
+            }
+          },
+          "control_090": {
+            "all_other_solid_field_hashes_identical": true,
+            "brinkman_off_last_substep_l2": 0.0,
+            "brinkman_on_last_substep_l2": 0.010897868248565614,
+            "case": "control_090",
+            "config_fingerprint": "c7857ca99258032c79ba00bfb9de8d24e5e5ef905fd551c854625a81d9ecdea0",
+            "diagnostic_only": true,
+            "field_artifact": {
+              "path": "artifacts/l1a2k/fields/brinkman_ab_control_090_step_0100.npz",
+              "sha256": "b8dcc9e7b8b9a496cffba05660d37f503e64077faff5abc31cfddd5ce7117181"
+            },
+            "kinetic_energy": {
+              "brinkman_off": 4.249962012249331e-07,
+              "brinkman_on": 2.2746750314231854e-08,
+              "off_minus_on": 4.0224945091070125e-07
+            },
+            "matched_state_hashes": {
+              "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+              "t": "4d0c3fc073b67ec36bdbcafd302c29a7f14700b39cd62fb76c1e76835f9777ac",
+              "u": "1704520491e633f4a33e4a8b6f1abf1ef287da1a1cedfd93493cba57f5224ba4",
+              "v": "12bcf7f60b67d074258f6f0368552e6938d5bef770ee909caf1e8029cb6aac69"
+            },
+            "matched_state_step": 27200,
+            "only_solid_field_changed": [
+              "chi"
+            ],
+            "phase_frozen_bitwise": true,
+            "physical_time_advanced": 0.4,
+            "production_acceptance_evidence": false,
+            "projection_observations_last_internal_substep": {
+              "divergence_after_l2_off": 9.64505692436832e-10,
+              "divergence_after_l2_on": 7.680440362437422e-10,
+              "poisson_residual_l2_off": 5.361473403625535e-07,
+              "poisson_residual_l2_on": 5.629115811982722e-07
+            },
+            "regional_velocity_difference": {
+              "all_momentum_cells": {
+                "difference_energy_fraction": 1.0,
+                "n_cells": 16384,
+                "velocity_difference_l2_off_minus_on": 0.0013321799477244163,
+                "velocity_difference_linf_off_minus_on": 0.0011549947513259543
+              },
+              "brinkman_chi_gt_010": {
+                "difference_energy_fraction": 0.2721138299097989,
+                "n_cells": 896,
+                "velocity_difference_l2_off_minus_on": 0.0006949254223999945,
+                "velocity_difference_linf_off_minus_on": 0.0011549947513259543
+              },
+              "brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.18271799165070668,
+                "n_cells": 640,
+                "velocity_difference_l2_off_minus_on": 0.0005694473139990769,
+                "velocity_difference_linf_off_minus_on": 0.0010796427246443682
+              },
+              "brinkman_chi_gt_090": {
+                "difference_energy_fraction": 0.14391037179780425,
+                "n_cells": 512,
+                "velocity_difference_l2_off_minus_on": 0.0005053693975823937,
+                "velocity_difference_linf_off_minus_on": 0.0009729827828436913
+              },
+              "outside_brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.8172820083492937,
+                "n_cells": 15744,
+                "velocity_difference_l2_off_minus_on": 0.0012043393083754534,
+                "velocity_difference_linf_off_minus_on": 0.0011549947513259543
+              }
+            },
+            "same_chemical_potential_and_capillary_force_bitwise": true,
+            "same_geometry_wall_energy_wetting_contact_angle_density_viscosity_dt_M_force_and_projection": true,
+            "same_start_state": true,
+            "state_hashes_after_off": {
+              "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+              "t": "f811c67dfb681e13fcbebd74935b3457cec5dafd63041172788f84bf9a14eb0b",
+              "u": "ab21b004aad91148d51c91b71aaa451ccdef007bd75fb511b396520251fe9db4",
+              "v": "b7ae5a1e790db8ba9eab68c080868bb7a0267b6bee0453a80fc6bb2aeb8fadab"
+            },
+            "state_hashes_after_on": {
+              "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+              "t": "f811c67dfb681e13fcbebd74935b3457cec5dafd63041172788f84bf9a14eb0b",
+              "u": "a13686d9fdbebb6c07ba24452c303d66cf7ad1e1c6c74183ef589c7386c075b2",
+              "v": "6279ad2b1c7d40f745b026e786579d649b0353b3dacb02e05eb4e265aa4cf76b"
+            },
+            "steps": 100,
+            "target_deg": 90.0,
+            "velocity_l2": {
+              "brinkman_off": 0.0016818774719377688,
+              "brinkman_on": 0.00042742751576019207,
+              "off_minus_on": 0.0013321799477244163,
+              "off_minus_on_linf": 0.0011549947513259543,
+              "off_minus_on_over_on": 3.116738858880192,
+              "off_over_on": 3.9348834829842474,
+              "start": 0.00042737408348586607
+            }
+          },
+          "control_150": {
+            "all_other_solid_field_hashes_identical": true,
+            "brinkman_off_last_substep_l2": 0.0,
+            "brinkman_on_last_substep_l2": 0.010482357947693748,
+            "case": "control_150",
+            "config_fingerprint": "82a53cc0e10d6ec8000660b6f4e4632bf69c69c61c566ee43eedb8f15677c730",
+            "diagnostic_only": true,
+            "field_artifact": {
+              "path": "artifacts/l1a2k/fields/brinkman_ab_control_150_step_0100.npz",
+              "sha256": "4220dbcd10b2071110e1a0c0b7dc6596d5e017f3c4d81d4b5c3f91dcf129930c"
+            },
+            "kinetic_energy": {
+              "brinkman_off": 5.937148205493675e-07,
+              "brinkman_on": 1.793541719336318e-08,
+              "off_minus_on": 5.757794033560043e-07
+            },
+            "matched_state_hashes": {
+              "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+              "t": "846e59a31010ffa1a3764d8a37acb1cc037ae9345ece28323837ffe7f695b771",
+              "u": "52ba7f0498dcd8b4b9fb05ee5ebcdcb4f94fabc7be01196bdea5ab7dbd56b88a",
+              "v": "064d17b00479ffb7ef967d8c46b8ee7e28e82af456abb43b59b41014dd9003a3"
+            },
+            "matched_state_step": 100000,
+            "only_solid_field_changed": [
+              "chi"
+            ],
+            "phase_frozen_bitwise": true,
+            "physical_time_advanced": 0.4,
+            "production_acceptance_evidence": false,
+            "projection_observations_last_internal_substep": {
+              "divergence_after_l2_off": 1.1696695169707261e-09,
+              "divergence_after_l2_on": 9.807884832287973e-10,
+              "poisson_residual_l2_off": 7.114812682372005e-07,
+              "poisson_residual_l2_on": 7.286357011488363e-07
+            },
+            "regional_velocity_difference": {
+              "all_momentum_cells": {
+                "difference_energy_fraction": 1.0,
+                "n_cells": 16384,
+                "velocity_difference_l2_off_minus_on": 0.0015421714168053888,
+                "velocity_difference_linf_off_minus_on": 0.0020614057952248487
+              },
+              "brinkman_chi_gt_010": {
+                "difference_energy_fraction": 0.4070234304176068,
+                "n_cells": 896,
+                "velocity_difference_l2_off_minus_on": 0.0009838805032456699,
+                "velocity_difference_linf_off_minus_on": 0.0020614057952248487
+              },
+              "brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.274845177069131,
+                "n_cells": 640,
+                "velocity_difference_l2_off_minus_on": 0.0008084938295560304,
+                "velocity_difference_linf_off_minus_on": 0.0020614057952248487
+              },
+              "brinkman_chi_gt_090": {
+                "difference_energy_fraction": 0.21525870235895475,
+                "n_cells": 512,
+                "velocity_difference_l2_off_minus_on": 0.0007155055526484574,
+                "velocity_difference_linf_off_minus_on": 0.001995282816669685
+              },
+              "outside_brinkman_chi_gt_050": {
+                "difference_energy_fraction": 0.7251548229308692,
+                "n_cells": 15744,
+                "velocity_difference_l2_off_minus_on": 0.0013132518442329959,
+                "velocity_difference_linf_off_minus_on": 0.001805631358070589
+              }
+            },
+            "same_chemical_potential_and_capillary_force_bitwise": true,
+            "same_geometry_wall_energy_wetting_contact_angle_density_viscosity_dt_M_force_and_projection": true,
+            "same_start_state": true,
+            "state_hashes_after_off": {
+              "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+              "t": "eb86d145e2eec3d033799ea47f33f5e5612f5995c6a7bfb908e854983fc6a363",
+              "u": "04b72462aeca570faf205f0ba25f6202baf93ea6f0ea613b32b2f64bd0a582da",
+              "v": "c8ed27157417fba76e9db449a50051ec0f86d39b611bf86702f1cc71ccbcc13b"
+            },
+            "state_hashes_after_on": {
+              "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+              "t": "eb86d145e2eec3d033799ea47f33f5e5612f5995c6a7bfb908e854983fc6a363",
+              "u": "de973337486ca5332268ab7c7150d62c54b9d36c39603375419903a93599fb48",
+              "v": "05b845f2ddf80c6b9b7c73435b3348b08220bf6e5d6f2e53d344c39367f2533b"
+            },
+            "steps": 100,
+            "target_deg": 150.0,
+            "velocity_l2": {
+              "brinkman_off": 0.0017916007001636774,
+              "brinkman_on": 0.0003331796359513922,
+              "off_minus_on": 0.0015421714168053888,
+              "off_minus_on_linf": 0.0020614057952248487,
+              "off_minus_on_over_on": 4.62864848387786,
+              "off_over_on": 5.377281522767062,
+              "start": 0.000333182854874059
+            }
+          }
+        },
+        "production_residual_energy_fraction_in_chi_gt_050": {
+          "authority_060": 0.25020035942140545,
+          "control_090": 0.2954637469473312,
+          "control_150": 0.3988603693430927
+        }
+      },
+      "scope_caveat": "the isolated A/B supports a Brinkman effect on the short frozen-phi momentum response; it does not establish that Brinkman coupling caused the 60-degree angle nonstationarity",
+      "status": "SUPPORTED"
+    },
+    "CAPILLARY_DENSITY_SCALING": {
+      "claim_tested": "constant division by rho_l alone creates spatial curl or changes the residual/source fraction",
+      "evidence": {
+        "authority_060": {
+          "curl_force_density_l2": 0.02836823959553622,
+          "curl_raw_acceleration_l2": 0.02836823959553622,
+          "expected_force_density_over_acceleration_l2": 1.0,
+          "force_density_l2": 0.03157836741643792,
+          "interpretation": "constant scalar division by rho_l changes magnitude only; any spatial curl/non-projectability comes from the force field/operator, not constant scaling alone",
+          "raw_acceleration_l2": 0.03157836741643792,
+          "residual_fraction_difference_force_vs_acceleration": 0.0,
+          "rho_l_constant": 1.0
+        },
+        "control_090": {
+          "curl_force_density_l2": 0.051394059636522965,
+          "curl_raw_acceleration_l2": 0.051394059636522965,
+          "expected_force_density_over_acceleration_l2": 1.0,
+          "force_density_l2": 0.045957713500914966,
+          "interpretation": "constant scalar division by rho_l changes magnitude only; any spatial curl/non-projectability comes from the force field/operator, not constant scaling alone",
+          "raw_acceleration_l2": 0.045957713500914966,
+          "residual_fraction_difference_force_vs_acceleration": 0.0,
+          "rho_l_constant": 1.0
+        },
+        "control_150": {
+          "curl_force_density_l2": 0.07227045428764461,
+          "curl_raw_acceleration_l2": 0.07227045428764461,
+          "expected_force_density_over_acceleration_l2": 1.0,
+          "force_density_l2": 0.0537680654693102,
+          "interpretation": "constant scalar division by rho_l changes magnitude only; any spatial curl/non-projectability comes from the force field/operator, not constant scaling alone",
+          "raw_acceleration_l2": 0.0537680654693102,
+          "residual_fraction_difference_force_vs_acceleration": 0.0,
+          "rho_l_constant": 1.0
+        }
+      },
+      "scope_caveat": "does not clear the separate model-choice caveat about density-dependent inertia or projection; local-density scaling was not run",
+      "status": "FALSIFIED"
+    },
+    "CAPILLARY_PRESSURE_IMBALANCE": {
+      "claim_tested": "the exact production-dtype capillary acceleration has a nonzero component outside the exact production pressure-gradient range in all three matched states",
+      "evidence": {
+        "authority_060": {
+          "checks": {
+            "divergence_residual_within_dtype_tolerance": true,
+            "finite_source_and_solution": true,
+            "poisson_solve_residual_within_dtype_tolerance": true,
+            "reconstruction_within_dtype_tolerance": true
+          },
+          "field_l2_in_reported_units": 0.03157836739328018,
+          "field_linf_in_reported_units": 0.07696725428114615,
+          "gradient_residual_cosine": -7.389440507051772e-08,
+          "gradient_residual_inner_product": -1.0528699038789207e-11,
+          "mean_free_pressure_potential": 2.738254067935486e-12,
+          "momentum_cell_area": 0.002197265625,
+          "momentum_grid_cell_count": 16384,
+          "nonprojectable_residual_l2": 0.004559833624139134,
+          "passed": true,
+          "poisson_solve_residual_l2": 3.316841962708576e-07,
+          "poisson_solve_residual_linf": 4.4517219066619873e-07,
+          "projectable_fraction_of_source_l2": 0.989519791000396,
+          "projectable_gradient_l2": 0.031247419503132326,
+          "projected_acceleration_l2": 0.03157836739328018,
+          "reconstruction_linf": 1.1641532182693481e-10,
+          "reconstruction_tolerance_linf": 7.340169361223807e-08,
+          "residual_divergence_l2": 3.315431282659249e-07,
+          "residual_divergence_linf": 4.454923328012228e-07,
+          "residual_fraction_of_source_l2": 0.14439738341601085,
+          "residual_over_projectable_l2": 0.14592672600315185,
+          "solve_tolerance_l2": 2.9074580367953877e-05,
+          "source_acceleration_l2": 0.03157836739328018,
+          "source_divergence_l2": 0.4193955241785404,
+          "source_dot_gradient_minus_gradient_norm_squared": -1.0532315362736522e-11,
+          "work_dtype": "float32",
+          "work_dtype_epsilon": 1.1920928955078125e-07
+        },
+        "control_090": {
+          "checks": {
+            "divergence_residual_within_dtype_tolerance": true,
+            "finite_source_and_solution": true,
+            "poisson_solve_residual_within_dtype_tolerance": true,
+            "reconstruction_within_dtype_tolerance": true
+          },
+          "field_l2_in_reported_units": 0.045957713494330886,
+          "field_linf_in_reported_units": 0.1259225308912648,
+          "gradient_residual_cosine": 7.644709604143121e-08,
+          "gradient_residual_inner_product": 2.4787820033080692e-11,
+          "mean_free_pressure_potential": -2.2111201758434618e-12,
+          "momentum_cell_area": 0.002197265625,
+          "momentum_grid_cell_count": 16384,
+          "nonprojectable_residual_l2": 0.007142128582276945,
+          "passed": true,
+          "poisson_solve_residual_l2": 5.252385454635356e-07,
+          "poisson_solve_residual_linf": 6.631016731262207e-07,
+          "projectable_fraction_of_source_l2": 0.9878505900667427,
+          "projectable_gradient_l2": 0.04539935439349307,
+          "projected_acceleration_l2": 0.045957713494330886,
+          "reconstruction_linf": 2.3283064365386963e-10,
+          "reconstruction_tolerance_linf": 1.2008908356787185e-07,
+          "residual_divergence_l2": 5.254906517973383e-07,
+          "residual_divergence_linf": 6.643240340054035e-07,
+          "residual_fraction_of_source_l2": 0.15540652567839264,
+          "residual_over_projectable_l2": 0.15731784466302018,
+          "solve_tolerance_l2": 4.2313816223528476e-05,
+          "source_acceleration_l2": 0.045957713494330886,
+          "source_divergence_l2": 0.5906056234878742,
+          "source_dot_gradient_minus_gradient_norm_squared": 2.478190482685383e-11,
+          "work_dtype": "float32",
+          "work_dtype_epsilon": 1.1920928955078125e-07
+        },
+        "control_150": {
+          "checks": {
+            "divergence_residual_within_dtype_tolerance": true,
+            "finite_source_and_solution": true,
+            "poisson_solve_residual_within_dtype_tolerance": true,
+            "reconstruction_within_dtype_tolerance": true
+          },
+          "field_l2_in_reported_units": 0.0537680652227016,
+          "field_linf_in_reported_units": 0.17966803360017267,
+          "gradient_residual_cosine": 2.292745891272649e-07,
+          "gradient_residual_inner_product": 1.0374227995151865e-10,
+          "mean_free_pressure_potential": -3.268496584496461e-12,
+          "momentum_cell_area": 0.002197265625,
+          "momentum_grid_cell_count": 16384,
+          "nonprojectable_residual_l2": 0.008523179362157844,
+          "passed": true,
+          "poisson_solve_residual_l2": 6.75538240717642e-07,
+          "poisson_solve_residual_linf": 8.549855010642204e-07,
+          "projectable_fraction_of_source_l2": 0.9873561312596677,
+          "projectable_gradient_l2": 0.053088228863604134,
+          "projected_acceleration_l2": 0.0537680652227016,
+          "reconstruction_linf": 4.656612873077393e-10,
+          "reconstruction_tolerance_linf": 1.7134478912369982e-07,
+          "residual_divergence_l2": 6.762197423770365e-07,
+          "residual_divergence_linf": 8.547212928533554e-07,
+          "residual_fraction_of_source_l2": 0.1585175015477262,
+          "residual_over_projectable_l2": 0.16054744233520865,
+          "solve_tolerance_l2": 4.950490043001676e-05,
+          "source_acceleration_l2": 0.0537680652227016,
+          "source_divergence_l2": 0.5627672710536071,
+          "source_dot_gradient_minus_gradient_norm_squared": 1.0372832323982117e-10,
+          "work_dtype": "float32",
+          "work_dtype_epsilon": 1.1920928955078125e-07
+        }
+      },
+      "scope_caveat": "support establishes the force-subspace property only; it does not establish that this component caused the 60-degree contact-angle nonstationarity",
+      "status": "SUPPORTED"
+    },
+    "CONTACT_LINE_PINNING": {
+      "claim_tested": "static pinning threshold or unpinning-force mechanism",
+      "evidence": {
+        "authority_060": {
+          "bottom_gap": 0.0078125,
+          "contact_line_exists": true,
+          "contact_width": 2.951238518169831,
+          "contour_wall_intersection_count": 12,
+          "detachment_observed": false,
+          "left_contact_x": 1.524380740086071,
+          "left_contact_x_wrapped": 1.524380740086071,
+          "raw_circle_fit_angle_deg": 59.64265151621933,
+          "right_contact_x": 4.475619258255902,
+          "right_contact_x_wrapped": 4.475619258255902,
+          "sessile_angle_deg": 59.64265151621933,
+          "top_height": 1.0546875,
+          "x_cm": 2.9999999991699635,
+          "y_cm": 0.7378311265522491
+        },
+        "control_090": {
+          "bottom_gap": 0.0078125,
+          "contact_line_exists": true,
+          "contact_width": 2.1228295266268398,
+          "contour_wall_intersection_count": 12,
+          "detachment_observed": false,
+          "left_contact_x": 1.9385852366825396,
+          "left_contact_x_wrapped": 1.9385852366825396,
+          "raw_circle_fit_angle_deg": 89.41024267586671,
+          "right_contact_x": 4.061414763309379,
+          "right_contact_x_wrapped": 4.061414763309379,
+          "sessile_angle_deg": 89.41024267586671,
+          "top_height": 1.2890625,
+          "x_cm": 2.9999999999948024,
+          "y_cm": 0.8223254107295428
+        },
+        "control_150": {
+          "bottom_gap": 0.0078125,
+          "contact_line_exists": true,
+          "contact_width": 0.7435175180350742,
+          "contour_wall_intersection_count": 16,
+          "detachment_observed": false,
+          "left_contact_x": 2.6282412414681495,
+          "left_contact_x_wrapped": 2.6282412414681495,
+          "raw_circle_fit_angle_deg": 147.7536522851593,
+          "right_contact_x": 3.3717587595032237,
+          "right_contact_x_wrapped": 3.3717587595032237,
+          "sessile_angle_deg": 147.7536522851593,
+          "top_height": 1.5234375,
+          "x_cm": 3.000000000482172,
+          "y_cm": 1.3404424692592134
+        }
+      },
+      "scope_caveat": "2dx and 4dx neighborhoods/exclusions are measured; no force-threshold test was run",
+      "status": "NOT_TESTED"
+    },
+    "DISCRETE_PRODUCT_RULE_IN_CAPILLARY_FORCE": {
+      "claim_tested": "the production centred-difference operator has a measurable product-rule defect in the Form-A/Form-B identity; the projected residual is explicitly split into the Form-B term and defect",
+      "evidence": {
+        "authority_060": {
+          "alternative_form_diagnostic_only": true,
+          "alternative_residual_l2": 0.004559436484953755,
+          "diagnostic_alternative_not_used_in_production": "-(SIGMA_NORM/We) * phi * G_h(mu_h) / rho_l",
+          "identity": "mu_h G_h(phi) = G_h(mu_h phi) - phi G_h(mu_h) - E_h",
+          "mu_product_identity_linf_before_pressure_projection": 2.7755575615628914e-17,
+          "not_a_force_ablation_or_production_validation": true,
+          "product_rule_defect_definition": "E_h = G_h(mu_h*phi) - mu_h*G_h(phi) - phi*G_h(mu_h)",
+          "product_rule_defect_residual_l2": 0.0073169143412025895,
+          "production_force_form": "+(SIGMA_NORM/We) * mu_h * G_h(phi) / rho_l",
+          "production_residual_equals_alternative_minus_defect_residual_l2_error": 2.3889554684869592e-08,
+          "production_residual_l2": 0.004559833624139134
+        },
+        "control_090": {
+          "alternative_form_diagnostic_only": true,
+          "alternative_residual_l2": 0.007120133866546748,
+          "diagnostic_alternative_not_used_in_production": "-(SIGMA_NORM/We) * phi * G_h(mu_h) / rho_l",
+          "identity": "mu_h G_h(phi) = G_h(mu_h phi) - phi G_h(mu_h) - E_h",
+          "mu_product_identity_linf_before_pressure_projection": 2.7755575615628914e-17,
+          "not_a_force_ablation_or_production_validation": true,
+          "product_rule_defect_definition": "E_h = G_h(mu_h*phi) - mu_h*G_h(phi) - phi*G_h(mu_h)",
+          "product_rule_defect_residual_l2": 0.011581831227740088,
+          "production_force_form": "+(SIGMA_NORM/We) * mu_h * G_h(phi) / rho_l",
+          "production_residual_equals_alternative_minus_defect_residual_l2_error": 3.427064603224749e-08,
+          "production_residual_l2": 0.007142128582276945
+        },
+        "control_150": {
+          "alternative_form_diagnostic_only": true,
+          "alternative_residual_l2": 0.008461819107296143,
+          "diagnostic_alternative_not_used_in_production": "-(SIGMA_NORM/We) * phi * G_h(mu_h) / rho_l",
+          "identity": "mu_h G_h(phi) = G_h(mu_h phi) - phi G_h(mu_h) - E_h",
+          "mu_product_identity_linf_before_pressure_projection": 5.551115123125783e-17,
+          "not_a_force_ablation_or_production_validation": true,
+          "product_rule_defect_definition": "E_h = G_h(mu_h*phi) - mu_h*G_h(phi) - phi*G_h(mu_h)",
+          "product_rule_defect_residual_l2": 0.013280612955328855,
+          "production_force_form": "+(SIGMA_NORM/We) * mu_h * G_h(phi) / rho_l",
+          "production_residual_equals_alternative_minus_defect_residual_l2_error": 3.572111063428244e-08,
+          "production_residual_l2": 0.008523179362157844
+        }
+      },
+      "scope_caveat": "this is an exact algebraic decomposition, not evidence that Form B is a better model; no force replacement or variant trajectory was used",
+      "status": "SUPPORTED"
+    },
+    "MOMENTUM_VISCOSITY_DISCRETIZATION": {
+      "claim_tested": "causal effect of the production viscosity operator",
+      "evidence": "unmeasured; no viscosity A/B was run",
+      "scope_caveat": "production nu(phi) and Laplacian remain unchanged",
+      "status": "NOT_TESTED"
+    },
+    "MULTIPLE_CONTRIBUTORS": {
+      "claim_tested": "joint causal attribution across multiple mechanisms",
+      "evidence": "no matched causal factorial ablation was run",
+      "scope_caveat": "mechanism closure is limited to the measured production-force subspace property",
+      "status": "NOT_TESTED"
+    },
+    "PHASE_KINETICS_LIMITED": {
+      "claim_tested": "whether phase kinetics also contributes to the observed L1A-2j nonstationarity",
+      "evidence": "L1A-2j retains PHASE_KINETICS_LIMITED=SUSPECTED; L1A-2k does not repeat or upgrade that classification",
+      "scope_caveat": "no phase-mobility or phase-equation ablation was run",
+      "status": "SUSPECTED"
+    },
+    "PRESSURE_PROJECTION_LIMITED": {
+      "claim_tested": "production Poisson solve fails to remove the divergence of a production-gradient field or leaves a solve/reconstruction residual beyond dtype-aware roundoff tolerance",
+      "evidence": {
+        "authority_060": {
+          "divergence_residual_within_dtype_tolerance": true,
+          "finite_source_and_solution": true,
+          "poisson_solve_residual_within_dtype_tolerance": true,
+          "reconstruction_within_dtype_tolerance": true
+        },
+        "control_090": {
+          "divergence_residual_within_dtype_tolerance": true,
+          "finite_source_and_solution": true,
+          "poisson_solve_residual_within_dtype_tolerance": true,
+          "reconstruction_within_dtype_tolerance": true
+        },
+        "control_150": {
+          "divergence_residual_within_dtype_tolerance": true,
+          "finite_source_and_solution": true,
+          "poisson_solve_residual_within_dtype_tolerance": true,
+          "reconstruction_within_dtype_tolerance": true
+        }
+      },
+      "scope_caveat": "the nonzero solenoidal residual is outside the projectable subspace by definition; it is not a Poisson convergence failure",
+      "status": "FALSIFIED"
+    },
+    "TIME_SPLITTING_OR_DT_SENSITIVITY": {
+      "claim_tested": "matched-physical-time dt/2 effect",
+      "evidence": "unmeasured; frozen-state diagnostics were sufficient to localize the algebraic force residual",
+      "scope_caveat": "dt/2 was not run",
+      "status": "NOT_TESTED"
+    },
+    "VARIABLE_DENSITY_COUPLING": {
+      "claim_tested": "whether a variable-density inertial/pressure model would improve the coupled dynamics",
+      "evidence": {
+        "authority_060": {
+          "capillary_acceleration_max_abs_difference": 0.0,
+          "changed_parameters": {
+            "rho_g": [
+              0.1,
+              1.0
+            ],
+            "rho_l": [
+              1.0,
+              1.0
+            ]
+          },
+          "diagnostic_only": true,
+          "evidence_trigger": "P-CAP-RHO/variable-density concern is open and the exact production force/projection balance is the subject of this audit; this minimal same-state A/B isolates only the rho(phi) blend",
+          "gravity_disabled": true,
+          "interpretation": "The equal-density A/B is a one-step same-state isolation only. It does not validate a variable-density inertia or pressure model.",
+          "pressure_symbol_max_abs_difference": 0.0,
+          "production_acceptance_evidence": false,
+          "same_start_state_hashes": {
+            "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+            "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+            "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+            "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+          },
+          "state_differences_one_production_step": {
+            "phi": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "u": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "v": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            }
+          },
+          "status": "measured",
+          "unchanged": [
+            "phi state",
+            "geometry",
+            "wetting",
+            "dt",
+            "M",
+            "We",
+            "force discretization",
+            "capillary denominator rho_l",
+            "pressure projection symbol",
+            "Brinkman",
+            "viscosity",
+            "phase boundary and transport"
+          ]
+        },
+        "control_090": {
+          "capillary_acceleration_max_abs_difference": 0.0,
+          "changed_parameters": {
+            "rho_g": [
+              0.1,
+              1.0
+            ],
+            "rho_l": [
+              1.0,
+              1.0
+            ]
+          },
+          "diagnostic_only": true,
+          "evidence_trigger": "P-CAP-RHO/variable-density concern is open and the exact production force/projection balance is the subject of this audit; this minimal same-state A/B isolates only the rho(phi) blend",
+          "gravity_disabled": true,
+          "interpretation": "The equal-density A/B is a one-step same-state isolation only. It does not validate a variable-density inertia or pressure model.",
+          "pressure_symbol_max_abs_difference": 0.0,
+          "production_acceptance_evidence": false,
+          "same_start_state_hashes": {
+            "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+            "t": "4d0c3fc073b67ec36bdbcafd302c29a7f14700b39cd62fb76c1e76835f9777ac",
+            "u": "1704520491e633f4a33e4a8b6f1abf1ef287da1a1cedfd93493cba57f5224ba4",
+            "v": "12bcf7f60b67d074258f6f0368552e6938d5bef770ee909caf1e8029cb6aac69"
+          },
+          "state_differences_one_production_step": {
+            "phi": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "u": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "v": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            }
+          },
+          "status": "measured",
+          "unchanged": [
+            "phi state",
+            "geometry",
+            "wetting",
+            "dt",
+            "M",
+            "We",
+            "force discretization",
+            "capillary denominator rho_l",
+            "pressure projection symbol",
+            "Brinkman",
+            "viscosity",
+            "phase boundary and transport"
+          ]
+        },
+        "control_150": {
+          "capillary_acceleration_max_abs_difference": 0.0,
+          "changed_parameters": {
+            "rho_g": [
+              0.1,
+              1.0
+            ],
+            "rho_l": [
+              1.0,
+              1.0
+            ]
+          },
+          "diagnostic_only": true,
+          "evidence_trigger": "P-CAP-RHO/variable-density concern is open and the exact production force/projection balance is the subject of this audit; this minimal same-state A/B isolates only the rho(phi) blend",
+          "gravity_disabled": true,
+          "interpretation": "The equal-density A/B is a one-step same-state isolation only. It does not validate a variable-density inertia or pressure model.",
+          "pressure_symbol_max_abs_difference": 0.0,
+          "production_acceptance_evidence": false,
+          "same_start_state_hashes": {
+            "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+            "t": "846e59a31010ffa1a3764d8a37acb1cc037ae9345ece28323837ffe7f695b771",
+            "u": "52ba7f0498dcd8b4b9fb05ee5ebcdcb4f94fabc7be01196bdea5ab7dbd56b88a",
+            "v": "064d17b00479ffb7ef967d8c46b8ee7e28e82af456abb43b59b41014dd9003a3"
+          },
+          "state_differences_one_production_step": {
+            "phi": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "u": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            },
+            "v": {
+              "bitwise_equal": true,
+              "l2": 0.0,
+              "linf": 0.0
+            }
+          },
+          "status": "measured",
+          "unchanged": [
+            "phi state",
+            "geometry",
+            "wetting",
+            "dt",
+            "M",
+            "We",
+            "force discretization",
+            "capillary denominator rho_l",
+            "pressure projection symbol",
+            "Brinkman",
+            "viscosity",
+            "phase boundary and transport"
+          ]
+        }
+      },
+      "scope_caveat": "the one-step equal-density blend A/B is identical under the current gravity-off velocity formulation; no variable-density projection or inertia prototype was justified or run",
+      "status": "NOT_TESTED"
+    },
+    "WALL_ENERGY_MOMENTUM_CONSISTENCY": {
+      "claim_tested": "whether wall-energy thermodynamics and the full momentum/wall traction balance are energetically consistent",
+      "evidence": {
+        "authority_060": {
+          "wall_mu_acceleration": {
+            "checks": {
+              "divergence_residual_within_dtype_tolerance": true,
+              "finite_source_and_solution": true,
+              "poisson_solve_residual_within_dtype_tolerance": true,
+              "reconstruction_within_dtype_tolerance": true
+            },
+            "field_l2_in_reported_units": 0.19555526474025484,
+            "field_linf_in_reported_units": 1.4726594818496623,
+            "gradient_residual_cosine": 4.177903110963533e-08,
+            "gradient_residual_inner_product": 7.514208542501108e-10,
+            "mean_free_pressure_potential": -5.243305789548458e-13,
+            "momentum_cell_area": 0.002197265625,
+            "momentum_grid_cell_count": 16384,
+            "nonprojectable_residual_l2": 0.11238461815691364,
+            "passed": true,
+            "poisson_solve_residual_l2": 9.633709214889655e-07,
+            "poisson_solve_residual_linf": 2.86102294921875e-06,
+            "projectable_fraction_of_source_l2": 0.8183677123359427,
+            "projectable_gradient_l2": 0.16003611700970582,
+            "projected_acceleration_l2": 0.1955552676350096,
+            "reconstruction_linf": 1.4901161193847656e-08,
+            "reconstruction_tolerance_linf": 1.4044375092273075e-06,
+            "residual_divergence_l2": 9.459891468863544e-07,
+            "residual_divergence_linf": 2.2649765014648438e-06,
+            "residual_fraction_of_source_l2": 0.5746949162559597,
+            "residual_over_projectable_l2": 0.7022453447186411,
+            "solve_tolerance_l2": 0.0001800500727102415,
+            "source_acceleration_l2": 0.1955552676350096,
+            "source_divergence_l2": 2.7254511335772964,
+            "source_dot_gradient_minus_gradient_norm_squared": 7.586453409924587e-10,
+            "work_dtype": "float32",
+            "work_dtype_epsilon": 1.1920928955078125e-07
+          }
+        },
+        "control_090": {
+          "wall_mu_acceleration": {
+            "checks": {
+              "divergence_residual_within_dtype_tolerance": true,
+              "finite_source_and_solution": true,
+              "poisson_solve_residual_within_dtype_tolerance": true,
+              "reconstruction_within_dtype_tolerance": true
+            },
+            "field_l2_in_reported_units": 2.6510369188704374e-17,
+            "field_linf_in_reported_units": 2.253647946146555e-16,
+            "gradient_residual_cosine": 4.162819608929284e-08,
+            "gradient_residual_inner_product": 1.4072289949841525e-41,
+            "mean_free_pressure_potential": -4.1025697452150245e-28,
+            "momentum_cell_area": 0.002197265625,
+            "momentum_grid_cell_count": 16384,
+            "nonprojectable_residual_l2": 1.5982861576032834e-17,
+            "passed": true,
+            "poisson_solve_residual_l2": 1.1626454071155977e-22,
+            "poisson_solve_residual_linf": 4.235164736271502e-22,
+            "projectable_fraction_of_source_l2": 0.7978235806351119,
+            "projectable_gradient_l2": 2.1150597718456806e-17,
+            "projected_acceleration_l2": 2.6510369249326717e-17,
+            "reconstruction_linf": 3.308722450212111e-24,
+            "reconstruction_tolerance_linf": 2.149246158843713e-22,
+            "residual_divergence_l2": 1.1434874144702889e-22,
+            "residual_divergence_linf": 2.6469779601696886e-22,
+            "residual_fraction_of_source_l2": 0.6028909452643233,
+            "residual_over_projectable_l2": 0.755669498743555,
+            "solve_tolerance_l2": 2.440841389057063e-20,
+            "source_acceleration_l2": 2.6510369249326717e-17,
+            "source_divergence_l2": 3.722432730859409e-16,
+            "source_dot_gradient_minus_gradient_norm_squared": 1.4362587570093415e-41,
+            "work_dtype": "float32",
+            "work_dtype_epsilon": 1.1920928955078125e-07
+          }
+        },
+        "control_150": {
+          "wall_mu_acceleration": {
+            "checks": {
+              "divergence_residual_within_dtype_tolerance": true,
+              "finite_source_and_solution": true,
+              "poisson_solve_residual_within_dtype_tolerance": true,
+              "reconstruction_within_dtype_tolerance": true
+            },
+            "field_l2_in_reported_units": 0.4207159987271763,
+            "field_linf_in_reported_units": 3.1660058517294503,
+            "gradient_residual_cosine": 1.7222974199283102e-08,
+            "gradient_residual_inner_product": 1.4061563409023753e-09,
+            "mean_free_pressure_potential": 4.219291582785445e-12,
+            "momentum_cell_area": 0.002197265625,
+            "momentum_grid_cell_count": 16384,
+            "nonprojectable_residual_l2": 0.23311974173792752,
+            "passed": true,
+            "poisson_solve_residual_l2": 2.0873017395591895e-06,
+            "poisson_solve_residual_linf": 3.814697265625e-06,
+            "projectable_fraction_of_source_l2": 0.8324485080747727,
+            "projectable_gradient_l2": 0.35022440433774416,
+            "projected_acceleration_l2": 0.4207159973746822,
+            "reconstruction_linf": 2.9802322387695312e-08,
+            "reconstruction_tolerance_linf": 3.0193384427024516e-06,
+            "residual_divergence_l2": 2.074192548227799e-06,
+            "residual_divergence_linf": 3.814697265625e-06,
+            "residual_fraction_of_source_l2": 0.5541023949472386,
+            "residual_over_projectable_l2": 0.6656296330312693,
+            "solve_tolerance_l2": 0.0003873582483037754,
+            "source_acceleration_l2": 0.4207159973746822,
+            "source_divergence_l2": 6.043287513926308,
+            "source_dot_gradient_minus_gradient_norm_squared": 1.4622054123059058e-09,
+            "work_dtype": "float32",
+            "work_dtype_epsilon": 1.1920928955078125e-07
+          }
+        }
+      },
+      "scope_caveat": "wall-energy-derived force is measured and localized; no wall-energy, momentum, or contact-angle formulation was modified",
+      "status": "NOT_TESTED"
+    },
+    "Y_PERIODIC_TOPOLOGY_COUPLING": {
+      "claim_tested": "causal contribution of y-periodic seam coupling",
+      "evidence": {
+        "authority_060": {
+          "area": 1.125,
+          "diagnostic_curl_v1_l2": 1.2391339589068382e-07,
+          "diagnostic_curl_v1_linf": 2.164019576866849e-07,
+          "mask_definition": "y_periodic_seam_2cells",
+          "n_cells": 512,
+          "residual_energy_fraction_of_global": 0.10952621615187039,
+          "residual_l2": 0.0015090653206003384,
+          "residual_linf": 0.004454747862165793,
+          "residual_to_source_l2_ratio": 50.67898143728726,
+          "source_acceleration_l2": 2.977694653290797e-05
+        },
+        "control_090": {
+          "area": 1.125,
+          "diagnostic_curl_v1_l2": 3.3483484332862483e-07,
+          "diagnostic_curl_v1_linf": 6.358206974255154e-07,
+          "mask_definition": "y_periodic_seam_2cells",
+          "n_cells": 512,
+          "residual_energy_fraction_of_global": 0.11954508434485958,
+          "residual_l2": 0.0024694118397733072,
+          "residual_linf": 0.00786007784238325,
+          "residual_to_source_l2_ratio": 209.99472473721823,
+          "source_acceleration_l2": 1.1759399398549002e-05
+        },
+        "control_150": {
+          "area": 1.125,
+          "diagnostic_curl_v1_l2": 1.1839835022220138e-06,
+          "diagnostic_curl_v1_linf": 2.465980514898547e-06,
+          "mask_definition": "y_periodic_seam_2cells",
+          "n_cells": 512,
+          "residual_energy_fraction_of_global": 0.14287466233751886,
+          "residual_l2": 0.003221656523932087,
+          "residual_linf": 0.010569973801996601,
+          "residual_to_source_l2_ratio": 5.557595606173922,
+          "source_acceleration_l2": 0.0005796853085807747
+        }
+      },
+      "scope_caveat": "seam overlap is localized only; no boundary-topology ablation was run",
+      "status": "NOT_TESTED"
+    }
+  },
+  "causal_root_cause_of_l1a2j_nonstationarity": "INCONCLUSIVE",
+  "diagnostic_variants_are_not_production_validation": true,
+  "equal_density_ablation": {
+    "local_density_scaling": "NOT_TESTED; no evidence trigger after rho_l is constant and equal-density blend A/B is unchanged",
+    "passed_exactly": true,
+    "status": "measured_same_state_one_step",
+    "variable_density_projection": "NOT_TESTED; equal-density A/B did not justify a prototype"
+  },
+  "final_root_cause": "CAPILLARY_PRESSURE_IMBALANCE",
+  "final_root_cause_scope": "the measured structural non-projectable capillary-acceleration component only; not a causal explanation of the 60-degree angle-cycle/production-gate failure",
+  "identified_discrete_force_choice": {
+    "discrete_identity": "mu_h G_h(phi) = G_h(mu_h phi) - phi G_h(mu_h) - E_h, where E_h is the measured centred-difference product-rule defect",
+    "force_variant_or_trajectory_used": false,
+    "interpretation": "The product-form capillary source is not generally a pure production pressure gradient when mu_h varies spatially. The measured residual is split algebraically into the diagnostic -phi G_h(mu_h) term and E_h. This identifies the force/operator choice behind the subspace residual, but does not show that either term causes the CHNS angle nonstationarity or that an alternate form is preferable.",
+    "pressure_projectable_subspace": "range(G_h) for the exact centred periodic production gradient and constant-coefficient m2_proj pressure solve",
+    "production_form": "+(SIGMA_NORM/We) * mu_h * G_h(phi) / rho_l, evaluated pointwise in pf.rhs and cast through the production momentum RHS",
+    "status": "SUPPORTED"
+  },
+  "scope": "diagnostic mechanism evidence only; not production validation and not a repair decision",
+  "stage": "L1A-2k",
+  "static_laplace_sign_magnitude": {
+    "all_passed": true,
+    "checks": [
+      {
+        "expectation": "phi=1 inside (liquid), phi=0 outside (gas); dphi/dr<0; n_out=-grad(phi)/|grad(phi)| = +r_hat",
+        "name": "phi_orientation_and_normal",
+        "note": "",
+        "observed": {
+          "dphi_dr_band_max": -0.013515727960343444,
+          "n_out_dot_r_hat_band_min": 0.9997294361010891,
+          "phi_inside_min": 0.9998099352615308,
+          "phi_outside_max": 1.3521809005823116e-08
+        },
+        "passed": true
+      },
+      {
+        "expectation": "mu = +dF/dphi (directional derivative); mu>0 at a convex liquid interface; int mu dphi = sigma_e/R",
+        "name": "chemical_potential_sign",
+        "note": "",
+        "observed": {
+          "int_mu_dphi_times_R_over_sigma_e": 0.9850637205414132,
+          "mu_max": 0.48093571649952127,
+          "mu_max_analytic_sqrt2_over_4R": 0.4419417382415922,
+          "variational_relative_error": 9.600792741408645e-06
+        },
+        "passed": true
+      },
+      {
+        "expectation": "net capillary force at a convex liquid interface points toward the liquid: int F.n_out dr < 0",
+        "name": "korteweg_force_direction",
+        "note": "",
+        "observed": {
+          "laplace_ratio_from_force_integral": 0.9850637194290468,
+          "net_radial_force_integral_F_dot_n_out": -0.012313296492863083
+        },
+        "passed": true
+      },
+      {
+        "expectation": "F = +grad(psi) is balanced by grad(P) with P = +psi (momentum carries -grad(P))",
+        "name": "pressure_gradient_convention",
+        "note": "",
+        "observed": {
+          "gradient_force_residual_after_projection": 6.152700162192384e-07,
+          "pressure_vs_psi_relative_error": 9.231820702490151e-08
+        },
+        "passed": true
+      },
+      {
+        "expectation": "pressure_field() is the projection pressure of step(): u* - dt grad(P) is divergence free",
+        "name": "diagnostic_equals_projection",
+        "note": "",
+        "observed": {
+          "div_after_over_div_before": 1.01958134455995e-06
+        },
+        "passed": true
+      },
+      {
+        "expectation": "delta_p = P_liquid - P_gas > 0 and delta_p R We ~ +1 (probes: liquid core, far gas)",
+        "name": "laplace_jump_sign_and_scale",
+        "note": "",
+        "observed": {
+          "laplace_ratio": 0.9850772536075545,
+          "phi_mean_inside_probe": 0.9999174751504804,
+          "phi_mean_outside_probe": 5.052422088479835e-10
+        },
+        "passed": true
+      },
+      {
+        "expectation": "the force integral -int F_r dr and the projection-pressure jump are the same quantity (catches any compensating sign in the diagnostic)",
+        "name": "force_integral_matches_projection_jump",
+        "note": "",
+        "observed": {
+          "abs_difference": 1.3534178507690342e-05,
+          "ratio_from_force_integral": 0.9850637194290468,
+          "ratio_from_projection_pressure": 0.9850772536075545
+        },
+        "passed": true
+      },
+      {
+        "expectation": "flow driven by the capillary force lowers F: -dF/dt = int mu u.grad(phi) > 0 (cos(mu grad phi, u) > 0)",
+        "name": "free_energy_consistency",
+        "note": "",
+        "observed": {
+          "cosine_mu_grad_phi_vs_driven_velocity": 0.1478616011894152,
+          "minus_dF_dt_per_unit": 0.002290152461666128
+        },
+        "passed": true
+      },
+      {
+        "expectation": "Form A (+mu grad phi) and Form B (-phi grad mu) drive the same flow (cos ~ +1); the solver force belongs to that class, not to its negative",
+        "name": "force_form_equivalence_class",
+        "note": "Form A and Form B differ by grad(mu phi) only in the continuum; on the grid the difference is O((dx/eps)^2).",
+        "observed": {
+          "cos_solenoidal_FormA_vs_FormB": 0.9595237419437721,
+          "cos_solver_vs_FormA": 0.9999999999999999,
+          "cos_solver_vs_FormB": 0.9595237419437721,
+          "nongradient_part_of_A_minus_B_over_solenoidal_A": 0.2843375384272293
+        },
+        "passed": true
+      },
+      {
+        "expectation": "informational: for uniform (relaxed) mu Form A keeps delta_p R We = +1, Form B loses it (reduced pressure)",
+        "name": "relaxed_mu_form_choice",
+        "note": "Form A is retained: its projection pressure is the mechanical pressure whose jump is the Young-Laplace value for any admissible mu; this is a design argument, not a benchmark fit.",
+        "observed": {
+          "laplace_ratio_FormA": 0.9999173806830213,
+          "laplace_ratio_FormB": 0.0
+        },
+        "passed": true
+      }
+    ],
+    "conventions": {
+      "chemical_potential": "mu = dF/dphi = f'(phi)/eps - eps lap(phi); mu = +eps |dphi/dr| / r > 0 at a convex liquid interface",
+      "grad_phi_direction": "dphi/dr < 0 across the interface: grad(phi) points gas -> liquid (outside -> inside)",
+      "korteweg_force": "F_cap = +(SIGMA_NORM/We) mu grad(phi) / rho_l  ~  -(SIGMA_NORM/We) phi grad(mu) / rho_l (up to a pure gradient); F . n_out < 0 (toward the liquid / centre of curvature)",
+      "laplace_jump": "delta_p = P_liquid - P_gas = +sigma/R = +1/(We R); laplace_ratio = delta_p R We -> +1 (2-D)",
+      "outward_normal": "n_out (liquid -> gas) = -grad(phi) / |grad(phi)| = +r_hat for a drop",
+      "phase_orientation": "phi = 1 liquid, phi = 0 gas; phi(r) = 0.5 (1 - tanh((r - R) / (sqrt(2) eps)))",
+      "pressure_gradient": "du/dt = ... - grad(P) + F; u+ = u* - dt grad(P), lap(P) = div(u*)/dt; static balance grad(P) = F"
+    },
+    "diagnosis": {
+      "diagnostic_pressure_convention_consistent": true,
+      "force_convention_consistent": true,
+      "projection_convention_consistent": true,
+      "three_conventions_consistent": true
+    },
+    "settings": {
+      "N": 128,
+      "R": 0.8,
+      "We": 100.0,
+      "eps": 0.09375,
+      "eps_over_dx": 2.0,
+      "sigma_norm": 4.242640687119285,
+      "solver_contract_version": 11
+    },
+    "status": "measured"
+  },
+  "statuses": [
+    "SUPPORTED",
+    "SUSPECTED",
+    "FALSIFIED",
+    "NOT_TESTED"
+  ]
+}

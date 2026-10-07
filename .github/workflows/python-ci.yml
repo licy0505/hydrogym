@@ -117,6 +117,8 @@ jobs:
           examples/two_phase/test_mass_precision.py
           examples/two_phase/test_krylov_roundoff.py
           examples/two_phase/test_phase_storage_precision.py
+          examples/two_phase/test_restart.py
+          examples/two_phase/test_a1_promotion_audit.py
 
       - name: Run the L1A-2g mass-precision audit (quick profile)
         working-directory: examples/two_phase
@@ -151,8 +153,16 @@ jobs:
       - name: Run two-phase L1A validation contract
         working-directory: examples/two_phase
         run: |
-          uv run --no-sync pytest -q test_production_validation.py
-          uv run --no-sync python -m production.run_validation --config production/configs/ci.json --out artifacts/production_validation/ci --overwrite
+          JAX_ENABLE_X64=1 uv run --no-sync pytest -q test_production_validation.py
+          JAX_ENABLE_X64=1 uv run --no-sync python -m production.run_validation --config production/configs/ci.json --out artifacts/production_validation/ci --overwrite
+
+      - name: Run Stage-2 A1 promotion audit (mandatory 2500-step quick reproduction)
+        working-directory: examples/two_phase
+        env:
+          JAX_ENABLE_X64: "1"
+        run: >-
+          uv run --no-sync python -m production.a1_promotion_audit
+          --out artifacts/l1a2i_stage2/promotion --overwrite
 
       - name: Run two-phase capillary sign audit
         working-directory: examples/two_phase
