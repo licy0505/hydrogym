@@ -1,0 +1,38 @@
+{
+ "QUALITY_DEPENDENCY_AUDIT": "PRE_EXISTING_FAILURE (separate known issue; not re-run here)",
+ "full_repository_ci": {
+  "claimed": false,
+  "note": "only the focused checks above were run"
+ },
+ "git_diff_check": {
+  "exit_code": 0,
+  "note": "git diff --check is also run from the repository root in the frozen quality evidence",
+  "passed": true,
+  "stdout_tail": ""
+ },
+ "py_compile": {
+  "exit_code": 0,
+  "passed": true
+ },
+ "pytest": {
+  "exit_code": 0,
+  "passed": true,
+  "scope": "tests/test_stationarity_metric_domain_audit.py",
+  "stderr_tail": "",
+  "stdout_tail": "......................                                                   [100%]\n22 passed in 23.86s\n"
+ },
+ "quick_profile_in_quality": true,
+ "ruff": {
+  "args": [
+   "production/stationarity_metric_domain_audit.py",
+   "tests/test_stationarity_metric_domain_audit.py"
+  ],
+  "exit_code": 0,
+  "passed": true,
+  "stdout_tail": "All checks passed!\n"
+ },
+ "scope": {
+  "module": "production/stationarity_metric_domain_audit.py",
+  "test": "tests/test_stationarity_metric_domain_audit.py"
+ }
+}

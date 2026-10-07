@@ -1,0 +1,2393 @@
+{
+ "angle_spread_audit": {
+  "dense_window": {
+   "cadence_only_subset": {
+    "max_deg": 59.819994119875126,
+    "min_deg": 59.642651516219296,
+    "n": 10,
+    "spread_deg": 0.17734260365583054
+   },
+   "cadence_steps": 100,
+   "max_deg": 59.819994119875126,
+   "min_deg": 59.642651516219296,
+   "n": 28,
+   "spread_deg": 0.17734260365583054
+  },
+  "full_late_window_1000_step_cadence": {
+   "max_deg": 59.819994119875126,
+   "min_deg": 59.642651516219296,
+   "n": 10,
+   "spread_deg": 0.17734260365583054,
+   "steps": [
+    41000,
+    42000,
+    43000,
+    44000,
+    45000,
+    46000,
+    47000,
+    48000,
+    49000,
+    50000
+   ]
+  },
+  "left_right_symmetry": {
+   "left_contact_x_max": 1.524380740086071,
+   "left_contact_x_min": 1.5224602988979152,
+   "left_contact_x_spread": 0.0019204411881557082,
+   "right_contact_x_max": 4.477539699483476,
+   "right_contact_x_min": 4.475619258255902,
+   "right_contact_x_spread": 0.0019204412275737326
+  },
+  "peak_to_peak_deg_full_window": 0.17734260365583054,
+  "production_window": {
+   "definition": "last 0.05 M*t (nwa.CRITERIA window_mobility_time) at the frozen 1000-step cadence",
+   "exceeds_recorded_threshold": true,
+   "max_deg": 59.74302387033691,
+   "min_deg": 59.642651516219296,
+   "n": 7,
+   "spread_deg": 0.10037235411761714,
+   "steps": [
+    44000,
+    45000,
+    46000,
+    47000,
+    48000,
+    49000,
+    50000
+   ]
+  },
+  "sampling_sensitivity": {
+   "cadence_changes_classifier_outcome": false,
+   "spread_dense_vs_cadence_in_dense_deg": 0.0,
+   "spread_production_window_vs_full_window_deg": 0.07697024953821341
+  },
+  "slope_deg_per_Mt_cadence": -0.009761713065494265,
+  "slope_deg_per_step_cadence": -1.952342613098853e-05,
+  "threshold_recorded_not_changed_deg": 0.1
+ },
+ "authority_endpoint_metric_pair": {
+  "Q_V": 7.05141628941166e-08,
+  "Q_prod": 7.100573362401594e-08,
+  "R_V": 0.00026554502988027583,
+  "R_prod": 0.0002664690106260312,
+  "R_prod_over_R_V": 1.0034795633199085,
+  "note": "R_V is a shadow metric; the production threshold is not applied to it (section 7/17)",
+  "production_threshold_recorded_only": 0.001
+ },
+ "authority_gate_reconstruction": {
+  "crosscheck": {
+   "abs_difference": 0.0,
+   "definition": "sqrt(sum((phi_final - phi_before_last_public_step)^2 / dt^2) * dx * dy)",
+   "dt": 0.004,
+   "dtype": "float64 phase delta; dt float; accumulation float64 numpy",
+   "mask": "none; every grid cell participates exactly as in nwa._sample",
+   "normalization": "cell area dx*dy (not V_i); exact production public-step delta and dt",
+   "nwa_phase_rate_l2": 0.0002664690106260312,
+   "reconstruction_bitwise_equal": true,
+   "source_function": "production.nonneutral_wetting_audit._sample",
+   "step": 50000
+  },
+  "exact_gate_value": 0.0002664690106260312,
+  "support_partition": {
+   "counts": {
+    "FULL_VOLUME": 15616,
+    "PARTIAL_VOLUME": 128,
+    "ZERO_VOLUME": 640,
+    "total": 16384
+   },
+   "diagnostics": {
+    "aperture_zero_is_machine_zero": true,
+    "max_zero_volume": 0.0,
+    "min_positive_volume": 0.00146484375,
+    "n_zero_volume_cells_with_open_phase_face": 0,
+    "sum_volume_over_area": 15701.333333333334
+   },
+   "mutually_exclusive_and_complete": true,
+   "tolerance_policy": {
+    "justification": "geometry emits exact 0.0 for fully solid cells and exact dx*dy for full cells (verified by the exact-equality counts); no tolerance was required",
+    "n_full_within_roundoff_but_not_exact": 0,
+    "n_zero_within_roundoff_but_not_exact": 0,
+    "rule": "exact equality against 0 and dx*dy; tolerance only if geometry arithmetic requires it",
+    "tolerance_used": false,
+    "tolerance_value": 0.0
+   },
+   "volume_weight_fractions": {
+    "FULL_VOLUME": 0.9945652173913043,
+    "PARTIAL_VOLUME": 0.005434782608695652,
+    "ZERO_VOLUME": 0.0
+   }
+  },
+  "zero_volume_activity_localization": {
+   "deep_inactive_cell_count": 384,
+   "definition": {
+    "deep_inactive": "zero-volume cell with no V>0 5-point neighbour",
+    "stencil_adjacent_inactive": "zero-volume cell with a 5-point (periodic-x) V>0 neighbour"
+   },
+   "distance_to_nearest_positive_volume_cell": {
+    "max_over_inactive_cells": 5,
+    "median_over_inactive_cells": 3.0
+   },
+   "interpretation": "every zero-volume cell has bitwise-zero phase rate; there is no zero-volume activity to localize",
+   "nonzero_rate_zero_volume_cell_count": 0,
+   "nonzero_rate_zero_volume_energy_fraction": null,
+   "spatial_overlap": "not_applicable_no_active_zero_volume_cells",
+   "stencil_adjacent_inactive_cell_count": 256,
+   "zero_volume_cell_count": 640
+  }
+ },
+ "authority_ledger": {
+  "E_all": 7.100573362401591e-08,
+  "R_prod": 0.00026646901062603117,
+  "classes": {
+   "FULL_VOLUME": {
+    "E": 6.953102143431793e-08,
+    "cell_count": 15616,
+    "f": 0.9792310829783583,
+    "max_abs_r": 0.00037258480634072555,
+    "nonzero_rate_cell_count": 15616,
+    "rms_r": 4.5015608362703206e-05
+   },
+   "PARTIAL_VOLUME": {
+    "E": 1.474712189697994e-09,
+    "cell_count": 128,
+    "f": 0.02076891702164189,
+    "max_abs_r": 0.0002769162900789768,
+    "nonzero_rate_cell_count": 128,
+    "rms_r": 7.241147090707522e-05
+   },
+   "ZERO_VOLUME": {
+    "E": 0.0,
+    "cell_count": 640,
+    "f": 0.0,
+    "max_abs_r": 0.0,
+    "nonzero_rate_cell_count": 0,
+    "rms_r": 0.0
+   }
+  }
+ },
+ "blockers": {
+  "N-CAPILLARY-PRESSURE-BALANCE": "structural background",
+  "N-CH-MASS-PRECISION": "resolved_in_contract_v11",
+  "N-STATIONARITY-METRIC-DOMAIN": {
+   "entered_as": "suspected_problem",
+   "exit_status": "confirmed_inactive_state_coupling",
+   "resolved_in_this_stage": false
+  },
+  "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN": "resolved_in_contract_v9",
+  "W-CONTACT-ANGLE": "open"
+ },
+ "cases": {
+  "authority_060": {
+   "formal_mass": {
+    "M_phi_sum_V_phi": 1.9233703028696105,
+    "full_grid_dxdy_sum_phi_diagnostic": 1.9696775588480726,
+    "note": "formal mass remains independent: a cell may contribute to R_prod while contributing exactly zero to sum_i V_i phi_i (section 21); N-CH-MASS-PRECISION stays resolved",
+    "zero_volume_cells_formal_mass_weight": 0.0
+   },
+   "provenance": {
+    "artifact_reuse": {
+     "endpoint_checkpoint": "reused_strict_l1a2m_checkpoint",
+     "window_samples": "reused_28_samples"
+    },
+    "config_fingerprint": "2563f20daad7bcdcbb11150fc54daa6a66ef3ff04326b7434d01c0560d5c495f",
+    "endpoint_state_hashes": {
+     "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+     "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+     "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+     "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+    },
+    "expected_l1a2k_state_hashes": {
+     "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+     "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+     "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+     "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+    },
+    "matches_l1a2k_per_field_hashes": true,
+    "replay": {},
+    "seed_state_hashes": {
+     "phi": "08eefeb5b34098e68e6017f153a64d8de4d8367609a0654705815d949be9ed08",
+     "t": "ee6c4e711111f9b163c88da27dff905fd54b59a1dbb4ed1272e24c2d1ebd6d30",
+     "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+     "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+    },
+    "state_acceptance": "accepted_exact_rehydration",
+    "step": 50000,
+    "target_deg": 60.0,
+    "time": 199.8132781982422
+   }
+  },
+  "ch_only_equilibrium_060": {
+   "formal_mass": {
+    "M_phi_sum_V_phi": 1.9233703028696179,
+    "full_grid_dxdy_sum_phi_diagnostic": 1.9683829001535569,
+    "note": "formal mass remains independent: a cell may contribute to R_prod while contributing exactly zero to sum_i V_i phi_i (section 21); N-CH-MASS-PRECISION stays resolved",
+    "zero_volume_cells_formal_mass_weight": 0.0
+   },
+   "provenance": {
+    "artifact_reuse": {
+     "endpoint_checkpoint": "reused_strict_l1a2m_checkpoint",
+     "window_samples": "reused_10_samples"
+    },
+    "config_fingerprint": "e17af41512ac417b8e91d41c896c5478ca31c0e62544c71863e054447065e4a9",
+    "endpoint_state_hashes": {
+     "phi": "bf7afb791c338f76479cf86592e0425afee6eb668e84a700ddd01aedeb56b1ce",
+     "t": "073066d2d9cf82ec8d765ae40e1b686b80a517058f580e72145950f05ea0769e",
+     "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+     "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+    },
+    "expected_l1a2k_state_hashes": {
+     "phi": "bf7afb791c338f76479cf86592e0425afee6eb668e84a700ddd01aedeb56b1ce",
+     "t": "073066d2d9cf82ec8d765ae40e1b686b80a517058f580e72145950f05ea0769e",
+     "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+     "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+    },
+    "matches_l1a2k_per_field_hashes": true,
+    "replay": {},
+    "seed_state_hashes": null,
+    "state_acceptance": "accepted_exact_rehydration",
+    "step": 180000,
+    "target_deg": 60.0,
+    "time": 722.8490600585938
+   }
+  },
+  "control_090": {
+   "formal_mass": {
+    "M_phi_sum_V_phi": 1.9233703028696136,
+    "full_grid_dxdy_sum_phi_diagnostic": 1.957256749929953,
+    "note": "formal mass remains independent: a cell may contribute to R_prod while contributing exactly zero to sum_i V_i phi_i (section 21); N-CH-MASS-PRECISION stays resolved",
+    "zero_volume_cells_formal_mass_weight": 0.0
+   },
+   "provenance": {
+    "artifact_reuse": {
+     "endpoint_checkpoint": "reused_strict_l1a2m_checkpoint",
+     "window_samples": "reused_10_samples"
+    },
+    "config_fingerprint": "c7857ca99258032c79ba00bfb9de8d24e5e5ef905fd551c854625a81d9ecdea0",
+    "endpoint_state_hashes": {
+     "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+     "t": "4d0c3fc073b67ec36bdbcafd302c29a7f14700b39cd62fb76c1e76835f9777ac",
+     "u": "1704520491e633f4a33e4a8b6f1abf1ef287da1a1cedfd93493cba57f5224ba4",
+     "v": "12bcf7f60b67d074258f6f0368552e6938d5bef770ee909caf1e8029cb6aac69"
+    },
+    "expected_l1a2k_state_hashes": {
+     "phi": "591e1870a894e67e862455ef581f7bde9e8bfd68c501acd8256e817571af9589",
+     "t": "4d0c3fc073b67ec36bdbcafd302c29a7f14700b39cd62fb76c1e76835f9777ac",
+     "u": "1704520491e633f4a33e4a8b6f1abf1ef287da1a1cedfd93493cba57f5224ba4",
+     "v": "12bcf7f60b67d074258f6f0368552e6938d5bef770ee909caf1e8029cb6aac69"
+    },
+    "matches_l1a2k_per_field_hashes": true,
+    "replay": {},
+    "seed_state_hashes": {
+     "phi": "08eefeb5b34098e68e6017f153a64d8de4d8367609a0654705815d949be9ed08",
+     "t": "ee6c4e711111f9b163c88da27dff905fd54b59a1dbb4ed1272e24c2d1ebd6d30",
+     "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+     "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+    },
+    "state_acceptance": "accepted_exact_rehydration",
+    "step": 27200,
+    "target_deg": 90.0,
+    "time": 108.90214538574219
+   }
+  },
+  "control_150": {
+   "formal_mass": {
+    "M_phi_sum_V_phi": 1.92337030286961,
+    "full_grid_dxdy_sum_phi_diagnostic": 1.9372605961373637,
+    "note": "formal mass remains independent: a cell may contribute to R_prod while contributing exactly zero to sum_i V_i phi_i (section 21); N-CH-MASS-PRECISION stays resolved",
+    "zero_volume_cells_formal_mass_weight": 0.0
+   },
+   "provenance": {
+    "artifact_reuse": {
+     "endpoint_checkpoint": "reused_strict_l1a2m_checkpoint",
+     "window_samples": "reused_10_samples"
+    },
+    "config_fingerprint": "82a53cc0e10d6ec8000660b6f4e4632bf69c69c61c566ee43eedb8f15677c730",
+    "endpoint_state_hashes": {
+     "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+     "t": "846e59a31010ffa1a3764d8a37acb1cc037ae9345ece28323837ffe7f695b771",
+     "u": "52ba7f0498dcd8b4b9fb05ee5ebcdcb4f94fabc7be01196bdea5ab7dbd56b88a",
+     "v": "064d17b00479ffb7ef967d8c46b8ee7e28e82af456abb43b59b41014dd9003a3"
+    },
+    "expected_l1a2k_state_hashes": {
+     "phi": "be58678ebea3c6b625fdaa7c781af82fea25382845bca6f8a62091a1966fb113",
+     "t": "846e59a31010ffa1a3764d8a37acb1cc037ae9345ece28323837ffe7f695b771",
+     "u": "52ba7f0498dcd8b4b9fb05ee5ebcdcb4f94fabc7be01196bdea5ab7dbd56b88a",
+     "v": "064d17b00479ffb7ef967d8c46b8ee7e28e82af456abb43b59b41014dd9003a3"
+    },
+    "matches_l1a2k_per_field_hashes": true,
+    "replay": {},
+    "seed_state_hashes": {
+     "phi": "08eefeb5b34098e68e6017f153a64d8de4d8367609a0654705815d949be9ed08",
+     "t": "ee6c4e711111f9b163c88da27dff905fd54b59a1dbb4ed1272e24c2d1ebd6d30",
+     "u": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418",
+     "v": "d2b86a7ea138e468b468c2e50cc42597acdc555630d748e59fcc1840bfa9e418"
+    },
+    "state_acceptance": "accepted_exact_rehydration",
+    "step": 100000,
+    "target_deg": 150.0,
+    "time": 400.5834655761719
+   }
+  }
+ },
+ "config_fingerprints": {
+  "authority_060": "2563f20daad7bcdcbb11150fc54daa6a66ef3ff04326b7434d01c0560d5c495f",
+  "ch_only_equilibrium_060": "e17af41512ac417b8e91d41c896c5478ca31c0e62544c71863e054447065e4a9",
+  "control_090": "c7857ca99258032c79ba00bfb9de8d24e5e5ef905fd551c854625a81d9ecdea0",
+  "control_150": "82a53cc0e10d6ec8000660b6f4e4632bf69c69c61c566ee43eedb8f15677c730"
+ },
+ "contract_bumped": false,
+ "created_at_local": "2026-10-07T08:03:19.610573+00:00",
+ "cross_metric_coupling": {
+  "caveat": "correlation over a late window cannot establish causality; see the counterfactual sections",
+  "l1a2l_reference_series_steps": [
+   41000,
+   42000,
+   43000,
+   44000,
+   45000,
+   46000,
+   47000,
+   48000,
+   48010,
+   48020,
+   48030,
+   48040,
+   48050,
+   48060,
+   48070,
+   48080,
+   48090,
+   48100,
+   48110,
+   48120,
+   48130,
+   48140,
+   48150,
+   48160,
+   48170,
+   48180,
+   48190,
+   48200,
+   48210,
+   48220,
+   48230,
+   48240,
+   48250,
+   48260,
+   48270,
+   48280,
+   48290,
+   48300,
+   48310,
+   48320,
+   48330,
+   48340,
+   48350,
+   48360,
+   48370,
+   48380,
+   48390,
+   48400,
+   48410,
+   48420,
+   48430,
+   48440,
+   48450,
+   48460,
+   48470,
+   48480,
+   48490,
+   48500,
+   48510,
+   48520,
+   48530,
+   48540,
+   48550,
+   48560,
+   48570,
+   48580,
+   48590,
+   48600,
+   48610,
+   48620,
+   48630,
+   48640,
+   48650,
+   48660,
+   48670,
+   48680,
+   48690,
+   48700,
+   48710,
+   48720,
+   48730,
+   48740,
+   48750,
+   48760,
+   48770,
+   48780,
+   48790,
+   48800,
+   48810,
+   48820,
+   48830,
+   48840,
+   48850,
+   48860,
+   48870,
+   48880,
+   48890,
+   48900,
+   48910,
+   48920,
+   48930,
+   48940,
+   48950,
+   48960,
+   48970,
+   48980,
+   48990,
+   49000,
+   49010,
+   49020,
+   49030,
+   49040,
+   49050,
+   49060,
+   49070,
+   49080,
+   49090,
+   49100,
+   49110,
+   49120,
+   49130,
+   49140,
+   49150,
+   49160,
+   49170,
+   49180,
+   49190,
+   49200,
+   49210,
+   49220,
+   49230,
+   49240,
+   49250,
+   49260,
+   49270,
+   49280,
+   49290,
+   49300,
+   49310,
+   49320,
+   49330,
+   49340,
+   49350,
+   49360,
+   49370,
+   49380,
+   49390,
+   49400,
+   49410,
+   49420,
+   49430,
+   49440,
+   49450,
+   49460,
+   49470,
+   49480,
+   49490,
+   49500,
+   49510,
+   49520,
+   49530,
+   49540,
+   49550,
+   49560,
+   49570,
+   49580,
+   49590,
+   49600,
+   49610,
+   49620,
+   49630,
+   49640,
+   49650,
+   49660,
+   49670,
+   49680,
+   49690,
+   49700,
+   49710,
+   49720,
+   49730,
+   49740,
+   49750,
+   49760,
+   49770,
+   49780,
+   49790,
+   49800,
+   49810,
+   49820,
+   49830,
+   49840,
+   49850,
+   49860,
+   49870,
+   49880,
+   49890,
+   49900,
+   49910,
+   49920,
+   49930,
+   49940,
+   49950,
+   49960,
+   49970,
+   49980,
+   49990,
+   50000,
+   50001
+  ],
+  "pairs": {
+   "R_V_vs_angle_velocity": {
+    "n": 27,
+    "pearson_r": -0.9270902130525287,
+    "spearman_rho": -0.9999999999999999
+   },
+   "R_V_vs_l1a2l_whole_fluid_net_rate_volume": {
+    "n": 28,
+    "pearson_r": 0.9986450177672825,
+    "spearman_rho": 0.9890530925013684
+   },
+   "R_prod_vs_R_V": {
+    "n": 28,
+    "pearson_r": 0.9999997433206856,
+    "spearman_rho": 0.9999999999999998
+   },
+   "R_prod_vs_angle_velocity": {
+    "n": 27,
+    "pearson_r": -0.9270062437659137,
+    "spearman_rho": -0.9999999999999999
+   },
+   "R_prod_vs_contact_line_speed": {
+    "n": 27,
+    "pearson_r": 0.5743460746914327,
+    "spearman_rho": 0.15384615384615385
+   },
+   "R_prod_vs_l1a2l_whole_fluid_net_rate_volume": {
+    "n": 28,
+    "pearson_r": 0.998635384358944,
+    "spearman_rho": 0.9890530925013684
+   },
+   "R_prod_vs_zero_volume_fraction": {
+    "n": 28,
+    "pearson_r": null,
+    "spearman_rho": null
+   }
+  }
+ },
+ "diagnostic_only": true,
+ "elapsed_seconds": 53.27411169200059,
+ "final_verdict": {
+  "decision_gates": {
+   "inactive_cells_causally_inactive": false,
+   "physical_activity_control_like": true,
+   "remaining_criteria_show_no_true_nonstationarity": true,
+   "robust_across_late_window": true,
+   "zero_cells_materially_inflate_R_prod": false
+  },
+  "rule": "section 25: counterfactual changes confined to V=0 phi measurably alter physical operators or the next physical state",
+  "verdict": "INACTIVE_STATE_COUPLING"
+ },
+ "frozen_production_gate_records": {
+  "authority_060": {
+   "production_stationarity_gate_at_50k": false,
+   "source": "evidence/l1a2j/chns_nonstationarity_report.json acceptance",
+   "status": "production_gate_not_passed_at_50k",
+   "step": 50000
+  },
+  "ch_only_equilibrium_060": {
+   "convergence_gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.09537505932090085,
+    "converged": true,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 3.8545370993903205e-06,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 7
+   },
+   "source": "evidence/l1a2k/capillary_pressure_balance_report.json phase_only_comparison",
+   "step": 180000
+  },
+  "control_090": {
+   "converged": true,
+   "production_gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.04110639488511936,
+    "converged": true,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 9.97537971535456e-05,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 32
+   },
+   "source": "evidence/l1a2j/chns_nonstationarity_report.json controls",
+   "step": 27200,
+   "stop_reason": "converged"
+  },
+  "control_150": {
+   "converged": true,
+   "production_gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.018354462038303154,
+    "converged": true,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 3.263636340414016e-05,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 32
+   },
+   "source": "evidence/l1a2j/chns_nonstationarity_report.json controls",
+   "step": 100000,
+   "stop_reason": "budget_exhausted"
+  }
+ },
+ "git_sha": "24abbbc9e36bb88da93aaa37b5b169a630254a17",
+ "inactive_state_causality": {
+  "authority_checkpoint_not_mutated": true,
+  "authority_step": 50000,
+  "coupling_confirmed": true,
+  "coupling_policy_evidence": {
+   "ZERO_CLAMP_LIQUID": {
+    "max_operator_linf_physical": 0.07647528915549628,
+    "one_step_changed": true,
+    "one_step_max_abs_u_delta": 5.738598702009767e-06
+   },
+   "ZERO_CLAMP_MIDPOINT": {
+    "max_operator_linf_physical": 0.03823764622211456,
+    "one_step_changed": true,
+    "one_step_max_abs_u_delta": 2.8295980882830918e-06
+   }
+  },
+  "inactive_classification": {
+   "label": "INACTIVE_STATE_COUPLING",
+   "materiality_thresholds": {
+    "note": "coupling is any non-bitwise physical-domain operator/next-state difference; magnitudes are reported alongside",
+    "zero_volume_material_fraction": 0.1
+   },
+   "next_physical_state_changed": true,
+   "operator_delta_on_physical_domain": true,
+   "zero_volume_material_contribution": false
+  },
+  "policies": {
+   "INACTIVE_FREEZE": {
+    "admissibility": {
+     "admissible": true,
+     "config_bitwise_equal": true,
+     "geometry_hashes": {
+      "aperture_x": "7381344b35d9e66cc005dabaa5093bc76a7d6cd3f2881fafab2ceb033a847f1c",
+      "aperture_y": "904ae7a69fc970e0a67a4617c48bdc79c25f98525f0bd1afe544723bcbf869e8",
+      "chi": "9db88d6a61580aa683a37b15d2e7825ae488537e127096c4cab3fb76c75cfeec",
+      "sdf": "ce776ab549cfd6839fdd256c6eddd95353753d0f350cbd88181b762e29e52c9b",
+      "volume": "5379f9a4b55b7a88967939e225fdf3162dfce7a20b789b1825643872e5da6824",
+      "wall_area": "3aa4358f03e9d2bcfac22125a9f30eab8ae930ef9ba4085f36b44fb353699bd6"
+     },
+     "phi_v_positive_bitwise_equal": true,
+     "pressure_note": "p is not an independent state variable: it is reconstructed from (phi,u,v) by the unchanged projection, so bitwise u/v/phi equality implies bitwise reconstructed pressure",
+     "state_a_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "state_b_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "t_bitwise_equal": true,
+     "u_bitwise_equal": true,
+     "v_bitwise_equal": true
+    },
+    "build": {
+     "changed_cell_count": 0,
+     "changed_value_max": 0.0,
+     "changed_value_min": 0.0,
+     "confined_to_zero_volume": true,
+     "description": "phi[V==0] = the exact previous-step (step n-1) values of the authority trajectory",
+     "phi_hash": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+     "policy": "INACTIVE_FREEZE",
+     "state_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     }
+    },
+    "one_step_replay": {
+     "contact_angle_deg": {
+      "A": 59.642639157145226,
+      "B": 59.642639157145226,
+      "abs_difference": 0.0
+     },
+     "formal_phase_mass_sum_V_phi": {
+      "A": 1.9233703028696105,
+      "B": 1.9233703028696105,
+      "abs_difference": 0.0,
+      "bitwise_equal": true
+     },
+     "next_physical_state_changed": false,
+     "phi_v_positive": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced",
+     "pressure_reconstructed": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "u": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "v": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    },
+    "operator_dependency_audit": {
+     "advective_phase_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "advective_phase_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "all_physical_bitwise_equal": true,
+     "capillary_acceleration_x": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "capillary_acceleration_y": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu_explicit": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "coupling_channels": {
+      "momentum_projection": "full-grid periodic stencils (capillary mu*grad(phi), nu(phi), global FFT projection) read every cell including V=0",
+      "phase_transport": "aperture-gated; closed faces carry machine-zero flux so V=0 phi cannot enter V>0 phase updates"
+     },
+     "momentum_mirror_selfcheck": {
+      "note": "the capillary decomposition above is applied to the same mu the production rhs produced",
+      "u_rhs_bitwise_equal": true,
+      "v_rhs_bitwise_equal": true
+     },
+     "momentum_predictor_u_rhs": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "momentum_predictor_v_rhs": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "nu_of_phi": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "phase_rhs_advective": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "evaluate unchanged production operators on A and B; compare on physical cells/faces",
+     "pressure_rhs_projection_reconstruction": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "rho_of_phi": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "wetting_wall_energy_mu_term": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    }
+   },
+   "ZERO_CLAMP": {
+    "admissibility": {
+     "admissible": true,
+     "config_bitwise_equal": true,
+     "geometry_hashes": {
+      "aperture_x": "7381344b35d9e66cc005dabaa5093bc76a7d6cd3f2881fafab2ceb033a847f1c",
+      "aperture_y": "904ae7a69fc970e0a67a4617c48bdc79c25f98525f0bd1afe544723bcbf869e8",
+      "chi": "9db88d6a61580aa683a37b15d2e7825ae488537e127096c4cab3fb76c75cfeec",
+      "sdf": "ce776ab549cfd6839fdd256c6eddd95353753d0f350cbd88181b762e29e52c9b",
+      "volume": "5379f9a4b55b7a88967939e225fdf3162dfce7a20b789b1825643872e5da6824",
+      "wall_area": "3aa4358f03e9d2bcfac22125a9f30eab8ae930ef9ba4085f36b44fb353699bd6"
+     },
+     "phi_v_positive_bitwise_equal": true,
+     "pressure_note": "p is not an independent state variable: it is reconstructed from (phi,u,v) by the unchanged projection, so bitwise u/v/phi equality implies bitwise reconstructed pressure",
+     "state_a_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "state_b_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "t_bitwise_equal": true,
+     "u_bitwise_equal": true,
+     "v_bitwise_equal": true
+    },
+    "build": {
+     "changed_cell_count": 0,
+     "changed_value_max": 0.0,
+     "changed_value_min": 0.0,
+     "confined_to_zero_volume": true,
+     "description": "phi[V==0] = 0.0, the gas-phase reference of the double well (the seeded deep-solid value)",
+     "phi_hash": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+     "policy": "ZERO_CLAMP",
+     "state_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     }
+    },
+    "one_step_replay": {
+     "contact_angle_deg": {
+      "A": 59.642639157145226,
+      "B": 59.642639157145226,
+      "abs_difference": 0.0
+     },
+     "formal_phase_mass_sum_V_phi": {
+      "A": 1.9233703028696105,
+      "B": 1.9233703028696105,
+      "abs_difference": 0.0,
+      "bitwise_equal": true
+     },
+     "next_physical_state_changed": false,
+     "phi_v_positive": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced",
+     "pressure_reconstructed": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "u": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "v": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    },
+    "operator_dependency_audit": {
+     "advective_phase_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "advective_phase_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "all_physical_bitwise_equal": true,
+     "capillary_acceleration_x": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "capillary_acceleration_y": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu_explicit": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "coupling_channels": {
+      "momentum_projection": "full-grid periodic stencils (capillary mu*grad(phi), nu(phi), global FFT projection) read every cell including V=0",
+      "phase_transport": "aperture-gated; closed faces carry machine-zero flux so V=0 phi cannot enter V>0 phase updates"
+     },
+     "momentum_mirror_selfcheck": {
+      "note": "the capillary decomposition above is applied to the same mu the production rhs produced",
+      "u_rhs_bitwise_equal": true,
+      "v_rhs_bitwise_equal": true
+     },
+     "momentum_predictor_u_rhs": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "momentum_predictor_v_rhs": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "nu_of_phi": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "phase_rhs_advective": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "evaluate unchanged production operators on A and B; compare on physical cells/faces",
+     "pressure_rhs_projection_reconstruction": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "rho_of_phi": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "wetting_wall_energy_mu_term": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    }
+   },
+   "ZERO_CLAMP_LIQUID": {
+    "admissibility": {
+     "admissible": true,
+     "config_bitwise_equal": true,
+     "geometry_hashes": {
+      "aperture_x": "7381344b35d9e66cc005dabaa5093bc76a7d6cd3f2881fafab2ceb033a847f1c",
+      "aperture_y": "904ae7a69fc970e0a67a4617c48bdc79c25f98525f0bd1afe544723bcbf869e8",
+      "chi": "9db88d6a61580aa683a37b15d2e7825ae488537e127096c4cab3fb76c75cfeec",
+      "sdf": "ce776ab549cfd6839fdd256c6eddd95353753d0f350cbd88181b762e29e52c9b",
+      "volume": "5379f9a4b55b7a88967939e225fdf3162dfce7a20b789b1825643872e5da6824",
+      "wall_area": "3aa4358f03e9d2bcfac22125a9f30eab8ae930ef9ba4085f36b44fb353699bd6"
+     },
+     "phi_v_positive_bitwise_equal": true,
+     "pressure_note": "p is not an independent state variable: it is reconstructed from (phi,u,v) by the unchanged projection, so bitwise u/v/phi equality implies bitwise reconstructed pressure",
+     "state_a_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "state_b_hashes": {
+      "phi": "5f1069ffa3ce6636af998edbc6baf8bfc7d0bb8135192811de68516e01cf8745",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "t_bitwise_equal": true,
+     "u_bitwise_equal": true,
+     "v_bitwise_equal": true
+    },
+    "build": {
+     "changed_cell_count": 640,
+     "changed_value_max": 1.0,
+     "changed_value_min": 1.0,
+     "confined_to_zero_volume": true,
+     "description": "phi[V==0] = 1.0, the liquid-phase reference of the double well; excites the nu(phi) momentum and capillary-gradient stencils at wall-adjacent cells",
+     "phi_hash": "5f1069ffa3ce6636af998edbc6baf8bfc7d0bb8135192811de68516e01cf8745",
+     "policy": "ZERO_CLAMP_LIQUID",
+     "state_hashes": {
+      "phi": "5f1069ffa3ce6636af998edbc6baf8bfc7d0bb8135192811de68516e01cf8745",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     }
+    },
+    "one_step_replay": {
+     "contact_angle_deg": {
+      "A": 59.642639157145226,
+      "B": 59.642639159629034,
+      "abs_difference": 2.4838087142597942e-09
+     },
+     "formal_phase_mass_sum_V_phi": {
+      "A": 1.9233703028696105,
+      "B": 1.9233703028696105,
+      "abs_difference": 0.0,
+      "bitwise_equal": true
+     },
+     "next_physical_state_changed": true,
+     "phi_v_positive": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 25.29822128134704,
+      "l2_delta_physical": 5.846592398399076e-07,
+      "linf_delta_full_grid": 1.0,
+      "linf_delta_physical": 8.125678763182265e-08
+     },
+     "policy": "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced",
+     "pressure_reconstructed": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.10984920669833595,
+      "l2_delta_physical": 0.0824838699297529,
+      "linf_delta_full_grid": 0.004455312038771808,
+      "linf_delta_physical": 0.0021167024970054626
+     },
+     "u": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 6.008544083880525e-05,
+      "l2_delta_physical": 5.0535734755899715e-05,
+      "linf_delta_full_grid": 5.738598702009767e-06,
+      "linf_delta_physical": 3.3587148209335282e-06
+     },
+     "v": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.00019780702984424566,
+      "l2_delta_physical": 0.00019327509757886634,
+      "linf_delta_full_grid": 3.891080268658698e-06,
+      "linf_delta_physical": 3.891080268658698e-06
+     }
+    },
+    "operator_dependency_audit": {
+     "advective_phase_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "advective_phase_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "all_physical_bitwise_equal": false,
+     "capillary_acceleration_x": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "capillary_acceleration_y": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.770181155094242,
+      "l2_delta_physical": 0.770181155094242,
+      "linf_delta_full_grid": 0.07647528708324683,
+      "linf_delta_physical": 0.07647528708324683
+     },
+     "ch_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu_explicit": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "coupling_channels": {
+      "momentum_projection": "full-grid periodic stencils (capillary mu*grad(phi), nu(phi), global FFT projection) read every cell including V=0",
+      "phase_transport": "aperture-gated; closed faces carry machine-zero flux so V=0 phi cannot enter V>0 phase updates"
+     },
+     "momentum_mirror_selfcheck": {
+      "note": "the capillary decomposition above is applied to the same mu the production rhs produced",
+      "u_rhs_bitwise_equal": true,
+      "v_rhs_bitwise_equal": true
+     },
+     "momentum_predictor_u_rhs": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.013201833718459195,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.002368050307268277,
+      "linf_delta_physical": 0.0
+     },
+     "momentum_predictor_v_rhs": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.7704505478904299,
+      "l2_delta_physical": 0.7701811564708088,
+      "linf_delta_full_grid": 0.07647528915549628,
+      "linf_delta_physical": 0.07647528915549628
+     },
+     "nu_of_phi": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 1.1384199576606167,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.045000000000000005,
+      "linf_delta_physical": 0.0
+     },
+     "phase_rhs_advective": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "evaluate unchanged production operators on A and B; compare on physical cells/faces",
+     "pressure_rhs_projection_reconstruction": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.10996704605741191,
+      "l2_delta_physical": 0.08283853418718665,
+      "linf_delta_full_grid": 0.004393421346321702,
+      "linf_delta_physical": 0.0021856045350432396
+     },
+     "rho_of_phi": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 22.768399153212332,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.9,
+      "linf_delta_physical": 0.0
+     },
+     "wetting_wall_energy_mu_term": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    }
+   },
+   "ZERO_CLAMP_MIDPOINT": {
+    "admissibility": {
+     "admissible": true,
+     "config_bitwise_equal": true,
+     "geometry_hashes": {
+      "aperture_x": "7381344b35d9e66cc005dabaa5093bc76a7d6cd3f2881fafab2ceb033a847f1c",
+      "aperture_y": "904ae7a69fc970e0a67a4617c48bdc79c25f98525f0bd1afe544723bcbf869e8",
+      "chi": "9db88d6a61580aa683a37b15d2e7825ae488537e127096c4cab3fb76c75cfeec",
+      "sdf": "ce776ab549cfd6839fdd256c6eddd95353753d0f350cbd88181b762e29e52c9b",
+      "volume": "5379f9a4b55b7a88967939e225fdf3162dfce7a20b789b1825643872e5da6824",
+      "wall_area": "3aa4358f03e9d2bcfac22125a9f30eab8ae930ef9ba4085f36b44fb353699bd6"
+     },
+     "phi_v_positive_bitwise_equal": true,
+     "pressure_note": "p is not an independent state variable: it is reconstructed from (phi,u,v) by the unchanged projection, so bitwise u/v/phi equality implies bitwise reconstructed pressure",
+     "state_a_hashes": {
+      "phi": "1e76060a3c3db68151d6d8dfd6ee4e422b77181f201eec3aaaff877bd24145dd",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "state_b_hashes": {
+      "phi": "4b90ea043f5e2f18ed38eacc646ea88d0a07fab39151f2a1dec7862b347f1ba7",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     },
+     "t_bitwise_equal": true,
+     "u_bitwise_equal": true,
+     "v_bitwise_equal": true
+    },
+    "build": {
+     "changed_cell_count": 640,
+     "changed_value_max": 0.5,
+     "changed_value_min": 0.5,
+     "confined_to_zero_volume": true,
+     "description": "phi[V==0] = 0.5, the double-well maximum; maximizes f'(phi) so mu is nonzero on inactive storage and the capillary stencil response is largest",
+     "phi_hash": "4b90ea043f5e2f18ed38eacc646ea88d0a07fab39151f2a1dec7862b347f1ba7",
+     "policy": "ZERO_CLAMP_MIDPOINT",
+     "state_hashes": {
+      "phi": "4b90ea043f5e2f18ed38eacc646ea88d0a07fab39151f2a1dec7862b347f1ba7",
+      "t": "788cb9c8e64d81b8af4b51ffaa19dadef8618e6ce2ad8c989fb1e591662f68a1",
+      "u": "d0b6aabd0becc5613c50ce80c21f2b18cbf2fdda4fb1e7c67efc9df221cdefb4",
+      "v": "5ee5e1dca3989feb562551c0ce4714e82421208694fbc5f3d75f631826440cea"
+     }
+    },
+    "one_step_replay": {
+     "contact_angle_deg": {
+      "A": 59.642639157145226,
+      "B": 59.642639158326865,
+      "abs_difference": 1.1816396749964042e-09
+     },
+     "formal_phase_mass_sum_V_phi": {
+      "A": 1.9233703028696105,
+      "B": 1.9233703028696105,
+      "abs_difference": 0.0,
+      "bitwise_equal": true
+     },
+     "next_physical_state_changed": true,
+     "phi_v_positive": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 12.64911064067352,
+      "l2_delta_physical": 2.9228764286795424e-07,
+      "linf_delta_full_grid": 0.5,
+      "linf_delta_physical": 4.058704272669189e-08
+     },
+     "policy": "one diagnostic public step per copy via pf.step_with_diagnostics; the authority trajectory is not advanced",
+     "pressure_reconstructed": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.05486517165044693,
+      "l2_delta_physical": 0.04116321430706427,
+      "linf_delta_full_grid": 0.0022300556884147227,
+      "linf_delta_physical": 0.0010560494847595692
+     },
+     "u": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 2.983771887499802e-05,
+      "l2_delta_physical": 2.5219395071052143e-05,
+      "linf_delta_full_grid": 2.8295980882830918e-06,
+      "linf_delta_physical": 1.6521516954526305e-06
+     },
+     "v": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 9.882563236343851e-05,
+      "l2_delta_physical": 9.657031858780514e-05,
+      "linf_delta_full_grid": 1.9431099644862115e-06,
+      "linf_delta_physical": 1.9431099644862115e-06
+     }
+    },
+    "operator_dependency_audit": {
+     "advective_phase_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "advective_phase_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "all_physical_bitwise_equal": false,
+     "capillary_acceleration_x": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "capillary_acceleration_y": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.385090577547121,
+      "l2_delta_physical": 0.385090577547121,
+      "linf_delta_full_grid": 0.038237643541623415,
+      "linf_delta_physical": 0.038237643541623415
+     },
+     "ch_flux_x_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "ch_flux_y_faces": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "chemical_potential_mu_explicit": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "coupling_channels": {
+      "momentum_projection": "full-grid periodic stencils (capillary mu*grad(phi), nu(phi), global FFT projection) read every cell including V=0",
+      "phase_transport": "aperture-gated; closed faces carry machine-zero flux so V=0 phi cannot enter V>0 phase updates"
+     },
+     "momentum_mirror_selfcheck": {
+      "note": "the capillary decomposition above is applied to the same mu the production rhs produced",
+      "u_rhs_bitwise_equal": true,
+      "v_rhs_bitwise_equal": true
+     },
+     "momentum_predictor_u_rhs": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.006600916873231192,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.001184025197289884,
+      "linf_delta_physical": 0.0
+     },
+     "momentum_predictor_v_rhs": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.3852252734011246,
+      "l2_delta_physical": 0.385090577691033,
+      "linf_delta_full_grid": 0.03823764622211456,
+      "linf_delta_physical": 0.03823764622211456
+     },
+     "nu_of_phi": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.5692099788303083,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.022500000000000003,
+      "linf_delta_physical": 0.0
+     },
+     "phase_rhs_advective": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     },
+     "policy": "evaluate unchanged production operators on A and B; compare on physical cells/faces",
+     "pressure_rhs_projection_reconstruction": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 0.054983528654944554,
+      "l2_delta_physical": 0.04141927068252112,
+      "linf_delta_full_grid": 0.002196710789576173,
+      "linf_delta_physical": 0.001092802733182907
+     },
+     "rho_of_phi": {
+      "bitwise_equal_physical": false,
+      "l2_delta_full_grid": 11.384199576606168,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.45000000000000007,
+      "linf_delta_physical": 0.0
+     },
+     "wetting_wall_energy_mu_term": {
+      "bitwise_equal_physical": true,
+      "l2_delta_full_grid": 0.0,
+      "l2_delta_physical": 0.0,
+      "linf_delta_full_grid": 0.0,
+      "linf_delta_physical": 0.0
+     }
+    }
+   }
+  },
+  "vacuous_policies": [
+   "ZERO_CLAMP",
+   "INACTIVE_FREEZE"
+  ]
+ },
+ "inactive_state_classification": {
+  "label": "INACTIVE_STATE_COUPLING",
+  "materiality_thresholds": {
+   "note": "coupling is any non-bitwise physical-domain operator/next-state difference; magnitudes are reported alongside",
+   "zero_volume_material_fraction": 0.1
+  },
+  "next_physical_state_changed": true,
+  "operator_delta_on_physical_domain": true,
+  "zero_volume_material_contribution": false
+ },
+ "matched_control_calibration": {
+  "authority_060_R_V": {
+   "max": 0.00031965883553300005,
+   "mean": 0.0002895921028604863,
+   "median": 0.0002876473344115139,
+   "min": 0.00026554502988027583,
+   "n": 10,
+   "std": 1.7120697909069334e-05
+  },
+  "authority_060_R_prod": {
+   "max": 0.00031989163732553473,
+   "mean": 0.00029018652851944355,
+   "median": 0.00028825344587102026,
+   "min": 0.0002664690106260312,
+   "n": 10,
+   "std": 1.6897797148041635e-05
+  },
+  "controls": {
+   "ch_only_equilibrium_060": {
+    "R_V_endpoint_only": 7.857486591924573e-05,
+    "R_prod_endpoint_only": 7.873686796173887e-05,
+    "R_prod_window_from_l1a2k_samples": {
+     "max": 9.256960370552085e-05,
+     "mean": 8.547647613208465e-05,
+     "median": 8.53586724068661e-05,
+     "min": 7.873686796173887e-05,
+     "n": 10,
+     "std": 4.4143403695255226e-06
+    },
+    "note": "window arrays were not retained for the CH-only control; endpoint ledger plus the L1A-2k scalar sample window are reported"
+   },
+   "control_090": {
+    "R_V": {
+     "max": 0.000802649742997572,
+     "mean": 0.0007260448107573904,
+     "median": 0.000722407335034534,
+     "min": 0.000660457319081108,
+     "n": 10,
+     "std": 4.525203611266933e-05
+    },
+    "R_prod": {
+     "max": 0.0008057950091722543,
+     "mean": 0.000729046851453517,
+     "median": 0.0007254068634962666,
+     "min": 0.0006633242211573162,
+     "n": 10,
+     "std": 4.53402214448088e-05
+    }
+   },
+   "control_150": {
+    "R_V": {
+     "max": 0.0004369595042552426,
+     "mean": 0.00041550509987333447,
+     "median": 0.0004152665039418405,
+     "min": 0.0003947664560310529,
+     "n": 10,
+     "std": 1.3464891747951603e-05
+    },
+    "R_prod": {
+     "max": 0.0004373005931679766,
+     "mean": 0.0004158290796175357,
+     "median": 0.00041559026528621647,
+     "min": 0.0003950739868859103,
+     "n": 10,
+     "std": 1.3475599322516281e-05
+    }
+   }
+  },
+  "effect_sizes": {
+   "authority_median_R_V_over_pooled_control_median_R_V": 0.692681282215336,
+   "authority_minus_control_median_R_V": -0.00012761916953032656,
+   "control_like": true,
+   "control_median_R_V_std": 0.0002629357753279384,
+   "effect_size_d": -0.4853625162690682
+  },
+  "policy": "report-only calibration against converged controls; the production 0.001 tolerance is NOT reapplied to R_V and no new acceptance threshold is proposed in L1A-2m"
+ },
+ "mechanism_matrix": [
+  {
+   "candidate": "CLASSIFIER_DOMAIN_MISMATCH",
+   "scope": "production full-grid dxdy norm vs exact control-volume support; the metric measures a different domain than the conserved state",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "ZERO_VOLUME_RATE_DOMINANCE",
+   "scope": "max ZERO_VOLUME energy fraction over the late window = 0.0",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "PARTIAL_CELL_WEIGHTING_MISMATCH",
+   "scope": "partial cells carry a full dx*dy weight in R_prod but only V_i < dx*dy in R_V",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "INACTIVE_STATE_COUPLING",
+   "scope": "sections 13/14 counterfactual operator/one-step evidence on physical cells and faces",
+   "status": "SUPPORTED"
+  },
+  {
+   "candidate": "TRUE_PHYSICAL_PHASE_NONSTATIONARITY",
+   "scope": "matched 60/90/150/CH-only comparison restricted to V_i > 0 (sections 8/26)",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "ANGLE_WINDOW_ALIASING",
+   "scope": "angle window spread under the production cadence vs denser available sampling",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "ANGLE_TRUE_RESIDUAL_MOTION",
+   "scope": "late-window angle slope and left/right contact-line drift; no gate change",
+   "status": "SUSPECTED"
+  },
+  {
+   "candidate": "CLASSIFIER_FALSE_NEGATIVE",
+   "scope": "section 24 decision rule",
+   "status": "FALSIFIED"
+  },
+  {
+   "candidate": "MIXED_CLASSIFIER_AND_PHYSICS",
+   "scope": "section 27 decision rule",
+   "status": "FALSIFIED"
+  }
+ ],
+ "operator_domain_map": {
+  "grid": {
+   "Nx": 128,
+   "Ny": 128,
+   "dx": 0.046875,
+   "dy": 0.046875
+  },
+  "n_zero_volume_cells_with_open_phase_face": 0,
+  "operators": [
+   {
+    "evidence": "shared face fluxes are gated by A_f; A_f = 0 on every wall-crossing face",
+    "operator": "advective_phase_source / phase_advective_fluxes",
+    "periodic_stencil_axes": [
+     "x",
+     "y"
+    ],
+    "reads_all_grid_cells": false,
+    "reads_v_zero_phi_for_open_face_flux": false,
+    "source": "phasefield.phase_advective_fluxes (phasefield.rhs phi_rhs)",
+    "uses_cut_cell_face_apertures": true,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": false
+   },
+   {
+    "evidence": "f'(phi) is cell-local; the -eps*fluid_laplacian stencil is aperture-weighted and closed faces contribute zero",
+    "operator": "chemical_potential (mu) and mu_explicit",
+    "periodic_stencil_axes": [],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": false,
+    "source": "phasefield.chemical_potential / phasefield._explicit_chemical_potential",
+    "uses_cut_cell_face_apertures": true,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": false
+   },
+   {
+    "evidence": "K has no row/column at V=0 (A=I there) and every CG inner product is V-weighted, so V=0 contributions vanish exactly",
+    "operator": "solve_ch_implicit (implicit CH solve)",
+    "periodic_stencil_axes": [],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": false,
+    "source": "phasefield.solve_ch_implicit / _cg_solve_volume_weighted",
+    "uses_cut_cell_face_apertures": true,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": false
+   },
+   {
+    "evidence": "the centred periodic gradient stencil reads neighbour cells regardless of support class",
+    "operator": "capillary acceleration (Korteweg force in rhs)",
+    "periodic_stencil_axes": [
+     "x",
+     "y"
+    ],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": true,
+    "source": "phasefield.rhs: cap_x/cap_y = (SIGMA_NORM/We) * mu * (_ddx phi, _ddy phi) / rho_l",
+    "uses_cut_cell_face_apertures": false,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": true
+   },
+   {
+    "evidence": "cell-local, but evaluated at every momentum cell including V=0 cells whose predictor enters the global projection",
+    "operator": "rho(phi)/nu(phi) material coefficients",
+    "periodic_stencil_axes": [],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": true,
+    "source": "phasefield.rho_of / phasefield.nu_of (called in phasefield.rhs)",
+    "uses_cut_cell_face_apertures": false,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": true
+   },
+   {
+    "evidence": "the momentum grid is the full periodic grid; nu(phi) and mu at V=0 cells enter u_rhs/v_rhs there",
+    "operator": "momentum predictor + Brinkman damping",
+    "periodic_stencil_axes": [
+     "x",
+     "y"
+    ],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": true,
+    "source": "phasefield.step_with_diagnostics substep (div_upwind, _lap, damp)",
+    "uses_cut_cell_face_apertures": false,
+    "uses_solid_mask": true,
+    "zero_volume_phi_can_reach_physical_domain": true
+   },
+   {
+    "evidence": "global divergence/FFT couples every grid cell, including solid rows",
+    "operator": "pressure projection",
+    "periodic_stencil_axes": [
+     "x",
+     "y"
+    ],
+    "reads_all_grid_cells": true,
+    "reads_v_zero_phi_for_open_face_flux": true,
+    "source": "phasefield.poisson_solve (periodic FFT, null mode removed)",
+    "uses_cut_cell_face_apertures": false,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": true
+   },
+   {
+    "evidence": "the wall measure is assigned to fluid-side control cells (wall_measure_density == 0 wherever V_i == 0)",
+    "operator": "wetting wall-energy term",
+    "periodic_stencil_axes": [],
+    "reads_all_grid_cells": false,
+    "reads_v_zero_phi_for_open_face_flux": false,
+    "source": "phasefield.wall_energy_derivative * phasefield.wall_measure_density (in _explicit_chemical_potential)",
+    "uses_cut_cell_face_apertures": false,
+    "uses_solid_mask": false,
+    "zero_volume_phi_can_reach_physical_domain": false
+   }
+  ],
+  "policy": "static documentation of the unchanged production operators, anchored to source; stencil visibility of V=0 phase storage is explicit per operator"
+ },
+ "out_dir": "artifacts/l1a2m",
+ "production_classifier_verdicts": {
+  "authority_060": {
+   "authoritative_in_this_stage": true,
+   "cadence_note": "this window evaluation uses the frozen 1000-step forensic cadence; the frozen production acceptance record of each state is reported beside it",
+   "classifier": "nwa._window_converged (unchanged production criteria and thresholds)",
+   "gate": {
+    "angle_ok": false,
+    "angle_window_spread_deg": 0.10037235411761714,
+    "converged": false,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 9.47607242616777e-05,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 25
+   },
+   "sample_cadence_steps": 1000
+  },
+  "ch_only_equilibrium_060": {
+   "authoritative_in_this_stage": true,
+   "cadence_note": "this window evaluation uses the frozen 1000-step forensic cadence; the frozen production acceptance record of each state is reported beside it",
+   "classifier": "nwa._window_converged (unchanged production criteria and thresholds)",
+   "gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.09537505932090085,
+    "converged": true,
+    "energy_ok": true,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 3.8545370993903205e-06,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 7
+   },
+   "sample_cadence_steps": 1000
+  },
+  "control_090": {
+   "authoritative_in_this_stage": true,
+   "cadence_note": "this window evaluation uses the frozen 1000-step forensic cadence; the frozen production acceptance record of each state is reported beside it",
+   "classifier": "nwa._window_converged (unchanged production criteria and thresholds)",
+   "gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.04013506392453792,
+    "converged": false,
+    "energy_ok": false,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 0.0004902115242462202,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 7
+   },
+   "sample_cadence_steps": 1000
+  },
+  "control_150": {
+   "authoritative_in_this_stage": true,
+   "cadence_note": "this window evaluation uses the frozen 1000-step forensic cadence; the frozen production acceptance record of each state is reported beside it",
+   "classifier": "nwa._window_converged (unchanged production criteria and thresholds)",
+   "gate": {
+    "angle_ok": true,
+    "angle_window_spread_deg": 0.014557372163295668,
+    "converged": false,
+    "energy_ok": false,
+    "energy_stationary_strict": false,
+    "energy_window_max_rel_change": 0.00016099667312818975,
+    "rate_ok": true,
+    "speed_ok": true,
+    "window_mobility_time": 0.05,
+    "window_samples_used": 7
+   },
+   "sample_cadence_steps": 1000
+  }
+ },
+ "production_semantics_changed": false,
+ "profile": "forensic",
+ "quality_status": {
+  "QUALITY_DEPENDENCY_AUDIT": "PRE_EXISTING_FAILURE (separate known issue; not re-run here)",
+  "full_repository_ci": {
+   "claimed": false,
+   "note": "only the focused checks above were run"
+  },
+  "git_diff_check": {
+   "exit_code": 0,
+   "note": "git diff --check is also run from the repository root in the frozen quality evidence",
+   "passed": true,
+   "stdout_tail": ""
+  },
+  "py_compile": {
+   "exit_code": 0,
+   "passed": true
+  },
+  "pytest": {
+   "exit_code": 0,
+   "passed": true,
+   "scope": "tests/test_stationarity_metric_domain_audit.py",
+   "stderr_tail": "",
+   "stdout_tail": "......................                                                   [100%]\n22 passed in 23.86s\n"
+  },
+  "quick_profile_in_quality": true,
+  "ruff": {
+   "args": [
+    "production/stationarity_metric_domain_audit.py",
+    "tests/test_stationarity_metric_domain_audit.py"
+   ],
+   "exit_code": 0,
+   "passed": true,
+   "stdout_tail": "All checks passed!\n"
+  },
+  "scope": {
+   "module": "production/stationarity_metric_domain_audit.py",
+   "test": "tests/test_stationarity_metric_domain_audit.py"
+  }
+ },
+ "runtime_versions": {
+  "jax": "0.10.2",
+  "jaxlib": "0.10.2",
+  "numpy": "2.4.6",
+  "python": "3.11.2",
+  "scipy": "1.17.1"
+ },
+ "shadow_metric_summary": {
+  "authority_060": {
+   "FULL_VOLUME_fraction": {
+    "max": 0.9956350766123753,
+    "mean": 0.9874173349798114,
+    "median": 0.9873878306780866,
+    "min": 0.9792310829783583,
+    "n": 10,
+    "std": 0.005303592393084479
+   },
+   "PARTIAL_VOLUME_fraction": {
+    "max": 0.02076891702164189,
+    "mean": 0.012582665020188597,
+    "median": 0.012612169321913464,
+    "min": 0.004364923387624816,
+    "n": 10,
+    "std": 0.005303592393084499
+   },
+   "R_V": {
+    "max": 0.00031965883553300005,
+    "mean": 0.0002895921028604863,
+    "median": 0.0002876473344115139,
+    "min": 0.00026554502988027583,
+    "n": 10,
+    "std": 1.7120697909069334e-05
+   },
+   "R_V_last": 0.00026554502988027583,
+   "R_prod": {
+    "max": 0.00031989163732553473,
+    "mean": 0.00029018652851944355,
+    "median": 0.00028825344587102026,
+    "min": 0.0002664690106260312,
+    "n": 10,
+    "std": 1.6897797148041635e-05
+   },
+   "R_prod_last": 0.0002664690106260312,
+   "ZERO_VOLUME_fraction": {
+    "max": 0.0,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "n": 10,
+    "std": 0.0
+   },
+   "steps": [
+    41000,
+    42000,
+    43000,
+    44000,
+    45000,
+    46000,
+    47000,
+    48000,
+    49000,
+    50000
+   ]
+  },
+  "ch_only_equilibrium_060": {
+   "FULL_VOLUME_fraction": {
+    "max": 0.9876676286889916,
+    "mean": 0.9865995913809733,
+    "median": 0.9866023794431766,
+    "min": 0.98552318703067,
+    "n": 10,
+    "std": 0.0006845034958330972
+   },
+   "PARTIAL_VOLUME_fraction": {
+    "max": 0.014476812969330038,
+    "mean": 0.013400408619026652,
+    "median": 0.01339762055682335,
+    "min": 0.012332371311008493,
+    "n": 10,
+    "std": 0.0006845034958330644
+   },
+   "R_V": {
+    "max": 9.234598146124042e-05,
+    "mean": 8.528485400025095e-05,
+    "median": 8.516784331353311e-05,
+    "min": 7.857486591924573e-05,
+    "n": 10,
+    "std": 4.394675802956027e-06
+   },
+   "R_V_last": 7.857486591924573e-05,
+   "R_prod": {
+    "max": 9.256960370552085e-05,
+    "mean": 8.547647613208465e-05,
+    "median": 8.53586724068661e-05,
+    "min": 7.873686796173887e-05,
+    "n": 10,
+    "std": 4.4143403695255226e-06
+   },
+   "R_prod_last": 7.873686796173887e-05,
+   "ZERO_VOLUME_fraction": {
+    "max": 0.0,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "n": 10,
+    "std": 0.0
+   },
+   "steps": [
+    171000,
+    172000,
+    173000,
+    174000,
+    175000,
+    176000,
+    177000,
+    178000,
+    179000,
+    180000
+   ]
+  },
+  "control_090": {
+   "FULL_VOLUME_fraction": {
+    "max": 0.9766258589281053,
+    "mean": 0.975294516839568,
+    "median": 0.9752400381370566,
+    "min": 0.974123905828159,
+    "n": 10,
+    "std": 0.000801476643134312
+   },
+   "PARTIAL_VOLUME_fraction": {
+    "max": 0.025876094171840995,
+    "mean": 0.024705483160432126,
+    "median": 0.024759961862943436,
+    "min": 0.023374141071894585,
+    "n": 10,
+    "std": 0.0008014766431343506
+   },
+   "R_V": {
+    "max": 0.000802649742997572,
+    "mean": 0.0007260448107573904,
+    "median": 0.000722407335034534,
+    "min": 0.000660457319081108,
+    "n": 10,
+    "std": 4.525203611266933e-05
+   },
+   "R_V_last": 0.000660457319081108,
+   "R_prod": {
+    "max": 0.0008057950091722543,
+    "mean": 0.000729046851453517,
+    "median": 0.0007254068634962666,
+    "min": 0.0006633242211573162,
+    "n": 10,
+    "std": 4.53402214448088e-05
+   },
+   "R_prod_last": 0.0006633242211573162,
+   "ZERO_VOLUME_fraction": {
+    "max": 0.0,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "n": 10,
+    "std": 0.0
+   },
+   "steps": [
+    18200,
+    19200,
+    20200,
+    21200,
+    22200,
+    23200,
+    24200,
+    25200,
+    26200,
+    27200
+   ]
+  },
+  "control_150": {
+   "FULL_VOLUME_fraction": {
+    "max": 0.9953313378455027,
+    "mean": 0.9953272127239149,
+    "median": 0.9953275850202898,
+    "min": 0.9953219012887337,
+    "n": 10,
+    "std": 3.012031812947382e-06
+   },
+   "PARTIAL_VOLUME_fraction": {
+    "max": 0.0046780987112662355,
+    "mean": 0.0046727872760851325,
+    "median": 0.004672414979710021,
+    "min": 0.004668662154497369,
+    "n": 10,
+    "std": 3.0120318129160017e-06
+   },
+   "R_V": {
+    "max": 0.0004369595042552426,
+    "mean": 0.00041550509987333447,
+    "median": 0.0004152665039418405,
+    "min": 0.0003947664560310529,
+    "n": 10,
+    "std": 1.3464891747951603e-05
+   },
+   "R_V_last": 0.0003947664560310529,
+   "R_prod": {
+    "max": 0.0004373005931679766,
+    "mean": 0.0004158290796175357,
+    "median": 0.00041559026528621647,
+    "min": 0.0003950739868859103,
+    "n": 10,
+    "std": 1.3475599322516281e-05
+   },
+   "R_prod_last": 0.0003950739868859103,
+   "ZERO_VOLUME_fraction": {
+    "max": 0.0,
+    "mean": 0.0,
+    "median": 0.0,
+    "min": 0.0,
+    "n": 10,
+    "std": 0.0
+   },
+   "steps": [
+    91000,
+    92000,
+    93000,
+    94000,
+    95000,
+    96000,
+    97000,
+    98000,
+    99000,
+    100000
+   ]
+  }
+ },
+ "solver_contract_version": 11,
+ "source_hashes": {
+  "capillary_pressure_balance_audit": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+  "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+  "contact_line_kinetics": "fca52869eb8fc6c8c327661ecbc485e838b42939b92c297636bbd56a5b1be5c5",
+  "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+  "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+  "phase_coupling_relaxation_audit": "9942fbb810447f8c64d3fa9d52a9d063464615cbb8ac380562f62c54a2a66841",
+  "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
+  "stationarity_metric_domain_audit": "80cd5afb8781983e50c9b893ac22bd1b36e02a8c78497585dc6b4fbddd2aa09f"
+ },
+ "stage": "L1A-2m",
+ "status": "complete",
+ "unmeasured_sections": {
+  "M_4x_closure": "outside L1A-2m scope (frozen M = M_ref)",
+  "dt_half": "outside L1A-2m scope (frozen dt = 0.004)"
+ },
+ "w_contact_angle_not_closed": true,
+ "windows": {
+  "authority_060": {
+   "summary": {
+    "FULL_VOLUME_fraction": {
+     "max": 0.9956350766123753,
+     "mean": 0.9874173349798114,
+     "median": 0.9873878306780866,
+     "min": 0.9792310829783583,
+     "n": 10,
+     "std": 0.005303592393084479
+    },
+    "PARTIAL_VOLUME_fraction": {
+     "max": 0.02076891702164189,
+     "mean": 0.012582665020188597,
+     "median": 0.012612169321913464,
+     "min": 0.004364923387624816,
+     "n": 10,
+     "std": 0.005303592393084499
+    },
+    "R_V": {
+     "max": 0.00031965883553300005,
+     "mean": 0.0002895921028604863,
+     "median": 0.0002876473344115139,
+     "min": 0.00026554502988027583,
+     "n": 10,
+     "std": 1.7120697909069334e-05
+    },
+    "R_V_last": 0.00026554502988027583,
+    "R_prod": {
+     "max": 0.00031989163732553473,
+     "mean": 0.00029018652851944355,
+     "median": 0.00028825344587102026,
+     "min": 0.0002664690106260312,
+     "n": 10,
+     "std": 1.6897797148041635e-05
+    },
+    "R_prod_last": 0.0002664690106260312,
+    "ZERO_VOLUME_fraction": {
+     "max": 0.0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "n": 10,
+     "std": 0.0
+    },
+    "steps": [
+     41000,
+     42000,
+     43000,
+     44000,
+     45000,
+     46000,
+     47000,
+     48000,
+     49000,
+     50000
+    ]
+   },
+   "window": {
+    "cadence_steps": 1000,
+    "end_step": 50000,
+    "start_step": 40000
+   }
+  },
+  "ch_only_equilibrium_060": {
+   "summary": {
+    "FULL_VOLUME_fraction": {
+     "max": 0.9876676286889916,
+     "mean": 0.9865995913809733,
+     "median": 0.9866023794431766,
+     "min": 0.98552318703067,
+     "n": 10,
+     "std": 0.0006845034958330972
+    },
+    "PARTIAL_VOLUME_fraction": {
+     "max": 0.014476812969330038,
+     "mean": 0.013400408619026652,
+     "median": 0.01339762055682335,
+     "min": 0.012332371311008493,
+     "n": 10,
+     "std": 0.0006845034958330644
+    },
+    "R_V": {
+     "max": 9.234598146124042e-05,
+     "mean": 8.528485400025095e-05,
+     "median": 8.516784331353311e-05,
+     "min": 7.857486591924573e-05,
+     "n": 10,
+     "std": 4.394675802956027e-06
+    },
+    "R_V_last": 7.857486591924573e-05,
+    "R_prod": {
+     "max": 9.256960370552085e-05,
+     "mean": 8.547647613208465e-05,
+     "median": 8.53586724068661e-05,
+     "min": 7.873686796173887e-05,
+     "n": 10,
+     "std": 4.4143403695255226e-06
+    },
+    "R_prod_last": 7.873686796173887e-05,
+    "ZERO_VOLUME_fraction": {
+     "max": 0.0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "n": 10,
+     "std": 0.0
+    },
+    "steps": [
+     171000,
+     172000,
+     173000,
+     174000,
+     175000,
+     176000,
+     177000,
+     178000,
+     179000,
+     180000
+    ]
+   },
+   "window": {
+    "cadence_steps": 1000,
+    "end_step": 180000,
+    "start_step": 170000
+   }
+  },
+  "control_090": {
+   "summary": {
+    "FULL_VOLUME_fraction": {
+     "max": 0.9766258589281053,
+     "mean": 0.975294516839568,
+     "median": 0.9752400381370566,
+     "min": 0.974123905828159,
+     "n": 10,
+     "std": 0.000801476643134312
+    },
+    "PARTIAL_VOLUME_fraction": {
+     "max": 0.025876094171840995,
+     "mean": 0.024705483160432126,
+     "median": 0.024759961862943436,
+     "min": 0.023374141071894585,
+     "n": 10,
+     "std": 0.0008014766431343506
+    },
+    "R_V": {
+     "max": 0.000802649742997572,
+     "mean": 0.0007260448107573904,
+     "median": 0.000722407335034534,
+     "min": 0.000660457319081108,
+     "n": 10,
+     "std": 4.525203611266933e-05
+    },
+    "R_V_last": 0.000660457319081108,
+    "R_prod": {
+     "max": 0.0008057950091722543,
+     "mean": 0.000729046851453517,
+     "median": 0.0007254068634962666,
+     "min": 0.0006633242211573162,
+     "n": 10,
+     "std": 4.53402214448088e-05
+    },
+    "R_prod_last": 0.0006633242211573162,
+    "ZERO_VOLUME_fraction": {
+     "max": 0.0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "n": 10,
+     "std": 0.0
+    },
+    "steps": [
+     18200,
+     19200,
+     20200,
+     21200,
+     22200,
+     23200,
+     24200,
+     25200,
+     26200,
+     27200
+    ]
+   },
+   "window": {
+    "cadence_steps": 1000,
+    "end_step": 27200,
+    "start_step": 17200
+   }
+  },
+  "control_150": {
+   "summary": {
+    "FULL_VOLUME_fraction": {
+     "max": 0.9953313378455027,
+     "mean": 0.9953272127239149,
+     "median": 0.9953275850202898,
+     "min": 0.9953219012887337,
+     "n": 10,
+     "std": 3.012031812947382e-06
+    },
+    "PARTIAL_VOLUME_fraction": {
+     "max": 0.0046780987112662355,
+     "mean": 0.0046727872760851325,
+     "median": 0.004672414979710021,
+     "min": 0.004668662154497369,
+     "n": 10,
+     "std": 3.0120318129160017e-06
+    },
+    "R_V": {
+     "max": 0.0004369595042552426,
+     "mean": 0.00041550509987333447,
+     "median": 0.0004152665039418405,
+     "min": 0.0003947664560310529,
+     "n": 10,
+     "std": 1.3464891747951603e-05
+    },
+    "R_V_last": 0.0003947664560310529,
+    "R_prod": {
+     "max": 0.0004373005931679766,
+     "mean": 0.0004158290796175357,
+     "median": 0.00041559026528621647,
+     "min": 0.0003950739868859103,
+     "n": 10,
+     "std": 1.3475599322516281e-05
+    },
+    "R_prod_last": 0.0003950739868859103,
+    "ZERO_VOLUME_fraction": {
+     "max": 0.0,
+     "mean": 0.0,
+     "median": 0.0,
+     "min": 0.0,
+     "n": 10,
+     "std": 0.0
+    },
+    "steps": [
+     91000,
+     92000,
+     93000,
+     94000,
+     95000,
+     96000,
+     97000,
+     98000,
+     99000,
+     100000
+    ]
+   },
+   "window": {
+    "cadence_steps": 1000,
+    "end_step": 100000,
+    "start_step": 90000
+   }
+  }
+ }
+}
