@@ -221,3 +221,91 @@ def test_unavailable_force_observable_is_unmeasured_not_zero():
         assert observable["force_observables"][key] == "unmeasured_not_current_contract"
 
 
+# ---------------------------------------------------------------------------
+# section 52: refinement
+# ---------------------------------------------------------------------------
+
+
+def _rows(values_by_key, times):
+    return [{"t": t, **{key: values[index] for key, values in values_by_key.items()}} for index, t in enumerate(times)]
+
+
+def test_refinement_comparison_uses_common_physical_times():
+    fine = _rows({"beta": [1.0, 2.0, 3.0]}, [0.08, 0.16, 0.24])
+    coarse = _rows({"beta": [1.005, 2.005]}, [0.08, 0.16])
+    comparison = audit.compare_scalar_observables(fine, coarse, ("beta",), [0.08, 0.16, 0.24], [0.08, 0.16])
+    assert comparison["n_common"] == 2 and comparison["beta"]["at_target"]
+    bad_coarse = _rows({"beta": [1.5, 2.5]}, [0.1, 0.2])
+    with pytest.raises(audit.AuditValidationError):
+        audit.compare_scalar_observables(fine, bad_coarse, ("beta",), [0.08, 0.16, 0.24], [0.1, 0.2])
+
+
+def test_field_comparison_uses_explicit_grid_mapping():
+    fine = np.random.default_rng(2).random((64, 64))
+    coarse = np.random.default_rng(3).random((32, 32))
+    result = audit.compare_fields_on_common_grid(fine, coarse, (64, 64), (32, 32), (32, 32))
+    assert "integer average-pool" in result["mapping_rule"] and result["common_shape"] == [32, 32]
+    with pytest.raises(audit.AuditValidationError):
+        audit.compare_fields_on_common_grid(fine, coarse, (64, 64), (32, 32), (24, 24))
+
+
+def test_existing_three_percent_scalar_target_is_not_modified():
+    assert audit.KEY_OBSERVABLE_REFINEMENT_CHANGE == 0.03
+    assert (
+        audit.KEY_OBSERVABLE_REFINEMENT_CHANGE
+        == validation_module.PROVISIONAL_READINESS_TARGETS["key_observable_refinement_change"]
+    )
+
+
+def test_unmeasured_refinement_cannot_pass():
+    audit_core = {"spatial_refinement": {"scalars": {"beta": {"status": "UNMEASURED"}}}, "temporal_refinement": {}}
+    categories = audit.assemble_category_statuses(audit_core, "forensic")
+    assert categories["SPATIAL_REFINEMENT"]["status"] == "UNMEASURED"
+
+
+# ---------------------------------------------------------------------------
+# section 53: contact gap
+# ---------------------------------------------------------------------------
+
+
+def test_contact_gap_phi05_and_phi01_are_distinct():
+    from production.observables import bottom_gap
+
+    p, _solid = _tiny_case_context(N=32)
+    y_axis = (np.arange(32) + 0.5) * p.dy
+    sdf = np.repeat(y_axis[None, :], 32, axis=0)  # fluid above a wall at y=0
+    phi = np.zeros((32, 32))
+    phi = np.where(y_axis[None, :] >= 1.5 * p.dy, 0.3, phi)
+    phi = np.where(y_axis[None, :] >= 2.5 * p.dy, 0.9, phi)
+    gap05 = bottom_gap(phi, sdf, threshold=0.5)
+    gap01 = bottom_gap(phi, sdf, threshold=0.1)
+    assert gap05 != gap01 and gap01 < gap05
+    assert gap01 == pytest.approx(1.5 * p.dy) and gap05 == pytest.approx(2.5 * p.dy)
+
+
+def test_gap_is_reported_in_dx_and_eps_units():
+    p, _solid = _tiny_case_context(N=32)
+    y_axis = (np.arange(32) + 0.5) * p.dy
+    sdf = np.repeat(y_axis[None, :], 32, axis=0)
+    phi = np.where(y_axis[None, :] >= 1.5 * p.dy, 0.9, np.zeros((32, 32)))
+    rows = [{"t": 0.08, "gap05": float(np.min(sdf[phi >= 0.5])), "gap01": float(np.min(sdf[phi >= 0.1]))}]
+    metrics = audit.contact_gap_metrics(rows, float(p.dx), float(p.eps))
+    assert metrics["gap05_min_over_dx"] == pytest.approx(metrics["gap05_min"] / p.dx)
+    assert metrics["gap05_min_over_eps"] == pytest.approx(metrics["gap05_min"] / p.eps)
+    assert metrics["gap05_min_over_dx"] != metrics["gap05_min_over_eps"]
+
+
+def test_contact_gap_refinement_classification_is_fail_closed():
+    production = {"n_frames_with_liquid": 5, "n_frames_contact_established": 0, "n_frames_diffuse_only": 0}
+    assert audit.contact_gap_classification(production, None, None)["classification"] == "INCONCLUSIVE"
+    assert (
+        audit.contact_gap_classification(production, {"n_frames_with_liquid": 0}, None)["classification"]
+        == "INCONCLUSIVE"
+    )
+    contact = {"n_frames_with_liquid": 5, "n_frames_contact_established": 2, "n_frames_diffuse_only": 0}
+    film = {"n_frames_with_liquid": 5, "n_frames_contact_established": 0, "n_frames_diffuse_only": 0}
+    assert audit.contact_gap_classification(contact, contact, contact)["classification"] == "CONTACT_ESTABLISHED"
+    assert audit.contact_gap_classification(film, film, film)["classification"] == "FINITE_GAS_FILM_PERSISTS"
+    assert audit.contact_gap_classification(contact, film, contact)["classification"] == "FINITE_GAS_FILM_PERSISTS"
+
+
