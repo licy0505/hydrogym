@@ -228,7 +228,11 @@ def diagnostic_one_substep(
     periodic projection) with ``u_rhs``/``v_rhs`` recomputed from the closure capillary.
     This is a diagnostic recomputation, never the production step.
     """
-    cap = capillary_acceleration_diagnostic(phi, u, v, solid, p, closure)
+    cap = (
+        one_sided_cap_closure_v1(phi, solid, p)
+        if closure == "one_sided_cap_closure_v1"
+        else capillary_acceleration_diagnostic(phi, u, v, solid, p, closure)
+    )
     mu_expl = np.asarray(pf._explicit_chemical_potential(jnp.asarray(phi), solid, p), dtype=np.float64)
     adv_u = pf.div_upwind(jnp.asarray(u), jnp.asarray(v), jnp.asarray(u), p.dx, p.dy)
     adv_v = pf.div_upwind(jnp.asarray(u), jnp.asarray(v), jnp.asarray(v), p.dx, p.dy)
