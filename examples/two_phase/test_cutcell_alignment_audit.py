@@ -149,7 +149,27 @@ def test_cutcell_alignment_allow_incomplete_never_hides_a_measured_failure(tmp_p
 
 
 # --------------------------------------------------------------------------------------
-#  2. the formal float64 gate: measured exactly when the evidence exists
+#  2. impact mass drift is a nonnegative measurement; exact zero must pass, not look missing
+# --------------------------------------------------------------------------------------
+@pytest.mark.parametrize(
+    "mass_drift, measured, passed",
+    [
+        (0.0, True, True),
+        (alignment.GATES["formal_mass_drift"], True, True),
+        (alignment.GATES["formal_mass_drift"] + 1e-9, True, False),
+        (None, False, False),
+    ],
+)
+def test_cutcell_alignment_impact_mass_drift_gate_handles_zero_and_missing(mass_drift, measured, passed):
+    gate = _gate_map(alignment.evaluate_gates({"impact": {"mass_drift_max": mass_drift}}))["impact_cutcell_mass_drift"]
+
+    assert gate.value == mass_drift
+    assert gate.measured is measured
+    assert gate.passed is passed
+
+
+# --------------------------------------------------------------------------------------
+#  3. the formal float64 gate: measured exactly when the evidence exists
 # --------------------------------------------------------------------------------------
 def test_cutcell_alignment_formal_mass_gate_is_measured_on_complete_float64_matrix():
     sections = {
@@ -193,7 +213,7 @@ def test_cutcell_alignment_formal_mass_gate_is_fail_closed(rows, reason):
 
 
 # --------------------------------------------------------------------------------------
-#  3. the cut-cell advective CFL audit: quoted analytic value == measured value
+#  4. the cut-cell advective CFL audit: quoted analytic value == measured value
 # --------------------------------------------------------------------------------------
 def test_cutcell_cfl_diagnostic_matches_uniform_cell_closed_form(x64):
     """The audit's detail text and the measured empty-solid value must be the same number."""

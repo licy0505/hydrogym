@@ -940,6 +940,7 @@ def evaluate_gates(numbers: dict[str, Any]) -> list[Gate]:
     )
 
     impact = numbers.get("impact", {})
+    impact_mass_drift = impact.get("mass_drift_max")
     add(
         "cutcell_advective_cfl_ratio",
         impact.get("cfl_ratio_min") is not None,
@@ -959,10 +960,10 @@ def evaluate_gates(numbers: dict[str, Any]) -> list[Gate]:
     )
     add(
         "impact_cutcell_mass_drift",
-        impact.get("mass_drift_max") is not None,
-        (impact.get("mass_drift_max") or 1e9) <= GATES["formal_mass_drift"],
+        impact_mass_drift is not None,
+        impact_mass_drift is not None and impact_mass_drift <= GATES["formal_mass_drift"],
         GATES["formal_mass_drift"],
-        impact.get("mass_drift_max"),
+        impact_mass_drift,
         "conserved cut-cell mass drift over the impact regressions",
     )
 
