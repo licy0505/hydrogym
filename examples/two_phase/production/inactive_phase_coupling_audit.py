@@ -2446,6 +2446,12 @@ def main(argv: list[str] | None = None) -> int:
         profiles = {args.profile}
     quality["profiles_run"] = sorted(profiles)
     quality_path.write_text(json.dumps(quality, indent=1, sort_keys=True))
+    manifest_path = EVIDENCE_ROOT / "manifest.json"
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text())
+        manifest["profiles_run"] = sorted(profiles)
+        manifest["profile"] = "forensic" if "forensic" in profiles else args.profile
+        manifest_path.write_text(json.dumps(manifest, indent=1, sort_keys=True))
     print(
         f"[{STAGE}] profile={args.profile} status={report['status']}"
         + (
