@@ -1,0 +1,237 @@
+{
+ "blockers": {
+  "N-CAPILLARY-PRESSURE-BALANCE": "structural background",
+  "N-CH-MASS-PRECISION": "resolved_in_contract_v11",
+  "N-STATIONARITY-METRIC-DOMAIN": "suspected_problem",
+  "N-WALL-ALIGNMENT-TRANSPORT-DOMAIN": "resolved_in_contract_v9",
+  "W-CONTACT-ANGLE": "open"
+ },
+ "cases": {},
+ "contract_bumped": false,
+ "created_at_local": "2026-10-07T07:01:07.438579+00:00",
+ "diagnostic_only": true,
+ "elapsed_seconds": 16.73994609800002,
+ "git_sha": "c1065418a82eac770748379320fffba17d65c33a",
+ "out_dir": "artifacts/l1a2m",
+ "production_semantics_changed": false,
+ "profile": "quick",
+ "quality_status": {
+  "QUALITY_DEPENDENCY_AUDIT": "PRE_EXISTING_FAILURE (separate known issue; not re-run here)",
+  "full_repository_ci": {
+   "claimed": false,
+   "note": "only the focused checks above were run"
+  },
+  "git_diff_check": {
+   "exit_code": 0,
+   "note": "git diff --check is also run from the repository root in the frozen quality evidence",
+   "passed": true,
+   "stdout_tail": ""
+  },
+  "py_compile": {
+   "exit_code": 0,
+   "passed": true
+  },
+  "pytest": {
+   "exit_code": 0,
+   "passed": true,
+   "scope": "tests/test_stationarity_metric_domain_audit.py",
+   "stderr_tail": "",
+   "stdout_tail": "......................                                                   [100%]\n22 passed in 22.48s\n"
+  },
+  "quick_profile_in_quality": false,
+  "ruff": {
+   "args": [
+    "production/stationarity_metric_domain_audit.py",
+    "tests/test_stationarity_metric_domain_audit.py"
+   ],
+   "exit_code": 0,
+   "passed": true,
+   "stdout_tail": "All checks passed!\n"
+  },
+  "scope": {
+   "module": "production/stationarity_metric_domain_audit.py",
+   "test": "tests/test_stationarity_metric_domain_audit.py"
+  }
+ },
+ "quick_checks": {
+  "grid": {
+   "N": 48,
+   "support_partition": {
+    "counts": {
+     "FULL_VOLUME": 2208,
+     "PARTIAL_VOLUME": 0,
+     "ZERO_VOLUME": 96,
+     "total": 2304
+    },
+    "diagnostics": {
+     "aperture_zero_is_machine_zero": true,
+     "max_zero_volume": 0.0,
+     "min_positive_volume": 0.015625,
+     "n_zero_volume_cells_with_open_phase_face": 0,
+     "sum_volume_over_area": 2208.0
+    },
+    "mutually_exclusive_and_complete": true,
+    "tolerance_policy": {
+     "justification": "geometry emits exact 0.0 for fully solid cells and exact dx*dy for full cells (verified by the exact-equality counts); no tolerance was required",
+     "n_full_within_roundoff_but_not_exact": 0,
+     "n_zero_within_roundoff_but_not_exact": 0,
+     "rule": "exact equality against 0 and dx*dy; tolerance only if geometry arithmetic requires it",
+     "tolerance_used": false,
+     "tolerance_value": 0.0
+    },
+    "volume_weight_fractions": {
+     "FULL_VOLUME": 1.0,
+     "PARTIAL_VOLUME": 0.0,
+     "ZERO_VOLUME": 0.0
+    }
+   }
+  },
+  "inactive_perturbation_confined_to_zero_volume": true,
+  "ledger_sums_match_E_all": true,
+  "operator_dependency_audit_available": true,
+  "perturbation_confinement_records": {
+   "INACTIVE_FREEZE": {
+    "changed_cell_count": 0,
+    "changed_value_max": 0.0,
+    "changed_value_min": 0.0,
+    "confined_to_zero_volume": true,
+    "description": "phi[V==0] = the exact previous-step (step n-1) values of the authority trajectory",
+    "phi_hash": "e0c221ddaf2925a4e3a146c93b416ca9863a32ab057395f7cb1a2d83bff7353d",
+    "policy": "INACTIVE_FREEZE",
+    "state_hashes": {
+     "phi": "e0c221ddaf2925a4e3a146c93b416ca9863a32ab057395f7cb1a2d83bff7353d",
+     "t": "c219013e88d5422b48f8b7a13fe2f06e27645277afbce29a11badd627f8f0ef3",
+     "u": "a20cf8b218a1a29ab2a8db26bb8a85fb20f576f47a72225b2452ce1ce003c149",
+     "v": "21973f47bc5c505e926d9f3f174b3d516c3a1d095448742020e7b218cce4db11"
+    }
+   },
+   "ZERO_CLAMP": {
+    "changed_cell_count": 0,
+    "changed_value_max": 0.0,
+    "changed_value_min": 0.0,
+    "confined_to_zero_volume": true,
+    "description": "phi[V==0] = 0.0, the gas-phase reference of the double well (the seeded deep-solid value)",
+    "phi_hash": "e0c221ddaf2925a4e3a146c93b416ca9863a32ab057395f7cb1a2d83bff7353d",
+    "policy": "ZERO_CLAMP",
+    "state_hashes": {
+     "phi": "e0c221ddaf2925a4e3a146c93b416ca9863a32ab057395f7cb1a2d83bff7353d",
+     "t": "c219013e88d5422b48f8b7a13fe2f06e27645277afbce29a11badd627f8f0ef3",
+     "u": "a20cf8b218a1a29ab2a8db26bb8a85fb20f576f47a72225b2452ce1ce003c149",
+     "v": "21973f47bc5c505e926d9f3f174b3d516c3a1d095448742020e7b218cce4db11"
+    }
+   },
+   "ZERO_CLAMP_LIQUID": {
+    "changed_cell_count": 96,
+    "changed_value_max": 1.0,
+    "changed_value_min": 1.0,
+    "confined_to_zero_volume": true,
+    "description": "phi[V==0] = 1.0, the liquid-phase reference of the double well; excites the nu(phi) momentum and capillary-gradient stencils at wall-adjacent cells",
+    "phi_hash": "fd3c0fb670bd0dd745c67f6724a576f6ab3c9905cb4190cb51c603050f31723c",
+    "policy": "ZERO_CLAMP_LIQUID",
+    "state_hashes": {
+     "phi": "fd3c0fb670bd0dd745c67f6724a576f6ab3c9905cb4190cb51c603050f31723c",
+     "t": "c219013e88d5422b48f8b7a13fe2f06e27645277afbce29a11badd627f8f0ef3",
+     "u": "a20cf8b218a1a29ab2a8db26bb8a85fb20f576f47a72225b2452ce1ce003c149",
+     "v": "21973f47bc5c505e926d9f3f174b3d516c3a1d095448742020e7b218cce4db11"
+    }
+   },
+   "ZERO_CLAMP_MIDPOINT": {
+    "changed_cell_count": 96,
+    "changed_value_max": 0.5,
+    "changed_value_min": 0.5,
+    "confined_to_zero_volume": true,
+    "description": "phi[V==0] = 0.5, the double-well maximum; maximizes f'(phi) so mu is nonzero on inactive storage and the capillary stencil response is largest",
+    "phi_hash": "c150f2a46e8dc4f3b6a8f9b04055f3da1f51066dcce8ed6dc9baacfc087d7543",
+    "policy": "ZERO_CLAMP_MIDPOINT",
+    "state_hashes": {
+     "phi": "c150f2a46e8dc4f3b6a8f9b04055f3da1f51066dcce8ed6dc9baacfc087d7543",
+     "t": "c219013e88d5422b48f8b7a13fe2f06e27645277afbce29a11badd627f8f0ef3",
+     "u": "a20cf8b218a1a29ab2a8db26bb8a85fb20f576f47a72225b2452ce1ce003c149",
+     "v": "21973f47bc5c505e926d9f3f174b3d516c3a1d095448742020e7b218cce4db11"
+    }
+   }
+  },
+  "production_phase_rate_reconstruction_exact": true,
+  "sample_rows": [
+   {
+    "FULL_VOLUME_f": 1.0,
+    "PARTIAL_VOLUME_f": 0.0,
+    "R_V": 0.060055697942288946,
+    "R_prod": 0.060055697942288946,
+    "ZERO_VOLUME_f": 0.0,
+    "step": 10
+   },
+   {
+    "FULL_VOLUME_f": 0.9999999999999998,
+    "PARTIAL_VOLUME_f": 0.0,
+    "R_V": 0.04473608852913041,
+    "R_prod": 0.04473608852913041,
+    "ZERO_VOLUME_f": 0.0,
+    "step": 20
+   },
+   {
+    "FULL_VOLUME_f": 1.0,
+    "PARTIAL_VOLUME_f": 0.0,
+    "R_V": 0.036624855220195346,
+    "R_prod": 0.036624855220195346,
+    "ZERO_VOLUME_f": 0.0,
+    "step": 30
+   }
+  ],
+  "shadow_report_schema": {
+   "R_V_median": 0.04473608852913041,
+   "R_prod_median": 0.04473608852913041,
+   "R_prod_to_R_V_median_ratio": 1.0,
+   "partial_volume_energy_fraction_max": 0.0,
+   "physical_domain_interpretation": {
+    "inactive_state_couples_to_physical_state": null,
+    "physical_rate_control_like": null,
+    "zero_volume_cells_contribute_to_R_prod": false
+   },
+   "production_verdict": {
+    "gate": {
+     "note": "quick smoke only"
+    }
+   },
+   "replaces_production_gate": false,
+   "report_only": true,
+   "threshold_note": "no threshold is applied to R_V in this stage; the 0.001 production tolerance is not transferable to the volume-weighted metric (section 17)",
+   "zero_volume_energy_fraction_max": 0.0
+  },
+  "shadow_volume_metric_computed": true,
+  "support_partition_complete_and_disjoint": true,
+  "zero_metric_value_is_zero_not_missing": true
+ },
+ "runtime_versions": {
+  "jax": "0.10.2",
+  "jaxlib": "0.10.2",
+  "numpy": "2.4.6",
+  "python": "3.11.2",
+  "scipy": "1.17.1"
+ },
+ "solver_contract_version": 11,
+ "source_hashes": {
+  "capillary_pressure_balance_audit": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+  "chns_nonstationarity_audit": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+  "contact_line_kinetics": "fca52869eb8fc6c8c327661ecbc485e838b42939b92c297636bbd56a5b1be5c5",
+  "nonneutral_wetting_audit": "c1f7570fa06f5ce113cbd7b52fe5ba50afd82f0addf2d0ff695ac9cf1e5139b7",
+  "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+  "phase_coupling_relaxation_audit": "9942fbb810447f8c64d3fa9d52a9d063464615cbb8ac380562f62c54a2a66841",
+  "phasefield": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
+  "stationarity_metric_domain_audit": "c6def0b63912df9a930fd0062067c71a4b42bdaba7735b08cf6820e3575854f1"
+ },
+ "stage": "L1A-2m",
+ "status": "complete_quick_smoke",
+ "unmeasured_sections": {
+  "M_4x_closure": "outside L1A-2m scope (frozen M = M_ref)",
+  "angle_spread_audit": "requires the authority late window",
+  "authority_060_rehydration": "forensic profile only; quick does not reproduce 50k physics",
+  "ch_only_equilibrium_060_rehydration": "forensic profile only",
+  "control_090_rehydration": "forensic profile only",
+  "control_150_rehydration": "forensic profile only",
+  "cross_metric_coupling": "requires the authority late window",
+  "dt_half": "outside L1A-2m scope (frozen dt = 0.004)",
+  "final_verdict": "requires the forensic measurements",
+  "matched_control_calibration": "requires the four rehydrated states"
+ }
+}
