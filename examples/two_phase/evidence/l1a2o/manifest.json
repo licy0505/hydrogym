@@ -1,0 +1,80 @@
+{
+ "canary_npz_available": [
+  "artifacts/l1a2o/canaries/complex_heldout_canary__random_pillars_We=100.0_cos_theta=-0.5_n_pillars=7_width_range=(0.2, 0.4)_final_fields.npz",
+  "artifacts/l1a2o/canaries/complex_quick__random_pillars_R=0.65_Re=120.0_We=120.0_cos_theta=0.0_dt=0.002_eps_factor=2.0_height_range=(0.3, 0.55)_impact_gap_eps=0.75_n_pillars=5_u_impact=1.0_velocity_mode=uniform_width_range=(0.4, 0.55).npz",
+  "artifacts/l1a2o/canaries/complex_quick__random_pillars_R=0.65_Re=120.0_We=120.0_cos_theta=0.0_dt=0.002_eps_factor=2.0_height_range=(0.3, 0.55)_impact_gap_eps=0.75_n_pillars=5_u_impact=1.0_velocity_mode=uniform_width_range=(0.4, 0.55)_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=100.0_cos_theta=-0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=100.0_cos_theta=0.0_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=200.0_cos_theta=-0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=200.0_cos_theta=0.0_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary__flat_We=200.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary_cadence_half__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary_spatial_N144__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary_spatial_N144__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary_temporal_dt_half__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_impact_canary_temporal_dt_half__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_quick__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_quick__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_quick_cadence_half__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_quick_cadence_half__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_quick_spatial_N32__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_quick_spatial_N32__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_quick_temporal_dt_half__flat_We=100.0_cos_theta=0.5.npz",
+  "artifacts/l1a2o/canaries/flat_quick_temporal_dt_half__flat_We=100.0_cos_theta=0.5_final_fields.npz",
+  "artifacts/l1a2o/canaries/flat_we200_ct0_temporal_dt_half__flat_We=200.0_cos_theta=0.0.npz",
+  "artifacts/l1a2o/canaries/flat_we200_ct0_temporal_dt_half__flat_We=200.0_cos_theta=0.0_final_fields.npz",
+  "artifacts/l1a2o/canaries/pillar_quick__pillars_R=0.65_Re=120.0_We=120.0_cos_theta=-0.25_dt=0.002_eps_factor=2.0_height=0.45_impact_gap_eps=0.75_n_pillars=4_u_impact=1.0_velocity_mode=uniform_width=0.45.npz",
+  "artifacts/l1a2o/canaries/pillar_quick__pillars_R=0.65_Re=120.0_We=120.0_cos_theta=-0.25_dt=0.002_eps_factor=2.0_height=0.45_impact_gap_eps=0.75_n_pillars=4_u_impact=1.0_velocity_mode=uniform_width=0.45_final_fields.npz",
+  "artifacts/l1a2o/canaries/pillar_training_canary__pillars_We=100.0_cos_theta=-0.5_height=0.4_n_pillars=4_width=0.3.npz",
+  "artifacts/l1a2o/canaries/pillar_training_canary__pillars_We=100.0_cos_theta=-0.5_height=0.4_n_pillars=4_width=0.3_final_fields.npz",
+  "artifacts/l1a2o/canaries/pillar_training_canary_spatial_N144__pillars_We=100.0_cos_theta=-0.5_height=0.4_n_pillars=4_width=0.3.npz",
+  "artifacts/l1a2o/canaries/pillar_training_canary_spatial_N144__pillars_We=100.0_cos_theta=-0.5_height=0.4_n_pillars=4_width=0.3_final_fields.npz"
+ ],
+ "files": {
+  "blocker_relevance_matrix.json": {
+   "sha256": "ea6a5a5a00829448ea24f3bed380c67ffe73d8cf273f5d6d537f50c6380f3db4"
+  },
+  "canary_matrix.json": {
+   "sha256": "53daf68db425dc55a0d4b7e40164fae1a9e979a6b4e65dce814039775fb30a2f"
+  },
+  "contact_gap_exit_audit.json": {
+   "sha256": "c35a349b6f1990690503eb61836faf1e1cff68639517af4fc920298755858a9a"
+  },
+  "field_uncertainty_matrix.json": {
+   "sha256": "d2e7f4872e6d6374205211f145fc8ebb0bdb4349dcf3a7171f462be088afb6e5"
+  },
+  "l1a_data_readiness_exit_report.json": {
+   "sha256": "1c913299670fa3fc0ca836b5956b270bee6fa8d9997b4ac140c2e177758d24cb"
+  },
+  "l1a_data_readiness_exit_report.md": {
+   "sha256": "cfa7b0b9113fc62aa32a7c656467ba380c3d9aa631b149afc40a9fc8573b53bb"
+  },
+  "l1a_data_readiness_quick_report.json": {
+   "sha256": "2be12ce91ddf3d6a63fee4f8aaa26e7c58b452f049a58ee413caf51260ca02d6"
+  },
+  "l1a_data_readiness_quick_report.md": {
+   "sha256": "8808d776848d94c96f3b2405987ed9cf900341a4f73c0c2f84280540460d8a43"
+  },
+  "l1b_contract_seed.json": {
+   "sha256": "a74bd6e5e994360303a2a2a2d8c2efb470232dcbeae87ab0e9720c66e2434a08"
+  },
+  "ml_task_contract.json": {
+   "sha256": "d5377d38f9e44bfdfdcbf5cf8cf50f8f951a2711671b03e2141371e158bbff38"
+  },
+  "observable_uncertainty_matrix.json": {
+   "sha256": "b9a4873b358f241a1fc2ff7bc08233ccc8a3919858453e54bc6003b8ec1c0489"
+  },
+  "sample_representation_fidelity.json": {
+   "sha256": "22a9483a15709661cb59e55811f35309f29506a615e2f1dd968b02666e6c2b04"
+  }
+ },
+ "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
+ "profile": "forensic",
+ "profiles_run": [
+  "forensic",
+  "quick"
+ ],
+ "section_version": 2,
+ "stage": "L1A-2o"
+}

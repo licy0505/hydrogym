@@ -1,0 +1,83 @@
+{
+ "_frame_signal_note": {
+  "phi": null,
+  "u": null,
+  "v": null
+ },
+ "beta": {
+  "late60_reference": null,
+  "space_at_target": false,
+  "space_refinement_max_relative_change": 0.12499999999999988,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 0.0
+ },
+ "contact_line_left": {
+  "late60_reference": {
+   "note": "static 60 deg window; reported for scale only",
+   "phi_window_residual_l2": null
+  },
+  "space_at_target": false,
+  "space_refinement_max_relative_change": 0.041666666666666664,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 0.0
+ },
+ "contact_line_right": {
+  "late60_reference": {
+   "note": "static 60 deg window; reported for scale only",
+   "phi_window_residual_l2": null
+  },
+  "space_at_target": true,
+  "space_refinement_max_relative_change": 0.0,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 0.0
+ },
+ "drop_vertical_extent": {
+  "late60_reference": null,
+  "space_at_target": true,
+  "space_refinement_max_relative_change": 0.0,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 0.0
+ },
+ "formal_mass": {
+  "late60_reference": null,
+  "space_at_target": false,
+  "space_refinement_max_relative_change": 0.1417811638341756,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 1.357571669118939e-16
+ },
+ "max_speed": {
+  "late60_reference": null,
+  "space_at_target": false,
+  "space_refinement_max_relative_change": 0.044121576889297104,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": false,
+  "time_of_max_space_discrepancy": 0.08,
+  "time_refinement_max_relative_change": 0.9118404100218583
+ },
+ "spread_width": {
+  "late60_reference": null,
+  "space_at_target": false,
+  "space_refinement_max_relative_change": 0.125,
+  "status": "MEASURED",
+  "target": 0.03,
+  "time_at_target": true,
+  "time_of_max_space_discrepancy": 0.04,
+  "time_refinement_max_relative_change": 0.0
+ }
+}

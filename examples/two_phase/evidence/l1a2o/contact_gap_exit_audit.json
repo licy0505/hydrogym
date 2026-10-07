@@ -1,0 +1,94 @@
+{
+ "classification": {
+  "classification": "DIFFUSE_CONTACT_ONLY",
+  "fail_closed": false,
+  "per_resolution": {
+   "production": "DIFFUSE_CONTACT_ONLY",
+   "spatial_refined": "DIFFUSE_CONTACT_ONLY",
+   "temporal_refined": "DIFFUSE_CONTACT_ONLY"
+  }
+ },
+ "production": {
+  "flat_quick__flat_We=100.0_cos_theta=0.5": {
+   "classification_series": [
+    "DIFFUSE_CONTACT_ONLY",
+    "DIFFUSE_CONTACT_ONLY"
+   ],
+   "definition": "min fluid-side SDF beneath phi>=threshold cells (production/observables.bottom_gap); contact event criterion bottom_gap <= 1.5*dx (production/observables.contact_signal)",
+   "gap01_min": 0.078125,
+   "gap01_min_over_dx": 0.8333333333333334,
+   "gap01_min_over_eps": 0.5555555555555556,
+   "gap01_series": [
+    0.078125,
+    0.078125
+   ],
+   "gap05_min": 0.265625,
+   "gap05_min_over_dx": 2.8333333333333335,
+   "gap05_min_over_eps": 1.8888888888888888,
+   "gap05_series": [
+    0.265625,
+    0.265625
+   ],
+   "n_frames_contact_established": 0,
+   "n_frames_diffuse_only": 2,
+   "n_frames_total": 2,
+   "n_frames_with_liquid": 2,
+   "time_of_min_gap05": 0.04,
+   "wall_profile_note": "wall-side phi profile recorded in the per-frame rows of the host trajectory (solver grid)"
+  }
+ },
+ "spatial_refined": {
+  "classification_series": [
+   "DIFFUSE_CONTACT_ONLY",
+   "DIFFUSE_CONTACT_ONLY"
+  ],
+  "definition": "min fluid-side SDF beneath phi>=threshold cells (production/observables.bottom_gap); contact event criterion bottom_gap <= 1.5*dx (production/observables.contact_signal)",
+  "gap01_min": 0.03125,
+  "gap01_min_over_dx": 0.16666666666666666,
+  "gap01_min_over_eps": 0.1111111111111111,
+  "gap01_series": [
+   0.03125,
+   0.03125
+  ],
+  "gap05_min": 0.40625,
+  "gap05_min_over_dx": 2.1666666666666665,
+  "gap05_min_over_eps": 1.4444444444444444,
+  "gap05_series": [
+   0.40625,
+   0.40625
+  ],
+  "n_frames_contact_established": 0,
+  "n_frames_diffuse_only": 2,
+  "n_frames_total": 2,
+  "n_frames_with_liquid": 2,
+  "time_of_min_gap05": 0.04,
+  "wall_profile_note": "wall-side phi profile recorded in the per-frame rows of the host trajectory (solver grid)"
+ },
+ "temporal_refined": {
+  "classification_series": [
+   "DIFFUSE_CONTACT_ONLY",
+   "DIFFUSE_CONTACT_ONLY"
+  ],
+  "definition": "min fluid-side SDF beneath phi>=threshold cells (production/observables.bottom_gap); contact event criterion bottom_gap <= 1.5*dx (production/observables.contact_signal)",
+  "gap01_min": 0.078125,
+  "gap01_min_over_dx": 0.8333333333333334,
+  "gap01_min_over_eps": 0.5555555555555556,
+  "gap01_series": [
+   0.078125,
+   0.078125
+  ],
+  "gap05_min": 0.265625,
+  "gap05_min_over_dx": 2.8333333333333335,
+  "gap05_min_over_eps": 1.8888888888888888,
+  "gap05_series": [
+   0.265625,
+   0.265625
+  ],
+  "n_frames_contact_established": 0,
+  "n_frames_diffuse_only": 2,
+  "n_frames_total": 2,
+  "n_frames_with_liquid": 2,
+  "time_of_min_gap05": 0.04,
+  "wall_profile_note": "wall-side phi profile recorded in the per-frame rows of the host trajectory (solver grid)"
+ }
+}
