@@ -1929,7 +1929,8 @@ def run_forensic(out: Path) -> dict[str, Any]:
                     for run in group.values()
                     if isinstance(run, dict) and "admissibility" in run
                 ),
-                "shell_localization_consistent": _shell_localization_consistent(experiments_by_case[name]),
+                "shell_localization_consistent": _shell_localization_consistent(experiments_by_case[name])[0],
+                "shell_localization_interpretation": _shell_localization_consistent(experiments_by_case[name])[1],
             }
             for name in experiments_by_case
         },
@@ -1999,23 +2000,31 @@ def run_forensic(out: Path) -> dict[str, Any]:
     return report
 
 
-def _shell_localization_consistent(case_runs: dict[str, Any]) -> bool:
-    """True when the measured shell pattern is consistent with a local stencil read.
+def _shell_localization_consistent(case_runs: dict[str, Any]) -> tuple[bool, str]:
+    """Section 12 interpretation of the measured shell pattern.
 
-    'Consistent' means: the shell that touches the physical domain with a raw full-grid
-    stencil (distance 1) responds, and deeper shells show no direct response beyond what
-    the distance-1 shell explains (section 12 interpretation table).
+    The direct stencil read must be localized to the first shell: ``I0_1`` fires at some
+    ladder stage and no deeper shell fires EARLIER in the production order. Deeper shells
+    may still respond at later stages (chained routes: perturbed storage -> inactive-cell
+    capillary response -> inactive velocity -> global projection), which the section 12
+    table classifies as a wider/chained stencil dependency, not an unexpected global read.
     """
-    shells = case_runs["shells"]
-    s1 = shells.get(f"I0_1@{PRIMARY_AMPLITUDE:g}", {})
-    s2 = shells.get(f"I0_2@{PRIMARY_AMPLITUDE:g}", {})
-    deep = shells.get(f"I0_deep@{PRIMARY_AMPLITUDE:g}", {})
-    first1 = s1.get("first_changed_stage")
-    return (
-        bool(first1 is not None)
-        and (s2.get("first_changed_stage") is None or s2.get("first_changed_stage") == first1)
-        and (deep.get("first_changed_stage") is None or deep.get("first_changed_stage") == first1)
-    )
+    order = {name: index for index, name in enumerate(LADDER_STAGES)}
+
+    def stage_depth(key: str) -> int | None:
+        stage = case_runs["shells"].get(key, {}).get("first_changed_stage")
+        return None if stage is None else order[stage]
+
+    s1 = stage_depth(f"I0_1@{PRIMARY_AMPLITUDE:g}")
+    s2 = stage_depth(f"I0_2@{PRIMARY_AMPLITUDE:g}")
+    deep = stage_depth(f"I0_deep@{PRIMARY_AMPLITUDE:g}")
+    if s1 is None:
+        return False, "no direct response on the first shell"
+    if (s2 is not None and s2 < s1) or (deep is not None and deep < s1):
+        return False, "a deeper shell fired at an earlier ladder stage (unexpected global coupling)"
+    if s2 is None and deep is None:
+        return True, "only I0_1 matters: local stencil leakage"
+    return True, "I0_1 direct read; deeper shells respond only through chained downstream routes"
 
 
 def _mechanism_matrix(
