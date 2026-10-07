@@ -1,0 +1,209 @@
+{
+ "candidates": {
+  "boundary_consistent_ghost_v1": {
+   "baseline_semantic_shift": {
+    "cap_delta_on_P_unperturbed": {
+     "cap_x_l2": 0.0,
+     "cap_x_linf": 0.0,
+     "cap_y_l2": 0.5977925013430859,
+     "cap_y_linf": 0.07647528708324683
+    },
+    "closure": "boundary_consistent_ghost_v1",
+    "note": "a production promotion would be a semantic change requiring the contract-bump decision of section 52",
+    "one_substep_velocity_delta_on_P": {
+     "u_l2": 5.260552864878097e-05,
+     "u_linf": 8.051381410485074e-06,
+     "v_l2": 7.176599075025541e-05,
+     "v_linf": 6.3868513900304685e-06
+    }
+   },
+   "sensitivity_after": {
+    "cap_x": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "cap_y": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "closure": "boundary_consistent_ghost_v1",
+    "ghost_meta": {
+     "changed_inactive_cells": 640,
+     "closure": "boundary_consistent_ghost_v1",
+     "derivation": "linear extension of the production natural wall BC eps*dphi/dn = -g_w'(phi) from the nearest wall-measure physical cell; clipped to the phase range",
+     "uses_only_production_boundary_semantics": true,
+     "uses_raw_inactive_storage": false
+    },
+    "u_projected": {
+     "S_l2": 0.00019836994712924038,
+     "bitwise_invariant": false,
+     "l2_on_P": 2.2442997567792445e-07,
+     "linf_on_P": 4.366923814612812e-08
+    },
+    "v_projected": {
+     "S_l2": 0.00022593941466725827,
+     "bitwise_invariant": false,
+     "l2_on_P": 2.556212675976602e-07,
+     "linf_on_P": 4.3943167691665196e-08
+    }
+   },
+   "sensitivity_before": 10.666666666666044,
+   "suppression_first_operator": {
+    "cap_x": 0.0,
+    "cap_y": 0.0
+   }
+  },
+  "nearest_physical_extension_v1": {
+   "baseline_semantic_shift": {
+    "cap_delta_on_P_unperturbed": {
+     "cap_x_l2": 0.0,
+     "cap_x_linf": 0.0,
+     "cap_y_l2": 0.5930739204735628,
+     "cap_y_linf": 0.07689349065055984
+    },
+    "closure": "nearest_physical_extension_v1",
+    "note": "a production promotion would be a semantic change requiring the contract-bump decision of section 52",
+    "one_substep_velocity_delta_on_P": {
+     "u_l2": 5.192201199045187e-05,
+     "u_linf": 7.868042304114694e-06,
+     "v_l2": 7.139227061680914e-05,
+     "v_linf": 6.138574862428155e-06
+    }
+   },
+   "sensitivity_after": {
+    "cap_x": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "cap_y": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "closure": "nearest_physical_extension_v1",
+    "ghost_meta": {
+     "changed_inactive_cells": 640,
+     "closure": "nearest_physical_extension_v1",
+     "derivation": "nearest physical cell value (numerical control, not BC-derived)"
+    },
+    "u_projected": {
+     "S_l2": 0.00015862406101233055,
+     "bitwise_invariant": false,
+     "l2_on_P": 1.7946263872186814e-07,
+     "linf_on_P": 4.219018992629499e-08
+    },
+    "v_projected": {
+     "S_l2": 0.00020208493520039689,
+     "bitwise_invariant": false,
+     "l2_on_P": 2.2863300488935148e-07,
+     "linf_on_P": 4.229667502120326e-08
+    }
+   },
+   "sensitivity_before": 10.666666666666044,
+   "suppression_first_operator": {
+    "cap_x": 0.0,
+    "cap_y": 0.0
+   }
+  },
+  "one_sided_cap_closure_v1": {
+   "baseline_semantic_shift": {
+    "cap_delta_on_P_unperturbed": {
+     "cap_x_l2": 0.0,
+     "cap_x_linf": 0.0,
+     "cap_y_l2": 0.5553600496387141,
+     "cap_y_linf": 0.07711478453769818
+    },
+    "closure": "one_sided_cap_closure_v1",
+    "note": "a production promotion would be a semantic change requiring the contract-bump decision of section 52",
+    "one_substep_velocity_delta_on_P": {
+     "u_l2": 7.282711238909022e-05,
+     "u_linf": 9.781900059513106e-06,
+     "v_l2": 0.00010060730972684273,
+     "v_linf": 7.312264431920954e-06
+    }
+   },
+   "sensitivity_after": {
+    "cap_x": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "cap_y": {
+     "S_l2": 0.0,
+     "bitwise_invariant": true,
+     "l2_on_P": 0.0,
+     "linf_on_P": 0.0
+    },
+    "closure": "one_sided_cap_closure_v1",
+    "ghost_meta": {
+     "closure": "one_sided_cap_closure_v1",
+     "operator_side": true,
+     "wall_adjacent_physical_cells": 128
+    },
+    "u_projected": {
+     "S_l2": 0.001663473622750394,
+     "bitwise_invariant": false,
+     "l2_on_P": 1.8820055663548103e-06,
+     "linf_on_P": 2.457686157208797e-07
+    },
+    "v_projected": {
+     "S_l2": 0.0020866436401366342,
+     "bitwise_invariant": false,
+     "l2_on_P": 2.3607677885766337e-06,
+     "linf_on_P": 1.2660536298549356e-07
+    }
+   },
+   "sensitivity_before": 10.666666666666044,
+   "suppression_first_operator": {
+    "cap_x": 0.0,
+    "cap_y": 0.0
+   }
+  }
+ },
+ "control_state_baseline_shift": {
+  "control_090": {
+   "cap_delta_on_P_unperturbed": {
+    "cap_x_l2": 0.0,
+    "cap_x_linf": 0.0,
+    "cap_y_l2": 0.7882362908288856,
+    "cap_y_linf": 0.12440320816981744
+   },
+   "closure": "boundary_consistent_ghost_v1",
+   "note": "a production promotion would be a semantic change requiring the contract-bump decision of section 52",
+   "one_substep_velocity_delta_on_P": {
+    "u_l2": 0.00010417660704755488,
+    "u_linf": 1.631085042911712e-05,
+    "v_l2": 0.0001340623305739763,
+    "v_linf": 1.3161597665272096e-05
+   }
+  },
+  "control_150": {
+   "cap_delta_on_P_unperturbed": {
+    "cap_x_l2": 0.0,
+    "cap_x_linf": 0.0,
+    "cap_y_l2": 0.6999969226237118,
+    "cap_y_linf": 0.17591140779546288
+   },
+   "closure": "boundary_consistent_ghost_v1",
+   "note": "a production promotion would be a semantic change requiring the contract-bump decision of section 52",
+   "one_substep_velocity_delta_on_P": {
+    "u_l2": 0.00010625088801649392,
+    "u_linf": 1.9961627279687022e-05,
+    "v_l2": 0.00013598235535595827,
+    "v_linf": 2.6298795281231438e-05
+   }
+  }
+ },
+ "suppression": {
+  "note": "suppression measured as bitwise invariance of the first affected operator under every closure",
+  "suppressed": true
+ }
+}
