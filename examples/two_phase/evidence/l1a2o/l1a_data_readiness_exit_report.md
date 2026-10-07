@@ -6,7 +6,7 @@
 - **PHYSICAL_PUBLICATION_DATA_READY:** `FAIL`
 - **L1A_STATUS:** `BLOCKED`
 - **Solver contract:** `11` (unchanged)
-- **git SHA:** `d4adee6de874`
+- **git SHA:** `710aa0ed9a69`
 
 ## Category statuses
 

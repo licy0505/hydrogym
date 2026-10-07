@@ -13,7 +13,7 @@
   "space_time_comparison_alignment": true,
   "verdict_schema": true
  },
- "elapsed_seconds": 88.9520096110009,
+ "elapsed_seconds": 91.35757522699896,
  "forensic_profile": {
   "ran": true,
   "status": "complete",
@@ -22,7 +22,7 @@
  "git_diff_check": {
   "passed": true
  },
- "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+ "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
  "notes": {
   "dependency_audit": "PRE_EXISTING_FAILURE (uv audit --locked, unchanged; kept separate per stage spec)"
  },

@@ -2448,8 +2448,8 @@ def run_forensic() -> dict[str, Any]:
             for record in canaries.values()
             if record.get("frame_signal") and isinstance(record["frame_signal"].get(name_field), dict)
         ]
-        mins = [entry["min"] for entry in signal_entries]
-        medians = [entry["median"] for entry in signal_entries]
+        mins = [value for entry in signal_entries if np.isfinite(value := entry["min"])]
+        medians = [value for entry in signal_entries if np.isfinite(value := entry["median"])]
         worst_class = "UNMEASURED"
         if ratios:
             ratio_max = max(ratios)

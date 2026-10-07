@@ -395,7 +395,7 @@
       "nsteps": 40,
       "save_every": 20
      },
-     "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+     "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
      "nsteps": 40,
      "observables_source_hash": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
      "sample_dtype_policy": "downsample_mean_then_float32_v1",
@@ -471,7 +471,7 @@
      "startup_relative_total_ratio_min": 1.0018167687031694,
      "startup_total_mass_ratio": 1.0018167687031694
     },
-    "elapsed_seconds": 12.156589708998581,
+    "elapsed_seconds": 12.093198051999934,
     "feature_cells_min": 2.1333333333333333,
     "final_fields_path": "artifacts/l1a2o/canaries/complex_quick__random_pillars_R=0.65_Re=120.0_We=120.0_cos_theta=0.0_dt=0.002_eps_factor=2.0_height_range=(0.3, 0.55)_impact_gap_eps=0.75_n_pillars=5_u_impact=1.0_velocity_mode=uniform_width_range=(0.4, 0.55)_final_fields.npz",
     "fingerprint": "82ec731b4da5638c8a2425d735145c65cd61aa7a4c37f9107557d5ab2570a885",
@@ -707,7 +707,7 @@
       "nsteps": 40,
       "save_every": 20
      },
-     "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+     "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
      "nsteps": 40,
      "observables_source_hash": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
      "sample_dtype_policy": "downsample_mean_then_float32_v1",
@@ -767,7 +767,7 @@
      "startup_relative_total_ratio_min": 1.0035397402647837,
      "startup_total_mass_ratio": 1.0035397402647837
     },
-    "elapsed_seconds": 11.808560499001032,
+    "elapsed_seconds": 12.345651036999698,
     "feature_cells_min": Infinity,
     "final_fields_path": "artifacts/l1a2o/canaries/flat_quick__flat_We=100.0_cos_theta=0.5_final_fields.npz",
     "fingerprint": "5d46ccc633313a886053f387ab5cb3669f4bfe5a2274b66e76c793f34c1a38ef",
@@ -1013,7 +1013,7 @@
       "nsteps": 40,
       "save_every": 20
      },
-     "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+     "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
      "nsteps": 40,
      "observables_source_hash": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
      "sample_dtype_policy": "downsample_mean_then_float32_v1",
@@ -1083,7 +1083,7 @@
      "startup_relative_total_ratio_min": 1.0031928682340763,
      "startup_total_mass_ratio": 1.0031928682340763
     },
-    "elapsed_seconds": 11.849332084999332,
+    "elapsed_seconds": 12.258352652001122,
     "feature_cells_min": 2.4,
     "final_fields_path": "artifacts/l1a2o/canaries/pillar_quick__pillars_R=0.65_Re=120.0_We=120.0_cos_theta=-0.25_dt=0.002_eps_factor=2.0_height=0.45_impact_gap_eps=0.75_n_pillars=4_u_impact=1.0_velocity_mode=uniform_width=0.45_final_fields.npz",
     "fingerprint": "3048d68ab700825e42a137f970b4cde6f251e7d9a14347592ad9bcb567229be5",
@@ -1525,7 +1525,7 @@
    "nsteps": 40,
    "save_every": 20
   },
-  "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+  "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
   "late60": {
    "reason": "the frozen-authority replay is a forensic-only measurement (section 46); the schema carries the unmeasured state fail-closed",
    "status": "UNMEASURED_QUICK_PROFILE"
@@ -1627,7 +1627,7 @@
      32,
      3
     ],
-    "reader_dir": "/tmp/l1a2o_reader__zjmjnyj",
+    "reader_dir": "/tmp/l1a2o_reader_r233g4n_",
     "shapes_match_current_model_contract": true,
     "status": "MEASURED"
    }
@@ -1661,7 +1661,7 @@
    "generate_dataset.py": "15a656d7962152386a487bb728c54c30c5528e2e694328f5048d1d569291d09b",
    "phasefield.py": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
    "production/dataset_lineage.py": "cd256032aab6a5d0948c434b013a814f1d4f0bc6a3071f6748edc9097112dc7f",
-   "production/l1a_data_readiness_exit_audit.py": "fc24a570dd8cc9f151912a48d627ef2a41d72439fcd8e36ba6b51e1e7ce650f9",
+   "production/l1a_data_readiness_exit_audit.py": "b541b1cf06a6b6f2937f5a4437c67d20be31497f119ca3ce022e9f6e76c16a81",
    "production/observables.py": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
    "surrogate.py": "f69b1e74f3fee07e9182aa0fd668f5debc2feb86f1f455b620b22028b785c029"
   },
@@ -2338,7 +2338,7 @@
    "status": "UNMEASURED"
   }
  },
- "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+ "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
  "l1b_contract_seed": {
   "audited_parameter_envelope": {
    "R": [
@@ -2511,7 +2511,7 @@
    "threshold_status": "current_defaults_match_frozen_stage_expectations"
   },
   "geometry_downsampling_rule": "hard-mask mean then EDT reinitialisation (generate_dataset._coarsen_geometry)",
-  "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+  "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
   "model_input_channels": 4,
   "model_output_channels": 3,
   "nominal_schedule": {
@@ -2566,7 +2566,7 @@
    "generate_dataset.py": "15a656d7962152386a487bb728c54c30c5528e2e694328f5048d1d569291d09b",
    "phasefield.py": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
    "production/dataset_lineage.py": "cd256032aab6a5d0948c434b013a814f1d4f0bc6a3071f6748edc9097112dc7f",
-   "production/l1a_data_readiness_exit_audit.py": "fc24a570dd8cc9f151912a48d627ef2a41d72439fcd8e36ba6b51e1e7ce650f9",
+   "production/l1a_data_readiness_exit_audit.py": "b541b1cf06a6b6f2937f5a4437c67d20be31497f119ca3ce022e9f6e76c16a81",
    "production/observables.py": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
    "surrogate.py": "f69b1e74f3fee07e9182aa0fd668f5debc2feb86f1f455b620b22028b785c029"
   },
@@ -2617,7 +2617,7 @@
   "generate_dataset.py": "15a656d7962152386a487bb728c54c30c5528e2e694328f5048d1d569291d09b",
   "phasefield.py": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
   "production/dataset_lineage.py": "cd256032aab6a5d0948c434b013a814f1d4f0bc6a3071f6748edc9097112dc7f",
-  "production/l1a_data_readiness_exit_audit.py": "fc24a570dd8cc9f151912a48d627ef2a41d72439fcd8e36ba6b51e1e7ce650f9",
+  "production/l1a_data_readiness_exit_audit.py": "b541b1cf06a6b6f2937f5a4437c67d20be31497f119ca3ce022e9f6e76c16a81",
   "production/observables.py": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
   "surrogate.py": "f69b1e74f3fee07e9182aa0fd668f5debc2feb86f1f455b620b22028b785c029"
  },

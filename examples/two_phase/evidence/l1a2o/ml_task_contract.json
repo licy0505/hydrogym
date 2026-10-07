@@ -76,7 +76,7 @@
   "threshold_status": "current_defaults_match_frozen_stage_expectations"
  },
  "geometry_downsampling_rule": "hard-mask mean then EDT reinitialisation (generate_dataset._coarsen_geometry)",
- "git_sha": "d4adee6de874ac54da7c21948d0a55ef28fa94b0",
+ "git_sha": "710aa0ed9a693872ae062d47493cd8019b25192a",
  "model_input_channels": 4,
  "model_output_channels": 3,
  "nominal_schedule": {
@@ -131,7 +131,7 @@
   "generate_dataset.py": "15a656d7962152386a487bb728c54c30c5528e2e694328f5048d1d569291d09b",
   "phasefield.py": "4790c6235dd763dbaad5aa838953cda3e39fe95d3e37844b9c4433b2547b3f0e",
   "production/dataset_lineage.py": "cd256032aab6a5d0948c434b013a814f1d4f0bc6a3071f6748edc9097112dc7f",
-  "production/l1a_data_readiness_exit_audit.py": "fc24a570dd8cc9f151912a48d627ef2a41d72439fcd8e36ba6b51e1e7ce650f9",
+  "production/l1a_data_readiness_exit_audit.py": "b541b1cf06a6b6f2937f5a4437c67d20be31497f119ca3ce022e9f6e76c16a81",
   "production/observables.py": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
   "surrogate.py": "f69b1e74f3fee07e9182aa0fd668f5debc2feb86f1f455b620b22028b785c029"
  },
