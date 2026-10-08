@@ -1,0 +1,84 @@
+{
+  "binding": {
+    "frozen_protocol": {
+      "contact_gap_cells": 1.5,
+      "core_phi": 0.9,
+      "dense_until": 0.08,
+      "dt_levels": [
+        0.002,
+        0.001,
+        0.0005
+      ],
+      "interface_band": [
+        0.1,
+        0.9
+      ],
+      "max_diagnostic_horizon": 0.8,
+      "spontaneous_velocity_fraction": 0.1,
+      "thinned_until": 0.24
+    },
+    "git_sha": "21ec435d15f21260f4073b9d47d7c95a7bbab323",
+    "section_version": "l1a2r_v1",
+    "solver_contract_version": 12,
+    "source_hashes": {
+      "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "impact_impulse_projection_audit": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "l1a2q_temporal_convergence_report": "1abdccba0703f3a4ba7d56cfd7fdf070ca3464d66fe1516e0ee952e75a71d830",
+      "l1a2q_time_integrator_map": "39eff6dcf5b9e3836254b1048e4874d84ca935e02ac2a46bf13560ad12aa8dec",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "stage": "L1A-2r",
+    "timestep_policy_default": "impact_phase_cap_dx2_v1"
+  },
+  "files": {
+    "counterfactual_matrix.json": {
+      "sha256": "ed2ae2cbe43d2fc769994c22098a828f012d890ae5eee1cd0637de8c2504a99f"
+    },
+    "decision_status.json": {
+      "sha256": "1227c9f709c9429bd1758cb4f862d52d47f6b5f2ff16744e25a2ac3426cf14d0"
+    },
+    "impact_event_audit.json": {
+      "sha256": "58a2fe051ccde1ef22d33c6b0ae7bb1bf5c46b840c811d72b74e665c657b9141"
+    },
+    "impact_impulse_causal_report.json": {
+      "sha256": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5"
+    },
+    "impact_impulse_causal_report.md": {
+      "sha256": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71"
+    },
+    "manifest.json": {
+      "sha256": "9819d2c53a666553b2a481ee364839300992cea73a432b6779d82b9c685ee4f0"
+    },
+    "mechanism_matrix.json": {
+      "sha256": "a35efd9096a2f717f2d93926fea98cb2d6a2c67cea52b8ae3836744c8157e943"
+    },
+    "periodic_projection_identity.json": {
+      "sha256": "73b820338d70e95002f154189ec52d667d714187febd1ea5da37fa9c0b1bcef8"
+    },
+    "quality_status.json": {
+      "sha256": "66220b245b21be98b42dc3d5649aee3d0a2058546c6fa3b889e17fd9fc960b2c"
+    },
+    "source_operator_map.json": {
+      "sha256": "764522c6947796a44ea7bda316e99dcd18fbf0e1d0cae5b9b3d00ff5c0fdec8b"
+    },
+    "startup_substep_ledger.json": {
+      "sha256": "7f876a6da8b8091d3254821916a07916f1813a7d4927ded5c9325edd2fd007ef"
+    },
+    "temporal_control_matrix.json": {
+      "sha256": "d14d5b7ca18c19cfee46d09ed7573d3da6311d286a58f29191636b11380f7d4a"
+    },
+    "velocity_momentum_budget.json": {
+      "sha256": "1df4233462c96c4fa5bf8333a991b13eb49a87416fd3dc02ba67d88d998741d5"
+    }
+  },
+  "git_sha": "21ec435d15f21260f4073b9d47d7c95a7bbab323",
+  "section_version": "l1a2r_v1",
+  "stage": "L1A-2r",
+  "verdicts": {
+    "decision": "B",
+    "impact_event_verdict": "INCONCLUSIVE",
+    "root_cause_verdict": "BRINKMAN_PROJECTION_COUPLING"
+  }
+}

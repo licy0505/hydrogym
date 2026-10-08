@@ -1,0 +1,1034 @@
+{
+  "empty_solid_geometry_control": {
+    "authority_state_hashes_after": {
+      "phi": "a0358417e58cf3d53329bf50a4d8b9651f222154e7b487892c1118809ce31199",
+      "u": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+      "v": "72f90402d743956c026a792416dcd15e8c59670e96ba94e111cfcb1526448a71"
+    },
+    "authority_state_hashes_before": {
+      "phi": "a0358417e58cf3d53329bf50a4d8b9651f222154e7b487892c1118809ce31199",
+      "u": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+      "v": "72f90402d743956c026a792416dcd15e8c59670e96ba94e111cfcb1526448a71"
+    },
+    "authority_unchanged": true,
+    "branches": {
+      "A_PRODUCTION": {
+        "divergence_lininf": 9.498198778601363e-07,
+        "full_grid_mean_v": -0.5000000067755335,
+        "increments": {
+          "core": {
+            "l2": 3.864451007230936e-06
+          },
+          "gas_bounded": {
+            "l2": 2.6445757542989234e-06
+          },
+          "grid": {
+            "l2": 2.860369764293456e-06,
+            "linf_u": 6.086277062422596e-05,
+            "linf_v": 7.766485214233398e-05
+          },
+          "interface_band": {
+            "l2": 1.2618509779993702e-05
+          },
+          "liquid_bounded": {
+            "l2": 5.8816061031048605e-06
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 5.8816061031048605e-06
+          },
+          "physical": {
+            "l2": 2.860369764293456e-06
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": -4.278422200508444e-13,
+            "mean_v": -0.500000019392563,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 8.443385981246131e-15,
+            "mean_v": -0.5000000085322142,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": -2.1450664461630916e-15,
+            "mean_v": -0.5000000067755335,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 3.5413099064981783e-13,
+            "mean_v": -0.4999995989104112,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914878194980288,
+          "kinetic_energy_physical": 0.19799466448598843,
+          "liquid_bounded": {
+            "mean_u": -2.3756020228727926e-13,
+            "mean_v": -0.49999996771890526,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": -2.3756020228727926e-13,
+            "mean_v": -0.49999996771890526,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5000776648996769,
+          "max_speed_physical": 0.5000776648996769,
+          "momentum_gas_y": -1.6821530061660384e-05,
+          "momentum_liquid_y": -0.0007565951765419634,
+          "momentum_mixture_y_physical": -0.7919787075621108,
+          "physical": {
+            "mean_u": -2.1450664461630916e-15,
+            "mean_v": -0.5000000067755335,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "550e1282c1ed8ba5a627b892209c62b8e12fe8e3b8b9697bdeb19fc9988c5bb8",
+          "v": "37fedcf27cbb4b9434f44ffddc5cd8c3d3e12fccde5f5056650cbecfc366cbdb"
+        }
+      },
+      "B_NO_BRINKMAN": {
+        "divergence_lininf": 9.498198778601363e-07,
+        "full_grid_mean_v": -0.5000000067755335,
+        "increments": {
+          "core": {
+            "l2": 3.864451007230936e-06
+          },
+          "gas_bounded": {
+            "l2": 2.6445757542989234e-06
+          },
+          "grid": {
+            "l2": 2.860369764293456e-06,
+            "linf_u": 6.086277062422596e-05,
+            "linf_v": 7.766485214233398e-05
+          },
+          "interface_band": {
+            "l2": 1.2618509779993702e-05
+          },
+          "liquid_bounded": {
+            "l2": 5.8816061031048605e-06
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 5.8816061031048605e-06
+          },
+          "physical": {
+            "l2": 2.860369764293456e-06
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": -4.278422200508444e-13,
+            "mean_v": -0.500000019392563,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 8.443385981246131e-15,
+            "mean_v": -0.5000000085322142,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": -2.1450664461630916e-15,
+            "mean_v": -0.5000000067755335,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 3.5413099064981783e-13,
+            "mean_v": -0.4999995989104112,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914878194980288,
+          "kinetic_energy_physical": 0.19799466448598843,
+          "liquid_bounded": {
+            "mean_u": -2.3756020228727926e-13,
+            "mean_v": -0.49999996771890526,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": -2.3756020228727926e-13,
+            "mean_v": -0.49999996771890526,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5000776648996769,
+          "max_speed_physical": 0.5000776648996769,
+          "momentum_gas_y": -1.6821530061660384e-05,
+          "momentum_liquid_y": -0.0007565951765419634,
+          "momentum_mixture_y_physical": -0.7919787075621108,
+          "physical": {
+            "mean_u": -2.1450664461630916e-15,
+            "mean_v": -0.5000000067755335,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "550e1282c1ed8ba5a627b892209c62b8e12fe8e3b8b9697bdeb19fc9988c5bb8",
+          "v": "37fedcf27cbb4b9434f44ffddc5cd8c3d3e12fccde5f5056650cbecfc366cbdb"
+        }
+      },
+      "C_NO_PROJECTION": {
+        "divergence_lininf": 0.007639330215170048,
+        "full_grid_mean_v": -0.5000000066502253,
+        "increments": {
+          "core": {
+            "l2": 3.661770342389427e-06
+          },
+          "gas_bounded": {
+            "l2": 1.0616693875730858e-05
+          },
+          "grid": {
+            "l2": 1.2103255970992177e-05,
+            "linf_u": 0.00013656934606842697,
+            "linf_v": 0.0003770291805267334
+          },
+          "interface_band": {
+            "l2": 8.119498916134858e-05
+          },
+          "liquid_bounded": {
+            "l2": 2.9956743158214193e-05
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 2.9956743158214193e-05
+          },
+          "physical": {
+            "l2": 1.2103255970992177e-05
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.5000000221762964,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.500000017205488,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.5000000066502253,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.49999629577368865,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914863450218586,
+          "kinetic_energy_physical": 0.19799451365084894,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.49999977197299994,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.49999977197299994,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.500373899936676,
+          "max_speed_physical": 0.500373899936676,
+          "momentum_gas_y": -1.6821530353455855e-05,
+          "momentum_liquid_y": -0.0007565948803411287,
+          "momentum_mixture_y_physical": -0.7919784045512547,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.5000000066502253,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "3f42b3e3a2a95fe87d16752631072cedb7e921cb051d9f5dde0fd945be06ff1e",
+          "v": "ab43fdf163fb2adaef1cea61ae6daf843e8b788e1b063009cfe9f961061ffdc4"
+        }
+      },
+      "D_NO_CAPILLARY_RHS": {
+        "divergence_lininf": 3.646516595623428e-11,
+        "full_grid_mean_v": -0.5,
+        "increments": {
+          "core": {
+            "l2": 7.299131176998181e-14
+          },
+          "gas_bounded": {
+            "l2": 8.168414727727753e-14
+          },
+          "grid": {
+            "l2": 1.0045246675841595e-13,
+            "linf_u": 3.0781549184566437e-12,
+            "linf_v": 0.0
+          },
+          "interface_band": {
+            "l2": 7.310943772318607e-13
+          },
+          "liquid_bounded": {
+            "l2": 2.934154284721207e-13
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 2.934154284721207e-13
+          },
+          "physical": {
+            "l2": 1.0045246675841595e-13
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": -2.7610321422284817e-21,
+            "mean_v": -0.5,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 1.5699383829334959e-22,
+            "mean_v": -0.5,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": 2.3438619789313445e-23,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": -2.3424121010489292e-21,
+            "mean_v": -0.5,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914880634735194,
+          "kinetic_energy_physical": 0.19799468932198874,
+          "liquid_bounded": {
+            "mean_u": -2.9459207033511584e-21,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": -2.9459207033511584e-21,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5,
+          "max_speed_physical": 0.5,
+          "momentum_gas_y": -1.6821529774610594e-05,
+          "momentum_liquid_y": -0.0007565952253894078,
+          "momentum_mixture_y_physical": -0.791978757287955,
+          "physical": {
+            "mean_u": 2.3438619789313445e-23,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "695112b4d53654f91e0406113ee3d549b2799ecd61555c3ba1d65f5cb7e826f3",
+          "v": "bf8c86ea4e1c8609880f416e466c4e2f34bc8d42a1b5fb4d4dabeff9c476cd72"
+        }
+      },
+      "F_NO_MOMENTUM_RHS": {
+        "divergence_lininf": 0.0,
+        "full_grid_mean_v": -0.5,
+        "increments": {
+          "core": {
+            "l2": 0.0
+          },
+          "gas_bounded": {
+            "l2": 0.0
+          },
+          "grid": {
+            "l2": 0.0,
+            "linf_u": 0.0,
+            "linf_v": 0.0
+          },
+          "interface_band": {
+            "l2": 0.0
+          },
+          "liquid_bounded": {
+            "l2": 0.0
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0
+          },
+          "physical": {
+            "l2": 0.0
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914880634735194,
+          "kinetic_energy_physical": 0.19799468932198874,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5,
+          "max_speed_physical": 0.5,
+          "momentum_gas_y": -1.6821529774610594e-05,
+          "momentum_liquid_y": -0.0007565952253894078,
+          "momentum_mixture_y_physical": -0.791978757287955,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "b9c048de34d844a2381155656d249036a85a52b60cb9fd06bf1600e44d7aa3ae",
+          "v": "bf8c86ea4e1c8609880f416e466c4e2f34bc8d42a1b5fb4d4dabeff9c476cd72"
+        }
+      },
+      "G_PROJECTION_ONLY": {
+        "divergence_lininf": 0.0,
+        "full_grid_mean_v": -0.5,
+        "increments": {
+          "core": {
+            "l2": 0.0
+          },
+          "gas_bounded": {
+            "l2": 0.0
+          },
+          "grid": {
+            "l2": 0.0,
+            "linf_u": 0.0,
+            "linf_v": 0.0
+          },
+          "interface_band": {
+            "l2": 0.0
+          },
+          "liquid_bounded": {
+            "l2": 0.0
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0
+          },
+          "physical": {
+            "l2": 0.0
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 34.450492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914880634735194,
+          "kinetic_energy_physical": 0.19799468932198874,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5,
+          "max_speed_physical": 0.5,
+          "momentum_gas_y": -1.6821529774610594e-05,
+          "momentum_liquid_y": -0.0007565952253894078,
+          "momentum_mixture_y_physical": -0.791978757287955,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "solid_chi": {
+            "mean_u": null,
+            "mean_v": null,
+            "weight_sum": 0.0
+          }
+        },
+        "state_hashes": {
+          "u": "b9c048de34d844a2381155656d249036a85a52b60cb9fd06bf1600e44d7aa3ae",
+          "v": "bf8c86ea4e1c8609880f416e466c4e2f34bc8d42a1b5fb4d4dabeff9c476cd72"
+        }
+      }
+    }
+  },
+  "primary": {
+    "authority_state_hashes_after": {
+      "phi": "a0358417e58cf3d53329bf50a4d8b9651f222154e7b487892c1118809ce31199",
+      "u": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+      "v": "72f90402d743956c026a792416dcd15e8c59670e96ba94e111cfcb1526448a71"
+    },
+    "authority_state_hashes_before": {
+      "phi": "a0358417e58cf3d53329bf50a4d8b9651f222154e7b487892c1118809ce31199",
+      "u": "8123c216413f82bbaa0339c27a43d9822c2a043e20662b27c97874429b996e9a",
+      "v": "72f90402d743956c026a792416dcd15e8c59670e96ba94e111cfcb1526448a71"
+    },
+    "authority_unchanged": true,
+    "branches": {
+      "A_PRODUCTION": {
+        "divergence_lininf": 2.7692043431670754e-06,
+        "full_grid_mean_v": -0.49698099660599837,
+        "increments": {
+          "core": {
+            "l2": 0.003022484238021767
+          },
+          "gas_bounded": {
+            "l2": 0.003024681318973437
+          },
+          "grid": {
+            "l2": 0.003024597165040366,
+            "linf_u": 8.229307422880083e-05,
+            "linf_v": 0.0032438039779663086
+          },
+          "interface_band": {
+            "l2": 0.0030232391900344444
+          },
+          "liquid_bounded": {
+            "l2": 0.0030227875806753636
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0030227875806753636
+          },
+          "physical": {
+            "l2": 0.003024596290468283
+          },
+          "solid_chi": {
+            "l2": 0.0030359341720090412
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 1.6768043315220415e-10,
+            "mean_v": -0.4969830273692986,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": -3.627400624076776e-12,
+            "mean_v": -0.49698091533438365,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": -5.61300580318005e-16,
+            "mean_v": -0.49698099660599837,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": -4.866746676439275e-10,
+            "mean_v": -0.4969822808088344,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018687286515317911,
+          "kinetic_energy_physical": 0.19542703610215742,
+          "liquid_bounded": {
+            "mean_u": 7.712495085649449e-11,
+            "mean_v": -0.4969827269412718,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 7.712495085649449e-11,
+            "mean_v": -0.4969827269412718,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.4971759321235852,
+          "max_speed_physical": 0.4971759321235852,
+          "momentum_gas_y": -1.5991959141724272e-05,
+          "momentum_liquid_y": -0.0007520295166095481,
+          "momentum_mixture_y_physical": -0.7864539911693029,
+          "physical": {
+            "mean_u": -5.503159677645791e-16,
+            "mean_v": -0.49698099669953133,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": 6.133573368073193e-16,
+            "mean_v": -0.4969696379192652,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "6c3c8d1c4f102421ffa428a09f3171a40426cbad20c2435db91c1b7d32d7c1ed",
+          "v": "f32e11dafa775df1630df74bf97eef760bf589a835bffd84efd365c27626ca02"
+        }
+      },
+      "B_NO_BRINKMAN": {
+        "divergence_lininf": 9.506742344456143e-07,
+        "full_grid_mean_v": -0.5000002094004432,
+        "increments": {
+          "core": {
+            "l2": 5.887932503729823e-06
+          },
+          "gas_bounded": {
+            "l2": 2.8895458231183063e-06
+          },
+          "grid": {
+            "l2": 4.141256341616283e-06,
+            "linf_u": 8.679391612531617e-05,
+            "linf_v": 0.00014340877532958984
+          },
+          "interface_band": {
+            "l2": 2.1419289320020774e-05
+          },
+          "liquid_bounded": {
+            "l2": 9.345557378508012e-06
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 9.345557378508012e-06
+          },
+          "physical": {
+            "l2": 3.4492275934995787e-06
+          },
+          "solid_chi": {
+            "l2": 1.2466357892311672e-05
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": -1.90339284539535e-13,
+            "mean_v": -0.5000020378799978,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 5.356233004350202e-15,
+            "mean_v": -0.5000001208431263,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": -1.360237816256654e-15,
+            "mean_v": -0.5000002094004432,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 1.6561786235988508e-13,
+            "mean_v": -0.5000027557949961,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018915038849366713,
+          "kinetic_energy_physical": 0.1978088114308733,
+          "liquid_bounded": {
+            "mean_u": -1.4270251165162834e-13,
+            "mean_v": -0.5000020910523639,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": -1.4270251165162834e-13,
+            "mean_v": -0.5000020910523639,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5001434088251628,
+          "max_speed_physical": 0.5001434088251628,
+          "momentum_gas_y": -1.6089111788126788e-05,
+          "momentum_liquid_y": -0.000756598389549877,
+          "momentum_mixture_y_physical": -0.7912320013701157,
+          "physical": {
+            "mean_u": -1.2935659637776699e-15,
+            "mean_v": -0.5000002093316205,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": -4.635923755778326e-15,
+            "mean_v": -0.5000002233305854,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "90216de2bbdfc9062b80dc97789dbb5fc3cf4538452324dc3c4644d126c3dd4e",
+          "v": "a3bd1c58e9d0b20eab56817df41b74ddb8a65b9c222dfd8220cfdd6543208734"
+        }
+      },
+      "C_NO_PROJECTION": {
+        "divergence_lininf": 1.142812728881836,
+        "full_grid_mean_v": -0.4969809963869112,
+        "increments": {
+          "core": {
+            "l2": 7.131092532499225e-06
+          },
+          "gas_bounded": {
+            "l2": 0.0021456932716372094
+          },
+          "grid": {
+            "l2": 0.013989971705901697,
+            "linf_u": 0.00013656934606842697,
+            "linf_v": 0.07142579555511475
+          },
+          "interface_band": {
+            "l2": 0.003334993707300771
+          },
+          "liquid_bounded": {
+            "l2": 0.0010314062298128466
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0010314062298128466
+          },
+          "physical": {
+            "l2": 0.0021083163194246415
+          },
+          "solid_chi": {
+            "l2": 0.06657872465585855
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.4999993304068477,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.4997738859875495,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969809963869112,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.49930917784387685,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018909180400408668,
+          "kinetic_energy_physical": 0.19774516949042378,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.49992359559454447,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.49992359559454447,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5001376276297038,
+          "max_speed_physical": 0.5001376276297038,
+          "momentum_gas_y": -1.6081831954122737e-05,
+          "momentum_liquid_y": -0.000756479610972675,
+          "momentum_mixture_y_physical": -0.791102917557041,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.4997806099321072,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": 0.0,
+            "mean_v": -0.43476613920695356,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "095f2c7d1078b0443220059514f02f876258c4c7a2767b0ea81f3a5a97d110ab",
+          "v": "7bf185c56ce74b7800815b510205325da1b321ca183bee9b7a80fa53f1526e8e"
+        }
+      },
+      "D_NO_CAPILLARY_RHS": {
+        "divergence_lininf": 1.430496459128329e-06,
+        "full_grid_mean_v": -0.49698079489300856,
+        "increments": {
+          "core": {
+            "l2": 0.0030245187790779995
+          },
+          "gas_bounded": {
+            "l2": 0.0030248041719080146
+          },
+          "grid": {
+            "l2": 0.0030248072694310886,
+            "linf_u": 2.034505186543356e-08,
+            "linf_v": 0.0032032430171966553
+          },
+          "interface_band": {
+            "l2": 0.003025941213633227
+          },
+          "liquid_bounded": {
+            "l2": 0.003024868831453633
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.003024868831453633
+          },
+          "physical": {
+            "l2": 0.003024807076007803
+          },
+          "solid_chi": {
+            "l2": 0.00303613788563779
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 6.710359072995212e-19,
+            "mean_v": -0.49698108392570234,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": -3.206719499352521e-14,
+            "mean_v": -0.4969807980126584,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": 6.925601559519667e-20,
+            "mean_v": -0.49698079489300856,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 8.72057019387381e-19,
+            "mean_v": -0.49697965871036787,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018687136625331145,
+          "kinetic_energy_physical": 0.19542549930803288,
+          "liquid_bounded": {
+            "mean_u": 6.819151910640786e-13,
+            "mean_v": -0.4969807332425986,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 6.819151910640786e-13,
+            "mean_v": -0.4969807332425986,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.49716484546661377,
+          "max_speed_physical": 0.49716484546661377,
+          "momentum_gas_y": -1.5991955366520476e-05,
+          "momentum_liquid_y": -0.0007520264997637541,
+          "momentum_mixture_y_physical": -0.7864508980534013,
+          "physical": {
+            "mean_u": 7.226714689534576e-20,
+            "mean_v": -0.4969807951036247,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": 2.536311832499815e-22,
+            "mean_v": -0.49696942174296604,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "68438a4122dfe1575f80a2b0b80379486790c4abd3857b611653a3ca33a8bfec",
+          "v": "1305ac97a6f6e2b41a4fb23d462704ad30b49bda3340a3413cfad35a6da57a47"
+        }
+      },
+      "F_NO_MOMENTUM_RHS": {
+        "divergence_lininf": 9.5367431640625e-07,
+        "full_grid_mean_v": -0.49698079548155266,
+        "increments": {
+          "core": {
+            "l2": 0.003024518559790368
+          },
+          "gas_bounded": {
+            "l2": 0.0030248035443252805
+          },
+          "grid": {
+            "l2": 0.0030248066826623005,
+            "linf_u": 0.0,
+            "linf_v": 0.0032032430171966553
+          },
+          "interface_band": {
+            "l2": 0.0030259403932199535
+          },
+          "liquid_bounded": {
+            "l2": 0.0030248685445700427
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0030248685445700427
+          },
+          "physical": {
+            "l2": 0.003024806463727287
+          },
+          "solid_chi": {
+            "l2": 0.003036136552308549
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969810841596295,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969807986414821,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.49698079548155266,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.49697965953821016,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018687136648028795,
+          "kinetic_energy_physical": 0.19542549955075433,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969807335443316,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969807335443316,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.49716484546661377,
+          "max_speed_physical": 0.49716484546661377,
+          "momentum_gas_y": -1.59919553867549e-05,
+          "momentum_liquid_y": -0.0007520265002203335,
+          "momentum_mixture_y_physical": -0.7864508985416584,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.49698079571775766,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": 0.0,
+            "mean_v": -0.4969694230067444,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "b9c048de34d844a2381155656d249036a85a52b60cb9fd06bf1600e44d7aa3ae",
+          "v": "135803a6aa9f3067fc9c0e41fd0e9dccc12b5deba4b37ecf7a0b9d0da1fcbf9a"
+        }
+      },
+      "G_PROJECTION_ONLY": {
+        "divergence_lininf": 0.0,
+        "full_grid_mean_v": -0.5,
+        "increments": {
+          "core": {
+            "l2": 0.0
+          },
+          "gas_bounded": {
+            "l2": 0.0
+          },
+          "grid": {
+            "l2": 0.0,
+            "linf_u": 0.0,
+            "linf_v": 0.0
+          },
+          "interface_band": {
+            "l2": 0.0
+          },
+          "liquid_bounded": {
+            "l2": 0.0
+          },
+          "liquid_raw_diagnostic": {
+            "l2": 0.0
+          },
+          "physical": {
+            "l2": 0.0
+          },
+          "solid_chi": {
+            "l2": 0.0
+          }
+        },
+        "region_stats": {
+          "core": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1274.0
+          },
+          "gas_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 32.950492978402494
+          },
+          "grid": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 36864.0
+          },
+          "interface_band": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 648.0
+          },
+          "kinetic_energy_liquid": 0.00018914880634735194,
+          "kinetic_energy_physical": 0.19780718932198874,
+          "liquid_bounded": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "liquid_raw_diagnostic": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1.549507021597507
+          },
+          "max_speed_global": 0.5,
+          "max_speed_physical": 0.5,
+          "momentum_gas_y": -1.6089107899610594e-05,
+          "momentum_liquid_y": -0.0007565952253894078,
+          "momentum_mixture_y_physical": -0.7912287572879549,
+          "physical": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 35328.0
+          },
+          "solid_chi": {
+            "mean_u": 0.0,
+            "mean_v": -0.5,
+            "weight_sum": 1536.0031131735595
+          }
+        },
+        "state_hashes": {
+          "u": "b9c048de34d844a2381155656d249036a85a52b60cb9fd06bf1600e44d7aa3ae",
+          "v": "bf8c86ea4e1c8609880f416e466c4e2f34bc8d42a1b5fb4d4dabeff9c476cd72"
+        }
+      }
+    }
+  }
+}

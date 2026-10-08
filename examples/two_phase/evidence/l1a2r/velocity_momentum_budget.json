@@ -1,0 +1,190 @@
+{
+  "from_ledger": {
+    "after": {
+      "core": {
+        "mean_u": 1.6768043315220415e-10,
+        "mean_v": -0.4969830273692986,
+        "weight_sum": 1274.0
+      },
+      "gas_bounded": {
+        "mean_u": -3.627400624076776e-12,
+        "mean_v": -0.49698091533438365,
+        "weight_sum": 32.950492978402494
+      },
+      "grid": {
+        "mean_u": -5.61300580318005e-16,
+        "mean_v": -0.49698099660599837,
+        "weight_sum": 36864.0
+      },
+      "interface_band": {
+        "mean_u": -4.866746676439275e-10,
+        "mean_v": -0.4969822808088344,
+        "weight_sum": 648.0
+      },
+      "kinetic_energy_liquid": 0.00018687286515317911,
+      "kinetic_energy_physical": 0.19542703610215742,
+      "liquid_bounded": {
+        "mean_u": 7.712495085649449e-11,
+        "mean_v": -0.4969827269412718,
+        "weight_sum": 1.549507021597507
+      },
+      "liquid_raw_diagnostic": {
+        "mean_u": 7.712495085649449e-11,
+        "mean_v": -0.4969827269412718,
+        "weight_sum": 1.549507021597507
+      },
+      "max_speed_global": 0.4971759321235852,
+      "max_speed_physical": 0.4971759321235852,
+      "momentum_gas_y": -1.5991959141724272e-05,
+      "momentum_liquid_y": -0.0007520295166095481,
+      "momentum_mixture_y_physical": -0.7864539911693029,
+      "physical": {
+        "mean_u": -5.503159677645791e-16,
+        "mean_v": -0.49698099669953133,
+        "weight_sum": 35328.0
+      },
+      "solid_chi": {
+        "mean_u": 6.133573368073193e-16,
+        "mean_v": -0.4969696379192652,
+        "weight_sum": 1536.0031131735595
+      }
+    },
+    "before": {
+      "core": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 1274.0
+      },
+      "gas_bounded": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 32.950492978402494
+      },
+      "grid": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 36864.0
+      },
+      "interface_band": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 648.0
+      },
+      "kinetic_energy_liquid": 0.00018914880634735194,
+      "kinetic_energy_physical": 0.19780718932198874,
+      "liquid_bounded": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 1.549507021597507
+      },
+      "liquid_raw_diagnostic": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 1.549507021597507
+      },
+      "max_speed_global": 0.5,
+      "max_speed_physical": 0.5,
+      "momentum_gas_y": -1.6089107899610594e-05,
+      "momentum_liquid_y": -0.0007565952253894078,
+      "momentum_mixture_y_physical": -0.7912287572879549,
+      "physical": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 35328.0
+      },
+      "solid_chi": {
+        "mean_u": 0.0,
+        "mean_v": -0.5,
+        "weight_sum": 1536.0031131735595
+      }
+    }
+  },
+  "initialization_variants": {
+    "note": "the u_impact ARGUMENT is not the liquid velocity: liquid-weighted and core velocities are reported per variant; a non-solenoidal seed is never production-ready",
+    "recovered_drop_y0": 1.0287707839320928,
+    "u_impact_argument": 0.5,
+    "variants": {
+      "GAS_AT_REST_CONTROL": {
+        "core_v": -0.5,
+        "divergence_lininf": 8.0,
+        "far_field_gas_v": 0.0,
+        "gas_weighted_v": -0.0013842696834058768,
+        "liquid_weighted_v": -0.4646720676195467,
+        "max_abs_v_in_solid": 0.0,
+        "momentum_liquid_y": -0.0007031373354655461,
+        "name": "gas_at_rest",
+        "projection_adjustment_needed": {
+          "du_lininf": 0.25332238329157053,
+          "dv_lininf": 0.3290299280982171
+        }
+      },
+      "SOLID_COMPATIBLE_INITIAL": {
+        "core_v": -0.5,
+        "divergence_lininf": 8.0,
+        "far_field_gas_v": -0.5,
+        "gas_weighted_v": -0.5,
+        "liquid_weighted_v": -0.5,
+        "max_abs_v_in_solid": 0.0,
+        "momentum_liquid_y": -0.0007565952253894078,
+        "name": "solid_compatible",
+        "projection_adjustment_needed": {
+          "du_lininf": 0.0,
+          "dv_lininf": 0.479166666365656
+        }
+      },
+      "STREAMFUNCTION_LOCALIZED": {
+        "core_v": -0.4999320476171173,
+        "divergence_lininf": 3.814697265625e-06,
+        "far_field_gas_v": 0.03434116768213431,
+        "gas_weighted_v": 0.02346443442859424,
+        "liquid_weighted_v": -0.4989746229242154,
+        "max_abs_v_in_solid": 1.000012755393982,
+        "momentum_liquid_y": -0.000755043634589883,
+        "name": "streamfunction",
+        "projection_adjustment_needed": {
+          "du_lininf": 5.634473646020441e-08,
+          "dv_lininf": 8.658551867611475e-08
+        }
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "core_v": -0.5,
+        "divergence_lininf": 0.0,
+        "far_field_gas_v": -0.5,
+        "gas_weighted_v": -0.5,
+        "liquid_weighted_v": -0.5,
+        "max_abs_v_in_solid": 0.5,
+        "momentum_liquid_y": -0.0007565952253894078,
+        "name": "uniform",
+        "projection_adjustment_needed": {
+          "du_lininf": 0.0,
+          "dv_lininf": 0.0
+        }
+      }
+    }
+  },
+  "negative_controls": {
+    "A_empty_solid_uniform": {
+      "divergence_initial": 0.0,
+      "full_step_max_abs_change_v": 5.900859832763672e-06,
+      "full_step_preserves_uniform": true,
+      "projection_only_max_abs_change_v": 0.0,
+      "projection_preserves_uniform": true
+    },
+    "B_projection_uniform_with_solid_present": {
+      "max_abs_change_v": 0.0,
+      "note": "solid chi is supplied to Brinkman only in the full step; here projection sees untouched uniform input",
+      "projection_alone_preserves_uniform": true
+    },
+    "C_zero_velocity_force_free": {
+      "max_abs_v_over_0_08": 0.00020517582015600055,
+      "no_spontaneous_startup": true,
+      "spontaneous_fraction_of_u_impact": 0.0004103516403120011
+    },
+    "D_pure_gradient_field": {
+      "div_lininf_after_projection": 7.05718994140625e-05,
+      "div_lininf_before": 233.16713905334473,
+      "note": "identities use the ACTUAL D/G/poisson construction (central differences + m2_proj), not an idealized continuum Laplacian",
+      "reduced": true
+    }
+  }
+}

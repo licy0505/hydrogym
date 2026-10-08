@@ -1,0 +1,77 @@
+{
+  "brinkman_grid_mean_change_max": 0.003019003613088822,
+  "full_grid_mean_change_max": 0.003019003613088822,
+  "full_grid_mean_change_scope_note": "full_grid_mean_change_max is the Brinkman-driven plain-grid mean change across a full substep (section 16 accounting); it is NOT a projection residual",
+  "note": "plain full-grid means are a periodic identity diagnostic, NOT physical total momentum; liquid/physical weighted means may legitimately change under projection",
+  "periodic_gradient_mean_cancels": true,
+  "proj_correction_grid_mean_max": 1.7785673975256877e-11,
+  "projection_grid_mean_change_max": 2.1908719283203482e-10,
+  "substeps": [
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": -1.6168795469173602e-11,
+      "mean_v_after_projection": -0.49698099660599837,
+      "mean_v_before_projection": -0.4969809963869112,
+      "mean_v_before_substep": -0.5,
+      "poisson_residual": 0.004081326887899195
+    },
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": 4.850638554015907e-12,
+      "mean_v_after_projection": -0.4939802844948847,
+      "mean_v_before_projection": -0.49398028445203734,
+      "mean_v_before_substep": -0.49698099660599837,
+      "poisson_residual": 0.004542532437255886
+    },
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": -7.275957614183426e-12,
+      "mean_v_after_projection": -0.49099774451557704,
+      "mean_v_before_projection": -0.49099774446222,
+      "mean_v_before_substep": -0.4939802844948847,
+      "poisson_residual": 0.00455243241685821
+    },
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": -6.4675179274609196e-12,
+      "mean_v_after_projection": -0.4880332595389013,
+      "mean_v_before_projection": -0.488033259508989,
+      "mean_v_before_substep": -0.49099774451557704,
+      "poisson_residual": 0.0047476006438955665
+    },
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": -8.084397409326149e-13,
+      "mean_v_after_projection": -0.485086714050946,
+      "mean_v_before_projection": -0.485086714071157,
+      "mean_v_before_substep": -0.4880332595389013,
+      "poisson_residual": 0.00387896461688797
+    },
+    {
+      "mean_grad_P": {
+        "mean_ddx_P": 0.0,
+        "mean_ddy_P": 0.0
+      },
+      "mean_of_proj_correction_v": -1.7785673975256877e-11,
+      "mean_v_after_projection": -0.48215799444975954,
+      "mean_v_before_projection": -0.48215799455162295,
+      "mean_v_before_substep": -0.485086714050946,
+      "poisson_residual": 0.0052793554932577536
+    }
+  ]
+}

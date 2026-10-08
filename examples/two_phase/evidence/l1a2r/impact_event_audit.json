@@ -1,0 +1,84 @@
+{
+  "complex_heldout": {
+    "authentication": {
+      "contact_time": null,
+      "contacted": false,
+      "reason": "the production contact criterion never fired within the diagnostic horizon",
+      "verdict": "NO_CONTACT_OR_HOVER"
+    },
+    "elapsed_seconds": 15.961073268000291,
+    "n_rows": 107,
+    "retention": {
+      "P_liquid_ratio_at_contact": 0.2020586689732536,
+      "loss_before_contact": 0.7979190634752917,
+      "note": "max_speed is neither the retained droplet velocity nor the incoming impulse",
+      "retention_at_contact": 0.2020809365247083,
+      "v_drop_0": -0.49566829817492125,
+      "v_drop_at_contact": -0.10016511390079645
+    }
+  },
+  "flat_we100_ct050": {
+    "authentication": {
+      "approach_fraction_of_u_impact": 0.601694140659806,
+      "contact_time": 0.17400000000000002,
+      "contacted": true,
+      "criterion": "signed downward liquid v, decreasing gap, approach >= 0.2*u_impact, post-contact response",
+      "gap_decreasing_before_contact": true,
+      "note": "phi touching the wall alone does NOT authenticate impact; max_speed_global is never used here",
+      "signed_precontact_v_core": -0.3008594665504601,
+      "signed_precontact_v_liquid": -0.300847070329903,
+      "verdict": "IMPACT_AUTHENTICATED"
+    },
+    "elapsed_seconds": 3.1523390409993226,
+    "n_rows": 83,
+    "retention": {
+      "P_liquid_ratio_at_contact": 0.5944616571022323,
+      "loss_before_contact": 0.40552447227972255,
+      "note": "max_speed is neither the retained droplet velocity nor the incoming impulse",
+      "retention_at_contact": 0.5944755277202775,
+      "v_drop_0": -0.4969827100671732,
+      "v_drop_at_contact": -0.29544405883503644
+    }
+  },
+  "flat_we200_ct000": {
+    "authentication": {
+      "approach_fraction_of_u_impact": 0.5799472739107273,
+      "contact_time": 0.186,
+      "contacted": true,
+      "criterion": "signed downward liquid v, decreasing gap, approach >= 0.2*u_impact, post-contact response",
+      "gap_decreasing_before_contact": true,
+      "note": "phi touching the wall alone does NOT authenticate impact; max_speed_global is never used here",
+      "signed_precontact_v_core": -0.2899880916448769,
+      "signed_precontact_v_liquid": -0.28997363695536366,
+      "verdict": "IMPACT_AUTHENTICATED"
+    },
+    "elapsed_seconds": 3.1935668670002997,
+    "n_rows": 85,
+    "retention": {
+      "P_liquid_ratio_at_contact": 0.572961485652982,
+      "loss_before_contact": 0.4270264153504617,
+      "note": "max_speed is neither the retained droplet velocity nor the incoming impulse",
+      "retention_at_contact": 0.5729735846495383,
+      "v_drop_0": -0.49698129727217566,
+      "v_drop_at_contact": -0.2847571554018163
+    }
+  },
+  "pillar_training": {
+    "authentication": {
+      "contact_time": null,
+      "contacted": false,
+      "reason": "the production contact criterion never fired within the diagnostic horizon",
+      "verdict": "NO_CONTACT_OR_HOVER"
+    },
+    "elapsed_seconds": 4.711227810999844,
+    "n_rows": 107,
+    "retention": {
+      "P_liquid_ratio_at_contact": 0.20478998382217597,
+      "loss_before_contact": 0.795204635982764,
+      "note": "max_speed is neither the retained droplet velocity nor the incoming impulse",
+      "retention_at_contact": 0.20479536401723591,
+      "v_drop_0": -0.49562098148882155,
+      "v_drop_at_contact": -0.10150087931858295
+    }
+  }
+}
