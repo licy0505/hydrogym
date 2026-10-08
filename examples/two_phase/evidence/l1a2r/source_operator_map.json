@@ -1,0 +1,20 @@
+{
+  "D": "central periodic difference _ddx + _ddy (symbol sin(k dx)/dx)",
+  "G": "central periodic gradient _ddx/_ddy of the pressure",
+  "anchors_bound_to_live_source": {
+    "D_divergence": "_ddx(u_new, p.dx) + _ddy(v_new, p.dy)",
+    "G_gradient_x": "u_new = u_new - dt * _ddx(pr, p.dx)",
+    "brinkman_factor": "damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)",
+    "capillary_force": "cap_x = (SIGMA_NORM / p.We) * mu * phi_x / p.rho_l",
+    "momentum_euler": "u_new = (u + dt * u_rhs) * damp",
+    "poisson_solve": "def poisson_solve(rhs, m2):",
+    "poisson_symbol_m2_proj": "def m2_proj(self):",
+    "streamfunction_init": "elif velocity_mode == \"streamfunction\":",
+    "three_substeps": "lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)",
+    "uniform_init": "v = -u_impact * jnp.ones_like(phi)"
+  },
+  "null_mode": "poisson_solve removes every Fourier mode with m2 <= 64*eps*scale (constant + resolved-null modes)",
+  "poisson_inverts": "m2_proj = symbol of grad_c . grad_c \u2014 the SAME central-difference pair; the solve is consistent D/G, NOT the 5-point Laplacian",
+  "projection_claim_policy": "the periodic projection is NOT called an exact Hodge decomposition; only measured discrete identities are reported (section 7)",
+  "stage": "L1A-2r"
+}

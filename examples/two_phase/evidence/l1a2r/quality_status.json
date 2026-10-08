@@ -1,0 +1,18 @@
+{
+  "all_checks_passed": true,
+  "checks": {
+    "authority_state_unchanged": true,
+    "contract_12": true,
+    "ledger_within_tolerance_public_step": true,
+    "no_threshold_change": true,
+    "quick_profile_cannot_promote": true,
+    "unmeasured_reported_as_unmeasured": true
+  },
+  "ci_claims": "local diagnostic measurements only; no hosted CI or GPU claimed",
+  "dependency_audit": "PRE_EXISTING_FAILURE (uv audit --locked, unchanged; never called green)",
+  "profiles_run": [
+    "quick",
+    "forensic"
+  ],
+  "stage": "L1A-2r"
+}

@@ -1,0 +1,26 @@
+{
+  "decision": "B",
+  "stop_conditions": {
+    "candidate_promoted": false,
+    "contract_12_throughout": true,
+    "new_production_datasets": false,
+    "production_semantics_changed": false,
+    "thresholds_relaxed": false
+  },
+  "verdicts": {
+    "blockers": {
+      "D_FRESH_TRAIN_CONTRACT": "OPEN (unchanged)",
+      "L1A_STATUS": "BLOCKED (unchanged)",
+      "L1B_EXIT": "L1B_DATA_NOT_READY (unchanged)",
+      "N_DT": "TARGET_CRITICAL (unchanged)",
+      "P_VARDENS_PROJ": "OPEN (unchanged, global)",
+      "SPATIAL_REFINEMENT": "FAIL (unchanged)",
+      "W_CONTACT_ANGLE": "OPEN (unchanged)"
+    },
+    "candidate_promoted": false,
+    "decision": "B",
+    "impact_event_verdict": "INCONCLUSIVE",
+    "production_semantics_changed": false,
+    "root_cause_verdict": "BRINKMAN_PROJECTION_COUPLING"
+  }
+}

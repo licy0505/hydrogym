@@ -1,0 +1,117 @@
+{
+  "mechanism_matrix": {
+    "BRINKMAN_LOCAL_DAMPING": {
+      "evidence": {
+        "damp_max": 1.0,
+        "damp_min": 0.8571484088897705,
+        "note": "the damping factor acts only where chi>0 (inside solid); measured directly"
+      },
+      "status": "SUPPORTED"
+    },
+    "BRINKMAN_PROJECTION_COUPLING": {
+      "evidence": {
+        "control_A_projection_preserves_uniform": true,
+        "note": "coupling requires: no-slip damping (nonzero divergence source) + projection response; quantified by A vs C and the divergence ledger",
+        "production_minus_no_projection_grid_mean_v": -2.1908719283203482e-10
+      },
+      "status": "SUPPORTED"
+    },
+    "CAPILLARY_STARTUP_RESPONSE": {
+      "evidence": {
+        "production_minus_no_capillary_liquid_v": -1.9936986732083106e-06
+      },
+      "status": "SUSPECTED"
+    },
+    "CONSTANT_DENSITY_PROJECTION_LIMITATION": {
+      "evidence": "P-VARDENS-PROJ stays open globally; this stage does not vary density in the projection",
+      "status": "NOT_TESTED"
+    },
+    "INITIAL_ALL_DOMAIN_VELOCITY_INCOMPATIBILITY": {
+      "evidence": {
+        "liquid_velocity_matches_intent": true,
+        "liquid_weighted_v_at_t0": -0.5,
+        "max_abs_v_in_solid_at_t0": 0.5,
+        "u_impact_argument": 0.5
+      },
+      "status": "SUSPECTED"
+    },
+    "INITIAL_GAS_LIQUID_RELATIVE_VELOCITY_MISMATCH": {
+      "evidence": {
+        "gas_weighted_v": -0.5,
+        "liquid_weighted_v": -0.5,
+        "note": "the uniform seed gives gas and liquid the SAME downward speed, i.e. zero relative velocity"
+      },
+      "status": "FALSIFIED"
+    },
+    "MAX_SPEED_METRIC_DOMAIN_MISMATCH": {
+      "evidence": {
+        "note": "global max_speed includes gas/solid startup transients; liquid-weighted v is the impulse surrogate (sections 9/15); L1A-2q's nonconvergent max_speed must not be read as nonconvergent liquid impact dynamics"
+      },
+      "status": "SUPPORTED"
+    },
+    "MOMENTUM_TIME_INTEGRATION_LIMITATION": {
+      "evidence": {
+        "dt_sensitive_startup": true,
+        "v_liquid_at_t0_08_by_dt": {
+          "0.0005": -0.18985446920746776,
+          "0.001": -0.3080889659170619,
+          "0.002": -0.3925161762535568
+        }
+      },
+      "status": "SUSPECTED"
+    },
+    "MULTIPLE_CONTRIBUTORS": {
+      "evidence": "resolved by the final verdict combination",
+      "status": "NOT_TESTED"
+    },
+    "PERIODIC_Y_TOPOLOGY_COUPLING": {
+      "evidence": "requires the seam-resolved field audit; armed, not required by measured evidence here",
+      "status": "NOT_TESTED"
+    },
+    "PROJECTION_DIRECT_GLOBAL_MOMENTUM_LOSS": {
+      "evidence": {
+        "brinkman_grid_mean_change_max": 0.003019003613088822,
+        "periodic_gradient_mean_cancels": true,
+        "proj_correction_grid_mean_max": 1.7785673975256877e-11,
+        "projection_grid_mean_change_max": 2.1908719283203482e-10
+      },
+      "status": "FALSIFIED"
+    },
+    "PROJECTION_DISCRETE_OPERATOR_MISMATCH": {
+      "evidence": {
+        "note": "residual measured against the ACTUAL D/G/m2_proj construction (section 18); floor is production float32 FFT roundoff",
+        "poisson_residuals_relative": [
+          2.3808665437205936e-06,
+          2.6654586421194497e-06,
+          2.6867322718861768e-06
+        ]
+      },
+      "status": "FALSIFIED"
+    },
+    "PROJECTION_LOCAL_IMPULSE_REDISTRIBUTION": {
+      "evidence": {
+        "no_projection_branch_liquid_v": -0.49992359559454447,
+        "note": "local redistribution without global-mean change (section 8 distinction)",
+        "production_branch_liquid_v": -0.4969827269412718
+      },
+      "status": "SUPPORTED"
+    },
+    "note": "statuses bind measured sections; nothing is SUPPORTED by plausibility alone"
+  },
+  "verdicts": {
+    "blockers": {
+      "D_FRESH_TRAIN_CONTRACT": "OPEN (unchanged)",
+      "L1A_STATUS": "BLOCKED (unchanged)",
+      "L1B_EXIT": "L1B_DATA_NOT_READY (unchanged)",
+      "N_DT": "TARGET_CRITICAL (unchanged)",
+      "P_VARDENS_PROJ": "OPEN (unchanged, global)",
+      "SPATIAL_REFINEMENT": "FAIL (unchanged)",
+      "W_CONTACT_ANGLE": "OPEN (unchanged)"
+    },
+    "candidate_promoted": false,
+    "decision": "B",
+    "impact_event_verdict": "INCONCLUSIVE",
+    "production_semantics_changed": false,
+    "root_cause_verdict": "BRINKMAN_PROJECTION_COUPLING"
+  }
+}
