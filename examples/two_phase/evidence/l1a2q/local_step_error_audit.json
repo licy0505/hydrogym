@@ -1,0 +1,90 @@
+{
+  "case": "flat_we100_ct050",
+  "dt_coarse": 0.002,
+  "frozen_states": [
+    {
+      "base_state_hashes": {
+        "phi": "6227e3b5c0546d8f3ac6fc61839e78e0881afe5c81afb6575a508a247472a720",
+        "u": "8c532407516d17edee189cb2ae7e1c850af7449afcd896e13931e136c031e09e",
+        "v": "0610185aca1b2f95cc0697b0903107cc08e75cfb52c15494f81151149f8a016f"
+      },
+      "comparisons": [
+        {
+          "dt": 0.001,
+          "factor": 2,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 1.5729725223589549e-06,
+          "phi_linf": 7.092804326480628e-05,
+          "u_l2": 2.026419890675703e-05,
+          "v_l2": 0.0014409959486979705
+        },
+        {
+          "dt": 0.0005,
+          "factor": 4,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 3.581934892416762e-06,
+          "phi_linf": 0.0001601971219699072,
+          "u_l2": 5.424016490893682e-05,
+          "v_l2": 0.0042450026709402455
+        }
+      ],
+      "t_freeze": 0.2
+    },
+    {
+      "base_state_hashes": {
+        "phi": "a4925120c523edf1f18fe43abfc7601dd0837afe8ab5ff5404c764380b46d2f4",
+        "u": "3e6439c041ffaf1d5a38b5d52ef6dae3d370990eb02d90d79fe2f7ded1e3e522",
+        "v": "e4918a1ee11275174e9323d07a3e65ec358a3174a415be3803421e403260711c"
+      },
+      "comparisons": [
+        {
+          "dt": 0.001,
+          "factor": 2,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 1.2204041712656943e-06,
+          "phi_linf": 5.703393127642897e-05,
+          "u_l2": 2.021130747554052e-05,
+          "v_l2": 0.00100299610520737
+        },
+        {
+          "dt": 0.0005,
+          "factor": 4,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 2.693629427951345e-06,
+          "phi_linf": 0.0001253385168580312,
+          "u_l2": 5.427833748121753e-05,
+          "v_l2": 0.0029546749845280815
+        }
+      ],
+      "t_freeze": 0.24
+    },
+    {
+      "base_state_hashes": {
+        "phi": "c93f2be66e22212aec8cfd85b8a528d056e9dcc96b8644be9f2ea6f5f8436b0d",
+        "u": "0ab92da95532fb43b08786807288e3e0b0d3e7ad8ac389c521112aa1a5355cda",
+        "v": "4ee240f4d5fb989a1b15236a2a30ca0dd8c47db3966d157c28d1ed16c89ac1ba"
+      },
+      "comparisons": [
+        {
+          "dt": 0.001,
+          "factor": 2,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 9.716268639731188e-07,
+          "phi_linf": 4.684830339540813e-05,
+          "u_l2": 2.0037036665938635e-05,
+          "v_l2": 0.0006984356919287466
+        },
+        {
+          "dt": 0.0005,
+          "factor": 4,
+          "final_state_differs_from_1x": true,
+          "phi_l2": 2.053877990664417e-06,
+          "phi_linf": 0.00010004428270082855,
+          "u_l2": 5.3935351799513855e-05,
+          "v_l2": 0.0020574444053500763
+        }
+      ],
+      "t_freeze": 0.28
+    }
+  ]
+}

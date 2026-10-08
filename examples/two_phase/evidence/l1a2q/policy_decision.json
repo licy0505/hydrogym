@@ -1,0 +1,8 @@
+{
+  "contract_decision": "contract remains 12 unless a promotion is separately evidenced (B23)",
+  "decision": "ADDITIONAL_TARGETED_DIAGNOSTIC",
+  "l1b_exit_verdict": "L1B_DATA_NOT_READY",
+  "promoted_here": false,
+  "promotion_requires": "the B22 gate set executed by the separate promotion machinery; quick profiles can never promote",
+  "temporal_verdict": "NONASYMPTOTIC_OR_MULTIPLE_SCALES"
+}

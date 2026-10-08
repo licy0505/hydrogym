@@ -1,0 +1,93 @@
+{
+  "binding": {
+    "frozen_constants": {
+      "dt_levels": [
+        0.002,
+        0.001,
+        0.0005
+      ],
+      "frame_dt": 0.08,
+      "key_observables": [
+        "spread_width",
+        "drop_vertical_extent",
+        "centroid_y",
+        "max_speed"
+      ],
+      "peak_window": [
+        0.16,
+        0.48
+      ],
+      "phase_overshoot_gate": 0.02,
+      "physical_horizon": 8.0,
+      "refinement_gate": 0.03
+    },
+    "git_sha": "1be9e031a24af902c2a5d645efcb12e350cbfc68",
+    "section_version": "l1a2q_v1",
+    "solver_contract_version": 12,
+    "source_hashes": {
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+      "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "temporal_convergence_audit": "356da04c6c5c47f004df9db8ecbcf9239f4661fa72472b709b496d08d4c2f749",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "stage": "L1A-2q",
+    "timestep_policy_default": "impact_phase_cap_dx2_v1"
+  },
+  "files": {
+    "cost_accuracy_matrix.json": {
+      "sha256": "c529bdc443c4bbfa1b290fde8dd924239e38ca10e40729b7ab8d50bfce22e800"
+    },
+    "dt_refinement_matrix.json": {
+      "sha256": "86f533157d3af9b2a7cc3d7ee107be9d53054b34895d2e6b8d87784aa15019d1"
+    },
+    "exit_reaudit.json": {
+      "sha256": "b9a9696d224fd1a01f1fe62bdb0164e687d39024e0c8eea64f64a94750d5f19b"
+    },
+    "field_convergence_matrix.json": {
+      "sha256": "9dba089cca7b8c4aa6beefe143fa053cd0134f009d243cc8d4ba23aeb892c4ba"
+    },
+    "local_step_error_audit.json": {
+      "sha256": "347071167a5d06d1f2e443d54ccb351f6cae4232cba86dd8afc21e384f7b5e1e"
+    },
+    "manifest.json": {
+      "sha256": "5a4dfbacce9406a76055e7b8fb448a650161a79af6288598ad45988f3f4be191"
+    },
+    "mechanism_matrix.json": {
+      "sha256": "d609a755980f83feef785459a48aa170ddeb10e522e7ad070f4b2b5c53df9c20"
+    },
+    "observable_convergence_matrix.json": {
+      "sha256": "07cd8d9530527ae6e78bc7a76115f57e06fa20c95f69977c941e6fb38b2c7364"
+    },
+    "peak_timing_amplitude_audit.json": {
+      "sha256": "b05a8ad2f50ecd81bcc69d5a4f5a99e523a68bc245118b2c87520aa548dc9602"
+    },
+    "policy_decision.json": {
+      "sha256": "6a5f224c89829a1c964b3b508fa415ff3cef222a43d7777632f587fb7fba6ce8"
+    },
+    "quality_status.json": {
+      "sha256": "4286c0917ca3b0d7bab15c514b721f52ca9047e06a0ffa4533a1ce4e9ab38a5a"
+    },
+    "spatial_refinement_recheck.json": {
+      "sha256": "de69c6fb16049406e0c390e0daa4c24d53f39e39ce00b34d6d6d8e9270bb8056"
+    },
+    "temporal_convergence_report.json": {
+      "sha256": "1abdccba0703f3a4ba7d56cfd7fdf070ca3464d66fe1516e0ee952e75a71d830"
+    },
+    "temporal_convergence_report.md": {
+      "sha256": "78a24810fdbcfee823d015934e39304e22198d0ad71410be5d6fdf5ed3e9bbb3"
+    },
+    "time_integrator_map.json": {
+      "sha256": "39eff6dcf5b9e3836254b1048e4874d84ca935e02ac2a46bf13560ad12aa8dec"
+    }
+  },
+  "git_sha": "1be9e031a24af902c2a5d645efcb12e350cbfc68",
+  "section_version": "l1a2q_v1",
+  "stage": "L1A-2q",
+  "verdicts": {
+    "l1b_exit_verdict": "L1B_DATA_NOT_READY",
+    "selected_action": "ADDITIONAL_TARGETED_DIAGNOSTIC",
+    "temporal_verdict": "NONASYMPTOTIC_OR_MULTIPLE_SCALES"
+  }
+}
