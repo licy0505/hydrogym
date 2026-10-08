@@ -237,7 +237,7 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 #      No global mass correction, geometry change or wetting recalibration is introduced. Contract-10
 #      datasets/checkpoints are stale; schema-3 ML samples remain derived float32 observations with
 #      an explicit export cast policy and are not restart-authoritative.
-SOLVER_CONTRACT_VERSION = 11
+SOLVER_CONTRACT_VERSION = 12
 
 #: Production embedded wall-measure construction (L1A-2e). ``sdf_cutcell_v1`` is the
 #: deterministic marching-squares cut-cell measure; ``diffuse_sdf_v7`` is the pinned

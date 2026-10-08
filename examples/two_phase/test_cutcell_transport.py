@@ -561,7 +561,7 @@ def test_advection_subcycling_is_opt_in_and_conservative(x64):
 
 def test_contract_is_v11():
     """The contract-11 storage default and existing geometry strings are frozen together."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     assert pf.PHASE_TRANSPORT_GEOMETRY_VERSION == 1
     assert pf.PHASE_TRANSPORT_GEOMETRIES == ("sdf_cutcell_fv_v1", "hard_cell_v7")
@@ -593,7 +593,7 @@ def test_contract10_dataset_is_stale_under_contract11():
     """A contract-10 fingerprint can never be reused as contract-11 training data."""
     import generate_dataset as G
 
-    args = type("Args", (), {"N": 64, "ds": 2, "max_phi_overshoot": 0.02, "max_solid_leak": 5e-4,
+    args = type("Args", (), {"N": 64, "ds": 2, "dt": 4.0e-3, "max_phi_overshoot": 0.02, "max_solid_leak": 5e-4,
                              "min_total_mass_ratio": 0.995, "max_total_mass_ratio": 1.005,
                              "max_speed": 5.0, "min_feature_cells": 2.0})()
     case = {"We": 100.0, "Re": 200.0, "surface": "flat", "split": "train", "cos_theta": 0.0}

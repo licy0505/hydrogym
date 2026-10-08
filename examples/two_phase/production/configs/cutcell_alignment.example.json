@@ -1,7 +1,7 @@
 {
   "stage": "L1A-2f",
   "profile": "baseline",
-  "solver_contract_version": 11,
+  "solver_contract_version": 12,
   "phase_storage_model": "phase_only_float64_v1",
   "phase_state_dtype": "float64",
   "velocity_state_dtype": "float32",

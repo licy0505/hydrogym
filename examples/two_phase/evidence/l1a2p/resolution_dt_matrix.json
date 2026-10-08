@@ -1,0 +1,115 @@
+{
+ "resolution_dt_matrix": {
+  "entries": {
+   "N144": {
+    "N": 144,
+    "dx": 0.041666666666666664,
+    "eps": 0.0625,
+    "eps_over_dx": 1.5,
+    "effective_dt": 0.004,
+    "stable_dt": 0.008333333333333333,
+    "max_overshoot_window": 0.009120343055023294,
+    "t_of_max_overshoot": 0.536,
+    "passes_gate_in_window": true,
+    "global_advective_cfl_at_peak": 0.005382984280586243,
+    "cutcell_advective_cfl_ratio_at_peak": 0.03375677764415741,
+    "dt_over_dx2_at_peak": 2.3040000000000003,
+    "impact_phase_cap_value": 0.0035555555555555553,
+    "policy_effective_dt": 0.0035555555555555553,
+    "policy_limiting_criterion": "impact_phase_dx2_cap"
+   },
+   "N192": {
+    "N": 192,
+    "dx": 0.03125,
+    "eps": 0.046875,
+    "eps_over_dx": 1.5,
+    "effective_dt": 0.004,
+    "stable_dt": 0.00625,
+    "max_overshoot_window": 0.0598145293183332,
+    "t_of_max_overshoot": 0.38,
+    "passes_gate_in_window": false,
+    "global_advective_cfl_at_peak": 0.013127284049987793,
+    "cutcell_advective_cfl_ratio_at_peak": 0.07909762859344482,
+    "dt_over_dx2_at_peak": 4.096,
+    "impact_phase_cap_value": 0.002,
+    "policy_effective_dt": 0.002,
+    "policy_limiting_criterion": "impact_phase_dx2_cap"
+   }
+  },
+  "alpha_family_analysis": {
+   "alpha1_dt_proportional_dx": {
+    "cap_at_N192_for_dt002": 0.064,
+    "note": "normalised C_1 = dt/dx; at N=144 the same C_1 gives dt = C_1*dx_144"
+   },
+   "analysis": "alpha=1 is falsified: a dt ~ dx law calibrated to the measured-good dt=0.002 at N=192 predicts dt_144 = 0.00267 < 0.004, i.e. N=144 should also fail at its requested step, contradicted by the measured N=144 PASS at dt=0.004. alpha>=3 is contradicted by the measured dt=0.002 success at N=192 (an alpha=3 calibrated bound would demand dt ~ 6e-5). alpha=2 is the only simple family consistent with both resolution measurements; the coefficient is calibrated at the failing resolution (C*dx_192^2 = 0.002).",
+   "alpha_selection": 2,
+   "alpha_status": "EMPIRICAL (physically supported family; not a derived stability law)"
+  }
+ },
+ "dt_sweep": {
+  "entries": {
+   "dt_0.0040": {
+    "dt": 0.004,
+    "effective_dt": 0.004,
+    "nsteps_window": 200,
+    "physical_window": 0.8,
+    "observation_interval": 0.04,
+    "max_overshoot_window": 0.0598145293183332,
+    "t_of_max_overshoot": 0.38,
+    "first_threshold_crossing_step": 54,
+    "first_threshold_crossing_t": 0.22,
+    "crosses_gate_in_window": true,
+    "beta_last": 0.9821428571428572,
+    "spread_width_last": 1.375,
+    "contact_line_left_last": 2.3125,
+    "contact_line_right_last": 3.65625,
+    "max_speed_overall": 0.49169859487163875,
+    "runtime_window_seconds": 1.2891788400002042
+   },
+   "dt_0.0030": {
+    "dt": 0.003,
+    "effective_dt": 0.003,
+    "nsteps_window": 267,
+    "physical_window": 0.8,
+    "observation_interval": 0.04,
+    "max_overshoot_window": 0.00803162101680574,
+    "t_of_max_overshoot": 0.801,
+    "first_threshold_crossing_step": null,
+    "first_threshold_crossing_t": null,
+    "crosses_gate_in_window": false,
+    "beta_last": 0.9821428571428572,
+    "spread_width_last": 1.375,
+    "contact_line_left_last": 2.3125,
+    "contact_line_right_last": 3.65625,
+    "max_speed_overall": 0.491641403667121,
+    "runtime_window_seconds": 1.454538857999978
+   },
+   "dt_0.0020": {
+    "dt": 0.002,
+    "effective_dt": 0.002,
+    "nsteps_window": 400,
+    "physical_window": 0.8,
+    "observation_interval": 0.04,
+    "max_overshoot_window": 0.004222536294901769,
+    "t_of_max_overshoot": 0.8,
+    "first_threshold_crossing_step": null,
+    "first_threshold_crossing_t": null,
+    "crosses_gate_in_window": false,
+    "beta_last": 0.9821428571428572,
+    "spread_width_last": 1.375,
+    "contact_line_left_last": 2.3125,
+    "contact_line_right_last": 3.65625,
+    "max_speed_overall": 0.49159228884282413,
+    "runtime_window_seconds": 1.652790540000069
+   }
+  },
+  "case": {
+   "split": "train",
+   "surface": "flat",
+   "We": 100.0,
+   "cos_theta": 0.5,
+   "seed": 6
+  },
+  "N": 192
+ }
+}

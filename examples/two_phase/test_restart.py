@@ -30,7 +30,7 @@ def test_contract11_checkpoint_roundtrip_preserves_storage_and_parameters(tmp_pa
     metadata = save_checkpoint(path, state, p, step_index=17)
     restored, loaded = load_checkpoint(path, expected_params=p)
 
-    assert metadata["solver_contract_version"] == loaded["solver_contract_version"] == 11
+    assert metadata["solver_contract_version"] == loaded["solver_contract_version"] == 12
     assert metadata["phase_storage_model"] == loaded["phase_storage_model"] == "phase_only_float64_v1"
     assert metadata["phase_state_dtype"] == "float64"
     assert metadata["velocity_state_dtype"] == "float32"

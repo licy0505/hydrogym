@@ -1,0 +1,58 @@
+{
+ "stage": "L1A-2p",
+ "profile": "forensic",
+ "verdicts": {
+  "repair_label": "DT_POLICY_PARTIALLY_SUFFICIENT",
+  "exit_verdict": "L1B_DATA_NOT_READY",
+  "single_remaining_target_critical_blocker": "TEMPORAL_REFINEMENT",
+  "failing_categories": [
+   "SPATIAL_REFINEMENT",
+   "TEMPORAL_REFINEMENT"
+  ],
+  "unmeasured_categories": [
+   "EXTERNAL_DYNAMIC_VALIDATION",
+   "FRESH_TRAINING_AGGREGATE_LINEAGE"
+  ],
+  "temporal_material_change": true,
+  "readiness_rule": {
+   "ready_requires": [
+    "all canaries incl. complex accepted by the unmodified generator gates",
+    "impact overshoot <= 0.02 everywhere",
+    "spatial and temporal refinement within the unchanged 0.03 target",
+    "labels not numerically dominated by representation noise",
+    "fresh files load via the current reader"
+   ],
+   "caveat_allowed": [
+    "W-CONTACT-ANGLE open",
+    "generic inactive-state leakage",
+    "model-form publication caveats",
+    "external validation incomplete"
+   ],
+   "caveat_not_allowed": [
+    "canary rejection",
+    "complex divergence",
+    "material refinement failures"
+   ]
+  }
+ },
+ "promotion": null,
+ "results": {
+  "profile": "forensic",
+  "args": {
+   "N": 192,
+   "ds": 3,
+   "dt": 0.004,
+   "nsteps": 2000,
+   "save_every": 20,
+   "timestep_policy": "impact_phase_cap_dx2_v1",
+   "max_phi_overshoot": 0.02,
+   "max_solid_leak": 0.0005,
+   "min_total_mass_ratio": 0.995,
+   "max_total_mass_ratio": 1.005,
+   "max_speed": 5.0,
+   "min_feature_cells": 2.0
+  },
+  "stages": {},
+  "profile_note": "forensic profile: the full production-spec evidence (section 32)"
+ }
+}

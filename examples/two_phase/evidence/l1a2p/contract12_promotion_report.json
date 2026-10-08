@@ -1,0 +1,86 @@
+{
+ "promotion": "ALREADY_APPLIED",
+ "precondition": {
+  "mandatory_canaries": 8,
+  "accepted": 8,
+  "all_mandatory_accepted": true,
+  "policy": {
+   "time_step_policy_name": "impact_phase_cap_dx2_v1",
+   "time_step_policy_version": 1
+  }
+ },
+ "semantics": {
+  "production_semantics_changed": true,
+  "changed_surface": "default timestep policy (requested_dt cap -> impact_phase_dx2 cap) and the recorded solver contract version",
+  "numerics_changed": false,
+  "note": "metadata-only version bump: the phase update, momentum, projection, Brinkman damping, wetting model, cut-cell geometry, rho/nu, M and phase_only_float64_v1 storage are untouched; contract-11 bitwise replay remains valid"
+ },
+ "edits": [],
+ "note": "the on-disk state already carries the promoted default policy and contract version",
+ "regression": {
+  "families": {
+   "formal_mass": {
+    "command": "-m pytest test_mass_precision.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "................                                                         [100%]\n16 passed in 29.88s"
+   },
+   "restart_determinism": {
+    "command": "-m pytest test_restart.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "....                                                                     [100%]\n4 passed in 23.28s"
+   },
+   "lineage": {
+    "command": "-m pytest test_dataset_contract.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": ".............                                                            [100%]\n13 passed in 27.70s"
+   },
+   "static_laplace_wall_alignment": {
+    "command": "-m pytest test_wall_measure.py test_cutcell_alignment_audit.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "............................................................             [100%]\n60 passed in 130.63s (0:02:10)"
+   },
+   "ch_only_wetting": {
+    "command": "-m pytest test_nonneutral_wetting_audit.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "............................                                             [100%]\n28 passed in 38.02s"
+   },
+   "cutcell_transport": {
+    "command": "-m pytest test_cutcell_transport.py -m not slow -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": ".........................                                                [100%]\n25 passed, 2 deselected in 71.24s (0:01:11)"
+   },
+   "core_solver": {
+    "command": "-m pytest test_two_phase.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "...............................................                          [100%]\n47 passed in 118.79s (0:01:58)"
+   },
+   "validation_contract": {
+    "command": "-m pytest test_production_validation.py -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": ".........................................................                [100%]\n57 passed in 72.47s (0:01:12)"
+   },
+   "l1a_audit_suites": {
+    "command": "-m pytest tests/ -q -x",
+    "returncode": 0,
+    "passed": true,
+    "tail": "........................................................................ [ 51%]\n....................................................................     [100%]\n140 passed in 183.58s (0:03:03)"
+   },
+   "run_validation_ci": {
+    "command": "-m production.run_validation --config production/configs/ci.json --out artifacts/l1a2p/promotion_regression/ci --overwrite",
+    "returncode": 0,
+    "passed": true,
+    "tail": "Report: artifacts/l1a2p/promotion_regression/ci/report.json\nPhysics status: BASELINE_ONLY; contract status: PASS"
+   }
+  },
+  "all_passed": true,
+  "full_8_case_matrix": "covered by the exit re-audit canary matrix (section 26), reported separately"
+ }
+}

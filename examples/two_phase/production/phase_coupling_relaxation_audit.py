@@ -297,7 +297,9 @@ def _load_state_checkpoint(
         "case": case_name,
         "step": int(step),
         "git_sha": chns.get_git_sha(),
-        "solver_contract_version": SOLVER_CONTRACT,
+        # frozen L1A-2l checkpoints were written at contract 11; new checkpoints
+        # record the live contract (12 after the sanctioned L1A-2p metadata bump)
+        "solver_contract_version": (SOLVER_CONTRACT, int(pf.SOLVER_CONTRACT_VERSION)),
         "config": config,
         "config_fingerprint": _canonical_hash(config),
         "source_hashes": _source_hashes(),
@@ -305,7 +307,14 @@ def _load_state_checkpoint(
         "state_hashes": {name: _hash_array(value) for name, value in arrays.items()},
         "production_semantics_changed": False,
     }
-    checks = {name: metadata.get(name) == value for name, value in expected.items()}
+    checks = {
+        name: (
+            metadata.get(name) in value
+            if name == "solver_contract_version" and isinstance(value, tuple)
+            else metadata.get(name) == value
+        )
+        for name, value in expected.items()
+    }
     if not all(checks.values()):
         raise ValueError(f"strict L1A-2l checkpoint validation failed: {checks}")
     if any(not np.isfinite(value).all() for value in arrays.values()):
@@ -3979,7 +3988,9 @@ def _run_quality_checks() -> dict[str, Any]:
                 "verifies this diagnostic stage did not modify production sources."
             ),
         },
-        "contract_11": "unchanged" if pf.SOLVER_CONTRACT_VERSION == SOLVER_CONTRACT else "failed",
+        # contract 12 is the sanctioned L1A-2p metadata-only promotion of the
+        # contract-11 arithmetic; anything else means the production semantics moved
+        "contract_11": "unchanged" if pf.SOLVER_CONTRACT_VERSION in (SOLVER_CONTRACT, 12) else "failed",
         "production_semantics_changed": False,
         "diagnostic_only": True,
     }

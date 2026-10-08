@@ -1,0 +1,95 @@
+{
+ "case": {
+  "split": "test",
+  "surface": "random_pillars",
+  "n_pillars": 7,
+  "width_range": [
+   0.2,
+   0.4
+  ],
+  "seed": 100,
+  "We": 100.0,
+  "cos_theta": -0.5
+ },
+ "N": 192,
+ "entries": {
+  "production_dt": {
+   "dt": 0.004,
+   "effective_dt": 0.004,
+   "diverged": true,
+   "first_nonfinite": {
+    "step": 333,
+    "t": 1.332,
+    "quantity": "phi",
+    "first_nonfinite_cell": [
+     0,
+     0
+    ]
+   },
+   "last_finite_step": 300,
+   "pre_break_cg_diagnostics": [
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 9.322916639792965e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 195,
+     "cg_relative_residual": 9.975010376527437e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 195,
+     "cg_relative_residual": 9.965562706561002e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 8.833846668990307e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 9.424833461785046e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 9.931044040657752e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 9.69572224216841e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 195,
+     "cg_relative_residual": 9.169614047752189e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 197,
+     "cg_relative_residual": 9.732902166261707e-07,
+     "cg_converged": true
+    },
+    {
+     "cg_iterations": 199,
+     "cg_relative_residual": 9.144722473397455e-07,
+     "cg_converged": true
+    }
+   ],
+   "runtime_seconds": 126.88431478400003
+  },
+  "dt_half": {
+   "dt": 0.002,
+   "effective_dt": 0.002,
+   "finite_through_step": 900,
+   "finite_through_t": 1.8,
+   "diverged": false,
+   "runtime_seconds": 207.354072997
+  }
+ },
+ "classification": "SUPPORTED",
+ "mechanism_note": "the complex-surface failure is a sudden non-finite blow-up (not the gradual interface overshoot of the flat cases); the classification only asserts whether the dt reduction removes it, not that the mechanism is identical"
+}

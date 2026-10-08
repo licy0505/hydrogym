@@ -92,7 +92,7 @@ def test_production_correction_matches_shipped_solve(N):
 # --------------------------------------------------------------------------- the production default
 def test_contract11_default_phase_storage_is_a1():
     """The promoted default is phase-only float64; contract-10 float32 remains explicit."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.PHASE_STORAGE_MODEL == "phase_only_float64_v1"
     assert pf.PHASE_STORAGE_MODELS[0] == pf.PHASE_STORAGE_MODEL
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
@@ -417,7 +417,7 @@ def test_hidden_state_candidates_are_flagged_for_the_dataset_contract():
 
 def test_frozen_stage1_selection_is_the_contract11_production_default():
     """Stage 2 promotes the selected A1 model without re-opening candidate selection."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.PHASE_STORAGE_MODEL == psa.PHASE_STORAGE_MODEL_OF["A1_phase_float64"]
     assert psa.PHASE_STORAGE_MODEL_OF["A1_phase_float64"] == "phase_only_float64_v1"
     hidden_models = {psa.PHASE_STORAGE_MODEL_OF[name] for name in psa.HIDDEN_STATE_CANDIDATES}

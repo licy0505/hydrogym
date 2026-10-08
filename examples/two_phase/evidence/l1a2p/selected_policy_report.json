@@ -1,0 +1,1063 @@
+{
+ "policy": {
+  "time_step_policy_name": "impact_phase_cap_dx2_v1",
+  "time_step_policy_version": 1
+ },
+ "all_mandatory_accepted": true,
+ "n_accepted": 8,
+ "n_total": 8,
+ "records": {
+  "flat_we100_ct050": {
+   "label": "flat_we100_ct050",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 100.0,
+    "cos_theta": 0.5,
+    "seed": 6
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "c59aad5472646c4340eef21997c8fde68a4b791d2dd17b6ae260d9fb797aee70",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.5495070215975073,
+    "startup_total_mass_ratio": 1.0000000000000002,
+    "startup_fluid_mass_ratio": 1.0000000000000002,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0,
+    "min_total_mass_ratio": 1.0,
+    "max_total_mass_ratio": 1.0000000000000004,
+    "startup_relative_total_ratio_min": 1.0,
+    "startup_relative_total_ratio_max": 1.0000000000000004,
+    "final_fluid_mass_ratio": 1.0,
+    "min_fluid_mass_ratio": 1.0,
+    "max_fluid_mass_ratio": 1.0000000000000004,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.011489807697238138,
+    "max_speed": 0.24840209429718188,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.011489807697238138,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.8928571428571429,
+   "contact_line_left_last": 2.375,
+   "contact_line_right_last": 3.59375,
+   "max_speed_overall": 0.24840209429718188,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "flat_we100_ct000": {
+   "label": "flat_we100_ct000",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 100.0,
+    "cos_theta": 0.0,
+    "seed": 4
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "f2a7cf6b23b67a098ac56d64a45f4fafc5a463a24371359db31f5e89e71e7626",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.549507021597507,
+    "startup_total_mass_ratio": 1.0,
+    "startup_fluid_mass_ratio": 1.0,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0,
+    "min_total_mass_ratio": 0.9999999999999999,
+    "max_total_mass_ratio": 1.0000000000000002,
+    "startup_relative_total_ratio_min": 0.9999999999999999,
+    "startup_relative_total_ratio_max": 1.0000000000000002,
+    "final_fluid_mass_ratio": 1.0,
+    "min_fluid_mass_ratio": 0.9999999999999999,
+    "max_fluid_mass_ratio": 1.0000000000000002,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.006679767093891842,
+    "max_speed": 0.2463090110249479,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.006679767093891842,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.8928571428571429,
+   "contact_line_left_last": 2.375,
+   "contact_line_right_last": 3.59375,
+   "max_speed_overall": 0.2463090110249479,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "flat_we100_ctm050": {
+   "label": "flat_we100_ctm050",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 100.0,
+    "cos_theta": -0.5,
+    "seed": 1
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "e1b98ec4f1eb7fdb9cc881b0a869d1ddf867feabdb3c921ca698e4a0eb358d36",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.549507021597507,
+    "startup_total_mass_ratio": 1.0,
+    "startup_fluid_mass_ratio": 1.0,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0,
+    "min_total_mass_ratio": 0.9999999999999997,
+    "max_total_mass_ratio": 1.0000000000000002,
+    "startup_relative_total_ratio_min": 0.9999999999999997,
+    "startup_relative_total_ratio_max": 1.0000000000000002,
+    "final_fluid_mass_ratio": 1.0,
+    "min_fluid_mass_ratio": 0.9999999999999997,
+    "max_fluid_mass_ratio": 1.0000000000000002,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.007190786643560099,
+    "max_speed": 0.24406980145532525,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.007190786643560099,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.9375000000000001,
+   "contact_line_left_last": 2.34375,
+   "contact_line_right_last": 3.625,
+   "max_speed_overall": 0.24406980145532525,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "flat_we200_ct050": {
+   "label": "flat_we200_ct050",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 200.0,
+    "cos_theta": 0.5,
+    "seed": 7
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "d066d6d1fdac82dedf29ea79ba218ca7f930a297dabd507f257fad4e205da398",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.5495070215975073,
+    "startup_total_mass_ratio": 1.0000000000000002,
+    "startup_fluid_mass_ratio": 1.0000000000000002,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0,
+    "min_total_mass_ratio": 0.9999999999999997,
+    "max_total_mass_ratio": 1.0000000000000002,
+    "startup_relative_total_ratio_min": 0.9999999999999997,
+    "startup_relative_total_ratio_max": 1.0000000000000002,
+    "final_fluid_mass_ratio": 1.0,
+    "min_fluid_mass_ratio": 0.9999999999999997,
+    "max_fluid_mass_ratio": 1.0000000000000002,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.012084962424295732,
+    "max_speed": 0.24559980946001406,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.012084962424295732,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.8928571428571429,
+   "contact_line_left_last": 2.375,
+   "contact_line_right_last": 3.59375,
+   "max_speed_overall": 0.24559980946001406,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "flat_we200_ct000": {
+   "label": "flat_we200_ct000",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 200.0,
+    "cos_theta": 0.0,
+    "seed": 5
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "ff252b96ff911b172e815440a97b04215c3d210ac35ccc3662500a152e219ef9",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.549507021597507,
+    "startup_total_mass_ratio": 1.0,
+    "startup_fluid_mass_ratio": 1.0,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0000000000000002,
+    "min_total_mass_ratio": 0.9999999999999997,
+    "max_total_mass_ratio": 1.0000000000000002,
+    "startup_relative_total_ratio_min": 0.9999999999999997,
+    "startup_relative_total_ratio_max": 1.0000000000000002,
+    "final_fluid_mass_ratio": 1.0000000000000002,
+    "min_fluid_mass_ratio": 0.9999999999999997,
+    "max_fluid_mass_ratio": 1.0000000000000002,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.0067735872053469315,
+    "max_speed": 0.24455910708741424,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.0067735872053469315,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.9375000000000001,
+   "contact_line_left_last": 2.34375,
+   "contact_line_right_last": 3.625,
+   "max_speed_overall": 0.24455910708741424,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "flat_we200_ctm050": {
+   "label": "flat_we200_ctm050",
+   "case": {
+    "split": "train",
+    "surface": "flat",
+    "We": 200.0,
+    "cos_theta": -0.5,
+    "seed": 2
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "a1e7c1f3b3e35d624dd079f9dc13265a58b7c77e9ee26093c39cd143eda16f8e",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.5495070215975073,
+    "startup_total_mass_ratio": 1.0000000000000002,
+    "startup_fluid_mass_ratio": 1.0000000000000002,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0000000000000002,
+    "min_total_mass_ratio": 0.9999999999999997,
+    "max_total_mass_ratio": 1.0000000000000002,
+    "startup_relative_total_ratio_min": 0.9999999999999997,
+    "startup_relative_total_ratio_max": 1.0000000000000002,
+    "final_fluid_mass_ratio": 1.0000000000000002,
+    "min_fluid_mass_ratio": 0.9999999999999997,
+    "max_fluid_mass_ratio": 1.0000000000000002,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.007233868762780871,
+    "max_speed": 0.24344486094848786,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.007233868762780871,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.9375000000000001,
+   "contact_line_left_last": 2.34375,
+   "contact_line_right_last": 3.625,
+   "max_speed_overall": 0.24344486094848786,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "pillar_training": {
+   "label": "pillar_training",
+   "case": {
+    "split": "train",
+    "surface": "pillars",
+    "n_pillars": 4,
+    "width": 0.3,
+    "height": 0.4,
+    "We": 100.0,
+    "cos_theta": -0.5,
+    "seed": 8
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "c0f8a2659469c36c584acf48fcb70d68fc0450f113fdec1620e0c5bab76336b3",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.550469499759823,
+    "first_saved_total_mass": 1.5510418752150605,
+    "startup_total_mass_ratio": 1.0003691626667446,
+    "startup_fluid_mass_ratio": 1.0,
+    "raw_initial_fluid_mass": 1.5500927792312642,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0035907036031408,
+    "min_total_mass_ratio": 1.0003691626667446,
+    "max_total_mass_ratio": 1.0035907036031408,
+    "startup_relative_total_ratio_min": 1.0003691626667446,
+    "startup_relative_total_ratio_max": 1.0035907036031408,
+    "final_fluid_mass_ratio": 0.9999999999999997,
+    "min_fluid_mass_ratio": 0.9999999999999994,
+    "max_fluid_mass_ratio": 1.0,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.007746959396640607,
+    "max_speed": 0.3906184593163887,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.007746959396640607,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.9821428571428572,
+   "contact_line_left_last": 2.3125,
+   "contact_line_right_last": 3.65625,
+   "max_speed_overall": 0.3906184593163887,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  },
+  "complex_heldout": {
+   "label": "complex_heldout",
+   "case": {
+    "split": "test",
+    "surface": "random_pillars",
+    "n_pillars": 7,
+    "width_range": [
+     0.2,
+     0.4
+    ],
+    "seed": 100,
+    "We": 100.0,
+    "cos_theta": -0.5
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "time_step_policy": {
+    "time_step_policy_name": "impact_phase_cap_dx2_v1",
+    "time_step_policy_version": 1,
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "limiting_criterion": "impact_phase_dx2_cap",
+    "limiting_value": 0.002,
+    "resolved_effective_dt": 0.002,
+    "registry_version": 1
+   },
+   "dataset_fingerprint": "2072cf7352f890bc3d1cbba8c89528cb12e5b87b65a87fbfbb9fd22106d701b7",
+   "accepted_by_generator": true,
+   "generator_diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.5507267347602243,
+    "first_saved_total_mass": 1.5507475719084605,
+    "startup_total_mass_ratio": 1.0000134370213456,
+    "startup_fluid_mass_ratio": 1.0000000000000002,
+    "raw_initial_fluid_mass": 1.5507205085017368,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0002022521384806,
+    "min_total_mass_ratio": 1.0000134370213456,
+    "max_total_mass_ratio": 1.0002022521384806,
+    "startup_relative_total_ratio_min": 1.0000134370213456,
+    "startup_relative_total_ratio_max": 1.0002022521384806,
+    "final_fluid_mass_ratio": 1.0000000000000546,
+    "min_fluid_mass_ratio": 0.9999999999999989,
+    "max_fluid_mass_ratio": 1.0000000000000593,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.008066414493723473,
+    "max_speed": 0.5503712358304244,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "max_phi_overshoot": 0.008066414493723473,
+   "final_t": 8.0,
+   "frame_dt": 0.08,
+   "n_frames": 100,
+   "beta_last": 0.9598214285714286,
+   "contact_line_left_last": 2.3125,
+   "contact_line_right_last": 3.625,
+   "max_speed_overall": 0.5503712358304244,
+   "reader_check": {
+    "status": "MEASURED",
+    "shapes_match_current_model_contract": true,
+    "lineage_accepted_by_current_reader": true
+   }
+  }
+ },
+ "refinement": {
+  "case": {
+   "split": "train",
+   "surface": "flat",
+   "We": 100.0,
+   "cos_theta": 0.5,
+   "seed": 6
+  },
+  "production": {
+   "variant_args": {
+    "N": 192,
+    "ds": 3,
+    "dt": 0.004,
+    "nsteps": 2000,
+    "save_every": 20,
+    "timestep_policy": "impact_phase_cap_dx2_v1",
+    "max_phi_overshoot": 0.02,
+    "max_solid_leak": 0.0005,
+    "min_total_mass_ratio": 0.995,
+    "max_total_mass_ratio": 1.005,
+    "max_speed": 5.0,
+    "min_feature_cells": 2.0
+   },
+   "schedule": {
+    "requested_dt": 0.004,
+    "effective_dt": 0.002,
+    "nsteps": 4000,
+    "save_every": 40,
+    "frame_dt": 0.08,
+    "n_frames": 100,
+    "horizon": 8.0,
+    "physical_horizon": 8.0,
+    "requested_horizon": 8.0,
+    "requested_frame_dt": 0.08,
+    "stable_dt_cap_N": 0.00625
+   },
+   "accepted": true,
+   "overshoot": 0.011489807697238138,
+   "diagnostics": {
+    "finite": true,
+    "initial_total_mass": 1.549507021597507,
+    "first_saved_total_mass": 1.5495070215975073,
+    "startup_total_mass_ratio": 1.0000000000000002,
+    "startup_fluid_mass_ratio": 1.0000000000000002,
+    "raw_initial_fluid_mass": 1.549507021597507,
+    "raw_initial_solid_leak": 0.0,
+    "final_total_mass_ratio": 1.0,
+    "min_total_mass_ratio": 1.0,
+    "max_total_mass_ratio": 1.0000000000000004,
+    "startup_relative_total_ratio_min": 1.0,
+    "startup_relative_total_ratio_max": 1.0000000000000004,
+    "final_fluid_mass_ratio": 1.0,
+    "min_fluid_mass_ratio": 1.0,
+    "max_fluid_mass_ratio": 1.0000000000000004,
+    "mass_metric": "sum_i V_i phi_i",
+    "initial_solid_leak": 0.0,
+    "max_solid_leak": 0.0,
+    "max_phi_overshoot": 0.011489807697238138,
+    "max_speed": 0.24840209429718188,
+    "shape": [
+     100,
+     192,
+     192
+    ]
+   },
+   "solver_params": {
+    "N": 192
+   },
+   "binding": {
+    "ds": 3
+   },
+   "final_fields_path": "artifacts/l1a2p/cache/refinement_production_fields.npz"
+  },
+  "spatial": {
+   "production_N": 192,
+   "refined_N": 144,
+   "note": "production contract ties eps to N (eps=1.5*Lx/N); the audit compares what production produces at each N",
+   "production_trajectory_finite": true,
+   "refined_trajectory_finite": true,
+   "equal_physical_times": false,
+   "scalars": {
+    "common_times": [
+     3.68,
+     7.36
+    ],
+    "n_common": 2,
+    "formal_mass": {
+     "max_abs_change": 0.008117576390988868,
+     "max_relative_change": 0.005211510142733904,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 7.36
+    },
+    "spread_width": {
+     "max_abs_change": 0.02083333333333326,
+     "max_relative_change": 0.015624999999999944,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 3.68
+    },
+    "beta": {
+     "max_abs_change": 0.014880952380952328,
+     "max_relative_change": 0.015624999999999943,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 3.68
+    },
+    "drop_vertical_extent": {
+     "max_abs_change": 0.04166666666666674,
+     "max_relative_change": 0.031250000000000056,
+     "target": 0.03,
+     "at_target": false,
+     "above_target": true,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 3.68
+    },
+    "centroid_y": {
+     "max_abs_change": 0.017718450935993668,
+     "max_relative_change": 0.019648330014508716,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 7.36
+    },
+    "contact_line_left": {
+     "max_abs_change": 0.010416666666666963,
+     "max_relative_change": 0.0044642857142858415,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 3.68
+    },
+    "contact_line_right": {
+     "max_abs_change": 0.010416666666666963,
+     "max_relative_change": 0.0029069767441861293,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 7.36
+    },
+    "max_speed": {
+     "max_abs_change": 0.002078291108289408,
+     "max_relative_change": 0.07941886695571079,
+     "target": 0.03,
+     "at_target": false,
+     "above_target": true,
+     "above_2x_target": true,
+     "time_of_max_discrepancy": 3.68
+    }
+   },
+   "fields": {
+    "phi_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(48, 48) and (144, 144)->(48, 48)",
+     "common_shape": [
+      48,
+      48
+     ],
+     "l2": 0.014398463490356117,
+     "relative_l2": 0.07404210260775758,
+     "linf": 0.1759795412683577
+    },
+    "u_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(48, 48) and (144, 144)->(48, 48)",
+     "common_shape": [
+      48,
+      48
+     ],
+     "l2": 0.0003646372104391812,
+     "relative_l2": 0.11747587854508702,
+     "linf": 0.0039762753812182285
+    },
+    "v_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(48, 48) and (144, 144)->(48, 48)",
+     "common_shape": [
+      48,
+      48
+     ],
+     "l2": 0.000339392061828822,
+     "relative_l2": 0.09630539019746431,
+     "linf": 0.002261502933429761
+    }
+   }
+  },
+  "temporal": {
+   "production_dt": 0.002,
+   "half_requested_dt": 0.002,
+   "half_effective_dt": 0.002,
+   "informative": false,
+   "equal_save_times": true,
+   "equal_horizon": true,
+   "eta_pen_note": "eta_pen=2*dt is part of the production dt policy; the dt/2 run is what production would generate",
+   "scalars": {
+    "common_times": [
+     0.08,
+     0.16,
+     0.24,
+     0.32,
+     0.4,
+     0.48,
+     0.56,
+     0.64,
+     0.72,
+     0.8,
+     0.88,
+     0.96,
+     1.04,
+     1.12,
+     1.2,
+     1.28,
+     1.36,
+     1.44,
+     1.52,
+     1.6,
+     1.68,
+     1.76,
+     1.84,
+     1.92,
+     2.0,
+     2.08,
+     2.16,
+     2.24,
+     2.32,
+     2.4,
+     2.48,
+     2.56,
+     2.64,
+     2.72,
+     2.8,
+     2.88,
+     2.96,
+     3.04,
+     3.12,
+     3.2,
+     3.28,
+     3.36,
+     3.44,
+     3.52,
+     3.6,
+     3.68,
+     3.76,
+     3.84,
+     3.92,
+     4.0,
+     4.08,
+     4.16,
+     4.24,
+     4.32,
+     4.4,
+     4.48,
+     4.56,
+     4.64,
+     4.72,
+     4.8,
+     4.88,
+     4.96,
+     5.04,
+     5.12,
+     5.2,
+     5.28,
+     5.36,
+     5.44,
+     5.52,
+     5.6,
+     5.68,
+     5.76,
+     5.84,
+     5.92,
+     6.0,
+     6.08,
+     6.16,
+     6.24,
+     6.32,
+     6.4,
+     6.48,
+     6.56,
+     6.64,
+     6.72,
+     6.8,
+     6.88,
+     6.96,
+     7.04,
+     7.12,
+     7.2,
+     7.28,
+     7.36,
+     7.44,
+     7.52,
+     7.6,
+     7.68,
+     7.76,
+     7.84,
+     7.92,
+     8.0
+    ],
+    "n_common": 100,
+    "formal_mass": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "spread_width": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "beta": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "drop_vertical_extent": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "centroid_y": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "contact_line_left": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "contact_line_right": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    },
+    "max_speed": {
+     "max_abs_change": 0.0,
+     "max_relative_change": 0.0,
+     "target": 0.03,
+     "at_target": true,
+     "above_target": false,
+     "above_2x_target": false,
+     "time_of_max_discrepancy": 0.08
+    }
+   },
+   "fields": {
+    "phi_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(64, 64) and (192, 192)->(64, 64)",
+     "common_shape": [
+      64,
+      64
+     ],
+     "l2": 0.0,
+     "relative_l2": 0.0,
+     "linf": 0.0
+    },
+    "u_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(64, 64) and (192, 192)->(64, 64)",
+     "common_shape": [
+      64,
+      64
+     ],
+     "l2": 0.0,
+     "relative_l2": 0.0,
+     "linf": 0.0
+    },
+    "v_final": {
+     "mapping_rule": "integer average-pool (192, 192)->(64, 64) and (192, 192)->(64, 64)",
+     "common_shape": [
+      64,
+      64
+     ],
+     "l2": 0.0,
+     "relative_l2": 0.0,
+     "linf": 0.0
+    }
+   },
+   "note": "the half run requests dt/2 under the legacy policy so the comparison point dt_selected/2 is reachable; the policy cap itself is what production would run (section 18)"
+  },
+  "field_uncertainty": {
+   "phi": {
+    "space_refinement_norm": 0.07404210260775758,
+    "time_refinement_norm": 0.0,
+    "representation_norm_saved_grid": null,
+    "representation_over_frame_signal": null,
+    "late60_residual_norm_saved_grid": null,
+    "frame_increment_norm_median": null,
+    "space_over_frame_signal": null,
+    "time_over_frame_signal": null
+   },
+   "u": {
+    "space_refinement_norm": 0.11747587854508702,
+    "time_refinement_norm": 0.0,
+    "representation_norm_saved_grid": null,
+    "representation_over_frame_signal": null,
+    "late60_residual_norm_saved_grid": null,
+    "frame_increment_norm_median": null,
+    "space_over_frame_signal": null,
+    "time_over_frame_signal": null
+   },
+   "v": {
+    "space_refinement_norm": 0.09630539019746431,
+    "time_refinement_norm": 0.0,
+    "representation_norm_saved_grid": null,
+    "representation_over_frame_signal": null,
+    "late60_residual_norm_saved_grid": null,
+    "frame_increment_norm_median": null,
+    "space_over_frame_signal": null,
+    "time_over_frame_signal": null
+   }
+  }
+ }
+}

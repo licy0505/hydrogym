@@ -165,7 +165,7 @@ def test_report_schema_solver_contract_lineage_fails_closed(version, valid):
     """Historical reports and current contract-11 reports validate only with explicit storage lineage."""
     report = _minimal_report()
     report["repository"]["solver_contract_version"] = version
-    if version == 11:
+    if version in (11, 12):
         report["repository"].update(
             phase_storage_model="phase_only_float64_v1",
             phase_state_dtype="float64",
@@ -329,7 +329,7 @@ def test_capillary_audit_reports_consistent_conventions():
     result = run_audit(N=64)
     assert [check.name for check in result.checks if not check.passed] == []
     assert result.diagnosis["three_conventions_consistent"] is True
-    assert result.to_dict()["settings"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
+    assert result.to_dict()["settings"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 12
 
 
 def test_capillary_audit_detects_a_flipped_force_sign(monkeypatch):
@@ -436,7 +436,7 @@ def test_ci_profile_report_records_contract_v9_lineage_and_stays_baseline_only(t
     assert run_validation(str(config_path), str(tmp_path / "ci")) == 0
     report = json.loads((tmp_path / "ci" / "report.json").read_text(encoding="utf-8"))
     assert validate_report_schema(report) == []
-    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
+    assert report["repository"]["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 12
     assert report["repository"]["wall_measure_method"] == pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert report["repository"]["wall_measure_contract_version"] == pf.WALL_MEASURE_CONTRACT_VERSION == 1
     assert report["repository"]["phasefield_sha256"] == compute_file_sha256(HERE / "phasefield.py")
@@ -724,7 +724,7 @@ def test_phase_boundary_audit_covers_v8_flux_and_thermodynamics():
         jax.config.update("jax_enable_x64", previous_x64)
     failed = [check.name for check in audit.checks if not check.passed]
     assert failed == []
-    assert audit.settings["solver_contract_version"] == 11
+    assert audit.settings["solver_contract_version"] == 12
     assert audit.settings["wall_measure_method"] == "sdf_cutcell_v1"
     variational = audit.numbers["v8_variational_audit"]
     assert variational["relative_error"] <= 1e-6  # wall-measure gate: mu == d(F_bulk + F_wall^h)/dphi

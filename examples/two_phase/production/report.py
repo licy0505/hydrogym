@@ -16,7 +16,7 @@ REPORT_SCHEMA_VERSION = VALIDATION_REPORT_SCHEMA_VERSION
 # contract of the solver that produced it. Contract 11 promotes the selected phase-only float64
 # state while retaining contract-10's weighted exchange solve and existing physics operators.
 # Unknown contracts fail closed.
-KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9, 10, 11)
+KNOWN_SOLVER_CONTRACT_VERSIONS = (4, 5, 6, 7, 8, 9, 10, 11, 12)
 #: Blocker statuses that claim resolution, one per contract that produced the closing evidence.
 KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v5",
@@ -26,6 +26,7 @@ KNOWN_RESOLVED_STATUSES = (
     "resolved_in_contract_v9",
     "resolved_in_contract_v10",
     "resolved_in_contract_v11",
+    "resolved_in_contract_v12",
     # W-CONTACT-ANGLE is closed by thermodynamic equilibrium, not by a measurement alone: the
     # contact angle is only claimed once a drift-clean full CHNS relaxation reaches it.
     "thermodynamic_equilibrium_validated_v9",

@@ -253,7 +253,7 @@ def test_finite_difference_and_autodiff_agree_with_the_solve(fixture):
 
 # --------------------------------------------------------------------------- contract
 def test_contract_version_and_metadata():
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.IMPLICIT_PHASE_SOLVER == "weighted_spd_nullspace_preserving_v1"
     assert pf.PHASE_MASS_INVARIANT == "componentwise_cutcell_volume"
     metadata = pf.phase_transport_metadata(pf.PhaseFieldParams(Nx=2, Ny=2))

@@ -63,8 +63,10 @@ def _config_fingerprint(config: dict[str, Any]) -> str:
 
 def checkpoint_metadata(p: pf.PhaseFieldParams, *, step_index: int) -> dict[str, Any]:
     """Build canonical lineage and config metadata for a contract-11 state."""
-    if pf.SOLVER_CONTRACT_VERSION != 11:
-        raise RuntimeError(f"solver checkpoints require contract 11, found contract {pf.SOLVER_CONTRACT_VERSION}")
+    if pf.SOLVER_CONTRACT_VERSION not in (11, 12):
+        raise RuntimeError(
+            f"solver checkpoints require contract 11 or 12, found contract {pf.SOLVER_CONTRACT_VERSION}"
+        )
     if p.phase_storage_model != pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL:
         raise RuntimeError(
             "contract-11 solver checkpoints require phase_storage_model='phase_only_float64_v1'"

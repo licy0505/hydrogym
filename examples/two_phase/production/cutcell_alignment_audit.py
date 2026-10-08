@@ -1463,8 +1463,8 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     # The alignment matrix is a closure statement about the transport domain. Contracts 9-11
     # retain that geometry; contract 11 additionally records the A1 phase-storage lineage.
     contract = report.get("solver_contract_version")
-    if contract not in (9, 10, 11):
-        errors.append(f"solver_contract_version must be 9, 10 or 11; got {contract!r}")
+    if contract not in (9, 10, 11, 12):
+        errors.append(f"solver_contract_version must be 9, 10, 11 or 12; got {contract!r}")
     if contract == 11:
         expected_storage = {
             "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,

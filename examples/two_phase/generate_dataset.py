@@ -39,6 +39,7 @@ import cases as C
 import jax
 import numpy as np
 import phasefield as pf
+from production import timestep_policy
 from scipy.ndimage import distance_transform_edt
 
 from production.dataset_lineage import (
@@ -97,6 +98,7 @@ def _dataset_fingerprint(case, args, dt, nsteps, save_every) -> str:
         },
         **pf.phase_transport_metadata(params),
         **sample_lineage_metadata(params),
+        "time_step_policy": _time_step_policy_record(case, args, dt),
         "solver_sha256": _source_sha256(pf.__file__),
         "generator_sha256": _source_sha256(__file__),
         "case": case,
@@ -156,17 +158,42 @@ def _feature_cells(case: dict, saved_dx: float) -> float:
 
 
 def _effective_schedule(case: dict, args: argparse.Namespace) -> tuple[float, int, int]:
-    """Resolve the actual solver dt and integer save schedule."""
+    """Resolve the actual solver dt and integer save schedule.
+
+    The effective dt is resolved by the canonical deterministic timestep policy
+    (``production/timestep_policy.py``); the horizon and frame spacing stay at
+    the *requested* physical schedule, so a policy change re-scales the step
+    count, never the dataset timing (L1A-2p sections 13/21).
+    """
     requested_dt = float(case.get("dt", args.dt))
-    p0 = pf.PhaseFieldParams(Nx=args.N, Ny=args.N, Lx=6.0, Ly=6.0, dt=requested_dt)
-    dt_cap = float(pf.stable_dt(p0, u_max=2.0))
-    dt = min(requested_dt, dt_cap)
+    policy = timestep_policy.effective_dt_for_case(
+        case, int(args.N), requested_dt, getattr(args, "timestep_policy", timestep_policy.DEFAULT_POLICY_NAME)
+    )
+    dt = policy["effective_dt"]
     horizon = max(float(args.nsteps) * float(args.dt), dt)
     save_time = max(float(args.save_every) * float(args.dt), dt)
     save_every = max(1, int(round(save_time / dt)))
     nsteps = max(save_every, int(round(horizon / dt)))
     nsteps = max(save_every, (nsteps // save_every) * save_every)
     return dt, nsteps, save_every
+
+
+def _time_step_policy_record(case: dict, args: argparse.Namespace, dt: float) -> dict:
+    """Policy identity for trajectory fingerprints and sample lineage (section 22)."""
+
+    policy = timestep_policy.effective_dt_for_case(
+        case, int(args.N), float(args.dt), getattr(args, "timestep_policy", timestep_policy.DEFAULT_POLICY_NAME)
+    )
+    return {
+        "time_step_policy_name": policy["time_step_policy_name"],
+        "time_step_policy_version": policy["time_step_policy_version"],
+        "requested_dt": float(policy["requested_dt"]),
+        "effective_dt": float(policy["effective_dt"]),
+        "limiting_criterion": policy["limiting_criterion"],
+        "limiting_value": float(policy["limiting_value"]),
+        "resolved_effective_dt": float(dt),
+        "registry_version": policy["registry_version"],
+    }
 
 
 def _downsample_history(history: np.ndarray, factor: int) -> np.ndarray:
@@ -232,7 +259,6 @@ def _diagnose(
     v = np.asarray(v, dtype=np.float64)
     volume = np.asarray(pf.phase_control_volumes(solid, p), dtype=np.float64)
     deep_solid = (volume <= 0.0).astype(np.float64)
-    fluid = np.asarray(volume > 0.0, dtype=np.float64)
 
     raw_total0 = float(np.sum(raw_initial))
     first_saved_total = float(np.sum(first_saved))
@@ -379,6 +405,7 @@ def _save_case(
     dataset_fingerprint: str,
     feature_cells_min: float,
     parameter_semantics: dict,
+    time_step_policy_record: dict,
 ) -> None:
     """Write one validated trajectory with explicit physical-time metadata."""
     # This is the single solver-state -> ML-sample phase conversion point. ``phi`` here is the
@@ -412,6 +439,7 @@ def _save_case(
             "saved_dx": saved_dx,
             "save_every": int(save_every),
             "frame_dt": float(p.dt * save_every),
+            "time_step_policy": time_step_policy_record,
             "feature_cells_min": float(feature_cells_min),
             "dataset_fingerprint": dataset_fingerprint,
             "solver_sha256": _source_sha256(pf.__file__),
@@ -448,6 +476,12 @@ def main() -> None:
     ap.add_argument("--ds", type=int, default=3, help="average-pooling factor (N/ds is saved resolution)")
     ap.add_argument("--N", type=int, default=192, help="solver resolution")
     ap.add_argument("--dt", type=float, default=4e-3, help="nominal solver timestep")
+    ap.add_argument(
+        "--timestep-policy",
+        default=timestep_policy.DEFAULT_POLICY_NAME,
+        choices=sorted(("legacy_requested_v0", "fixed_cap_002_v1", "impact_phase_cap_dx2_v1", "cfl_multicriterion_v1")),
+        help="deterministic case-static timestep policy (see production/timestep_policy.py)",
+    )
     ap.add_argument("--limit", type=int, default=0, help="max cases (0 = all)")
     ap.add_argument("--overwrite", action="store_true", help="regenerate existing .npz files")
     ap.add_argument("--require-complete", action="store_true", help="fail if any planned case is not accepted")
@@ -485,6 +519,7 @@ def main() -> None:
 
         dt, nsteps, save_every = _effective_schedule(case, args)
         fingerprint = _dataset_fingerprint(case, args, dt, nsteps, save_every)
+        policy_record = _time_step_policy_record(case, args, dt)
         saved_dx = 6.0 / args.N * args.ds
         feature_cells_min = _feature_cells(case, saved_dx)
         semantics = {
@@ -494,6 +529,7 @@ def main() -> None:
             "kinematic_We": float(case.get("We", 100.0)) * float(case.get("u_impact", 0.5)) ** 2,
             "kinematic_Re": float(case.get("Re", 200.0)) * abs(float(case.get("u_impact", 0.5))),
             "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
+            **timestep_policy.policy_identity(getattr(args, "timestep_policy", timestep_policy.DEFAULT_POLICY_NAME)),
             # The case pipeline records the exact production defaults; each
             # trajectory file also carries the instantiated parameters.
             "wetting_model": str(case.get("wetting_model", "surface_energy")),
@@ -583,6 +619,7 @@ def main() -> None:
                 fingerprint,
                 feature_cells_min,
                 semantics,
+                policy_record,
             )
             temporary_path.replace(path)
             _remove_rejection(out_dir, name)

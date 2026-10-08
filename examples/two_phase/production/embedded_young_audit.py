@@ -1264,9 +1264,9 @@ def validate_report(report: dict[str, Any]) -> list[str]:
     if report.get("stage") != STAGE:
         errors.append(f"stage must be {STAGE}")
     contract = report.get("solver_contract_version")
-    if contract not in (8, 9, 10, 11):
+    if contract not in (8, 9, 10, 11, 12):
         # 8/9/10 are frozen reproduction contracts; 11 is the live A1 production default.
-        errors.append(f"solver_contract_version must be 8, 9, 10 or 11; got {contract!r}")
+        errors.append(f"solver_contract_version must be 8, 9, 10, 11 or 12; got {contract!r}")
     if contract == 11:
         expected_storage = {
             "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,

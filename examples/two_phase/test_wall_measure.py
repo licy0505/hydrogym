@@ -612,7 +612,7 @@ def test_wall_measure_option_fails_closed_and_legacy_is_pinned(x64):
 # ---------------------------------------------------------------------------
 def test_contract11_metadata_and_contract10_staleness():
     """Contract 11 retains v9 geometry/v10 solve semantics and adds A1 storage lineage."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_CONTRACT_VERSION == 1
     assert pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
@@ -623,7 +623,7 @@ def test_contract11_metadata_and_contract10_staleness():
         "wall_measure_contract_version": pf.WALL_MEASURE_CONTRACT_VERSION,
         "solver_contract": int(pf.SOLVER_CONTRACT_VERSION),
     }
-    assert payload_defaults["solver_contract"] == 11
+    assert payload_defaults["solver_contract"] == 12
     source = (HERE / "generate_dataset.py").read_text()
     assert 'wall_measure=str(case.get("wall_measure", pf.WALL_MEASURE_METHOD))' in source
     assert '"wall_measure_method": str(params.wall_measure)' in source
@@ -707,7 +707,7 @@ def test_wall_measure_audit_module_passes_its_own_gates(x64):
     failed = [check.name for check in audit.checks if not check.passed]
     assert failed == []
     payload = audit.to_dict()
-    assert payload["solver_contract_version"] == 11
+    assert payload["solver_contract_version"] == 12
     assert payload["wall_measure_method"] == "sdf_cutcell_v1"
     json.dumps(payload, allow_nan=False)  # strict JSON
 
@@ -752,7 +752,7 @@ def test_cutcell_alignment_config_documents_the_l1a2f_profile():
     cfg = json.loads((HERE / "production" / "configs" / "cutcell_alignment.example.json").read_text())
     base = caa.PROFILES["baseline"]
     assert cfg["stage"] == "L1A-2f"
-    assert cfg["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
+    assert cfg["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 12
     assert cfg["phase_transport_geometry"] == pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     assert cfg["phase_control_volume"] == pf.PHASE_CONTROL_VOLUME == "partial_cell_volume"
     assert cfg["phase_face_aperture"] == pf.PHASE_FACE_APERTURE == "partial_open_length"
@@ -864,7 +864,7 @@ def test_embedded_young_quick_profile_runs_end_to_end(tmp_path, x64):
     assert report["stage"] == "L1A-2e"
     # the L1A-2e runner now runs under contract 9: its sections are re-measured on cut-cell control
     # volumes, and the report carries the v9 transport metadata
-    assert report["solver_contract_version"] == 11
+    assert report["solver_contract_version"] == 12
     assert report["phase_transport_geometry"] == "sdf_cutcell_fv_v1"
     assert report["phase_control_volume"] == "partial_cell_volume"
     assert report["trajectory_semantics_changed"] is True

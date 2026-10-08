@@ -263,7 +263,7 @@ def test_phasefield_has_no_mass_redistribution():
 
 def test_shipped_contract_metadata_unchanged_by_this_stage():
     """L1A-2h remains a historical audit while production ships contract 11/A1."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.IMPLICIT_PHASE_SOLVER == "weighted_spd_nullspace_preserving_v1"
     assert pf.PHASE_MASS_INVARIANT == "componentwise_cutcell_volume"
     assert kra.CONTRACT_VERSION == pf.SOLVER_CONTRACT_VERSION

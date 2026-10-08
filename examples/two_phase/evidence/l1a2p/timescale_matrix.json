@@ -1,0 +1,63 @@
+{
+ "label": "flat_we100_ct050",
+ "dx": 0.03125,
+ "eps": 0.046875,
+ "eps_over_dx": 1.5,
+ "M": 0.002,
+ "dt": 0.004,
+ "dt_over_3": 0.0013333333333333333,
+ "We": 100.0,
+ "rho_l": 1.0,
+ "max_speed": 0.19800983369350433,
+ "global_advective_cfl": 0.025345258712768555,
+ "momentum_advective_cfl": 0.025345258712768555,
+ "stable_dt": 0.00625,
+ "dt_over_stable_dt": 0.64,
+ "cutcell_public_dt": {
+  "dt_adv_min": 0.029121870175004005,
+  "cutcell_advective_cfl_ratio": 0.1373538225889206,
+  "cutcell_advective_cfl_ratio_all_cells": 0.1373538225889206,
+  "n_significant_cells": 35328
+ },
+ "cutcell_substep_dt3": {
+  "dt_adv_min": 0.029121870175004005,
+  "cutcell_advective_cfl_ratio": 0.0457846038043499,
+  "cutcell_advective_cfl_ratio_all_cells": 0.0457846038043499
+ },
+ "dt_adv_min": 0.029121870175004005,
+ "ch_indicators": {
+  "explicit_ch_source_linf": 19.476341882677403,
+  "explicit_ch_source_l2": 0.7822753907308428,
+  "explicit_adv_source_linf": 5.88642198750296,
+  "explicit_adv_source_l2": 0.14964374683298587,
+  "explicit_source_dt3_scale_linf": 0.025968455843569868,
+  "mu_linf": 4.4287648195393805,
+  "mu_expl_linf": 8.053169452345184,
+  "cg_rtol": 1e-06,
+  "empirical_ch_indicator": {
+   "name": "dt_over_dx2_scaled_phase_rate (EMPIRICAL, not a derived stability bound)",
+   "value": 4.096,
+   "note": "the split CH update treats the stiff eps*L term implicitly; no mathematically justified explicit CH timestep bound exists for this scheme, so the policy uses the measured impact-window response instead of a manufactured formula (section 7)"
+  }
+ },
+ "capillary_momentum_indicators": {
+  "max_mu_grad_phi": 1.7538648881558556,
+  "max_capillary_acceleration": 1.7538648881558556,
+  "max_capillary_acceleration_times_dt": 0.007015459552623423,
+  "viscous_rate_indicator_dt_nu_over_dx2": 0.02048,
+  "dt_over_eta_pen": 0.5,
+  "eta_pen": 0.008,
+  "projection_correction_max_norm": null,
+  "note": "projection norm is measured per substep in the instrumented window (section 3)"
+ },
+ "policy_candidates_at_this_state": {
+  "fixed_cap_002_v1_cap": 0.002,
+  "impact_phase_cap_dx2_v1_cap": 0.002,
+  "dt_over_impact_cap": 2.0
+ },
+ "state": {
+  "step": 53,
+  "t": 0.216,
+  "overshoot": 0.019369829231579594
+ }
+}
