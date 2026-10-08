@@ -72,12 +72,11 @@ def test_physics_gate_requires_every_measured_gate_and_artifact(tmp_path):
     assert incomplete["missing_gates"] == [PHYSICS_REQUIRED_GATES[-1]]
 
 
-def test_chns_closure_requires_baseline_profile_and_contract11_lineage(tmp_path):
+def test_chns_closure_requires_baseline_profile_and_current_contract_lineage(tmp_path):
     from production.run_validation import _contact_angle_acceptance
 
-    cases = []
-    for target in (60.0, 90.0, 120.0, 150.0):
-        cases.append(
+    def _cases(solver_contract_version):
+        return [
             {
                 "target_deg": target,
                 "measured_deg": target,
@@ -90,7 +89,7 @@ def test_chns_closure_requires_baseline_profile_and_contract11_lineage(tmp_path)
                 "enforce_solid_phi": False,
                 "wall_measure_method": "sdf_cutcell_v1",
                 "runtime": {
-                    "solver_contract_version": 11,
+                    "solver_contract_version": solver_contract_version,
                     "phase_storage_model": "phase_only_float64_v1",
                     "phase_state_dtype": "float64",
                     "velocity_state_dtype": "float32",
@@ -100,16 +99,35 @@ def test_chns_closure_requires_baseline_profile_and_contract11_lineage(tmp_path)
                 },
                 "samples": [{"max_speed": 0.0}],
             }
-        )
+            for target in (60.0, 90.0, 120.0, 150.0)
+        ]
+
+    import phasefield as pf
+
+    current_contract = int(pf.SOLVER_CONTRACT_VERSION)
+    cases = _cases(current_contract)
     benchmarks = {"contact_angle": {"cases": cases}}
     accepted, evidence = _contact_angle_acceptance(benchmarks)
     assert accepted, evidence
+
+    # Explicit negative control: evidence generated under the previous contract is
+    # NOT silently accepted as current-contract production evidence.
+    stale_benchmarks = {"contact_angle": {"cases": _cases(current_contract - 1)}}
+    stale_accepted, stale_evidence = _contact_angle_acceptance(stale_benchmarks)
+    assert not stale_accepted
+    assert stale_evidence["storage_lineage_ok"] is not True
 
     baseline = tmp_path / "baseline.json"
     baseline.write_text(json.dumps({"config": {"profile": "baseline"}, "benchmarks": benchmarks}))
     closure = load_chns_closure(str(baseline), root=tmp_path)
     assert closure["status"] == "PASS"
     assert closure["acceptance"] is True
+
+    stale_baseline = tmp_path / "baseline-stale-contract.json"
+    stale_baseline.write_text(json.dumps({"config": {"profile": "baseline"}, "benchmarks": stale_benchmarks}))
+    stale_closure = load_chns_closure(str(stale_baseline), root=tmp_path)
+    assert stale_closure["status"] == "FAIL"
+    assert stale_closure["acceptance"] is False
 
     ci = tmp_path / "ci.json"
     ci.write_text(json.dumps({"config": {"profile": "ci"}, "benchmarks": benchmarks}))

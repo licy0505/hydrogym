@@ -52,9 +52,16 @@ def test_straight_through_projection_keeps_projected_forward_and_raw_gradient():
     np.testing.assert_allclose(np.asarray(grad), np.ones_like(np.asarray(raw)), rtol=0, atol=1e-7)
 
 
-def test_surrogate_dataset_loader_accepts_only_explicit_v11_sample_lineage(tmp_path):
+def test_surrogate_dataset_loader_accepts_only_current_sample_lineage(tmp_path):
+    # The current-state fixture derives its expected contract from the live solver
+    # module, so a future contract bump cannot leave this positive fixture stale.
+    import phasefield as pf
+
+    current_contract = int(pf.SOLVER_CONTRACT_VERSION)
+    assert DATASET_SCHEMA_VERSION == 3
+
     lineage = {
-        "solver_contract_version": 11,
+        "solver_contract_version": current_contract,
         "phase_storage_model": "phase_only_float64_v1",
         "phase_state_dtype": "float64",
         "solver_phase_dtype": "float64",
@@ -73,8 +80,13 @@ def test_surrogate_dataset_loader_accepts_only_explicit_v11_sample_lineage(tmp_p
     with np.load(current, allow_pickle=False) as archive:
         S._require_current_dataset(archive, str(current))
 
-    stale = tmp_path / "stale-v10.npz"
-    stale_lineage = dict(lineage, solver_contract_version=10, phase_storage_model="float32_contract_10")
+    # The immediately previous contract is stale under the current contract.
+    stale = tmp_path / "stale-previous-contract.npz"
+    stale_lineage = dict(
+        lineage,
+        solver_contract_version=current_contract - 1,
+        phase_storage_model=f"float32_contract_{current_contract - 2}",
+    )
     np.savez(
         stale,
         dataset_schema_version=np.asarray(DATASET_SCHEMA_VERSION, dtype=np.int32),
@@ -82,9 +94,44 @@ def test_surrogate_dataset_loader_accepts_only_explicit_v11_sample_lineage(tmp_p
         case=np.asarray(json.dumps(stale_lineage)),
         phi=np.zeros((2, 8, 8), dtype=np.float32),
     )
-    with np.load(stale, allow_pickle=False) as archive, pytest.raises(RuntimeError, match="contract-11 lineage"):
+    with np.load(stale, allow_pickle=False) as archive, pytest.raises(
+        RuntimeError, match=f"invalid solver lineage for contract-{current_contract}"
+    ):
         S._require_current_dataset(archive, str(stale))
 
+    # Two contracts back stays stale as well.
+    older = tmp_path / "stale-older-contract.npz"
+    older_lineage = dict(
+        lineage,
+        solver_contract_version=current_contract - 2,
+        phase_storage_model=f"float32_contract_{current_contract - 2}",
+    )
+    np.savez(
+        older,
+        dataset_schema_version=np.asarray(DATASET_SCHEMA_VERSION, dtype=np.int32),
+        dataset_fingerprint=np.asarray("older-fingerprint"),
+        case=np.asarray(json.dumps(older_lineage)),
+        phi=np.zeros((2, 8, 8), dtype=np.float32),
+    )
+    with np.load(older, allow_pickle=False) as archive, pytest.raises(
+        RuntimeError, match=f"invalid solver lineage for contract-{current_contract}"
+    ):
+        S._require_current_dataset(archive, str(older))
+
+    # Missing lineage fails closed.
+    missing = tmp_path / "missing-lineage.npz"
+    np.savez(
+        missing,
+        dataset_schema_version=np.asarray(DATASET_SCHEMA_VERSION, dtype=np.int32),
+        dataset_fingerprint=np.asarray("missing-fingerprint"),
+        phi=np.zeros((2, 8, 8), dtype=np.float32),
+    )
+    with np.load(missing, allow_pickle=False) as archive, pytest.raises(
+        RuntimeError, match="lacks solver/sample lineage"
+    ):
+        S._require_current_dataset(archive, str(missing))
+
+    # A stored-sample dtype that contradicts the recorded cast policy fails closed.
     wrong_cast = tmp_path / "wrong-cast.npz"
     np.savez(
         wrong_cast,
@@ -93,5 +140,7 @@ def test_surrogate_dataset_loader_accepts_only_explicit_v11_sample_lineage(tmp_p
         case=np.asarray(json.dumps(lineage)),
         phi=np.zeros((2, 8, 8), dtype=np.float64),
     )
-    with np.load(wrong_cast, allow_pickle=False) as archive, pytest.raises(RuntimeError, match="contract-11 lineage"):
+    with np.load(wrong_cast, allow_pickle=False) as archive, pytest.raises(
+        RuntimeError, match=f"invalid solver lineage for contract-{current_contract}"
+    ):
         S._require_current_dataset(archive, str(wrong_cast))

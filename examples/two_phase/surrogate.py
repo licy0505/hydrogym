@@ -27,6 +27,8 @@ from production.dataset_lineage import DATASET_SCHEMA_VERSION, validate_training
 
 
 def _require_current_dataset(d, path):
+    import phasefield as pf
+
     if "dataset_schema_version" not in d.files:
         raise RuntimeError(f"stale two_phase dataset: {path} has no schema marker; regenerate with generate_dataset.py")
     version = int(np.asarray(d["dataset_schema_version"]).item())
@@ -42,7 +44,10 @@ def _require_current_dataset(d, path):
         metadata = json.loads(str(np.asarray(d["case"]).item()))
         validate_training_sample_lineage(metadata, phi_dtype=np.asarray(d["phi"]).dtype.name)
     except (TypeError, ValueError, json.JSONDecodeError, RuntimeError) as exc:
-        raise RuntimeError(f"stale two_phase dataset: {path} has invalid contract-11 lineage: {exc}") from exc
+        raise RuntimeError(
+            f"stale two_phase dataset: {path} has invalid solver lineage for "
+            f"contract-{int(pf.SOLVER_CONTRACT_VERSION)}: {exc}"
+        ) from exc
 
 
 def combine_fingerprints(fingerprints) -> str:
