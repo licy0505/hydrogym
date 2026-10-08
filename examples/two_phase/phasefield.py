@@ -237,7 +237,25 @@ SIGMA_NORM = 6.0 / jnp.sqrt(2.0)
 #      No global mass correction, geometry change or wetting recalibration is introduced. Contract-10
 #      datasets/checkpoints are stale; schema-3 ML samples remain derived float32 observations with
 #      an explicit export cast policy and are not restart-authoritative.
-SOLVER_CONTRACT_VERSION = 11
+SOLVER_CONTRACT_VERSION = 12
+
+#: Contract-12 history (L1A-2p). Contract 12 changes the default dataset trajectory
+#: timestep policy, NOT the PDE operator formulas:
+#:   - production policy: "impact_phase_cap_dx2_v1" (production/timestep_policy.py);
+#:   - effective timestep: min(requested_dt, stable_dt, 2.048 * dx^2);
+#:   - production trajectory semantics changed: True (frame content, scheduling and
+#:     trajectory fingerprints change; the timestep-policy record is part of identity);
+#:   - CH/NS spatial operator formulas: unchanged;
+#:   - historical contract-11 trajectories remain reproducible under the explicitly
+#:     pinned legacy policy "legacy_requested_v0".
+SOLVER_CONTRACT_12_TRAJECTORY_POLICY = "impact_phase_cap_dx2_v1"
+SOLVER_CONTRACT_12_EFFECTIVE_DT_RULE = "min(requested_dt, stable_dt, 2.048 * dx^2)"
+SOLVER_CONTRACT_12_PRODUCTION_SEMANTICS = {
+    "solver_operator_formulas_changed": False,
+    "production_timestep_policy_changed": True,
+    "production_trajectory_semantics_changed": True,
+    "solver_contract_version": 12,
+}
 
 #: Production embedded wall-measure construction (L1A-2e). ``sdf_cutcell_v1`` is the
 #: deterministic marching-squares cut-cell measure; ``diffuse_sdf_v7`` is the pinned

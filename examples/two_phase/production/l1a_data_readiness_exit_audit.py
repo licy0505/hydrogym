@@ -193,7 +193,12 @@ def _argparse_defaults_from_source(path: Path) -> dict[str, Any]:
                     name = first.value.lstrip("-").replace("-", "_")
                     for keyword in call.keywords:
                         if keyword.arg == "default":
-                            defaults[name] = ast.literal_eval(keyword.value)
+                            try:
+                                defaults[name] = ast.literal_eval(keyword.value)
+                            except (ValueError, SyntaxError):
+                                # non-literal defaults (e.g. module constants such as the
+                                # timestep-policy authority) are discovered, not hard-coded
+                                continue
     return defaults
 
 
@@ -846,6 +851,7 @@ def run_canary(
                 "solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION),
                 "audit_role": role,
             },
+            generator._time_step_policy_record(case, args.namespace(), schedule["effective_dt"]),
         )
         temporary.replace(npz_path)
         record["canary_npz"] = str(npz_path)
@@ -2126,7 +2132,10 @@ def l1b_contract_seed(audit: dict[str, Any], categories: dict[str, Any], headlin
         },
         "audited_surfaces": {"simple": ["flat", "pillars"], "complex_heldout": ["random_pillars"]},
         "production_resolution": {"N": 192, "Lx": 6.0, "Ly": 6.0, "eps_rule": "1.5*Lx/N"},
-        "dt_policy": {"requested_dt": 0.004, "effective_dt_rule": "min(requested, stable_dt(N, u_max=2.0))"},
+        "dt_policy": {
+            "requested_dt": 0.004,
+            "effective_dt_rule": "min(requested, stable_dt(N, u_max=2.0), impact_phase_dx2_cap)",
+        },
         "physical_horizon": 8.0,
         "save_cadence": {"save_every": 20, "frame_dt": 0.08},
         "downsample_factor": 3,
@@ -2349,16 +2358,29 @@ def run_forensic() -> dict[str, Any]:
         refined = run_canary(case, role, GeneratorArgs(N=144), mandatory=False)
         spatial_audits[role] = spatial_refinement_audit(prod, refined)
 
-    # temporal refinement subset (section 18): dt/2, same horizon, same save times
+    # temporal refinement subset (section 18): dt/2, same horizon, same save times.
+    # The half point is derived from the production run's EFFECTIVE dt: under a
+    # timestep policy the requested dt/2 can equal the policy cap itself, which
+    # would make the comparison vacuous.
     temporal_audits = {}
     for role, case in (
         ("flat_impact_canary_temporal_dt_half", primary["case"]),
         ("flat_we200_ct0_temporal_dt_half", _flat_case(200.0, 0.0)),
     ):
-        half = run_canary(case, role, GeneratorArgs(dt=2e-3, nsteps=4000, save_every=40), mandatory=False)
-        temporal_audits[role] = temporal_refinement_audit(
-            canaries[_case_display_name(case, "flat_impact_canary")], half
+        prod_rec = canaries[_case_display_name(case, "flat_impact_canary")]
+        prod_eff = float(prod_rec["schedule"]["effective_dt"])
+        half_dt = prod_eff / 2.0
+        half = run_canary(
+            case,
+            role,
+            GeneratorArgs(
+                dt=half_dt,
+                nsteps=int(round(float(production_args.nsteps * production_args.dt) / half_dt)),
+                save_every=int(round(float(production_args.dt * production_args.save_every) / half_dt)),
+            ),
+            mandatory=False,
         )
+        temporal_audits[role] = temporal_refinement_audit(prod_rec, half)
 
     # cadence subset (section 29): half cadence on the primary case
     cadence_record = run_canary(
@@ -2390,10 +2412,16 @@ def run_forensic() -> dict[str, Any]:
     refined_record = run_canary(
         primary["case"], "flat_impact_canary_spatial_N144", GeneratorArgs(N=144), mandatory=False
     )
+    primary_prod = canaries[_case_display_name(primary["case"], "flat_impact_canary")]
+    gap_half_dt = float(primary_prod["schedule"]["effective_dt"]) / 2.0
     half_record = run_canary(
         primary["case"],
         "flat_impact_canary_temporal_dt_half",
-        GeneratorArgs(dt=2e-3, nsteps=4000, save_every=40),
+        GeneratorArgs(
+            dt=gap_half_dt,
+            nsteps=int(round(float(production_args.nsteps * production_args.dt) / gap_half_dt)),
+            save_every=int(round(float(production_args.dt * production_args.save_every) / gap_half_dt)),
+        ),
         mandatory=False,
     )
     refined_metrics = contact_gap_metrics(

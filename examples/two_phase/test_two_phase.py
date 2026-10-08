@@ -269,7 +269,7 @@ def _elliptical_drop(p, R, aspect=1.3):
 
 def test_solver_contract_is_v11():
     """Contract 11 preserves embedded transport and promotes A1 phase-only float64 storage."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"

@@ -37,7 +37,7 @@ def test_dataset_fingerprint_changes_when_saved_grid_changes():
 
 def test_v10_dataset_is_stale_under_v11(tmp_path, monkeypatch):
     """Schema v3 remains; contract-10 files without A1 storage/sample lineage fail closed in v11."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert pf.WALL_MEASURE_METHOD == "sdf_cutcell_v1"
     assert pf.WALL_MEASURE_METHODS == ("sdf_cutcell_v1", "diffuse_sdf_v7")
     assert pf.WETTING_MODELS == ("surface_energy", "surface_energy_volume_v6", "legacy_affinity", "none")
@@ -95,7 +95,7 @@ def test_v10_dataset_is_stale_under_v11(tmp_path, monkeypatch):
 
 def test_manifest_records_solver_contract_version(tmp_path):
     manifest = G._write_manifest(tmp_path, "smoke", [])
-    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
+    assert manifest["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 12
     assert manifest["wetting_model"] == "surface_energy"
     assert manifest["phase_boundary_model"] == "impermeable_flux"
     assert manifest["wall_measure_method"] == "sdf_cutcell_v1"
@@ -108,7 +108,7 @@ def test_manifest_records_solver_contract_version(tmp_path):
     assert manifest["sample_cast_policy"] == "downsample_mean_then_float32_v1"
     assert manifest["dataset_schema_decision"]["selected_version"] == 3
     written = json.loads((tmp_path / "manifest.json").read_text())
-    assert written["solver_contract_version"] == 11
+    assert written["solver_contract_version"] == 12
     assert written["wall_measure_method"] == "sdf_cutcell_v1"
 
 
@@ -134,6 +134,16 @@ def test_save_case_preserves_schema3_layout_and_records_single_sample_cast(tmp_p
         dataset_fingerprint="test-fingerprint",
         feature_cells_min=2.0,
         parameter_semantics={},
+        time_step_policy_record={
+            "time_step_policy_name": "legacy_requested_v0",
+            "time_step_policy_version": 0,
+            "requested_dt": 4.0e-3,
+            "effective_dt": 4.0e-3,
+            "limiting_criterion": "requested_dt",
+            "limiting_value": 4.0e-3,
+            "resolved_effective_dt": 4.0e-3,
+            "registry_version": 1,
+        },
     )
     with np.load(path, allow_pickle=False) as archive:
         expected_fields = {

@@ -1,0 +1,63 @@
+{
+ "candidates": {
+  "legacy_requested_v0": {
+   "time_step_policy_name": "legacy_requested_v0",
+   "time_step_policy_version": 0,
+   "requested_dt": 0.004,
+   "effective_dt": 0.004,
+   "limiting_criterion": "requested_dt",
+   "limiting_value": 0.004,
+   "stable_dt_cap": 0.00625,
+   "dx": 0.03125,
+   "policy_cap_value": null,
+   "registry_version": 1
+  },
+  "fixed_cap_002_v1": {
+   "time_step_policy_name": "fixed_cap_002_v1",
+   "time_step_policy_version": 1,
+   "requested_dt": 0.004,
+   "effective_dt": 0.002,
+   "limiting_criterion": "fixed_cap_dt",
+   "limiting_value": 0.002,
+   "stable_dt_cap": 0.00625,
+   "dx": 0.03125,
+   "policy_cap_value": 0.002,
+   "registry_version": 1
+  },
+  "impact_phase_cap_dx2_v1": {
+   "time_step_policy_name": "impact_phase_cap_dx2_v1",
+   "time_step_policy_version": 1,
+   "requested_dt": 0.004,
+   "effective_dt": 0.002,
+   "limiting_criterion": "impact_phase_dx2_cap",
+   "limiting_value": 0.002,
+   "stable_dt_cap": 0.00625,
+   "dx": 0.03125,
+   "policy_cap_value": 0.002,
+   "registry_version": 1
+  },
+  "cfl_multicriterion_v1": {
+   "time_step_policy_name": "cfl_multicriterion_v1",
+   "time_step_policy_version": 1,
+   "requested_dt": 0.004,
+   "effective_dt": 0.002,
+   "limiting_criterion": "impact_phase_dx2_cap",
+   "limiting_value": 0.002,
+   "stable_dt_cap": 0.00625,
+   "dx": 0.03125,
+   "policy_cap_value": 0.002,
+   "registry_version": 1
+  }
+ },
+ "selected": "impact_phase_cap_dx2_v1",
+ "selection_rationale": {
+  "A_fixed_cap_002_v1": "control candidate; measured good on the flat matrix, but resolution-independent by construction and therefore not evidence-calibrated across N",
+  "B_impact_phase_cap_dx2_v1": "selected: the only simple family consistent with both resolution measurements (N144 PASS at 0.004, N192 FAIL at 0.004) and with the measured dt sweep cliff (0.003 passes the impact window, 0.004 fails); the coefficient is calibrated so the failing resolution runs at the measured-good dt=0.002",
+  "C_cfl_multicriterion_v1": "evaluated: the cut-cell advective CFL never binds in the audited matrix (ratio 0.137 at the pre-failure state), so the multi-criterion minimum collapses onto B; kept as the explicit multi-criterion form",
+  "subcycling": "falsified as the primary repair: the cut-cell advective CFL ratio is 0.137 at the pre-failure impact state, far from 1; the pile-up is not an advective CFL violation (section 14)",
+  "case_static": "every candidate is case-static (one deterministic effective dt per trajectory); state-dependent adaptive stepping is not introduced (section 13)"
+ },
+ "forbidden_repair_controls_measured": {
+  "note": "phi clipping / bounded projection / mass redistribution are NOT used as repairs (section 15); the implicit CH filter present in production is the only bound-restoring mechanism"
+ }
+}

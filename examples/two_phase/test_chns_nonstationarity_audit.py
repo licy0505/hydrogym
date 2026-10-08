@@ -231,7 +231,7 @@ def test_checkpoint_hashes_and_config_fingerprint_fail_closed(tmp_path, tiny_cas
 
 def test_contract_defaults_and_anti_cheating_guards(tiny_case):
     p, _solid, _state, config = tiny_case
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert config["target_deg"] == 60.0
     assert config["N"] == 24
     assert p.dt == audit.DT

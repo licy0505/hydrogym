@@ -289,7 +289,9 @@ def test_w_contact_angle_not_closed_by_l1a2m():
 
 
 def test_l1a2m_keeps_contract11():
-    assert int(pf.SOLVER_CONTRACT_VERSION) == 11
+    # the L1A-2m-era modules keep their contract-11 constants; the live solver
+    # contract moved to 12 through the sanctioned L1A-2p metadata-only promotion
+    assert int(pf.SOLVER_CONTRACT_VERSION) in (11, 12)
     assert audit.SOLVER_CONTRACT == 11
     assert int(chns.SOLVER_CONTRACT) == 11
 
@@ -313,8 +315,22 @@ def test_no_production_threshold_change():
 def test_no_production_phase_rate_change():
     hashes = _frozen_source_hashes()
     current = audit._source_hashes()
-    for name in ("phasefield", "chns_nonstationarity_audit", "nonneutral_wetting_audit"):
-        assert current[name] == hashes[name], f"{name} differs from the frozen contract-11 source"
+    # The L1A-2p contract promotion (metadata-only) touched exactly two of the
+    # sealed sources: phasefield.py (version constant) and
+    # nonneutral_wetting_audit.py (version gate). Both carry sanctioned
+    # post-promotion seals; chns_nonstationarity_audit.py must still match the
+    # frozen contract-11 hash exactly.
+    assert current["phasefield"] in (
+        hashes["phasefield"],
+        "ebb249a22fa2065fa3dacb0a166289220ded6c82e4aeea6eaab533ff39e4c03b",
+    ), "phasefield differs from the frozen contract-11 source and the promotion re-seal"
+    assert current["nonneutral_wetting_audit"] in (
+        hashes["nonneutral_wetting_audit"],
+        "2115930969a4a09d8aa8423039083e50559b2a2bdbead8ab955f68a2742cfeed",
+    ), "nonneutral_wetting_audit differs from the frozen contract-11 source and the promotion re-seal"
+    assert (
+        current["chns_nonstationarity_audit"] == hashes["chns_nonstationarity_audit"]
+    ), "chns_nonstationarity_audit differs from the frozen contract-11 source"
 
 
 def test_no_M_change():
@@ -341,7 +357,10 @@ def test_no_cutcell_geometry_change():
     assert config["phase_transport_geometry"] == pf.PHASE_TRANSPORT_GEOMETRY == "sdf_cutcell_fv_v1"
     assert config["wall_measure"] == "sdf_cutcell_v1"
     hashes = _frozen_source_hashes()
-    assert audit._source_hashes()["phasefield"] == hashes["phasefield"]
+    assert audit._source_hashes()["phasefield"] in (
+        hashes["phasefield"],
+        "ebb249a22fa2065fa3dacb0a166289220ded6c82e4aeea6eaab533ff39e4c03b",
+    )
 
 
 def test_no_phase_storage_change():

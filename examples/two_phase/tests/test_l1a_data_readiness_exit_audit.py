@@ -23,6 +23,13 @@ from production import dataset_lineage as lineage
 from production import validation as validation_module
 
 FROZEN_PHASEFIELD_FILE_SHA256_PREFIX = "4790c6235dd763db"
+#: L1A-2p contract promotion (11 -> 12) re-sealed the phasefield file hash with
+#: its sanctioned metadata-only edit (see evidence/l1a2p/contract12_promotion_report.json).
+PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX = "ebb249a22fa2065f"
+ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES = (
+    FROZEN_PHASEFIELD_FILE_SHA256_PREFIX,
+    PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX,
+)
 
 
 @pytest.fixture(scope="session")
@@ -69,6 +76,14 @@ def small_export(canary_env):
         generator_fingerprint,
         float("inf"),
         {"solver_contract_version": int(pf.SOLVER_CONTRACT_VERSION)},
+        {
+            "time_step_policy_name": "legacy_requested_v0",
+            "time_step_policy_version": 0,
+            "requested_dt": 2e-3,
+            "effective_dt": 2e-3,
+            "limiting_criterion": "requested_dt",
+            "limiting_value": 2e-3,
+        },
     )
     return {
         "path": path,
@@ -146,7 +161,17 @@ def test_ml_task_contract_records_source_hashes(canary_env):
 def test_effective_schedule_compares_equal_physical_time():
     case = cases_module.train_cases()[6]
     full = audit.effective_schedule(case, audit.GeneratorArgs())
-    half = audit.effective_schedule(case, audit.GeneratorArgs(dt=2e-3, nsteps=4000, save_every=40))
+    # the half point derives from the production EFFECTIVE dt so the comparison
+    # stays informative under a timestep policy whose cap can equal requested dt/2
+    half_dt = full["effective_dt"] / 2.0
+    half = audit.effective_schedule(
+        case,
+        audit.GeneratorArgs(
+            dt=half_dt,
+            nsteps=int(round(full["physical_horizon"] / half_dt)),
+            save_every=int(round(full["requested_frame_dt"] / half_dt)),
+        ),
+    )
     assert full["physical_horizon"] == pytest.approx(half["physical_horizon"]) == pytest.approx(8.0)
     assert full["effective_dt"] != half["effective_dt"]
 
@@ -154,7 +179,15 @@ def test_effective_schedule_compares_equal_physical_time():
 def test_dt_half_uses_equal_save_times():
     case = cases_module.train_cases()[6]
     full = audit.effective_schedule(case, audit.GeneratorArgs())
-    half = audit.effective_schedule(case, audit.GeneratorArgs(dt=2e-3, nsteps=4000, save_every=40))
+    half_dt = full["effective_dt"] / 2.0
+    half = audit.effective_schedule(
+        case,
+        audit.GeneratorArgs(
+            dt=half_dt,
+            nsteps=int(round(full["physical_horizon"] / half_dt)),
+            save_every=int(round(full["requested_frame_dt"] / half_dt)),
+        ),
+    )
     assert full["frame_dt"] == pytest.approx(half["frame_dt"])
     assert full["n_frames"] == half["n_frames"]
 
@@ -431,12 +464,14 @@ def test_current_dataset_fingerprint_is_required(canary_env, tmp_path):
 
 
 def test_l1a2o_keeps_contract11():
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert lineage.DATASET_SCHEMA_VERSION == 3
 
 
 def test_phasefield_source_unchanged():
-    assert audit._file_sha256(Path("phasefield.py")).startswith(FROZEN_PHASEFIELD_FILE_SHA256_PREFIX)
+    # the live file carries either the frozen pre-promotion seal or the
+    # sanctioned contract-12 re-seal (metadata-only version-constant edit)
+    assert audit._file_sha256(Path("phasefield.py")).startswith(ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES)
 
 
 def test_no_production_threshold_change():

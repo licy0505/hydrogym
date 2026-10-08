@@ -1,0 +1,61 @@
+{
+ "stage": "L1A-2p",
+ "section_version": 1,
+ "git_sha": "0a0e7dde4dcc70fb221aad9e64ab59208567803e",
+ "files": {
+  "complex_divergence_report.json": {
+   "sha256": "17b09f5e0f540524247d0e8be07959c3a4068baa208e9c2ae4d53f8b97e46250"
+  },
+  "contract12_promotion_report.json": {
+   "sha256": "635406d31ead142d41c2102c17d870f8bd8c979cbca9cf2c138d271cc3e53de8"
+  },
+  "exit_reaudit.json": {
+   "sha256": "02699266ec917ff92f8f26aef55a65ea8bf0a13ef7ef9dc3a0cb3ab1aaa57529"
+  },
+  "impact_phase_robustness_report.json": {
+   "sha256": "f41323cd3f342144454d33114cfe335f3b818056ae2272166b937af7549a26ea"
+  },
+  "impact_phase_robustness_report.md": {
+   "sha256": "1df55e118b714ecf03f031134787133e63b7f1887d2fae778ea490c1427f7774"
+  },
+  "manifest.json": {
+   "sha256": "ae6d8aeb697fd717d6a09445d43fa1b3128aec3cca9431c26c3efa3bc62cd968"
+  },
+  "overshoot_timeline.json": {
+   "sha256": "c67b526ca8ced76fd56f8dd5ec81169e6ec0bac6df2c899b0fa84d6994cf1955"
+  },
+  "phase_update_decomposition.json": {
+   "sha256": "1c718612779e32ca88fc0cf60f5b4549384fafcaaccf9c3d3f28801591d17a9a"
+  },
+  "quality_status.json": {
+   "sha256": "63363820df58445112be0a89e8bd9abad3b364f0116a13a8a00975be0cc36d4c"
+  },
+  "resolution_dt_matrix.json": {
+   "sha256": "0651402054ec6121397777363d8d5f73fdbf5b81962b503a81778a2751a6881a"
+  },
+  "selected_policy_report.json": {
+   "sha256": "6d2970ca2e1c3bf92b0308e21fc10ef3aeb87e521e38eefa87eeaf0990569ae9"
+  },
+  "timescale_matrix.json": {
+   "sha256": "ead01e524bc15fd0fee36be9e565b2c296c265499c1594cb635e11cbc7de7af6"
+  },
+  "timestep_candidate_matrix.json": {
+   "sha256": "8632b1ba5fba1138b36c1d2c8617ef4b7099be6c501bc76448936b3568cedc23"
+  }
+ },
+ "profiles_run": [
+  "quick",
+  "forensic"
+ ],
+ "verdict": {
+  "repair_label": "DT_POLICY_PARTIALLY_SUFFICIENT",
+  "exit_verdict": "L1B_DATA_NOT_READY",
+  "single_remaining_target_critical_blocker": "TEMPORAL_REFINEMENT"
+ },
+ "promotion": {
+  "status": "ALREADY_APPLIED",
+  "solver_contract_version": 12,
+  "default_timestep_policy": "impact_phase_cap_dx2_v1",
+  "regression_all_passed": true
+ }
+}

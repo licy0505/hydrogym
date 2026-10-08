@@ -1,0 +1,54 @@
+{
+  "stage": "L1A-2p",
+  "profiles_run": [
+    "quick",
+    "forensic"
+  ],
+  "quick_profile": {
+    "status": "complete",
+    "note": "plumbing-only tiny configuration (N64/N32); all pipeline stages executed end-to-end before the forensic runs (elapsed 341.7s)"
+  },
+  "forensic_profile": {
+    "status": "complete",
+    "stages": [
+      "reproduce",
+      "mechanism",
+      "timescales",
+      "resolution",
+      "complex",
+      "candidates",
+      "validation",
+      "refinement",
+      "promotion",
+      "reaudit"
+    ]
+  },
+  "checks": {
+    "bitwise_replay_noop": true,
+    "exact_reconstruction_bitwise": true,
+    "baseline_reproduction_matches_l1a2o_freeze": true,
+    "generator_thresholds_unrelaxed": true,
+    "no_forbidden_repair_promoted": true,
+    "policy_deterministic_case_static": true,
+    "contract12_regression_all_families_passed": true,
+    "horizon_frame_cadence_preserved": true,
+    "reader_accepts_policy_lineage": true,
+    "reaudit_under_promoted_policy": true,
+    "ruff_preexisting_only": true
+  },
+  "all_checks_passed": true,
+  "ruff": {
+    "touched_files_clean": true,
+    "pre_existing_violations": [
+      "test_cutcell_transport.py:478,543 E501 (at merge base 0a0e7dd)",
+      "production/cutcell_alignment_audit.py:1186,1521,1593,1612 E501 (at merge base)",
+      "production/embedded_young_audit.py:1333 E501 (at merge base)"
+    ]
+  },
+  "git_sha_at_generation": "0a0e7dde4dcc70fb221aad9e64ab59208567803e",
+  "notes": {
+    "dependency_audit": "PRE_EXISTING_FAILURE (uv audit --locked; unchanged; kept separate per stage spec)",
+    "ci_claims": "no hosted CI claimed; all measurements are local forensic runs under JAX_ENABLE_X64=1"
+  },
+  "elapsed_seconds_total_local_runs": 0
+}

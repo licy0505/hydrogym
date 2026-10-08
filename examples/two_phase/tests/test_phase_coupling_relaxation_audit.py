@@ -151,7 +151,7 @@ def test_strict_checkpoint_validation_binds_state_config_source_and_runtime(tmp_
         config=config,
     )
     _assert_same_state(loaded, state)
-    assert metadata["solver_contract_version"] == 11
+    assert metadata["solver_contract_version"] == 12
     assert metadata["production_semantics_changed"] is False
 
     with np.load(path, allow_pickle=False) as archive:

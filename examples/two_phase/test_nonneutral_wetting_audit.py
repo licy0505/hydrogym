@@ -481,7 +481,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
     assert report["stage"] == "L1A-2d"
     assert all(row["classification"] in (None, "INCONCLUSIVE") for row in report["classification_summary"].values())
     assert report["recommended_next_stage"]["decision"] == "INCONCLUSIVE"  # smoke budgets never classify
-    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 11
+    assert report["solver_contract_version"] == pf.SOLVER_CONTRACT_VERSION == 12
     assert report["trajectory_semantics_changed"] is False  # the L1A-2d stage itself changes no default
     assert len(report["historical_v7_baseline"]) == 4
     assert {row["final_sampled_angle_deg"] for row in report["historical_v7_baseline"]} == {
@@ -514,7 +514,7 @@ def test_nonneutral_audit_report_schema(tmp_path):
 
 def test_solver_contract_is_v9_and_l1a2d_stage_is_frozen():
     """The L1A-2d diagnostic stage is unchanged; the *solver* it diagnoses is now contract v9."""
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     assert audit.STAGE == "L1A-2d"
     p = pf.PhaseFieldParams(Nx=16, Ny=16)
     assert p.phase_boundary_model == "impermeable_flux" and p.wetting_model == "surface_energy"

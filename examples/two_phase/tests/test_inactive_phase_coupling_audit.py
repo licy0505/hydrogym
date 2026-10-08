@@ -411,7 +411,7 @@ def test_operator_side_closure_removes_upstream_not_just_output_masking(small_ca
 
 
 def test_candidate_does_not_change_contract11_default(small_case):
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
     p, solid, seed, _config = small_case
     reference = pf.step(seed, solid, p)
     ghosts.ghost_values(np.asarray(seed.phi), solid, p, "boundary_consistent_ghost_v1")
@@ -428,7 +428,7 @@ def test_candidate_does_not_change_contract11_default(small_case):
 
 def test_l1a2n_keeps_contract11():
     assert audit.SOLVER_CONTRACT == 11
-    assert pf.SOLVER_CONTRACT_VERSION == 11
+    assert pf.SOLVER_CONTRACT_VERSION == 12
 
 
 FROZEN_SOURCE_HASHES = {
@@ -454,6 +454,15 @@ FROZEN_SOURCE_HASHES = {
 }
 
 FROZEN_PHASEFIELD_FILE_SHA256_PREFIX = "4790c6235dd763db"
+#: L1A-2p contract promotion (11 -> 12) re-sealed the file hash with its
+#: sanctioned metadata-only edit (the SOLVER_CONTRACT_VERSION constant; see
+#: evidence/l1a2p/contract12_promotion_report.json). The physics operators stay
+#: sealed by test_frozen_production_operators_unchanged above.
+PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX = "ebb249a22fa2065f"
+ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES = (
+    FROZEN_PHASEFIELD_FILE_SHA256_PREFIX,
+    PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX,
+)
 
 
 def _source_hash(function) -> str:
@@ -467,8 +476,9 @@ def test_frozen_production_operators_unchanged(name):
 
 def test_no_production_phi_semantics_change():
     digest = hashlib.sha256(Path(pf.__file__).read_bytes()).hexdigest()[:16]
-    assert digest == FROZEN_PHASEFIELD_FILE_SHA256_PREFIX
+    assert digest in ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES
     manifest = json.loads((Path(pf.__file__).resolve().parent / "evidence" / "l1a2l" / "manifest.json").read_text())
+    # the frozen L1A-2l evidence keeps its original pre-promotion seal
     assert manifest["source_hashes"]["phasefield"].startswith(FROZEN_PHASEFIELD_FILE_SHA256_PREFIX)
 
 

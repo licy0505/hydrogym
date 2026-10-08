@@ -1408,9 +1408,9 @@ def validate_report(report: dict[str, Any]) -> list[str]:
         errors.append("stage must be L1A-2d")
     # The diagnostic audit records the live contract, never silently labels a current trajectory
     # with a historical solver version. Contracts 7-10 remain recognized for frozen evidence.
-    if report["solver_contract_version"] not in (7, 8, 9, 10, 11):
+    if report["solver_contract_version"] not in (7, 8, 9, 10, 11, 12):
         errors.append(f"solver_contract_version must be 7, 8, 9, 10 or 11; got {report['solver_contract_version']!r}")
-    if report["solver_contract_version"] == 11:
+    if report["solver_contract_version"] in (11, 12):
         expected_storage = {
             "phase_storage_model": pf.PHASE_ONLY_FLOAT64_STORAGE_MODEL,
             "phase_state_dtype": "float64",

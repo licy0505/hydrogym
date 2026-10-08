@@ -293,7 +293,9 @@ def _load_checkpoint(
         "section": "production_state",
         "case": case_name,
         "step": int(step),
-        "solver_contract_version": SOLVER_CONTRACT,
+        # frozen L1A-2m checkpoints were written at contract 11; new checkpoints
+        # record the live contract (12 after the sanctioned L1A-2p metadata bump)
+        "solver_contract_version": (SOLVER_CONTRACT, int(pf.SOLVER_CONTRACT_VERSION)),
         "config": config,
         "config_fingerprint": _canonical_hash(config),
         "source_hashes": _binding_source_hashes(),
@@ -304,7 +306,14 @@ def _load_checkpoint(
     # is bound by the production source hashes, the config fingerprint, the state-hash self-check
     # and (at required steps) the frozen upstream per-field hashes, so diagnostic-only commits
     # must not invalidate saved production states.
-    checks = {name: metadata.get(name) == value for name, value in expected.items()}
+    checks = {
+        name: (
+            metadata.get(name) in value
+            if name == "solver_contract_version" and isinstance(value, tuple)
+            else metadata.get(name) == value
+        )
+        for name, value in expected.items()
+    }
     checks["git_sha_recorded"] = isinstance(metadata.get("git_sha"), str) and len(metadata["git_sha"]) == 40
     stored_hashes = metadata.get("state_hashes")
     checks["state_hashes"] = stored_hashes == {name: _hash_array(value) for name, value in arrays.items()}
