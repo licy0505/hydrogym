@@ -1,0 +1,21 @@
+{
+  "categories": {
+    "COMPLEX_SURFACE_CANARY": "PASS (frozen L1A-2p promotion)",
+    "EXTERNAL_DYNAMIC_VALIDATION": "UNMEASURED (structural caveat)",
+    "FRESH_TRAINING_AGGREGATE_LINEAGE": "UNMEASURED (L1B-1 scope)",
+    "GENERATOR_ACCEPTANCE": "PASS (frozen L1A-2p promotion: 8/8 canaries, contract 12)",
+    "SIMPLE_SURFACE_COVERAGE": "PASS (frozen L1A-2p promotion)",
+    "SOLVER_NUMERICAL_STABILITY": "PASS (frozen L1A-2p promotion)",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "FAIL",
+    "WETTING_RESIDUAL_RELEVANCE": "PASS (frozen; W-CONTACT-ANGLE stays open)"
+  },
+  "exit_verdict": "L1B_DATA_NOT_READY",
+  "note": "frozen categories carry the L1A-2p promotion evidence unchanged; they are re-audited only by a separate promotion run (B22/B24)",
+  "prior_exit": "L1B_DATA_NOT_READY",
+  "prior_single_blocker": "TEMPORAL_REFINEMENT",
+  "prior_stage": "L1A-2p",
+  "selected_action": "ADDITIONAL_TARGETED_DIAGNOSTIC",
+  "stage": "L1A-2q",
+  "temporal_verdict": "NONASYMPTOTIC_OR_MULTIPLE_SCALES"
+}

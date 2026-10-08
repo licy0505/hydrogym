@@ -1,0 +1,66 @@
+{
+  "anchors_bound_to_live_source": {
+    "brinkman_implicit_damping": "damp = 1.0 / (1.0 + dt * solid.chi / p.eta_pen)",
+    "capillary_force_site": "cap_x = (SIGMA_NORM / p.We) * mu * phi_x / p.rho_l",
+    "phase_implicit_correction": "return solve_ch_implicit(phi + dt * source, solid, p, dt)",
+    "projection_constant_density_poisson": "pr = poisson_solve(div / dt, p.m2_proj)",
+    "substep_dt": "dt = p.dt / 3.0",
+    "three_substeps_lax_scan_length3": "lax.scan(substep, (state.phi, state.u, state.v, state.t), None, length=3)"
+  },
+  "b18_note": "an observed first-order rate is CONSISTENT with this structure; three Euler substeps are not a higher-order method; a higher-order integrator would need a separate promotion",
+  "public_step": {
+    "iterative_solves": [
+      "solve_ch_implicit (CG, production rtol=1e-6, fail-closed)"
+    ],
+    "order_verdict": "three Lie-split semi-implicit Euler substeps: the dt/3 subdivision does NOT raise the formal order \u2014 first-order in the public dt (each substep locally O(dt^2); no symmetric composition, no Richardson extrapolation)",
+    "splitting": "sequential Lie splitting rhs -> phase -> momentum -> projection per substep; phase and velocity never iterate within a substep",
+    "stiff_or_nonlinear_sites": [
+      "CH chemical-potential stiffness (handled implicitly)",
+      "capillary acceleration mu*grad(phi) at the interface (explicit)",
+      "Brinkman damping inside the solid (implicit scalar factor, exact per substep)"
+    ],
+    "structure": "one public step = lax.scan of exactly 3 semi-implicit Euler substeps at dt/3",
+    "substeps": [
+      {
+        "components": {
+          "capillary": "Korteweg/CSF (SIGMA_NORM/We) * mu(phi) * grad(phi) / rho_l (explicit; only force site)",
+          "chemical_potential": "explicit part f'(phi)/eps + wall representation; stiff -eps*L(phi) is implicit",
+          "momentum_convection": "first-order upwind divergence (explicit)",
+          "phase_advection": "conservative cut-cell face-flux divergence of phi with the frozen velocity (explicit)",
+          "viscosity": "5-point Laplacian with nu(phi) (explicit)"
+        },
+        "operation": "rhs evaluation at the carry state (fully explicit)",
+        "order": 1
+      },
+      {
+        "components": {
+          "advective": "explicit Euler with the rhs fluxes",
+          "ch_implicit": "matrix-free weighted-SPD nullspace-preserving CG solve of the stiff CH term; fail-closed; iterations/residual/converged in StepDiagnostics"
+        },
+        "operation": "phase update (split from velocity: OLD u,v)",
+        "order": 2,
+        "order_note": "explicit Euler predictor + linearly implicit corrector: locally O(dt^2), globally first order"
+      },
+      {
+        "components": {
+          "brinkman": "exact implicit damping factor 1/(1 + dt*chi/eta_pen) on the Euler update",
+          "explicit_euler": "u <- u + dt * u_rhs"
+        },
+        "operation": "momentum update (split from phase: OLD phi, via the pre-computed rhs)",
+        "order": 3,
+        "order_note": "RHS frozen at substep start; the damping factor is exact for linear decay over the substep"
+      },
+      {
+        "components": {
+          "correction": "u <- u - dt * grad(p)",
+          "poisson": "periodic FFT spectral solve of lap(p)=div(u*)/dt, null mode removed; constant-coefficient, NOT cut-cell-aware (P-VARDENS-PROJ stays open)"
+        },
+        "operation": "pressure projection",
+        "order": 4
+      }
+    ],
+    "time_state": "t accumulates in the param dtype inside the solver; every schedule in this audit is computed from integer step counts in float64, never from accumulated t"
+  },
+  "section_version": "l1a2q_v1",
+  "stage": "L1A-2q"
+}

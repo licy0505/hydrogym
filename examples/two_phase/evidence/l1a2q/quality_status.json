@@ -1,0 +1,20 @@
+{
+  "all_checks_passed": true,
+  "checks": {
+    "contract_12_preserved": true,
+    "incomplete_matrix_cannot_claim_ready": true,
+    "no_phi_clipping": true,
+    "phase_overshoot_gate_unchanged": true,
+    "quick_profile_never_promotes": true,
+    "refinement_gate_unchanged": true,
+    "stale_cache_rejected": true,
+    "w_contact_angle_open": true
+  },
+  "ci_claims": "local measurements only; hosted CI claims live in the Stage-A PR closure",
+  "dependency_audit": "PRE_EXISTING_FAILURE (uv audit --locked, unchanged; separate classification)",
+  "profiles_run": [
+    "quick",
+    "forensic"
+  ],
+  "stage": "L1A-2q"
+}

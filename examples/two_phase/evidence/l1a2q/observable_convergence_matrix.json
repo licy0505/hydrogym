@@ -1,0 +1,682 @@
+{
+  "complex_heldout": {
+    "beta": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "centroid_y": {
+      "E1": {
+        "rel_rms_error": 0.012855078720956483
+      },
+      "E2": {
+        "rel_rms_error": 0.007033702674693162
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.8699821884133547,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "common_times": [
+      0.08,
+      0.16,
+      0.24,
+      0.32,
+      0.4,
+      0.48,
+      0.56,
+      0.64,
+      0.72,
+      0.8
+    ],
+    "contact_line_left": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "contact_line_right": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "drop_vertical_extent": {
+      "E1": {
+        "rel_rms_error": 0.01987615979999813
+      },
+      "E2": {
+        "rel_rms_error": 0.007186994682200862
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 1.4675785223076225,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "formal_mass": {
+      "E1": {
+        "rel_rms_error": 1.6325946579243562e-16
+      },
+      "E2": {
+        "rel_rms_error": 7.842731054564248e-17
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 1.0577386087099678,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "max_abs_u": {
+      "E1": {
+        "rel_rms_error": 0.27428102036452295
+      },
+      "E2": {
+        "rel_rms_error": 0.48658537475661223
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_abs_v": {
+      "E1": {
+        "rel_rms_error": 0.31936430664588267
+      },
+      "E2": {
+        "rel_rms_error": 0.4722761088861817
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_speed": {
+      "E1": {
+        "rel_rms_error": 0.3180917428766428
+      },
+      "E2": {
+        "rel_rms_error": 0.47219248088778615
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "phi_max": {
+      "E1": {
+        "rel_rms_error": 0.00033853921038988575
+      },
+      "E2": {
+        "rel_rms_error": 0.00019292332241065287
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.8112953790733041,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "phi_min": {
+      "E1": {
+        "rel_rms_error": 0.022455467699444853
+      },
+      "E2": {
+        "rel_rms_error": 0.04806149193922281
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "spread_width": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    }
+  },
+  "flat_we100_ct050": {
+    "beta": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "centroid_y": {
+      "E1": {
+        "rel_rms_error": 0.023979734266561338
+      },
+      "E2": {
+        "rel_rms_error": 0.013228280051348396
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.85819017773106,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "common_times": [
+      0.08,
+      0.16,
+      0.24,
+      0.32,
+      0.4,
+      0.48,
+      0.56,
+      0.64,
+      0.72,
+      0.8
+    ],
+    "contact_line_left": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "contact_line_right": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "drop_vertical_extent": {
+      "E1": {
+        "rel_rms_error": 0.018188261446392948
+      },
+      "E2": {
+        "rel_rms_error": 0.024786422284763868
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "formal_mass": {
+      "E1": {
+        "rel_rms_error": 1.8126195852702154e-16
+      },
+      "E2": {
+        "rel_rms_error": 1.4330016052209184e-16
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.33903595255631913,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "max_abs_u": {
+      "E1": {
+        "rel_rms_error": 0.21619343352250073
+      },
+      "E2": {
+        "rel_rms_error": 0.25715488570435896
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_abs_v": {
+      "E1": {
+        "rel_rms_error": 0.43354824278541904
+      },
+      "E2": {
+        "rel_rms_error": 1.0102241010756818
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_speed": {
+      "E1": {
+        "rel_rms_error": 0.4338526506179345
+      },
+      "E2": {
+        "rel_rms_error": 1.01602201386969
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "phi_max": {
+      "E1": {
+        "rel_rms_error": 0.00046072963284483686
+      },
+      "E2": {
+        "rel_rms_error": 0.00024353572984485411
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.9197869411687215,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "phi_min": {
+      "E1": {
+        "rel_rms_error": 22.45253885873968
+      },
+      "E2": {
+        "rel_rms_error": 0.034738909256764094
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 9.336110417464903,
+        "status": "HIGHER_ORDER_LIKE"
+      }
+    },
+    "spread_width": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    }
+  },
+  "flat_we200_ct000": {
+    "beta": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "centroid_y": {
+      "E1": {
+        "rel_rms_error": 0.024020718112167508
+      },
+      "E2": {
+        "rel_rms_error": 0.013194392010898417
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.8643544080894949,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "common_times": [
+      0.08,
+      0.16,
+      0.24,
+      0.32,
+      0.4,
+      0.48,
+      0.56,
+      0.64,
+      0.72,
+      0.8
+    ],
+    "contact_line_left": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "contact_line_right": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "drop_vertical_extent": {
+      "E1": {
+        "rel_rms_error": 0.01721325931647741
+      },
+      "E2": {
+        "rel_rms_error": 0.018188261446392948
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "formal_mass": {
+      "E1": {
+        "rel_rms_error": 1.6955503651593548e-16
+      },
+      "E2": {
+        "rel_rms_error": 1.6955503651593548e-16
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.0,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "max_abs_u": {
+      "E1": {
+        "rel_rms_error": 0.3292221062078521
+      },
+      "E2": {
+        "rel_rms_error": 0.6298265584468546
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_abs_v": {
+      "E1": {
+        "rel_rms_error": 0.4406678332410711
+      },
+      "E2": {
+        "rel_rms_error": 1.0565613019803193
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_speed": {
+      "E1": {
+        "rel_rms_error": 0.4409140528650343
+      },
+      "E2": {
+        "rel_rms_error": 1.0573475727201445
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "phi_max": {
+      "E1": {
+        "rel_rms_error": 0.0004448504600119579
+      },
+      "E2": {
+        "rel_rms_error": 0.00023317399823090447
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.9319135250026364,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "phi_min": {
+      "E1": {
+        "rel_rms_error": 0.04854631848221526
+      },
+      "E2": {
+        "rel_rms_error": 0.04233781829811269
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.19741496476165674,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "spread_width": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    }
+  },
+  "pillar_training": {
+    "beta": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "centroid_y": {
+      "E1": {
+        "rel_rms_error": 0.015442077384864323
+      },
+      "E2": {
+        "rel_rms_error": 0.00836328335682319
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.8847254989612088,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "common_times": [
+      0.08,
+      0.16,
+      0.24,
+      0.32,
+      0.4,
+      0.48,
+      0.56,
+      0.64,
+      0.72,
+      0.8
+    ],
+    "contact_line_left": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "contact_line_right": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    },
+    "drop_vertical_extent": {
+      "E1": {
+        "rel_rms_error": 0.007186994682200862
+      },
+      "E2": {
+        "rel_rms_error": 0.021560984046602585
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "formal_mass": {
+      "E1": {
+        "rel_rms_error": 1.2812312586752045e-16
+      },
+      "E2": {
+        "rel_rms_error": 1.1095788181354383e-16
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.2075187496394221,
+        "status": "NOT_IN_ASYMPTOTIC_REGIME"
+      }
+    },
+    "max_abs_u": {
+      "E1": {
+        "rel_rms_error": 0.2490070552370086
+      },
+      "E2": {
+        "rel_rms_error": 0.44222693085904563
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_abs_v": {
+      "E1": {
+        "rel_rms_error": 0.35344609784757697
+      },
+      "E2": {
+        "rel_rms_error": 0.6474116713759064
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "max_speed": {
+      "E1": {
+        "rel_rms_error": 0.3234594335424674
+      },
+      "E2": {
+        "rel_rms_error": 0.5672570428479043
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "phi_max": {
+      "E1": {
+        "rel_rms_error": 0.00034974469155073397
+      },
+      "E2": {
+        "rel_rms_error": 0.00019237902536043634
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": 0.8623506462473324,
+        "status": "FIRST_ORDER_LIKE"
+      }
+    },
+    "phi_min": {
+      "E1": {
+        "rel_rms_error": 0.04138191575791818
+      },
+      "E2": {
+        "rel_rms_error": 0.051369336878449016
+      },
+      "order": {
+        "note": "frozen bands: first-order [0.85,1.15], higher-order >= 1.6, E2 > E1 -> NONMONOTONE",
+        "p_obs": null,
+        "status": "NONMONOTONE"
+      }
+    },
+    "spread_width": {
+      "E1": {
+        "rel_rms_error": 0.0
+      },
+      "E2": {
+        "rel_rms_error": 0.0
+      },
+      "order": {
+        "note": "both differences exactly zero",
+        "p_obs": null,
+        "status": "UNDETERMINED"
+      }
+    }
+  }
+}

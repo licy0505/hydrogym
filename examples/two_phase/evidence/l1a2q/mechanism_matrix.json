@@ -1,0 +1,189 @@
+{
+  "BRINKMAN_TIME_RESPONSE": {
+    "evidence": "the damping factor 1/(1+dt*chi/eta_pen) is the exact substep solution of the linear decay; its only temporal error enters through the frozen explicit RHS (counted as first-order truncation)",
+    "status": "FALSIFIED"
+  },
+  "CAPILLARY_MOMENTUM_TEMPORAL_ERROR": {
+    "evidence": "velocity-field orders; capillary is the only explicit interface force (integrator map)",
+    "status": "NOT_TESTED"
+  },
+  "CH_TEMPORAL_ERROR": {
+    "evidence": {
+      "local_phi_quadratic_like": [
+        false,
+        false,
+        false
+      ]
+    },
+    "status": "NOT_TESTED"
+  },
+  "FIRST_ORDER_TEMPORAL_TRUNCATION": {
+    "evidence": {
+      "dominant_field_order": "MIXED",
+      "dominant_observable_order": "NONMONOTONE"
+    },
+    "status": "SUSPECTED"
+  },
+  "MULTIPLE_TIME_SCALES": {
+    "evidence": {
+      "global_peak_view": {
+        "0.0005": {
+          "peak_speed": 0.030190590733350342,
+          "t_peak": 0.08
+        },
+        "0.001": {
+          "peak_speed": 0.12179648138921279,
+          "t_peak": 0.08
+        },
+        "0.002": {
+          "peak_speed": 0.24840209429718188,
+          "t_peak": 0.08
+        }
+      },
+      "rule": "max_speed decays by >= 3x within the frozen window: a fast start-up transient and a slow relaxation coexist in one trajectory",
+      "window_decay": {
+        "complex_heldout": {
+          "0.0005": {
+            "decay": 5.790246968499701,
+            "first": 0.03982010064637397,
+            "min": 0.006877098828945404
+          },
+          "0.001": {
+            "decay": 8.74503152948657,
+            "first": 0.1310043671062267,
+            "min": 0.014980433937202525
+          },
+          "0.002": {
+            "decay": 9.023701678484763,
+            "first": 0.3227880456223321,
+            "min": 0.03577113441061073
+          }
+        },
+        "flat_we100_ct050": {
+          "0.0005": {
+            "decay": 1.0440578714856494,
+            "first": 0.006250913545465024,
+            "min": 0.005987133200356262
+          },
+          "0.001": {
+            "decay": 2.7522235794672882,
+            "first": 0.034184514116187045,
+            "min": 0.012420689355042766
+          },
+          "0.002": {
+            "decay": 5.245619359852265,
+            "first": 0.1235030547829459,
+            "min": 0.023544036711505536
+          }
+        },
+        "flat_we200_ct000": {
+          "0.0005": {
+            "decay": 1.8302822053380787,
+            "first": 0.002474840718166157,
+            "min": 0.0013521634592459032
+          },
+          "0.001": {
+            "decay": 7.264416310341947,
+            "first": 0.029020246985676977,
+            "min": 0.003994849103617928
+          },
+          "0.002": {
+            "decay": 10.561392800298536,
+            "first": 0.11837280647759817,
+            "min": 0.011208067791423509
+          }
+        },
+        "max_decay_within_window": 10.561392800298536,
+        "pillar_training": {
+          "0.0005": {
+            "decay": 4.861124072659801,
+            "first": 0.02819474277740666,
+            "min": 0.005800045906250588
+          },
+          "0.001": {
+            "decay": 5.738941793560744,
+            "first": 0.06820368328309633,
+            "min": 0.011884365748337577
+          },
+          "0.002": {
+            "decay": 7.0698272327309555,
+            "first": 0.19701988311691607,
+            "min": 0.02786770830902053
+          }
+        }
+      }
+    },
+    "status": "SUPPORTED"
+  },
+  "NEAR_ZERO_NORMALIZATION_AMPLIFICATION": {
+    "evidence": "all measured max_speed peaks are far below the nominal impact scale (O(1)): relative-error gates on this decaying start-up transient amplify small absolute differences; absolute pointwise RMS errors are reported alongside (B10)",
+    "status": "SUPPORTED"
+  },
+  "PEAK_AMPLITUDE_NONCONVERGENCE": {
+    "evidence": {
+      "peak_amplitude_rel_diffs": [
+        2.6128363376229693,
+        2.0103138023270404,
+        3.078973088548192,
+        10.72610696626198,
+        1.8886985809715895,
+        1.4190212984581683,
+        1.4639487427208815,
+        2.2899054743638874
+      ]
+    },
+    "status": "SUPPORTED"
+  },
+  "PEAK_TIMING_MISALIGNMENT": {
+    "evidence": {
+      "abs_t_peak_shifts": [
+        0.0010000000000000009,
+        0.31899999999999995,
+        0.0010000000000000009,
+        0.0005000000000000004,
+        0.0010000000000000009,
+        0.0005000000000000004,
+        0.0010000000000000009,
+        0.0005000000000000004
+      ],
+      "median_aligned_over_pointwise": 0.996989575360228
+    },
+    "status": "FALSIFIED"
+  },
+  "PHASE_ADVECTION_TEMPORAL_ERROR": {
+    "evidence": "phi field orders at public-step level; L1A-2p's advective-overshoot diagnosis is a DIFFERENT question and is not reused as proof here (B16)",
+    "status": "NOT_TESTED"
+  },
+  "PROJECTION_TEMPORAL_ERROR": {
+    "evidence": "STRUCTURAL: the measured uniform impact impulse (v=-0.5 everywhere at t=0) decays to <25% within 0.08 time units; only the constant-density periodic projection couples globally and can damp a uniform field (Brinkman acts only inside the solid; viscosity/advection vanish on a uniform field). B17's predictor/pressure/projected decomposition around the start-up transient is the named next targeted diagnostic; P-VARDENS-PROJ stays open",
+    "status": "SUSPECTED"
+  },
+  "SPATIAL_TEMPORAL_ERROR_CONFOUNDING": {
+    "evidence": {
+      "gate": 0.03,
+      "note": "N144 vs N192 compared at the SAME physical dt=0.001 (no dt confound)",
+      "spatial_shared_dt_rel_errors": [
+        0.030303030303030196,
+        0.030303030303030193,
+        0.01506131137016416,
+        0.026991996362988862,
+        2.7030265984508313e-10,
+        0.052205289783968156,
+        0.005238812265994291
+      ]
+    },
+    "status": "SUPPORTED"
+  },
+  "TIME_SPLITTING_OR_COUPLING_LIMITATION": {
+    "evidence": {
+      "local_velocity_first_order_fraction": [
+        false,
+        false,
+        false
+      ],
+      "nonmonotone_anywhere": true
+    },
+    "status": "SUSPECTED"
+  },
+  "note": "no mechanism is marked SUPPORTED because it is plausible; each status binds measured sections"
+}

@@ -1,0 +1,319 @@
+{
+  "complex_heldout": {
+    "E1_dt0.002_vs_dt0.001": {
+      "aligned_over_pointwise": 0.9949064540968027,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.3227880456223321,
+        "peak_width": null,
+        "t_peak": 0.162,
+        "t_peak_grid": 0.162
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.1310043671062267,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "integrated_abs_error": 0.027060065281211354,
+      "peak_aligned_rms_error": 0.1007816272745141,
+      "peak_amplitude_rel_diff": 1.4639487427208815,
+      "pointwise_rms_error": 0.10129759120520111,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.002,
+          "fine_grid": 0.001
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0010000000000000009
+    },
+    "E2_dt0.001_vs_dt0.0005": {
+      "aligned_over_pointwise": 0.9977469622092144,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.1310043671062267,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.03982010064637397,
+        "peak_width": null,
+        "t_peak": 0.1605,
+        "t_peak_grid": 0.1605
+      },
+      "integrated_abs_error": 0.007986782754197393,
+      "peak_aligned_rms_error": 0.0332005634801371,
+      "peak_amplitude_rel_diff": 2.2899054743638874,
+      "pointwise_rms_error": 0.03327553451691229,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.001,
+          "fine_grid": 0.0005
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0005000000000000004
+    }
+  },
+  "flat_we100_ct050": {
+    "E1_dt0.002_vs_dt0.001": {
+      "aligned_over_pointwise": 0.9972817314696494,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.1235030547829459,
+        "peak_width": null,
+        "t_peak": 0.162,
+        "t_peak_grid": 0.162
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.034184514116187045,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "integrated_abs_error": 0.010718571443914405,
+      "peak_aligned_rms_error": 0.04120562158926258,
+      "peak_amplitude_rel_diff": 2.6128363376229693,
+      "pointwise_rms_error": 0.041317934831253456,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.002,
+          "fine_grid": 0.001
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0010000000000000009
+    },
+    "E2_dt0.001_vs_dt0.0005": {
+      "aligned_over_pointwise": 0.6900603405805349,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.034184514116187045,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.011355797554979698,
+        "peak_width": null,
+        "t_peak": 0.48,
+        "t_peak_grid": 0.48
+      },
+      "integrated_abs_error": 0.002479019516378314,
+      "peak_aligned_rms_error": 0.006688338477426582,
+      "peak_amplitude_rel_diff": 2.0103138023270404,
+      "pointwise_rms_error": 0.009692396568972226,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.001,
+          "fine_grid": 0.0005
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": -0.31899999999999995
+    }
+  },
+  "flat_we200_ct000": {
+    "E1_dt0.002_vs_dt0.001": {
+      "aligned_over_pointwise": 0.996924029195589,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.11837280647759817,
+        "peak_width": null,
+        "t_peak": 0.162,
+        "t_peak_grid": 0.162
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.029020246985676977,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "integrated_abs_error": 0.0107011476493266,
+      "peak_aligned_rms_error": 0.04116119023107055,
+      "peak_amplitude_rel_diff": 3.078973088548192,
+      "pointwise_rms_error": 0.041288191502699786,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.002,
+          "fine_grid": 0.001
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0010000000000000009
+    },
+    "E2_dt0.001_vs_dt0.0005": {
+      "aligned_over_pointwise": 0.999563620626652,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.029020246985676977,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.002474840718166157,
+        "peak_width": null,
+        "t_peak": 0.1605,
+        "t_peak_grid": 0.1605
+      },
+      "integrated_abs_error": 0.001995010231752146,
+      "peak_aligned_rms_error": 0.008619423082606758,
+      "peak_amplitude_rel_diff": 10.72610696626198,
+      "pointwise_rms_error": 0.008623186063137252,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.001,
+          "fine_grid": 0.0005
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0005000000000000004
+    }
+  },
+  "global_peak_view": {
+    "amplitude_rel_diff_E1": 1.0394849790724927,
+    "amplitude_rel_diff_E2": 3.034253005015535,
+    "case": "flat_we100_ct050",
+    "note": "global max_speed over every saved frame",
+    "p_obs_amplitude": -1.5454724759016192,
+    "per_level": {
+      "0.0005": {
+        "peak_speed": 0.030190590733350342,
+        "t_peak": 0.08
+      },
+      "0.001": {
+        "peak_speed": 0.12179648138921279,
+        "t_peak": 0.08
+      },
+      "0.002": {
+        "peak_speed": 0.24840209429718188,
+        "t_peak": 0.08
+      }
+    }
+  },
+  "pillar_training": {
+    "E1_dt0.002_vs_dt0.001": {
+      "aligned_over_pointwise": 0.9958065088306806,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.19701988311691607,
+        "peak_width": null,
+        "t_peak": 0.162,
+        "t_peak_grid": 0.162
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.06820368328309633,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "integrated_abs_error": 0.01609704842392497,
+      "peak_aligned_rms_error": 0.06047979953173534,
+      "peak_amplitude_rel_diff": 1.8886985809715895,
+      "pointwise_rms_error": 0.06073448907534593,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.002,
+          "fine_grid": 0.001
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0010000000000000009
+    },
+    "E2_dt0.001_vs_dt0.0005": {
+      "aligned_over_pointwise": 0.9970551215248672,
+      "coarse": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.06820368328309633,
+        "peak_width": null,
+        "t_peak": 0.161,
+        "t_peak_grid": 0.161
+      },
+      "fine": {
+        "at_window_edge": true,
+        "grid_refinement_shift": 0.0,
+        "peak_speed": 0.02819474277740666,
+        "peak_width": null,
+        "t_peak": 0.1605,
+        "t_peak_grid": 0.1605
+      },
+      "integrated_abs_error": 0.004043243208370731,
+      "peak_aligned_rms_error": 0.01460471735662676,
+      "peak_amplitude_rel_diff": 1.4190212984581683,
+      "pointwise_rms_error": 0.01464785350512089,
+      "protocol": {
+        "interpolation": "3-point parabolic on the public-step grid, no smoothing, ties -> earliest",
+        "note": "peak alignment is a diagnostic attribution tool, never an acceptance criterion (B11)",
+        "sampling_uncertainty": {
+          "coarse_grid": 0.001,
+          "fine_grid": 0.0005
+        },
+        "window": [
+          0.16,
+          0.48
+        ]
+      },
+      "t_peak_shift": 0.0005000000000000004
+    }
+  }
+}

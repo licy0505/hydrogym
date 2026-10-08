@@ -1,0 +1,60 @@
+{
+  "0.0005": {
+    "cost_multiplier_vs_coarsest": 2.216263558833807,
+    "dt": 0.0005,
+    "measured": {
+      "compile_probe_seconds": 1.3732250819994078,
+      "elapsed_seconds": 200.4511653460013,
+      "horizon_of_run": 8.0,
+      "integration_seconds": 199.07794026400188,
+      "steps_per_second": 80.37053215831965,
+      "steps_run": 16000
+    },
+    "nsteps_T8": 16000,
+    "projected_full_horizon_seconds": 199.07794026400188
+  },
+  "0.001": {
+    "cost_multiplier_vs_coarsest": 1.7973581426111875,
+    "dt": 0.001,
+    "measured": {
+      "compile_probe_seconds": 1.2660046649998549,
+      "elapsed_seconds": 162.71537539600104,
+      "horizon_of_run": 8.0,
+      "integration_seconds": 161.44937073100118,
+      "steps_per_second": 49.55113769584892,
+      "steps_run": 8000
+    },
+    "nsteps_T8": 8000,
+    "projected_full_horizon_seconds": 161.44937073100118
+  },
+  "0.002": {
+    "cost_multiplier_vs_coarsest": 1.0,
+    "dt": 0.002,
+    "measured": {
+      "compile_probe_seconds": 1.2637754990009853,
+      "elapsed_seconds": 91.08970774000045,
+      "horizon_of_run": 8.0,
+      "integration_seconds": 89.82593224099946,
+      "steps_per_second": 44.530570406641104,
+      "steps_run": 4000
+    },
+    "nsteps_T8": 4000,
+    "projected_full_horizon_seconds": 89.82593224099946
+  },
+  "environment": {
+    "device": "CPU (2-vCPU sandbox, JAX cpu, XLA_PYTHON_CLIENT_PREALLOCATE=false)",
+    "jax_enable_x64": true,
+    "note": "single-process wall-clock on the shared sandbox; no GPU used (B6 honesty)"
+  },
+  "window_probe": {
+    "0.0005": {
+      "elapsed_seconds": 24.558920442999806
+    },
+    "0.001": {
+      "elapsed_seconds": 18.185284036000667
+    },
+    "0.002": {
+      "elapsed_seconds": 24.905900626001312
+    }
+  }
+}
