@@ -123,6 +123,8 @@ jobs:
 
       - name: Run L1A-2s frozen-fixture closure tests
         working-directory: examples/two_phase
+        env:
+          PYTHONPATH: .
         run: >-
           uv run --no-sync pytest -q
           tests/test_inactive_phase_coupling_audit.py::test_no_production_phi_semantics_change

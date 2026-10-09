@@ -33,6 +33,11 @@
       "sha256": "dad5eefd5dc1a669dc06e95e829774855ceff70aa4ed697f377081feccb68110"
     },
     {
+      "bytes": 1879,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/hosted_ci_postclosure_attempt.md",
+      "sha256": "32f20dae5c22f1ad751c2f7ee2a43e769e002a30e06d419280a12ca59faa9cfb"
+    },
+    {
       "bytes": 6511,
       "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/pypi_locked_vulnerability_scan.json",
       "sha256": "ead536b5ecb0a34ddd0dcc0d60f96808630a36054b129a829b6e5e6baad92942"
