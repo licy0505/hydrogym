@@ -1,0 +1,61 @@
+{
+  "schema": "quality3b_owner_attestation_v1",
+  "repository": "licy0505/hydrogym",
+  "pull_request": 22,
+  "pr22_head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+  "pr22_base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "pr23_merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+  "github_record": {
+    "kind": "pull_request_issue_comment",
+    "comment_id": 6098141190,
+    "url": "https://github.com/licy0505/hydrogym/pull/22#issuecomment-6098141190",
+    "api_url": "https://api.github.com/repos/licy0505/hydrogym/issues/comments/6098141190",
+    "actor": "licy0505",
+    "actor_id": 156068376,
+    "author_association": "OWNER",
+    "created_at": "2026-10-10T13:46:35Z",
+    "updated_at": "2026-10-10T13:46:35Z",
+    "body_sha256": "450ddc8ff92b4cec0e32a0f8ee1751fa3c63d94d18603f8f9982fcde045a0dc1",
+    "body_verified_against_api": true
+  },
+  "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+  "baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "transitions": [
+    {
+      "path": "examples/two_phase/production/impact_impulse_projection_audit.py",
+      "old_sha256": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "new_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "change_class": "LEGACY_SHIFTED_APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+      "old_sha256": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+      "new_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "change_class": "LEGACY_SHIFTED_APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+      "old_sha256": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+      "new_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "change_class": "LEGACY_SHIFTED_APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+      "old_sha256": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+      "new_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "change_class": "LEGACY_SHIFTED_APPROVED"
+    }
+  ],
+  "scope": {
+    "merge_pr22": false,
+    "close_pr22": false,
+    "change_solver_contract": false,
+    "change_frozen_production_sources": false,
+    "change_physical_thresholds": false,
+    "run_l1a_2t": false,
+    "generate_official_l1b_data": false,
+    "run_t8_cfd": false,
+    "run_ml_training": false,
+    "authorize_extra_files_or_quality_exemptions": false
+  }
+}
