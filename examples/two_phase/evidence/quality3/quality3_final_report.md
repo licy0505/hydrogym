@@ -1,6 +1,6 @@
 # QUALITY-3 Frozen Quality-Baseline Reconciliation & Integration Validation
 
-执行策略：fail closed。本文档只报告已实际执行的检查；未执行项不填为 PASS。当前报告记录四项 exact SHA migration 已获仓库所有者批准，但 hosted required checks 尚待在批准后的 exact integrated commit 上重新运行。QUALITY-3 不重新计算 L1A-2s，不改变 HydroGym two-phase 生产算子、物理参数、solver contract 或历史 L1A-2s 结论。
+执行策略：fail closed。本文档只报告已实际执行的检查；未执行项不填为 PASS。当前报告记录四项 exact SHA migration 已获仓库所有者批准，并已在批准后的 exact integrated commit 上完成 hosted required checks；这不等同于授权合并 PR #22。QUALITY-3 不重新计算 L1A-2s，不改变 HydroGym two-phase 生产算子、物理参数、solver contract 或历史 L1A-2s 结论。
 
 ## Provenance
 
@@ -59,7 +59,7 @@
 - merged main `039f6a0...` 的 hosted Python CI Quality、Two-phase unit + E2E smoke、五种 core import、package、CodeQL、部署 build 均有对应记录；Python CI Quality job `114168222944` 与 E2E job `114168223007` 为 SUCCESS。GitHub Pages deploy job `114168485062` 为 FAILURE；branch protection API 返回 403，无法独立证明其 required/non-required 属性。
 - PR #22 exact head 的 hosted Two-phase、imports、package、CodeQL、deployment 和分析 jobs 为 SUCCESS，但 Quality job `113734922481` FAILURE：`Audit locked dependencies` FAILURE，Lint/format/isort/codespell 随后 SKIPPED。因此 PR #22 当前仍不能称为 required checks 全绿。
 - 旧 session-branch run `38045950758`/`38047079721` 是 pre-approval historical runs：前者因 4 个 `PENDING_OWNER` transition 在 Quality gate 阻塞，后者的 strict lint 仍对应 approval 尚未写入的 commit；它们没有被重写成当前 PASS。
-- owner approval 已完成，但批准后的 exact integrated commit 尚未完成新一轮 hosted required checks；本报告不把 pending hosted run 写成 PASS，也不把 PR #22 写成可 merge。
+- owner approval 后的 exact integrated commit `7a0284c438d37f0015f079a7869c3ea640c6e9cb` 已完成 hosted Python CI run `38053658694`；Quality（含 `uv audit --locked`）、Two-phase unit + E2E、五种 core import 和 package 八个 job 均 SUCCESS。逐 job URL、时间与结论见 `post_approval_hosted_checks.json`。该 PASS 只验证 session-branch integration，不执行也不授权合并 PR #22。
 
 ## Frozen milestone status
 
@@ -84,18 +84,19 @@ raw_ruff / raw_format / raw_isort / raw_codespell: RAW_TOOL_FAIL(1) / RAW_TOOL_F
 ratchet_historical / added / removed / moved / approved: 171+27+28+3 / 0 / 0 / 0 / 4; pending_owner=0
 provenance_and_sha_checks: PASS for frozen sources; APPROVED_EXACT_TRANSITIONS for four overlap pairs
 operator_identity / frozen_source_tests: owner=licy0505; agent=Arena session / focused=49 PASS; fixture=28 PASS; numerical=PASS
-quality_gate / uv_audit / two_phase_e2e / non_slow_pytest: LOCAL-PASS-BASELINE-ONLY / local-exact-ENVIRONMENT-BLOCKED; hosted-required-PENDING / hosted-main-PASS / 228 PASS
+quality_gate / uv_audit / two_phase_e2e / non_slow_pytest: LOCAL-PASS-BASELINE-ONLY / local-exact-ENVIRONMENT-BLOCKED; hosted-python-ci-PASS / hosted-main-PASS / 228 PASS
 new_tests / adversarial_tests: 12 new QUALITY-3 tests / 31 total PASS
-evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 5f557c31751e4bdf40f854af980c333175958157c527b7c2ed23d12f16265ac8
-PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE; approved-reseal-hosted-checks-pending
+evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 505b161c743a90a418c0c4a840500597924f3ee9f4b6ee8129769e96dd531cae
+post_approval_hosted_run / head / conclusion: 38053658694 / 7a0284c438d37f0015f079a7869c3ea640c6e9cb / SUCCESS
+PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE; integration-validated-but-PR22-merge-blocked
 SOLVER_CONTRACT_VERSION=12
 L1A_STATUS=BLOCKED
 L1B_DATA_NOT_READY
 L1A-2t=NOT_RUN
-DECISION: HOSTED_REQUIRED_CHECKS_PENDING
-EXACTLY_ONE_NEXT_ACTION: Push the owner-approved exact integrated commit, rerun all required hosted checks, then reassess PR #22; no merge is executed by this agent.
+DECISION: QUALITY3_INTEGRATION_VALIDATED_PR22_MERGE_BLOCKED
+EXACTLY_ONE_NEXT_ACTION: No merge action is authorized or executed by this agent; retain PR #22 OPEN pending separate merge authorization and current PR-head policy checks.
 ```
 
 ## Decision
 
-主 verdict 现在是 `HOSTED_REQUIRED_CHECKS_PENDING`。四项 named exact SHA transitions 已得到仓库所有者批准，四路 ratchet 已通过且没有新增债务；但是本地 exact `uv audit --locked` 受 Python 3.12 环境阻塞，批准后的 exact integrated commit 尚未有新的 required hosted result，PR #22 仍 OPEN 且未达到可合并条件。因此本轮不 merge PR #22；下一步只能在批准后的 exact commit 上完成 required hosted checks，再依据真实结果重新判定。
+主 verdict 现在是 `QUALITY3_INTEGRATION_VALIDATED_PR22_MERGE_BLOCKED`。四项 named exact SHA transitions 已得到仓库所有者批准，四路 ratchet 已通过且没有新增债务；批准后的 exact integrated commit `7a0284c438d37f0015f079a7869c3ea640c6e9cb` 的 hosted Python CI run `38053658694` 八个 job 全部 SUCCESS，包含 hosted `uv audit --locked`。这验证了 QUALITY-3 integration，但不改变 PR #22 仍 OPEN、其自身观察到的 head Quality 失败、以及本轮不 merge 的决定。L1B 仍为 `L1B_DATA_NOT_READY`。

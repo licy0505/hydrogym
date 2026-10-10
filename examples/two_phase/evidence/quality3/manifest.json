@@ -1,6 +1,6 @@
 {
-  "artifact_count_total": 44,
-  "artifact_count_with_hashes": 43,
+  "artifact_count_total": 46,
+  "artifact_count_with_hashes": 45,
   "bound_external_files": {
     "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
     "quality/approved_migrations.json": "b5f79986e0358fe128265d88863a25a5a6007b10565006514571d8caaa484e8a",
@@ -151,7 +151,7 @@
     },
     {
       "path": "examples/two_phase/evidence/quality3/owner_approval_reseal.json",
-      "sha256": "2733e2db08c3faeaf6d7f7404d512a193e51afe6b76623ead7835e86137552ba"
+      "sha256": "f86f6560ae9ddbb34b605bf4c4b0be631afcf451bf39e425acbd6cffaa49a5a2"
     },
     {
       "path": "examples/two_phase/evidence/quality3/raw/ratchet_post_approval.exit",
@@ -184,11 +184,19 @@
     {
       "path": "examples/two_phase/evidence/quality3/raw/uv_audit_locked_post_approval.txt",
       "sha256": "6cbe0a2baa3b374d840b0804ff861609bf879ce71fcc98c0655e6490ece4750e"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/post_approval_hosted_checks.json",
+      "sha256": "23bd635e8b2f52a072a84886ea119083b5a2a7739cda693e14e151fd6773bb67"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/post_approval_merge_eligibility.json",
+      "sha256": "87a213c409fe3712004fbd17551959e396549738b788c6fb412a151cf73a627e"
     }
   ],
-  "generated_at_utc": "2026-10-10T12:52:36.033939Z",
+  "generated_at_utc": "2026-10-10T13:05:47.831384Z",
   "manifest_hash_policy": "SHA-256 for every quality3 artifact except this manifest and final report; final report binds this manifest hash after write without reciprocal hash cycle.",
   "quality3_root": "examples/two_phase/evidence/quality3",
   "schema": "quality3_manifest_v1",
-  "status": "HOSTED_REQUIRED_CHECKS_PENDING"
+  "status": "QUALITY3_INTEGRATION_VALIDATED_PR22_MERGE_BLOCKED"
 }

@@ -1,0 +1,90 @@
+{
+  "schema": "quality3_post_approval_hosted_checks_v1",
+  "recorded_at_utc": "2026-10-10T13:04:57.344979Z",
+  "workflow": "Python CI",
+  "event": "push",
+  "run_id": 38053658694,
+  "head_sha": "7a0284c438d37f0015f079a7869c3ea640c6e9cb",
+  "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "jobs": [
+    {
+      "job_id": 114217657568,
+      "name": "Core import (Python 3.10)",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657568"
+    },
+    {
+      "job_id": 114217657356,
+      "name": "Core import (Python 3.11)",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657356"
+    },
+    {
+      "job_id": 114217657397,
+      "name": "Core import (Python 3.12)",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657397"
+    },
+    {
+      "job_id": 114217657448,
+      "name": "Core import (Python 3.13)",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657448"
+    },
+    {
+      "job_id": 114217657503,
+      "name": "Core import (Python 3.14)",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657503"
+    },
+    {
+      "job_id": 114217657229,
+      "name": "Package distributions",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657229"
+    },
+    {
+      "job_id": 114217657462,
+      "name": "Quality checks",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657462"
+    },
+    {
+      "job_id": 114217657324,
+      "name": "Two-phase unit + E2E smoke",
+      "conclusion": "success",
+      "started_at": "2026-10-10T12:54:01Z",
+      "completed_at": "2026-10-10T12:54:14Z",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694/job/114217657324"
+    }
+  ],
+  "quality_steps": {
+    "check_lockfile": "success",
+    "audit_locked_dependencies": "success",
+    "strict_legacy_debt_lint": "success",
+    "format": "success",
+    "isort": "success",
+    "codespell": "success"
+  },
+  "python_ci_required_job_set_observed_pass": true,
+  "branch_protection_classification": "HTTP_403_NOT_INDEPENDENTLY_OBSERVABLE",
+  "codeql": "NOT_TRIGGERED_BY_PUSH_TO_SESSION_BRANCH",
+  "pr22_merge": "NOT_EXECUTED",
+  "interpretation": "The owner-approved exact integrated commit passed the hosted Python CI quality, dependency, core import, two-phase, and package jobs. This does not execute or authorize merging PR #22."
+}

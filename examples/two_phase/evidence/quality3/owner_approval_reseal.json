@@ -81,7 +81,17 @@
       "hosted_required": true
     }
   },
-  "hosted_required_checks": "PENDING_ON_FINAL_APPROVAL_COMMIT",
+  "hosted_required_checks": {
+    "workflow": "Python CI",
+    "run_id": 38053658694,
+    "head_sha": "7a0284c438d37f0015f079a7869c3ea640c6e9cb",
+    "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38053658694",
+    "conclusion": "success",
+    "job_count": 8,
+    "all_jobs_success": true,
+    "evidence": "examples/two_phase/evidence/quality3/post_approval_hosted_checks.json"
+  },
   "pr22_merge": "NOT_EXECUTED",
-  "l1b_data": "L1B_DATA_NOT_READY"
+  "l1b_data": "L1B_DATA_NOT_READY",
+  "decision": "QUALITY3_INTEGRATION_VALIDATED_PR22_MERGE_BLOCKED"
 }
