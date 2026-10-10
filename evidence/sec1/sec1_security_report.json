@@ -1,0 +1,73 @@
+{
+  "stage": "SEC-1",
+  "sec1_decision": "SECURITY_FIXED_BUT_QUALITY_BLOCKED",
+  "baseline_main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "security_head_sha": null,
+  "workspace_branch": "arena/7e891333-hydrogym",
+  "workspace_clean_before_edits": true,
+  "uv_version": "0.12.5",
+  "python_local": "3.11.2",
+  "timestamp_utc": "2026-10-10T06:21:01Z",
+  "pyproject_modified": false,
+  "workflow_modified": false,
+  "solver_files_modified": false,
+  "security_suppressions": false,
+  "historical_hosted_audit": {
+    "run_id": "37904603600",
+    "job_id": "113734922481",
+    "url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922481",
+    "records": 18,
+    "packages": 5,
+    "lock_packages_audited": 261
+  },
+  "packages": [
+    {"name": "jupyterlab", "old": "4.6.3", "new": "4.6.4", "floor": "4.6.4", "role": "direct_interactive", "advisory_local": "NETWORK_UNAVAILABLE"},
+    {"name": "notebook", "old": "7.6.2", "new": "7.6.3", "floor": "7.6.3", "role": "direct_interactive", "advisory_local": "NETWORK_UNAVAILABLE"},
+    {"name": "tornado", "old": "6.5.8", "new": "6.5.10", "floor": "6.5.9", "role": "transitive", "advisory_local": "NETWORK_UNAVAILABLE"},
+    {"name": "urllib3", "old": "2.7.0", "new": "2.8.0", "floor": "2.8.0", "role": "transitive", "advisory_local": "NETWORK_UNAVAILABLE"},
+    {"name": "werkzeug", "old": "3.1.8", "new": "3.1.9", "floor": "3.1.9", "role": "transitive", "advisory_local": "NETWORK_UNAVAILABLE"}
+  ],
+  "steps": {
+    "uv_lock_check": {"verdict": "PASS", "exit": 0},
+    "uv_audit_locked": {"verdict": "NOT_RUN", "reason": "NETWORK_UNAVAILABLE", "osv": "https://api.osv.dev/v1/querybatch"},
+    "ruff_check": {"verdict": "FAIL", "exit": 1},
+    "ruff_format": {"verdict": "FAIL", "exit": 1},
+    "isort": {"verdict": "FAIL", "exit": 1},
+    "codespell": {"verdict": "FAIL", "exit": 65},
+    "core_import_3.10": {"verdict": "NOT_RUN"},
+    "core_import_3.11": {"verdict": "PASS"},
+    "core_import_3.12": {"verdict": "NOT_RUN"},
+    "core_import_3.13": {"verdict": "NOT_RUN"},
+    "core_import_3.14": {"verdict": "NOT_RUN"},
+    "two_phase_e2e": {"verdict": "NOT_RUN"},
+    "local_nonslow_pytest": {"verdict": "NOT_RUN"},
+    "frozen_fixture_closure": {"verdict": "NOT_RUN"}
+  },
+  "hashes_baseline": {
+    "uv.lock": "80f33a2ad52594577f49bb41f88166df501f59557dc840456d4e221eba048b7d",
+    "pyproject.toml": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811",
+    "python-ci.yml": "7dd9df934336528e85996ad5179ae298074579ed4f0a27de7d4975ba65a973a7"
+  },
+  "hashes_after": {
+    "uv.lock": "d6a186574d8f12e5caf8eeedecd9ae891b5b7911f0ad31f58ffa97b51e37a7e1",
+    "pyproject.toml": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811",
+    "python-ci.yml": "7dd9df934336528e85996ad5179ae298074579ed4f0a27de7d4975ba65a973a7",
+    "phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "generate_dataset.py": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "cases.py": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da"
+  },
+  "pr22": {
+    "number": 22,
+    "state": "OPEN",
+    "head": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "branch": "arena/3d47375a-hydrogym",
+    "post_security_ci": "NOT_AVAILABLE",
+    "quality": "FAILURE_AUDIT"
+  },
+  "flags": {
+    "SOLVER_CONTRACT_VERSION": 12,
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA_NOT_READY": true,
+    "L1A-2t": "NOT_RUN"
+  }
+}
