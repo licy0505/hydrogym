@@ -1,0 +1,231 @@
+{
+  "exactly_one_next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+  "existing_thresholds": {
+    "key_observable_refinement_change": 0.03,
+    "max_phi_overshoot": 0.02,
+    "max_solid_leak": 0.0005,
+    "max_speed": 5.0,
+    "max_total_mass_ratio": 1.005,
+    "min_total_mass_ratio": 0.995
+  },
+  "historical_blockers_unchanged": {
+    "D_FRESH_TRAIN_CONTRACT_OPEN": true,
+    "L1A_STATUS_BLOCKED": true,
+    "L1B_DATA_NOT_READY": true,
+    "N_DT_TARGET_CRITICAL": true,
+    "P_VARDENS_PROJ_OPEN": true,
+    "SPATIAL_REFINEMENT_FAIL": true,
+    "W_CONTACT_ANGLE_OPEN": true
+  },
+  "initialization": {
+    "complex_heldout": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 3.337860107421875e-06,
+        "FV_Linf": 8.821487426757812e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0005294676520861685,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 118.90771484375,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.296018769685427,
+        "nearwall_chi": 1.755882097015352,
+        "pass": false,
+        "wall_normal": 1.3259762918203706
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 11399.2587890625,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "flat_we100_ct050": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.9206275939941406e-06,
+        "FV_Linf": 9.179115295410156e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 33.579803466796875,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.4955877207078272,
+        "nearwall_chi": 1.8976761861569122,
+        "pass": false,
+        "wall_normal": 1.0493689179420471
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 16.0,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "flat_we200_ct000": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.9206275939941406e-06,
+        "FV_Linf": 9.179115295410156e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 33.579803466796875,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.4955877207078272,
+        "nearwall_chi": 1.8976761861569122,
+        "pass": false,
+        "wall_normal": 1.0493689179420471
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 16.0,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "pillar_training": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.86102294921875e-06,
+        "FV_Linf": 5.7220458984375e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 7.806503163010348e-06,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 79.69010162353516,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.4919522702497192,
+        "nearwall_chi": 0.597682294794151,
+        "pass": false,
+        "wall_normal": 0.4981606982133826
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 79.99999237060547,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    }
+  },
+  "no_missing_stage_assembled_as_pass": true,
+  "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+  "quality_gates": {
+    "direct_field_labels": "UNMEASURED",
+    "generator_quality_gates": "FAIL",
+    "spatial_refinement": "FAIL",
+    "temporal_refinement": "UNMEASURED"
+  },
+  "stage": "L1A-2s"
+}

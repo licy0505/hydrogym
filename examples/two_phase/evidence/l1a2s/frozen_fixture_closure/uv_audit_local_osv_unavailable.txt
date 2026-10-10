@@ -1,0 +1,8 @@
+warning: `uv audit` is experimental and may change without warning. Pass `--preview-features audit-command` to disable this warning.
+warning: The `--output-format json` option is experimental and the schema may change without warning. Pass `--preview-features json-output` to disable this warning.
+Using CPython 3.11.2 interpreter at: /usr/bin/python3.11
+Resolved 262 packages in 1ms
+error: Request failed after 3 retries
+  Caused by: error sending request for url (https://api.osv.dev/v1/querybatch)
+  Caused by: client error (Connect)
+  Caused by: tls handshake eof

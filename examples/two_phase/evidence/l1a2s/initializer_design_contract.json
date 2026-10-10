@@ -1,0 +1,34 @@
+{
+  "acceptance": {
+    "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+    "core_mean_speed_relative_error_max": 0.01,
+    "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+    "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+    "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+    "open_face_FV_dimensionless_Linf_max": 0.01,
+    "region_definitions": {
+      "core_mean": "V_i-weighted mean over phi >= 0.9",
+      "deep_solid": "sdf < -2*dx",
+      "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+      "nearwall_chi": "chi >= 0.01",
+      "nearwall_sdf": "abs(sdf) <= 3*dx",
+      "partial_cells": "0 < V_i < dx*dy",
+      "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+    }
+  },
+  "candidates": {
+    "C0": "UNIFORM_ALL_DOMAIN, exact production build_case negative control; no promotion",
+    "C1": "STREAMFUNCTION_LOCALIZED_V0, exact current droplet_initial_state streamfunction u/v, case-specific x0/y0; solid velocity independently checked",
+    "C2": "SDF_TAPERED_STREAMFUNCTION_V1, isolated diagnostic builder in this module; formula, taper and amplitude rule included in candidate details",
+    "C3": {
+      "reason": "C2 is evaluated first; optional constrained solve is prohibited unless C2 clearly fails a declared compatibility property",
+      "status": "NOT_RUN"
+    }
+  },
+  "initializer_scale": "one deterministic scalar per geometry, set by V_i-weighted phi>=0.9 core mean; no input-u-impact equality claim beyond this declared target.",
+  "phase_and_operator_freeze": "C0/C1/C2 share bitwise phi, Solid geometry, M/eps/We/Re/cos_theta, phase transport, wetting, rho/nu, capillary force, eta_pen and all production operators; C2 changes only t=0 u/v.",
+  "physical_parameters_and_geometry": "Derived per exact study_cases() from build_case, local _local_surface_top, actual SDF, case x0/R, and policy schedule. No shared y0 or geometry mutation.",
+  "return_flow_requirement": "periodic localized downward motion requires a return flow; ambient/farfield and return-flow peak are reported separately.",
+  "stage": "L1A-2s",
+  "stage_version": "l1a2s_v1"
+}

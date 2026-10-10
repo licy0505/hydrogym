@@ -1,0 +1,11 @@
+L1A-2s frozen-fixture closure: repaired anchors and operator guards
+HEAD: 78fc8d719f9ebfecc686e6dffdb53b5ba028f80e
+Working directory: /home/user/hydrogym/examples/two_phase
+Interpreter: Python 3.11.2
+Command: JAX_ENABLE_X64=1 PYTHONPATH=. /home/user/hydrogym/.venv/bin/pytest -q <closure nodeids>
+
+--- pytest output ---
+............................                                             [100%]
+28 passed in 1.71s
+
+pytest_exit_code=0

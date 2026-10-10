@@ -1,0 +1,103 @@
+{
+  "candidate_initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+  "case_hashes": {
+    "flat_we100_ct050": {
+      "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+      "u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+      "v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+    },
+    "flat_we200_ct000": {
+      "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+      "u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+      "v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+    },
+    "pillar_training": {
+      "geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+      "phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+      "u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+      "v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+    }
+  },
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training"
+  ],
+  "diagnostic_only": true,
+  "files": [
+    {
+      "bytes": 68522,
+      "path": "pillar_flat_operator_comparison/pillar_flat_operator_comparison.json",
+      "sha256": "54cdc9434b851a58e5ef228b70df21296d8c68a76b3c5f190ac27220d17b07db"
+    },
+    {
+      "bytes": 11785,
+      "path": "pillar_flat_operator_comparison/pillar_flat_operator_comparison.md",
+      "sha256": "fa50d3062e8a0d3475d7c9a1d5e64b6bd1770bb2c1d4ea05ad28cc73c88e4f84"
+    },
+    {
+      "bytes": 28221,
+      "path": "pillar_flat_operator_comparison/run_short_operator_comparison.py",
+      "sha256": "81d373238666e1e3b570d7a2a1faac8eb655a426c02d969c97948c7dabc0c98f"
+    }
+  ],
+  "frozen_approach_floor": {
+    "formula": "0.2*u_impact",
+    "fraction": 0.2,
+    "u_impact": 0.5,
+    "value": 0.1
+  },
+  "frozen_contact_gap_cells": 1.5,
+  "head_sha_at_short_run": "7b87dd31354817b942502923b18d956db477dd68",
+  "long_t8_calculation_repeated": false,
+  "production_lineage_eligible": false,
+  "schema_version": 1,
+  "short_run_public_steps": {
+    "flat_we100_ct050": 104,
+    "flat_we200_ct000": 143,
+    "pillar_training": 176
+  },
+  "solver_contract_version": 12,
+  "source_hashes": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "stage": "L1A-2s focused pillar-versus-flat precontact operator diagnosis",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "upstream_evidence_files": [
+    {
+      "bytes": 5994821,
+      "path": "impact_event_matrix.json",
+      "sha256": "ea39659f03d5b3ee4562cf14618c136f235b3a7fd3b3de46e46c1f2bce02abac"
+    },
+    {
+      "bytes": 92971,
+      "path": "initializer_constraint_matrix.json",
+      "sha256": "ffa04938c1252dbdfd408233289b795396837cfa2a0bcd682549412efae46095"
+    },
+    {
+      "bytes": 345588,
+      "path": "projection_brinkman_startup_ledger.json",
+      "sha256": "c8363736cfdbbd88f3a45d8a7f22ee30aebc27707d5bd5dd7607c20cdf0add2c"
+    },
+    {
+      "bytes": 1074,
+      "path": "initializer_decision.json",
+      "sha256": "95c708c49a0354c389061a60fa340a8bc84ac2aac3e2023667a881b7dee26162"
+    }
+  ]
+}

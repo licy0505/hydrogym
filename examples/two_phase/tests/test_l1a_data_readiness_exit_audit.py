@@ -26,9 +26,13 @@ FROZEN_PHASEFIELD_FILE_SHA256_PREFIX = "4790c6235dd763db"
 #: L1A-2p contract promotion (11 -> 12) re-sealed the phasefield file hash with
 #: its sanctioned metadata-only edit (see evidence/l1a2p/contract12_promotion_report.json).
 PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX = "ebb249a22fa2065f"
+#: L1A-2q/r record this later whole-file seal after contract-12 lineage metadata
+#: was added; function-level operator guards remain separate.
+L1A2Q_R_PHASEFIELD_FILE_SHA256_PREFIX = "024665742dce67bc"
 ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES = (
     FROZEN_PHASEFIELD_FILE_SHA256_PREFIX,
     PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX,
+    L1A2Q_R_PHASEFIELD_FILE_SHA256_PREFIX,
 )
 
 

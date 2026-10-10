@@ -1,0 +1,404 @@
+{
+  "artifacts": {
+    "bounded_full_horizon_matrix.json": {
+      "bytes": 338381,
+      "sha256": "3e4dee892a7c15efbe29197ad17b829079d6f2c9f1555bf311a329f7a6cb5a18"
+    },
+    "control_matrix.json": {
+      "bytes": 1963281,
+      "sha256": "c326791ed884d12cd421fa0bc9c2d5f0a840ee9db7dfdcc94fc505a0da157531"
+    },
+    "direct_field_quality_matrix.json": {
+      "bytes": 34709,
+      "sha256": "7b51985a1223a78c2dacb2fd7bc815677135de40d29e8e55882d677ecf974c93"
+    },
+    "gate_and_blocker_matrix.json": {
+      "bytes": 7283,
+      "sha256": "c16d4c5508f50c8fc9eb0d9ffd8445962a9970423890d0553254b5419a4aab12"
+    },
+    "impact_event_matrix.json": {
+      "bytes": 5994821,
+      "sha256": "ea39659f03d5b3ee4562cf14618c136f235b3a7fd3b3de46e46c1f2bce02abac"
+    },
+    "impact_parameter_semantics.json": {
+      "bytes": 5325,
+      "sha256": "eebb4d72e271270495ae259a866d0ef7e37a1d985b42a59dfaa64592436a33fb"
+    },
+    "initial_velocity_region_budget.json": {
+      "bytes": 39563,
+      "sha256": "34017796009e26736a4083fc8537c7917ac963ee54e9fd834deb9efd8e89eb16"
+    },
+    "initializer_constraint_matrix.json": {
+      "bytes": 92971,
+      "sha256": "ffa04938c1252dbdfd408233289b795396837cfa2a0bcd682549412efae46095"
+    },
+    "initializer_decision.json": {
+      "bytes": 1074,
+      "sha256": "95c708c49a0354c389061a60fa340a8bc84ac2aac3e2023667a881b7dee26162"
+    },
+    "initializer_design_contract.json": {
+      "bytes": 2175,
+      "sha256": "21083ef2b4a5f1e6018cf8f1d22f9263a3825e84ed9df6f2b2a6cfc65b614157"
+    },
+    "l1a2s_final_report.json": {
+      "bytes": 17232,
+      "sha256": "9591d7193226a4d01c621eb471d996b38c15f85b7254beff42700ee40f7d6f2a"
+    },
+    "l1a2s_final_report.md": {
+      "bytes": 18182,
+      "sha256": "5c8cbf619b16554a6ffc2ef9a5408171d4424e35a753a69155c02b717ccb3bbc"
+    },
+    "projection_brinkman_startup_ledger.json": {
+      "bytes": 345588,
+      "sha256": "c8363736cfdbbd88f3a45d8a7f22ee30aebc27707d5bd5dd7607c20cdf0add2c"
+    },
+    "quality_status.json": {
+      "bytes": 1759,
+      "sha256": "ff0edb0ca360de390cc893d28c8f719b6b359c02bc6c94cf28e5a2b8103defca"
+    },
+    "source_and_prerequisite_map.json": {
+      "bytes": 11723,
+      "sha256": "46e435009981e9d8f37ef888222d874e417b539182091976ae3ecd18c106afa4"
+    },
+    "spatial_temporal_reaudit.json": {
+      "bytes": 51077,
+      "sha256": "0e78775438792b5eda81eacb4b1b656ef9befee4e420afcb7e73872248fa0118"
+    },
+    "temporal_retention_matrix.json": {
+      "bytes": 27971273,
+      "sha256": "cc1aef076186e73f0180e61405b369314325cae9555899ba87f57a9cd00b2cbf"
+    }
+  },
+  "base_main_git_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "cases": {
+    "complex_heldout": {
+      "case_fingerprint": "4ffb0eed977cb884fb59e798c0b75eba1539e4a2b7b789f41c8d42067fb10127",
+      "geometry_fingerprint": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+      "initial_hashes": {
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      }
+    },
+    "flat_we100_ct050": {
+      "case_fingerprint": "b18e4d9fcd7e98b6597eabd123568178319cfdc6e7649caf3582c1628f0122b3",
+      "geometry_fingerprint": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "initial_hashes": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    "flat_we200_ct000": {
+      "case_fingerprint": "843d23897aea3365ffd67586e8a60bf54a65af9c44c20eb5db0a3af6e50da029",
+      "geometry_fingerprint": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "initial_hashes": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    "pillar_training": {
+      "case_fingerprint": "9a8edba848d160ab28723f584b8574d66c16db412bfe99102fc2bd261065f7f8",
+      "geometry_fingerprint": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+      "initial_hashes": {
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      }
+    }
+  },
+  "dtype_policy": {
+    "generator_sample_phi": "float32",
+    "generator_sample_u_v": "float16",
+    "phase_solver": "float64 current phase_storage_model",
+    "velocity_and_geometry": "float32 p.dtype"
+  },
+  "elapsed_seconds": 2589.5551039539996,
+  "initializer_version_and_parameters": {
+    "C2": "c2_sdf_tapered_streamfunction_v1",
+    "acceptance": {
+      "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+      "core_mean_speed_relative_error_max": 0.01,
+      "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+      "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+      "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+      "open_face_FV_dimensionless_Linf_max": 0.01,
+      "region_definitions": {
+        "core_mean": "V_i-weighted mean over phi >= 0.9",
+        "deep_solid": "sdf < -2*dx",
+        "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+        "nearwall_chi": "chi >= 0.01",
+        "nearwall_sdf": "abs(sdf) <= 3*dx",
+        "partial_cells": "0 < V_i < dx*dy",
+        "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+      }
+    },
+    "implementation_sha256": "835b2e31a072662db0a07171dbcf08114d0aa706bf94e5588c564859a3f6396b"
+  },
+  "l1a2r_report_json_sha256": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+  "l1a2r_report_sha256": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+  "pr21": {
+    "head_sha": "8220c32c6fed24432788f28bb0d76a027c7e95df",
+    "merge_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "merged_at_utc": "2026-10-08T16:05:31Z",
+    "number": 21,
+    "state": "MERGED",
+    "url": "https://github.com/licy0505/hydrogym/pull/21"
+  },
+  "production_timestep_policy": "impact_phase_cap_dx2_v1",
+  "profile": "forensic",
+  "profile_and_tests": {
+    "candidate_promoted": false,
+    "forensic_N192_completed": true,
+    "profile": "forensic"
+  },
+  "quality_status": {
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "artifacts_directory": "examples/two_phase/artifacts/l1a2s",
+    "candidate_promoted": false,
+    "evidence_file_count": 17,
+    "fleet_impact_verdict": "PARTIAL_IMPACT_AUTHENTICATION",
+    "initializer_verdict": "INITIALIZER_COMPATIBLE",
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+    "production_semantics_changed": false,
+    "production_timestep_policy": "impact_phase_cap_dx2_v1",
+    "profile": "forensic",
+    "quality_claims": {
+      "focused_2s_pytest": "PASS: 49 passed",
+      "forensic_profile": true,
+      "git_diff_check": "PASS",
+      "hosted_ci": "PENDING_PR",
+      "locked_dependency_audit": "NOT_CLASSIFIED_UNTIL_HOSTED_CHECKS",
+      "preexisting_two_phase_regression": "BLOCKED: 223 passed; 5 known frozen-source/merge-fixture failures",
+      "py_compile": "PASS",
+      "quick_profile": "forensic",
+      "ruff": "ruff check PASS for all changed Python; ruff format --check PASS for the new audit and test; the reused projection-audit module has identical pre-existing whole-file formatting debt at HEAD"
+    },
+    "readiness": {
+      "DIRECT_FIELD_LABELS": "UNMEASURED",
+      "GENERATOR_QUALITY_GATES": "FAIL",
+      "SPATIAL_REFINEMENT": "FAIL",
+      "TEMPORAL_REFINEMENT": "UNMEASURED"
+    },
+    "solver_contract_version": 12,
+    "stage": "L1A-2s",
+    "stage_decision": {
+      "decision": "B_INITIALIZATION_HELPFUL_BUT_REFINEMENT_OR_GEOMETRY_BLOCKS",
+      "next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+      "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION"
+    },
+    "status": "BLOCKED_DIAGNOSTIC_ONLY"
+  },
+  "run_bindings": {
+    "09b15dbf118cfd91aa926a16386250af35d0ee5d7cd23a8c63559d963097a73c": {
+      "N": 192,
+      "base_main_git_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "case_fingerprint": "843d23897aea3365ffd67586e8a60bf54a65af9c44c20eb5db0a3af6e50da029",
+      "diagnostic_only": true,
+      "diagnostic_sampling_rule": "every public step for event/retention rows; three internal-substep scalar ledger; fields at t=0 and exact 0.08 cadence",
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "frame_cadence": 0.08,
+      "geometry_fingerprint": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "horizon": 8.0,
+      "initial_state_hashes": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+      "initializer_version": "c2_sdf_tapered_streamfunction_v1",
+      "phase_dtype": "float64",
+      "production_lineage_eligible": false,
+      "profile": "forensic",
+      "requested_dt": 0.002,
+      "solver_contract": 12,
+      "solver_source_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "stage_version": "l1a2s_v1",
+      "timestep_policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "velocity_dtype": "float32"
+    },
+    "36928753751e91baaa5170be28c3a7ab6b50eca304a6089040fbead203746dbb": {
+      "N": 192,
+      "base_main_git_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "case_fingerprint": "4ffb0eed977cb884fb59e798c0b75eba1539e4a2b7b789f41c8d42067fb10127",
+      "diagnostic_only": true,
+      "diagnostic_sampling_rule": "every public step for event/retention rows; three internal-substep scalar ledger; fields at t=0 and exact 0.08 cadence",
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "frame_cadence": 0.08,
+      "geometry_fingerprint": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+      "horizon": 8.0,
+      "initial_state_hashes": {
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      },
+      "initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+      "initializer_version": "c2_sdf_tapered_streamfunction_v1",
+      "phase_dtype": "float64",
+      "production_lineage_eligible": false,
+      "profile": "forensic",
+      "requested_dt": 0.002,
+      "solver_contract": 12,
+      "solver_source_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "stage_version": "l1a2s_v1",
+      "timestep_policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "velocity_dtype": "float32"
+    },
+    "ce083c00b3a92b6c78481b00a73c4091952adf642edc91ed9f18b6b6d3f75c7c": {
+      "N": 192,
+      "base_main_git_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "case_fingerprint": "b18e4d9fcd7e98b6597eabd123568178319cfdc6e7649caf3582c1628f0122b3",
+      "diagnostic_only": true,
+      "diagnostic_sampling_rule": "every public step for event/retention rows; three internal-substep scalar ledger; fields at t=0 and exact 0.08 cadence",
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "frame_cadence": 0.08,
+      "geometry_fingerprint": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "horizon": 8.0,
+      "initial_state_hashes": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+      "initializer_version": "c2_sdf_tapered_streamfunction_v1",
+      "phase_dtype": "float64",
+      "production_lineage_eligible": false,
+      "profile": "forensic",
+      "requested_dt": 0.002,
+      "solver_contract": 12,
+      "solver_source_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "stage_version": "l1a2s_v1",
+      "timestep_policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "velocity_dtype": "float32"
+    },
+    "ceb2cd78bc869cb6f37ffcd1af1a98596e19c66903284c32df012657b563effa": {
+      "N": 192,
+      "base_main_git_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "case_fingerprint": "9a8edba848d160ab28723f584b8574d66c16db412bfe99102fc2bd261065f7f8",
+      "diagnostic_only": true,
+      "diagnostic_sampling_rule": "every public step for event/retention rows; three internal-substep scalar ledger; fields at t=0 and exact 0.08 cadence",
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "frame_cadence": 0.08,
+      "geometry_fingerprint": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+      "horizon": 8.0,
+      "initial_state_hashes": {
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+      "initializer_version": "c2_sdf_tapered_streamfunction_v1",
+      "phase_dtype": "float64",
+      "production_lineage_eligible": false,
+      "profile": "forensic",
+      "requested_dt": 0.002,
+      "solver_contract": 12,
+      "solver_source_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "stage_version": "l1a2s_v1",
+      "timestep_policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "velocity_dtype": "float32"
+    }
+  },
+  "runtime": {
+    "jax": "0.10.2",
+    "jax_backend": "cpu",
+    "jax_devices": [
+      "cpu:0"
+    ],
+    "jax_enable_x64": true,
+    "numpy": "2.4.6",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "python": "3.11.2"
+  },
+  "solver_contract_version": 12,
+  "source_hash_baselines_from_l1a2r": {
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "source_hashes_current": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "source_hashes_sha256": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "stage": "L1A-2s",
+  "stage_version": "l1a2s_v1"
+}
