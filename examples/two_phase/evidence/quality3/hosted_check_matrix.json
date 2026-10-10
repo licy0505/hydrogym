@@ -430,6 +430,37 @@
     "state": "closed",
     "url": "https://github.com/licy0505/hydrogym/pull/23"
   },
+  "quality3_branch": {
+    "all_jobs_complete_at_utc": "2026-10-10T10:43:24Z",
+    "core_imports_and_package": "SUCCESS",
+    "job_ids": [
+      114191932430,
+      114191932388,
+      114191932380,
+      114191932368,
+      114191932348,
+      114191932340
+    ],
+    "quality_job": {
+      "audit_locked_dependencies": "success",
+      "codespell": "skipped",
+      "conclusion": "failure",
+      "failure_reason": "four protected SHA transitions are PENDING_OWNER",
+      "format": "skipped",
+      "id": 114191932211,
+      "isort": "skipped",
+      "lint": "failure",
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38044758044/job/114191932211"
+    },
+    "run_id": 38044758044,
+    "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38044758044",
+    "sha": "32c1cbf4237189408cc8b9a8d8f5ec659bf57ba6",
+    "two_phase_unit_e2e": {
+      "conclusion": "success",
+      "id": 114191932376,
+      "url": "https://github.com/licy0505/hydrogym/actions/runs/38044758044/job/114191932376"
+    }
+  },
   "queried_at_utc": "2026-10-10T10:17:01Z",
   "schema": "quality3_hosted_check_matrix_v1"
 }

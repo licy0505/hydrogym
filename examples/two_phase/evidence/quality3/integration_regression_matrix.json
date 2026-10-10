@@ -20,7 +20,13 @@
     "main_two_phase_unit_e2e": "PASS",
     "pr22_quality": "FAIL",
     "pr22_quality_blocker": "Audit locked dependencies; later quality steps skipped",
-    "pr22_two_phase_unit_e2e": "PASS_ON_PR22_HEAD"
+    "pr22_two_phase_unit_e2e": "PASS_ON_PR22_HEAD",
+    "quality3_branch_package_and_imports": "PASS",
+    "quality3_branch_quality": "FAIL_PENDING_OWNER_RESEAL",
+    "quality3_branch_run_id": 38044758044,
+    "quality3_branch_sha": "32c1cbf4237189408cc8b9a8d8f5ec659bf57ba6",
+    "quality3_branch_two_phase_e2e": "PASS",
+    "quality3_branch_url": "https://github.com/licy0505/hydrogym/actions/runs/38044758044"
   },
   "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
   "local_environment": {

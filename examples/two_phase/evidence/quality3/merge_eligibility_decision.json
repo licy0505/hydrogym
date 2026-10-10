@@ -7,6 +7,13 @@
     "SOLVER_CONTRACT_VERSION": 12
   },
   "generated_at_utc": "2026-10-10T10:19:36.607356Z",
+  "latest_pushed_session_branch_checks": {
+    "quality": "FAIL_AT_STRICT_LEGACY_DEBT_LINT",
+    "quality_failure_is_expected_owner_reseal_block": "true",
+    "run_id": 38044758044,
+    "sha": "32c1cbf4237189408cc8b9a8d8f5ec659bf57ba6",
+    "two_phase_e2e": "PASS"
+  },
   "milestones": {
     "L1B_DATA_READY": "NOT_ALLOWED_AND_NOT_READY",
     "QUALITY3_INTEGRATION_VALIDATED": "NOT_REACHED",

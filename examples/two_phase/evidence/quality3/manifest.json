@@ -25,15 +25,15 @@
     },
     {
       "path": "examples/two_phase/evidence/quality3/hosted_check_matrix.json",
-      "sha256": "506ba906d1a984e30cbf194fe96cd05cdc6799e2a43497c279dfd38cbdc372a9"
+      "sha256": "d64111fa5f519fe086f8673463de60ce089c84f2e0b40cc92c739a8c573b8597"
     },
     {
       "path": "examples/two_phase/evidence/quality3/integration_regression_matrix.json",
-      "sha256": "b40caa7fa8cdbea470a87db17b5e05b2bb81cc074da929ca1571c2b6b5961d41"
+      "sha256": "d1f3aedbd8d7a9b77db2fa0bea70f76c7b1756f99a0e71e9885850967b089d6a"
     },
     {
       "path": "examples/two_phase/evidence/quality3/merge_eligibility_decision.json",
-      "sha256": "19658fdf5b161073fe4e2ad0805ec10f5d4715366422da59a4733e86c62232eb"
+      "sha256": "5a9f14b44adf4e6556309006423c8e1b4f26c1a24a5ab3b4e73b37fc743ba8fe"
     },
     {
       "path": "examples/two_phase/evidence/quality3/pr22_quality_overlap_matrix.json",
@@ -149,7 +149,7 @@
       "sha256": "bcc246c7816f86aa753f0dc48916c9f41093afb1c147cc049693403199da05d1"
     }
   ],
-  "generated_at_utc": "2026-10-10T10:23:31.519899Z",
+  "generated_at_utc": "2026-10-10T10:44:08.670228Z",
   "manifest_hash_policy": "SHA-256 for every quality3 artifact except this manifest and final report; final report binds this manifest hash after write without reciprocal hash cycle.",
   "quality3_root": "examples/two_phase/evidence/quality3",
   "schema": "quality3_manifest_v1",

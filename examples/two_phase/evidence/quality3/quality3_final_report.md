@@ -49,6 +49,7 @@
 - 原有 two-phase unit regression 分组件完成：solver core 93 passed；wall 46 passed；cut-cell transport 25 passed、2 deselected；其余 audit 84 passed、合计 248 passed、2 deselected。一个聚合调用超过本地 30 分钟预算，因此只记录 TIMEOUT；组件结果没有被伪装成聚合调用 PASS。
 - merged main `039f6a0...` 的 hosted Python CI Quality、Two-phase unit + E2E smoke、五种 core import、package、CodeQL、部署 build 均有对应记录；Python CI Quality job `114168222944` 与 E2E job `114168223007` 为 SUCCESS。GitHub Pages deploy job `114168485062` 为 FAILURE；branch protection API 返回 403，无法独立证明其 required/non-required 属性。
 - PR #22 exact head 的 hosted Two-phase、imports、package、CodeQL、deployment 和分析 jobs 为 SUCCESS，但 Quality job `113734922481` FAILURE：`Audit locked dependencies` FAILURE，Lint/format/isort/codespell 随后 SKIPPED。因此 PR #22 当前不能称为 required checks 全绿。
+- 本 session branch `32c1cbf4237189408cc8b9a8d8f5ec659bf57ba6` 的最新 hosted run `38044758044` 已完成：Quality job `114191932211` 在严格 legacy-debt lint 因四个 PENDING_OWNER SHA transition FAILURE；其余 format/isort/codespell 被依赖关系跳过；同一 run 的 Two-phase unit + E2E job `114191932376`、五种 core import 和 package 均 SUCCESS。该失败不能被改写成 QUALITY3 PASS。
 - 本地 exact `uv lock --check` 和 exact `uv audit --locked` 因环境没有 Python 3.12 返回环境失败；`uv lock --check --python 3.11` PASS。不能把本地 audit 写成 PASS。merged main hosted authoritative `uv audit --locked` 为 SUCCESS；PR #22 head 的 audit step 为 FAILURE。
 
 ## Frozen milestone status
@@ -76,8 +77,8 @@ provenance_and_sha_checks: PASS for frozen sources; PENDING_OWNER_RESEAL for exa
 operator_identity / frozen_source_tests: owner=licy0505; agent=Arena session / focused=49 PASS; fixture=28 PASS; numerical=PASS
 quality_gate / uv_audit / two_phase_e2e / non_slow_pytest: BLOCKED_OWNER_RESEAL / hosted-main-PASS; local-exact-ENVIRONMENT_BLOCKED / hosted-main-PASS / 228 PASS
 new_tests / adversarial_tests: 12 new QUALITY-3 tests / 31 total PASS
- evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 499bc947840b2613ab2d525d5d33d4f1c14fde4cc44fa0c1b7ab85e64da564cd
-PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE
+ evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 559b0da9a193da8fc87f0d4d5bb6d764186e9be5535e927ec62536a992518c17
+PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE; session-branch-hosted-quality-FAIL-owner-reseal
 SOLVER_CONTRACT_VERSION=12
 L1A_STATUS=BLOCKED
 L1B_DATA_NOT_READY
