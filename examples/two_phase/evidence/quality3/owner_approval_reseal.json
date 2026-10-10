@@ -1,0 +1,87 @@
+{
+  "schema": "quality3_owner_approval_reseal_v1",
+  "generated_at_utc": "2026-10-10T12:52:04.754295Z",
+  "approved_by": "licy0505",
+  "approval_commit": "0909dd69fa847c51e75dad7528b0f066823baebd",
+  "source_gate_manifest": "quality/approved_migrations.json",
+  "source_gate_manifest_sha256": "b5f79986e0358fe128265d88863a25a5a6007b10565006514571d8caaa484e8a",
+  "baseline_ref": "quality/legacy_two_phase_debt_v1.json",
+  "baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "approved_entry_count": 4,
+  "pending_or_rejected_entry_count": 0,
+  "transitions": [
+    {
+      "path": "examples/two_phase/production/impact_impulse_projection_audit.py",
+      "old_sha256": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "new_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "approval_status": "APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+      "old_sha256": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+      "new_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "approval_status": "APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+      "old_sha256": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+      "new_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "approval_status": "APPROVED"
+    },
+    {
+      "path": "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+      "old_sha256": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+      "new_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "approval_status": "APPROVED"
+    }
+  ],
+  "historical_preapproval_evidence_preserved": true,
+  "historical_preapproval_status": "OWNER_RESEAL_APPROVAL_REQUIRED",
+  "local_quality_gate": {
+    "command": "python scripts/quality_debt_gate.py --tool all",
+    "exit": 0,
+    "status": "PASS_BASELINE_ONLY",
+    "raw_artifact": "examples/two_phase/evidence/quality3/raw/ratchet_post_approval.txt",
+    "raw_artifact_sha256": "eb6787fe37e875fc63a99d91f9f2b3f5dea579a04ff4d257b378e98a780975aa",
+    "interpretation": "Historical debt remains frozen; no added diagnostics; four exact SHA transitions accepted."
+  },
+  "dependency_checks": {
+    "uv_lock_check_python311": {
+      "command": "uv lock --check --python 3.11",
+      "exit": 0,
+      "status": "PASS_COMPATIBLE_LOCAL_INTERPRETER",
+      "artifact": "examples/two_phase/evidence/quality3/raw/uv_lock_check_post_approval.txt",
+      "artifact_sha256": "79c6d5138adf435f6b9b3188742e37a4ce3179df58860bc6dc9e362e85fe983b"
+    },
+    "uv_lock_check_exact": {
+      "command": "uv lock --check",
+      "exit": 2,
+      "status": "ENVIRONMENT_BLOCKED_PYTHON_3_12_DOWNLOAD_TLS",
+      "artifact": "examples/two_phase/evidence/quality3/raw/uv_lock_check_exact_post_approval.txt",
+      "artifact_sha256": "36591578a526477530c29d23bb425356f56847b9d2bb98e67aa1049f8e478b61"
+    },
+    "uv_audit_locked": {
+      "command": "uv audit --locked",
+      "exit": 2,
+      "status": "ENVIRONMENT_BLOCKED_PYTHON_3_12_DOWNLOAD_TLS_NOT_PASS",
+      "artifact": "examples/two_phase/evidence/quality3/raw/uv_audit_locked_post_approval.txt",
+      "artifact_sha256": "6cbe0a2baa3b374d840b0804ff861609bf879ce71fcc98c0655e6490ece4750e",
+      "hosted_required": true
+    }
+  },
+  "hosted_required_checks": "PENDING_ON_FINAL_APPROVAL_COMMIT",
+  "pr22_merge": "NOT_EXECUTED",
+  "l1b_data": "L1B_DATA_NOT_READY"
+}

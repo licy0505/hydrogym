@@ -169,9 +169,12 @@ def test_live_gate_on_repository(tool, capsys):
     }
     drift = [rel for rel in overlap if gate.sha256_file(ROOT / rel) != baseline["file_sha256"][rel]]
     if drift:
-        assert code == 1
+        migrations = {entry["path"]: entry for entry in gate.load_migrations(ROOT, baseline)}
+        assert all(migrations[rel]["approval_status"] == "APPROVED" for rel in drift)
+        assert code == 0
         out = capsys.readouterr().out
-        assert "SHA_DRIFT:" in out or "PROTECTED_SHA_DRIFT_UNAPPROVED:" in out
+        assert "sha_transitions_approved=4" in out
+        assert "PASS_BASELINE_ONLY" in out
     else:
         assert code == 0
         assert "PASS_BASELINE_ONLY" in capsys.readouterr().out

@@ -1,14 +1,14 @@
 # QUALITY-3 Frozen Quality-Baseline Reconciliation & Integration Validation
 
-执行策略：fail closed。本文档只报告已实际执行的检查；未执行项不填为 PASS。QUALITY-3 不重新计算 L1A-2s，不改变 HydroGym two-phase 生产算子、物理参数、solver contract 或历史 L1A-2s 结论。
+执行策略：fail closed。本文档只报告已实际执行的检查；未执行项不填为 PASS。当前报告记录四项 exact SHA migration 已获仓库所有者批准，但 hosted required checks 尚待在批准后的 exact integrated commit 上重新运行。QUALITY-3 不重新计算 L1A-2s，不改变 HydroGym two-phase 生产算子、物理参数、solver contract 或历史 L1A-2s 结论。
 
 ## Provenance
 
-- 查询时间窗口：2026-10-10 UTC；最新 main 为 `039f6a0d9a14ff601c76a58f5a66ce0900677de5`。
+- 查询时间窗口：2026-10-10 UTC；merged main 为 `039f6a0d9a14ff601c76a58f5a66ce0900677de5`。
 - PR #23 已由仓库所有者 `licy0505` 合并，实际 merge SHA 是 `039f6a0d9a14ff601c76a58f5a66ce0900677de5`，head SHA 是 `ea00347c8a6cebf6cfbff36f744d39ccd60784d1`。没有把 PR #23 head 当作 merge SHA。
 - PR #22 仍 OPEN，head 是 `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf`，original `base_main_sha` 是 `002120f3a051e638a7e85f9db4022107dbe45780`，未执行 PR merge。
 - 实际集成预检无冲突；保留 ancestry 的本地 integration merge 是 `39dfdab0ef384eabb6693833dc33a4b08b378d8e`，父提交为 merged-main `039f6a0...` 和 PR #22 exact head `19da2a4...`，merge-base 为 `002120f...`，预检 tree 为 `ac6ac3f0651f7bcf211f2e3775fe5891a5360061`。
-- `git diff --check` 返回 0。预合并工作区 `git status --porcelain` 为空；当前工作区包含 QUALITY-3 证据和修复，尚未执行任何 merge/close 操作。
+- `git diff --check` 返回 0。没有执行 PR #22 merge/close 操作。`quality/owner_approval_quality3_sha_transitions_2026-10-10.json` 和 `owner_approval_reseal.json` 保存本轮显式 owner approval 的范围与 exact pair。
 - 四个且仅四个 QUALITY-2 pinned 文件与 PR #22 重叠：
   1. `examples/two_phase/production/impact_impulse_projection_audit.py`
   2. `examples/two_phase/tests/test_inactive_phase_coupling_audit.py`
@@ -17,20 +17,27 @@
 
 ## Quality and migration result
 
-四路原始工具都真实执行，仍保留原历史 multiset，没有发现新增诊断；原始工具非零并不等于 RAW_CLEAN：
+四路原始工具已重新执行，仍保留原历史 multiset，没有新增诊断。raw tool 的非零返回码表示历史债务仍被工具报告；ratchet gate 已按 owner-approved exact transitions 放行：
 
 | tool | raw exit | historical | added | ratchet result |
 |---|---:|---:|---:|---|
-| Ruff | 1 | 171 | 0 | FAIL：4 个 protected SHA transition 待 owner reseal |
-| Ruff format | 1 | 27 | 0 | FAIL：4 个 protected SHA transition 待 owner reseal |
-| isort | 1 | 28 | 0 | FAIL：4 个 protected SHA transition 待 owner reseal |
-| codespell | 65 | 3 | 0 | FAIL：4 个 protected SHA transition 待 owner reseal |
+| Ruff | 1 | 171 | 0 | PASS_BASELINE_ONLY；4 个 exact SHA transitions approved |
+| Ruff format | 1 | 27 | 0 | PASS_BASELINE_ONLY；4 个 exact SHA transitions approved |
+| isort | 1 | 28 | 0 | PASS_BASELINE_ONLY；4 个 exact SHA transitions approved |
+| codespell | 65 | 3 | 0 | PASS_BASELINE_ONLY；4 个 exact SHA transitions approved |
 
-质量 gate 输出同时记录了原始 return code 和 ratchet 判定。新增的三个 PR #22 Python 文件已逐文件执行 Ruff、format、isort、codespell，四项均 exit 0；它们没有继承旧债务豁免。L1A-2s 原有两个新增脚本的 import disorder 已作局部、可审计修复，未对冻结生产算子做格式化。
+`quality/approved_migrations.json` 的 4 个条目均为 `LEGACY_SHIFTED_APPROVED`、`approval_status=APPROVED`，批准人为 `licy0505`，approval marker commit 为 `0909dd69fa847c51e75dad7528b0f066823baebd`。source manifest SHA-256 为 `b5f79986e0358fe128265d88863a25a5a6007b10565006514571d8caaa484e8a`；baseline JSON 未更新，baseline SHA-256 仍为 `52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b`。
 
-`quality/approved_migrations.json` 有 4 个 exact old-to-new SHA 条目，全部为 `LEGACY_SHIFTED_APPROVED` 的 `PENDING_OWNER`；没有任何 `APPROVED`。无摘要重算、无计数净抵消、无 wildcard/prefix SHA。baseline JSON 未更新，原 baseline SHA-256 为 `52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b`。
+| path | old SHA-256 | new SHA-256 | PR #22 commit | mapped debt |
+|---|---|---|---|---|
+| `production/impact_impulse_projection_audit.py` | `b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691` | `5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9` | `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf` | format + isort |
+| `tests/test_inactive_phase_coupling_audit.py` | `869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7` | `1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29` | `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf` | isort |
+| `tests/test_l1a_data_readiness_exit_audit.py` | `ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c` | `e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f` | `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf` | isort |
+| `tests/test_stationarity_metric_domain_audit.py` | `808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76` | `2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215` | `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf` | format |
 
-四个迁移的 old/new SHA、PR #22 commit、源码 diff fingerprint、诊断映射及 evidence hash 见 `diagnostic_ancestry_mapping.json` 与 `authorized_sha_transition_manifest.json`。没有 `LEGACY_REMOVED_APPROVED`，因此没有降低历史数量；没有 `NEW_QUALITY_DEBT`。
+没有 `LEGACY_REMOVED_APPROVED`，因此没有降低历史数量；没有 `NEW_QUALITY_DEBT`，没有摘要重算、计数净抵消或 wildcard/prefix SHA。旧的 pre-approval evidence 仍保留在 `authorized_sha_transition_manifest.json`、`baseline_reconciliation_matrix.json`、`diagnostic_ancestry_mapping.json` 和对应 raw artifacts 中，没有被改写；本轮新增 post-approval raw output 在 `raw/ratchet_post_approval.txt`。
+
+新增的 PR #22 Python 文件已逐文件执行 Ruff、format、isort、codespell，四项均 exit 0；它们没有继承旧债务豁免。L1A-2s 原有两个新增脚本的 import disorder 已作局部、可审计修复，未对冻结生产算子做格式化。
 
 ## Frozen source and numerical identity
 
@@ -47,10 +54,12 @@
 - QUALITY-3 adversarial suite：31 passed，其中新增 QUALITY-3 测试 12 项，覆盖新文件 E501/F841、SHA drift、等数量替换、无证据行移位、批准删除后重新引入、baseline 篡改、跨目录诊断、拼写/import disorder、tool/parse/missing-stage、exact overlap pair 和 frozen physics source。
 - `examples/two_phase/tests -m 'not slow'`（在 `examples/two_phase` cwd）：228 passed。
 - 原有 two-phase unit regression 分组件完成：solver core 93 passed；wall 46 passed；cut-cell transport 25 passed、2 deselected；其余 audit 84 passed、合计 248 passed、2 deselected。一个聚合调用超过本地 30 分钟预算，因此只记录 TIMEOUT；组件结果没有被伪装成聚合调用 PASS。
+- 本地批准后 gate test：31 passed；ratchet exit 0，且输出 `APPROVED=4`、`sha_transitions_approved=4`、`sha_drift_unapproved=0`。
+- 本地 `uv lock --check --python 3.11` exit 0。exact `uv lock --check` 和 exact `uv audit --locked` 仍因环境无法取得 Python 3.12（GitHub standalone download 的 TLS `UnknownIssuer`）而 exit 2；这两项没有写成 local PASS。`uv audit --locked` 必须由 hosted required check 实际复核。
 - merged main `039f6a0...` 的 hosted Python CI Quality、Two-phase unit + E2E smoke、五种 core import、package、CodeQL、部署 build 均有对应记录；Python CI Quality job `114168222944` 与 E2E job `114168223007` 为 SUCCESS。GitHub Pages deploy job `114168485062` 为 FAILURE；branch protection API 返回 403，无法独立证明其 required/non-required 属性。
-- PR #22 exact head 的 hosted Two-phase、imports、package、CodeQL、deployment 和分析 jobs 为 SUCCESS，但 Quality job `113734922481` FAILURE：`Audit locked dependencies` FAILURE，Lint/format/isort/codespell 随后 SKIPPED。因此 PR #22 当前不能称为 required checks 全绿。
-- 本 session branch `133159e50713eca4a2ba517d37c2e2a8d1b13af6` 的最新 hosted run `38045950758` 已完成：Quality job `114195402363` 在严格 legacy-debt lint 因四个 PENDING_OWNER SHA transition FAILURE；其余 format/isort/codespell 被依赖关系跳过；同一 run 的 Two-phase unit + E2E job `114195402395`、五种 core import 和 package 均 SUCCESS。该失败不能被改写成 QUALITY3 PASS。
-- 本地 exact `uv lock --check` 和 exact `uv audit --locked` 因环境没有 Python 3.12 返回环境失败；`uv lock --check --python 3.11` PASS。不能把本地 audit 写成 PASS。merged main hosted authoritative `uv audit --locked` 为 SUCCESS；PR #22 head 的 audit step 为 FAILURE。
+- PR #22 exact head 的 hosted Two-phase、imports、package、CodeQL、deployment 和分析 jobs 为 SUCCESS，但 Quality job `113734922481` FAILURE：`Audit locked dependencies` FAILURE，Lint/format/isort/codespell 随后 SKIPPED。因此 PR #22 当前仍不能称为 required checks 全绿。
+- 旧 session-branch run `38045950758`/`38047079721` 是 pre-approval historical runs：前者因 4 个 `PENDING_OWNER` transition 在 Quality gate 阻塞，后者的 strict lint 仍对应 approval 尚未写入的 commit；它们没有被重写成当前 PASS。
+- owner approval 已完成，但批准后的 exact integrated commit 尚未完成新一轮 hosted required checks；本报告不把 pending hosted run 写成 PASS，也不把 PR #22 写成可 merge。
 
 ## Frozen milestone status
 
@@ -69,24 +78,24 @@ QUALITY-3 FINAL
 main_sha / latest_integrated_main_sha: 039f6a0d9a14ff601c76a58f5a66ce0900677de5 / 039f6a0d9a14ff601c76a58f5a66ce0900677de5
 PR23 state / merge_sha / head / required_checks: CLOSED+MERGED / 039f6a0d9a14ff601c76a58f5a66ce0900677de5 / ea00347c8a6cebf6cfbff36f744d39ccd60784d1 / Python-CI-and-CodeQL-PASS; Pages-FAIL; required-classification-UNOBSERVABLE-HTTP403
 PR22 state / head / original_base_sha / integrated_tree_sha: OPEN / 19da2a4d695e6cceabd0e6c3dcc505d09ba84daf / 002120f3a051e638a7e85f9db4022107dbe45780 / ac6ac3f0651f7bcf211f2e3775fe5891a5360061
-workspace_branch / clean_at_start / permission: arena/9fa6b0dd-hydrogym / true / session-branch-write; owner-approval-not-observed
+workspace_branch / clean_at_start / permission: arena/9fa6b0dd-hydrogym / true / session-branch-write; owner-approval-observed
 conflicted_pinned_files: 4 (exact paths in pr22_quality_overlap_matrix.json)
 raw_ruff / raw_format / raw_isort / raw_codespell: RAW_TOOL_FAIL(1) / RAW_TOOL_FAIL(1) / RAW_TOOL_FAIL(1) / RAW_TOOL_FAIL(65)
-ratchet_historical / added / removed / moved / approved: 171+27+28+3 / 0 / 0 / 0 / 0; pending_owner=4
-provenance_and_sha_checks: PASS for frozen sources; PENDING_OWNER_RESEAL for exact four overlap pairs
+ratchet_historical / added / removed / moved / approved: 171+27+28+3 / 0 / 0 / 0 / 4; pending_owner=0
+provenance_and_sha_checks: PASS for frozen sources; APPROVED_EXACT_TRANSITIONS for four overlap pairs
 operator_identity / frozen_source_tests: owner=licy0505; agent=Arena session / focused=49 PASS; fixture=28 PASS; numerical=PASS
-quality_gate / uv_audit / two_phase_e2e / non_slow_pytest: BLOCKED_OWNER_RESEAL / hosted-main-PASS; local-exact-ENVIRONMENT_BLOCKED / hosted-main-PASS / 228 PASS
+quality_gate / uv_audit / two_phase_e2e / non_slow_pytest: LOCAL-PASS-BASELINE-ONLY / local-exact-ENVIRONMENT-BLOCKED; hosted-required-PENDING / hosted-main-PASS / 228 PASS
 new_tests / adversarial_tests: 12 new QUALITY-3 tests / 31 total PASS
- evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 1525515be0c4b674468acbc576041301697850056ae56f910e0f35dcf9e3bd76
-PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE; session-branch-hosted-quality-FAIL-owner-reseal
+evidence_manifest_path / SHA: examples/two_phase/evidence/quality3/manifest.json / 5f557c31751e4bdf40f854af980c333175958157c527b7c2ed23d12f16265ac8
+PR23_merge_eligibility / PR22_merge_eligibility: ALREADY_MERGED_BY_OWNER_WITH_PAGES_FAILURE_UNCLASSIFIED / NOT_ELIGIBLE; approved-reseal-hosted-checks-pending
 SOLVER_CONTRACT_VERSION=12
 L1A_STATUS=BLOCKED
 L1B_DATA_NOT_READY
 L1A-2t=NOT_RUN
-DECISION: OWNER_RESEAL_APPROVAL_REQUIRED
-EXACTLY_ONE_NEXT_ACTION: Repository owner reviews and explicitly approves the four named exact SHA transitions, then reruns PR #22 required hosted checks on the exact integrated commit; no merge is executed by this agent.
+DECISION: HOSTED_REQUIRED_CHECKS_PENDING
+EXACTLY_ONE_NEXT_ACTION: Push the owner-approved exact integrated commit, rerun all required hosted checks, then reassess PR #22; no merge is executed by this agent.
 ```
 
 ## Decision
 
-主 verdict 是 `OWNER_RESEAL_APPROVAL_REQUIRED`。这是 fail-closed 阻塞，不是 `QUALITY3_INTEGRATION_VALIDATED`：源码、冻结物理身份、局部数值等价性和本地回归证据已记录，但四个受保护文件的 exact SHA transition 没有仓库所有者批准，PR #22 hosted Quality 也没有全绿。下一步只能由仓库所有者审查并批准上述四个 named transitions，随后在 exact integrated commit 上重新运行 required checks；本轮不 merge PR #22。
+主 verdict 现在是 `HOSTED_REQUIRED_CHECKS_PENDING`。四项 named exact SHA transitions 已得到仓库所有者批准，四路 ratchet 已通过且没有新增债务；但是本地 exact `uv audit --locked` 受 Python 3.12 环境阻塞，批准后的 exact integrated commit 尚未有新的 required hosted result，PR #22 仍 OPEN 且未达到可合并条件。因此本轮不 merge PR #22；下一步只能在批准后的 exact commit 上完成 required hosted checks，再依据真实结果重新判定。

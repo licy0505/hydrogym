@@ -1,10 +1,11 @@
 {
-  "artifact_count_total": 35,
-  "artifact_count_with_hashes": 34,
+  "artifact_count_total": 44,
+  "artifact_count_with_hashes": 43,
   "bound_external_files": {
     "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
-    "quality/approved_migrations.json": "0ddf26e08b7e6341e0866f7dabd1f26e97ab5b3a202be599856375f681154629",
-    "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b"
+    "quality/approved_migrations.json": "b5f79986e0358fe128265d88863a25a5a6007b10565006514571d8caaa484e8a",
+    "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+    "quality/owner_approval_quality3_sha_transitions_2026-10-10.json": "f8336158e00d28d599d8e62805b7a5f227155385037fc624f17dd2fb764ee1b6"
   },
   "files": [
     {
@@ -147,11 +148,47 @@
     {
       "path": "examples/two_phase/evidence/quality3/raw_quality_results.json",
       "sha256": "bcc246c7816f86aa753f0dc48916c9f41093afb1c147cc049693403199da05d1"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/owner_approval_reseal.json",
+      "sha256": "2733e2db08c3faeaf6d7f7404d512a193e51afe6b76623ead7835e86137552ba"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ratchet_post_approval.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ratchet_post_approval.txt",
+      "sha256": "eb6787fe37e875fc63a99d91f9f2b3f5dea579a04ff4d257b378e98a780975aa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_post_approval.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_post_approval.txt",
+      "sha256": "79c6d5138adf435f6b9b3188742e37a4ce3179df58860bc6dc9e362e85fe983b"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_exact_post_approval.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_exact_post_approval.txt",
+      "sha256": "36591578a526477530c29d23bb425356f56847b9d2bb98e67aa1049f8e478b61"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_audit_locked_post_approval.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_audit_locked_post_approval.txt",
+      "sha256": "6cbe0a2baa3b374d840b0804ff861609bf879ce71fcc98c0655e6490ece4750e"
     }
   ],
-  "generated_at_utc": "2026-10-10T11:03:35.536647Z",
+  "generated_at_utc": "2026-10-10T12:52:36.033939Z",
   "manifest_hash_policy": "SHA-256 for every quality3 artifact except this manifest and final report; final report binds this manifest hash after write without reciprocal hash cycle.",
   "quality3_root": "examples/two_phase/evidence/quality3",
   "schema": "quality3_manifest_v1",
-  "status": "OWNER_RESEAL_APPROVAL_REQUIRED"
+  "status": "HOSTED_REQUIRED_CHECKS_PENDING"
 }
