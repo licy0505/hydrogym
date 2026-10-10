@@ -1,0 +1,35 @@
+{
+  "timestamp_utc": "2026-10-10T06:35:22Z",
+  "repo": "licy0505/hydrogym",
+  "workspace_branch": "arena/7e891333-hydrogym",
+  "workspace_clean_before_quality1_edits": true,
+  "workspace_head": "94f16bf7297ecb225ef5bb3a44e390d394165f08",
+  "main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "uv_version": "0.12.5",
+  "python_local": "3.11.2",
+  "branch_protection_api": "HTTP_403",
+  "session_constraint": "Arena session pinned to arena/7e891333-hydrogym; cannot create independent quality-only branch",
+  "pr23": {
+    "number": 23,
+    "state": "OPEN",
+    "mergedAt": null,
+    "head": "94f16bf7297ecb225ef5bb3a44e390d394165f08",
+    "url": "https://github.com/licy0505/hydrogym/pull/23",
+    "mergeable_github": true,
+    "files": ["uv.lock", "evidence/sec1/*"],
+    "quality_job": "https://github.com/licy0505/hydrogym/actions/runs/38030683145/job/114150796874",
+    "quality_conclusion": "FAILURE",
+    "run_id": "38030683145",
+    "core_imports_3.10_3.14": "SUCCESS",
+    "two_phase_e2e": "IN_PROGRESS_at_preflight"
+  },
+  "pr22": {
+    "number": 22,
+    "state": "OPEN",
+    "head": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "url": "https://github.com/licy0505/hydrogym/pull/22",
+    "quality_conclusion": "FAILURE",
+    "two_phase_e2e": "SUCCESS",
+    "independent": true
+  }
+}

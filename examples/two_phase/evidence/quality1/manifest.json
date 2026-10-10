@@ -1,0 +1,17 @@
+{
+  "note": "manifest.json not self-hashed",
+  "sha256": {
+    "examples/two_phase/evidence/quality1/change_impact.json": "caf445800ef1d7d92a54b3a92249598ae2152d01a0913ddd5ec8c74b9c37ced2",
+    "examples/two_phase/evidence/quality1/check_invariants.py": "eb20680e4a30b5613cff3819ca8ae07f7d93c973cf45e618840d56f6a8bfe54c",
+    "examples/two_phase/evidence/quality1/ci_validation.json": "49599bedc255e63bd55d02daaddd247b2d4135d7912ba39029bb59d5130169aa",
+    "examples/two_phase/evidence/quality1/codespell.txt": "680e59d635aab253e763c77b1b0ac05d0e4e0566b069a9106288dffb32f1434d",
+    "examples/two_phase/evidence/quality1/format_files.txt": "23a8ad734af1eafca3252418f87f2f69462df938948ccccd961d12ef4c1c1370",
+    "examples/two_phase/evidence/quality1/frozen_source_inventory.json": "a04c94e20d000451b1256b3ffa39b8eff286accadb0fbd187d3620f61d2d5c57",
+    "examples/two_phase/evidence/quality1/isort_files.txt": "dc69865ba4f1aea983fe1f9a2ee174d8bb070c506f6a52a969c241f42de8f874",
+    "examples/two_phase/evidence/quality1/merge_dependency_plan.md": "5a3859b7454a5ac39a26e60081340797fcc216fd05fddfaca33be09f2469a82b",
+    "examples/two_phase/evidence/quality1/preflight.json": "7c771e15109f4da37661044a5c7c68bef99f4e0082686ea2cbe36cc4cdffbbe0",
+    "examples/two_phase/evidence/quality1/quality1_final_report.md": "ddcc0bcc939d921b96e55eb59fc679c673b400b4dc974685d5c0d1c054fef9ae",
+    "examples/two_phase/evidence/quality1/quality_baseline.json": "27a426af4e09bad2a5f3e0edd7e8f29b556949f4aa18c4139ed4f58c4a143bd2",
+    "examples/two_phase/evidence/quality1/ruff_findings_slim.json": "cc9820b406b88b861ab975e604ab60d1c5bc2c57f07ce7c362b16b8ddbd0dfd5"
+  }
+}
