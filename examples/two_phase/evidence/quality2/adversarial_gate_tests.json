@@ -1,0 +1,13 @@
+{
+  "pytest": "test/test_quality_debt_gate.py",
+  "result": "19 passed",
+  "includes": [
+    "equal-count swap fail",
+    "new E501/F841",
+    "sha drift",
+    "missing file",
+    "format/isort/codespell new file",
+    "baseline inflation",
+    "invalid json"
+  ]
+}

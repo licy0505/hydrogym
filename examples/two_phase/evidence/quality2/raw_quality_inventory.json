@@ -1,0 +1,25 @@
+{
+  "raw_ruff": {
+    "exit": 1,
+    "findings": 171,
+    "files": 12,
+    "new": 0
+  },
+  "raw_format": {
+    "exit": 1,
+    "files": 27,
+    "new": 0
+  },
+  "raw_isort": {
+    "exit": 1,
+    "files": 28,
+    "new": 0
+  },
+  "raw_codespell": {
+    "exit": 65,
+    "findings": 3,
+    "new": 0
+  },
+  "uv_lock_check": "PASS",
+  "uv_audit_local": "NETWORK_UNAVAILABLE"
+}

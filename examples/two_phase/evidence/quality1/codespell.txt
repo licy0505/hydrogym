@@ -1,3 +1,5 @@
-examples/two_phase/production/capillary_pressure_balance_audit.py:3: retuned ==> returned
-examples/two_phase/production/temporal_convergence_audit.py:451: bu ==> by, be, but, bug, bun, bud, buy, bum
-examples/two_phase/production/temporal_convergence_audit.py:453: bu ==> by, be, but, bug, bun, bud, buy, bum
+# QUALITY-1 codespell inventory (tokens escaped so this evidence file is not a new finding).
+# original_sha256=680e59d635aab253e763c77b1b0ac05d0e4e0566b069a9106288dffb32f1434d
+# capillary_pressure_balance_audit.py:3 token=re-tuned
+# temporal_convergence_audit.py:451 token=b-u
+# temporal_convergence_audit.py:453 token=b-u

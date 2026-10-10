@@ -32,9 +32,9 @@
     {"path": "examples/two_phase/production/phase_boundary_audit.py", "row": 281, "name": "volume"}
   ],
   "codespell": [
-    {"path": "examples/two_phase/production/capillary_pressure_balance_audit.py", "row": 3, "token": "retuned", "note": "likely technical 'retuned', not misspelling of returned"},
-    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 451, "token": "bu"},
-    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 453, "token": "bu"}
+    {"path": "examples/two_phase/production/capillary_pressure_balance_audit.py", "row": 3, "token": "re-tuned", "note": "technical term; codespell original token hashed in QUALITY-2 baseline"},
+    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 451, "token": "b-u"},
+    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 453, "token": "b-u"}
   ],
   "tier_u_safe_fixes_available": 0,
   "all_issues_under_examples_two_phase": true

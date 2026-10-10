@@ -1,0 +1,1350 @@
+{
+  "version": "legacy_two_phase_debt_v1",
+  "policy": "option_R_non_increasing_exact_multiset",
+  "baseline_git_sha": "5b10c1505dbf9977e9bb1c58456fe15cc1c0ba82",
+  "note": "Historical debt only. Counts are summaries, not pass criteria. New findings fail.",
+  "tools": {
+    "uv": "0.12.5",
+    "ruff": "0.15.22",
+    "isort": "6.1.0",
+    "codespell": "2.4.3",
+    "python": "3.11.2"
+  },
+  "hashes": {
+    "uv.lock": "d6a186574d8f12e5caf8eeedecd9ae891b5b7911f0ad31f58ffa97b51e37a7e1",
+    "pyproject.toml": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811",
+    ".github/workflows/python-ci.yml": "7dd9df934336528e85996ad5179ae298074579ed4f0a27de7d4975ba65a973a7"
+  },
+  "summary": {
+    "ruff_findings": 171,
+    "ruff_files": 12,
+    "format_files": 27,
+    "isort_files": 28,
+    "codespell_findings": 3
+  },
+  "file_sha256": {
+    "examples/two_phase/generate_dataset.py": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "examples/two_phase/production/a1_promotion_audit.py": "db139a62cce83a6f586a5ba120d8ca8fc312da2ee99a59c67844ff87f1defec2",
+    "examples/two_phase/production/capillary_pressure_balance_audit.py": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae",
+    "examples/two_phase/production/chns_nonstationarity_audit.py": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+    "examples/two_phase/production/contract11_chns_stage_audit.py": "fba3f65adadec419b439ea3f53766939fef3f08239ccd3002699013eea53ad30",
+    "examples/two_phase/production/cutcell_alignment_audit.py": "9dbe55f949d41e2bfdbd621e6b7cad2c18908736cdaad37b5712004c19a23f75",
+    "examples/two_phase/production/cutcell_geometry_audit.py": "b05a612d182f00f29d711db6288f87ddafacfe05e34fe48337c5b0be44bb3264",
+    "examples/two_phase/production/cutcell_phase_transport_audit.py": "f1301ed6bcca9a3e7bf8bf4d7382a0b04628f2f1570e38bb3a063456f7b7654c",
+    "examples/two_phase/production/embedded_young_audit.py": "1acd188a2fd466a1b89b1cda0f95b2fc35b3a4e3348d9b75b1ffc48fe1a8c599",
+    "examples/two_phase/production/impact_impulse_projection_audit.py": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "examples/two_phase/production/impact_phase_robustness_audit.py": "80071dd9b591202b9d72b1bce068b6fdaf2c28b706e6867d88fd79c173cccfc9",
+    "examples/two_phase/production/inactive_phase_coupling_audit.py": "d3cca817894d49c6438b76987a29f07bc9c5c2aa5c5107f187fe86ae30e6d23a",
+    "examples/two_phase/production/inactive_phase_ghost_prototypes.py": "f2bcb5ede4e5c7c56a39518585087075dcddf8c3c90292104942987b7b180458",
+    "examples/two_phase/production/l1a2k_brinkman_coupling_diagnostic.py": "cc459a56b07e81b9a15723f2ef57e80ff1c718076f2cf65074063a6e57e13b0e",
+    "examples/two_phase/production/l1a_data_readiness_exit_audit.py": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "examples/two_phase/production/mass_precision_audit.py": "6ce7187a334e56b591e8d04ddb719df83493e142e3e06297c3ece1481505f085",
+    "examples/two_phase/production/phase_boundary_audit.py": "e4fb971a6a54686ff3e10788d346e4f6319cfbbfced9f4cd930fed97abb405d9",
+    "examples/two_phase/production/phase_coupling_relaxation_audit.py": "f5d012a4823c010348872a451ca770f8676eb0c95e2e6892e3c19b9c81a12b8b",
+    "examples/two_phase/production/phase_storage_precision_audit.py": "d3a252dd097ba354b84f846e6f74f0b82f50b636c9ca0c0c1ec2163c4799c83a",
+    "examples/two_phase/production/restart.py": "8bd70df457f7bf71c7735dde84b7125c63f375740617a689166f8328463feed2",
+    "examples/two_phase/production/run_validation.py": "e46656f44c75e772220c86ef5d3a1b5d26a742f1d9cd2b0d0499516328406eeb",
+    "examples/two_phase/production/stationarity_metric_domain_audit.py": "4d4d291b3146735ea14dbd2ec3e09359e756f0e575fd1617b3633c8a9c5264a7",
+    "examples/two_phase/production/temporal_convergence_audit.py": "356da04c6c5c47f004df9db8ecbcf9239f4661fa72472b709b496d08d4c2f749",
+    "examples/two_phase/production/wetting_audit.py": "84d1904da80f7f6e920b5ffcf26902cfb8e61ad6b29ddc077ff92b6041edc38a",
+    "examples/two_phase/surrogate.py": "a5eed7760fd415b52393409f59d00fde95f6e089c9998266915c9624595b1419",
+    "examples/two_phase/test_a1_promotion_audit.py": "26f5dd8222c92066bc23d50748975978678de6d010d92218bd3bf825fdd5b67a",
+    "examples/two_phase/test_chns_nonstationarity_audit.py": "528d2d8f4c6ec27cfa809bca8c1a6a18a7820db34fa80627255e93bd16a3c852",
+    "examples/two_phase/test_cutcell_transport.py": "ec3c7364a992554296b734029fea1019d2479b97af35d4dd0b49eb761a7caa27",
+    "examples/two_phase/test_dataset_contract.py": "7c8ed70d2983df4f6f47c277c459947839a5431f141e801a604e79204ddfb9bc",
+    "examples/two_phase/test_nonneutral_wetting_audit.py": "c92bdfcc39acad51cec116a8f508c86b6d3236c0d34523f9f37932821e0504cb",
+    "examples/two_phase/test_phase_storage_precision.py": "27354841b1d52f3c7119925068469e60014aaccb016373b322fb0ebdf5b24024",
+    "examples/two_phase/test_production_validation.py": "78778db3e8a3edcb6bf9269e99b943323e1755e4cd1531938953a055b6b121e8",
+    "examples/two_phase/test_surrogate.py": "53bdb23da9752ede58192b29d8f6ed3f4aec7c7de69ae2746b5da3959a3cfbd3",
+    "examples/two_phase/test_two_phase.py": "08eb2c69afd840255f1e990a8685d8806dedb8a2a5159afa2e4af546a7ece9ef",
+    "examples/two_phase/test_wall_measure.py": "57a0525f20ee40abeb50bb5e7a27d21a414aa9e7cfdc02954570b980acfdc87e",
+    "examples/two_phase/tests/test_impact_impulse_projection_audit.py": "e117c379bb30fe60458acecf020b0a5ca6646526eb4c92f919e61fcd5e5d207d",
+    "examples/two_phase/tests/test_impact_phase_robustness_audit.py": "0a966ce7abfccfe4a62eeba9ddbe47b44c91945ad98b20a5e76cb34ebda3c7a9",
+    "examples/two_phase/tests/test_inactive_phase_coupling_audit.py": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+    "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+    "examples/two_phase/tests/test_stationarity_metric_domain_audit.py": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+    "examples/two_phase/tests/test_temporal_convergence_audit.py": "e83e9e2563c28bf13e102440558fa722198db4b99e0359e51f11af23516db5fe"
+  },
+  "ruff": [
+    {
+      "path": "examples/two_phase/phasefield.py",
+      "code": "F841",
+      "row": 810,
+      "col": 12,
+      "message": "Local variable `centre` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/phasefield.py",
+      "code": "E501",
+      "row": 947,
+      "col": 121,
+      "message": "Line too long (121 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 131,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 440,
+      "col": 121,
+      "message": "Line too long (128 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 721,
+      "col": 121,
+      "message": "Line too long (129 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 982,
+      "col": 121,
+      "message": "Line too long (144 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 1068,
+      "col": 121,
+      "message": "Line too long (167 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 1069,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 1099,
+      "col": 121,
+      "message": "Line too long (154 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/a1_promotion_audit.py",
+      "code": "E501",
+      "row": 1300,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 248,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 357,
+      "col": 121,
+      "message": "Line too long (133 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1085,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1087,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1184,
+      "col": 121,
+      "message": "Line too long (134 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1244,
+      "col": 121,
+      "message": "Line too long (128 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1396,
+      "col": 121,
+      "message": "Line too long (139 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1418,
+      "col": 121,
+      "message": "Line too long (129 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1453,
+      "col": 121,
+      "message": "Line too long (149 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1626,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1708,
+      "col": 121,
+      "message": "Line too long (180 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1729,
+      "col": 121,
+      "message": "Line too long (168 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1765,
+      "col": 121,
+      "message": "Line too long (143 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1769,
+      "col": 121,
+      "message": "Line too long (129 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1770,
+      "col": 121,
+      "message": "Line too long (173 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1773,
+      "col": 121,
+      "message": "Line too long (127 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1774,
+      "col": 121,
+      "message": "Line too long (151 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "F841",
+      "row": 1801,
+      "col": 5,
+      "message": "Local variable `all_steps_before_resume` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1825,
+      "col": 121,
+      "message": "Line too long (146 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "F841",
+      "row": 1846,
+      "col": 5,
+      "message": "Local variable `progress_path` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1865,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1899,
+      "col": 121,
+      "message": "Line too long (158 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1915,
+      "col": 121,
+      "message": "Line too long (162 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1921,
+      "col": 121,
+      "message": "Line too long (169 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1955,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1967,
+      "col": 121,
+      "message": "Line too long (128 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1970,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1986,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 1989,
+      "col": 121,
+      "message": "Line too long (159 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2082,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2127,
+      "col": 121,
+      "message": "Line too long (135 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2130,
+      "col": 121,
+      "message": "Line too long (136 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "F841",
+      "row": 2264,
+      "col": 5,
+      "message": "Local variable `history` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2300,
+      "col": 121,
+      "message": "Line too long (199 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2316,
+      "col": 121,
+      "message": "Line too long (136 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2335,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2491,
+      "col": 121,
+      "message": "Line too long (121 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2546,
+      "col": 121,
+      "message": "Line too long (134 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2553,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2568,
+      "col": 121,
+      "message": "Line too long (124 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2584,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2607,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2613,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2627,
+      "col": 121,
+      "message": "Line too long (166 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2635,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2640,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2666,
+      "col": 121,
+      "message": "Line too long (127 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2667,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2669,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2691,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2692,
+      "col": 121,
+      "message": "Line too long (144 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2736,
+      "col": 121,
+      "message": "Line too long (129 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2742,
+      "col": 121,
+      "message": "Line too long (174 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2743,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2760,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2761,
+      "col": 121,
+      "message": "Line too long (175 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2762,
+      "col": 121,
+      "message": "Line too long (124 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2768,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2780,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2791,
+      "col": 121,
+      "message": "Line too long (205 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2792,
+      "col": 121,
+      "message": "Line too long (224 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2816,
+      "col": 121,
+      "message": "Line too long (144 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2821,
+      "col": 121,
+      "message": "Line too long (239 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2825,
+      "col": 121,
+      "message": "Line too long (143 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2833,
+      "col": 121,
+      "message": "Line too long (135 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2842,
+      "col": 121,
+      "message": "Line too long (171 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2855,
+      "col": 121,
+      "message": "Line too long (140 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2856,
+      "col": 121,
+      "message": "Line too long (151 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2858,
+      "col": 121,
+      "message": "Line too long (146 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2878,
+      "col": 121,
+      "message": "Line too long (128 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "F841",
+      "row": 2907,
+      "col": 5,
+      "message": "Local variable `reset` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2924,
+      "col": 121,
+      "message": "Line too long (165 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2925,
+      "col": 121,
+      "message": "Line too long (153 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2929,
+      "col": 121,
+      "message": "Line too long (221 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2933,
+      "col": 121,
+      "message": "Line too long (215 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2941,
+      "col": 121,
+      "message": "Line too long (157 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2942,
+      "col": 121,
+      "message": "Line too long (142 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2945,
+      "col": 121,
+      "message": "Line too long (141 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2946,
+      "col": 121,
+      "message": "Line too long (143 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2947,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2955,
+      "col": 121,
+      "message": "Line too long (190 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2956,
+      "col": 121,
+      "message": "Line too long (239 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2962,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2965,
+      "col": 121,
+      "message": "Line too long (208 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2966,
+      "col": 121,
+      "message": "Line too long (155 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2968,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2970,
+      "col": 121,
+      "message": "Line too long (178 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2979,
+      "col": 121,
+      "message": "Line too long (219 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2980,
+      "col": 121,
+      "message": "Line too long (161 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2981,
+      "col": 121,
+      "message": "Line too long (161 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2982,
+      "col": 121,
+      "message": "Line too long (407 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2994,
+      "col": 121,
+      "message": "Line too long (283 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2995,
+      "col": 121,
+      "message": "Line too long (191 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 2996,
+      "col": 121,
+      "message": "Line too long (202 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3052,
+      "col": 121,
+      "message": "Line too long (181 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3155,
+      "col": 121,
+      "message": "Line too long (151 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3163,
+      "col": 121,
+      "message": "Line too long (164 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3167,
+      "col": 121,
+      "message": "Line too long (150 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3168,
+      "col": 121,
+      "message": "Line too long (124 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3180,
+      "col": 121,
+      "message": "Line too long (179 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3183,
+      "col": 121,
+      "message": "Line too long (127 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3188,
+      "col": 121,
+      "message": "Line too long (247 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3207,
+      "col": 121,
+      "message": "Line too long (184 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3212,
+      "col": 121,
+      "message": "Line too long (224 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3220,
+      "col": 121,
+      "message": "Line too long (214 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3256,
+      "col": 121,
+      "message": "Line too long (196 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3283,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3284,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3326,
+      "col": 121,
+      "message": "Line too long (135 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3424,
+      "col": 121,
+      "message": "Line too long (181 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3447,
+      "col": 121,
+      "message": "Line too long (121 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3482,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3483,
+      "col": 121,
+      "message": "Line too long (129 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3520,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3549,
+      "col": 121,
+      "message": "Line too long (136 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3552,
+      "col": 121,
+      "message": "Line too long (149 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3554,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3556,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3565,
+      "col": 121,
+      "message": "Line too long (127 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3569,
+      "col": 121,
+      "message": "Line too long (135 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3581,
+      "col": 121,
+      "message": "Line too long (199 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3582,
+      "col": 121,
+      "message": "Line too long (141 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3585,
+      "col": 121,
+      "message": "Line too long (158 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3613,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3614,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3623,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3626,
+      "col": 121,
+      "message": "Line too long (150 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3627,
+      "col": 121,
+      "message": "Line too long (151 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3650,
+      "col": 121,
+      "message": "Line too long (127 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3658,
+      "col": 121,
+      "message": "Line too long (138 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3710,
+      "col": 121,
+      "message": "Line too long (193 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 3711,
+      "col": 121,
+      "message": "Line too long (284 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/contract11_chns_stage_audit.py",
+      "code": "E501",
+      "row": 266,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/contract11_chns_stage_audit.py",
+      "code": "E501",
+      "row": 385,
+      "col": 121,
+      "message": "Line too long (144 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_alignment_audit.py",
+      "code": "E501",
+      "row": 1186,
+      "col": 121,
+      "message": "Line too long (138 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_alignment_audit.py",
+      "code": "E501",
+      "row": 1521,
+      "col": 121,
+      "message": "Line too long (147 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_alignment_audit.py",
+      "code": "E501",
+      "row": 1593,
+      "col": 121,
+      "message": "Line too long (132 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_alignment_audit.py",
+      "code": "E501",
+      "row": 1612,
+      "col": 121,
+      "message": "Line too long (159 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 190,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 267,
+      "col": 121,
+      "message": "Line too long (121 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 269,
+      "col": 121,
+      "message": "Line too long (134 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 275,
+      "col": 121,
+      "message": "Line too long (196 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 640,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 758,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 873,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 874,
+      "col": 121,
+      "message": "Line too long (123 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 935,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 978,
+      "col": 121,
+      "message": "Line too long (133 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_geometry_audit.py",
+      "code": "E501",
+      "row": 1048,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_phase_transport_audit.py",
+      "code": "E501",
+      "row": 256,
+      "col": 121,
+      "message": "Line too long (126 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_phase_transport_audit.py",
+      "code": "E501",
+      "row": 475,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_phase_transport_audit.py",
+      "code": "E501",
+      "row": 599,
+      "col": 121,
+      "message": "Line too long (136 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/cutcell_phase_transport_audit.py",
+      "code": "E501",
+      "row": 1028,
+      "col": 121,
+      "message": "Line too long (125 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/embedded_young_audit.py",
+      "code": "E501",
+      "row": 1333,
+      "col": 121,
+      "message": "Line too long (130 > 120)"
+    },
+    {
+      "path": "examples/two_phase/production/phase_boundary_audit.py",
+      "code": "F841",
+      "row": 281,
+      "col": 5,
+      "message": "Local variable `volume` is assigned to but never used"
+    },
+    {
+      "path": "examples/two_phase/production/phase_boundary_audit.py",
+      "code": "E501",
+      "row": 344,
+      "col": 121,
+      "message": "Line too long (138 > 120)"
+    },
+    {
+      "path": "examples/two_phase/test_chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 59,
+      "col": 121,
+      "message": "Line too long (128 > 120)"
+    },
+    {
+      "path": "examples/two_phase/test_chns_nonstationarity_audit.py",
+      "code": "E501",
+      "row": 197,
+      "col": 121,
+      "message": "Line too long (122 > 120)"
+    },
+    {
+      "path": "examples/two_phase/test_cutcell_transport.py",
+      "code": "E501",
+      "row": 478,
+      "col": 121,
+      "message": "Line too long (121 > 120)"
+    },
+    {
+      "path": "examples/two_phase/test_cutcell_transport.py",
+      "code": "E501",
+      "row": 543,
+      "col": 121,
+      "message": "Line too long (131 > 120)"
+    },
+    {
+      "path": "examples/two_phase/test_phase_storage_precision.py",
+      "code": "E501",
+      "row": 6,
+      "col": 121,
+      "message": "Line too long (134 > 120)"
+    }
+  ],
+  "format_files": [
+    "examples/two_phase/phasefield.py",
+    "examples/two_phase/production/a1_promotion_audit.py",
+    "examples/two_phase/production/chns_nonstationarity_audit.py",
+    "examples/two_phase/production/contract11_chns_stage_audit.py",
+    "examples/two_phase/production/cutcell_alignment_audit.py",
+    "examples/two_phase/production/cutcell_geometry_audit.py",
+    "examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "examples/two_phase/production/embedded_young_audit.py",
+    "examples/two_phase/production/impact_impulse_projection_audit.py",
+    "examples/two_phase/production/impact_phase_robustness_audit.py",
+    "examples/two_phase/production/l1a2k_brinkman_coupling_diagnostic.py",
+    "examples/two_phase/production/mass_precision_audit.py",
+    "examples/two_phase/production/phase_boundary_audit.py",
+    "examples/two_phase/production/phase_storage_precision_audit.py",
+    "examples/two_phase/production/restart.py",
+    "examples/two_phase/production/run_validation.py",
+    "examples/two_phase/production/temporal_convergence_audit.py",
+    "examples/two_phase/production/wetting_audit.py",
+    "examples/two_phase/test_chns_nonstationarity_audit.py",
+    "examples/two_phase/test_cutcell_transport.py",
+    "examples/two_phase/test_dataset_contract.py",
+    "examples/two_phase/test_nonneutral_wetting_audit.py",
+    "examples/two_phase/test_phase_storage_precision.py",
+    "examples/two_phase/test_surrogate.py",
+    "examples/two_phase/tests/test_impact_impulse_projection_audit.py",
+    "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+    "examples/two_phase/tests/test_temporal_convergence_audit.py"
+  ],
+  "isort_files": [
+    "examples/two_phase/generate_dataset.py",
+    "examples/two_phase/phasefield.py",
+    "examples/two_phase/production/a1_promotion_audit.py",
+    "examples/two_phase/production/capillary_pressure_balance_audit.py",
+    "examples/two_phase/production/chns_nonstationarity_audit.py",
+    "examples/two_phase/production/cutcell_alignment_audit.py",
+    "examples/two_phase/production/cutcell_geometry_audit.py",
+    "examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "examples/two_phase/production/impact_impulse_projection_audit.py",
+    "examples/two_phase/production/impact_phase_robustness_audit.py",
+    "examples/two_phase/production/inactive_phase_coupling_audit.py",
+    "examples/two_phase/production/inactive_phase_ghost_prototypes.py",
+    "examples/two_phase/production/l1a2k_brinkman_coupling_diagnostic.py",
+    "examples/two_phase/production/l1a_data_readiness_exit_audit.py",
+    "examples/two_phase/production/phase_coupling_relaxation_audit.py",
+    "examples/two_phase/production/stationarity_metric_domain_audit.py",
+    "examples/two_phase/production/temporal_convergence_audit.py",
+    "examples/two_phase/surrogate.py",
+    "examples/two_phase/test_a1_promotion_audit.py",
+    "examples/two_phase/test_cutcell_transport.py",
+    "examples/two_phase/test_production_validation.py",
+    "examples/two_phase/test_two_phase.py",
+    "examples/two_phase/test_wall_measure.py",
+    "examples/two_phase/tests/test_impact_impulse_projection_audit.py",
+    "examples/two_phase/tests/test_impact_phase_robustness_audit.py",
+    "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+    "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+    "examples/two_phase/tests/test_temporal_convergence_audit.py"
+  ],
+  "codespell": [
+    {
+      "path": "examples/two_phase/production/capillary_pressure_balance_audit.py",
+      "row": 3,
+      "token": "retuned",
+      "suggestion": "returned",
+      "raw": "examples/two_phase/production/capillary_pressure_balance_audit.py:3: retuned ==> returned"
+    },
+    {
+      "path": "examples/two_phase/production/temporal_convergence_audit.py",
+      "row": 451,
+      "token": "bu",
+      "suggestion": "by, be, but, bug, bun, bud, buy, bum",
+      "raw": "examples/two_phase/production/temporal_convergence_audit.py:451: bu ==> by, be, but, bug, bun, bud, buy, bum"
+    },
+    {
+      "path": "examples/two_phase/production/temporal_convergence_audit.py",
+      "row": 453,
+      "token": "bu",
+      "suggestion": "by, be, but, bug, bun, bud, buy, bum",
+      "raw": "examples/two_phase/production/temporal_convergence_audit.py:453: bu ==> by, be, but, bug, bun, bud, buy, bum"
+    }
+  ]
+}

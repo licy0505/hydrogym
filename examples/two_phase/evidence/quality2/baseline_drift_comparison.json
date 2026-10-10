@@ -1,0 +1,16 @@
+{
+  "quality1_expected": {
+    "ruff": 171,
+    "format": 27,
+    "isort": 28,
+    "codespell": 3
+  },
+  "measured_after_quality1_hygiene": {
+    "ruff": 171,
+    "format": 27,
+    "isort": 28,
+    "codespell": 3
+  },
+  "quality1_hygiene": "check_invariants format/E501; codespell evidence tokens escaped so evidence files are not new findings",
+  "mismatch": false
+}

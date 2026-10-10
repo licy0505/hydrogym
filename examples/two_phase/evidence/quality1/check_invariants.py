@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """QUALITY-1 protocol checks. Not a physics test. Fail closed."""
+
 from __future__ import annotations
 
 import hashlib
@@ -23,7 +24,9 @@ def main() -> int:
         got = sha256(rel)
         if got != expected:
             errors.append(f"protected hash drift {rel}")
-    if CI["quality_hosted_pr23"].get("format") == "SKIPPED" and CI["quality_hosted_pr23"].get("skipped_not_success") is not True:
+    skipped_format = CI["quality_hosted_pr23"].get("format") == "SKIPPED"
+    skipped_not_ok = CI["quality_hosted_pr23"].get("skipped_not_success") is not True
+    if skipped_format and skipped_not_ok:
         errors.append("SKIPPED must not be treated as success")
     if BASE["commands"]["ruff_check"]["verdict"] != "FAIL":
         errors.append("baseline ruff must remain FAIL until a real fix")
