@@ -1,0 +1,4 @@
+Auxiliary GitHub Actions log download attempted for job 114239263862.
+The GitHub results-receiver endpoint returned EOF (gh exit 1).
+This does not change the authoritative run/job/step conclusions captured through the GitHub API:
+all 10 substantive Quality steps, including Check lockfile and Audit locked dependencies, were completed with conclusion success.

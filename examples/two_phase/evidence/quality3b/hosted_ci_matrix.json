@@ -1,19 +1,139 @@
 {
   "schema": "quality3b_hosted_ci_matrix_v1",
   "workflow": "Python CI",
-  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
-  "tested_code_tree": "PENDING_FINAL_COMMIT_TREE",
-  "status": "QUALITY3B_HOSTED_CHECKS_PENDING",
-  "run_id": null,
-  "run_url": null,
-  "required_check_classification": "UNVERIFIED_UNTIL_FINAL_RUN",
-  "jobs": [],
+  "workflow_id": 363271521,
+  "workflow_path": ".github/workflows/python-ci.yml",
+  "workflow_sha256": "e7f917f106aa56ef5bf94344291d1c233ad9912341c1d674080f4ff772bb9a65",
+  "workflow_definition_commit": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
+  "tested_code_commit": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
+  "tested_code_tree": "candidate tree containing the evidence publication commit",
+  "status": "QUALITY3B_HOSTED_CHECKS_SUCCESS_CANDIDATE",
+  "run_id": 38061066683,
+  "run_number": 141,
+  "run_attempt": 1,
+  "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683",
+  "api_url": "https://api.github.com/repos/licy0505/hydrogym/actions/runs/38061066683",
+  "event": "push",
+  "branch": "arena/9fa6b0dd-hydrogym",
+  "head_sha": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
+  "created_at": "2026-10-10T14:48:17Z",
+  "updated_at": "2026-10-10T15:07:32Z",
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "required_check_classification": "ALL_FINAL_CANDIDATE_WORKFLOW_JOBS_VERIFIED_SUCCESS",
+  "required_checks": {
+    "count": 8,
+    "all_completed_success": true,
+    "jobs": [
+      {
+        "name": "Package distributions",
+        "job_id": 114239263675,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263675"
+      },
+      {
+        "name": "Two-phase unit + E2E smoke",
+        "job_id": 114239263790,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263790"
+      },
+      {
+        "name": "Core import (Python 3.10)",
+        "job_id": 114239263809,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263809"
+      },
+      {
+        "name": "Core import (Python 3.11)",
+        "job_id": 114239263833,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263833"
+      },
+      {
+        "name": "Quality checks",
+        "job_id": 114239263862,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263862",
+        "steps_verified_via_api": [
+          {
+            "name": "Check lockfile",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit locked dependencies",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Lint (strict legacy-debt gate)",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check formatting (strict legacy-debt gate)",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check import ordering (strict legacy-debt gate)",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check spelling (strict legacy-debt gate)",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "Core import (Python 3.12)",
+        "job_id": 114239263888,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263888"
+      },
+      {
+        "name": "Core import (Python 3.13)",
+        "job_id": 114239263902,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263902"
+      },
+      {
+        "name": "Core import (Python 3.14)",
+        "job_id": 114239263926,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263926"
+      }
+    ]
+  },
+  "github_api_artifacts": {
+    "run": "raw/hosted_run_api_38061066683.json",
+    "jobs": "raw/hosted_jobs_api_38061066683.json",
+    "check_runs": "raw/hosted_check_runs_api_2551c20.json",
+    "quality_job_steps": "raw/hosted_quality_job_api_114239263862.json"
+  },
+  "auxiliary_log_capture": {
+    "status": "FAILED_NOT_REQUIRED",
+    "reason": "GitHub results-receiver returned EOF while downloading the human-readable log; authoritative job and step conclusions were retrieved from the GitHub API.",
+    "raw_exit": "raw/hosted_quality_job_log_fetch.exit"
+  },
   "pr22": {
     "number": 22,
     "state": "OPEN",
+    "head_branch": "arena/3d47375a-hydrogym",
     "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
     "candidate_head_sha_match": false,
-    "merge_executed": false
+    "merge_executed": false,
+    "close_executed": false
   },
-  "note": "This file is a pre-hosted-run record. It must not be interpreted as PASS."
+  "decision_boundary": "Hosted checks are green for the fixed session branch candidate, but PR #22 still points to a different head; this is not MERGE_ELIGIBLE_AWAITING_OWNER."
 }
