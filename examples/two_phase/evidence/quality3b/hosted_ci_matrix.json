@@ -4,20 +4,20 @@
   "workflow_id": 363271521,
   "workflow_path": ".github/workflows/python-ci.yml",
   "workflow_sha256": "e7f917f106aa56ef5bf94344291d1c233ad9912341c1d674080f4ff772bb9a65",
-  "workflow_definition_commit": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
-  "tested_code_commit": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
-  "tested_code_tree": "candidate tree containing the evidence publication commit",
+  "workflow_definition_commit": "02acbb747cb375cbd7e35663aa670a43f6242982",
+  "tested_code_commit": "02acbb747cb375cbd7e35663aa670a43f6242982",
+  "tested_code_tree": "final evidence-publication candidate tree",
   "status": "QUALITY3B_HOSTED_CHECKS_SUCCESS_CANDIDATE",
-  "run_id": 38061066683,
-  "run_number": 141,
+  "run_id": 38062535119,
+  "run_number": 142,
   "run_attempt": 1,
-  "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683",
-  "api_url": "https://api.github.com/repos/licy0505/hydrogym/actions/runs/38061066683",
+  "run_url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119",
+  "api_url": "https://api.github.com/repos/licy0505/hydrogym/actions/runs/38062535119",
   "event": "push",
   "branch": "arena/9fa6b0dd-hydrogym",
-  "head_sha": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
-  "created_at": "2026-10-10T14:48:17Z",
-  "updated_at": "2026-10-10T15:07:32Z",
+  "head_sha": "02acbb747cb375cbd7e35663aa670a43f6242982",
+  "created_at": "2026-10-10T15:10:27Z",
+  "updated_at": "2026-10-10T15:22:19Z",
   "run_status": "completed",
   "run_conclusion": "success",
   "required_check_classification": "ALL_FINAL_CANDIDATE_WORKFLOW_JOBS_VERIFIED_SUCCESS",
@@ -26,39 +26,11 @@
     "all_completed_success": true,
     "jobs": [
       {
-        "name": "Package distributions",
-        "job_id": 114239263675,
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263675"
-      },
-      {
-        "name": "Two-phase unit + E2E smoke",
-        "job_id": 114239263790,
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263790"
-      },
-      {
-        "name": "Core import (Python 3.10)",
-        "job_id": 114239263809,
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263809"
-      },
-      {
-        "name": "Core import (Python 3.11)",
-        "job_id": 114239263833,
-        "status": "completed",
-        "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263833"
-      },
-      {
         "name": "Quality checks",
-        "job_id": 114239263862,
+        "job_id": 114243541929,
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263862",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243541929",
         "steps_verified_via_api": [
           {
             "name": "Check lockfile",
@@ -93,38 +65,66 @@
         ]
       },
       {
-        "name": "Core import (Python 3.12)",
-        "job_id": 114239263888,
+        "name": "Core import (Python 3.11)",
+        "job_id": 114243542062,
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263888"
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542062"
       },
       {
         "name": "Core import (Python 3.13)",
-        "job_id": 114239263902,
+        "job_id": 114243542082,
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263902"
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542082"
+      },
+      {
+        "name": "Two-phase unit + E2E smoke",
+        "job_id": 114243542114,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542114"
+      },
+      {
+        "name": "Core import (Python 3.12)",
+        "job_id": 114243542139,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542139"
       },
       {
         "name": "Core import (Python 3.14)",
-        "job_id": 114239263926,
+        "job_id": 114243542143,
         "status": "completed",
         "conclusion": "success",
-        "url": "https://github.com/licy0505/hydrogym/actions/runs/38061066683/job/114239263926"
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542143"
+      },
+      {
+        "name": "Package distributions",
+        "job_id": 114243542154,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542154"
+      },
+      {
+        "name": "Core import (Python 3.10)",
+        "job_id": 114243542180,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/licy0505/hydrogym/actions/runs/38062535119/job/114243542180"
       }
     ]
   },
   "github_api_artifacts": {
-    "run": "raw/hosted_run_api_38061066683.json",
-    "jobs": "raw/hosted_jobs_api_38061066683.json",
-    "check_runs": "raw/hosted_check_runs_api_2551c20.json",
-    "quality_job_steps": "raw/hosted_quality_job_api_114239263862.json"
+    "run": "raw/hosted_run_api_38062535119.json",
+    "jobs": "raw/hosted_jobs_api_38062535119.json",
+    "check_runs": "raw/hosted_check_runs_api_02acbb7.json",
+    "quality_job_steps": "raw/hosted_quality_job_api_114243541929.json"
   },
   "auxiliary_log_capture": {
-    "status": "FAILED_NOT_REQUIRED",
-    "reason": "GitHub results-receiver returned EOF while downloading the human-readable log; authoritative job and step conclusions were retrieved from the GitHub API.",
-    "raw_exit": "raw/hosted_quality_job_log_fetch.exit"
+    "status": "NOT_REQUIRED",
+    "reason": "Authoritative run, job, check-run, and Quality step conclusions were retrieved from the GitHub API; human-readable log download was not required for classification.",
+    "historical_attempt_for_prior_run": "raw/hosted_quality_job_log_fetch.txt"
   },
   "pr22": {
     "number": 22,

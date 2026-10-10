@@ -1,18 +1,18 @@
 {
   "schema": "quality3b_manifest_v1",
-  "generated_at_utc": "2026-10-10T15:09:49.475970Z",
+  "generated_at_utc": "2026-10-10T15:23:09.592597Z",
   "quality3b_root": "examples/two_phase/evidence/quality3b",
-  "tested_code_commit": "2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c",
+  "tested_code_commit": "02acbb747cb375cbd7e35663aa670a43f6242982",
   "approval_commit": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
   "gate_consumer_commit": "338d08acd6315c17d115e01ad6e32f9bd2ff4bf2",
-  "hosted_run_id": 38061066683,
+  "hosted_run_id": 38062535119,
   "bound_external_files": {
     "quality/approved_migrations.json": "251778df8b09b74e1ee38ea8c8ce40689fd2deddee7a24f92e6e95b7237cce8a",
     "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
     "quality/approvals/quality3b_owner_attestation.json": "7cc2fbb7e2396579dc5dd3d9d1222accce7a8710396c5a1caaba981c0a2b78c1"
   },
-  "artifact_count_total": 34,
-  "artifact_count_with_hashes": 32,
+  "artifact_count_total": 38,
+  "artifact_count_with_hashes": 36,
   "files": [
     {
       "path": "examples/two_phase/evidence/quality3b/adversarial_matrix.json",
@@ -31,8 +31,8 @@
     },
     {
       "path": "examples/two_phase/evidence/quality3b/hosted_ci_matrix.json",
-      "sha256": "f0d331b722bcc0f26d1560e63d87e12614eba10d354eed7e5cacbe64485ff70e",
-      "bytes": 5188
+      "sha256": "52577bec336c08a8b960dd9bcef7918b5449a155164397eafc9fa621f1a29b29",
+      "bytes": 5199
     },
     {
       "path": "examples/two_phase/evidence/quality3b/owner_approval_provenance.json",
@@ -80,6 +80,11 @@
       "bytes": 275
     },
     {
+      "path": "examples/two_phase/evidence/quality3b/raw/hosted_check_runs_api_02acbb7.json",
+      "sha256": "65935842b66e7b1aafbf4cbf66b5e35d1a064ec76ff56997d74c0ab5e8bdd540",
+      "bytes": 24530
+    },
+    {
       "path": "examples/two_phase/evidence/quality3b/raw/hosted_check_runs_api_2551c20.json",
       "sha256": "531b8be5fd2b99de3dc851c2f7c64dafc62fcbc2306e40db5b8127a4ccc44485",
       "bytes": 24530
@@ -90,8 +95,18 @@
       "bytes": 21990
     },
     {
+      "path": "examples/two_phase/evidence/quality3b/raw/hosted_jobs_api_38062535119.json",
+      "sha256": "ad7dfd6dddf566498de953e7d1c05594b87991ba42bc2adc8bc8d1bc8160d552",
+      "bytes": 21990
+    },
+    {
       "path": "examples/two_phase/evidence/quality3b/raw/hosted_quality_job_api_114239263862.json",
       "sha256": "858a935db01846fa34c49e0aaa111112fbb788bebed2129baf293748be2c87ab",
+      "bytes": 3047
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/hosted_quality_job_api_114243541929.json",
+      "sha256": "d476904cf7b003dd070ab4b15f6ddafee677016ba5210430bae045ac7d37efcd",
       "bytes": 3047
     },
     {
@@ -108,6 +123,11 @@
       "path": "examples/two_phase/evidence/quality3b/raw/hosted_run_api_38061066683.json",
       "sha256": "b6397f7b06957a568f266d61c2fb70395c2ca20883b3bed6619f833a376880e5",
       "bytes": 12073
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/hosted_run_api_38062535119.json",
+      "sha256": "a52cc597e965d7564076a3ecd8613d4505c7a07b3176f6b5ef561d5b8478fbd3",
+      "bytes": 12083
     },
     {
       "path": "examples/two_phase/evidence/quality3b/raw/nonslow_regression.txt",

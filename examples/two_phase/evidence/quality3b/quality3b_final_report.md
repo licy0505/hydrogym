@@ -8,9 +8,9 @@
 - PR #23：`CLOSED + MERGED`，实际 merge SHA `039f6a0d9a14ff601c76a58f5a66ce0900677de5`；最新 `main` 已重新核验为同一 SHA。
 - PR #22：`OPEN`，当前实际 head `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf`，base `002120f3a051e638a7e85f9db4022107dbe45780`。没有更新 PR #22 分支，也没有 merge/close。
 - QUALITY-3 integration reference `39dfdab0ef384eabb6693833dc33a4b08b378d8e` 保留双 parent：PR #23 merged-main 与 PR #22 exact head；它不是 main merge。
-- 最终 hosted 候选提交为 `2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c`；该提交包含 evidence publication tree，未修改生产求解器、物理参数或阈值。
-- GitHub Actions `Python CI` run `38061066683`（run #141）已完成且 conclusion `success`；8/8 workflow jobs 及 Quality job 的 lock/audit/ratchet steps 均由 GitHub API 核验为 `completed/success`。详情见 `hosted_ci_matrix.json` 与 `raw/hosted_*`。
-- QUALITY-3B evidence manifest：`examples/two_phase/evidence/quality3b/manifest.json`，SHA-256 `7ba8f4f4ee72af1ca6b5eeae20d3d8437fc9d03d97f61a3da14af18cb53e3a44`。
+- 最终 hosted 候选提交为 `02acbb747cb375cbd7e35663aa670a43f6242982`；该提交只包含 evidence publication metadata/raw captures，未修改生产求解器、物理参数或阈值。
+- GitHub Actions `Python CI` run `38062535119`（run #142）已完成且 conclusion `success`；8/8 workflow jobs 及 Quality job 的 lock/audit/ratchet steps 均由 GitHub API 核验为 `completed/success`。详情见 `hosted_ci_matrix.json` 与 `raw/hosted_*`。
+- QUALITY-3B evidence manifest：`examples/two_phase/evidence/quality3b/manifest.json`，SHA-256 `dd828ae98755a682ff262cce73e506386a87de31cae1257cbba3f6e1d21b442f`。
 
 ## Verified GitHub owner attestation
 
@@ -45,7 +45,7 @@
 
 ## Regression and identity
 
-本地完整矩阵 artifacts 在 verifier/test commit `86125cfaf8656af0de691cae6398ea58bc95eeae` 的 source tree 上捕获；evidence publication commit `2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c` 相对其只新增 evidence files，未改变被测生产/solver source。最终 hosted run 则直接 checkout 并验证了 `2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c`。
+本地完整矩阵 artifacts 在 verifier/test commit `86125cfaf8656af0de691cae6398ea58bc95eeae` 的 source tree 上捕获；其后的 evidence publication commits `2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c`（首版 evidence）和 `02acbb747cb375cbd7e35663aa670a43f6242982`（hosted API finalization）只新增 evidence files，未改变被测生产/solver source。最终 hosted run 直接 checkout 并验证了 `02acbb747cb375cbd7e35663aa670a43f6242982`。
 
 - L1A-2s focused module：`49 passed`。
 - Frozen fixture closure：`28 passed`。
@@ -57,7 +57,7 @@
 
 ## Hosted checks and merge boundary
 
-`hosted_ci_matrix.json` 已记录 `QUALITY3B_HOSTED_CHECKS_SUCCESS_CANDIDATE`：固定 session branch 候选 `2551c2047ddb3a9fef2a41c919e4ea5aa715bb6c` 的 8/8 workflow jobs 全部 `completed/success`。Quality job 的 GitHub API step record 特别核验了 `uv lock --check`、`uv audit --locked` 和四个质量 ratchet steps；没有使用 continue-on-error 或 `--exit-zero`。一次辅助 human-readable log 下载因 GitHub results-receiver EOF 失败，已记录为非必需的 auxiliary capture failure；不覆盖 API step conclusions。
+`hosted_ci_matrix.json` 已记录 `QUALITY3B_HOSTED_CHECKS_SUCCESS_CANDIDATE`：固定 session branch 候选 `02acbb747cb375cbd7e35663aa670a43f6242982` 的 8/8 workflow jobs 全部 `completed/success`。Quality job 的 GitHub API step record 特别核验了 `uv lock --check`、`uv audit --locked` 和四个质量 ratchet steps；没有使用 continue-on-error 或 `--exit-zero`。先前 run 的辅助 human-readable log 下载 EOF 已保留在 raw evidence；最终 run 的分类以其 GitHub API run/job/check-run/step records 为准。
 
 但是 PR #22 仍为 `OPEN`，其 branch `arena/3d47375a-hydrogym` 的实际 head 仍是 `19da2a4d695e6cceabd0e6c3dcc505d09ba84daf`，与已测试候选不同；PR #22 自己的旧 status rollup 仍包含失败的旧 Quality checks。由于本 session 只能写固定分支 `arena/9fa6b0dd-hydrogym`，不能无授权把 candidate 推入 PR #22 branch，本轮不能产生 `MERGE_ELIGIBLE_AWAITING_OWNER`，也没有 merge/close 任何 PR。当前阶段判决为 `QUALITY3B_VALIDATED_PR22_HEAD_NOT_UPDATED`。
 
@@ -85,9 +85,9 @@ historical_ruff / format / isort / codespell: 171 / 27 / 28 / 3
 new_diagnostics: 0
 adversarial_tests / focused_49 / fixture_28 / nonslow_228 / component_248: 44 PASS / 49 PASS / 28 PASS / 228 PASS / 248 PASS + 2 deselected
 operator_identity / numerical_equivalence / frozen_source_checks: PASS / PASS / PASS
-evidence_manifest_path / SHA: examples/two_phase/evidence/quality3b/manifest.json / 7ba8f4f4ee72af1ca6b5eeae20d3d8437fc9d03d97f61a3da14af18cb53e3a44
-uv_lock_check / hosted_uv_audit / core_imports_3p10_to_3p14 / hosted_two_phase_e2e: local-compatible-PASS; exact-local-ENVIRONMENT_BLOCKED / PASS (run 38061066683 Quality step) / PASS (3.10, 3.11, 3.12, 3.13, 3.14) / PASS (run 38061066683)
-hosted_run_id / required_checks / workflow_sha / PR22_head_sha_match: 38061066683 / 8 of 8 SUCCESS / e7f917f106aa56ef5bf94344291d1c233ad9912341c1d674080f4ff772bb9a65 / FALSE
+evidence_manifest_path / SHA: examples/two_phase/evidence/quality3b/manifest.json / dd828ae98755a682ff262cce73e506386a87de31cae1257cbba3f6e1d21b442f
+uv_lock_check / hosted_uv_audit / core_imports_3p10_to_3p14 / hosted_two_phase_e2e: local-compatible-PASS; exact-local-ENVIRONMENT_BLOCKED / PASS (run 38062535119 Quality step) / PASS (3.10, 3.11, 3.12, 3.13, 3.14) / PASS (run 38062535119)
+hosted_run_id / required_checks / workflow_sha / PR22_head_sha_match: 38062535119 / 8 of 8 SUCCESS / e7f917f106aa56ef5bf94344291d1c233ad9912341c1d674080f4ff772bb9a65 / FALSE
 GitHub_merge_eligibility / actual_merges_performed: NOT_YET_ELIGIBLE_PR22_HEAD_NOT_UPDATED / NONE
 SOLVER_CONTRACT_VERSION=12
 L1A_STATUS=BLOCKED
