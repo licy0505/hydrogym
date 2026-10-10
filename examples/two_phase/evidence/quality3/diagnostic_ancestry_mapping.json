@@ -1,0 +1,175 @@
+{
+  "base_main_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+  "entries": [
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "isort": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "ruff": []
+      },
+      "mapping_evidence": {
+        "diff_lines": 148,
+        "diff_sha256": "bd07c6897bedb1cebf2a9ad64ef0dea0e4b25da5ecc9e523426871ea9c8187bb",
+        "method": "exact source diff plus diagnostic identity mapping; file-level format/isort findings are unchanged and no Ruff/codespell row finding exists for this path",
+        "new_blob_sha1": "244458bd3f91df95f671946fad79f390b7c630c9",
+        "new_diagnostics_proven": true,
+        "old_blob_sha1": "8e5ea4e7e1018710c3dab45955d139566d414e89",
+        "pr22_head_blob_sha1": "244458bd3f91df95f671946fad79f390b7c630c9"
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "isort": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "path": "examples/two_phase/production/impact_impulse_projection_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_inactive_phase_coupling_audit.py"
+        ],
+        "ruff": []
+      },
+      "mapping_evidence": {
+        "diff_lines": 70,
+        "diff_sha256": "1c064267a9bdb8ca14e13594a78ea6b6696454d091c3c9745a9d5f35a18e36ad",
+        "method": "exact source diff plus diagnostic identity mapping; file-level format/isort findings are unchanged and no Ruff/codespell row finding exists for this path",
+        "new_blob_sha1": "d4264e274515efcee87485569bd5a99e758cccce",
+        "new_diagnostics_proven": true,
+        "old_blob_sha1": "c7cfed741abca75b5a3d847a125827c837b6ff33",
+        "pr22_head_blob_sha1": "d4264e274515efcee87485569bd5a99e758cccce"
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_inactive_phase_coupling_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+      "path": "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py"
+        ],
+        "ruff": []
+      },
+      "mapping_evidence": {
+        "diff_lines": 18,
+        "diff_sha256": "d7c858196ff1ccd366d1aaac9025416485f214f4b544cfa73d6cacbd8d5a7ed4",
+        "method": "exact source diff plus diagnostic identity mapping; file-level format/isort findings are unchanged and no Ruff/codespell row finding exists for this path",
+        "new_blob_sha1": "b677bc64354a9413a3a7a36e9d5436cc6f81feae",
+        "new_diagnostics_proven": true,
+        "old_blob_sha1": "7fc15c00b8b4da42eb4b67edf8ecc768deaaecce",
+        "pr22_head_blob_sha1": "b677bc64354a9413a3a7a36e9d5436cc6f81feae"
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+      "path": "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/tests/test_stationarity_metric_domain_audit.py"
+        ],
+        "isort": [],
+        "ruff": []
+      },
+      "mapping_evidence": {
+        "diff_lines": 44,
+        "diff_sha256": "04c3db684c67963930896b7ad481764b1f49f9b6d5b397b2fd2f2cb9cb55ea5a",
+        "method": "exact source diff plus diagnostic identity mapping; file-level format/isort findings are unchanged and no Ruff/codespell row finding exists for this path",
+        "new_blob_sha1": "8c506af9960587a72efa8d57fc387f66f4fb5724",
+        "new_diagnostics_proven": true,
+        "old_blob_sha1": "5e47c0a19fa6e214638ba9f92aa489784a0691a5",
+        "pr22_head_blob_sha1": "8c506af9960587a72efa8d57fc387f66f4fb5724"
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/tests/test_stationarity_metric_domain_audit.py"
+        ],
+        "isort": [],
+        "ruff": []
+      },
+      "old_sha256": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+      "path": "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    }
+  ],
+  "generated_at_utc": "2026-10-10T09:51:00.679517Z",
+  "original_pr22_base_main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "policy": "No entry is owner-approved in this workspace; exact SHA pair and source diff are recorded for owner review.",
+  "pr22_head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+  "schema": "quality3_diagnostic_ancestry_mapping_v1",
+  "status": "OWNER_RESEAL_APPROVAL_REQUIRED"
+}

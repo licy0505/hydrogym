@@ -1,0 +1,147 @@
+{
+  "c2_status": "DIAGNOSTIC_ONLY",
+  "default_timestep_policy": "impact_phase_cap_dx2_v1",
+  "frozen_tests": {
+    "fixture_closure": {
+      "artifact": "examples/two_phase/evidence/quality3/raw/fixture_closure_28.log",
+      "artifact_sha256": "ec7b7263e020abfef45d39965cb8b9154a16ecc4aabc3e3a867efc0e9cc88b26",
+      "passed": 28,
+      "status": "PASS"
+    },
+    "focused_l1a2s": {
+      "artifact": "examples/two_phase/evidence/quality3/raw/focused_l1a2s_49.log",
+      "artifact_sha256": "774668db87531c9362d118b40984c84f1361c341ac55dd34a7163c31fdde841b",
+      "passed": 49,
+      "status": "PASS"
+    }
+  },
+  "generated_at_utc": "2026-10-10T10:18:54.799165Z",
+  "historical_l1a2s_status_preserved": {
+    "L1A-2t": "NOT_RUN",
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "SOLVER_CONTRACT_VERSION": 12,
+    "source_quality_status_sha256": "ff0edb0ca360de390cc893d28c8f719b6b359c02bc6c94cf28e5a2b8103defca"
+  },
+  "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
+  "merged_main_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+  "no_formal_experiment_or_training": true,
+  "no_t8_rerun": true,
+  "numerical_equivalence": {
+    "artifact": "examples/two_phase/evidence/quality3/raw/numerical_equivalence.json",
+    "artifact_sha256": "43e79599a5c4d67a16080e0457351306970feec101e68367bd7583d8cb3241fa",
+    "capture_only_added_keys": [
+      "captured_fields"
+    ],
+    "command": "PYTHONPATH=. JAX_ENABLE_X64=1 python /tmp/q3/numerical_equiv.py",
+    "common_ledger_values_exact_equal": true,
+    "state_phi_u_v_array_equal": true,
+    "status": "PASS"
+  },
+  "official_dataset_or_l1b_readiness_changed": false,
+  "pf_step_fast_kernel_validation": {
+    "artifact": "examples/two_phase/evidence/quality3/raw/ledger_validation.json",
+    "artifact_sha256": "ab3ccb1b398ed4f5b9f70e4ba97359e8c9339f2063d777c4afab244699206b24",
+    "command": "pytest -q examples/two_phase/tests/test_impact_initialization_compatibility_audit.py",
+    "fast_kernel_within_dtype_tolerance": {
+      "phi": true,
+      "u": true,
+      "v": true
+    },
+    "max_abs_difference": {
+      "phi": 1.9326473754688323e-10,
+      "u": 1.650521497253976e-08,
+      "v": 2.9802322387695312e-08
+    },
+    "rhs_recomposition_bitwise": [
+      true,
+      true,
+      true
+    ],
+    "status": "PASS",
+    "test": "test_jit_ledger_matches_pf_step_within_dtype_tolerance"
+  },
+  "schema": "quality3_frozen_source_and_numerical_identity_v1",
+  "solver_contract_version": 12,
+  "source_files": {
+    "examples/two_phase/cases.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "1901755116ade595c22402458c65f30b4e7d2b0b",
+      "sha256": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da"
+    },
+    "examples/two_phase/generate_dataset.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "84c180d4392210c508463b95c5dc45e31016b6d6",
+      "sha256": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25"
+    },
+    "examples/two_phase/phasefield.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "5916bd4086f5b264034a3a390add23e73ffa22ab",
+      "sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c"
+    },
+    "examples/two_phase/production/capillary_pressure_balance_audit.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "be2d9922f2624a3f3f169735bd3f3e02f8a1392f",
+      "sha256": "6e6b45ce72131a98f156695ee29261e89eb9b4a0a832f837af465b17e5b121ae"
+    },
+    "examples/two_phase/production/chns_nonstationarity_audit.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "4b57f543ce046c62f9994e4bc24574e8e4eadc81",
+      "sha256": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a"
+    },
+    "examples/two_phase/production/cutcell_geometry_audit.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "bc2401a31ebc13b6f0be6fd195590c079244a145",
+      "sha256": "b05a612d182f00f29d711db6288f87ddafacfe05e34fe48337c5b0be44bb3264"
+    },
+    "examples/two_phase/production/cutcell_phase_transport_audit.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "927d77ff28652cc666db884978523e24f1535a10",
+      "sha256": "f1301ed6bcca9a3e7bf8bf4d7382a0b04628f2f1570e38bb3a063456f7b7654c"
+    },
+    "examples/two_phase/production/observables.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "4bd82eb11222201789aa8616619acd8d2e7cd35b",
+      "sha256": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a"
+    },
+    "examples/two_phase/production/timestep_policy.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "8b997459573e07616afd9ac8adc79958893b38cb",
+      "sha256": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "examples/two_phase/production/validation.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "f903be21bdbc86482853db721f791f5f70fc608e",
+      "sha256": "c9f0673b20936841dcd6d23a2c3d26b80aa8c845108874c2419480120b4f42dd"
+    },
+    "examples/two_phase/production/wetting_audit.py": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "9956f8dc8742443ee6613f693b0eecea75c77181",
+      "sha256": "84d1904da80f7f6e920b5ffcf26902cfb8e61ad6b29ddc077ff92b6041edc38a"
+    },
+    "pyproject.toml": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "442aa625a9ed747213ee4db091ce887fb5a8ed2c",
+      "sha256": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811"
+    },
+    "quality/legacy_two_phase_debt_v1.json": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "df762217174f89ef22d89326c9a77d0520d30fea",
+      "sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b"
+    },
+    "uv.lock": {
+      "byte_identical_to_merged_main": true,
+      "merged_main_blob_sha1": "66322497e4c5f21fff1d712aa1a9b0dee4cf1d83",
+      "sha256": "d6a186574d8f12e5caf8eeedecd9ae891b5b7911f0ad31f58ffa97b51e37a7e1"
+    }
+  },
+  "static_invariants": {
+    "capture_fields_enters_pf_step_or_rhs_state": false,
+    "core_chns_wetting_cutcell_sources_unchanged_from_merged_main": true,
+    "phasefield_contract12": true,
+    "phasefield_generate_dataset_cases_unchanged_from_merged_main": true,
+    "production_equation_modified_by_pr22": false,
+    "production_initializer_modified_by_pr22": false,
+    "quality_and_physical_config_unchanged_from_merged_main": true
+  }
+}

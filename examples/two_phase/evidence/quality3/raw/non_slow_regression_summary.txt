@@ -1,0 +1,7 @@
+examples/two_phase/tests -m not slow: PASS, 228 passed in 292.92s.
+Original two-phase unit regression split because one aggregate invocation exceeded local wall-clock budget:
+test_two_phase.py test_surrogate.py test_dataset_contract.py test_train_operator.py test_nonneutral_wetting_audit.py: PASS, 93 passed.
+test_wall_measure.py: PASS, 46 passed.
+test_cutcell_transport.py -m not slow: PASS, 25 passed, 2 deselected.
+test_cutcell_alignment_audit.py test_mass_precision.py test_krylov_roundoff.py test_phase_storage_precision.py test_restart.py test_a1_promotion_audit.py: PASS, 84 passed.
+Aggregate invocation: TIMEOUT after 30 minutes; component runs above completed.

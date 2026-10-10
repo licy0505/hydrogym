@@ -39,6 +39,19 @@ PR21 = {
     "merged_at_utc": "2026-10-08T16:05:31Z",
     "url": "https://github.com/licy0505/hydrogym/pull/21",
 }
+# QUALITY-3 integration lineage. BASE_MAIN_SHA remains the original PR #21 base
+# fact; this exact second-parent merge is an additional verified main state, not
+# a rewrite of the L1A-2s provenance.
+PR23_INTEGRATION = {
+    "number": 23,
+    "state": "MERGED",
+    "head_sha": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1",
+    "merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "base_sha": BASE_MAIN_SHA,
+    "merged_at_utc": "2026-10-10T08:04:14Z",
+    "url": "https://github.com/licy0505/hydrogym/pull/23",
+}
+VERIFIED_MAIN_SHAS = frozenset({BASE_MAIN_SHA, PR23_INTEGRATION["merge_sha"]})
 EXPECTED_POLICY = "impact_phase_cap_dx2_v1"
 CASE_NAMES = ("flat_we100_ct050", "flat_we200_ct000", "pillar_training", "complex_heldout")
 CANDIDATES = ("UNIFORM_ALL_DOMAIN", "STREAMFUNCTION_LOCALIZED_V0", "SDF_TAPERED_STREAMFUNCTION_V1")
@@ -82,19 +95,19 @@ TWO_PHASE = REPO / "examples" / "two_phase"
 EVIDENCE_DIR = TWO_PHASE / "evidence" / "l1a2s"
 ARTIFACT_DIR = TWO_PHASE / "artifacts" / "l1a2s"
 
+import cases as cases_module  # noqa: E402
+
+# ``generate_dataset`` lives one package level above ``production`` in this example.
+# Import it by its existing module name without modifying its source.
+import generate_dataset as generator  # noqa: E402
 import jax  # noqa: E402
 import jax.numpy as jnp  # noqa: E402
 import phasefield as pf  # noqa: E402
-import cases as cases_module  # noqa: E402
 from production import impact_impulse_projection_audit as impulse_audit  # noqa: E402
 from production import l1a_data_readiness_exit_audit as l1a_exit  # noqa: E402
 from production import observables  # noqa: E402
 from production import timestep_policy  # noqa: E402
 from production import validation as validation_module  # noqa: E402
-
-# ``generate_dataset`` lives one package level above ``production`` in this example.
-# Import it by its existing module name without modifying its source.
-import generate_dataset as generator  # noqa: E402
 
 
 class AuditValidationError(RuntimeError):
@@ -204,6 +217,18 @@ def _git(command: list[str], *, required: bool = True) -> str | None:
         return None
 
 
+def _verified_main_lineage(latest_main: str | None) -> bool:
+    if latest_main == BASE_MAIN_SHA:
+        return True
+    if latest_main != PR23_INTEGRATION["merge_sha"]:
+        return False
+    parents = _git(["git", "show", "-s", "--format=%P", latest_main], required=False)
+    if not parents:
+        return False
+    parent_set = set(parents.split())
+    return {BASE_MAIN_SHA, PR23_INTEGRATION["head_sha"]}.issubset(parent_set)
+
+
 def _current_source_paths() -> dict[str, Path]:
     return {
         "phasefield": TWO_PHASE / "phasefield.py",
@@ -250,11 +275,21 @@ def _frozen_source_gate() -> dict[str, Any]:
         latest_main = _git(["git", "rev-parse", "origin/main"])
     except AuditValidationError:
         latest_main = None
-    checks["origin_main_is_verified_merge_base"] = latest_main == BASE_MAIN_SHA
+    checks["origin_main_is_verified_merge_base"] = _verified_main_lineage(latest_main)
     if not all(checks.values()):
         failed = [name for name, ok in checks.items() if not ok]
         raise AuditValidationError(f"L1A-2s prerequisite/source freeze failed: {failed}; latest_main={latest_main}")
-    return {"checks": checks, "source_hashes": current, "latest_main_sha": latest_main}
+    return {
+        "checks": checks,
+        "source_hashes": current,
+        "latest_main_sha": latest_main,
+        "integration_lineage": {
+            "original_base_main_sha": BASE_MAIN_SHA,
+            "accepted_latest_main_shas": sorted(VERIFIED_MAIN_SHAS),
+            "pr23": PR23_INTEGRATION,
+            "main_lineage_verified": bool(checks["origin_main_is_verified_merge_base"]),
+        },
+    }
 
 
 def _canary_cases() -> dict[str, dict[str, Any]]:
@@ -284,7 +319,8 @@ def _preflight_payload() -> dict[str, Any]:
             "pr21": pr,
             "verified_merge_sha": BASE_MAIN_SHA,
             "latest_main_sha_at_execution": frozen["latest_main_sha"],
-            "main_is_at_or_after_pr21_merge": frozen["latest_main_sha"] == BASE_MAIN_SHA,
+            "main_is_at_or_after_pr21_merge": frozen["latest_main_sha"] in VERIFIED_MAIN_SHAS,
+            "integration_lineage": frozen["integration_lineage"],
             "branch_session_policy": (
                 "Arena binds this execution to arena/3d47375a-hydrogym; no l1a-2s branch switch was made"
             ),

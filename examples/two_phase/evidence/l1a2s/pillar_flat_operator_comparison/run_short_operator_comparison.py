@@ -21,7 +21,6 @@ from typing import Any
 import jax
 import numpy as np
 import phasefield as pf
-
 from production import impact_impulse_projection_audit as impulse
 from production import impact_initialization_compatibility_audit as audit
 

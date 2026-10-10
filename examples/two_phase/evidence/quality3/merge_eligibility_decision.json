@@ -1,0 +1,60 @@
+{
+  "decision": "OWNER_RESEAL_APPROVAL_REQUIRED",
+  "frozen_flags": {
+    "L1A-2t": "NOT_RUN",
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA_NOT_READY": true,
+    "SOLVER_CONTRACT_VERSION": 12
+  },
+  "generated_at_utc": "2026-10-10T10:19:36.607356Z",
+  "milestones": {
+    "L1B_DATA_READY": "NOT_ALLOWED_AND_NOT_READY",
+    "QUALITY3_INTEGRATION_VALIDATED": "NOT_REACHED",
+    "SECURITY_CI_CLOSED": "PR23 main hosted uv audit PASS; PR22 head audit FAIL"
+  },
+  "not_merge_operation_executed": true,
+  "owner_actions_required": [
+    "Owner must review and explicitly approve all four named old_sha256 -> new_sha256 transitions in quality/approved_migrations.json.",
+    "Owner must resolve or rerun PR #22 required Quality checks on the exact integrated head; the observed PR #22 head check failed at uv audit and skipped the four quality gates.",
+    "After approval, rerun all required hosted checks on the exact resulting commit; do not set approval_status to APPROVED in this workspace."
+  ],
+  "positive_results": {
+    "all_four_historical_multisets_equal": true,
+    "frozen_source_identity": true,
+    "local_quality3_adversarial_tests": true,
+    "no_new_quality_diagnostics": true,
+    "non_slow_two_phase_tests": true,
+    "numerical_equivalence": true,
+    "pr23_actual_merge_observed": true
+  },
+  "pr22_merge_eligibility": {
+    "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "number": 22,
+    "owner_approval_observed": false,
+    "state": "NOT_ELIGIBLE",
+    "state_reason": "owner reseal pending and hosted Quality checks not all green"
+  },
+  "pr23_merge_eligibility": {
+    "actual_merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "codeql": "PASS",
+    "deploy_pages": "FAILURE",
+    "owner": "licy0505",
+    "python_ci": "PASS",
+    "required_classification": "NOT_OBSERVABLE_HTTP_403",
+    "state": "ALREADY_MERGED_BY_OWNER"
+  },
+  "schema": "quality3_merge_eligibility_decision_v1",
+  "secondary_blockers": [
+    "PR22_REQUIRED_CHECKS_NOT_GREEN",
+    "UV_AUDIT_LOCAL_INTERPRETER_UNAVAILABLE",
+    "BRANCH_PROTECTION_REQUIRED_CLASSIFICATION_UNOBSERVABLE"
+  ],
+  "sha_transition_status": {
+    "approved": 0,
+    "entries": 4,
+    "frozen_source_entries": 0,
+    "manifest": "quality/approved_migrations.json",
+    "manifest_sha256": "0ddf26e08b7e6341e0866f7dabd1f26e97ab5b3a202be599856375f681154629",
+    "pending_owner": 4
+  }
+}

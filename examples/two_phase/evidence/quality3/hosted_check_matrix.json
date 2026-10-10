@@ -1,0 +1,435 @@
+{
+  "authority": {
+    "branch_protection_query": "HTTP 403 Resource not accessible by integration",
+    "fail_closed": true,
+    "owner": "licy0505",
+    "pr22_owner_approval_observed": false,
+    "pr22_requested_reviewers": [],
+    "pr23_merged_by": "licy0505"
+  },
+  "main": {
+    "check_runs": [
+      {
+        "completed_at": "2026-10-10T08:05:51Z",
+        "conclusion": "failure",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605277/job/114168485062",
+        "id": 114168485062,
+        "name": "Deploy to GitHub Pages",
+        "started_at": "2026-10-10T08:05:48Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:36Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223140",
+        "id": 114168223140,
+        "name": "Core import (Python 3.12)",
+        "started_at": "2026-10-10T08:04:20Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:36Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223116",
+        "id": 114168223116,
+        "name": "Package distributions",
+        "started_at": "2026-10-10T08:04:19Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:35Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223051",
+        "id": 114168223051,
+        "name": "Core import (Python 3.11)",
+        "started_at": "2026-10-10T08:04:19Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:31Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223048",
+        "id": 114168223048,
+        "name": "Core import (Python 3.13)",
+        "started_at": "2026-10-10T08:04:18Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:34Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223038",
+        "id": 114168223038,
+        "name": "Core import (Python 3.14)",
+        "started_at": "2026-10-10T08:04:18Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:33Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223036",
+        "id": 114168223036,
+        "name": "Core import (Python 3.10)",
+        "started_at": "2026-10-10T08:04:18Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:06:10Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605295/job/114168223019",
+        "id": 114168223019,
+        "name": "Analyze python",
+        "started_at": "2026-10-10T08:04:19Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:23:22Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168223007",
+        "id": 114168223007,
+        "name": "Two-phase unit + E2E smoke",
+        "started_at": "2026-10-10T08:04:19Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:05:30Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605295/job/114168222968",
+        "id": 114168222968,
+        "name": "Analyze javascript-typescript",
+        "started_at": "2026-10-10T08:04:19Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:04:32Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605283/job/114168222944",
+        "id": 114168222944,
+        "name": "Quality checks",
+        "started_at": "2026-10-10T08:04:18Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-10T08:05:46Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/38036605277/job/114168222691",
+        "id": 114168222691,
+        "name": "Build Docusaurus",
+        "started_at": "2026-10-10T08:04:18Z",
+        "status": "completed"
+      }
+    ],
+    "deploy_pages": "FAILURE",
+    "deploy_pages_job_id": 114168485062,
+    "note": "Branch protection endpoint returned HTTP 403; required/non-required classification of the Pages failure is not independently observable here.",
+    "observed_required_quality_and_e2e": "SUCCESS",
+    "python_ci_job_ids": {
+      "core_3_10": 114168223036,
+      "core_3_11": 114168223051,
+      "core_3_12": 114168223140,
+      "core_3_13": 114168223048,
+      "core_3_14": 114168223038,
+      "package": 114168223116,
+      "quality": 114168222944,
+      "two_phase": 114168223007
+    },
+    "sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5"
+  },
+  "pr22": {
+    "check_runs": [
+      {
+        "completed_at": "2026-10-09T08:23:44Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/runs/113735170465",
+        "id": 113735170465,
+        "name": "CodeQL",
+        "started_at": "2026-10-09T08:23:41Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:50Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603597/job/113734922907",
+        "id": 113734922907,
+        "name": "Analyze python",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:16Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922816",
+        "id": 113734922816,
+        "name": "Core import (Python 3.11)",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:41:32Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922809",
+        "id": 113734922809,
+        "name": "Two-phase unit + E2E smoke",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:17Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922790",
+        "id": 113734922790,
+        "name": "Core import (Python 3.13)",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:17Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922721",
+        "id": 113734922721,
+        "name": "Core import (Python 3.14)",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:18Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922711",
+        "id": 113734922711,
+        "name": "Core import (Python 3.12)",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:14Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922633",
+        "id": 113734922633,
+        "name": "Package distributions",
+        "started_at": "2026-10-09T08:22:58Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:50Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603597/job/113734922590",
+        "id": 113734922590,
+        "name": "Analyze javascript-typescript",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:11Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922583",
+        "id": 113734922583,
+        "name": "Core import (Python 3.10)",
+        "started_at": "2026-10-09T08:22:58Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:10Z",
+        "conclusion": "failure",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922481",
+        "id": 113734922481,
+        "name": "Quality checks",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:24:14Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603558/job/113734921979",
+        "id": 113734921979,
+        "name": "Test deployment",
+        "started_at": "2026-10-09T08:22:59Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:10Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901755",
+        "id": 113734901755,
+        "name": "Core import (Python 3.11)",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:07Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901675",
+        "id": 113734901675,
+        "name": "Core import (Python 3.13)",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:07Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901628",
+        "id": 113734901628,
+        "name": "Core import (Python 3.14)",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:43Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901531",
+        "id": 113734901531,
+        "name": "Core import (Python 3.12)",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:07Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901522",
+        "id": 113734901522,
+        "name": "Core import (Python 3.10)",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:08Z",
+        "conclusion": "failure",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901411",
+        "id": 113734901411,
+        "name": "Quality checks",
+        "started_at": "2026-10-09T08:22:56Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:23:16Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901342",
+        "id": 113734901342,
+        "name": "Package distributions",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      },
+      {
+        "completed_at": "2026-10-09T08:41:46Z",
+        "conclusion": "success",
+        "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904597008/job/113734901126",
+        "id": 113734901126,
+        "name": "Two-phase unit + E2E smoke",
+        "started_at": "2026-10-09T08:22:55Z",
+        "status": "completed"
+      }
+    ],
+    "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "mergeable": true,
+    "mergeable_state": "unstable",
+    "merged": false,
+    "number": 22,
+    "observed_required_check_summary": "NOT_ALL_GREEN",
+    "original_base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "quality_job": {
+      "blocked_following_steps": [
+        "Lint",
+        "Check formatting",
+        "Check import ordering",
+        "Check spelling"
+      ],
+      "blocking_step": "Audit locked dependencies",
+      "conclusion": "failure",
+      "html_url": "https://github.com/licy0505/hydrogym/actions/runs/37904603600/job/113734922481",
+      "job_id": 113734922481,
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install uv",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install quality tools",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Check lockfile",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "failure",
+          "name": "Audit locked dependencies",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Lint",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Check formatting",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Check import ordering",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Check spelling",
+          "number": 10,
+          "status": "completed"
+        },
+        {
+          "conclusion": "skipped",
+          "name": "Post Install uv",
+          "number": 19,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 20,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "status": "completed"
+        }
+      ]
+    },
+    "state": "open",
+    "url": "https://github.com/licy0505/hydrogym/pull/22"
+  },
+  "pr23": {
+    "base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "head_sha": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1",
+    "merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "merged": true,
+    "merged_at": "2026-10-10T08:04:14Z",
+    "merged_by": "licy0505",
+    "number": 23,
+    "state": "closed",
+    "url": "https://github.com/licy0505/hydrogym/pull/23"
+  },
+  "queried_at_utc": "2026-10-10T10:17:01Z",
+  "schema": "quality3_hosted_check_matrix_v1"
+}

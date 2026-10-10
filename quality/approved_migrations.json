@@ -1,0 +1,135 @@
+{
+  "baseline_ref": "legacy_two_phase_debt_v1",
+  "entries": [
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "isort": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "ruff": []
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "isort": [
+          "examples/two_phase/production/impact_impulse_projection_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "path": "examples/two_phase/production/impact_impulse_projection_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_inactive_phase_coupling_audit.py"
+        ],
+        "ruff": []
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_inactive_phase_coupling_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+      "path": "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py"
+        ],
+        "ruff": []
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [
+          "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py"
+        ],
+        "ruff": []
+      },
+      "old_sha256": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+      "path": "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    },
+    {
+      "approval_status": "PENDING_OWNER",
+      "change_class": "LEGACY_SHIFTED_APPROVED",
+      "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "mapped_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/tests/test_stationarity_metric_domain_audit.py"
+        ],
+        "isort": [],
+        "ruff": []
+      },
+      "new_diagnostics": {
+        "codespell": [],
+        "format": [],
+        "isort": [],
+        "ruff": []
+      },
+      "new_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "old_diagnostics": {
+        "codespell": [],
+        "format": [
+          "examples/two_phase/tests/test_stationarity_metric_domain_audit.py"
+        ],
+        "isort": [],
+        "ruff": []
+      },
+      "old_sha256": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+      "path": "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    }
+  ],
+  "policy": "Exact owner-approved old_sha256 -> new_sha256 only; no prefixes, wildcards, or frozen-source exceptions.",
+  "version": "quality_migrations_v1"
+}

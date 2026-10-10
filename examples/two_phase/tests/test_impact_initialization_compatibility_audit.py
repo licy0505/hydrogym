@@ -85,7 +85,9 @@ def test_l1a2r_merged_base_verified_or_fail_closed():
     assert all(result["checks"].values())
     assert audit.PR21["state"] == "MERGED"
     assert audit.PR21["merge_sha"] == audit.BASE_MAIN_SHA
-    assert result["latest_main_sha"] == audit.BASE_MAIN_SHA
+    assert result["latest_main_sha"] in audit.VERIFIED_MAIN_SHAS
+    assert result["integration_lineage"]["original_base_main_sha"] == audit.BASE_MAIN_SHA
+    assert result["integration_lineage"]["main_lineage_verified"] is True
 
 
 def test_contract12_and_policy_pinned():

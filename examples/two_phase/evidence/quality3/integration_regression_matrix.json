@@ -1,0 +1,86 @@
+{
+  "dependency_security": {
+    "uv_audit_hosted_main": "PASS",
+    "uv_audit_hosted_pr22_head": "FAIL_STEP",
+    "uv_audit_locked_exact": "NOT_PASS_LOCAL_ENVIRONMENT",
+    "uv_lock_check_exact": "NOT_PASS_LOCAL_ENVIRONMENT",
+    "uv_lock_check_python311": "PASS"
+  },
+  "formal_runs": {
+    "L1A-2t": "NOT_RUN",
+    "ML_training": "NOT_RUN",
+    "T8_CFD": "NOT_RUN",
+    "official_L1B_training_data": "NOT_RUN"
+  },
+  "generated_at_utc": "2026-10-10T10:19:17.175304Z",
+  "hosted": {
+    "main_python_ci_quality": "PASS",
+    "main_quality_job_id": 114168222944,
+    "main_two_phase_job_id": 114168223007,
+    "main_two_phase_unit_e2e": "PASS",
+    "pr22_quality": "FAIL",
+    "pr22_quality_blocker": "Audit locked dependencies; later quality steps skipped",
+    "pr22_two_phase_unit_e2e": "PASS_ON_PR22_HEAD"
+  },
+  "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
+  "local_environment": {
+    "jax_enable_x64": true,
+    "platform": "cpu",
+    "python": "3.11.2",
+    "python312_available": false,
+    "uv": "0.12.5"
+  },
+  "schema": "quality3_integration_regression_matrix_v1",
+  "status": "INTEGRATION_REGRESSION_TESTS_PASS_WITH_HOSTED_PR22_AND_OWNER_RESEAL_BLOCKERS",
+  "tests": [
+    {
+      "artifact": "examples/two_phase/evidence/quality3/raw/ratchet_adversarial_tests.txt",
+      "artifact_sha256": "483da582db52bc068d0f8af766d853839424eb940b23ae7fc6f0efd6b30a832c",
+      "command": "pytest -q test/test_quality_debt_gate.py",
+      "name": "test/test_quality_debt_gate.py",
+      "passed": 31,
+      "status": "PASS"
+    },
+    {
+      "artifact": "examples/two_phase/evidence/quality3/raw/focused_l1a2s_49.log",
+      "artifact_sha256": "774668db87531c9362d118b40984c84f1361c341ac55dd34a7163c31fdde841b",
+      "command": "pytest -q examples/two_phase/tests/test_impact_initialization_compatibility_audit.py",
+      "name": "L1A-2s compatibility focused",
+      "passed": 49,
+      "status": "PASS"
+    },
+    {
+      "artifact": "examples/two_phase/evidence/quality3/raw/fixture_closure_28.log",
+      "artifact_sha256": "ec7b7263e020abfef45d39965cb8b9154a16ecc4aabc3e3a867efc0e9cc88b26",
+      "command": "pytest -q [10 named closure tests]",
+      "name": "frozen fixture closure",
+      "passed": 28,
+      "status": "PASS"
+    },
+    {
+      "artifact": "examples/two_phase/evidence/quality3/raw/non_slow_regression_summary.txt",
+      "artifact_sha256": "cb099aecfb0a656612a438a5fc42e05282141f4024187f9bd37e1f41348d9353",
+      "command": "pytest -q tests -m 'not slow' (cwd examples/two_phase)",
+      "name": "examples/two_phase/tests non-slow",
+      "passed": 228,
+      "status": "PASS"
+    },
+    {
+      "aggregate_invocation": "TIMEOUT_AFTER_30_MINUTES",
+      "artifact": "examples/two_phase/evidence/quality3/raw/non_slow_regression_summary.txt",
+      "artifact_sha256": "cb099aecfb0a656612a438a5fc42e05282141f4024187f9bd37e1f41348d9353",
+      "command": "split equivalent of python-ci two-phase unit command",
+      "component_summary": "solver core 93; wall 46; cut-cell transport 25 plus 2 deselected; remaining audits 84; total 248 passed and 2 deselected",
+      "name": "original solver unit group",
+      "passed": 93,
+      "status": "PASS_COMPONENT_RUNS"
+    },
+    {
+      "artifact": "examples/two_phase/evidence/quality3/raw/numerical_equivalence.json",
+      "artifact_sha256": "43e79599a5c4d67a16080e0457351306970feec101e68367bd7583d8cb3241fa",
+      "command": "python /tmp/q3/numerical_equiv.py",
+      "name": "instrumented versus non-capture state/ledger comparison",
+      "status": "PASS"
+    }
+  ]
+}

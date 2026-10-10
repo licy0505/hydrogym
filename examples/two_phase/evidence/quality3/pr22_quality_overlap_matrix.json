@@ -1,0 +1,116 @@
+{
+  "approval_decision": "OWNER_RESEAL_APPROVAL_REQUIRED",
+  "generated_at_utc": "2026-10-10T10:18:29.103689Z",
+  "integrated_main_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+  "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
+  "new_file_policy": "New PR #22 Python files receive no historical exemption; all four tools ran directly and returned zero.",
+  "new_python_files": {
+    "examples/two_phase/evidence/l1a2s/pillar_flat_operator_comparison/run_short_operator_comparison.py": {
+      "codespell_exit": 0,
+      "format_exit": 0,
+      "integrated_worktree_sha256": "0732bde5a00130e24de132ce24158dbe8dca95cb4ffde58759be4166f6373dcf",
+      "isort_exit": 0,
+      "pr22_head_sha256": "81d373238666e1e3b570d7a2a1faac8eb655a426c02d969c97948c7dabc0c98f",
+      "ruff_exit": 0,
+      "status": "PASS_NO_NEW_DIAGNOSTICS"
+    },
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py": {
+      "codespell_exit": 0,
+      "format_exit": 0,
+      "integrated_worktree_sha256": "788791df2b0bb3e737fe68cba6e5cd3e98d100285184e0b727ce02363309a3b0",
+      "isort_exit": 0,
+      "pr22_head_sha256": "835b2e31a072662db0a07171dbcf08114d0aa706bf94e5588c564859a3f6396b",
+      "ruff_exit": 0,
+      "status": "PASS_NO_NEW_DIAGNOSTICS"
+    },
+    "examples/two_phase/tests/test_impact_initialization_compatibility_audit.py": {
+      "codespell_exit": 0,
+      "format_exit": 0,
+      "integrated_worktree_sha256": "a9fdf15826d419bdec8e389f524b65f513ac4bc5c30d946fccb3a50164496405",
+      "isort_exit": 0,
+      "pr22_head_sha256": "0ae1be05e88a95bfa935509911894702ba5d4e46dedbe4a8b86fade34c25881b",
+      "ruff_exit": 0,
+      "status": "PASS_NO_NEW_DIAGNOSTICS"
+    }
+  },
+  "overlap_count": 4,
+  "overlap_paths": [
+    {
+      "integrated_worktree_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "legacy_mapped": "PENDING_OWNER_RESEAL",
+      "migration_evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "new_issues": {
+        "codespell": 0,
+        "format": 0,
+        "isort": 0,
+        "ruff": 0
+      },
+      "numerical_equivalence": "PASS for shared diagnostic path; see frozen_source_and_numerical_identity.json",
+      "old_baseline_sha256": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "path": "examples/two_phase/production/impact_impulse_projection_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "pr22_head_sha256": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "quality_dialect_classification": "LEGACY_SHIFTED_APPROVED",
+      "sha_reseal_approval": "PENDING_OWNER"
+    },
+    {
+      "integrated_worktree_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "legacy_mapped": "PENDING_OWNER_RESEAL",
+      "migration_evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "new_issues": {
+        "codespell": 0,
+        "format": 0,
+        "isort": 0,
+        "ruff": 0
+      },
+      "numerical_equivalence": "PASS_NOT_APPLICABLE_PROTECTED_SOURCE_ASSERTIONS",
+      "old_baseline_sha256": "869c53b6050aa1ecee9b5da611415fbae15868a658b1746ae604ce5e73f381f7",
+      "path": "examples/two_phase/tests/test_inactive_phase_coupling_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "pr22_head_sha256": "1c97db79f830d5387ffede08a4a4f5b4e65139eda68fa407bce8cb2ebf7b5c29",
+      "quality_dialect_classification": "LEGACY_SHIFTED_APPROVED",
+      "sha_reseal_approval": "PENDING_OWNER"
+    },
+    {
+      "integrated_worktree_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "legacy_mapped": "PENDING_OWNER_RESEAL",
+      "migration_evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "new_issues": {
+        "codespell": 0,
+        "format": 0,
+        "isort": 0,
+        "ruff": 0
+      },
+      "numerical_equivalence": "PASS_NOT_APPLICABLE_PROTECTED_SOURCE_ASSERTIONS",
+      "old_baseline_sha256": "ec4e780169391b96f0af67416dab015fb47254893a1c8e05a8c9c3ea655f379c",
+      "path": "examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "pr22_head_sha256": "e93a05cd5d9a9140e1294f36c788cf54540f8a9476b2eb93c7ac4a8c8083a94f",
+      "quality_dialect_classification": "LEGACY_SHIFTED_APPROVED",
+      "sha_reseal_approval": "PENDING_OWNER"
+    },
+    {
+      "integrated_worktree_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "legacy_mapped": "PENDING_OWNER_RESEAL",
+      "migration_evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+      "new_issues": {
+        "codespell": 0,
+        "format": 0,
+        "isort": 0,
+        "ruff": 0
+      },
+      "numerical_equivalence": "PASS_NOT_APPLICABLE_PROTECTED_SOURCE_ASSERTIONS",
+      "old_baseline_sha256": "808f52d749797af44ded20889086d919dc071ec604f0d107797baf936fa60b76",
+      "path": "examples/two_phase/tests/test_stationarity_metric_domain_audit.py",
+      "pr22_commit": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+      "pr22_head_sha256": "2418f24262dcb6593586cd2fad4506113ad64878a72360aba8583ba31ae6a215",
+      "quality_dialect_classification": "LEGACY_SHIFTED_APPROVED",
+      "sha_reseal_approval": "PENDING_OWNER"
+    }
+  ],
+  "pr22_changed_files": 39,
+  "pr22_head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+  "pr22_number": 22,
+  "pr22_original_base_main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "schema": "quality3_pr22_quality_overlap_matrix_v1"
+}

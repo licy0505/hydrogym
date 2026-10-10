@@ -1,0 +1,157 @@
+{
+  "artifact_count_total": 35,
+  "artifact_count_with_hashes": 34,
+  "bound_external_files": {
+    "integration_merge_commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
+    "quality/approved_migrations.json": "0ddf26e08b7e6341e0866f7dabd1f26e97ab5b3a202be599856375f681154629",
+    "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b"
+  },
+  "files": [
+    {
+      "path": "examples/two_phase/evidence/quality3/authorized_sha_transition_manifest.json",
+      "sha256": "db7b0aa47fb62ff57d24319ffbb1d7532dc4c65b74431cec49e018b9b19354b0"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/baseline_reconciliation_matrix.json",
+      "sha256": "d69b522403af0d3b3ba97ea352be5a83a4d5653b197f24d5d1d4a851b8922723"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/diagnostic_ancestry_mapping.json",
+      "sha256": "b7f50870bc3b289e658a7a445b4ab90bb5c85380e1c6c03ae071b2632c7dac45"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/frozen_source_and_numerical_identity.json",
+      "sha256": "49ea4748182e983797c3644fccc8f3d49867768414c7af33b25037ac7cb96c40"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/hosted_check_matrix.json",
+      "sha256": "506ba906d1a984e30cbf194fe96cd05cdc6799e2a43497c279dfd38cbdc372a9"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/integration_regression_matrix.json",
+      "sha256": "b40caa7fa8cdbea470a87db17b5e05b2bb81cc074da929ca1571c2b6b5961d41"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/merge_eligibility_decision.json",
+      "sha256": "19658fdf5b161073fe4e2ad0805ec10f5d4715366422da59a4733e86c62232eb"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/pr22_quality_overlap_matrix.json",
+      "sha256": "45c4946eb33a10d28bba3eb0f0d87a17cd1e5d2b19aff85de4ad56da2efbd36d"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/preflight_and_merge_graph.json",
+      "sha256": "5aaca44e85eddd875328ab9dfce7939b1babab4c4a8bf0a5de492e78980f99de"
+    },
+    {
+      "hash_status": "EXCLUDED_TO_AVOID_MANIFEST_REPORT_CYCLE",
+      "path": "examples/two_phase/evidence/quality3/quality3_final_report.md",
+      "sha256": null
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/ratchet_adversarial_tests.json",
+      "sha256": "7d5be1a097f6d85d3390757e95bd8c10efd58dfad5661f8c0ed8a03f67f0ff7a"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/codespell.exit",
+      "sha256": "979b894f2d91bf199766571d58024f020d1a44a417da5f48e1fa1cdf554a14f5"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/codespell.stdout.b64",
+      "sha256": "32249db962dfaddcfda7435b06be48860401ff903c3f2310325694bd1a5e02dd"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/fixture_closure_28.log",
+      "sha256": "ec7b7263e020abfef45d39965cb8b9154a16ecc4aabc3e3a867efc0e9cc88b26"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/focused_l1a2s_49.log",
+      "sha256": "774668db87531c9362d118b40984c84f1361c341ac55dd34a7163c31fdde841b"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/format.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/format.stdout.b64",
+      "sha256": "8edb9c32b07c716f23d72f178d62807e8e6a39603522a29be921da347768f6be"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/isort.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/isort.stdout.b64",
+      "sha256": "14600f67e7f2a727cf042cd078308e8df6e52924cdc19cd639b6ee45655d4582"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ledger_validation.json",
+      "sha256": "ab3ccb1b398ed4f5b9f70e4ba97359e8c9339f2063d777c4afab244699206b24"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/non_slow_regression_summary.txt",
+      "sha256": "cb099aecfb0a656612a438a5fc42e05282141f4024187f9bd37e1f41348d9353"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/numerical_equivalence.json",
+      "sha256": "43e79599a5c4d67a16080e0457351306970feec101e68367bd7583d8cb3241fa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ratchet_adversarial_tests.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ratchet_adversarial_tests.txt",
+      "sha256": "483da582db52bc068d0f8af766d853839424eb940b23ae7fc6f0efd6b30a832c"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ruff.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ruff.json",
+      "sha256": "dd2e124a9bdebf0238638d76ed9d078f7a86e7cca394d2cedd9e763985b018c1"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/ruff.stderr",
+      "sha256": "13bea765fa7121defc39cd5150349737278207e67ec726ead888f26571f9d540"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/tool_versions.txt",
+      "sha256": "8ce21b9a9ef78d7f33a009f54b8b54e48c0bea46936c49524854f50476430e52"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_audit_locked.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_audit_locked.txt",
+      "sha256": "8831dbf1692d70209de31d18587d0cfbf245461ee0e91fd185a3f6d80fe8ddf7"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check.txt",
+      "sha256": "e88995c1bc1d1ffdb03c5cff71b230a92b4b6697e4e3a660373a343e9ffec77e"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_python311.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw/uv_lock_check_python311.txt",
+      "sha256": "3f3b5decbd97848d8b2a5512b9c8b915260eca50e04587bd7db03e776a9cc5c1"
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3/raw_quality_results.json",
+      "sha256": "bcc246c7816f86aa753f0dc48916c9f41093afb1c147cc049693403199da05d1"
+    }
+  ],
+  "generated_at_utc": "2026-10-10T10:23:31.519899Z",
+  "manifest_hash_policy": "SHA-256 for every quality3 artifact except this manifest and final report; final report binds this manifest hash after write without reciprocal hash cycle.",
+  "quality3_root": "examples/two_phase/evidence/quality3",
+  "schema": "quality3_manifest_v1",
+  "status": "OWNER_RESEAL_APPROVAL_REQUIRED"
+}
