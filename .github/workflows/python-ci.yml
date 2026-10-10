@@ -39,19 +39,17 @@ jobs:
       - name: Audit locked dependencies
         run: uv audit --locked
 
-      - name: Lint
-        run: uv run --no-sync ruff check .
+      - name: Lint (strict legacy-debt gate)
+        run: uv run --no-sync python scripts/quality_debt_gate.py --tool ruff
 
-      - name: Check formatting
-        run: uv run --no-sync ruff format --check --diff .
+      - name: Check formatting (strict legacy-debt gate)
+        run: uv run --no-sync python scripts/quality_debt_gate.py --tool format
 
-      - name: Check import ordering
-        run: uv run --no-sync isort . --check-only --diff
+      - name: Check import ordering (strict legacy-debt gate)
+        run: uv run --no-sync python scripts/quality_debt_gate.py --tool isort
 
-      - name: Check spelling
-        run: >-
-          uv run --no-sync codespell --toml pyproject.toml
-          README.md CONTRIBUTING.md docs examples test hydrogym
+      - name: Check spelling (strict legacy-debt gate)
+        run: uv run --no-sync python scripts/quality_debt_gate.py --tool codespell
 
   core:
     name: Core import (Python ${{ matrix.python-version }})

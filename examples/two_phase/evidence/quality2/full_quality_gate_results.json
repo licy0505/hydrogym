@@ -1,0 +1,26 @@
+{
+  "ruff": {
+    "raw_exit": 1,
+    "gate": "PASS_BASELINE_ONLY",
+    "historical": 171,
+    "new": 0
+  },
+  "format": {
+    "raw_exit": 1,
+    "gate": "PASS_BASELINE_ONLY",
+    "historical": 27,
+    "new": 0
+  },
+  "isort": {
+    "raw_exit": 1,
+    "gate": "PASS_BASELINE_ONLY",
+    "historical": 28,
+    "new": 0
+  },
+  "codespell": {
+    "raw_exit": 65,
+    "gate": "PASS_BASELINE_ONLY",
+    "historical": 3,
+    "new": 0
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "tree": "SEC-1 integrated HEAD 94f16bf7297ecb225ef5bb3a44e390d394165f08",
+  "note": "Python sources identical to origin/main except evidence/sec1; ruff/format/isort/codespell inventories therefore match pristine main.",
+  "commands": {
+    "uv_lock_check": {"exit": 0, "verdict": "PASS"},
+    "uv_audit_locked": {"exit": 2, "verdict": "NETWORK_UNAVAILABLE", "reason": "api.osv.dev tls handshake eof"},
+    "ruff_check": {"exit": 1, "verdict": "FAIL", "n_findings": 171, "codes": {"E501": 165, "F841": 6}, "n_files": 12, "output_sha256": "dd2e124a9bdebf0238638d76ed9d078f7a86e7cca394d2cedd9e763985b018c1"},
+    "ruff_format": {"exit": 1, "verdict": "FAIL", "n_files_would_reformat": 27, "diff_sha256": "1a944221a4294dcba9244cc0ec3ead5140620aebbbb70a8f6fa829e8db154dd5"},
+    "isort": {"exit": 1, "verdict": "FAIL", "n_files": 28, "diff_sha256": "68fdf436306ed3028ce0d581048b3a8988e8c850426b9aef91c57b1c9427b79b"},
+    "codespell": {"exit": 65, "verdict": "FAIL", "n_lines": 3, "output_sha256": "680e59d635aab253e763c77b1b0ac05d0e4e0566b069a9106288dffb32f1434d"}
+  },
+  "ruff_by_file": {
+    "examples/two_phase/production/chns_nonstationarity_audit.py": 132,
+    "examples/two_phase/production/cutcell_geometry_audit.py": 11,
+    "examples/two_phase/production/a1_promotion_audit.py": 8,
+    "examples/two_phase/production/cutcell_alignment_audit.py": 4,
+    "examples/two_phase/production/cutcell_phase_transport_audit.py": 4,
+    "examples/two_phase/phasefield.py": 2,
+    "examples/two_phase/production/contract11_chns_stage_audit.py": 2,
+    "examples/two_phase/production/phase_boundary_audit.py": 2,
+    "examples/two_phase/test_chns_nonstationarity_audit.py": 2,
+    "examples/two_phase/test_cutcell_transport.py": 2,
+    "examples/two_phase/production/embedded_young_audit.py": 1,
+    "examples/two_phase/test_phase_storage_precision.py": 1
+  },
+  "f841": [
+    {"path": "examples/two_phase/phasefield.py", "row": 810, "name": "centre"},
+    {"path": "examples/two_phase/production/chns_nonstationarity_audit.py", "row": 1801, "name": "all_steps_before_resume"},
+    {"path": "examples/two_phase/production/chns_nonstationarity_audit.py", "row": 1846, "name": "progress_path"},
+    {"path": "examples/two_phase/production/chns_nonstationarity_audit.py", "row": 2264, "name": "history"},
+    {"path": "examples/two_phase/production/chns_nonstationarity_audit.py", "row": 2907, "name": "reset"},
+    {"path": "examples/two_phase/production/phase_boundary_audit.py", "row": 281, "name": "volume"}
+  ],
+  "codespell": [
+    {"path": "examples/two_phase/production/capillary_pressure_balance_audit.py", "row": 3, "token": "re-tuned", "note": "technical term; codespell original token hashed in QUALITY-2 baseline"},
+    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 451, "token": "b-u"},
+    {"path": "examples/two_phase/production/temporal_convergence_audit.py", "row": 453, "token": "b-u"}
+  ],
+  "tier_u_safe_fixes_available": 0,
+  "all_issues_under_examples_two_phase": true
+}

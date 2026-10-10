@@ -1,0 +1,16 @@
+{
+  "note": "manifest not self-hashed",
+  "sha256": {
+    "examples/two_phase/evidence/quality2/adversarial_gate_tests.json": "b5b1688cc06246cc02c87ae85019cd4f8204eb004bfaa47b0f4dcb5a9f133c0e",
+    "examples/two_phase/evidence/quality2/baseline_drift_comparison.json": "85c4f86eb6b3474e385589f66caaa24aa1c816a1ddae7c9a685f5c1e339bd597",
+    "examples/two_phase/evidence/quality2/ci_check_matrix.json": "f90bfecb7c2112899ff612ca2c84c863e2e612408713a49832378a5bf2a8a023",
+    "examples/two_phase/evidence/quality2/frozen_source_hashes.json": "3cf9618ea8ef1f7eebd32cee96c6019c078f31baac226166e6c990b087ebfcdb",
+    "examples/two_phase/evidence/quality2/full_quality_gate_results.json": "a16ae529f4dcb61684899c968a970e79022e58b3d4e9e2075f072f5824894505",
+    "examples/two_phase/evidence/quality2/preflight_and_lineage.json": "7934ef1c9a2c56c3ae0a34e295f2837cbfdba61b7cd09ce65bb71b8c9bb101ec",
+    "examples/two_phase/evidence/quality2/quality2_final_report.json": "73718b33f8a23bc7c8321c6c11afe150ca1fc04ecdaefcb2976b7c76cded3a31",
+    "examples/two_phase/evidence/quality2/quality2_final_report.md": "0d7b691e98e6e8bf7ff7655fdabf03885ef4f5181ebead383649c47fe43a1243",
+    "examples/two_phase/evidence/quality2/raw_quality_inventory.json": "74a144a0f570a6e9c89c6959850d1b53b95e74bc1c03bd6a0d0b4f754e46cdf7",
+    "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+    "scripts/quality_debt_gate.py": "0dd7c7c67102ab20f5c2fc80e5716117d1138ea45c838228b9561944a2b297cd"
+  }
+}

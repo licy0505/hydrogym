@@ -1,0 +1,13 @@
+{
+  "quality1_code_diff": "evidence-only; no production Python edits",
+  "touched_paths_intended": ["examples/two_phase/evidence/quality1/*"],
+  "production_freeze": true,
+  "ast_compare_protected": "NOT_APPLICABLE_no_protected_edits",
+  "source_hash_protected": "UNCHANGED",
+  "chns_ns_brinkman_cutcell_timestep": "UNCHANGED",
+  "workflow_ci_rules": "UNCHANGED",
+  "noqa_or_ignore": false,
+  "bulk_ruff_format_isort": false,
+  "regression": "NOT_RUN (no solver diff; hosted two-phase E2E on PR23 was IN_PROGRESS at preflight)",
+  "pr22_pollution": false
+}

@@ -1,0 +1,36 @@
+{
+  "security": {
+    "uv_lock_check_local": "PASS",
+    "uv_audit_locked_local": "NETWORK_UNAVAILABLE",
+    "uv_audit_locked_hosted_pr23": "PASS_per_prior_observation_and_quality_job_reached_lint",
+    "hosted_quality_job": "https://github.com/licy0505/hydrogym/actions/runs/38030683145/job/114150796874",
+    "hosted_quality_conclusion": "FAILURE",
+    "lockfile_diff_in_quality1": false
+  },
+  "quality_local": {
+    "ruff_check": "FAIL",
+    "ruff_format": "FAIL",
+    "isort": "FAIL",
+    "codespell": "FAIL"
+  },
+  "quality_hosted_pr23": {
+    "lockfile": "PASS",
+    "audit": "PASS",
+    "lint": "FAIL",
+    "format": "SKIPPED",
+    "isort": "SKIPPED",
+    "codespell": "SKIPPED",
+    "skipped_not_success": true
+  },
+  "python_imports_hosted_pr23": {
+    "3.10": "PASS",
+    "3.11": "PASS",
+    "3.12": "PASS",
+    "3.13": "PASS",
+    "3.14": "PASS"
+  },
+  "two_phase_e2e_hosted_pr23": "IN_PROGRESS_at_preflight",
+  "local_pytest_nonslow": "NOT_RUN",
+  "package_distributions_pr23": "PASS",
+  "codeql_pr23": "PASS"
+}

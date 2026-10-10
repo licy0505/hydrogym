@@ -1,0 +1,13 @@
+{
+  "note": "sec1_manifest.json is not self-hashed",
+  "sha256": {
+    "evidence/sec1/sec1_security_report.md": "9661810c2f71872ecc24e7e1840a7ed709f938ddcbab6b9642eed7f0f8a4d832",
+    "evidence/sec1/sec1_security_report.json": "345f35e89932540c1381dbbdf4654e06f04d90eacb5f605cb57d3aff66c1b9f9",
+    "uv.lock": "d6a186574d8f12e5caf8eeedecd9ae891b5b7911f0ad31f58ffa97b51e37a7e1",
+    "pyproject.toml": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811",
+    ".github/workflows/python-ci.yml": "7dd9df934336528e85996ad5179ae298074579ed4f0a27de7d4975ba65a973a7",
+    "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "examples/two_phase/generate_dataset.py": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "examples/two_phase/cases.py": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da"
+  }
+}

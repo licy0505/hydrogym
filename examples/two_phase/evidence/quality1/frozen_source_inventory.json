@@ -1,0 +1,53 @@
+{
+  "solver_contract": 12,
+  "tier_P": {
+    "files": [
+      "examples/two_phase/phasefield.py",
+      "examples/two_phase/generate_dataset.py",
+      "examples/two_phase/cases.py"
+    ],
+    "sha256": {
+      "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "examples/two_phase/generate_dataset.py": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "examples/two_phase/cases.py": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da"
+    },
+    "quality_hits": {
+      "phasefield.py": ["ruff E501/F841", "format", "isort"],
+      "generate_dataset.py": ["isort"],
+      "cases.py": []
+    },
+    "edit_policy": "NO_EDITS_WITHOUT_OWNER_RESEAL"
+  },
+  "tier_H": {
+    "examples": [
+      "examples/two_phase/production/chns_nonstationarity_audit.py",
+      "examples/two_phase/production/nonneutral_wetting_audit.py",
+      "examples/two_phase/production/cutcell_geometry_audit.py",
+      "examples/two_phase/production/cutcell_alignment_audit.py",
+      "examples/two_phase/production/cutcell_phase_transport_audit.py",
+      "examples/two_phase/production/a1_promotion_audit.py",
+      "examples/two_phase/production/contract11_chns_stage_audit.py",
+      "examples/two_phase/production/phase_boundary_audit.py",
+      "examples/two_phase/production/embedded_young_audit.py",
+      "examples/two_phase/production/capillary_pressure_balance_audit.py",
+      "examples/two_phase/production/temporal_convergence_audit.py",
+      "examples/two_phase/test_chns_nonstationarity_audit.py"
+    ],
+    "sha256": {
+      "examples/two_phase/production/chns_nonstationarity_audit.py": "4e74208d191273d617446297d431a813abede74b8b2924043852bfe9b3ee9b1a",
+      "examples/two_phase/production/nonneutral_wetting_audit.py": "2115930969a4a09d8aa8423039083e50559b2a2bdbead8ab955f68a2742cfeed"
+    },
+    "seals": [
+      "test_chns_nonstationarity_audit.py uses inspect.getsource(audit) and function-source substring asserts",
+      "historical evidence manifests under examples/two_phase/evidence/l1a2*"
+    ],
+    "edit_policy": "LEAVE_UNTOUCHED_DEFAULT"
+  },
+  "tier_U": {
+    "outside_two_phase": "CLEAN (0 ruff/format/isort/codespell hits in hydrogym/, docs, test/, README)",
+    "action": "none"
+  },
+  "workflow_sha256": "7dd9df934336528e85996ad5179ae298074579ed4f0a27de7d4975ba65a973a7",
+  "pyproject_sha256": "11620fc7d9a2066b06b09787972d4976d752e56d00100f77ac0b68421814e811",
+  "uv_lock_sha256_sec1": "d6a186574d8f12e5caf8eeedecd9ae891b5b7911f0ad31f58ffa97b51e37a7e1"
+}
