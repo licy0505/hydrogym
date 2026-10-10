@@ -1,0 +1,67 @@
+{
+  "schema": "quality3b_regression_matrix_v1",
+  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+  "generated_at_utc": "2026-10-10T14:46:54.404673Z",
+  "commands": [
+    {
+      "name": "QUALITY-3 + QUALITY-3B tests",
+      "command": "pytest -q test/test_quality3b_owner_verifier.py test/test_quality_debt_gate.py",
+      "result": "44 passed",
+      "exit": 0,
+      "artifact": "examples/two_phase/evidence/quality3b/raw/adversarial_tests.txt",
+      "artifact_sha256": "316269544f58dec6a5d58519e45204670e43523986f7ee7f295541e36c7f6f7a"
+    },
+    {
+      "name": "L1A-2s focused module",
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. uv run --no-sync pytest -q tests/test_impact_initialization_compatibility_audit.py",
+      "result": "49 passed",
+      "exit": 0,
+      "artifact": "examples/two_phase/evidence/quality3b/raw/focused_l1a2s_49.txt",
+      "artifact_sha256": "7338ba4b49569eea803aa091d512b4336bb8294d344788a90b32994cb9ffa9bc"
+    },
+    {
+      "name": "frozen fixture closure",
+      "command": "PYTHONPATH=. uv run --no-sync pytest -q [10 named frozen fixture nodes]",
+      "result": "28 passed",
+      "exit": 0,
+      "artifact": "examples/two_phase/evidence/quality3b/raw/frozen_fixture_closure_28.txt",
+      "artifact_sha256": "0fc0076c37e0a26180e3c04d3d13761a055cc862b44b4190b0c59060c540ef80"
+    },
+    {
+      "name": "full two-phase non-slow",
+      "command": "PYTHONPATH=. uv run --no-sync pytest -q tests -m not slow",
+      "result": "228 passed in 304.04s",
+      "exit": 0,
+      "artifact": "examples/two_phase/evidence/quality3b/raw/nonslow_regression.txt",
+      "artifact_sha256": "0750755a7bdde8b989d9b9fb8cb8489269f1288936d150192782ff9a3c4fd787"
+    },
+    {
+      "name": "component solver core",
+      "result": "93 passed",
+      "exit": 0
+    },
+    {
+      "name": "component wall",
+      "result": "46 passed",
+      "exit": 0
+    },
+    {
+      "name": "component cut-cell transport",
+      "result": "25 passed, 2 deselected",
+      "exit": 0
+    },
+    {
+      "name": "component remaining audits",
+      "result": "84 passed",
+      "exit": 0
+    }
+  ],
+  "component_total": "248 passed, 2 deselected",
+  "failed_attempts_not_counted": [
+    "parallel component attempt timed out under resource contention",
+    "wall invocation without JAX_ENABLE_X64=1 had 4 setup failures; corrected x64 rerun passed"
+  ],
+  "numerical_equivalence": "PASS",
+  "frozen_source_closure": "PASS",
+  "aggregate_timeout_not_misrepresented": true
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "quality3b_adversarial_matrix_v1",
+  "generated_at_utc": "2026-10-10T14:46:54.372594Z",
+  "command": "PYTHONPATH=. uv run --no-sync pytest -q test/test_quality3b_owner_verifier.py test/test_quality_debt_gate.py",
+  "exit": 0,
+  "combined_passed": 44,
+  "quality3_tests_passed": 31,
+  "quality3b_tests_total": 13,
+  "quality3b_negative_tests_passed": 12,
+  "negative_cases": [
+    {
+      "case": "wrong owner actor",
+      "test": "test_wrong_owner_actor_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "fake owner association",
+      "test": "test_fake_owner_association_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "edited comment",
+      "test": "test_edited_comment_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "comment body hash mismatch",
+      "test": "test_comment_body_hash_mismatch_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "wrong approval commit",
+      "test": "test_wrong_approval_commit_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "unowned approval commit",
+      "test": "test_unowned_approval_commit_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "extra commit file",
+      "test": "test_extra_commit_file_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "old SHA one-bit change",
+      "test": "test_old_sha_one_bit_change_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "new SHA one-bit change",
+      "test": "test_new_sha_one_bit_change_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "unlisted fifth file",
+      "test": "test_unlisted_fifth_file_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "wrong PR22 head",
+      "test": "test_wrong_pr22_head_fails",
+      "result": "FAIL_CLOSED"
+    },
+    {
+      "case": "scope expansion",
+      "test": "test_scope_expansion_fails",
+      "result": "FAIL_CLOSED"
+    }
+  ],
+  "positive_exact_owner_binding": "PASS",
+  "raw_artifact": "examples/two_phase/evidence/quality3b/raw/adversarial_tests.txt",
+  "raw_artifact_sha256": "316269544f58dec6a5d58519e45204670e43523986f7ee7f295541e36c7f6f7a",
+  "raw_exit_artifact_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+}

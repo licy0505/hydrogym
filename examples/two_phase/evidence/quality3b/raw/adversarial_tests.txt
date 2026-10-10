@@ -1,0 +1,3 @@
+warning: Using incompatible environment (`.venv`) due to `--no-sync` (The project environment's Python version does not satisfy the request: `Python 3.12`)
+............................................                             [100%]
+44 passed in 5.57s

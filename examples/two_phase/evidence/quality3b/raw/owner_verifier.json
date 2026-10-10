@@ -1,0 +1,26 @@
+{
+  "approval_commit": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
+  "attestation_path": "/home/user/hydrogym/quality/approvals/quality3b_owner_attestation.json",
+  "gate_manifest_path": "/home/user/hydrogym/quality/approved_migrations.json",
+  "github_comment": {
+    "actor": "licy0505",
+    "author_association": "OWNER",
+    "body_sha256": "450ddc8ff92b4cec0e32a0f8ee1751fa3c63d94d18603f8f9982fcde045a0dc1",
+    "created_at": "2026-10-10T13:46:35Z",
+    "id": 6098141190,
+    "updated_at": "2026-10-10T13:46:35Z",
+    "url": "https://github.com/licy0505/hydrogym/pull/22#issuecomment-6098141190"
+  },
+  "github_commit": {
+    "author": "licy0505",
+    "committer": "licy0505",
+    "files": [
+      "quality/approvals/quality3b_owner_attestation.json"
+    ],
+    "sha": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
+    "signature_verified": false,
+    "url": "https://github.com/licy0505/hydrogym/commit/6237cbb9614588b976384ca27e6a7c5d05aa3348"
+  },
+  "owner_approval_verified": true,
+  "source_hashes_verified": true
+}

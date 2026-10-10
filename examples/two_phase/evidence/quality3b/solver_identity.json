@@ -1,0 +1,56 @@
+{
+  "schema": "quality3b_solver_identity_v1",
+  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+  "solver_contract_version": 12,
+  "impact_phase_cap_dx2_v1_unchanged": true,
+  "frozen_sources": [
+    {
+      "path": "examples/two_phase/phasefield.py",
+      "current_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "origin_main_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "matches": true
+    },
+    {
+      "path": "examples/two_phase/generate_dataset.py",
+      "current_sha256": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "origin_main_sha256": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "matches": true
+    },
+    {
+      "path": "examples/two_phase/cases.py",
+      "current_sha256": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "origin_main_sha256": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "matches": true
+    },
+    {
+      "path": "examples/two_phase/production/timestep_policy.py",
+      "current_sha256": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+      "origin_main_sha256": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+      "matches": true
+    }
+  ],
+  "all_frozen_sources_match_origin_main": true,
+  "production_operator_source_changed": false,
+  "physical_thresholds_changed": false,
+  "capture_fields_diagnostic_only": true,
+  "numerical_equivalence": {
+    "state_phi_u_v_array_equal": true,
+    "common_ledger_values_exact_equal": true,
+    "capture_only_added_keys": [
+      "captured_fields"
+    ],
+    "status": "PASS",
+    "artifact": "examples/two_phase/evidence/quality3/raw/numerical_equivalence.json",
+    "artifact_sha256": "43e79599a5c4d67a16080e0457351306970feec101e68367bd7583d8cb3241fa"
+  },
+  "ledger_validation": {
+    "rhs_recomposition_bitwise": true,
+    "fast_kernel_within_dtype_tolerance": true,
+    "artifact": "examples/two_phase/evidence/quality3/raw/ledger_validation.json",
+    "artifact_sha256": "ab3ccb1b398ed4f5b9f70e4ba97359e8c9339f2063d777c4afab244699206b24"
+  },
+  "l1b_data": "L1B_DATA_NOT_READY",
+  "l1a_2t": "NOT_RUN",
+  "t8_cfd": "NOT_RUN",
+  "ml_training": "NOT_RUN"
+}

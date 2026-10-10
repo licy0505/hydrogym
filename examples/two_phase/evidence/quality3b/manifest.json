@@ -1,0 +1,149 @@
+{
+  "schema": "quality3b_manifest_v1",
+  "generated_at_utc": "2026-10-10T14:47:42.956106Z",
+  "quality3b_root": "examples/two_phase/evidence/quality3b",
+  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+  "approval_commit": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
+  "gate_consumer_commit": "338d08acd6315c17d115e01ad6e32f9bd2ff4bf2",
+  "bound_external_files": {
+    "quality/approved_migrations.json": "251778df8b09b74e1ee38ea8c8ce40689fd2deddee7a24f92e6e95b7237cce8a",
+    "quality/legacy_two_phase_debt_v1.json": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+    "quality/approvals/quality3b_owner_attestation.json": "7cc2fbb7e2396579dc5dd3d9d1222accce7a8710396c5a1caaba981c0a2b78c1"
+  },
+  "artifact_count_total": 27,
+  "artifact_count_with_hashes": 26,
+  "files": [
+    {
+      "path": "examples/two_phase/evidence/quality3b/adversarial_matrix.json",
+      "sha256": "45840ec9c7ad3d176973724a28e9a88765c8658f6b9fa6a9acfc1d847851666c",
+      "bytes": 2259
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/authorized_transitions.json",
+      "sha256": "8abbbc9d897e5c52ca015174b3b53acb692f3cb3d0b6e74f2ec9e3b73372fccb",
+      "bytes": 5968
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/gate_validation.json",
+      "sha256": "d71aa70ad2e0e7ea317ba7a6cbdef22c8c98b7c0a4111ca4019e4b6fdaa1fa92",
+      "bytes": 1663
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/hosted_ci_matrix.json",
+      "sha256": "8ebc546f065897c91a91bcea66b6556024ce598cf0744d1b80e4233a59034b52",
+      "bytes": 627
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/owner_approval_provenance.json",
+      "sha256": "5ebf9def31754b5c1924a1b5bc8b5d01a9b2ca702ffb3077e7cd205d570906ae",
+      "bytes": 2116
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/preflight_and_ancestry.json",
+      "sha256": "4b00aae6ea0d60c79b89dabf1cc66e5cf2f4ceff0392b59338314f33321f4857",
+      "bytes": 1733
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/adversarial_tests.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/adversarial_tests.txt",
+      "sha256": "316269544f58dec6a5d58519e45204670e43523986f7ee7f295541e36c7f6f7a",
+      "bytes": 255
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/component_regression_summary.txt",
+      "sha256": "d4ec45df862453b43dde3bbbc5bf9ba841d2a594f41b78a5bf9b56b4f9c754f2",
+      "bytes": 1002
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/focused_l1a2s_49.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/focused_l1a2s_49.txt",
+      "sha256": "7338ba4b49569eea803aa091d512b4336bb8294d344788a90b32994cb9ffa9bc",
+      "bytes": 276
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/frozen_fixture_closure_28.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/frozen_fixture_closure_28.txt",
+      "sha256": "0fc0076c37e0a26180e3c04d3d13761a055cc862b44b4190b0c59060c540ef80",
+      "bytes": 275
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/nonslow_regression.txt",
+      "sha256": "0750755a7bdde8b989d9b9fb8cb8489269f1288936d150192782ff9a3c4fd787",
+      "bytes": 528
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/owner_verifier.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/owner_verifier.json",
+      "sha256": "9fd22e99552daff40950c444d374cb37d3f8d7bc4fe72d9e80396bd149893ff6",
+      "bytes": 1023
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/quality_gate_all.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/quality_gate_all.txt",
+      "sha256": "eb6787fe37e875fc63a99d91f9f2b3f5dea579a04ff4d257b378e98a780975aa",
+      "bytes": 1390
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_audit_locked_local.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_audit_locked_local.txt",
+      "sha256": "6cbe0a2baa3b374d840b0804ff861609bf879ce71fcc98c0655e6490ece4750e",
+      "bytes": 615
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_lock_check_exact.exit",
+      "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_lock_check_exact.txt",
+      "sha256": "36591578a526477530c29d23bb425356f56847b9d2bb98e67aa1049f8e478b61",
+      "bytes": 482
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_lock_check_python311.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/raw/uv_lock_check_python311.txt",
+      "sha256": "3a898e4274fc9e398a9e23bef8e73a04e708dc591b22a8d18c70b166ec4b2ce8",
+      "bytes": 30
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/regression_matrix.json",
+      "sha256": "b7b60cf6af54643089505de7e7557a94b6c0dc21c578cc9be9cf0b8632a11d83",
+      "bytes": 2502
+    },
+    {
+      "path": "examples/two_phase/evidence/quality3b/solver_identity.json",
+      "sha256": "cd02d495d3211e861f42f58fe1e97f5d0c5a75c1a7e918a2e90558b1c812b46a",
+      "bytes": 2287
+    }
+  ],
+  "manifest_hash_policy": "SHA-256 for every quality3b artifact except this manifest and final report; final report is excluded to avoid a report/manifest cycle.",
+  "status": "QUALITY3B_HOSTED_CHECKS_PENDING"
+}

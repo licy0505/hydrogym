@@ -1,0 +1,6 @@
+warning: Using incompatible environment (`/home/user/hydrogym/.venv`) due to `--no-sync` (The project environment's Python version does not satisfy the request: `Python 3.12`)
+........................................................................ [ 31%]
+........................................................................ [ 63%]
+........................................................................ [ 94%]
+............                                                             [100%]
+228 passed in 304.04s (0:05:04)

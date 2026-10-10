@@ -1,0 +1,19 @@
+{
+  "schema": "quality3b_hosted_ci_matrix_v1",
+  "workflow": "Python CI",
+  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+  "tested_code_tree": "PENDING_FINAL_COMMIT_TREE",
+  "status": "QUALITY3B_HOSTED_CHECKS_PENDING",
+  "run_id": null,
+  "run_url": null,
+  "required_check_classification": "UNVERIFIED_UNTIL_FINAL_RUN",
+  "jobs": [],
+  "pr22": {
+    "number": 22,
+    "state": "OPEN",
+    "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "candidate_head_sha_match": false,
+    "merge_executed": false
+  },
+  "note": "This file is a pre-hosted-run record. It must not be interpreted as PASS."
+}
