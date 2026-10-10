@@ -119,6 +119,23 @@ jobs:
           examples/two_phase/test_restart.py
           examples/two_phase/test_a1_promotion_audit.py
 
+      - name: Run L1A-2s frozen-fixture closure tests
+        working-directory: examples/two_phase
+        env:
+          PYTHONPATH: .
+        run: >-
+          uv run --no-sync pytest -q
+          tests/test_inactive_phase_coupling_audit.py::test_no_production_phi_semantics_change
+          tests/test_inactive_phase_coupling_audit.py::test_w_contact_angle_remains_open
+          tests/test_inactive_phase_coupling_audit.py::test_frozen_production_operators_unchanged
+          tests/test_inactive_phase_coupling_audit.py::test_no_production_stencil_change
+          tests/test_inactive_phase_coupling_audit.py::test_no_production_wetting_change
+          tests/test_inactive_phase_coupling_audit.py::test_no_production_capillary_change
+          tests/test_inactive_phase_coupling_audit.py::test_no_production_rho_nu_change
+          tests/test_l1a_data_readiness_exit_audit.py::test_phasefield_source_unchanged
+          tests/test_stationarity_metric_domain_audit.py::test_no_production_phase_rate_change
+          tests/test_stationarity_metric_domain_audit.py::test_no_cutcell_geometry_change
+
       - name: Run the L1A-2g mass-precision audit (quick profile)
         working-directory: examples/two_phase
         env:

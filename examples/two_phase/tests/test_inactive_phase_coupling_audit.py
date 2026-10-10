@@ -456,12 +456,15 @@ FROZEN_SOURCE_HASHES = {
 FROZEN_PHASEFIELD_FILE_SHA256_PREFIX = "4790c6235dd763db"
 #: L1A-2p contract promotion (11 -> 12) re-sealed the file hash with its
 #: sanctioned metadata-only edit (the SOLVER_CONTRACT_VERSION constant; see
-#: evidence/l1a2p/contract12_promotion_report.json). The physics operators stay
-#: sealed by test_frozen_production_operators_unchanged above.
+#: evidence/l1a2p/contract12_promotion_report.json).
 PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX = "ebb249a22fa2065f"
+#: L1A-2q/r record this later whole-file seal after contract-12 lineage metadata
+#: was added. Operator semantics remain independently sealed below.
+L1A2Q_R_PHASEFIELD_FILE_SHA256_PREFIX = "024665742dce67bc"
 ACTIVE_PHASEFIELD_FILE_SHA256_PREFIXES = (
     FROZEN_PHASEFIELD_FILE_SHA256_PREFIX,
     PROMOTED_PHASEFIELD_FILE_SHA256_PREFIX,
+    L1A2Q_R_PHASEFIELD_FILE_SHA256_PREFIX,
 )
 
 
@@ -522,13 +525,23 @@ def nwa_criteria_angle_tol():
     return nwa.CRITERIA["angle_tol_deg"]
 
 
+L1A2M_EXPECTED_MERGE_SHA = "ee15098ab0600b2bdf450162a3c89ec7ce2950d1"
+
+
 def test_w_contact_angle_remains_open():
     evidence = Path(pf.__file__).resolve().parent / "evidence" / "l1a2j" / "chns_nonstationarity_report.json"
     report = json.loads(evidence.read_text())
     acceptance = report["acceptance"]
     assert acceptance["production_60_degree_stationarity_gate_at_50k"] is False
     assert acceptance["status"] == "production_gate_not_passed_at_50k"
-    assert audit.MERGED_MAIN_SHA == l1a2m_git_sha_of_merge()
+    assert audit.MERGED_MAIN_SHA == L1A2M_EXPECTED_MERGE_SHA
+    resolved_merge_sha = l1a2m_git_sha_of_merge()
+    # GitHub Actions uses a depth-1 checkout, which omits this historical
+    # ancestor. Accept that only when Git confirms the checkout is shallow;
+    # full-history checkouts must resolve the exact pinned merge.
+    assert resolved_merge_sha == L1A2M_EXPECTED_MERGE_SHA or (
+        resolved_merge_sha == "unavailable" and git_checkout_is_shallow()
+    )
     assert report is not None
 
 
@@ -536,9 +549,21 @@ def l1a2m_git_sha_of_merge() -> str:
     import subprocess
 
     result = subprocess.run(
-        ["git", "log", "--format=%H", "-1", "ee15098ab0600b2bdf450162a3c89ec7ce2950d1"],
+        ["git", "log", "--format=%H", "-1", L1A2M_EXPECTED_MERGE_SHA],
         capture_output=True,
         text=True,
         check=False,
     )
     return result.stdout.strip() or "unavailable"
+
+
+def git_checkout_is_shallow() -> bool:
+    import subprocess
+
+    result = subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return result.returncode == 0 and result.stdout.strip() == "true"

@@ -1,0 +1,1595 @@
+{
+  "N": 192,
+  "candidate_initializer": "SDF_TAPERED_STREAMFUNCTION_V1",
+  "candidate_initializer_role": "isolated diagnostic-only C2; not the production default",
+  "cases_detail": {
+    "flat_we100_ct050": {
+      "case_geometry_and_timestep": {
+        "contact_gap_cells": 1.5,
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_gap_from_case_geometry": 0.09375,
+        "internal_substep_h": 0.0006666666666666666,
+        "local_surface_top": 0.234375,
+        "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "initialized_velocity": {
+        "candidate": "SDF_TAPERED_STREAMFUNCTION_V1",
+        "central_D_div_linf": 2.9206275939941406e-06,
+        "core_v_phi_ge_0p9": -0.5000000077079005,
+        "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+        "diagnostic_only": true,
+        "initial_local_normal_approach_speed": 0.0,
+        "initial_phi05_support": {
+          "gap": 0.07831191984795716,
+          "gap_cell": [
+            95,
+            10
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.32831191984795716
+          ],
+          "threshold_contour_crossing_count": 176,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.25
+          ]
+        },
+        "liquid_v_weighted": -0.31045168477414836,
+        "open_face_fv_div_linf": 9.179115295410156e-06,
+        "u_impact": 0.5,
+        "wall_flux_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION"
+      },
+      "operator_response_final_precontact_public_step": {
+        "global_scalar_ledger": [
+          {
+            "brinkman_dv_grid_mean_exact": 1.7875679336754047e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0420742039087159e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.04414932429790497,
+            "div_after_projection_linf": 2.950429916381836e-06,
+            "div_before_linf": 2.2649765014648438e-06,
+            "mean_of_proj_correction": 9.362785502741534e-14,
+            "proj_dv_grid_linf_v": 0.0035003579687327147,
+            "projection_dv_grid_mean_exact": -5.270587689281619e-13,
+            "projection_dv_liquid_mean_exact": 0.00016158484764150746,
+            "rhs_dv_grid_mean": -1.355545661580108e-07,
+            "rhs_dv_liquid_mean": -0.0001243355155870447,
+            "t_after": 0.2066666666666667,
+            "t_before": 0.20600000000000002
+          },
+          {
+            "brinkman_dv_grid_mean_exact": 1.7857382959994715e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0454697787291702e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.044275522232055664,
+            "div_after_projection_linf": 3.159046173095703e-06,
+            "div_before_linf": 2.950429916381836e-06,
+            "mean_of_proj_correction": -1.141077061820205e-13,
+            "proj_dv_grid_linf_v": 0.0035006417892873287,
+            "projection_dv_grid_mean_exact": -4.307481743977733e-13,
+            "projection_dv_liquid_mean_exact": 0.00016182618047283932,
+            "rhs_dv_grid_mean": -1.355852759117612e-07,
+            "rhs_dv_liquid_mean": -0.00012443735536064453,
+            "t_after": 0.20733333333333337,
+            "t_before": 0.2066666666666667
+          },
+          {
+            "brinkman_dv_grid_mean_exact": 1.783968709053359e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0488663910050857e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.04440188407897949,
+            "div_after_projection_linf": 2.384185791015625e-06,
+            "div_before_linf": 3.159046173095703e-06,
+            "mean_of_proj_correction": 1.9242229932495733e-13,
+            "proj_dv_grid_linf_v": 0.0035009444691240788,
+            "projection_dv_grid_mean_exact": 1.882917587280196e-11,
+            "projection_dv_liquid_mean_exact": 0.00016206564298565777,
+            "rhs_dv_grid_mean": -1.3565287553808223e-07,
+            "rhs_dv_liquid_mean": -0.0001245395408612691,
+            "t_after": 0.20800000000000002,
+            "t_before": 0.20733333333333334
+          }
+        ],
+        "local_normal_stages": [
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 1.1920928955078125e-07,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008495089252069446,
+              "explicit_rhs": 0.0007630910051235062,
+              "periodic_pressure_projection": 0.00014057507151492288
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.045797783711491534,
+              "after_explicit_rhs": 0.04664729263669848,
+              "after_pressure_projection": 0.04593835878300646,
+              "before": 0.04588420163157497
+            },
+            "public_step": 104,
+            "substep_index_1_based": 1,
+            "support": {
+              "gap": 0.0484385573019811,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.2984385573019811
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.2066666666666667,
+            "t_before": 0.20600000000000002
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 1.1920928955078125e-07,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008538860400775158,
+              "explicit_rhs": 0.0007619382133245561,
+              "periodic_pressure_projection": 0.00014511140451779064
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.04547581791342946,
+              "after_explicit_rhs": 0.046329703953506975,
+              "after_pressure_projection": 0.04562092931794725,
+              "before": 0.04556776574018242
+            },
+            "public_step": 104,
+            "substep_index_1_based": 2,
+            "support": {
+              "gap": 0.04815772922750233,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.29815772922750233
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.20733333333333337,
+            "t_before": 0.2066666666666667
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008582857168354247,
+              "explicit_rhs": 0.0007607492202648947,
+              "periodic_pressure_projection": 0.00014971022503209447
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.04514908812630465,
+              "after_explicit_rhs": 0.046007373843140076,
+              "after_pressure_projection": 0.045298798351336746,
+              "before": 0.04524662462287518
+            },
+            "public_step": 104,
+            "substep_index_1_based": 3,
+            "support": {
+              "gap": 0.047874577696479015,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.297874577696479
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.20800000000000002,
+            "t_before": 0.20733333333333334
+          }
+        ]
+      },
+      "operator_response_first_internal_substep": {
+        "global_scalar_ledger": {
+          "brinkman_dv_grid_l2": 0.017283807833290653,
+          "brinkman_dv_grid_mean_exact": 9.670275284139677e-09,
+          "brinkman_dv_liquid_mean_exact": 9.838599583340776e-08,
+          "damp_max": 1.0,
+          "damp_min": 0.8571484088897705,
+          "div_after_brinkman_linf": 0.08585166931152344,
+          "div_after_projection_linf": 2.5033950805664062e-06,
+          "div_after_rhs_linf": 0.08580589294433594,
+          "div_before_linf": 2.9206275939941406e-06,
+          "mean_of_proj_correction": -1.4395467240121973e-14,
+          "proj_dv_grid_l2": 0.015475325060061799,
+          "proj_dv_grid_linf_v": 0.004876192193478346,
+          "projection_dv_grid_mean_exact": -3.742735069596271e-11,
+          "projection_dv_liquid_mean_exact": -3.648691664562926e-06,
+          "rhs_dv_grid_mean": -5.191584988250798e-07,
+          "rhs_dv_liquid_mean": -9.431391575529031e-05
+        },
+        "local_normal_stages": {
+          "fast_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "normal_approach_delta_by_operator": {
+            "brinkman": 5.731906137324493e-07,
+            "explicit_rhs": -0.00010040250660486214,
+            "periodic_pressure_projection": 0.001056013980627852
+          },
+          "normal_approach_speed_by_velocity_stage": {
+            "after_brinkman": -9.982931599112969e-05,
+            "after_explicit_rhs": -0.00010040250660486214,
+            "after_pressure_projection": 0.0009561846646367224,
+            "before": 0.0
+          },
+          "public_step": 1,
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_after": 0.0006666666666666666,
+          "t_before": 0.0
+        },
+        "saved_startup_ledger_max_abs_delta": 5.212855418862145e-10
+      },
+      "operator_response_last_10_precontact_public_steps": {
+        "all_projection_solves_converged": true,
+        "definitions": {
+          "divergence": "periodic central-D Linf at named substep stage; not the open-face FV reconstruction",
+          "grid_mean": "full periodic grid mean v change at the named operator stage",
+          "liquid_mean": "stage delta in V_i*phi_i-weighted mean v; weights frozen at substep input phi",
+          "projection_linf_v": "max absolute vertical velocity correction from periodic pressure projection",
+          "projection_mean": "mean of the periodic pressure-gradient correction; not a Brinkman mean change"
+        },
+        "internal_substep_count": 30,
+        "public_step_count": 10,
+        "public_steps": [
+          95,
+          104
+        ],
+        "statistics": {
+          "brinkman_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.01602251330739947,
+            "max_per_internal_substep": 0.01602251330739947,
+            "mean_per_internal_substep": 0.015971936609439026,
+            "median_per_internal_substep": 0.015971981871700257,
+            "min_per_internal_substep": 0.015921199174519153
+          },
+          "brinkman_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 1.8414693769841506e-07,
+            "max_per_internal_substep": 1.8414693769841506e-07,
+            "mean_per_internal_substep": 1.8118058114460867e-07,
+            "median_per_internal_substep": 1.8113030502636065e-07,
+            "min_per_internal_substep": 1.783968709053359e-07
+          },
+          "brinkman_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 1.0488663910050857e-05,
+            "max_per_internal_substep": 1.0488663910050857e-05,
+            "mean_per_internal_substep": 1.0000676855972164e-05,
+            "median_per_internal_substep": 9.99931979076839e-06,
+            "min_per_internal_substep": 9.51769077116037e-06
+          },
+          "div_after_brinkman_linf": {
+            "max_abs_per_internal_substep": 0.04440188407897949,
+            "max_per_internal_substep": 0.04440188407897949,
+            "mean_per_internal_substep": 0.042596215506394704,
+            "median_per_internal_substep": 0.042587876319885254,
+            "min_per_internal_substep": 0.04082046449184418
+          },
+          "div_after_projection_linf": {
+            "max_abs_per_internal_substep": 3.635883331298828e-06,
+            "max_per_internal_substep": 3.635883331298828e-06,
+            "mean_per_internal_substep": 2.7003387610117595e-06,
+            "median_per_internal_substep": 2.7418136596679688e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "div_after_rhs_linf": {
+            "max_abs_per_internal_substep": 0.035521626472473145,
+            "max_per_internal_substep": 0.035521626472473145,
+            "mean_per_internal_substep": 0.03551038901011149,
+            "median_per_internal_substep": 0.03551127016544342,
+            "min_per_internal_substep": 0.03549611568450928
+          },
+          "div_before_linf": {
+            "max_abs_per_internal_substep": 3.635883331298828e-06,
+            "max_per_internal_substep": 3.635883331298828e-06,
+            "mean_per_internal_substep": 2.736101547876994e-06,
+            "median_per_internal_substep": 2.7418136596679688e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "mean_of_proj_correction": {
+            "max_abs_per_internal_substep": 1.9242229932495733e-13,
+            "max_per_internal_substep": 1.9242229932495733e-13,
+            "mean_per_internal_substep": 3.95567899358478e-15,
+            "median_per_internal_substep": -8.871779043828285e-15,
+            "min_per_internal_substep": -1.3907215915864778e-13
+          },
+          "proj_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.014670828167136723,
+            "max_per_internal_substep": 0.014670828167136723,
+            "mean_per_internal_substep": 0.014649862630654908,
+            "median_per_internal_substep": 0.014649938709393968,
+            "min_per_internal_substep": 0.014628628650600843
+          },
+          "proj_dv_grid_linf_v": {
+            "max_abs_per_internal_substep": 0.0035009444691240788,
+            "max_per_internal_substep": 0.0035009444691240788,
+            "mean_per_internal_substep": 0.003495627036318183,
+            "median_per_internal_substep": 0.0034958464093506336,
+            "min_per_internal_substep": 0.0034895064309239388
+          },
+          "projection_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 5.0881360082034706e-11,
+            "max_per_internal_substep": 5.0881360082034706e-11,
+            "mean_per_internal_substep": 4.934162813412605e-12,
+            "median_per_internal_substep": 2.40544788707704e-12,
+            "min_per_internal_substep": -4.6353616546997614e-11
+          },
+          "projection_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 0.00016206564298565777,
+            "max_per_internal_substep": 0.00016206564298565777,
+            "mean_per_internal_substep": 0.00015845078690183856,
+            "median_per_internal_substep": 0.00015849010305657863,
+            "min_per_internal_substep": 0.00015469648810415693
+          },
+          "rhs_dv_grid_mean": {
+            "max_abs_per_internal_substep": 1.3665381436570882e-07,
+            "max_per_internal_substep": -1.3530350559278196e-07,
+            "mean_per_internal_substep": -1.3569244648511895e-07,
+            "median_per_internal_substep": -1.3555281717814362e-07,
+            "min_per_internal_substep": -1.3665381436570882e-07
+          },
+          "rhs_dv_liquid_mean": {
+            "max_abs_per_internal_substep": 0.0001245395408612691,
+            "max_per_internal_substep": -0.00012160902098245088,
+            "mean_per_internal_substep": -0.00012306873542784278,
+            "median_per_internal_substep": -0.0001230663486557028,
+            "min_per_internal_substep": -0.0001245395408612691
+          }
+        }
+      },
+      "precontact_velocity": {
+        "core_v_phi_ge_0p9": -0.4982672289387466,
+        "discrete_divergence_and_flux": {
+          "central_D_l2_fluid_volume_rms": 1.4395007919448084e-07,
+          "central_D_linf": 2.384185791015625e-06,
+          "cutcell_flux_reconstruction": "u_f=0.5*(u_i+u_{i+1}), v_f=0.5*(v_i+v_{i+1}); shared contract-9 A_f times face velocity; divide by V_i",
+          "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+          "cutcell_open_face_FV_l2_fluid_volume_rms": 0.016644073078082463,
+          "cutcell_open_face_FV_linf": 0.8007239103317261,
+          "saved_precontact_cutcell_measurement_available": true
+        },
+        "embedded_wall_flux": {
+          "absolute_bilinear_flux": 0.01996708141086856,
+          "max_bilinear_wall_normal_speed": 0.02502262219786644,
+          "measurement_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION",
+          "signed_bilinear_flux": 0.00016238490206887946
+        },
+        "fraction_of_frozen_approach_floor": 0.4492073303149014,
+        "gap_phi05": 0.04758907177307092,
+        "gap_phi05_over_dx": 1.5228502967382695,
+        "liquid_v_weighted": -0.292887907350453,
+        "local_normal_approach_speed": 0.04492073303149014,
+        "local_speed_over_u_impact": 0.08984146606298028,
+        "precontact_support": {
+          "gap": 0.04758907177307092,
+          "gap_cell": [
+            95,
+            9
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.2975890717730709
+          ],
+          "threshold_contour_crossing_count": 174,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.25
+          ]
+        },
+        "rerun_row_matches_saved_local_speed": true,
+        "time": 0.20800000000000002
+      }
+    },
+    "flat_we200_ct000": {
+      "case_geometry_and_timestep": {
+        "contact_gap_cells": 1.5,
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_gap_from_case_geometry": 0.09375,
+        "internal_substep_h": 0.0006666666666666666,
+        "local_surface_top": 0.234375,
+        "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "initialized_velocity": {
+        "candidate": "SDF_TAPERED_STREAMFUNCTION_V1",
+        "central_D_div_linf": 2.9206275939941406e-06,
+        "core_v_phi_ge_0p9": -0.5000000077079005,
+        "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+        "diagnostic_only": true,
+        "initial_local_normal_approach_speed": 0.0,
+        "initial_phi05_support": {
+          "gap": 0.07831191984795716,
+          "gap_cell": [
+            95,
+            10
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.32831191984795716
+          ],
+          "threshold_contour_crossing_count": 176,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.25
+          ]
+        },
+        "liquid_v_weighted": -0.31045168477414836,
+        "open_face_fv_div_linf": 9.179115295410156e-06,
+        "u_impact": 0.5,
+        "wall_flux_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION"
+      },
+      "operator_response_final_precontact_public_step": {
+        "global_scalar_ledger": [
+          {
+            "brinkman_dv_grid_mean_exact": -3.065074676659544e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0664528822940929e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.04095396399497986,
+            "div_after_projection_linf": 2.6226043701171875e-06,
+            "div_before_linf": 3.0547380447387695e-06,
+            "mean_of_proj_correction": -5.295234525984734e-14,
+            "proj_dv_grid_linf_v": 0.0035194691736251116,
+            "projection_dv_grid_mean_exact": -1.0925046939644663e-11,
+            "projection_dv_liquid_mean_exact": 0.00018214212470694623,
+            "rhs_dv_grid_mean": 5.654076856707339e-07,
+            "rhs_dv_liquid_mean": -0.0001315217707210358,
+            "t_after": 0.2846666666666667,
+            "t_before": 0.28400000000000003
+          },
+          {
+            "brinkman_dv_grid_mean_exact": -3.0805148281008874e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0685475072906975e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.040973663330078125,
+            "div_after_projection_linf": 2.93925404548645e-06,
+            "div_before_linf": 2.6226043701171875e-06,
+            "mean_of_proj_correction": 4.719897673895344e-14,
+            "proj_dv_grid_linf_v": 0.0035195229575037956,
+            "projection_dv_grid_mean_exact": -3.3404378414604426e-11,
+            "projection_dv_liquid_mean_exact": 0.00018227484638250923,
+            "rhs_dv_grid_mean": 5.669807965628629e-07,
+            "rhs_dv_liquid_mean": -0.00013159253225262645,
+            "t_after": 0.2853333333333333,
+            "t_before": 0.2846666666666667
+          },
+          {
+            "brinkman_dv_grid_mean_exact": -3.0960327008284276e-07,
+            "brinkman_dv_liquid_mean_exact": 1.0706341808024098e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.040993064641952515,
+            "div_after_projection_linf": 2.205371856689453e-06,
+            "div_before_linf": 2.93925404548645e-06,
+            "mean_of_proj_correction": 2.975878067791285e-14,
+            "proj_dv_grid_linf_v": 0.0035196056123822927,
+            "projection_dv_grid_mean_exact": -6.666877119809733e-12,
+            "projection_dv_liquid_mean_exact": 0.00018240627060656363,
+            "rhs_dv_grid_mean": 5.685688265034343e-07,
+            "rhs_dv_liquid_mean": -0.00013166268574528076,
+            "t_after": 0.28600000000000003,
+            "t_before": 0.2853333333333334
+          }
+        ],
+        "local_normal_stages": [
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008843481320296095,
+              "explicit_rhs": 0.0006683566336615349,
+              "periodic_pressure_projection": 0.0002374922877225183
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.04581701388022223,
+              "after_explicit_rhs": 0.04670136201225184,
+              "after_pressure_projection": 0.04605450616794475,
+              "before": 0.04603300537859031
+            },
+            "public_step": 143,
+            "substep_index_1_based": 1,
+            "support": {
+              "gap": 0.04751635657798131,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.2975163565779813
+              ],
+              "threshold_contour_crossing_count": 176,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.2846666666666667,
+            "t_before": 0.28400000000000003
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008864920038024818,
+              "explicit_rhs": 0.0006685010927831303,
+              "periodic_pressure_projection": 0.0002391578450281484
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.04563468284488017,
+              "after_explicit_rhs": 0.04652117484868265,
+              "after_pressure_projection": 0.04587384068990832,
+              "before": 0.04585267375589952
+            },
+            "public_step": 143,
+            "substep_index_1_based": 2,
+            "support": {
+              "gap": 0.04737327923735363,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.2973732792373536
+              ],
+              "threshold_contour_crossing_count": 176,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.2853333333333333,
+            "t_before": 0.2846666666666667
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 1.1920928955078125e-07,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0008886409405286233,
+              "explicit_rhs": 0.0006686375102112618,
+              "periodic_pressure_projection": 0.00024084488811546012
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.04545094730244746,
+              "after_explicit_rhs": 0.046339588242976085,
+              "after_pressure_projection": 0.04569179219056292,
+              "before": 0.04567095073276482
+            },
+            "public_step": 143,
+            "substep_index_1_based": 3,
+            "support": {
+              "gap": 0.04722955989033839,
+              "gap_cell": [
+                95,
+                9
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.2972295598903384
+              ],
+              "threshold_contour_crossing_count": 176,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.25
+              ]
+            },
+            "t_after": 0.28600000000000003,
+            "t_before": 0.2853333333333334
+          }
+        ]
+      },
+      "operator_response_first_internal_substep": {
+        "global_scalar_ledger": {
+          "brinkman_dv_grid_l2": 0.017296545423274398,
+          "brinkman_dv_grid_mean_exact": 2.353819587657074e-09,
+          "brinkman_dv_liquid_mean_exact": 8.258429173565124e-08,
+          "damp_max": 1.0,
+          "damp_min": 0.8571484088897705,
+          "div_after_brinkman_linf": 0.08584785461425781,
+          "div_after_projection_linf": 2.7865171432495117e-06,
+          "div_after_rhs_linf": 0.08580303192138672,
+          "div_before_linf": 2.9206275939941406e-06,
+          "mean_of_proj_correction": -4.994766340375673e-14,
+          "proj_dv_grid_l2": 0.015493129314853627,
+          "proj_dv_grid_linf_v": 0.004880964756011963,
+          "projection_dv_grid_mean_exact": -6.163793076754858e-11,
+          "projection_dv_liquid_mean_exact": -2.5899126291660493e-06,
+          "rhs_dv_grid_mean": -3.6841368961268714e-07,
+          "rhs_dv_liquid_mean": -9.3940229538957e-05
+        },
+        "local_normal_stages": {
+          "fast_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "normal_approach_delta_by_operator": {
+            "brinkman": 2.8653400936465165e-07,
+            "explicit_rhs": -5.016171424468018e-05,
+            "periodic_pressure_projection": 0.0009485125497499963
+          },
+          "normal_approach_speed_by_velocity_stage": {
+            "after_brinkman": -4.987518023531553e-05,
+            "after_explicit_rhs": -5.016171424468018e-05,
+            "after_pressure_projection": 0.0008986373695146808,
+            "before": 0.0
+          },
+          "public_step": 1,
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_after": 0.0006666666666666666,
+          "t_before": 0.0
+        },
+        "saved_startup_ledger_max_abs_delta": 9.819732259318606e-10
+      },
+      "operator_response_last_10_precontact_public_steps": {
+        "all_projection_solves_converged": true,
+        "definitions": {
+          "divergence": "periodic central-D Linf at named substep stage; not the open-face FV reconstruction",
+          "grid_mean": "full periodic grid mean v change at the named operator stage",
+          "liquid_mean": "stage delta in V_i*phi_i-weighted mean v; weights frozen at substep input phi",
+          "projection_linf_v": "max absolute vertical velocity correction from periodic pressure projection",
+          "projection_mean": "mean of the periodic pressure-gradient correction; not a Brinkman mean change"
+        },
+        "internal_substep_count": 30,
+        "public_step_count": 10,
+        "public_steps": [
+          134,
+          143
+        ],
+        "statistics": {
+          "brinkman_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.015530711526414701,
+            "max_per_internal_substep": 0.015530711526414701,
+            "mean_per_internal_substep": 0.015473402030084698,
+            "median_per_internal_substep": 0.015473451476939848,
+            "min_per_internal_substep": 0.015415904360961949
+          },
+          "brinkman_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 3.0960327008284276e-07,
+            "max_per_internal_substep": -2.6477710492035635e-07,
+            "mean_per_internal_substep": -2.871885642698325e-07,
+            "median_per_internal_substep": -2.871921918118975e-07,
+            "min_per_internal_substep": -3.0960327008284276e-07
+          },
+          "brinkman_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 1.0706341808024098e-05,
+            "max_per_internal_substep": 1.0706341808024098e-05,
+            "mean_per_internal_substep": 1.0402330305500185e-05,
+            "median_per_internal_substep": 1.0402414805469627e-05,
+            "min_per_internal_substep": 1.0097742015662022e-05
+          },
+          "div_after_brinkman_linf": {
+            "max_abs_per_internal_substep": 0.040993064641952515,
+            "max_per_internal_substep": 0.040993064641952515,
+            "mean_per_internal_substep": 0.040687811374664304,
+            "median_per_internal_substep": 0.04069451987743378,
+            "min_per_internal_substep": 0.04035845398902893
+          },
+          "div_after_projection_linf": {
+            "max_abs_per_internal_substep": 3.46451997756958e-06,
+            "max_per_internal_substep": 3.46451997756958e-06,
+            "mean_per_internal_substep": 2.542262276013692e-06,
+            "median_per_internal_substep": 2.514570951461792e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "div_after_rhs_linf": {
+            "max_abs_per_internal_substep": 0.03574448823928833,
+            "max_per_internal_substep": 0.03574448823928833,
+            "mean_per_internal_substep": 0.0356999933719635,
+            "median_per_internal_substep": 0.03570106625556946,
+            "min_per_internal_substep": 0.0356518030166626
+          },
+          "div_before_linf": {
+            "max_abs_per_internal_substep": 3.46451997756958e-06,
+            "max_per_internal_substep": 3.46451997756958e-06,
+            "mean_per_internal_substep": 2.5561700264612832e-06,
+            "median_per_internal_substep": 2.5779008865356445e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "mean_of_proj_correction": {
+            "max_abs_per_internal_substep": 1.73297513974022e-13,
+            "max_per_internal_substep": 1.73297513974022e-13,
+            "mean_per_internal_substep": -1.9917239385145813e-15,
+            "median_per_internal_substep": 4.9150363901885695e-15,
+            "min_per_internal_substep": -1.2760803992079768e-13
+          },
+          "proj_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.014408144402068753,
+            "max_per_internal_substep": 0.014408144402068753,
+            "mean_per_internal_substep": 0.014377948464893923,
+            "median_per_internal_substep": 0.01437806113216878,
+            "min_per_internal_substep": 0.014347349560033173
+          },
+          "proj_dv_grid_linf_v": {
+            "max_abs_per_internal_substep": 0.0035196056123822927,
+            "max_per_internal_substep": 0.0035196056123822927,
+            "mean_per_internal_substep": 0.0035181238393609724,
+            "median_per_internal_substep": 0.0035182746360078454,
+            "min_per_internal_substep": 0.0035161026753485203
+          },
+          "projection_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 6.410263446597773e-11,
+            "max_per_internal_substep": 5.372910618539308e-11,
+            "mean_per_internal_substep": 7.543473098452932e-12,
+            "median_per_internal_substep": 4.6833812387650185e-12,
+            "min_per_internal_substep": -6.410263446597773e-11
+          },
+          "projection_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 0.00018240627060656363,
+            "max_per_internal_substep": 0.00018240627060656363,
+            "mean_per_internal_substep": 0.0001803979727644446,
+            "median_per_internal_substep": 0.00018042522513330459,
+            "min_per_internal_substep": 0.0001782941739994734
+          },
+          "rhs_dv_grid_mean": {
+            "max_abs_per_internal_substep": 5.685688265034343e-07,
+            "max_per_internal_substep": 5.685688265034343e-07,
+            "mean_per_internal_substep": 5.462157849295398e-07,
+            "median_per_internal_substep": 5.462497911827062e-07,
+            "min_per_internal_substep": 5.237175660487842e-07
+          },
+          "rhs_dv_liquid_mean": {
+            "max_abs_per_internal_substep": 0.00013166268574528076,
+            "max_per_internal_substep": -0.00012954813934526536,
+            "mean_per_internal_substep": -0.00013061224219964543,
+            "median_per_internal_substep": -0.00013061633101895537,
+            "min_per_internal_substep": -0.00013166268574528076
+          }
+        }
+      },
+      "precontact_velocity": {
+        "core_v_phi_ge_0p9": -0.4778219853007625,
+        "discrete_divergence_and_flux": {
+          "central_D_l2_fluid_volume_rms": 1.4124591814922657e-07,
+          "central_D_linf": 2.205371856689453e-06,
+          "cutcell_flux_reconstruction": "u_f=0.5*(u_i+u_{i+1}), v_f=0.5*(v_i+v_{i+1}); shared contract-9 A_f times face velocity; divide by V_i",
+          "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+          "cutcell_open_face_FV_l2_fluid_volume_rms": 0.01708055428630797,
+          "cutcell_open_face_FV_linf": 0.795329213142395,
+          "saved_precontact_cutcell_measurement_available": false
+        },
+        "embedded_wall_flux": {
+          "absolute_bilinear_flux": 0.020931391000885924,
+          "max_bilinear_wall_normal_speed": 0.024854039773344994,
+          "measurement_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION",
+          "signed_bilinear_flux": -0.0003120224637314095
+        },
+        "fraction_of_frozen_approach_floor": 0.4548783907852,
+        "gap_phi05": 0.04708519229940478,
+        "gap_phi05_over_dx": 1.5067261535809529,
+        "liquid_v_weighted": -0.27700939205586017,
+        "local_normal_approach_speed": 0.04548783907852,
+        "local_speed_over_u_impact": 0.09097567815704,
+        "precontact_support": {
+          "gap": 0.04708519229940478,
+          "gap_cell": [
+            95,
+            9
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.2970851922994048
+          ],
+          "threshold_contour_crossing_count": 176,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.25
+          ]
+        },
+        "rerun_row_matches_saved_local_speed": true,
+        "time": 0.28600000000000003
+      }
+    },
+    "pillar_training": {
+      "case_geometry_and_timestep": {
+        "contact_gap_cells": 1.5,
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "initial_gap_from_case_geometry": 0.09375,
+        "internal_substep_h": 0.0006666666666666666,
+        "local_surface_top": 0.640625,
+        "phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "initialized_velocity": {
+        "candidate": "SDF_TAPERED_STREAMFUNCTION_V1",
+        "central_D_div_linf": 2.86102294921875e-06,
+        "core_v_phi_ge_0p9": -0.4999999831981805,
+        "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+        "diagnostic_only": true,
+        "initial_local_normal_approach_speed": 0.0,
+        "initial_phi05_support": {
+          "gap": 0.08456192133807328,
+          "gap_cell": [
+            95,
+            23
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.7345619198479572
+          ],
+          "threshold_contour_crossing_count": 176,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.6499999761581421
+          ]
+        },
+        "liquid_v_weighted": -0.3176470020909587,
+        "open_face_fv_div_linf": 5.7220458984375e-06,
+        "u_impact": 0.5,
+        "wall_flux_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION"
+      },
+      "operator_response_final_precontact_public_step": {
+        "global_scalar_ledger": [
+          {
+            "brinkman_dv_grid_mean_exact": 1.6948577708161827e-06,
+            "brinkman_dv_liquid_mean_exact": 2.3341451897711622e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.08658915758132935,
+            "div_after_projection_linf": 1.9073486328125e-06,
+            "div_before_linf": 1.9073486328125e-06,
+            "mean_of_proj_correction": -3.145771569426135e-15,
+            "proj_dv_grid_linf_v": 0.0029599156696349382,
+            "projection_dv_grid_mean_exact": -9.134346587370062e-12,
+            "projection_dv_liquid_mean_exact": 8.248090376806086e-05,
+            "rhs_dv_grid_mean": -5.326863752189025e-07,
+            "rhs_dv_liquid_mean": -5.555546204413554e-05,
+            "t_after": 0.3506666666666667,
+            "t_before": 0.35000000000000003
+          },
+          {
+            "brinkman_dv_grid_mean_exact": 1.6916088502823431e-06,
+            "brinkman_dv_liquid_mean_exact": 2.3401313211682862e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.08666002750396729,
+            "div_after_projection_linf": 1.9073486328125e-06,
+            "div_before_linf": 1.9073486328125e-06,
+            "mean_of_proj_correction": 6.251169407536166e-14,
+            "proj_dv_grid_linf_v": 0.0029599478002637625,
+            "projection_dv_grid_mean_exact": 2.3815491968550335e-11,
+            "projection_dv_liquid_mean_exact": 8.251094616070596e-05,
+            "rhs_dv_grid_mean": -5.323550156419242e-07,
+            "rhs_dv_liquid_mean": -5.5581089162242275e-05,
+            "t_after": 0.35133333333333333,
+            "t_before": 0.3506666666666667
+          },
+          {
+            "brinkman_dv_grid_mean_exact": 1.6883767756547325e-06,
+            "brinkman_dv_liquid_mean_exact": 2.3461481179312274e-05,
+            "cg_converged": true,
+            "div_after_brinkman_linf": 0.08673059940338135,
+            "div_after_projection_linf": 1.9073486328125e-06,
+            "div_before_linf": 1.9073486328125e-06,
+            "mean_of_proj_correction": -6.094618895929188e-15,
+            "proj_dv_grid_linf_v": 0.002960062585771084,
+            "projection_dv_grid_mean_exact": -4.3090656175867756e-11,
+            "projection_dv_liquid_mean_exact": 8.253969230801417e-05,
+            "rhs_dv_grid_mean": -5.320030624682878e-07,
+            "rhs_dv_liquid_mean": -5.560668226640831e-05,
+            "t_after": 0.35200000000000004,
+            "t_before": 0.3513333333333334
+          }
+        ],
+        "local_normal_stages": [
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 5.960464477539063e-08
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0013110626441570072,
+              "explicit_rhs": 0.0009103229032917798,
+              "periodic_pressure_projection": 0.000447859300373582
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.06927878106990315,
+              "after_explicit_rhs": 0.07058984371406016,
+              "after_pressure_projection": 0.06972664037027673,
+              "before": 0.06967952081076838
+            },
+            "public_step": 176,
+            "substep_index_1_based": 1,
+            "support": {
+              "gap": 0.04758264100811949,
+              "gap_cell": [
+                95,
+                22
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.6975826398483538
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.6499999761581421
+              ]
+            },
+            "t_after": 0.3506666666666667,
+            "t_before": 0.35000000000000003
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 1.1920928955078125e-07
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.001314990400123145,
+              "explicit_rhs": 0.0009094697215280972,
+              "periodic_pressure_projection": 0.0004523836155498201
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.06918152693494381,
+              "after_explicit_rhs": 0.07049651733506695,
+              "after_pressure_projection": 0.06963391055049363,
+              "before": 0.06958704761353886
+            },
+            "public_step": 176,
+            "substep_index_1_based": 2,
+            "support": {
+              "gap": 0.04745331925071527,
+              "gap_cell": [
+                95,
+                22
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.6974533180986577
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.6499999761581421
+              ]
+            },
+            "t_after": 0.35133333333333333,
+            "t_before": 0.3506666666666667
+          },
+          {
+            "fast_vs_capture_state_max_abs_delta": {
+              "phi": 0.0,
+              "u": 5.960464477539063e-08,
+              "v": 5.960464477539063e-08
+            },
+            "normal_approach_delta_by_operator": {
+              "brinkman": -0.0013189179013284036,
+              "explicit_rhs": 0.0009086108306957802,
+              "periodic_pressure_projection": 0.000456924222751634
+            },
+            "normal_approach_speed_by_velocity_stage": {
+              "after_brinkman": 0.06908383411851218,
+              "after_explicit_rhs": 0.07040275201984059,
+              "after_pressure_projection": 0.06954075834126382,
+              "before": 0.0694941411891448
+            },
+            "public_step": 176,
+            "substep_index_1_based": 3,
+            "support": {
+              "gap": 0.04732391628251734,
+              "gap_cell": [
+                95,
+                22
+              ],
+              "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+              "local_wall_normal_into_solid": [
+                0.0,
+                -1.0
+              ],
+              "support_xy": [
+                2.984375,
+                0.6973239151381728
+              ],
+              "threshold_contour_crossing_count": 174,
+              "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+              "wall_xy": [
+                2.984375,
+                0.6499999761581421
+              ]
+            },
+            "t_after": 0.35200000000000004,
+            "t_before": 0.3513333333333334
+          }
+        ]
+      },
+      "operator_response_first_internal_substep": {
+        "global_scalar_ledger": {
+          "brinkman_dv_grid_l2": 0.017076665399621896,
+          "brinkman_dv_grid_mean_exact": 4.2513217226691565e-08,
+          "brinkman_dv_liquid_mean_exact": 2.1890227559473362e-07,
+          "damp_max": 1.0,
+          "damp_min": 0.8571484088897705,
+          "div_after_brinkman_linf": 0.08461284637451172,
+          "div_after_projection_linf": 2.7418136596679688e-06,
+          "div_after_rhs_linf": 0.0846409797668457,
+          "div_before_linf": 2.86102294921875e-06,
+          "mean_of_proj_correction": 1.3883732849726918e-14,
+          "proj_dv_grid_l2": 0.014312555339380167,
+          "proj_dv_grid_linf_v": 0.0033984819892793894,
+          "projection_dv_grid_mean_exact": 5.769191451937748e-12,
+          "projection_dv_liquid_mean_exact": -1.28142131658941e-05,
+          "rhs_dv_grid_mean": -1.4500490090133993e-06,
+          "rhs_dv_liquid_mean": -1.9683432830144536e-05
+        },
+        "local_normal_stages": {
+          "fast_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 1.1920928955078125e-07,
+            "v": 1.1920928955078125e-07
+          },
+          "normal_approach_delta_by_operator": {
+            "brinkman": 4.4301686402857467e-07,
+            "explicit_rhs": -0.00010027744691200732,
+            "periodic_pressure_projection": 0.0006680717422631319
+          },
+          "normal_approach_speed_by_velocity_stage": {
+            "after_brinkman": -9.983443004797875e-05,
+            "after_explicit_rhs": -0.00010027744691200732,
+            "after_pressure_projection": 0.0005682373122151532,
+            "before": 0.0
+          },
+          "public_step": 1,
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "t_after": 0.0006666666666666666,
+          "t_before": 0.0
+        },
+        "saved_startup_ledger_max_abs_delta": 5.794285520545296e-10
+      },
+      "operator_response_last_10_precontact_public_steps": {
+        "all_projection_solves_converged": true,
+        "definitions": {
+          "divergence": "periodic central-D Linf at named substep stage; not the open-face FV reconstruction",
+          "grid_mean": "full periodic grid mean v change at the named operator stage",
+          "liquid_mean": "stage delta in V_i*phi_i-weighted mean v; weights frozen at substep input phi",
+          "projection_linf_v": "max absolute vertical velocity correction from periodic pressure projection",
+          "projection_mean": "mean of the periodic pressure-gradient correction; not a Brinkman mean change"
+        },
+        "internal_substep_count": 30,
+        "public_step_count": 10,
+        "public_steps": [
+          167,
+          176
+        ],
+        "statistics": {
+          "brinkman_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.014083568396561205,
+            "max_per_internal_substep": 0.014083568396561205,
+            "mean_per_internal_substep": 0.014035608250123403,
+            "median_per_internal_substep": 0.014035571589947744,
+            "min_per_internal_substep": 0.013987771346712741
+          },
+          "brinkman_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 1.7838515442715642e-06,
+            "max_per_internal_substep": 1.7838515442715642e-06,
+            "mean_per_internal_substep": 1.7358778727234667e-06,
+            "median_per_internal_substep": 1.7357454319580664e-06,
+            "min_per_internal_substep": 1.6883767756547325e-06
+          },
+          "brinkman_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 2.3461481179312274e-05,
+            "max_per_internal_substep": 2.3461481179312274e-05,
+            "mean_per_internal_substep": 2.259582713465264e-05,
+            "median_per_internal_substep": 2.2594437000280113e-05,
+            "min_per_internal_substep": 2.173506722245998e-05
+          },
+          "div_after_brinkman_linf": {
+            "max_abs_per_internal_substep": 0.08673059940338135,
+            "max_per_internal_substep": 0.08673059940338135,
+            "mean_per_internal_substep": 0.0856701632340749,
+            "median_per_internal_substep": 0.08568036556243896,
+            "min_per_internal_substep": 0.08457255363464355
+          },
+          "div_after_projection_linf": {
+            "max_abs_per_internal_substep": 2.384185791015625e-06,
+            "max_per_internal_substep": 2.384185791015625e-06,
+            "mean_per_internal_substep": 1.9470850626627603e-06,
+            "median_per_internal_substep": 1.9073486328125e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "div_after_rhs_linf": {
+            "max_abs_per_internal_substep": 0.03218793869018555,
+            "max_per_internal_substep": 0.03218793869018555,
+            "mean_per_internal_substep": 0.03210773468017578,
+            "median_per_internal_substep": 0.03210882842540741,
+            "min_per_internal_substep": 0.03202325105667114
+          },
+          "div_before_linf": {
+            "max_abs_per_internal_substep": 2.384185791015625e-06,
+            "max_per_internal_substep": 2.384185791015625e-06,
+            "mean_per_internal_substep": 1.9470850626627603e-06,
+            "median_per_internal_substep": 1.9073486328125e-06,
+            "min_per_internal_substep": 1.9073486328125e-06
+          },
+          "mean_of_proj_correction": {
+            "max_abs_per_internal_substep": 1.592978678653656e-13,
+            "max_per_internal_substep": 1.592978678653656e-13,
+            "mean_per_internal_substep": 2.0038187219684235e-14,
+            "median_per_internal_substep": 2.1500951160700896e-14,
+            "min_per_internal_substep": -7.715357185839892e-14
+          },
+          "proj_dv_grid_l2": {
+            "max_abs_per_internal_substep": 0.012714645802790385,
+            "max_per_internal_substep": 0.012714645802790385,
+            "mean_per_internal_substep": 0.012679302090096727,
+            "median_per_internal_substep": 0.012679264477024603,
+            "min_per_internal_substep": 0.012644079207069815
+          },
+          "proj_dv_grid_linf_v": {
+            "max_abs_per_internal_substep": 0.002960062585771084,
+            "max_per_internal_substep": 0.002960062585771084,
+            "mean_per_internal_substep": 0.0029588126111775638,
+            "median_per_internal_substep": 0.0029588937759399414,
+            "min_per_internal_substep": 0.0029573803767561913
+          },
+          "projection_dv_grid_mean_exact": {
+            "max_abs_per_internal_substep": 4.5859942579551394e-11,
+            "max_per_internal_substep": 3.9783030265145354e-11,
+            "mean_per_internal_substep": -2.6051461435774804e-12,
+            "median_per_internal_substep": -7.632941467348226e-13,
+            "min_per_internal_substep": -4.5859942579551394e-11
+          },
+          "projection_dv_liquid_mean_exact": {
+            "max_abs_per_internal_substep": 8.253969230801417e-05,
+            "max_per_internal_substep": 8.253969230801417e-05,
+            "mean_per_internal_substep": 8.208314492170785e-05,
+            "median_per_internal_substep": 8.208970308274321e-05,
+            "min_per_internal_substep": 8.160241010475614e-05
+          },
+          "rhs_dv_grid_mean": {
+            "max_abs_per_internal_substep": 5.432316650454214e-07,
+            "max_per_internal_substep": -5.320030624682878e-07,
+            "mean_per_internal_substep": -5.373210899291464e-07,
+            "median_per_internal_substep": -5.371522267006443e-07,
+            "min_per_internal_substep": -5.432316650454214e-07
+          },
+          "rhs_dv_liquid_mean": {
+            "max_abs_per_internal_substep": 5.560668226640831e-05,
+            "max_per_internal_substep": -5.486611142100108e-05,
+            "mean_per_internal_substep": -5.5233996342416514e-05,
+            "median_per_internal_substep": -5.523229298071066e-05,
+            "min_per_internal_substep": -5.560668226640831e-05
+          }
+        }
+      },
+      "precontact_velocity": {
+        "core_v_phi_ge_0p9": -0.4957007449064109,
+        "discrete_divergence_and_flux": {
+          "central_D_l2_fluid_volume_rms": 1.2849675517970026e-07,
+          "central_D_linf": 1.9073486328125e-06,
+          "cutcell_flux_reconstruction": "u_f=0.5*(u_i+u_{i+1}), v_f=0.5*(v_i+v_{i+1}); shared contract-9 A_f times face velocity; divide by V_i",
+          "cutcell_flux_status": "MEASURED_OPEN_FACE_RECONSTRUCTION",
+          "cutcell_open_face_FV_l2_fluid_volume_rms": 0.045689988271995205,
+          "cutcell_open_face_FV_linf": 5.566899299621582,
+          "saved_precontact_cutcell_measurement_available": false
+        },
+        "embedded_wall_flux": {
+          "absolute_bilinear_flux": 0.022344913951332347,
+          "max_bilinear_wall_normal_speed": 0.03730404085125013,
+          "measurement_status": "MEASURED_WITH_DECLARED_BILINEAR_CELL_VELOCITY_RECONSTRUCTION",
+          "signed_bilinear_flux": -0.0027461075763832625
+        },
+        "fraction_of_frozen_approach_floor": 0.6940081089845105,
+        "gap_phi05": 0.047194429288487987,
+        "gap_phi05_over_dx": 1.5102217372316156,
+        "liquid_v_weighted": -0.29806167455253135,
+        "local_normal_approach_speed": 0.06940081089845106,
+        "local_speed_over_u_impact": 0.1388016217969021,
+        "precontact_support": {
+          "gap": 0.047194429288487987,
+          "gap_cell": [
+            95,
+            22
+          ],
+          "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+          "local_wall_normal_into_solid": [
+            0.0,
+            -1.0
+          ],
+          "support_xy": [
+            2.984375,
+            0.6971944281518615
+          ],
+          "threshold_contour_crossing_count": 174,
+          "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+          "wall_xy": [
+            2.984375,
+            0.6499999761581421
+          ]
+        },
+        "rerun_row_matches_saved_local_speed": true,
+        "time": 0.352
+      }
+    }
+  },
+  "contact_gap_cells": 1.5,
+  "diagnostic_only": true,
+  "effective_dt": 0.002,
+  "execution": {
+    "head_sha": "7b87dd31354817b942502923b18d956db477dd68",
+    "jax": "0.10.2",
+    "jax_backend": "cpu",
+    "jax_enable_x64": true,
+    "long_forensic_t8_calculation_repeated": false,
+    "python": "3.11.2",
+    "short_window_run_steps": {
+      "flat_we100_ct050": 104,
+      "flat_we200_ct000": 143,
+      "pillar_training": 176
+    },
+    "source_hashes": {
+      "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+      "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+      "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+      "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+      "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    }
+  },
+  "historical_readiness_and_blockers_unchanged": {
+    "initializer_verdict": "INITIALIZER_COMPATIBLE",
+    "no_l1b_or_contract_promotion": true,
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+    "stage_decision": "B_INITIALIZATION_HELPFUL_BUT_REFINEMENT_OR_GEOMETRY_BLOCKS"
+  },
+  "internal_substep_h": 0.0006666666666666666,
+  "meaningful_approach_floor": {
+    "formula": "0.2*u_impact",
+    "fraction": 0.2,
+    "u_impact": 0.5,
+    "value": 0.1
+  },
+  "production_lineage_eligible": false,
+  "production_lineage_guard": {
+    "candidate_promoted": false,
+    "contract_13_or_l1b_readiness_claimed": false,
+    "diagnostic_only": true,
+    "geometry_or_contact_threshold_changed": false,
+    "historical_readiness_statuses_overwritten": false,
+    "official_data_written": false,
+    "production_lineage_eligible": false,
+    "solver_or_default_changed": false
+  },
+  "production_source_freeze_checks": {
+    "cases_unchanged_since_l1a2r": true,
+    "contract12": true,
+    "generator_unchanged_since_l1a2r": true,
+    "l1a2r_report_present": true,
+    "origin_main_is_verified_merge_base": true,
+    "phasefield_unchanged_since_l1a2r": true,
+    "policy": true,
+    "policy_matches_contract": true,
+    "timestep_policy_unchanged_since_l1a2r": true
+  },
+  "requested_dt": 0.004,
+  "saved_full_horizon_outcomes_reused": {
+    "flat_we100_ct050": {
+      "approach_floor": 0.1,
+      "contact_location": {
+        "gap": 0.04537480640073838,
+        "gap_cell": [
+          95,
+          9
+        ],
+        "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+        "local_wall_normal_into_solid": [
+          0.0,
+          -1.0
+        ],
+        "support_xy": [
+          2.984375,
+          0.2953748064007384
+        ],
+        "threshold_contour_crossing_count": 176,
+        "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+        "wall_xy": [
+          2.984375,
+          0.25
+        ]
+      },
+      "contact_time_discrete": 0.21,
+      "contact_time_interpolated_gap_threshold": 0.20864497397827136,
+      "event_verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT",
+      "postcontact_dynamics_verified": true,
+      "postcontact_interval": [
+        0.21,
+        0.44999999999999996
+      ],
+      "precontact_time": 0.20800000000000002,
+      "saved_precontact_gap_phi05": 0.04758907177307092,
+      "saved_precontact_local_normal_approach_speed": 0.04492073303149014
+    },
+    "flat_we200_ct000": {
+      "approach_floor": 0.1,
+      "contact_location": {
+        "gap": 0.04653353708814628,
+        "gap_cell": [
+          95,
+          9
+        ],
+        "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+        "local_wall_normal_into_solid": [
+          0.0,
+          -1.0
+        ],
+        "support_xy": [
+          2.984375,
+          0.2965335370881463
+        ],
+        "threshold_contour_crossing_count": 182,
+        "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+        "wall_xy": [
+          2.984375,
+          0.25
+        ]
+      },
+      "contact_time_discrete": 0.28800000000000003,
+      "contact_time_interpolated_gap_threshold": 0.2867620422869758,
+      "event_verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT",
+      "postcontact_dynamics_verified": true,
+      "postcontact_interval": [
+        0.28800000000000003,
+        0.528
+      ],
+      "precontact_time": 0.28600000000000003,
+      "saved_precontact_gap_phi05": 0.04708519229940478,
+      "saved_precontact_local_normal_approach_speed": 0.04548783907852
+    },
+    "pillar_training": {
+      "approach_floor": 0.1,
+      "contact_location": {
+        "gap": 0.046805435948933743,
+        "gap_cell": [
+          95,
+          22
+        ],
+        "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+        "local_wall_normal_into_solid": [
+          0.0,
+          -1.0
+        ],
+        "support_xy": [
+          2.984375,
+          0.6968054348354931
+        ],
+        "threshold_contour_crossing_count": 174,
+        "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+        "wall_xy": [
+          2.984375,
+          0.6499999761581421
+        ]
+      },
+      "contact_time_discrete": 0.354,
+      "contact_time_interpolated_gap_threshold": 0.35364233808658024,
+      "event_verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT",
+      "postcontact_dynamics_verified": true,
+      "postcontact_interval": [
+        0.354,
+        0.594
+      ],
+      "precontact_time": 0.352,
+      "saved_precontact_gap_phi05": 0.047194429288487987,
+      "saved_precontact_local_normal_approach_speed": 0.06940081089845106
+    }
+  },
+  "scope": {
+    "cases": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "complex_heldout": "not rerun or replaced; its saved event and readiness status remain unchanged",
+    "contact_metric": "bilinear actual-SDF gap on the periodic linear phi=0.5 contour; gap <= 1.5 dx",
+    "full_horizon": "not rerun; only short segments ending at each saved precontact time were advanced",
+    "geometry_and_drop_placement": "reconstructed from exact frozen canary registry; verified against saved geometry and initial-state hashes",
+    "postcontact": "reused from saved full-horizon evidence; no postcontact window was rerun"
+  },
+  "solver_contract_version": 12,
+  "stage": "L1A-2s focused pillar-versus-flat precontact operator diagnosis",
+  "timestep_policy": "impact_phase_cap_dx2_v1"
+}
