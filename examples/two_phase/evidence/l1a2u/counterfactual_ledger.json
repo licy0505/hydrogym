@@ -1,0 +1,339 @@
+{
+  "definition": "counterfactual over the eta_pen axis only, holding the seed, the geometry, the physics and the matched physical sampling times fixed; every quantity is compared at the same position and time",
+  "entries": [
+    {
+      "candidate": "C2_BASE",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.004,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9810326184455984,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9810326184455984,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": 0.0,
+        "gate_band_speed_peak": 0.0,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.002,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.5,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.27349236730816395,
+      "front_speed_fixed": -0.27349236730816395,
+      "gate_band_speed_peak_coupled": 0.7026378432234446,
+      "gate_band_speed_peak_fixed": 0.7026378432234446,
+      "internal_substep_h": 0.0006666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    {
+      "candidate": "C2_BASE",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.002,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 6.31451996580148e-49,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9781715779338211,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 9.383739929333436e-26,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9810296729048129,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.010041598081011072,
+        "gate_band_speed_peak": 0.152884808604822,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.001,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.25,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.26299691921803764,
+      "front_speed_fixed": -0.2730385172990487,
+      "gate_band_speed_peak_coupled": 0.5492810867927161,
+      "gate_band_speed_peak_fixed": 0.7021658953975382,
+      "internal_substep_h": 0.0003333333333333333,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    {
+      "candidate": "C2_BASE",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.001,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 3.9873162398505524e-97,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.975323852900436,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 2.962864184666591e-26,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.9810282005342821,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.15977816106550632,
+        "gate_band_speed_peak": 0.32188285531870964,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.0005,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.125,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.11301037327228688,
+      "front_speed_fixed": -0.2727885343377932,
+      "gate_band_speed_peak_coupled": 0.3800485580029953,
+      "gate_band_speed_peak_fixed": 0.701931413321705,
+      "internal_substep_h": 0.00016666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    {
+      "candidate": "R1_MEDIUM",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.004,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9810326184455984,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9810326184455984,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": 0.0,
+        "gate_band_speed_peak": 0.0,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.002,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.5,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.2505722797551256,
+      "front_speed_fixed": -0.2505722797551256,
+      "gate_band_speed_peak_coupled": 46073.613540031656,
+      "gate_band_speed_peak_fixed": 46073.613540031656,
+      "internal_substep_h": 0.0006666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+        "v": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09"
+      }
+    },
+    {
+      "candidate": "R1_MEDIUM",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.002,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 6.31451996580148e-49,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9781715779338211,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 9.383739929333436e-26,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9810296729048129,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.005653217069708838,
+        "gate_band_speed_peak": 1.0070477534239295,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.001,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.25,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.3332415278510489,
+      "front_speed_fixed": -0.3388947449207577,
+      "gate_band_speed_peak_coupled": 27.137077214247075,
+      "gate_band_speed_peak_fixed": 28.144124967671004,
+      "internal_substep_h": 0.0003333333333333333,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+        "v": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09"
+      }
+    },
+    {
+      "candidate": "R1_MEDIUM",
+      "case": "flat_we100_ct050",
+      "coupled_eta": 0.001,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 3.9873162398505524e-97,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.975323852900436,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 2.962864184666591e-26,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.9810282005342821,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.00877819515933781,
+        "gate_band_speed_peak": 4.330837958926171,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.0005,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.125,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.3299198662106077,
+      "front_speed_fixed": -0.3386980613699455,
+      "gate_band_speed_peak_coupled": 22.917178206041026,
+      "gate_band_speed_peak_fixed": 27.248016164967197,
+      "internal_substep_h": 0.00016666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+        "v": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09"
+      }
+    },
+    {
+      "candidate": "C2_BASE",
+      "case": "pillar_training",
+      "coupled_eta": 0.004,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9711593722250881,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 7.946395387722335e-25,
+        "substeps": 360,
+        "volume_weighted_mean": 0.9711593722250881,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": 0.0,
+        "gate_band_speed_peak": 0.0,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.002,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.5,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.07907595674266031,
+      "front_speed_fixed": -0.07907595674266031,
+      "gate_band_speed_peak_coupled": 0.9437263151618517,
+      "gate_band_speed_peak_fixed": 0.9437263151618517,
+      "internal_substep_h": 0.0006666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      }
+    },
+    {
+      "candidate": "C2_BASE",
+      "case": "pillar_training",
+      "coupled_eta": 0.002,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 6.31451996580148e-49,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9668971385261896,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 9.383739929333436e-26,
+        "substeps": 720,
+        "volume_weighted_mean": 0.9711549892136173,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.01630581892032209,
+        "gate_band_speed_peak": 0.08529322825575614,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.001,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.25,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.062264782411289764,
+      "front_speed_fixed": -0.07857060133161185,
+      "gate_band_speed_peak_coupled": 0.8583509383434405,
+      "gate_band_speed_peak_fixed": 0.9436441665991966,
+      "internal_substep_h": 0.0003333333333333333,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      }
+    },
+    {
+      "candidate": "C2_BASE",
+      "case": "pillar_training",
+      "coupled_eta": 0.001,
+      "cumulative_damping_over_window_coupled": {
+        "gate_band_min": 3.9873162398505524e-97,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.9626986870253417,
+        "window": 0.24
+      },
+      "cumulative_damping_over_window_fixed": {
+        "gate_band_min": 2.962864184666591e-26,
+        "substeps": 1440,
+        "volume_weighted_mean": 0.971152798721809,
+        "window": 0.24
+      },
+      "delta_at_a_matched_position_same_time": {
+        "front_speed": -0.031785597485962935,
+        "gate_band_speed_peak": 0.22780885999907408,
+        "support_sdf_over_dx": 0.0
+      },
+      "dt": 0.0005,
+      "dt_over_eta_coupled": 0.5,
+      "dt_over_eta_fixed": 0.125,
+      "fixed_eta": 0.004,
+      "front_speed_coupled": -0.04653947406899478,
+      "front_speed_fixed": -0.07832507155495771,
+      "gate_band_speed_peak_coupled": 0.7158070114608238,
+      "gate_band_speed_peak_fixed": 0.9436158714598979,
+      "internal_substep_h": 0.00016666666666666666,
+      "same_geometry": true,
+      "same_seed": {
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      }
+    }
+  ],
+  "entry_count": 9
+}

@@ -1,0 +1,423 @@
+{
+  "N": 192,
+  "cases": {
+    "complex_heldout": {
+      "C2_BASE": {
+        "anchors": {
+          "t_0.08": {
+            "contour_normal_advance_speed": -0.03302183616457641,
+            "gap_phi05_over_dx": 5.303633610855287,
+            "gate_band_max_speed_over_u_impact": 0.6119891949388347,
+            "support_sdf_over_dx": 5.681934833526611,
+            "t_sampled": 0.08
+          },
+          "t_0.12": {
+            "contour_normal_advance_speed": 0.0044595067894834806,
+            "gap_phi05_over_dx": 5.218372269292653,
+            "gate_band_max_speed_over_u_impact": 0.8316767170110011,
+            "support_sdf_over_dx": 4.790537357330322,
+            "t_sampled": 0.12
+          },
+          "t_0.24": {
+            "contour_normal_advance_speed": 0.5020131270561937,
+            "gap_phi05_over_dx": 4.592898929249863,
+            "gate_band_max_speed_over_u_impact": 1.1383298093180179,
+            "support_sdf_over_dx": 4.790537357330322,
+            "t_sampled": 0.24
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.0967216694636264,
+        "max_local_normal_fluid_speed": 0.5077021450084737,
+        "mean_local_normal_fluid_speed": 0.04849105727220709,
+        "transport_split_at_t0": {
+          "case_name": "complex_heldout",
+          "grid_closure_linf": 5.551115123125783e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 39,
+            "relative_residual": 9.371593907620107e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": -2.421984833555265e-20,
+            "sum_V_delta_adv": 9.350336267862507e-06,
+            "sum_V_delta_ch_explicit": 6.043926026571121e-06,
+            "sum_V_delta_ch_implicit": -8.180233193457863e-06,
+            "sum_V_delta_total": 7.214029100975741e-06
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 0.002364621942078072,
+            "ch_explicit": 0.006023973042080057,
+            "ch_implicit": 0.005823737083751501,
+            "total": 0.002564857900406614
+          }
+        }
+      },
+      "R1_MEDIUM": {
+        "anchors": {
+          "t_0.08": {
+            "status": "UNMEASURED"
+          },
+          "t_0.12": {
+            "status": "UNMEASURED"
+          },
+          "t_0.24": {
+            "status": "UNMEASURED"
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.39778356693723427,
+        "max_local_normal_fluid_speed": 8540.23972021145,
+        "mean_local_normal_fluid_speed": 427.174228247817,
+        "transport_split_at_t0": {
+          "case_name": "complex_heldout",
+          "grid_closure_linf": 5.551115123125783e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 49,
+            "relative_residual": 8.658233540457878e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": 9.899697571034635e-21,
+            "sum_V_delta_adv": 3.1759515132452725e-05,
+            "sum_V_delta_ch_explicit": 6.043926026571121e-06,
+            "sum_V_delta_ch_implicit": -8.777628127764565e-06,
+            "sum_V_delta_total": 2.9025813031259288e-05
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 0.008777452108854713,
+            "ch_explicit": 0.006023973042080057,
+            "ch_implicit": 0.005614163434960573,
+            "total": 0.006162194706544666
+          }
+        }
+      }
+    },
+    "flat_we100_ct050": {
+      "C2_BASE": {
+        "anchors": {
+          "t_0.08": {
+            "contour_normal_advance_speed": 0.05190236840788251,
+            "gap_phi05_over_dx": 2.5347545197564756,
+            "gate_band_max_speed_over_u_impact": 0.32035483187097824,
+            "support_sdf_over_dx": 2.5,
+            "t_sampled": 0.08
+          },
+          "t_0.12": {
+            "contour_normal_advance_speed": 0.05899187768311636,
+            "gap_phi05_over_dx": 2.3262800263138477,
+            "gate_band_max_speed_over_u_impact": 0.45394520150662276,
+            "support_sdf_over_dx": 2.5,
+            "t_sampled": 0.12
+          },
+          "t_0.24": {
+            "contour_normal_advance_speed": 0.029445973695853885,
+            "gap_phi05_over_dx": 0.40556005420793007,
+            "gate_band_max_speed_over_u_impact": 0.7026378432234446,
+            "support_sdf_over_dx": 0.5,
+            "t_sampled": 0.24
+          }
+        },
+        "contact_time_discrete": 0.21,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.27349236730816395,
+        "max_local_normal_fluid_speed": 0.059808819974399643,
+        "mean_local_normal_fluid_speed": 0.04470063868621609,
+        "transport_split_at_t0": {
+          "case_name": "flat_we100_ct050",
+          "grid_closure_linf": 5.572799166575493e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.424120901770968e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": -1.1371417316888982e-19,
+            "sum_V_delta_adv": 1.3807832239787933e-07,
+            "sum_V_delta_ch_explicit": 1.2738046417876066e-05,
+            "sum_V_delta_ch_implicit": -1.1381493403866854e-05,
+            "sum_V_delta_total": 1.4946313364069775e-06
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 3.167141117189916e-05,
+            "ch_explicit": 0.008844531301869183,
+            "ch_implicit": 0.005006394114239976,
+            "total": 0.007233393829400775
+          }
+        }
+      },
+      "R1_MEDIUM": {
+        "anchors": {
+          "t_0.08": {
+            "status": "UNMEASURED"
+          },
+          "t_0.12": {
+            "status": "UNMEASURED"
+          },
+          "t_0.24": {
+            "status": "UNMEASURED"
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.2505722797551256,
+        "max_local_normal_fluid_speed": 0.2195788451826618,
+        "mean_local_normal_fluid_speed": -96.01061160118394,
+        "transport_split_at_t0": {
+          "case_name": "flat_we100_ct050",
+          "grid_closure_linf": 5.551115123125783e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 10,
+            "relative_residual": 4.132904429578729e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": 3.87729331605656e-19,
+            "sum_V_delta_adv": 6.274339483335643e-06,
+            "sum_V_delta_ch_explicit": 1.2738046417876066e-05,
+            "sum_V_delta_ch_implicit": -1.1024755119619023e-05,
+            "sum_V_delta_total": 7.987630781593072e-06
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 0.0016185244129370867,
+            "ch_explicit": 0.008844531301869183,
+            "ch_implicit": 0.004917747198146305,
+            "total": 0.007232591947194611
+          }
+        }
+      }
+    },
+    "flat_we200_ct000": {
+      "C2_BASE": {
+        "anchors": {
+          "t_0.08": {
+            "contour_normal_advance_speed": 0.04747486159774686,
+            "gap_phi05_over_dx": 2.4542425513553674,
+            "gate_band_max_speed_over_u_impact": 0.3182910336812008,
+            "support_sdf_over_dx": 2.5,
+            "t_sampled": 0.08
+          },
+          "t_0.12": {
+            "contour_normal_advance_speed": 0.055803972235268964,
+            "gap_phi05_over_dx": 2.3145516849689205,
+            "gate_band_max_speed_over_u_impact": 0.45029550124426193,
+            "support_sdf_over_dx": 2.5,
+            "t_sampled": 0.12
+          },
+          "t_0.24": {
+            "contour_normal_advance_speed": 0.055154718457705976,
+            "gap_phi05_over_dx": 1.7857313860964545,
+            "gate_band_max_speed_over_u_impact": 0.6945502874657703,
+            "support_sdf_over_dx": 1.5,
+            "t_sampled": 0.24
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.0937825584685123,
+        "max_local_normal_fluid_speed": 0.05984758429666452,
+        "mean_local_normal_fluid_speed": 0.04766026381603875,
+        "transport_split_at_t0": {
+          "case_name": "flat_we200_ct000",
+          "grid_closure_linf": 5.572799166575493e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.437087909810263e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": -3.917527381051139e-20,
+            "sum_V_delta_adv": 1.3807832239787933e-07,
+            "sum_V_delta_ch_explicit": 1.2280615475058049e-05,
+            "sum_V_delta_ch_implicit": -1.1361604251518845e-05,
+            "sum_V_delta_total": 1.0570895459370447e-06
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 3.167141117189916e-05,
+            "ch_explicit": 0.005553895710727468,
+            "ch_implicit": 0.005010026074812934,
+            "total": 0.004401971153824374
+          }
+        }
+      },
+      "R1_MEDIUM": {
+        "anchors": {
+          "t_0.08": {
+            "status": "UNMEASURED"
+          },
+          "t_0.12": {
+            "status": "UNMEASURED"
+          },
+          "t_0.24": {
+            "status": "UNMEASURED"
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.2978185909674323,
+        "max_local_normal_fluid_speed": 0.21553716752586655,
+        "mean_local_normal_fluid_speed": -70.38338693602142,
+        "transport_split_at_t0": {
+          "case_name": "flat_we200_ct000",
+          "grid_closure_linf": 5.551115123125783e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 10,
+            "relative_residual": 4.152943435234337e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": 4.622682309640344e-19,
+            "sum_V_delta_adv": 6.274339483335643e-06,
+            "sum_V_delta_ch_explicit": 1.2280615475058049e-05,
+            "sum_V_delta_ch_implicit": -1.1004764776993272e-05,
+            "sum_V_delta_total": 7.550190181400881e-06
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 0.0016185244129370867,
+            "ch_explicit": 0.005553895710727468,
+            "ch_implicit": 0.004921418591877891,
+            "total": 0.004401177353558355
+          }
+        }
+      }
+    },
+    "pillar_training": {
+      "C2_BASE": {
+        "anchors": {
+          "t_0.08": {
+            "contour_normal_advance_speed": 0.05253897274228453,
+            "gap_phi05_over_dx": 2.643332785732863,
+            "gate_band_max_speed_over_u_impact": 0.3742268116742333,
+            "support_sdf_over_dx": 2.700000047683716,
+            "t_sampled": 0.08
+          },
+          "t_0.12": {
+            "contour_normal_advance_speed": 0.07009765139620647,
+            "gap_phi05_over_dx": 2.542089134000019,
+            "gate_band_max_speed_over_u_impact": 0.5477920999981245,
+            "support_sdf_over_dx": 2.700000047683716,
+            "t_sampled": 0.12
+          },
+          "t_0.24": {
+            "contour_normal_advance_speed": 0.08779689894864937,
+            "gap_phi05_over_dx": 2.0986781350347137,
+            "gate_band_max_speed_over_u_impact": 0.9437263151618517,
+            "support_sdf_over_dx": 1.7000000476837158,
+            "t_sampled": 0.24
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.07907595674266031,
+        "max_local_normal_fluid_speed": 0.08832230705263196,
+        "mean_local_normal_fluid_speed": 0.061308516683176634,
+        "transport_split_at_t0": {
+          "case_name": "pillar_training",
+          "grid_closure_linf": 6.640349531585815e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.169921042527577e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": 1.4643082075658717e-19,
+            "sum_V_delta_adv": 2.0489904247658868e-07,
+            "sum_V_delta_ch_explicit": 5.845851209018788e-05,
+            "sum_V_delta_ch_implicit": -9.434703692488165e-05,
+            "sum_V_delta_total": -3.568362579221703e-05
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 4.433325482739159e-05,
+            "ch_explicit": 0.010071514607894554,
+            "ch_implicit": 0.015454250447999363,
+            "total": 0.005382735840104819
+          }
+        }
+      },
+      "R1_MEDIUM": {
+        "anchors": {
+          "t_0.08": {
+            "status": "UNMEASURED"
+          },
+          "t_0.12": {
+            "status": "UNMEASURED"
+          },
+          "t_0.24": {
+            "status": "UNMEASURED"
+          }
+        },
+        "contact_time_discrete": null,
+        "distinction": "front_speed_dgap_dt is the motion of the reconstructed phi=0.5 contour; mean/max_local_normal_fluid_speed is the fluid velocity sampled at that contour along the local wall normal. They are reported separately and are not interchangeable.",
+        "front_speed_dgap_dt": -0.3341970750285487,
+        "max_local_normal_fluid_speed": 0.2272803539796604,
+        "mean_local_normal_fluid_speed": -62.96967917880787,
+        "transport_split_at_t0": {
+          "case_name": "pillar_training",
+          "grid_closure_linf": 5.551115123125783e-17,
+          "h": 0.0006666666666666666,
+          "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 6.496834639719335e-07
+          },
+          "t": 0.0,
+          "window": "periodic window of radius 2 cells around the phi=0.5 support",
+          "window_V_weighted": {
+            "closure_residual": 4.810088349220358e-19,
+            "sum_V_delta_adv": 6.274339483335643e-06,
+            "sum_V_delta_ch_explicit": 5.845851209018788e-05,
+            "sum_V_delta_ch_implicit": -9.399020713720797e-05,
+            "sum_V_delta_total": -2.925735556368396e-05
+          },
+          "window_cell_count": 25,
+          "window_max_abs_component": {
+            "adv": 0.0016185244129370867,
+            "ch_explicit": 0.010071514607894554,
+            "ch_implicit": 0.015455070158521794,
+            "total": 0.00538355555062725
+          }
+        }
+      }
+    }
+  },
+  "profile": "forensic",
+  "window": 0.24
+}

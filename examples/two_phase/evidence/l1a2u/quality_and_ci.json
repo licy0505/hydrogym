@@ -1,0 +1,114 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_adjacent_suites": {
+    "test_l1a2r_merged_base_verified_or_fail_closed": {
+      "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+      "closure_requires": "an owner-approved lineage-only patch; it is not part of this stage'sphysics evidence",
+      "measured_error": "AuditValidationError: L1A-2s prerequisite/source freeze failed: ['origin_main_is_verified_merge_base']; latest_main=09e2993b8da478d79e768054194201af57121784",
+      "not_edited": true,
+      "reason": "the frozen L1A-2s source gate accepts only the PR #21 merge and the PR #23 merge; the verified main is the PR #22 merge 09e2993, which is in neither set",
+      "status": "FAILS_ON_VERIFIED_MAIN"
+    }
+  },
+  "historical_summary": {
+    "codespell_findings": 3,
+    "format_files": 27,
+    "isort_files": 28,
+    "ruff_files": 12,
+    "ruff_findings": 171
+  },
+  "hosted_ci": {
+    "base_main_ci": {
+      "applicability": "engineering CI of the verified main this branch is based on; not evidence forthis head",
+      "conclusion": "success",
+      "head_sha": "865317d438eee5c8d5f1e942f0ad30c943010818",
+      "jobs": "8/8",
+      "run_id": 38120327651
+    },
+    "reported_at": "assembly time",
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "NOT_RUN"
+  },
+  "inherited_statuses": {
+    "DIRECT_FIELD_LABELS": "UNMEASURED",
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "UNMEASURED",
+    "unchanged_by_this_stage": true
+  },
+  "local_validation_bound_to_this_source_revision": true,
+  "local_validation_payload": {
+    "final_head_adjacent_recheck": {
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_radial_incident_seed_eta_dt_audit.py tests/test_nearwall_taper_interface_transport_audit.py tests/test_impact_initialization_compatibility_audit.py tests/test_impact_impulse_projection_audit.py",
+      "duration_seconds": 143.67,
+      "failures": {
+        "test_l1a2r_merged_base_verified_or_fail_closed": "FROZEN_LINEAGE_DRIFT_CONFIRMED (pre-existing; reproduced identically on a pristine worktree at the verified main 09e2993 with this stage absent)",
+        "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION - the frozen L1A-2t preflight asserts the worktree holds no untracked changes outside L1A-2t deliverables and that every commit on top of the verified main touches only L1A-2t paths; that assertion cannot hold on a branch that also carries the L1A-2u stage files. It passed 47/47 when the L1A-2t stage closed (verified again at the final head with the L1A-2u files moved aside: 1 passed), and it is not edited: editing a finished stage to green is forbidden, so the assertion is recorded as superseded rather than fixed."
+      },
+      "not_edited": true,
+      "recorded_at_utc": "2026-10-11T17:27:07Z",
+      "result": "165 passed; 2 failed"
+    },
+    "focused_test_module": {
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_radial_incident_seed_eta_dt_audit.py",
+      "duration_seconds": 49.33,
+      "note": "slowest tests: radial-envelope invariants (module fixture setup 13.2 s), interface-vs-fluid report (11.5 s)",
+      "result": "50 passed; 0 failed"
+    },
+    "frozen_adjacent_suites": {
+      "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+      "closure": "requires an owner-approved lineage-only patch; not part of this stage's physics evidence",
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_impact_initialization_compatibility_audit.py tests/test_impact_impulse_projection_audit.py",
+      "duration_seconds": 72.91,
+      "evidence": "git rev-list --parents -1 09e2993 => 039f6a0d 865317d4; merge-base --is-ancestor 09e2993 HEAD = true; frozen sources phasefield/generate_dataset/cases/timestep_policy are IDENTICAL between 039f6a0d and 09e2993",
+      "failure": "test_l1a2r_merged_base_verified_or_fail_closed",
+      "hidden_as_pass": false,
+      "measured_error": "AuditValidationError: L1A-2s prerequisite/source freeze failed: ['origin_main_is_verified_merge_base']; latest_main=09e2993b8da478d79e768054194201af57121784",
+      "not_edited": true,
+      "result": "69 passed; 1 failed",
+      "root_cause": "the frozen VERIFIED_MAIN_SHAS = {PR21 merge 002120f3..., PR23 merge 039f6a0d...} excludes the PR23 base state at which it was written; the L1A-2s PR was merged INTO PR23's branch before PR22 merged that branch into main"
+    },
+    "l1a2t_suite_recheck": {
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_nearwall_taper_interface_transport_audit.py",
+      "duration_seconds": 49.87,
+      "note": "verified on the re-publication commit fecf7ecd (the audited module revision f8c37489, bound by SHA inside the L1A-2t evidence)",
+      "result": "47 passed; 0 failed"
+    },
+    "not_run": [
+      "hosted CI for this head at payload-recording time (no PR opened)",
+      "T=8 recompute",
+      "L1B data generation",
+      "ML training",
+      "contract 13"
+    ],
+    "quality_gate": {
+      "codespell": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 3)",
+      "command": "export PATH=\"<uv>:$PWD/.venv/bin:$PATH\"; python scripts/quality_debt_gate.py --tool {ruff,format,isort,codespell}",
+      "format": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 27)",
+      "isort": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 28)",
+      "note": "new L1A-2u code adds zero diagnostics; no frozen module reformatted",
+      "ruff": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 171)"
+    },
+    "recorded_at_utc": "2026-10-11T16:57:50Z",
+    "security_checks": {
+      "uv_lock_check": "ENVIRONMENT_BLOCKED - fails downloading the .python-version 3.12 interpreter over the sandbox network (invalid peer certificate: UnknownIssuer); reported as blocked, never as PASS",
+      "uv_pip_check": "PASS - 'Checked 79 packages; all installed packages are compatible'"
+    },
+    "stage": "L1A-2u",
+    "stage_source_sha256": "e005d24f9e3c5f5ccd21fcff5957a523860dfc23918f576a1c87e47738fdc1c3",
+    "stage_version": "l1a2u_v1"
+  },
+  "no_promotion": {
+    "candidate_promoted": false,
+    "contract_13": false,
+    "full_t8_recomputation": false,
+    "l1b_generation": false,
+    "ml_training": false,
+    "production_change": false
+  },
+  "profile": "forensic",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "quality_baseline_untouched": true,
+  "ratchet_expectation": "PASS_BASELINE_ONLY"
+}

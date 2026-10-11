@@ -1,0 +1,424 @@
+{
+  "N": 192,
+  "admissible_window": {
+    "minimum_admissible_delta_dx": 1.445622444152832,
+    "one_stencil_cell_over_dx": 1.0,
+    "rule": "the radial roll-off radius must place the post-stencil velocity support edge at or above the worst-case gate-band edge; the pole clearance of the frozen droplet is 3 dx",
+    "worst_case_gate_band_edge_over_dx": 3.445622444152832
+  },
+  "boundary_probes": {
+    "complex_heldout": {
+      "P_DELTA_1.0": {
+        "accepted_by_the_six_frozen_gates": true,
+        "amplitude_scale": 0.7900493030623696,
+        "core_volume_fraction_inside_support": 1.0,
+        "delta_dx": 1.0,
+        "failing_gates": [],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.5": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 36.316947574428404,
+        "core_volume_fraction_inside_support": 0.9795918367346939,
+        "delta_dx": 2.5,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.75": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 261.5782268394424,
+        "core_volume_fraction_inside_support": 0.9544740973312402,
+        "delta_dx": 2.75,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_3.0": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 12017.714885923007,
+        "core_volume_fraction_inside_support": 0.9246467817896389,
+        "delta_dx": 3.0,
+        "failing_gates": [
+          "central_D",
+          "open_face_FV_divergence"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_4.0": {
+        "core_coverage": 0.8273155416012559,
+        "status": "NO_CORE_MOTION"
+      }
+    },
+    "flat_we100_ct050": {
+      "P_DELTA_1.0": {
+        "accepted_by_the_six_frozen_gates": true,
+        "amplitude_scale": 0.7900493030623696,
+        "core_volume_fraction_inside_support": 1.0,
+        "delta_dx": 1.0,
+        "failing_gates": [],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.5": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 36.316947574428525,
+        "core_volume_fraction_inside_support": 0.9795918367346939,
+        "delta_dx": 2.5,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.75": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 261.5782268394424,
+        "core_volume_fraction_inside_support": 0.9544740973312402,
+        "delta_dx": 2.75,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_3.0": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 12017.714885923007,
+        "core_volume_fraction_inside_support": 0.9246467817896389,
+        "delta_dx": 3.0,
+        "failing_gates": [
+          "central_D",
+          "open_face_FV_divergence"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_4.0": {
+        "core_coverage": 0.8273155416012559,
+        "status": "NO_CORE_MOTION"
+      }
+    },
+    "flat_we200_ct000": {
+      "P_DELTA_1.0": {
+        "accepted_by_the_six_frozen_gates": true,
+        "amplitude_scale": 0.7900493030623696,
+        "core_volume_fraction_inside_support": 1.0,
+        "delta_dx": 1.0,
+        "failing_gates": [],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.5": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 36.316947574428525,
+        "core_volume_fraction_inside_support": 0.9795918367346939,
+        "delta_dx": 2.5,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.75": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 261.5782268394424,
+        "core_volume_fraction_inside_support": 0.9544740973312402,
+        "delta_dx": 2.75,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_3.0": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 12017.714885923007,
+        "core_volume_fraction_inside_support": 0.9246467817896389,
+        "delta_dx": 3.0,
+        "failing_gates": [
+          "central_D",
+          "open_face_FV_divergence"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_4.0": {
+        "core_coverage": 0.8273155416012559,
+        "status": "NO_CORE_MOTION"
+      }
+    },
+    "pillar_training": {
+      "P_DELTA_1.0": {
+        "accepted_by_the_six_frozen_gates": true,
+        "amplitude_scale": 0.7900493030623696,
+        "core_volume_fraction_inside_support": 1.0,
+        "delta_dx": 1.0,
+        "failing_gates": [],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.5": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 36.316947574428525,
+        "core_volume_fraction_inside_support": 0.9795918367346939,
+        "delta_dx": 2.5,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_2.75": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 261.5782268394424,
+        "core_volume_fraction_inside_support": 0.9544740973312402,
+        "delta_dx": 2.75,
+        "failing_gates": [
+          "central_D"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_3.0": {
+        "accepted_by_the_six_frozen_gates": false,
+        "amplitude_scale": 12017.714885923007,
+        "core_volume_fraction_inside_support": 0.9246467817896389,
+        "delta_dx": 3.0,
+        "failing_gates": [
+          "central_D",
+          "open_face_FV_divergence"
+        ],
+        "gate_band_max_speed_over_u_impact": 0.0,
+        "status": "MEASURED"
+      },
+      "P_DELTA_4.0": {
+        "core_coverage": 0.8273155416012559,
+        "status": "NO_CORE_MOTION"
+      }
+    }
+  },
+  "contour_support_inside_gate_band": {
+    "complex_heldout": false,
+    "flat_we100_ct050": true,
+    "flat_we200_ct000": true,
+    "pillar_training": true
+  },
+  "design_window_verdict": "FEASIBLE_WINDOW_EXISTS_ABOVE_THE_GATE_BAND",
+  "gate_band_geometry": {
+    "complex_heldout": {
+      "case_name": "complex_heldout",
+      "gate": {
+        "chi_is_smoothed_solid_indicator": true,
+        "limit": 0.02,
+        "quantity": "max |velocity| over cells with chi >= 0.01, divided by u_impact"
+      },
+      "gate_band_cell_count": 4188,
+      "gate_band_max_sdf_over_dx": 3.445622444152832,
+      "gate_band_sdf_range_over_dx": [
+        -7.5,
+        3.445622444152832
+      ],
+      "nominal_clearance_over_dx": 3.0,
+      "open_cells_min_sdf_over_dx": 3.4481067657470703,
+      "open_cells_with_chi_below_gate": 32676,
+      "per_threshold": {
+        "chi_ge_0.01": {
+          "cell_count": 4188,
+          "max_sdf_over_dx": 3.445622444152832,
+          "open_volume_share": 0.041423635523520734
+        },
+        "chi_ge_0.02": {
+          "cell_count": 4027,
+          "max_sdf_over_dx": 2.8709139823913574,
+          "open_volume_share": 0.0367005728879254
+        },
+        "chi_ge_0.05": {
+          "cell_count": 3690,
+          "max_sdf_over_dx": 2.2052621841430664,
+          "open_volume_share": 0.026814410725219638
+        },
+        "chi_ge_0.1": {
+          "cell_count": 3574,
+          "max_sdf_over_dx": 1.6427220106124878,
+          "open_volume_share": 0.02341145876416958
+        },
+        "chi_ge_0.5": {
+          "cell_count": 2741,
+          "max_sdf_over_dx": -0.1704222708940506,
+          "open_volume_share": 0.00046264071764455923
+        }
+      },
+      "phi05_support_chi": 0.0005123895243741572,
+      "phi05_support_is_inside_gate_band": false,
+      "phi05_support_sdf_over_dx": 5.681934833526611,
+      "phi_ge_0p5_min_sdf_over_dx": 5.681934833526611,
+      "phi_ge_0p9_min_sdf_over_dx": 7.917027473449707
+    },
+    "flat_we100_ct050": {
+      "case_name": "flat_we100_ct050",
+      "gate": {
+        "chi_is_smoothed_solid_indicator": true,
+        "limit": 0.02,
+        "quantity": "max |velocity| over cells with chi >= 0.01, divided by u_impact"
+      },
+      "gate_band_cell_count": 2112,
+      "gate_band_max_sdf_over_dx": 2.5,
+      "gate_band_sdf_range_over_dx": [
+        -7.5,
+        2.5
+      ],
+      "nominal_clearance_over_dx": 3.0,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "open_cells_with_chi_below_gate": 34752,
+      "per_threshold": {
+        "chi_ge_0.01": {
+          "cell_count": 2112,
+          "max_sdf_over_dx": 2.5,
+          "open_volume_share": 0.016304347826086956
+        },
+        "chi_ge_0.02": {
+          "cell_count": 2112,
+          "max_sdf_over_dx": 2.5,
+          "open_volume_share": 0.016304347826086956
+        },
+        "chi_ge_0.05": {
+          "cell_count": 1920,
+          "max_sdf_over_dx": 1.5,
+          "open_volume_share": 0.010869565217391304
+        },
+        "chi_ge_0.1": {
+          "cell_count": 1920,
+          "max_sdf_over_dx": 1.5,
+          "open_volume_share": 0.010869565217391304
+        },
+        "chi_ge_0.5": {
+          "cell_count": 1536,
+          "max_sdf_over_dx": -0.5,
+          "open_volume_share": 0.0
+        }
+      },
+      "phi05_support_chi": 0.03444519639015198,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.5,
+      "phi_ge_0p5_min_sdf_over_dx": 3.5,
+      "phi_ge_0p9_min_sdf_over_dx": 5.5
+    },
+    "flat_we200_ct000": {
+      "case_name": "flat_we200_ct000",
+      "gate": {
+        "chi_is_smoothed_solid_indicator": true,
+        "limit": 0.02,
+        "quantity": "max |velocity| over cells with chi >= 0.01, divided by u_impact"
+      },
+      "gate_band_cell_count": 2112,
+      "gate_band_max_sdf_over_dx": 2.5,
+      "gate_band_sdf_range_over_dx": [
+        -7.5,
+        2.5
+      ],
+      "nominal_clearance_over_dx": 3.0,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "open_cells_with_chi_below_gate": 34752,
+      "per_threshold": {
+        "chi_ge_0.01": {
+          "cell_count": 2112,
+          "max_sdf_over_dx": 2.5,
+          "open_volume_share": 0.016304347826086956
+        },
+        "chi_ge_0.02": {
+          "cell_count": 2112,
+          "max_sdf_over_dx": 2.5,
+          "open_volume_share": 0.016304347826086956
+        },
+        "chi_ge_0.05": {
+          "cell_count": 1920,
+          "max_sdf_over_dx": 1.5,
+          "open_volume_share": 0.010869565217391304
+        },
+        "chi_ge_0.1": {
+          "cell_count": 1920,
+          "max_sdf_over_dx": 1.5,
+          "open_volume_share": 0.010869565217391304
+        },
+        "chi_ge_0.5": {
+          "cell_count": 1536,
+          "max_sdf_over_dx": -0.5,
+          "open_volume_share": 0.0
+        }
+      },
+      "phi05_support_chi": 0.03444519639015198,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.5,
+      "phi_ge_0p5_min_sdf_over_dx": 3.5,
+      "phi_ge_0p9_min_sdf_over_dx": 5.5
+    },
+    "pillar_training": {
+      "case_name": "pillar_training",
+      "gate": {
+        "chi_is_smoothed_solid_indicator": true,
+        "limit": 0.02,
+        "quantity": "max |velocity| over cells with chi >= 0.01, divided by u_impact"
+      },
+      "gate_band_cell_count": 2936,
+      "gate_band_max_sdf_over_dx": 3.1906111240386963,
+      "gate_band_sdf_range_over_dx": [
+        -7.5,
+        3.1906111240386963
+      ],
+      "nominal_clearance_over_dx": 3.0,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "open_cells_with_chi_below_gate": 33928,
+      "per_threshold": {
+        "chi_ge_0.01": {
+          "cell_count": 2936,
+          "max_sdf_over_dx": 3.1906111240386963,
+          "open_volume_share": 0.026077273747539362
+        },
+        "chi_ge_0.02": {
+          "cell_count": 2920,
+          "max_sdf_over_dx": 2.7892651557922363,
+          "open_volume_share": 0.025617984558078167
+        },
+        "chi_ge_0.05": {
+          "cell_count": 2640,
+          "max_sdf_over_dx": 1.838477611541748,
+          "open_volume_share": 0.017580423742507283
+        },
+        "chi_ge_0.1": {
+          "cell_count": 2496,
+          "max_sdf_over_dx": 1.5,
+          "open_volume_share": 0.013446821037356543
+        },
+        "chi_ge_0.5": {
+          "cell_count": 2056,
+          "max_sdf_over_dx": -0.30000001192092896,
+          "open_volume_share": 0.0008819810646144984
+        }
+      },
+      "phi05_support_chi": 0.02659699320793152,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.700000047683716,
+      "phi_ge_0p5_min_sdf_over_dx": 3.700000047683716,
+      "phi_ge_0p9_min_sdf_over_dx": 5.699999809265137
+    }
+  },
+  "profile": "forensic",
+  "structural_finding": {
+    "cases_with_contour_inside_band": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "consequence": "no gate-compliant initializer of this family can place incident momentum at the t=0 contact footprint; incident momentum can only be placed above the band and advected downward",
+    "measured_not_assumed": true,
+    "statement": "every case places the frozen phi=0.5 contour support cell inside the chi >= 0.01 gate band, so the frozen gate caps the initial normal speed *at the contour itself* at 0.02 u_impact"
+  },
+  "verdict": "T0_FEASIBILITY_NO_GO_FOR_T0_CONTACT_MOMENTUM"
+}

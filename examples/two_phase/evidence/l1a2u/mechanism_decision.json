@@ -1,0 +1,279 @@
+{
+  "c2_replay_verdict": "BASELINE_REPLAY_OK",
+  "candidate_outcome": "RADIAL_SEED_DISCRETIZATION_INADMISSIBLE_NO_GAIN_CLAIM",
+  "design_window_verdict": "FEASIBLE_WINDOW_EXISTS_ABOVE_THE_GATE_BAND",
+  "dt_eta_detail": {
+    "all_rows_counts": {
+      "confounded": 3,
+      "residual": 3
+    },
+    "all_rows_verdict_including_inadmissible_seeds": "DT_ETA_CONFOUNDED",
+    "confounded_observables": 3,
+    "excluded_inadmissible_rows": [
+      "flat_we100_ct050/R1_MEDIUM"
+    ],
+    "residual_observables": 1,
+    "rule": "the coupled and the fixed-eta dt trends are compared on the same observables at matched physical times; a material difference (>25% of the larger ratio) marks the observable as confounded by the Brinkman penalty timescale, otherwise as a time-discretization residual; rows from interior-inadmissible seeds that were actually run here are labelled and excluded",
+    "trends": {
+      "flat_we100_ct050/C2_BASE/front_speed_gap_per_time": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.4132121652409765,
+        "fixed_eta_finest_over_coarsest": 0.9974264986723462,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "flat_we100_ct050/C2_BASE/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.5408882565440426,
+        "fixed_eta_finest_over_coarsest": 0.9989946031109016,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "flat_we100_ct050/R1_MEDIUM/front_speed_gap_per_time": {
+        "counted_in_verdict": false,
+        "coupled_finest_over_coarsest": 1.3166654608922639,
+        "fixed_eta_finest_over_coarsest": 1.3516980477686589,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "DISCRETIZATION_INADMISSIBLE"
+      },
+      "flat_we100_ct050/R1_MEDIUM/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": false,
+        "coupled_finest_over_coarsest": 0.0004974035341536461,
+        "fixed_eta_finest_over_coarsest": 0.0005914017606040907,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "DISCRETIZATION_INADMISSIBLE"
+      },
+      "pillar_training/C2_BASE/front_speed_gap_per_time": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.5885413972346846,
+        "fixed_eta_finest_over_coarsest": 0.9905042541546955,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "pillar_training/C2_BASE/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.758490040979795,
+        "fixed_eta_finest_over_coarsest": 0.9998829706238139,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "ADMISSIBLE"
+      }
+    },
+    "verdict": "DT_ETA_CONFOUNDED"
+  },
+  "dt_eta_verdict": "DT_ETA_CONFOUNDED",
+  "evidence_class": "FORENSIC_N192",
+  "frozen_lineage_gate_blocked": true,
+  "initializer_stability_probe": {
+    "N": 192,
+    "candidates": {
+      "C2_BASE": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 4.177637727780233,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 4.212954615390365,
+          "16": 4.19670016061676,
+          "24": 4.187536011177674,
+          "32": 4.177637727780233,
+          "8": 4.205158741115366
+        },
+        "peak_speed_over_u_impact_t0": 4.212954615390365,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      },
+      "R0_WEAK": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 14.763277670149357,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 30.973781858021553,
+          "16": 18.920715665387604,
+          "24": 16.562168227698596,
+          "32": 14.763277670149357,
+          "8": 23.441466902372724
+        },
+        "peak_speed_over_u_impact_t0": 30.973781858021553,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      },
+      "R1_MEDIUM": {
+        "first_nonfinite_macro_step": 20,
+        "macro_steps_run": 20,
+        "peak_speed_over_u_impact_final": null,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 89.76984464265173,
+          "16": 212.62359676904086,
+          "20": null,
+          "8": 68.86716999400755
+        },
+        "peak_speed_over_u_impact_t0": 89.76984464265173,
+        "t_end_probed": 0.04,
+        "verdict": "DIVERGED_WITHIN_PROBE"
+      },
+      "R2_SHARP": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 15.147307147188442,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 36.328378172556846,
+          "16": 20.20205394765551,
+          "24": 16.703085204531412,
+          "32": 15.147307147188442,
+          "8": 26.219329041566613
+        },
+        "peak_speed_over_u_impact_t0": 36.328378172556846,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      }
+    },
+    "case_name": "complex_heldout",
+    "dt": 0.002,
+    "precontact_note": "the probe horizon is far below the earliest measured contact time in this stage, so no contact physics can be touched by it",
+    "precontact_only": true,
+    "profile": "forensic",
+    "t_end_probed": 0.064
+  },
+  "interior_speed_screen": {
+    "admissible_in_every_case": [],
+    "ceiling_over_u_impact": 4.905526491646905,
+    "ceiling_sources": [
+      "complex_heldout/C1_STREAMFUNCTION_V0",
+      "flat_we100_ct050/C1_STREAMFUNCTION_V0",
+      "flat_we200_ct000/C1_STREAMFUNCTION_V0",
+      "pillar_training/C1_STREAMFUNCTION_V0"
+    ],
+    "inadmissible_in_every_case": [
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "measured_not_assumed": true,
+    "rule": "a candidate is admissible only while its peak open-cell seed speed stays within the maximum the frozen reference family (C0/C1/C2) itself produces in the same cases; the ceiling is measured here and is not adjustable, and an inadmissible seed invalidates any flux, approach or event comparison derived from its flow field"
+  },
+  "next_action": {
+    "action": "Re-screen the radial family at t=0 only, with the measured interior-speed ceiling added as a prespecified design constraint and the frozen six gates unchanged, and report whether any member of the prespecified family can hold the incident flux gain while keeping the peak open-cell seed speed inside the frozen reference family range; no trajectory, no event and no refinement claim until that screen passes.",
+    "bounded_scope": "one t=0 screening pass over the prespecified family; no trajectory, no generator, no ML",
+    "chosen_candidate": "R1_MEDIUM",
+    "dt_eta_context": "DT_ETA_CONFOUNDED",
+    "feasibility_context": "T0_FEASIBILITY_NO_GO_FOR_T0_CONTACT_MOMENTUM",
+    "must_not_be_started_in_this_stage": true
+  },
+  "per_case_radial_vs_c2": {
+    "complex_heldout": {
+      "c2_downward_phase_flux_above_band": 0.00016236045468680636,
+      "c2_gate_band_speed_over_u_impact": 0.001058935304172337,
+      "c2_interior_peak_speed_over_u_impact": 4.212954615390365,
+      "c2_mass_weighted_downward_momentum": 0.004674447244161692,
+      "front_speed_c2": -0.0967216694636264,
+      "front_speed_materiality": "more",
+      "front_speed_radial": -0.39778356693723427,
+      "max_approach_c2": 0.5077021450084737,
+      "max_approach_materiality": "more",
+      "max_approach_radial": 8540.23972021145,
+      "momentum_materiality": "more",
+      "phase_flux_materiality": "more",
+      "phase_flux_ratio_radial_over_c2": 6.699809543889172,
+      "radial_downward_phase_flux_above_band": 0.0010877841238608507,
+      "radial_gate_band_speed_over_u_impact": 0.0,
+      "radial_interior_peak_speed_over_u_impact": 89.76984464265173,
+      "radial_mass_weighted_downward_momentum": 0.01314839766598826,
+      "radial_seed_admissibility": "DISCRETIZATION_INADMISSIBLE",
+      "readout_status": "DISCRETIZATION_INADMISSIBLE_READOUT"
+    },
+    "flat_we100_ct050": {
+      "c2_downward_phase_flux_above_band": -0.0002621789001194162,
+      "c2_gate_band_speed_over_u_impact": 0.0,
+      "c2_interior_peak_speed_over_u_impact": 4.315600561416556,
+      "c2_mass_weighted_downward_momentum": -0.005023782638909814,
+      "front_speed_c2": -0.27349236730816395,
+      "front_speed_materiality": "comparable",
+      "front_speed_radial": -0.2505722797551256,
+      "max_approach_c2": 0.059808819974399643,
+      "max_approach_materiality": "more",
+      "max_approach_radial": 0.2195788451826618,
+      "momentum_materiality": "comparable",
+      "phase_flux_materiality": "more",
+      "phase_flux_ratio_radial_over_c2": 1.6048691761055918,
+      "radial_downward_phase_flux_above_band": -0.0004207628354269177,
+      "radial_gate_band_speed_over_u_impact": 0.0,
+      "radial_interior_peak_speed_over_u_impact": 89.76984464265173,
+      "radial_mass_weighted_downward_momentum": -0.004802239065013979,
+      "radial_seed_admissibility": "DISCRETIZATION_INADMISSIBLE",
+      "readout_status": "DISCRETIZATION_INADMISSIBLE_READOUT"
+    },
+    "flat_we200_ct000": {
+      "c2_downward_phase_flux_above_band": -0.0002621789001194162,
+      "c2_gate_band_speed_over_u_impact": 0.0,
+      "c2_interior_peak_speed_over_u_impact": 4.315600561416556,
+      "c2_mass_weighted_downward_momentum": -0.005023782638909814,
+      "front_speed_c2": -0.0937825584685123,
+      "front_speed_materiality": "more",
+      "front_speed_radial": -0.2978185909674323,
+      "max_approach_c2": 0.05984758429666452,
+      "max_approach_materiality": "more",
+      "max_approach_radial": 0.21553716752586655,
+      "momentum_materiality": "comparable",
+      "phase_flux_materiality": "more",
+      "phase_flux_ratio_radial_over_c2": 1.6048691761055918,
+      "radial_downward_phase_flux_above_band": -0.0004207628354269177,
+      "radial_gate_band_speed_over_u_impact": 0.0,
+      "radial_interior_peak_speed_over_u_impact": 89.76984464265173,
+      "radial_mass_weighted_downward_momentum": -0.004802239065013979,
+      "radial_seed_admissibility": "DISCRETIZATION_INADMISSIBLE",
+      "readout_status": "DISCRETIZATION_INADMISSIBLE_READOUT"
+    },
+    "pillar_training": {
+      "c2_downward_phase_flux_above_band": -0.0006012080707726347,
+      "c2_gate_band_speed_over_u_impact": 1.5613006326020695e-05,
+      "c2_interior_peak_speed_over_u_impact": 4.224925143806713,
+      "c2_mass_weighted_downward_momentum": -0.01271688990857536,
+      "front_speed_c2": -0.07907595674266031,
+      "front_speed_materiality": "more",
+      "front_speed_radial": -0.3341970750285487,
+      "max_approach_c2": 0.08832230705263196,
+      "max_approach_materiality": "more",
+      "max_approach_radial": 0.2272803539796604,
+      "momentum_materiality": "more",
+      "phase_flux_materiality": "more",
+      "phase_flux_ratio_radial_over_c2": 3.8719580305182837,
+      "radial_downward_phase_flux_above_band": -0.0023278524176405077,
+      "radial_gate_band_speed_over_u_impact": 0.0,
+      "radial_interior_peak_speed_over_u_impact": 89.76984464265173,
+      "radial_mass_weighted_downward_momentum": -0.056201482889133306,
+      "radial_seed_admissibility": "DISCRETIZATION_INADMISSIBLE",
+      "readout_status": "DISCRETIZATION_INADMISSIBLE_READOUT"
+    }
+  },
+  "physical_verdict_valid": true,
+  "profile": "forensic",
+  "provenance_status": {
+    "l1a2t_commit_shas_verifiable": false,
+    "l1a2t_content_recovered_and_published": true,
+    "l1a2t_remote_provenance_blocked": false,
+    "reason": "the reported stage commits are unrecoverable, so the history is not verifiable; the delivered content is re-published and bound by SHA-256 inside the stage evidence and verified here"
+  },
+  "radial_compatibility": {
+    "candidate_selection_rule": "prespecified median-design candidate R1_MEDIUM is compatible in every case",
+    "cases_compared": 4,
+    "cases_with_inadmissible_readout": [
+      "complex_heldout",
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "cases_with_material_flux_and_approach_gain": 0,
+    "cases_with_valid_readout": 0,
+    "chosen_candidate": "R1_MEDIUM",
+    "compatible_in_every_case": [
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "gain_claim_status": "WITHHELD: the chosen seed is interior-speed inadmissible, so its flux and approach materiality rows are recorded but cannot support a speed-gain claim"
+  },
+  "stage": "L1A-2u",
+  "stage_status": "L1A2U_DIAGNOSTIC_COMPLETE_NO_PROMOTION",
+  "stage_version": "l1a2u_v1",
+  "t0_feasibility_verdict": "T0_FEASIBILITY_NO_GO_FOR_T0_CONTACT_MOMENTUM",
+  "taper_mechanism_verdict": "INTERIOR_SPEED_INADMISSIBLE"
+}

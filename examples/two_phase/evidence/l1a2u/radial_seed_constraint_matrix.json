@@ -1,0 +1,1816 @@
+{
+  "N": 192,
+  "cases": {
+    "complex_heldout": {
+      "candidates": {
+        "C2_BASE": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "note": "the frozen C2 seed is a streamfunction with an SDF wall taper; confinement is reported through the near-wall flux budget and the band matrix instead"
+          },
+          "core_v_phi_ge_0p9": -0.5000000248595142,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 2.086162567138672e-07,
+            "dx_FV_Linf_over_u_impact": 5.513429641723633e-07,
+            "nearwall_chi_speed_over_u_impact": 0.001058935304172337,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 2.6822657228935703e-06,
+                "advective_phase_flux_y": 3.821888789837721e-06,
+                "cell_count": 649,
+                "liquid_mass_weighted_v": 5.7617046093717656e-05,
+                "max_speed_over_u_impact": 0.2715891928243709
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 2.4952375067167815e-05,
+                "advective_phase_flux_y": 1.8150699259012917e-05,
+                "cell_count": 611,
+                "liquid_mass_weighted_v": 0.00038479556707395914,
+                "max_speed_over_u_impact": 0.9198789437511357
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0004161447524330907,
+                "advective_phase_flux_y": 0.0001585385663410109,
+                "cell_count": 900,
+                "liquid_mass_weighted_v": 0.004616830198067975,
+                "max_speed_over_u_impact": 2.9431664830310282
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.0021820582223690812,
+                "advective_phase_flux_y": -6.345407796886718e-05,
+                "cell_count": 1082,
+                "liquid_mass_weighted_v": 0.001644279744332718,
+                "max_speed_over_u_impact": 3.8059116876513253
+              }
+            },
+            "case_name": "complex_heldout",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": 0.00016236045468680636,
+            "gate_band_max_speed_over_u_impact": 0.001058935304172337,
+            "mass_weighted_downward_momentum_above_band": 0.004674447244161692
+          },
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+          "initial_v_hash": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "interior_peak_speed_over_u_impact": 4.212954615390365,
+          "interior_speed_status": "ADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.001058935304172337,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R0_WEAK": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "complex_heldout",
+            "cutcell_advective_flux_support_measure": 0.04177517361111111,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 5.681934833526611,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1500,
+            "psi_support_measure": 0.03748914930555555,
+            "psi_support_min_sdf_over_dx": 7.024541854858398,
+            "velocity_support_measure": 0.04074435763888889,
+            "velocity_support_min_sdf_over_dx": 6.165148735046387
+          },
+          "core_v_phi_ge_0p9": -0.4999999710383534,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 0.0,
+                "cell_count": 649,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 4.7060781164865614e-07,
+                "cell_count": 611,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.00064034133111379,
+                "advective_phase_flux_y": 0.0005805328668670115,
+                "cell_count": 900,
+                "liquid_mass_weighted_v": 0.012087836604503247,
+                "max_speed_over_u_impact": 16.5224388840641
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.0039030592816237486,
+                "advective_phase_flux_y": 0.0004082019617012837,
+                "cell_count": 1082,
+                "liquid_mass_weighted_v": 0.023593164693750918,
+                "max_speed_over_u_impact": 26.584881354849042
+              }
+            },
+            "case_name": "complex_heldout",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": 0.0005805328668670115,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": 0.012087836604503247
+          },
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "4df05bf97da972d6718c357c620bc6f2f8164bac76258778c60084dd9aae54ec",
+          "initial_v_hash": "c387ec92da6d211ce097ee4209fc1c823a363952bf60e4278e65888c9b6a746b",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R1_MEDIUM": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "complex_heldout",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 6.165148735046387,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 7.546830177307129,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 6.604506969451904
+          },
+          "core_v_phi_ge_0p9": -0.49999995593981617,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+            "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 0.0,
+                "cell_count": 649,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 0.0,
+                "cell_count": 611,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0007882888629099978,
+                "advective_phase_flux_y": 0.0010877841238608507,
+                "cell_count": 900,
+                "liquid_mass_weighted_v": 0.01314839766598826,
+                "max_speed_over_u_impact": 40.810129331456345
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.01180130914225501,
+                "advective_phase_flux_y": 0.00221814127895491,
+                "cell_count": 1082,
+                "liquid_mass_weighted_v": 0.09861649029583114,
+                "max_speed_over_u_impact": 68.90059309200143
+              }
+            },
+            "case_name": "complex_heldout",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": 0.0010877841238608507,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": 0.01314839766598826
+          },
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "fa5543976d2dd8d7f2668576e19f0f695c5acb29cb1a24aeb3ff7328133a6c7a",
+          "initial_v_hash": "7963ac1ff87b050b6d8b705ec2a257eb0ab0531602daa3f2748e5c511be8a683",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045697,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.11508601795515314,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R2_SHARP": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "complex_heldout",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 6.165148735046387,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 7.546830177307129,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 6.604506969451904
+          },
+          "core_v_phi_ge_0p9": -0.4999999534806567,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 0.0,
+                "cell_count": 649,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0,
+                "advective_phase_flux_y": 0.0,
+                "cell_count": 611,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 0.0
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0006057737592094719,
+                "advective_phase_flux_y": 0.0005924450802761752,
+                "cell_count": 900,
+                "liquid_mass_weighted_v": 0.012090113004226202,
+                "max_speed_over_u_impact": 18.58938591227953
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.003983315366721577,
+                "advective_phase_flux_y": 0.00041138615674719847,
+                "cell_count": 1082,
+                "liquid_mass_weighted_v": 0.024092805162646547,
+                "max_speed_over_u_impact": 28.955942626707028
+              }
+            },
+            "case_name": "complex_heldout",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": 0.0005924450802761752,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": 0.012090113004226202
+          },
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "e774e06d5914f1fc979d5989aecd48e8d7e6c6f5b26fb99bb6861b32de7546b8",
+          "initial_v_hash": "f40e48a8371a7467232d3808951aba974ccec805eb1c68eebb0f9ef45c54bc4e",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335744,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34209925943406955,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        }
+      },
+      "case_name": "complex_heldout",
+      "compatible_candidates": [
+        "C2_BASE",
+        "R0_WEAK",
+        "R1_MEDIUM",
+        "R2_SHARP"
+      ],
+      "controls": {
+        "C0_UNIFORM": {
+          "core_v_phi_ge_0p9": -0.5,
+          "interior_peak_speed_over_u_impact": 1.0,
+          "nearwall_chi_speed_over_u_impact": 1.0,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        },
+        "C1_STREAMFUNCTION_V0": {
+          "core_v_phi_ge_0p9": -0.49993204607319797,
+          "interior_peak_speed_over_u_impact": 4.905526491646905,
+          "nearwall_chi_speed_over_u_impact": 3.511764194030704,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        }
+      },
+      "verdicts": {
+        "C2_BASE": "COMPATIBLE",
+        "R0_WEAK": "COMPATIBLE",
+        "R1_MEDIUM": "COMPATIBLE",
+        "R2_SHARP": "COMPATIBLE"
+      }
+    },
+    "flat_we100_ct050": {
+      "candidates": {
+        "C2_BASE": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "note": "the frozen C2 seed is a streamfunction with an SDF wall taper; confinement is reported through the near-wall flux budget and the band matrix instead"
+          },
+          "core_v_phi_ge_0p9": -0.5000000077079005,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+            "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 3.3621421936417766e-05,
+                "advective_phase_flux_y": -5.29477566335192e-06,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -1.0441830350371922e-05,
+                "max_speed_over_u_impact": 0.18721919201347678
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0002166298489247715,
+                "advective_phase_flux_y": -3.257341551350491e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.0003155984917721543,
+                "max_speed_over_u_impact": 0.8124918254489735
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0015953410447130875,
+                "advective_phase_flux_y": -0.00025688412445606424,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.005013340808559442,
+                "max_speed_over_u_impact": 2.9571780033483215
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004645787774861297,
+                "advective_phase_flux_y": -0.0013025772142185252,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.03680953695182465,
+                "max_speed_over_u_impact": 3.710363284306354
+              }
+            },
+            "case_name": "flat_we100_ct050",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0002621789001194162,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.005023782638909814
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+          "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "interior_peak_speed_over_u_impact": 4.315600561416556,
+          "interior_speed_status": "ADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R0_WEAK": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we100_ct050",
+            "cutcell_advective_flux_support_measure": 0.04177517361111111,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 3.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1500,
+            "psi_support_measure": 0.03748914930555555,
+            "psi_support_min_sdf_over_dx": 4.5,
+            "velocity_support_measure": 0.04074435763888889,
+            "velocity_support_min_sdf_over_dx": 3.5
+          },
+          "core_v_phi_ge_0p9": -0.4999999710383534,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.00037881561065153575,
+                "advective_phase_flux_y": -2.0688171095352695e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -9.302519344683483e-06,
+                "max_speed_over_u_impact": 3.441205679599005
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0015002474494062294,
+                "advective_phase_flux_y": -7.281804937777123e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.0004117904426469484,
+                "max_speed_over_u_impact": 8.214738461466291
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.004054697269477077,
+                "advective_phase_flux_y": -0.0002461447510294742,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.003492542465216598,
+                "max_speed_over_u_impact": 16.5224388840641
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004928650309166341,
+                "advective_phase_flux_y": -0.000577442664285959,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.01234357185257546,
+                "max_speed_over_u_impact": 26.584881354849042
+              }
+            },
+            "case_name": "flat_we100_ct050",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.00026683292212482685,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.003501844984561282
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "f5a8912de9b3d92589ee06ac94f6d2335ba39190eca32702f75aaaae3304c323",
+          "initial_v_hash": "497a3c5aebd2a0dbbb6ac5263b6623aea636320ac7c068d77be9479fdfd18199",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R1_MEDIUM": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we100_ct050",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.5,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.5
+          },
+          "core_v_phi_ge_0p9": -0.49999995593981617,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+            "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0003333551455630624,
+                "advective_phase_flux_y": -1.579579586234944e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 3.8250229358673096
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0026039604212758213,
+                "advective_phase_flux_y": -8.87533641842147e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.00023888261707202363,
+                "max_speed_over_u_impact": 17.345363580891846
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.01084514265350539,
+                "advective_phase_flux_y": -0.0004049670395645682,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.004802239065013977,
+                "max_speed_over_u_impact": 43.02621947748312
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.015033978457018395,
+                "advective_phase_flux_y": -0.0010895360046571183,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.022236845790410097,
+                "max_speed_over_u_impact": 68.90059309200143
+              }
+            },
+            "case_name": "flat_we100_ct050",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0004207628354269177,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.004802239065013979
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+          "initial_v_hash": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045698,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.1150860179551531,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R2_SHARP": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we100_ct050",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.5,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.5
+          },
+          "core_v_phi_ge_0p9": -0.4999999534806567,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0003622359610122816,
+                "advective_phase_flux_y": -1.8469192169545294e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 4.18973445892334
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0015045639096057909,
+                "advective_phase_flux_y": -6.686098359583459e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.00030668689702086646,
+                "max_speed_over_u_impact": 9.408438542597105
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.00408039744093585,
+                "advective_phase_flux_y": -0.00023404407271174844,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.0031640336304466243,
+                "max_speed_over_u_impact": 18.58938591227953
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004992929467127346,
+                "advective_phase_flux_y": -0.000576822750566094,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.01213625895313845,
+                "max_speed_over_u_impact": 28.955942626707028
+              }
+            },
+            "case_name": "flat_we100_ct050",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0002525132648812939,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.003164033630446624
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "8b8b0d88e8e7c66ed6d3c4e0927539335ebecfd3f8d8cfbefc13147d10ab5a58",
+          "initial_v_hash": "827163f081288d64e282cf040129d7ed01ea5f49121e369f8993ce95103ea995",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335742,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.3420992594340696,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        }
+      },
+      "case_name": "flat_we100_ct050",
+      "compatible_candidates": [
+        "C2_BASE",
+        "R0_WEAK",
+        "R1_MEDIUM",
+        "R2_SHARP"
+      ],
+      "controls": {
+        "C0_UNIFORM": {
+          "core_v_phi_ge_0p9": -0.5,
+          "interior_peak_speed_over_u_impact": 1.0,
+          "nearwall_chi_speed_over_u_impact": 1.0,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        },
+        "C1_STREAMFUNCTION_V0": {
+          "core_v_phi_ge_0p9": -0.49993204607319797,
+          "interior_peak_speed_over_u_impact": 4.905526491646905,
+          "nearwall_chi_speed_over_u_impact": 3.7953523723138245,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        }
+      },
+      "verdicts": {
+        "C2_BASE": "COMPATIBLE",
+        "R0_WEAK": "COMPATIBLE",
+        "R1_MEDIUM": "COMPATIBLE",
+        "R2_SHARP": "COMPATIBLE"
+      }
+    },
+    "flat_we200_ct000": {
+      "candidates": {
+        "C2_BASE": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "note": "the frozen C2 seed is a streamfunction with an SDF wall taper; confinement is reported through the near-wall flux budget and the band matrix instead"
+          },
+          "core_v_phi_ge_0p9": -0.5000000077079005,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+            "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 3.3621421936417766e-05,
+                "advective_phase_flux_y": -5.29477566335192e-06,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -1.0441830350371922e-05,
+                "max_speed_over_u_impact": 0.18721919201347678
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0002166298489247715,
+                "advective_phase_flux_y": -3.257341551350491e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.0003155984917721543,
+                "max_speed_over_u_impact": 0.8124918254489735
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0015953410447130875,
+                "advective_phase_flux_y": -0.00025688412445606424,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.005013340808559442,
+                "max_speed_over_u_impact": 2.9571780033483215
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004645787774861297,
+                "advective_phase_flux_y": -0.0013025772142185252,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.03680953695182465,
+                "max_speed_over_u_impact": 3.710363284306354
+              }
+            },
+            "case_name": "flat_we200_ct000",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0002621789001194162,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.005023782638909814
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+          "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "interior_peak_speed_over_u_impact": 4.315600561416556,
+          "interior_speed_status": "ADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R0_WEAK": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we200_ct000",
+            "cutcell_advective_flux_support_measure": 0.04177517361111111,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 3.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1500,
+            "psi_support_measure": 0.03748914930555555,
+            "psi_support_min_sdf_over_dx": 4.5,
+            "velocity_support_measure": 0.04074435763888889,
+            "velocity_support_min_sdf_over_dx": 3.5
+          },
+          "core_v_phi_ge_0p9": -0.4999999710383534,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.00037881561065153575,
+                "advective_phase_flux_y": -2.0688171095352695e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -9.302519344683483e-06,
+                "max_speed_over_u_impact": 3.441205679599005
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0015002474494062294,
+                "advective_phase_flux_y": -7.281804937777123e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.0004117904426469484,
+                "max_speed_over_u_impact": 8.214738461466291
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.004054697269477077,
+                "advective_phase_flux_y": -0.0002461447510294742,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.003492542465216598,
+                "max_speed_over_u_impact": 16.5224388840641
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004928650309166341,
+                "advective_phase_flux_y": -0.000577442664285959,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.01234357185257546,
+                "max_speed_over_u_impact": 26.584881354849042
+              }
+            },
+            "case_name": "flat_we200_ct000",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.00026683292212482685,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.003501844984561282
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "f5a8912de9b3d92589ee06ac94f6d2335ba39190eca32702f75aaaae3304c323",
+          "initial_v_hash": "497a3c5aebd2a0dbbb6ac5263b6623aea636320ac7c068d77be9479fdfd18199",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R1_MEDIUM": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we200_ct000",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.5,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.5
+          },
+          "core_v_phi_ge_0p9": -0.49999995593981617,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+            "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0003333551455630624,
+                "advective_phase_flux_y": -1.579579586234944e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 3.8250229358673096
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0026039604212758213,
+                "advective_phase_flux_y": -8.87533641842147e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.00023888261707202363,
+                "max_speed_over_u_impact": 17.345363580891846
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.01084514265350539,
+                "advective_phase_flux_y": -0.0004049670395645682,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.004802239065013977,
+                "max_speed_over_u_impact": 43.02621947748312
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.015033978457018395,
+                "advective_phase_flux_y": -0.0010895360046571183,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.022236845790410097,
+                "max_speed_over_u_impact": 68.90059309200143
+              }
+            },
+            "case_name": "flat_we200_ct000",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0004207628354269177,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.004802239065013979
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+          "initial_v_hash": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045698,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.1150860179551531,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R2_SHARP": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "flat_we200_ct000",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.5,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.5,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.5
+          },
+          "core_v_phi_ge_0p9": -0.4999999534806567,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0003622359610122816,
+                "advective_phase_flux_y": -1.8469192169545294e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 4.18973445892334
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.0015045639096057909,
+                "advective_phase_flux_y": -6.686098359583459e-05,
+                "cell_count": 384,
+                "liquid_mass_weighted_v": -0.00030668689702086646,
+                "max_speed_over_u_impact": 9.408438542597105
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.00408039744093585,
+                "advective_phase_flux_y": -0.00023404407271174844,
+                "cell_count": 576,
+                "liquid_mass_weighted_v": -0.0031640336304466243,
+                "max_speed_over_u_impact": 18.58938591227953
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.004992929467127346,
+                "advective_phase_flux_y": -0.000576822750566094,
+                "cell_count": 768,
+                "liquid_mass_weighted_v": -0.01213625895313845,
+                "max_speed_over_u_impact": 28.955942626707028
+              }
+            },
+            "case_name": "flat_we200_ct000",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0002525132648812939,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.003164033630446624
+          },
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "8b8b0d88e8e7c66ed6d3c4e0927539335ebecfd3f8d8cfbefc13147d10ab5a58",
+          "initial_v_hash": "827163f081288d64e282cf040129d7ed01ea5f49121e369f8993ce95103ea995",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335742,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.3420992594340696,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        }
+      },
+      "case_name": "flat_we200_ct000",
+      "compatible_candidates": [
+        "C2_BASE",
+        "R0_WEAK",
+        "R1_MEDIUM",
+        "R2_SHARP"
+      ],
+      "controls": {
+        "C0_UNIFORM": {
+          "core_v_phi_ge_0p9": -0.5,
+          "interior_peak_speed_over_u_impact": 1.0,
+          "nearwall_chi_speed_over_u_impact": 1.0,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        },
+        "C1_STREAMFUNCTION_V0": {
+          "core_v_phi_ge_0p9": -0.49993204607319797,
+          "interior_peak_speed_over_u_impact": 4.905526491646905,
+          "nearwall_chi_speed_over_u_impact": 3.7953523723138245,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        }
+      },
+      "verdicts": {
+        "C2_BASE": "COMPATIBLE",
+        "R0_WEAK": "COMPATIBLE",
+        "R1_MEDIUM": "COMPATIBLE",
+        "R2_SHARP": "COMPATIBLE"
+      }
+    },
+    "pillar_training": {
+      "candidates": {
+        "C2_BASE": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "note": "the frozen C2 seed is a streamfunction with an SDF wall taper; confinement is reported through the near-wall flux budget and the band matrix instead"
+          },
+          "core_v_phi_ge_0p9": -0.4999999831981805,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+            "nearwall_chi_speed_over_u_impact": 1.5613006326020695e-05,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 2.9641320965354226e-05,
+                "advective_phase_flux_y": -2.2611622254829028e-05,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -0.00018555293040586982,
+                "max_speed_over_u_impact": 0.321694564078728
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.00015678147233064713,
+                "advective_phase_flux_y": -0.0001133857383895101,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -0.0016409878466465768,
+                "max_speed_over_u_impact": 0.9557370943883582
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0008845748472580508,
+                "advective_phase_flux_y": -0.000578596292954888,
+                "cell_count": 800,
+                "liquid_mass_weighted_v": -0.012531336978169489,
+                "max_speed_over_u_impact": 2.577659156663401
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.0028761694280209074,
+                "advective_phase_flux_y": -0.00205910930882606,
+                "cell_count": 1032,
+                "liquid_mass_weighted_v": -0.061908468538035125,
+                "max_speed_over_u_impact": 3.1725904230003357
+              }
+            },
+            "case_name": "pillar_training",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0006012080707726347,
+            "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+            "mass_weighted_downward_momentum_above_band": -0.01271688990857536
+          },
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+          "initial_v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "interior_peak_speed_over_u_impact": 4.224925143806713,
+          "interior_speed_status": "ADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 1.5613006326020695e-05,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R0_WEAK": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "pillar_training",
+            "cutcell_advective_flux_support_measure": 0.04177517361111111,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 3.700000047683716,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1500,
+            "psi_support_measure": 0.03748914930555555,
+            "psi_support_min_sdf_over_dx": 4.699999809265137,
+            "velocity_support_measure": 0.04074435763888889,
+            "velocity_support_min_sdf_over_dx": 3.700000047683716
+          },
+          "core_v_phi_ge_0p9": -0.4999999710383534,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.0003747369498218918,
+                "advective_phase_flux_y": -2.7846179338070707e-05,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -9.302519344683483e-06,
+                "max_speed_over_u_impact": 3.441205679599005
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.001280263473107416,
+                "advective_phase_flux_y": -0.00024222222308308567,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -0.0009879181346359287,
+                "max_speed_over_u_impact": 8.214738461466291
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.00242418172964893,
+                "advective_phase_flux_y": -0.001013677644082956,
+                "cell_count": 800,
+                "liquid_mass_weighted_v": -0.02325416094994645,
+                "max_speed_over_u_impact": 12.717246903846135
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.00332497789250438,
+                "advective_phase_flux_y": -0.0019426507178997823,
+                "cell_count": 1032,
+                "liquid_mass_weighted_v": -0.05748832164478287,
+                "max_speed_over_u_impact": 20.677697494840984
+              }
+            },
+            "case_name": "pillar_training",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0010415238234210266,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.02326346346929114
+          },
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "b63cd56d65163440fdd46061b1e6abf0145d5cef2a59193a13c5802ee41b6366",
+          "initial_v_hash": "0aa88039e4f5a1bf0ea35f02a6fa2b28901dd396a770ebd4e810a0e9ce0bcab6",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R1_MEDIUM": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "pillar_training",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.699999809265137,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.699999809265137,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.699999809265137
+          },
+          "core_v_phi_ge_0p9": -0.49999995593981617,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+            "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.00033335514556306233,
+                "advective_phase_flux_y": -1.5795795862349446e-05,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 3.8250229358673096
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.002453975588677409,
+                "advective_phase_flux_y": -0.0002728274073995166,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -0.00023888261707202384,
+                "max_speed_over_u_impact": 17.345363580891846
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.007142948507868514,
+                "advective_phase_flux_y": -0.0023120566217781583,
+                "cell_count": 800,
+                "liquid_mass_weighted_v": -0.056201482889133306,
+                "max_speed_over_u_impact": 30.654592320151767
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.010095008175924788,
+                "advective_phase_flux_y": -0.004981897051766216,
+                "cell_count": 1032,
+                "liquid_mass_weighted_v": -0.13832285779871117,
+                "max_speed_over_u_impact": 60.495291720345975
+              }
+            },
+            "case_name": "pillar_training",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0023278524176405077,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.056201482889133306
+          },
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "766b21403f314fba2aa0e6be854f9c650f4d446d400e5a9c98b5f82767f6f456",
+          "initial_v_hash": "fc1d62076e27916a5368d42fc60bce32c4eb8bcad88ea980550574cdc6979464",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.3445764210457005,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.11508601795515304,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        },
+        "R2_SHARP": {
+          "acceptance_checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "confinement": {
+            "case_name": "pillar_training",
+            "cutcell_advective_flux_support_measure": 0.039252387152777776,
+            "cutcell_advective_flux_support_min_sdf_over_dx": 4.699999809265137,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "interpretation": "psi support, post-differentiation velocity support and cut-cell open-face flux support are reported separately because each widens the previous one by one stencil",
+            "open_face_flux_cells_below_gate_band_edge": 0,
+            "open_volume_advancing_cells": 1412,
+            "psi_support_measure": 0.03515625,
+            "psi_support_min_sdf_over_dx": 5.699999809265137,
+            "velocity_support_measure": 0.03830295138888889,
+            "velocity_support_min_sdf_over_dx": 4.699999809265137
+          },
+          "core_v_phi_ge_0p9": -0.4999999534806567,
+          "deep_solid_speed_over_u_impact": 0.0,
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+            "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "failing_gates": [],
+          "flux_budget": {
+            "bands": {
+              "3_5dx": {
+                "advective_phase_flux_x_abs": 0.00036223596101228167,
+                "advective_phase_flux_y": -1.8469192169545294e-05,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": 0.0,
+                "max_speed_over_u_impact": 4.18973445892334
+              },
+              "4_6dx": {
+                "advective_phase_flux_x_abs": 0.001321036783756565,
+                "advective_phase_flux_y": -0.00025428818486598307,
+                "cell_count": 568,
+                "liquid_mass_weighted_v": -0.00030668689702086603,
+                "max_speed_over_u_impact": 9.408438542597105
+              },
+              "5_8dx": {
+                "advective_phase_flux_x_abs": 0.0024299492836780943,
+                "advective_phase_flux_y": -0.0010133095612148285,
+                "cell_count": 800,
+                "liquid_mass_weighted_v": -0.0212672143927699,
+                "max_speed_over_u_impact": 14.279627627153022
+              },
+              "8_12dx": {
+                "advective_phase_flux_x_abs": 0.0033513830506594596,
+                "advective_phase_flux_y": -0.0019529053966845216,
+                "cell_count": 1032,
+                "liquid_mass_weighted_v": -0.06015316624324537,
+                "max_speed_over_u_impact": 22.723686183424938
+              }
+            },
+            "case_name": "pillar_training",
+            "definition": "A_f * u_n,f * phi_upwind,f on shared cut-cell faces, V_i weighted; conservative by construction",
+            "downward_phase_flux_above_band": -0.0010317787533843737,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "mass_weighted_downward_momentum_above_band": -0.0212672143927699
+          },
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "23f8c25227291837467d965d3c5519f585de13c03da44d675faa3061ece3e517",
+          "initial_v_hash": "f6812651361db4c6c4348259cb1dfb73d060528a61e07d0641368e2fb4419f47",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.461564111033574,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34209925943406966,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "interior_speed_status": "DISCRETIZATION_INADMISSIBLE",
+          "nearwall_chi_speed_over_u_impact": 0.0,
+          "normalization_well_conditioned": true,
+          "status": "COMPATIBLE",
+          "wall_normal_sample_over_u_impact": 0.0
+        }
+      },
+      "case_name": "pillar_training",
+      "compatible_candidates": [
+        "C2_BASE",
+        "R0_WEAK",
+        "R1_MEDIUM",
+        "R2_SHARP"
+      ],
+      "controls": {
+        "C0_UNIFORM": {
+          "core_v_phi_ge_0p9": -0.5,
+          "interior_peak_speed_over_u_impact": 1.0,
+          "nearwall_chi_speed_over_u_impact": 1.0,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        },
+        "C1_STREAMFUNCTION_V0": {
+          "core_v_phi_ge_0p9": -0.49993204607319797,
+          "interior_peak_speed_over_u_impact": 4.905526491646905,
+          "nearwall_chi_speed_over_u_impact": 1.195364589588302,
+          "role": "replay control only; never promoted",
+          "status": "INITIALIZER_INCOMPATIBLE_CASE"
+        }
+      },
+      "verdicts": {
+        "C2_BASE": "COMPATIBLE",
+        "R0_WEAK": "COMPATIBLE",
+        "R1_MEDIUM": "COMPATIBLE",
+        "R2_SHARP": "COMPATIBLE"
+      }
+    }
+  },
+  "compatible_in_every_case": [
+    "R0_WEAK",
+    "R1_MEDIUM",
+    "R2_SHARP"
+  ],
+  "controls_promoted": false,
+  "frozen_gates": {
+    "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+    "core_mean_speed_relative_error_max": 0.01,
+    "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+    "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+    "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+    "open_face_FV_dimensionless_Linf_max": 0.01,
+    "region_definitions": {
+      "core_mean": "V_i-weighted mean over phi >= 0.9",
+      "deep_solid": "sdf < -2*dx",
+      "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+      "nearwall_chi": "chi >= 0.01",
+      "nearwall_sdf": "abs(sdf) <= 3*dx",
+      "partial_cells": "0 < V_i < dx*dy",
+      "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+    }
+  },
+  "gate_check_to_limit": {
+    "central_D": "central_D_dimensionless_Linf_max",
+    "core_target": "core_mean_speed_relative_error_max",
+    "deep_solid_velocity": "deep_solid_speed_over_u_impact_max",
+    "embedded_wall_normal_velocity": "embedded_wall_bilinear_normal_speed_over_u_impact_max",
+    "nearwall_chi_velocity": "nearwall_chi_ge_0p01_speed_over_u_impact_max",
+    "open_face_FV_divergence": "open_face_FV_dimensionless_Linf_max"
+  },
+  "gate_source": "inherited verbatim from production.impact_initialization_compatibility_audit.INITIAL_ACCEPTANCE",
+  "initializer_stability_probe": {
+    "N": 192,
+    "candidates": {
+      "C2_BASE": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 4.177637727780233,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 4.212954615390365,
+          "16": 4.19670016061676,
+          "24": 4.187536011177674,
+          "32": 4.177637727780233,
+          "8": 4.205158741115366
+        },
+        "peak_speed_over_u_impact_t0": 4.212954615390365,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      },
+      "R0_WEAK": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 14.763277670149357,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 30.973781858021553,
+          "16": 18.920715665387604,
+          "24": 16.562168227698596,
+          "32": 14.763277670149357,
+          "8": 23.441466902372724
+        },
+        "peak_speed_over_u_impact_t0": 30.973781858021553,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      },
+      "R1_MEDIUM": {
+        "first_nonfinite_macro_step": 20,
+        "macro_steps_run": 20,
+        "peak_speed_over_u_impact_final": null,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 89.76984464265173,
+          "16": 212.62359676904086,
+          "20": null,
+          "8": 68.86716999400755
+        },
+        "peak_speed_over_u_impact_t0": 89.76984464265173,
+        "t_end_probed": 0.04,
+        "verdict": "DIVERGED_WITHIN_PROBE"
+      },
+      "R2_SHARP": {
+        "first_nonfinite_macro_step": null,
+        "macro_steps_run": 32,
+        "peak_speed_over_u_impact_final": 15.147307147188442,
+        "peak_speed_over_u_impact_series_sampled": {
+          "0": 36.328378172556846,
+          "16": 20.20205394765551,
+          "24": 16.703085204531412,
+          "32": 15.147307147188442,
+          "8": 26.219329041566613
+        },
+        "peak_speed_over_u_impact_t0": 36.328378172556846,
+        "t_end_probed": 0.064,
+        "verdict": "STABLE_WITHIN_PROBE"
+      }
+    },
+    "case_name": "complex_heldout",
+    "dt": 0.002,
+    "precontact_note": "the probe horizon is far below the earliest measured contact time in this stage, so no contact physics can be touched by it",
+    "precontact_only": true,
+    "profile": "forensic",
+    "t_end_probed": 0.064
+  },
+  "interior_speed_screen": {
+    "admissible_in_every_case": [],
+    "ceiling_over_u_impact": 4.905526491646905,
+    "ceiling_sources": [
+      "complex_heldout/C1_STREAMFUNCTION_V0",
+      "flat_we100_ct050/C1_STREAMFUNCTION_V0",
+      "flat_we200_ct000/C1_STREAMFUNCTION_V0",
+      "pillar_training/C1_STREAMFUNCTION_V0"
+    ],
+    "inadmissible_in_every_case": [
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "measured_not_assumed": true,
+    "per_case": {
+      "complex_heldout": {
+        "C2_BASE": {
+          "interior_peak_speed_over_u_impact": 4.212954615390365,
+          "status": "ADMISSIBLE"
+        },
+        "R0_WEAK": {
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R1_MEDIUM": {
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R2_SHARP": {
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        }
+      },
+      "flat_we100_ct050": {
+        "C2_BASE": {
+          "interior_peak_speed_over_u_impact": 4.315600561416556,
+          "status": "ADMISSIBLE"
+        },
+        "R0_WEAK": {
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R1_MEDIUM": {
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R2_SHARP": {
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        }
+      },
+      "flat_we200_ct000": {
+        "C2_BASE": {
+          "interior_peak_speed_over_u_impact": 4.315600561416556,
+          "status": "ADMISSIBLE"
+        },
+        "R0_WEAK": {
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R1_MEDIUM": {
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R2_SHARP": {
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        }
+      },
+      "pillar_training": {
+        "C2_BASE": {
+          "interior_peak_speed_over_u_impact": 4.224925143806713,
+          "status": "ADMISSIBLE"
+        },
+        "R0_WEAK": {
+          "interior_peak_speed_over_u_impact": 30.973781858021553,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R1_MEDIUM": {
+          "interior_peak_speed_over_u_impact": 89.76984464265173,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        },
+        "R2_SHARP": {
+          "interior_peak_speed_over_u_impact": 36.328378172556846,
+          "status": "DISCRETIZATION_INADMISSIBLE"
+        }
+      }
+    },
+    "rule": "a candidate is admissible only while its peak open-cell seed speed stays within the maximum the frozen reference family (C0/C1/C2) itself produces in the same cases; the ceiling is measured here and is not adjustable, and an inadmissible seed invalidates any flux, approach or event comparison derived from its flow field",
+    "screened_candidate_keys": [
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ]
+  },
+  "profile": "forensic"
+}
