@@ -6,11 +6,11 @@
     "dt_eta_factorial_matrix.json": "4443f508f57bda73557f6a71e832e3be7ae3398410a65a1d0921b33e47e1cd8f",
     "failure_and_adversarial_tests.json": "047c2d5affa8703fbfbdf60f2fb34cc9a01a695b60360648a66e6fcd24d82677",
     "interface_vs_fluid_velocity.json": "9ff0444c8f5a69df71b06808f2bb825453012e41753e508d750aed5719e9c1dd",
-    "l1a2u_final_report.md": "7bde1e57557fafff3bfdfed95d4015dd499c90bc14cecaa65864eb73a92ac13a",
+    "l1a2u_final_report.md": "e1ff8f8f3337363ef1d84b8b8ad0f05b89d4b87f1e8cd118f97fc6a2354d9414",
     "mechanism_decision.json": "daf2d49e678a9da89c5ab26dc455626b2fda728b46b72516d5d3a25d12a7b1cb",
     "nearwall_and_flux_budget.json": "ab0678b3e7831547b4c89955436490eaf09f127ce4804505cb50e39479676872",
     "preflight.json": "0c2eef169ae9c7fb82b0c748734d8dfce0e3aa13a3aeb655327f053e793004ba",
-    "quality_and_ci.json": "4cf837e248bdbc4e7da4160dc53b0d89fbe212d4efcab797b4e734df33372250",
+    "quality_and_ci.json": "6abd6218b5adcbb99521dcda184fb10b6ef07ee96af3eff2efc6a6d7f576f872",
     "radial_seed_constraint_matrix.json": "1b2d3f67fa8a33b7b45f83bbd7f25bc99c12ed9d28fc9439b32cdae800a27f4c",
     "source_and_provenance.json": "af23f3919c6df0092e7252901eb8b36a16a08e77357b9db7b48e9ef75dc8024d",
     "t0_feasibility_matrix.json": "fa9b9324b91be59bc75a1607f5d5d2e8937561410612868d2624b67fe855be28"
@@ -30,6 +30,14 @@
     "quality_and_blocker_matrix.json": "7849920e5b58932d6dc011c6e085a9eff5f7c712b759eda2372b8370e642f507",
     "taper_candidate_design_contract.json": "cffe6b6a32b53d6a97f5a94c6d7ee5b12f98d77c52f06ea9ce881ae30dc09ed5",
     "temporal_sensitivity_matrix.json": "825ddcfeb4a5654c74dc6f0a60973d05a620fecfd74e1e0b27e5917668543bd2"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "cfc3f5266796eccec7f6af6e6c6c066bc4169081",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "previous_status": "NOT_RUN",
+    "reason": "hosted CI is only observable after the head is pushed",
+    "recorded_status": "success"
   },
   "l1a2t_missing_commits": [
     "c52f049",

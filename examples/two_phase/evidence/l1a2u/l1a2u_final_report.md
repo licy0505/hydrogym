@@ -219,7 +219,7 @@
 - quality baseline `52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b`, declared new diagnostics 0, ratchet expectation `PASS_BASELINE_ONLY`
 - local validation bound to this revision: True
 - local validation payload: {"final_head_adjacent_recheck": {"command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_radial_incident_seed_eta_dt_audit.py tests/test_nearwall_taper_interface_transport_audit.py tests/test_impact_initialization_compatibility_audit.py tests/test_impact_impulse_projection_audit.py", "duration_seconds": 143.67, "failures": {"test_l1a2r_merged_base_verified_or_fail_closed": "FROZEN_LINEAGE_DRIFT_CONFIRMED (pre-existing; reproduced identically on a pristine worktree at the verified main 09e2993 with this stage absent)", "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION - the frozen L1A-2t preflight asserts the worktree holds no untracked changes outside L1A-2t deliverables and that every commit on top of the verified main touches only L1A-2t paths; that assertion ca
-- hosted CI for this head: `NOT_RUN`
+- hosted CI for this head: `success` (observed after push)
 - base main CI (run 38120327651, head 865317d4):success 8/8 - engineering CI of the verified main this branch is based on; not evidence forthis head
 
 ## N. Exactly one next action

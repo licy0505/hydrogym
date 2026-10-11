@@ -25,9 +25,12 @@
       "jobs": "8/8",
       "run_id": 38120327651
     },
-    "reported_at": "assembly time",
+    "observed_head_sha": "cfc3f5266796eccec7f6af6e6c6c066bc4169081",
+    "previous_recorded_status": "NOT_RUN",
+    "reported_at": "observed after the head was pushed",
+    "resealed_after_push": true,
     "rule": "no hosted result is claimed for a head that was not pushed and observed",
-    "status_for_this_head": "NOT_RUN"
+    "status_for_this_head": "success"
   },
   "inherited_statuses": {
     "DIRECT_FIELD_LABELS": "UNMEASURED",
