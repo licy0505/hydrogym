@@ -1,0 +1,910 @@
+{
+  "diagnostic_only": true,
+  "field_errors": {
+    "flat_we100_ct050": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "t_0.00": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.196564783032526,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19754878031916898,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.1460268706741685,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14844648450023362,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.22195264917743737,
+              "reference_L2_rms": 0.22195264917743737,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2238294109920462,
+              "reference_L2_rms": 0.2238294109920462,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          }
+        },
+        "t_0.08": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.00023807600308051947,
+              "Linf": 0.0068705081939697266,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19541757705678287,
+              "relative_L2_with_physical_floor": 0.00023807600308051947,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.00023807600308051947,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0002621068178564731,
+              "Linf": 0.007885870119231642,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19635471212660316,
+              "relative_L2_with_physical_floor": 0.0002621068178564731,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0023544200159581015,
+              "Linf": 0.040771484375,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14214077324860466,
+              "relative_L2_with_physical_floor": 0.011772100079790506,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0023544200159581015,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.002458805544464193,
+              "Linf": 0.04829930514097214,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14385904251890574,
+              "relative_L2_with_physical_floor": 0.012294027722320964,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0019213949691805378,
+              "Linf": 0.0352783203125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.21548708981647618,
+              "reference_L2_rms": 0.21548708981647618,
+              "relative_L2_with_physical_floor": 0.008916520107153202,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0019213949691805378,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0019476347510801108,
+              "Linf": 0.03855478763580322,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.21724461447660748,
+              "reference_L2_rms": 0.21724461447660748,
+              "relative_L2_with_physical_floor": 0.008965169312815479,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          }
+        },
+        "t_0.16": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0010220179155656067,
+              "Linf": 0.025278985500335693,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19456110717121203,
+              "relative_L2_with_physical_floor": 0.0010220179155656067,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0010220179155656067,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0011414983983518453,
+              "Linf": 0.0335484426656934,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19549612271497707,
+              "relative_L2_with_physical_floor": 0.0011414983983518453,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.005460884922997093,
+              "Linf": 0.097412109375,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14147601418925826,
+              "relative_L2_with_physical_floor": 0.027304424614985463,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.005460884922997093,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.005724651655150093,
+              "Linf": 0.11340351402759552,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14302482082953322,
+              "relative_L2_with_physical_floor": 0.028623258275750463,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.004095541664897015,
+              "Linf": 0.07470703125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2082754917963081,
+              "reference_L2_rms": 0.2082754917963081,
+              "relative_L2_with_physical_floor": 0.019664059508751153,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.004095541664897015,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.004164123000379315,
+              "Linf": 0.07909634709358215,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2099509900653902,
+              "reference_L2_rms": 0.2099509900653902,
+              "relative_L2_with_physical_floor": 0.01983378596634567,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          }
+        },
+        "t_0.24": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0022489922913049615,
+              "Linf": 0.05061608552932739,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19379437542014352,
+              "relative_L2_with_physical_floor": 0.0022489922913049615,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0022489922913049615,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0025905481104918724,
+              "Linf": 0.08094658915441516,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19475659892338323,
+              "relative_L2_with_physical_floor": 0.0025905481104918724,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.00789862878695867,
+              "Linf": 0.1402587890625,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14170386902586155,
+              "relative_L2_with_physical_floor": 0.03949314393479335,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.00789862878695867,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.00833045017783909,
+              "Linf": 0.1612851321697235,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14320325549058438,
+              "relative_L2_with_physical_floor": 0.04165225088919545,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.005850413849775869,
+              "Linf": 0.10302734375,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.20065107709796856,
+              "reference_L2_rms": 0.20065107709796856,
+              "relative_L2_with_physical_floor": 0.029157151481022874,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.005850413849775869,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0059498954791858474,
+              "Linf": 0.10897290706634521,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.20224933067850143,
+              "reference_L2_rms": 0.20224933067850143,
+              "relative_L2_with_physical_floor": 0.029418616413835707,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          }
+        }
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "t_0.00": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.196564783032526,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19754878031916898,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.145107761483955,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14927226338342986,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.25011984336458215,
+              "reference_L2_rms": 0.25011984336458215,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2572612511148328,
+              "reference_L2_rms": 0.2572612511148328,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          }
+        },
+        "t_0.08": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0026581552143361007,
+              "Linf": 0.04637289047241211,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19579190446443062,
+              "relative_L2_with_physical_floor": 0.0026581552143361007,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0026581552143361007,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0029268629673006663,
+              "Linf": 0.06837508452743124,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19675391775809487,
+              "relative_L2_with_physical_floor": 0.0029268629673006663,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.012367988937025214,
+              "Linf": 0.23828125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.11119887350216279,
+              "relative_L2_with_physical_floor": 0.06183994468512607,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.012367988937025214,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.012922949965541164,
+              "Linf": 0.28008098900318146,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.11269509407067246,
+              "relative_L2_with_physical_floor": 0.06461474982770582,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.010450897185085932,
+              "Linf": 0.136962890625,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.17291441241028066,
+              "relative_L2_with_physical_floor": 0.05225448592542965,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.010450897185085932,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.010648287431314234,
+              "Linf": 0.14473816752433777,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.17540039338756655,
+              "relative_L2_with_physical_floor": 0.05324143715657117,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          }
+        },
+        "t_0.16": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.004041797309481548,
+              "Linf": 0.06236189603805542,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19517279232677048,
+              "relative_L2_with_physical_floor": 0.004041797309481548,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.004041797309481548,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.00446410784498895,
+              "Linf": 0.10734421515502995,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19613502815830616,
+              "relative_L2_with_physical_floor": 0.00446410784498895,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.00911925362299772,
+              "Linf": 0.145263671875,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.10135110596540091,
+              "relative_L2_with_physical_floor": 0.0455962681149886,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.00911925362299772,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.009486549174978548,
+              "Linf": 0.17119750380516052,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.10231657522367048,
+              "relative_L2_with_physical_floor": 0.04743274587489273,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.007836379659377108,
+              "Linf": 0.084228515625,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.147292193162545,
+              "relative_L2_with_physical_floor": 0.03918189829688554,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.007836379659377108,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.007945201129739756,
+              "Linf": 0.09019464254379272,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.14875798789218245,
+              "relative_L2_with_physical_floor": 0.03972600564869878,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          }
+        },
+        "t_0.24": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.005200302229045182,
+              "Linf": 0.07982587814331055,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19466103888347416,
+              "relative_L2_with_physical_floor": 0.005200302229045182,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.005200302229045182,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.005801681730934653,
+              "Linf": 0.14242238653947464,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19560835330228407,
+              "relative_L2_with_physical_floor": 0.005801681730934653,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.007577436988497202,
+              "Linf": 0.104736328125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.09474615019979293,
+              "relative_L2_with_physical_floor": 0.03788718494248601,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.007577436988497202,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0078304457010891,
+              "Linf": 0.12783905863761902,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.09549227296789768,
+              "relative_L2_with_physical_floor": 0.039152228505445495,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.006694261313771911,
+              "Linf": 0.063720703125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.13080233621388018,
+              "relative_L2_with_physical_floor": 0.033471306568859556,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.006694261313771911,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.006774839839633647,
+              "Linf": 0.06554506719112396,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.131831736207781,
+              "relative_L2_with_physical_floor": 0.03387419919816823,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          }
+        }
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "t_0.00": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.196564783032526,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19754878031916898,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.0,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.0,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.5,
+              "reference_L2_rms": 0.5,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0,
+              "Linf": 0.0,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.5,
+              "reference_L2_rms": 0.5,
+              "relative_L2_with_physical_floor": 0.0,
+              "status": "MEASURED"
+            },
+            "time": 0.0
+          }
+        },
+        "t_0.08": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.008076925498995757,
+              "Linf": 0.10067415237426758,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19622238910243006,
+              "relative_L2_with_physical_floor": 0.008076925498995757,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.008076925498995757,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.008967644632771245,
+              "Linf": 0.19236591557930116,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19723021598874915,
+              "relative_L2_with_physical_floor": 0.008967644632771245,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.00011853963646847153,
+              "Linf": 0.0019140243530273438,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 7.362582724752706e-05,
+              "relative_L2_with_physical_floor": 0.0005926981823423576,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.00011853963646847153,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0001397467408565086,
+              "Linf": 0.003213114512618631,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 9.420074159382964e-05,
+              "relative_L2_with_physical_floor": 0.000698733704282543,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.21441796273379624,
+              "Linf": 0.2178497314453125,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.02738211920727387,
+              "relative_L2_with_physical_floor": 1.0720898136689812,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.21441796273379624,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.21441831347374402,
+              "Linf": 0.21821166016161442,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.02738338907888266,
+              "relative_L2_with_physical_floor": 1.07209156736872,
+              "status": "MEASURED"
+            },
+            "time": 0.08
+          }
+        },
+        "t_0.16": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.015270574441169079,
+              "Linf": 0.22699639201164246,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19613937495738246,
+              "relative_L2_with_physical_floor": 0.015270574441169079,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.015270574441169079,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.017103235021892094,
+              "Linf": 0.3798964426528049,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19717511277630798,
+              "relative_L2_with_physical_floor": 0.017103235021892094,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.0002599214872756386,
+              "Linf": 0.0047454833984375,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.00013443100436249993,
+              "relative_L2_with_physical_floor": 0.0012996074363781928,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.0002599214872756386,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.00028685239883882957,
+              "Linf": 0.007037607720121741,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.00014761977732471426,
+              "relative_L2_with_physical_floor": 0.0014342619941941478,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.11547703446814199,
+              "Linf": 0.12033653259277344,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.001530171385369566,
+              "relative_L2_with_physical_floor": 0.57738517234071,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.11547703446814199,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.11547650229310222,
+              "Linf": 0.1215419799555093,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.001530959321757364,
+              "relative_L2_with_physical_floor": 0.577382511465511,
+              "status": "MEASURED"
+            },
+            "time": 0.16
+          }
+        },
+        "t_0.24": {
+          "phi": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.01921154457549479,
+              "Linf": 0.3188813626766205,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.1960687212430084,
+              "relative_L2_with_physical_floor": 0.01921154457549479,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float32",
+            "quantized_export_L2_rms": 0.01921154457549479,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.02142292044637226,
+              "Linf": 0.5034669930259157,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 1.0,
+              "reference_L2_rms": 0.19713939019675414,
+              "relative_L2_with_physical_floor": 0.02142292044637226,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "u": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.00035969883194494944,
+              "Linf": 0.00820159912109375,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.00019493518964253955,
+              "relative_L2_with_physical_floor": 0.0017984941597247472,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.00035969883194494944,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.0003858067175567967,
+              "Linf": 0.010971711948513985,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.0002172923393091225,
+              "relative_L2_with_physical_floor": 0.0019290335877839833,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          },
+          "v": {
+            "export_downsampled_ds3_cast": {
+              "L2_rms": 0.05654850047791579,
+              "Linf": 0.06315422058105469,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.00024004123768573565,
+              "relative_L2_with_physical_floor": 0.28274250238957893,
+              "status": "MEASURED"
+            },
+            "export_dtype": "float16",
+            "quantized_export_L2_rms": 0.05654850047791579,
+            "same_shape": true,
+            "solver_grid": {
+              "L2_rms": 0.05654841158565381,
+              "Linf": 0.06531295867171139,
+              "near_zero_fail_closed": false,
+              "normalization_scale": 0.2,
+              "reference_L2_rms": 0.0002491366391378145,
+              "relative_L2_with_physical_floor": 0.282742057928269,
+              "status": "MEASURED"
+            },
+            "time": 0.24
+          }
+        }
+      }
+    }
+  },
+  "finite": true,
+  "reason": "direct phi/u/v differences are measured, but the repository has no approved universal field-error tolerance; morphology cannot waive these label defects",
+  "sample_dtypes": {
+    "phi": "float32",
+    "u": "float16",
+    "v": "float16"
+  },
+  "status": "MEASURED",
+  "status_gate": "UNMEASURED"
+}

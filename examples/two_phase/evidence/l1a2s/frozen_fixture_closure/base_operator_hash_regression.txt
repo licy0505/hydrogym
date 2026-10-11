@@ -1,0 +1,10 @@
+L1A-2s frozen-fixture closure: independent operator-level guard reproduction
+Base SHA: 002120f3a051e638a7e85f9db4022107dbe45780
+Interpreter: Python 3.11.2
+Command: JAX_ENABLE_X64=1 PYTHONPATH=. pytest -q <operator hash and invariant nodeids>
+
+--- pytest output ---
+.........................                                                [100%]
+25 passed in 2.57s
+
+pytest_exit_code=0

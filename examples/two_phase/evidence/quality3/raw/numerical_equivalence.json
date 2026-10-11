@@ -1,0 +1,1 @@
+{"capture_fields_is_diagnostic_only": true, "capture_only_added_keys": ["captured_fields"], "common_ledger_values_exact_equal": true, "solver_contract_version": 12, "state_phi_u_v_array_equal": true, "status": "PASS"}

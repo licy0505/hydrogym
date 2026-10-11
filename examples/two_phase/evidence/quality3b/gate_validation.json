@@ -1,0 +1,51 @@
+{
+  "schema": "quality3b_gate_validation_v1",
+  "generated_at_utc": "2026-10-10T14:46:54.372426Z",
+  "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+  "approval_commit": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
+  "command": "python scripts/quality_debt_gate.py --tool all",
+  "exit": 0,
+  "status": "PASS_BASELINE_ONLY",
+  "raw_tool_results": {
+    "ruff": {
+      "raw_exit": 1,
+      "historical": 171,
+      "new": 0
+    },
+    "format": {
+      "raw_exit": 1,
+      "historical": 27,
+      "new": 0
+    },
+    "isort": {
+      "raw_exit": 1,
+      "historical": 28,
+      "new": 0
+    },
+    "codespell": {
+      "raw_exit": 65,
+      "historical": 3,
+      "new": 0
+    }
+  },
+  "ratchet": {
+    "migrations_loaded": 4,
+    "approved": 4,
+    "pending_or_rejected": 0,
+    "sha_transitions_approved": 4,
+    "sha_drift_unapproved": 0,
+    "new_findings": 0,
+    "baseline_unchanged": true
+  },
+  "raw_artifact": "examples/two_phase/evidence/quality3b/raw/quality_gate_all.txt",
+  "raw_artifact_sha256": "eb6787fe37e875fc63a99d91f9f2b3f5dea579a04ff4d257b378e98a780975aa",
+  "raw_exit_artifact_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+  "verifier_output_artifact": "examples/two_phase/evidence/quality3b/raw/owner_verifier.json",
+  "verifier_output_sha256": "9fd22e99552daff40950c444d374cb37d3f8d7bc4fe72d9e80396bd149893ff6",
+  "owner_verifier_exit": 0,
+  "owner_approval_verified": true,
+  "local_exact_uv_lock": "ENVIRONMENT_BLOCKED_PYTHON_3_12_TLS",
+  "local_exact_uv_audit": "ENVIRONMENT_BLOCKED_PYTHON_3_12_TLS_NOT_PASS",
+  "compatible_uv_lock_python311": "PASS",
+  "raw_outputs_preserved": true
+}

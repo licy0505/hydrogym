@@ -1,0 +1,49 @@
+{
+  "schema": "quality3b_owner_approval_provenance_v1",
+  "verified_at_utc": "2026-10-10T14:46:54.371539Z",
+  "verification_method": [
+    "Live GitHub API issue-comment lookup",
+    "GitHub API commit lookup for approval commit",
+    "Authenticated gh actor lookup",
+    "Exact body SHA-256 comparison",
+    "Exact transition, baseline, PR head, and commit file-scope comparison"
+  ],
+  "authenticated_actor": {
+    "login": "licy0505",
+    "id": 156068376
+  },
+  "github_comment": {
+    "kind": "pull_request_issue_comment",
+    "comment_id": 6098141190,
+    "url": "https://github.com/licy0505/hydrogym/pull/22#issuecomment-6098141190",
+    "api_url": "https://api.github.com/repos/licy0505/hydrogym/issues/comments/6098141190",
+    "actor": "licy0505",
+    "actor_id": 156068376,
+    "author_association": "OWNER",
+    "created_at": "2026-10-10T13:46:35Z",
+    "updated_at": "2026-10-10T13:46:35Z",
+    "body_sha256": "450ddc8ff92b4cec0e32a0f8ee1751fa3c63d94d18603f8f9982fcde045a0dc1",
+    "body_verified_against_api": true
+  },
+  "approval_commit": {
+    "sha": "6237cbb9614588b976384ca27e6a7c5d05aa3348",
+    "url": "https://github.com/licy0505/hydrogym/commit/6237cbb9614588b976384ca27e6a7c5d05aa3348",
+    "api_author": "licy0505",
+    "api_committer": "licy0505",
+    "files": [
+      "quality/approvals/quality3b_owner_attestation.json"
+    ],
+    "signature_verified": false,
+    "signature_note": "No cryptographic Git signature was reported by the GitHub commit API; owner identity is established by the live PR comment author_association=OWNER plus API author/committer identity and authenticated actor."
+  },
+  "bindings": {
+    "repository": "licy0505/hydrogym",
+    "pr_number": 22,
+    "pr22_head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "pr22_base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "pr23_merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "evidence_hash": "2187be0a33e2a68d49feb3cb4075883df3bd506e365b6562cd2b161e3aacff5d",
+    "baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b"
+  },
+  "owner_approval_verified": true
+}

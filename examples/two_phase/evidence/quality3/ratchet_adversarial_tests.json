@@ -1,0 +1,38 @@
+{
+  "command": "pytest -q test/test_quality_debt_gate.py",
+  "coverage": [
+    "new file E501/F841",
+    "pinned SHA drift",
+    "equal count swap",
+    "row shift approval",
+    "unchanged legacy",
+    "approved removal and reintroduction",
+    "baseline edit seal",
+    "all directories",
+    "typo and import disorder",
+    "tool failure/parse/missing stage",
+    "exact overlap SHA pair",
+    "frozen phasefield/generator/cases"
+  ],
+  "new_quality3_tests": 12,
+  "new_test_names": [
+    "def test_q3_01_new_file_findings_get_no_legacy_exemption",
+    "def test_q3_02_pinned_sha_drift_fails_with_identical_findings",
+    "def test_q3_03_one_removed_one_added_equal_counts_fails",
+    "def test_q3_04_row_shift_needs_diff_evidence_and_owner_approval",
+    "def test_q3_05_unchanged_legacy_keeps_passing",
+    "def test_q3_06_approved_removal_then_reintroduction_fails",
+    "def test_q3_07_baseline_json_edit_cannot_bypass_manifest",
+    "def test_q3_08_new_findings_in_any_directory_fail",
+    "def test_q3_09_injected_typo_and_import_disorder_fail",
+    "def test_q3_10_tool_failure_bad_output_missing_stage_fail",
+    "def test_q3_11_overlap_file_exception_only_under_approved_pair",
+    "def test_q3_12_frozen_physics_sources_always_fail"
+  ],
+  "raw_artifact": "examples/two_phase/evidence/quality3/raw/ratchet_adversarial_tests.txt",
+  "raw_artifact_sha256": "483da582db52bc068d0f8af766d853839424eb940b23ae7fc6f0efd6b30a832c",
+  "return_code": 0,
+  "schema": "quality3_ratchet_adversarial_tests_v1",
+  "status": "PASS",
+  "total_passed": 31
+}

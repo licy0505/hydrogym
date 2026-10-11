@@ -1,0 +1,436 @@
+{
+  "base_main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "control_status": "MEASURED",
+  "decision_summary": "C2 is initializer-compatible on all four canaries. With the reconstructed local phi=0.5 contour gap, complex_heldout authenticates at T=8; flat_we100_ct050, flat_we200_ct000, and pillar_training have decreasing precontact gaps and verified postcontact dynamics but remain below the inherited local-normal approach floor. Fleet status is PARTIAL_IMPACT_AUTHENTICATION. Temporal impact refinement and direct-field label acceptance remain UNMEASURED; spatial refinement and generator quality remain FAIL. The first bounded next action is to diagnose pillar_training without changing geometry, placement, thresholds, or production semantics.",
+  "direct_field_labels": "UNMEASURED",
+  "direct_field_status": "UNMEASURED",
+  "elapsed_seconds": 2589.5551039539996,
+  "event_status": "MEASURED",
+  "fleet_impact_verdict": "PARTIAL_IMPACT_AUTHENTICATION",
+  "full_horizon_status": "MEASURED",
+  "historical_statuses": {
+    "D_FRESH_TRAIN_CONTRACT": "OPEN (unchanged; L1B-1 task)",
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "N_DT": "TARGET_CRITICAL (unchanged; diagnostic improvement does not satisfy formal exit tests)",
+    "PHYSICAL_PUBLICATION_DATA_READY": false,
+    "P_VARDENS_PROJ": "OPEN (unchanged)",
+    "SOLVER_CONTRACT_VERSION": 12,
+    "SOLVER_SURROGATE_DATA_READY": false,
+    "SPATIAL_REFINEMENT": "FAIL (historical official status unchanged)",
+    "W_CONTACT_ANGLE": "OPEN (unchanged)",
+    "bulk_training_data_generated": false,
+    "candidate_promoted": false,
+    "official_dataset_written": false,
+    "production_semantics_changed": false,
+    "production_timestep_policy": "impact_phase_cap_dx2_v1"
+  },
+  "impact_parameter_semantics": "UNRESOLVED",
+  "initialization_constraint_summary": {
+    "complex_heldout": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 3.337860107421875e-06,
+        "FV_Linf": 8.821487426757812e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0005294676520861685,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 118.90771484375,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.296018769685427,
+        "nearwall_chi": 1.755882097015352,
+        "pass": false,
+        "wall_normal": 1.3259762918203706
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 11399.2587890625,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "flat_we100_ct050": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.9206275939941406e-06,
+        "FV_Linf": 9.179115295410156e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 33.579803466796875,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.4955877207078272,
+        "nearwall_chi": 1.8976761861569122,
+        "pass": false,
+        "wall_normal": 1.0493689179420471
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 16.0,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "flat_we200_ct000": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.9206275939941406e-06,
+        "FV_Linf": 9.179115295410156e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 0.0,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 33.579803466796875,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 1.4955877207078272,
+        "nearwall_chi": 1.8976761861569122,
+        "pass": false,
+        "wall_normal": 1.0493689179420471
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 16.0,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    },
+    "pillar_training": {
+      "SDF_TAPERED_STREAMFUNCTION_V1": {
+        "D_Linf": 2.86102294921875e-06,
+        "FV_Linf": 5.7220458984375e-06,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": true,
+          "embedded_wall_normal_velocity": true,
+          "nearwall_chi_velocity": true,
+          "open_face_FV_divergence": true
+        },
+        "deep_solid": 0.0,
+        "nearwall_chi": 7.806503163010348e-06,
+        "pass": true,
+        "wall_normal": 0.0
+      },
+      "STREAMFUNCTION_LOCALIZED_V0": {
+        "D_Linf": 3.0994415283203125e-06,
+        "FV_Linf": 79.69010162353516,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.4919522702497192,
+        "nearwall_chi": 0.597682294794151,
+        "pass": false,
+        "wall_normal": 0.4981606982133826
+      },
+      "UNIFORM_ALL_DOMAIN": {
+        "D_Linf": 0.0,
+        "FV_Linf": 79.99999237060547,
+        "checks": {
+          "central_D": true,
+          "core_target": true,
+          "deep_solid_velocity": false,
+          "embedded_wall_normal_velocity": false,
+          "nearwall_chi_velocity": false,
+          "open_face_FV_divergence": false
+        },
+        "deep_solid": 0.5,
+        "nearwall_chi": 0.5,
+        "pass": false,
+        "wall_normal": 0.5
+      }
+    }
+  },
+  "initializer_verdict": "INITIALIZER_COMPATIBLE",
+  "local_validation": {
+    "correct_root_non_slow_command": "cd examples/two_phase && JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests -m 'not slow'",
+    "correct_root_non_slow_result": "223 passed, 5 failed; failures are the previously observed frozen-source/merge-fixture failures and remain a merge blocker",
+    "focused_test_command": "JAX_ENABLE_X64=1 PYTHONPATH=examples/two_phase .venv/bin/pytest -q examples/two_phase/tests/test_impact_initialization_compatibility_audit.py",
+    "focused_test_result": "49 passed",
+    "git_diff_check": "PASS",
+    "hosted_ci": "PENDING_PR",
+    "py_compile": "PASS on audit module, reused projection audit, and test module",
+    "ruff_check": "PASS on all changed Python",
+    "ruff_format": "PASS on impact_initialization_compatibility_audit.py and its test; the reused impact_impulse_projection_audit.py also fails ruff format --check at HEAD, so no broad unrelated format-only rewrite was applied"
+  },
+  "next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+  "pr21": {
+    "head_sha": "8220c32c6fed24432788f28bb0d76a027c7e95df",
+    "merge_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "merged_at_utc": "2026-10-08T16:05:31Z",
+    "number": 21,
+    "state": "MERGED",
+    "url": "https://github.com/licy0505/hydrogym/pull/21"
+  },
+  "preflight": {
+    "case_definitions": {
+      "complex_heldout": {
+        "We": 100.0,
+        "cos_theta": -0.5,
+        "n_pillars": 7,
+        "seed": 100,
+        "split": "test",
+        "surface": "random_pillars",
+        "width_range": [
+          0.2,
+          0.4
+        ]
+      },
+      "flat_we100_ct050": {
+        "We": 100.0,
+        "cos_theta": 0.5,
+        "seed": 6,
+        "split": "train",
+        "surface": "flat"
+      },
+      "flat_we200_ct000": {
+        "We": 200.0,
+        "cos_theta": 0.0,
+        "seed": 5,
+        "split": "train",
+        "surface": "flat"
+      },
+      "pillar_training": {
+        "We": 100.0,
+        "cos_theta": -0.5,
+        "height": 0.4,
+        "n_pillars": 4,
+        "seed": 8,
+        "split": "train",
+        "surface": "pillars",
+        "width": 0.3
+      }
+    },
+    "frozen_l1a2r_findings": {
+      "d_fresh_train_contract": "OPEN",
+      "direct_global_momentum_loss": "FALSIFIED",
+      "discrete_operator_mismatch_tested_identity": "FALSIFIED",
+      "frozen_flat_events": {
+        "flat_we100_ct050": {
+          "contact_t": 0.174,
+          "retention": 0.5944755277202775,
+          "v_liquid": -0.300847070329903,
+          "verdict": "IMPACT_AUTHENTICATED"
+        },
+        "flat_we200_ct000": {
+          "contact_t": 0.186,
+          "retention": 0.5729735846495383,
+          "v_liquid": -0.28997363695536366,
+          "verdict": "IMPACT_AUTHENTICATED"
+        }
+      },
+      "frozen_short_window_only": {
+        "complex_heldout": "NO_CONTACT_OR_HOVER within short L1A-2r window; late retention 0.2020809365247083",
+        "not_extrapolated_to_T8": true,
+        "pillar_training": "NO_CONTACT_OR_HOVER within short L1A-2r window; late retention 0.20479536401723591"
+      },
+      "l1a2r_report_json_sha256": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+      "l1a2r_report_sha256": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+      "l1a_status": "BLOCKED",
+      "l1b_data": "L1B_DATA_NOT_READY",
+      "local_impulse_redistribution": "SUPPORTED",
+      "n_dt": "TARGET_CRITICAL",
+      "negative_controls_language": {
+        "SOLID_COMPATIBLE_INITIAL": "zero-in-solid control, not divergence-free physical seed",
+        "STREAMFUNCTION_LOCALIZED": "near-solenoidal control, not verified solid-compatible"
+      },
+      "p_vardens_proj": "OPEN",
+      "root_cause": "BRINKMAN_PROJECTION_COUPLING",
+      "solver_contract": 12,
+      "spatial_refinement": "FAIL",
+      "stage": "COMPLETE / PR #21 merged",
+      "w_contact_angle": "OPEN"
+    },
+    "prerequisite": {
+      "branch_session_policy": "Arena binds this execution to arena/3d47375a-hydrogym; no l1a-2s branch switch was made",
+      "head_at_preflight": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "latest_main_sha_at_execution": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "main_is_at_or_after_pr21_merge": true,
+      "pr21": {
+        "head_sha": "8220c32c6fed24432788f28bb0d76a027c7e95df",
+        "merge_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+        "merged_at_utc": "2026-10-08T16:05:31Z",
+        "number": 21,
+        "state": "MERGED",
+        "url": "https://github.com/licy0505/hydrogym/pull/21"
+      },
+      "verified_merge_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "worktree_branch": "arena/3d47375a-hydrogym"
+    },
+    "runtime": {
+      "jax": "0.10.2",
+      "jax_backend": "cpu",
+      "jax_devices": [
+        "cpu:0"
+      ],
+      "jax_enable_x64": true,
+      "numpy": "2.4.6",
+      "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+      "python": "3.11.2"
+    },
+    "source_freeze": {
+      "checks": {
+        "cases_unchanged_since_l1a2r": true,
+        "contract12": true,
+        "generator_unchanged_since_l1a2r": true,
+        "l1a2r_report_present": true,
+        "origin_main_is_verified_merge_base": true,
+        "phasefield_unchanged_since_l1a2r": true,
+        "policy": true,
+        "policy_matches_contract": true,
+        "timestep_policy_unchanged_since_l1a2r": true
+      },
+      "latest_main_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+      "source_hashes": {
+        "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+        "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+        "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+        "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+        "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+        "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+        "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+        "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+        "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+        "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+        "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+        "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+        "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+        "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+      }
+    },
+    "stage": "L1A-2s",
+    "stage_version": "l1a2s_v1"
+  },
+  "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+  "production_freeze": {
+    "bulk_training_data_generated": false,
+    "candidate_promoted": false,
+    "official_dataset_written": false,
+    "production_initializer_default": "uniform (unchanged)",
+    "production_semantics_changed": false,
+    "production_timestep_policy": "impact_phase_cap_dx2_v1",
+    "solver_contract_version": 12,
+    "training_or_neural_operator_run": false
+  },
+  "profile": "forensic",
+  "quality_status": {
+    "focused_2s_pytest": "PASS: 49 passed",
+    "git_diff_check": "PASS",
+    "hosted_ci": "PENDING_PR",
+    "locked_dependency_audit": "NOT_CLASSIFIED_UNTIL_HOSTED_CHECKS",
+    "preexisting_two_phase_regression": "BLOCKED: 223 passed; the same 5 frozen-source/merge-fixture failures remain",
+    "py_compile": "PASS: all three changed Python files compiled",
+    "ruff": "ruff check PASS for all changed Python; ruff format --check PASS for the new audit and test; the reused projection-audit module has identical pre-existing whole-file formatting debt at HEAD"
+  },
+  "readiness": {
+    "DIRECT_FIELD_LABELS": "UNMEASURED",
+    "GENERATOR_QUALITY_GATES": "FAIL",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "UNMEASURED"
+  },
+  "spatial_status": "FAIL",
+  "stage": "L1A-2s",
+  "stage_decision": {
+    "decision": "B_INITIALIZATION_HELPFUL_BUT_REFINEMENT_OR_GEOMETRY_BLOCKS",
+    "next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION"
+  },
+  "stage_version": "l1a2s_v1",
+  "startup_ledger_status": "MEASURED",
+  "temporal_status": "UNMEASURED",
+  "thresholds": {
+    "key_observable_refinement_change": 0.03,
+    "max_phi_overshoot": 0.02,
+    "max_solid_leak": 0.0005,
+    "max_speed": 5.0,
+    "max_total_mass_ratio": 1.005,
+    "min_total_mass_ratio": 0.995
+  }
+}

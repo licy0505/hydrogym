@@ -1,0 +1,3347 @@
+[
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 18,
+      "row": 810
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "_centre",
+          "end_location": {
+            "column": 18,
+            "row": 810
+          },
+          "location": {
+            "column": 12,
+            "row": 810
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `centre`"
+    },
+    "location": {
+      "column": 12,
+      "row": 810
+    },
+    "message": "Local variable `centre` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 810,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 122,
+      "row": 947
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/phasefield.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 947
+    },
+    "message": "Line too long (121 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 947,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 131
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 131
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 131,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 129,
+      "row": 440
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 440
+    },
+    "message": "Line too long (128 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 440,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 130,
+      "row": 721
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 721
+    },
+    "message": "Line too long (129 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 721,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 145,
+      "row": 982
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 982
+    },
+    "message": "Line too long (144 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 982,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 168,
+      "row": 1068
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1068
+    },
+    "message": "Line too long (167 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1068,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 1069
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1069
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1069,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 155,
+      "row": 1099
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1099
+    },
+    "message": "Line too long (154 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1099,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 1300
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/a1_promotion_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1300
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1300,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 248
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 248
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 248,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 134,
+      "row": 357
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 357
+    },
+    "message": "Line too long (133 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 357,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 1085
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1085
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1085,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 1087
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1087
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1087,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 135,
+      "row": 1184
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1184
+    },
+    "message": "Line too long (134 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1184,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 129,
+      "row": 1244
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1244
+    },
+    "message": "Line too long (128 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1244,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 140,
+      "row": 1396
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1396
+    },
+    "message": "Line too long (139 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1396,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 130,
+      "row": 1418
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1418
+    },
+    "message": "Line too long (129 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1418,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 150,
+      "row": 1453
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1453
+    },
+    "message": "Line too long (149 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1453,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 1626
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1626
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1626,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 181,
+      "row": 1708
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1708
+    },
+    "message": "Line too long (180 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1708,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 169,
+      "row": 1729
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1729
+    },
+    "message": "Line too long (168 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1729,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 144,
+      "row": 1765
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1765
+    },
+    "message": "Line too long (143 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1765,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 130,
+      "row": 1769
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1769
+    },
+    "message": "Line too long (129 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1769,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 174,
+      "row": 1770
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1770
+    },
+    "message": "Line too long (173 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1770,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 128,
+      "row": 1773
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1773
+    },
+    "message": "Line too long (127 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1773,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 152,
+      "row": 1774
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1774
+    },
+    "message": "Line too long (151 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1774,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 28,
+      "row": 1801
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 1802
+          },
+          "location": {
+            "column": 1,
+            "row": 1801
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `all_steps_before_resume`"
+    },
+    "location": {
+      "column": 5,
+      "row": 1801
+    },
+    "message": "Local variable `all_steps_before_resume` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 1801,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 147,
+      "row": 1825
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1825
+    },
+    "message": "Line too long (146 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1825,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 18,
+      "row": 1846
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 21,
+            "row": 1846
+          },
+          "location": {
+            "column": 5,
+            "row": 1846
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `progress_path`"
+    },
+    "location": {
+      "column": 5,
+      "row": 1846
+    },
+    "message": "Local variable `progress_path` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 1846,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 1865
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1865
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1865,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 159,
+      "row": 1899
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1899
+    },
+    "message": "Line too long (158 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1899,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 163,
+      "row": 1915
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1915
+    },
+    "message": "Line too long (162 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1915,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 170,
+      "row": 1921
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1921
+    },
+    "message": "Line too long (169 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1921,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 1955
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1955
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1955,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 129,
+      "row": 1967
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1967
+    },
+    "message": "Line too long (128 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1967,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 1970
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1970
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1970,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 1986
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1986
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1986,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 160,
+      "row": 1989
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1989
+    },
+    "message": "Line too long (159 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1989,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 2082
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2082
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2082,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 136,
+      "row": 2127
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2127
+    },
+    "message": "Line too long (135 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2127,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 137,
+      "row": 2130
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2130
+    },
+    "message": "Line too long (136 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2130,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 12,
+      "row": 2264
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 1,
+            "row": 2265
+          },
+          "location": {
+            "column": 1,
+            "row": 2264
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `history`"
+    },
+    "location": {
+      "column": 5,
+      "row": 2264
+    },
+    "message": "Local variable `history` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 2264,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 200,
+      "row": 2300
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2300
+    },
+    "message": "Line too long (199 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2300,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 137,
+      "row": 2316
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2316
+    },
+    "message": "Line too long (136 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2316,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 2335
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2335
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2335,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 122,
+      "row": 2491
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2491
+    },
+    "message": "Line too long (121 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2491,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 135,
+      "row": 2546
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2546
+    },
+    "message": "Line too long (134 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2546,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 2553
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2553
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2553,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 125,
+      "row": 2568
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2568
+    },
+    "message": "Line too long (124 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2568,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 2584
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2584
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2584,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 2607
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2607
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2607,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 2613
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2613
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2613,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 167,
+      "row": 2627
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2627
+    },
+    "message": "Line too long (166 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2627,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 2635
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2635
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2635,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 2640
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2640
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2640,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 128,
+      "row": 2666
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2666
+    },
+    "message": "Line too long (127 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2666,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 2667
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2667
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2667,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 2669
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2669
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2669,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 2691
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2691
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2691,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 145,
+      "row": 2692
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2692
+    },
+    "message": "Line too long (144 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2692,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 130,
+      "row": 2736
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2736
+    },
+    "message": "Line too long (129 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2736,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 175,
+      "row": 2742
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2742
+    },
+    "message": "Line too long (174 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2742,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 2743
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2743
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2743,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 2760
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2760
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2760,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 176,
+      "row": 2761
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2761
+    },
+    "message": "Line too long (175 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2761,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 125,
+      "row": 2762
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2762
+    },
+    "message": "Line too long (124 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2762,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 2768
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2768
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2768,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 2780
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2780
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2780,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 206,
+      "row": 2791
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2791
+    },
+    "message": "Line too long (205 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2791,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 225,
+      "row": 2792
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2792
+    },
+    "message": "Line too long (224 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2792,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 145,
+      "row": 2816
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2816
+    },
+    "message": "Line too long (144 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2816,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 240,
+      "row": 2821
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2821
+    },
+    "message": "Line too long (239 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2821,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 144,
+      "row": 2825
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2825
+    },
+    "message": "Line too long (143 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2825,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 136,
+      "row": 2833
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2833
+    },
+    "message": "Line too long (135 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2833,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 172,
+      "row": 2842
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2842
+    },
+    "message": "Line too long (171 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2842,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 141,
+      "row": 2855
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2855
+    },
+    "message": "Line too long (140 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2855,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 152,
+      "row": 2856
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2856
+    },
+    "message": "Line too long (151 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2856,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 147,
+      "row": 2858
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2858
+    },
+    "message": "Line too long (146 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2858,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 129,
+      "row": 2878
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2878
+    },
+    "message": "Line too long (128 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2878,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 10,
+      "row": 2907
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 13,
+            "row": 2907
+          },
+          "location": {
+            "column": 5,
+            "row": 2907
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `reset`"
+    },
+    "location": {
+      "column": 5,
+      "row": 2907
+    },
+    "message": "Local variable `reset` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 2907,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 166,
+      "row": 2924
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2924
+    },
+    "message": "Line too long (165 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2924,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 154,
+      "row": 2925
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2925
+    },
+    "message": "Line too long (153 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2925,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 222,
+      "row": 2929
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2929
+    },
+    "message": "Line too long (221 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2929,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 216,
+      "row": 2933
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2933
+    },
+    "message": "Line too long (215 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2933,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 158,
+      "row": 2941
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2941
+    },
+    "message": "Line too long (157 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2941,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 143,
+      "row": 2942
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2942
+    },
+    "message": "Line too long (142 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2942,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 142,
+      "row": 2945
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2945
+    },
+    "message": "Line too long (141 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2945,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 144,
+      "row": 2946
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2946
+    },
+    "message": "Line too long (143 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2946,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 2947
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2947
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2947,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 191,
+      "row": 2955
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2955
+    },
+    "message": "Line too long (190 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2955,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 240,
+      "row": 2956
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2956
+    },
+    "message": "Line too long (239 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2956,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 2962
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2962
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2962,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 209,
+      "row": 2965
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2965
+    },
+    "message": "Line too long (208 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2965,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 156,
+      "row": 2966
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2966
+    },
+    "message": "Line too long (155 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2966,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 2968
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2968
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2968,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 179,
+      "row": 2970
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2970
+    },
+    "message": "Line too long (178 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2970,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 220,
+      "row": 2979
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2979
+    },
+    "message": "Line too long (219 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2979,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 162,
+      "row": 2980
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2980
+    },
+    "message": "Line too long (161 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2980,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 162,
+      "row": 2981
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2981
+    },
+    "message": "Line too long (161 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2981,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 408,
+      "row": 2982
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2982
+    },
+    "message": "Line too long (407 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2982,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 284,
+      "row": 2994
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2994
+    },
+    "message": "Line too long (283 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2994,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 192,
+      "row": 2995
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2995
+    },
+    "message": "Line too long (191 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2995,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 203,
+      "row": 2996
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 2996
+    },
+    "message": "Line too long (202 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 2996,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 182,
+      "row": 3052
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3052
+    },
+    "message": "Line too long (181 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3052,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 152,
+      "row": 3155
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3155
+    },
+    "message": "Line too long (151 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3155,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 165,
+      "row": 3163
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3163
+    },
+    "message": "Line too long (164 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3163,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 151,
+      "row": 3167
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3167
+    },
+    "message": "Line too long (150 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3167,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 125,
+      "row": 3168
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3168
+    },
+    "message": "Line too long (124 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3168,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 180,
+      "row": 3180
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3180
+    },
+    "message": "Line too long (179 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3180,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 128,
+      "row": 3183
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3183
+    },
+    "message": "Line too long (127 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3183,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 248,
+      "row": 3188
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3188
+    },
+    "message": "Line too long (247 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3188,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 185,
+      "row": 3207
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3207
+    },
+    "message": "Line too long (184 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3207,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 225,
+      "row": 3212
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3212
+    },
+    "message": "Line too long (224 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3212,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 215,
+      "row": 3220
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3220
+    },
+    "message": "Line too long (214 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3220,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 197,
+      "row": 3256
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3256
+    },
+    "message": "Line too long (196 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3256,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 3283
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3283
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3283,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 3284
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3284
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3284,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 136,
+      "row": 3326
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3326
+    },
+    "message": "Line too long (135 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3326,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 182,
+      "row": 3424
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3424
+    },
+    "message": "Line too long (181 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3424,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 122,
+      "row": 3447
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3447
+    },
+    "message": "Line too long (121 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3447,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 3482
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3482
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3482,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 130,
+      "row": 3483
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3483
+    },
+    "message": "Line too long (129 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3483,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 3520
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3520
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3520,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 137,
+      "row": 3549
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3549
+    },
+    "message": "Line too long (136 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3549,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 150,
+      "row": 3552
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3552
+    },
+    "message": "Line too long (149 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3552,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 3554
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3554
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3554,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 3556
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3556
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3556,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 128,
+      "row": 3565
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3565
+    },
+    "message": "Line too long (127 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3565,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 136,
+      "row": 3569
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3569
+    },
+    "message": "Line too long (135 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3569,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 200,
+      "row": 3581
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3581
+    },
+    "message": "Line too long (199 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3581,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 142,
+      "row": 3582
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3582
+    },
+    "message": "Line too long (141 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3582,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 159,
+      "row": 3585
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3585
+    },
+    "message": "Line too long (158 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3585,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 3613
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3613
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3613,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 3614
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3614
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3614,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 3623
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3623
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3623,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 151,
+      "row": 3626
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3626
+    },
+    "message": "Line too long (150 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3626,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 152,
+      "row": 3627
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3627
+    },
+    "message": "Line too long (151 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3627,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 128,
+      "row": 3650
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3650
+    },
+    "message": "Line too long (127 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3650,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 139,
+      "row": 3658
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3658
+    },
+    "message": "Line too long (138 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3658,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 194,
+      "row": 3710
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3710
+    },
+    "message": "Line too long (193 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3710,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 285,
+      "row": 3711
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 3711
+    },
+    "message": "Line too long (284 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 3711,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 266
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/contract11_chns_stage_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 266
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 266,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 145,
+      "row": 385
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/contract11_chns_stage_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 385
+    },
+    "message": "Line too long (144 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 385,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 139,
+      "row": 1186
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_alignment_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1186
+    },
+    "message": "Line too long (138 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1186,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 148,
+      "row": 1521
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_alignment_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1521
+    },
+    "message": "Line too long (147 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1521,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 133,
+      "row": 1593
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_alignment_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1593
+    },
+    "message": "Line too long (132 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1593,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 160,
+      "row": 1612
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_alignment_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1612
+    },
+    "message": "Line too long (159 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1612,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 190
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 190
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 190,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 122,
+      "row": 267
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 267
+    },
+    "message": "Line too long (121 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 267,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 135,
+      "row": 269
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 269
+    },
+    "message": "Line too long (134 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 269,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 197,
+      "row": 275
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 275
+    },
+    "message": "Line too long (196 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 275,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 640
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 640
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 640,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 758
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 758
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 758,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 873
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 873
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 873,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 124,
+      "row": 874
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 874
+    },
+    "message": "Line too long (123 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 874,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 935
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 935
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 935,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 134,
+      "row": 978
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 978
+    },
+    "message": "Line too long (133 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 978,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 1048
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_geometry_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1048
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1048,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 127,
+      "row": 256
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 256
+    },
+    "message": "Line too long (126 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 256,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 475
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 475
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 475,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 137,
+      "row": 599
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 599
+    },
+    "message": "Line too long (136 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 599,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 126,
+      "row": 1028
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/cutcell_phase_transport_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1028
+    },
+    "message": "Line too long (125 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1028,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 131,
+      "row": 1333
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/embedded_young_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 1333
+    },
+    "message": "Line too long (130 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 1333,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "F841",
+    "end_location": {
+      "column": 11,
+      "row": 281
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/phase_boundary_audit.py",
+    "fix": {
+      "applicability": "unsafe",
+      "edits": [
+        {
+          "content": "",
+          "end_location": {
+            "column": 14,
+            "row": 281
+          },
+          "location": {
+            "column": 5,
+            "row": 281
+          }
+        }
+      ],
+      "message": "Remove assignment to unused variable `volume`"
+    },
+    "location": {
+      "column": 5,
+      "row": 281
+    },
+    "message": "Local variable `volume` is assigned to but never used",
+    "name": "unused-variable",
+    "noqa_row": 281,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/unused-variable"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 139,
+      "row": 344
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/production/phase_boundary_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 344
+    },
+    "message": "Line too long (138 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 344,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 129,
+      "row": 59
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/test_chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 59
+    },
+    "message": "Line too long (128 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 59,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 123,
+      "row": 197
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/test_chns_nonstationarity_audit.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 197
+    },
+    "message": "Line too long (122 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 197,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 122,
+      "row": 478
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/test_cutcell_transport.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 478
+    },
+    "message": "Line too long (121 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 478,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 132,
+      "row": 543
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/test_cutcell_transport.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 543
+    },
+    "message": "Line too long (131 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 543,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  },
+  {
+    "cell": null,
+    "code": "E501",
+    "end_location": {
+      "column": 135,
+      "row": 6
+    },
+    "filename": "/home/user/hydrogym/examples/two_phase/test_phase_storage_precision.py",
+    "fix": null,
+    "location": {
+      "column": 121,
+      "row": 6
+    },
+    "message": "Line too long (134 > 120)",
+    "name": "line-too-long",
+    "noqa_row": 10,
+    "severity": "error",
+    "url": "https://docs.astral.sh/ruff/rules/line-too-long"
+  }
+]

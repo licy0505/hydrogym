@@ -29,6 +29,9 @@ from production import stationarity_metric_domain_audit as audit
 jax.config.update("jax_enable_x64", True)
 
 FROZEN_MANIFEST = Path(__file__).resolve().parents[1] / "evidence" / "l1a2l" / "manifest.json"
+#: Whole-file seal recorded by the later L1A-2q/r evidence after contract-12
+#: lineage metadata was added; operator-level source hashes remain authoritative.
+L1A2Q_R_PHASEFIELD_SOURCE_SHA256 = "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c"
 
 
 @pytest.fixture(scope="module")
@@ -315,15 +318,15 @@ def test_no_production_threshold_change():
 def test_no_production_phase_rate_change():
     hashes = _frozen_source_hashes()
     current = audit._source_hashes()
-    # The L1A-2p contract promotion (metadata-only) touched exactly two of the
-    # sealed sources: phasefield.py (version constant) and
-    # nonneutral_wetting_audit.py (version gate). Both carry sanctioned
-    # post-promotion seals; chns_nonstationarity_audit.py must still match the
-    # frozen contract-11 hash exactly.
+    # L1A-2p's contract promotion and the later L1A-2q/r lineage metadata add
+    # sanctioned whole-file seals. The operator-level hashes in the focused
+    # anti-tamper tests remain the semantic guard; chns_nonstationarity_audit.py
+    # must still match the frozen contract-11 hash exactly.
     assert current["phasefield"] in (
         hashes["phasefield"],
         "ebb249a22fa2065fa3dacb0a166289220ded6c82e4aeea6eaab533ff39e4c03b",
-    ), "phasefield differs from the frozen contract-11 source and the promotion re-seal"
+        L1A2Q_R_PHASEFIELD_SOURCE_SHA256,
+    ), "phasefield differs from the frozen contract-11 source and recorded contract-12 seals"
     assert current["nonneutral_wetting_audit"] in (
         hashes["nonneutral_wetting_audit"],
         "2115930969a4a09d8aa8423039083e50559b2a2bdbead8ab955f68a2742cfeed",
@@ -360,6 +363,7 @@ def test_no_cutcell_geometry_change():
     assert audit._source_hashes()["phasefield"] in (
         hashes["phasefield"],
         "ebb249a22fa2065fa3dacb0a166289220ded6c82e4aeea6eaab533ff39e4c03b",
+        L1A2Q_R_PHASEFIELD_SOURCE_SHA256,
     )
 
 

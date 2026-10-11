@@ -1,0 +1,20 @@
+{
+  "candidate_promoted": false,
+  "contract13_promoted": false,
+  "fleet_impact_verdict": "PARTIAL_IMPACT_AUTHENTICATION",
+  "initializer_verdict": "INITIALIZER_COMPATIBLE",
+  "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+  "production_semantics_changed": false,
+  "readiness": {
+    "DIRECT_FIELD_LABELS": "UNMEASURED",
+    "GENERATOR_QUALITY_GATES": "FAIL",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "UNMEASURED"
+  },
+  "smallest_next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+  "stage_decision": {
+    "decision": "B_INITIALIZATION_HELPFUL_BUT_REFINEMENT_OR_GEOMETRY_BLOCKS",
+    "next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION"
+  }
+}

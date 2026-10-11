@@ -1,0 +1,1090 @@
+{
+  "complex_heldout": {
+    "SDF_TAPERED_STREAMFUNCTION_V1": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "n_pillars": 7,
+          "seed": 100,
+          "split": "test",
+          "surface": "random_pillars",
+          "width_range": [
+            0.2,
+            0.4
+          ]
+        },
+        "case_name": "complex_heldout",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.921875,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.715625
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "initial_u_hash": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "initial_v_hash": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.9703620185724317,
+          "deep_solid_cell_area": 0.0,
+          "gas_weighted_control_volume": 0.07924319703990614,
+          "liquid_weighted_control_volume": 0.8911188215325255,
+          "open_fluid_control_volume": 0.9703620185724317,
+          "solid_indicator_cell_area": 1.0898267734006889e-06
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 31.738391796523167,
+          "liquid_weight_sum_Vphi": 1.5507205085017368,
+          "open_fluid_volume": 33.2891123050249,
+          "solid_indicator_volume_dxdy_chi": 2.6612439964448624
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5000000248595142,
+        "actual_initial_gas_weighted_v": 0.015328636104703815,
+        "actual_initial_liquid_weighted_v": -0.3137291700919056,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0,
+          "mean_speed": 0.0,
+          "u": 0.0,
+          "v": 0.0
+        },
+        "max_speed_global": 2.1064773076951826,
+        "return_flow_peak_speed": 1.2098035904284965
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "STREAMFUNCTION_LOCALIZED_V0": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "n_pillars": 7,
+          "seed": 100,
+          "split": "test",
+          "surface": "random_pillars",
+          "width_range": [
+            0.2,
+            0.4
+          ]
+        },
+        "case_name": "complex_heldout",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.921875,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.715625
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "initial_u_hash": "fff97c4bafcb4ba9f022294ab9170e7989500dc011447d710f486484b220e8f5",
+        "initial_v_hash": "65102c3efb12fd008f225c92555352381c850b0d0d96284a028da5919473a0d0"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.33311165994113373,
+          "deep_solid_cell_area": 0.0009322673628121476,
+          "gas_weighted_control_volume": 0.1532137040028505,
+          "liquid_weighted_control_volume": 0.17719786061080428,
+          "open_fluid_control_volume": 0.3304115646136548,
+          "solid_indicator_cell_area": 0.0027917580645514853
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 31.738391796523167,
+          "liquid_weight_sum_Vphi": 1.5507205085017368,
+          "open_fluid_volume": 33.2891123050249,
+          "solid_indicator_volume_dxdy_chi": 2.6612439964448624
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.49993204607319797,
+        "actual_initial_gas_weighted_v": 0.02390861441985168,
+        "actual_initial_liquid_weighted_v": -0.49896236958315243,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0029517185487375718,
+          "mean_speed": 3.0910426332138145e-05,
+          "u": -9.077676443501449e-07,
+          "v": 2.4385292878702784e-05
+        },
+        "max_speed_global": 2.4527632458234523,
+        "return_flow_peak_speed": 2.4527632458234523
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "UNIFORM_ALL_DOMAIN": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "n_pillars": 7,
+          "seed": 100,
+          "split": "test",
+          "surface": "random_pillars",
+          "width_range": [
+            0.2,
+            0.4
+          ]
+        },
+        "case_name": "complex_heldout",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.921875,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.715625
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "initial_u_hash": "c5f146df2f7ae50fce30e5c33039ffc1abec53f7fd4de1d75523fc239bd66231",
+        "initial_v_hash": "1b4fb74a4fdd82869cc343e7d02f7746df0d51a09d1396e259953fe0160b1591"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.6244567576605251,
+          "deep_solid_cell_area": 0.020715332031250002,
+          "gas_weighted_control_volume": 0.4131287288626171,
+          "liquid_weighted_control_volume": 0.1774412321566396,
+          "open_fluid_control_volume": 0.5905699610192566,
+          "solid_indicator_cell_area": 0.033271866486156515
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 31.738391796523167,
+          "liquid_weight_sum_Vphi": 1.5507205085017368,
+          "open_fluid_volume": 33.2891123050249,
+          "solid_indicator_volume_dxdy_chi": 2.6612439964448624
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5,
+        "actual_initial_gas_weighted_v": -0.5,
+        "actual_initial_liquid_weighted_v": -0.5,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.5,
+          "mean_speed": 0.5,
+          "u": 0.0,
+          "v": -0.5
+        },
+        "max_speed_global": 0.5,
+        "return_flow_peak_speed": 0.5
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    }
+  },
+  "flat_we100_ct050": {
+    "SDF_TAPERED_STREAMFUNCTION_V1": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": 0.5,
+          "seed": 6,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we100_ct050",
+        "cos_theta": 0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 1.050826573658556,
+          "deep_solid_cell_area": 0.0,
+          "gas_weighted_control_volume": 0.08498282691503276,
+          "liquid_weighted_control_volume": 0.9658437467435232,
+          "open_fluid_control_volume": 1.050826573658556,
+          "solid_indicator_cell_area": 3.2325836193562482e-06
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5000000077079005,
+        "actual_initial_gas_weighted_v": 0.014599085561054527,
+        "actual_initial_liquid_weighted_v": -0.31045168477414836,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0,
+          "mean_speed": 0.0,
+          "u": 0.0,
+          "v": 0.0
+        },
+        "max_speed_global": 2.157800280708278,
+        "return_flow_peak_speed": 1.2109906225545215
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "STREAMFUNCTION_LOCALIZED_V0": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": 0.5,
+          "seed": 6,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we100_ct050",
+        "cos_theta": 0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "56e5f29587abc560289b6b3768d58a56aed32618225e39b310a1511ad41917e0",
+        "initial_v_hash": "44f72fb6a426c78f6d7f59a0e119bd96a8ccec9efc5947aebd6b0f4a753959af"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.3329789164528888,
+          "deep_solid_cell_area": 0.00775929852558298,
+          "gas_weighted_control_volume": 0.14420127191104387,
+          "liquid_weighted_control_volume": 0.17717937952628907,
+          "open_fluid_control_volume": 0.32138065143733296,
+          "solid_indicator_cell_area": 0.011860675323489034
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.49993204607319797,
+        "actual_initial_gas_weighted_v": 0.0234644282869104,
+        "actual_initial_liquid_weighted_v": -0.4989744926402518,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0029517185487375718,
+          "mean_speed": 2.935639363468725e-05,
+          "u": 0.0,
+          "v": 2.2322414052204023e-05
+        },
+        "max_speed_global": 2.4527632458234523,
+        "return_flow_peak_speed": 2.4527632458234523
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "UNIFORM_ALL_DOMAIN": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": 0.5,
+          "seed": 6,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we100_ct050",
+        "cos_theta": 0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "c5f146df2f7ae50fce30e5c33039ffc1abec53f7fd4de1d75523fc239bd66231",
+        "initial_v_hash": "1b4fb74a4fdd82869cc343e7d02f7746df0d51a09d1396e259953fe0160b1591"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.6243195399297194,
+          "deep_solid_cell_area": 0.014062500000000002,
+          "gas_weighted_control_volume": 0.428147343707106,
+          "liquid_weighted_control_volume": 0.17742219622261352,
+          "open_fluid_control_volume": 0.6055695399297195,
+          "solid_indicator_cell_area": 0.018915654608363343
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5,
+        "actual_initial_gas_weighted_v": -0.5,
+        "actual_initial_liquid_weighted_v": -0.5,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.5,
+          "mean_speed": 0.5,
+          "u": 0.0,
+          "v": -0.5
+        },
+        "max_speed_global": 0.5,
+        "return_flow_peak_speed": 0.5
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    }
+  },
+  "flat_we200_ct000": {
+    "SDF_TAPERED_STREAMFUNCTION_V1": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 200.0,
+        "case": {
+          "We": 200.0,
+          "cos_theta": 0.0,
+          "seed": 5,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we200_ct000",
+        "cos_theta": 0.0,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 1.050826573658556,
+          "deep_solid_cell_area": 0.0,
+          "gas_weighted_control_volume": 0.08498282691503276,
+          "liquid_weighted_control_volume": 0.9658437467435232,
+          "open_fluid_control_volume": 1.050826573658556,
+          "solid_indicator_cell_area": 3.2325836193562482e-06
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5000000077079005,
+        "actual_initial_gas_weighted_v": 0.014599085561054527,
+        "actual_initial_liquid_weighted_v": -0.31045168477414836,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0,
+          "mean_speed": 0.0,
+          "u": 0.0,
+          "v": 0.0
+        },
+        "max_speed_global": 2.157800280708278,
+        "return_flow_peak_speed": 1.2109906225545215
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "STREAMFUNCTION_LOCALIZED_V0": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 200.0,
+        "case": {
+          "We": 200.0,
+          "cos_theta": 0.0,
+          "seed": 5,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we200_ct000",
+        "cos_theta": 0.0,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "56e5f29587abc560289b6b3768d58a56aed32618225e39b310a1511ad41917e0",
+        "initial_v_hash": "44f72fb6a426c78f6d7f59a0e119bd96a8ccec9efc5947aebd6b0f4a753959af"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.3329789164528888,
+          "deep_solid_cell_area": 0.00775929852558298,
+          "gas_weighted_control_volume": 0.14420127191104387,
+          "liquid_weighted_control_volume": 0.17717937952628907,
+          "open_fluid_control_volume": 0.32138065143733296,
+          "solid_indicator_cell_area": 0.011860675323489034
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.49993204607319797,
+        "actual_initial_gas_weighted_v": 0.0234644282869104,
+        "actual_initial_liquid_weighted_v": -0.4989744926402518,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0029517185487375718,
+          "mean_speed": 2.935639363468725e-05,
+          "u": 0.0,
+          "v": 2.2322414052204023e-05
+        },
+        "max_speed_global": 2.4527632458234523,
+        "return_flow_peak_speed": 2.4527632458234523
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "UNIFORM_ALL_DOMAIN": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 200.0,
+        "case": {
+          "We": 200.0,
+          "cos_theta": 0.0,
+          "seed": 5,
+          "split": "train",
+          "surface": "flat"
+        },
+        "case_name": "flat_we200_ct000",
+        "cos_theta": 0.0,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.234375,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.028125
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "initial_u_hash": "c5f146df2f7ae50fce30e5c33039ffc1abec53f7fd4de1d75523fc239bd66231",
+        "initial_v_hash": "1b4fb74a4fdd82869cc343e7d02f7746df0d51a09d1396e259953fe0160b1591"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.6243195399297194,
+          "deep_solid_cell_area": 0.014062500000000002,
+          "gas_weighted_control_volume": 0.428147343707106,
+          "liquid_weighted_control_volume": 0.17742219622261352,
+          "open_fluid_control_volume": 0.6055695399297195,
+          "solid_indicator_cell_area": 0.018915654608363343
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.950492978402494,
+          "liquid_weight_sum_Vphi": 1.549507021597507,
+          "open_fluid_volume": 34.5,
+          "solid_indicator_volume_dxdy_chi": 1.5000030402085542
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5,
+        "actual_initial_gas_weighted_v": -0.5,
+        "actual_initial_liquid_weighted_v": -0.5,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.5,
+          "mean_speed": 0.5,
+          "u": 0.0,
+          "v": -0.5
+        },
+        "max_speed_global": 0.5,
+        "return_flow_peak_speed": 0.5
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    }
+  },
+  "pillar_training": {
+    "SDF_TAPERED_STREAMFUNCTION_V1": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "height": 0.4,
+          "n_pillars": 4,
+          "seed": 8,
+          "split": "train",
+          "surface": "pillars",
+          "width": 0.3
+        },
+        "case_name": "pillar_training",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.640625,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.434375
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "initial_u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "initial_v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.9732166163518303,
+          "deep_solid_cell_area": 0.0,
+          "gas_weighted_control_volume": 0.0772945695764292,
+          "liquid_weighted_control_volume": 0.8959220467754011,
+          "open_fluid_control_volume": 0.9732166163518303,
+          "solid_indicator_cell_area": 1.4706719481470522e-06
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.469867538864136,
+          "liquid_weight_sum_Vphi": 1.5500927792312642,
+          "open_fluid_volume": 34.0199603180954,
+          "solid_indicator_volume_dxdy_chi": 1.955339190772706
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.4999999831981805,
+        "actual_initial_gas_weighted_v": 0.015164285047566659,
+        "actual_initial_liquid_weighted_v": -0.3176470020909587,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0,
+          "mean_speed": 0.0,
+          "u": 0.0,
+          "v": 0.0
+        },
+        "max_speed_global": 2.1124625719033565,
+        "return_flow_peak_speed": 1.0597060593271082
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "STREAMFUNCTION_LOCALIZED_V0": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "height": 0.4,
+          "n_pillars": 4,
+          "seed": 8,
+          "split": "train",
+          "surface": "pillars",
+          "width": 0.3
+        },
+        "case_name": "pillar_training",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.640625,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.434375
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "initial_u_hash": "aed658b49f48d9e5498c732462619ec1bcd1c6af639fe446deeb1985e606dd89",
+        "initial_v_hash": "b1fe746eb7386bb34cbb642be11d114a06638e0a856f2c46b188918bb922ef61"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.3330843417584922,
+          "deep_solid_cell_area": 0.00039246053260036444,
+          "gas_weighted_control_volume": 0.154984580238733,
+          "liquid_weighted_control_volume": 0.17718786964092365,
+          "open_fluid_control_volume": 0.33217244987965666,
+          "solid_indicator_cell_area": 0.0010799780348475555
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.469867538864136,
+          "liquid_weight_sum_Vphi": 1.5500927792312642,
+          "open_fluid_volume": 34.0199603180954,
+          "solid_indicator_volume_dxdy_chi": 1.955339190772706
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.49993204607319797,
+        "actual_initial_gas_weighted_v": 0.024973249184613543,
+        "actual_initial_liquid_weighted_v": -0.49896227682150485,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.0029517185487375718,
+          "mean_speed": 2.9990328808980483e-05,
+          "u": -1.2713893251579472e-16,
+          "v": 2.3834534854829072e-05
+        },
+        "max_speed_global": 2.4527632458234523,
+        "return_flow_peak_speed": 2.4527632458234523
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    },
+    "UNIFORM_ALL_DOMAIN": {
+      "case_identity": {
+        "Lx": 6.0,
+        "Ly": 6.0,
+        "M": 0.002,
+        "N": 192,
+        "R": 0.7,
+        "Re": 200.0,
+        "We": 100.0,
+        "case": {
+          "We": 100.0,
+          "cos_theta": -0.5,
+          "height": 0.4,
+          "n_pillars": 4,
+          "seed": 8,
+          "split": "train",
+          "surface": "pillars",
+          "width": 0.3
+        },
+        "case_name": "pillar_training",
+        "cos_theta": -0.5,
+        "dx": 0.03125,
+        "dy": 0.03125,
+        "effective_dt": 0.002,
+        "eps": 0.046875,
+        "eps_over_dx": 1.5,
+        "eta_pen": 0.004,
+        "initial_gap": 0.09375,
+        "local_surface_top": 0.640625,
+        "nu_g": 0.05,
+        "nu_l": 0.005,
+        "phase_dtype": "float64",
+        "policy": {
+          "dx": 0.03125,
+          "effective_dt": 0.002,
+          "limiting_criterion": "impact_phase_dx2_cap",
+          "limiting_value": 0.002,
+          "policy_cap_value": 0.002,
+          "registry_version": 1,
+          "requested_dt": 0.004,
+          "stable_dt_cap": 0.00625,
+          "time_step_policy_name": "impact_phase_cap_dx2_v1",
+          "time_step_policy_version": 1
+        },
+        "requested_dt": 0.004,
+        "rho_g": 0.1,
+        "rho_l": 1.0,
+        "u_impact_argument": 0.5,
+        "velocity_dtype": "float32",
+        "x0": 3.0,
+        "y0": 1.434375
+      },
+      "initial_hashes": {
+        "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "initial_u_hash": "c5f146df2f7ae50fce30e5c33039ffc1abec53f7fd4de1d75523fc239bd66231",
+        "initial_v_hash": "1b4fb74a4fdd82869cc343e7d02f7746df0d51a09d1396e259953fe0160b1591"
+      },
+      "kinetic_energy_regionwise": {
+        "energy": {
+          "all_grid_plain_cell_area": 0.62442781872298,
+          "deep_solid_cell_area": 0.01669921875,
+          "gas_weighted_control_volume": 0.4222039688682401,
+          "liquid_weighted_control_volume": 0.17743097277146958,
+          "open_fluid_control_volume": 0.5996349416397097,
+          "solid_indicator_cell_area": 0.024580094130273053
+        },
+        "region_normalization": {
+          "gas_weight_sum_V1minusphi": 32.469867538864136,
+          "liquid_weight_sum_Vphi": 1.5500927792312642,
+          "open_fluid_volume": 34.0199603180954,
+          "solid_indicator_volume_dxdy_chi": 1.955339190772706
+        },
+        "rho_definition": "rho_g+(rho_l-rho_g)*phi"
+      },
+      "liquid_core_gas_farfield_return_flow": {
+        "actual_initial_core_v_phi_ge_0p9": -0.5,
+        "actual_initial_gas_weighted_v": -0.5,
+        "actual_initial_liquid_weighted_v": -0.5,
+        "farfield_gas_velocity": {
+          "definition": "phi<=0.1, V_i>0, periodic distance from case-specific droplet center >= R+0.75",
+          "max_speed": 0.5,
+          "mean_speed": 0.5,
+          "u": 0.0,
+          "v": -0.5
+        },
+        "max_speed_global": 0.5,
+        "return_flow_peak_speed": 0.5
+      },
+      "normalization": "all phase means use the same physical V_i; liquid V_i*phi_i; gas V_i*(1-phi_i); core V_i*1(phi>=0.9)"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+L1A-2s frozen-fixture closure: complete local non-slow regression suite
+HEAD: 78fc8d719f9ebfecc686e6dffdb53b5ba028f80e
+Working directory: /home/user/hydrogym/examples/two_phase
+Interpreter: Python 3.11.2
+Command: JAX_ENABLE_X64=1 PYTHONPATH=. /home/user/hydrogym/.venv/bin/pytest -q tests -m "not slow"
+
+--- pytest output ---
+........................................................................ [ 31%]
+........................................................................ [ 63%]
+........................................................................ [ 94%]
+............                                                             [100%]
+228 passed in 274.68s (0:04:34)
+
+pytest_exit_code=0

@@ -1,0 +1,65 @@
+{
+  "approved_entries": 0,
+  "baseline_policy": "option_R_non_increasing_exact_multiset",
+  "baseline_ref": "quality/legacy_two_phase_debt_v1.json",
+  "baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "baseline_summary": {
+    "codespell_findings": 3,
+    "format_files": 27,
+    "isort_files": 28,
+    "ruff_files": 12,
+    "ruff_findings": 171
+  },
+  "baseline_update": "NOT_PERFORMED",
+  "decision": "OWNER_RESEAL_APPROVAL_REQUIRED",
+  "generated_at_utc": "2026-10-10T10:18:29.106212Z",
+  "migration_entries": 4,
+  "migration_manifest": "quality/approved_migrations.json",
+  "migration_manifest_sha256": "0ddf26e08b7e6341e0866f7dabd1f26e97ab5b3a202be599856375f681154629",
+  "new_quality_debt": "NONE_OBSERVED",
+  "no_count_netting": true,
+  "pending_owner_entries": 4,
+  "ratchet_historical": {
+    "added": 0,
+    "approved": 0,
+    "kept": {
+      "codespell": 3,
+      "format": 27,
+      "isort": 28,
+      "ruff": 171
+    },
+    "moved": 0,
+    "removed": 0
+  },
+  "raw_and_ratchet": {
+    "codespell": {
+      "gate_exit": 1,
+      "historical_count": 3,
+      "new_count": 0,
+      "output": "MIGRATIONS_LOADED=4 APPROVED=0 PENDING_OR_REJECTED=4\nRAW_TOOL_FAIL tool=codespell RAW_TOOL_EXIT=65\nHISTORICAL_EXCEPTIONS=3; NEW_FINDINGS=0; GATE=FAIL\nRATCHET_DECISION=FAIL kept=3 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=0 sha_drift_unapproved=4\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/production/impact_impulse_projection_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_inactive_phase_coupling_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_stationarity_metric_domain_audit.py\nGATE_FAIL",
+      "raw_exit": 65
+    },
+    "format": {
+      "gate_exit": 1,
+      "historical_count": 27,
+      "new_count": 0,
+      "output": "MIGRATIONS_LOADED=4 APPROVED=0 PENDING_OR_REJECTED=4\nRAW_TOOL_FAIL tool=format RAW_TOOL_EXIT=1\nHISTORICAL_EXCEPTIONS=27; NEW_FINDINGS=0; GATE=FAIL\nRATCHET_DECISION=FAIL kept=27 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=0 sha_drift_unapproved=4\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/production/impact_impulse_projection_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_inactive_phase_coupling_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_stationarity_metric_domain_audit.py\nGATE_FAIL",
+      "raw_exit": 1
+    },
+    "isort": {
+      "gate_exit": 1,
+      "historical_count": 28,
+      "new_count": 0,
+      "output": "MIGRATIONS_LOADED=4 APPROVED=0 PENDING_OR_REJECTED=4\nRAW_TOOL_FAIL tool=isort RAW_TOOL_EXIT=1\nHISTORICAL_EXCEPTIONS=28; NEW_FINDINGS=0; GATE=FAIL\nRATCHET_DECISION=FAIL kept=28 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=0 sha_drift_unapproved=4\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/production/impact_impulse_projection_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_inactive_phase_coupling_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_stationarity_metric_domain_audit.py\nGATE_FAIL",
+      "raw_exit": 1
+    },
+    "ruff": {
+      "gate_exit": 1,
+      "historical_count": 171,
+      "new_count": 0,
+      "output": "MIGRATIONS_LOADED=4 APPROVED=0 PENDING_OR_REJECTED=4\nRAW_TOOL_FAIL tool=ruff RAW_TOOL_EXIT=1\nHISTORICAL_EXCEPTIONS=171; NEW_FINDINGS=0; GATE=FAIL\nRATCHET_DECISION=FAIL kept=171 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=0 sha_drift_unapproved=4\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/production/impact_impulse_projection_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_inactive_phase_coupling_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_l1a_data_readiness_exit_audit.py\nPROTECTED_SHA_DRIFT_UNAPPROVED:examples/two_phase/tests/test_stationarity_metric_domain_audit.py\nGATE_FAIL",
+      "raw_exit": 1
+    }
+  },
+  "schema": "quality3_baseline_reconciliation_matrix_v1"
+}

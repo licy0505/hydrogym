@@ -1,0 +1,17 @@
+Final sequential component runs, with JAX_ENABLE_X64=1:
+
+solver core command: pytest -q test_two_phase.py test_surrogate.py test_dataset_contract.py test_train_operator.py test_nonneutral_wetting_audit.py
+result: 93 passed in 191.04s
+
+wall command: pytest -q test_wall_measure.py
+result: 46 passed in 156.77s
+
+cut-cell command: pytest -q test_cutcell_transport.py -m 'not slow'
+result: 25 passed, 2 deselected in 92.23s
+
+remaining command: pytest -q test_cutcell_alignment_audit.py test_mass_precision.py test_krylov_roundoff.py test_phase_storage_precision.py test_restart.py test_a1_promotion_audit.py
+result: 84 passed in 153.97s
+
+component total: 248 passed, 2 deselected.
+A first parallel attempt was terminated after resource contention/timeouts; it is not counted as a pass. The sequential x64 reruns above are the authoritative component results.
+A first wall invocation without JAX_ENABLE_X64=1 had 4 environment/setup failures; the corrected x64 invocation above is the authoritative result.

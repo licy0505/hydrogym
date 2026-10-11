@@ -1,0 +1,38 @@
+{
+  "L1A_STATUS": "BLOCKED",
+  "L1B_DATA": "L1B_DATA_NOT_READY",
+  "artifacts_directory": "examples/two_phase/artifacts/l1a2s",
+  "candidate_promoted": false,
+  "evidence_file_count": 17,
+  "fleet_impact_verdict": "PARTIAL_IMPACT_AUTHENTICATION",
+  "initializer_verdict": "INITIALIZER_COMPATIBLE",
+  "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION",
+  "production_semantics_changed": false,
+  "production_timestep_policy": "impact_phase_cap_dx2_v1",
+  "profile": "forensic",
+  "quality_claims": {
+    "focused_2s_pytest": "PASS: 49 passed",
+    "forensic_profile": true,
+    "git_diff_check": "PASS",
+    "hosted_ci": "PENDING_PR",
+    "locked_dependency_audit": "NOT_CLASSIFIED_UNTIL_HOSTED_CHECKS",
+    "preexisting_two_phase_regression": "BLOCKED: 223 passed; 5 known frozen-source/merge-fixture failures",
+    "py_compile": "PASS",
+    "quick_profile": "forensic",
+    "ruff": "ruff check PASS for all changed Python; ruff format --check PASS for the new audit and test; the reused projection-audit module has identical pre-existing whole-file formatting debt at HEAD"
+  },
+  "readiness": {
+    "DIRECT_FIELD_LABELS": "UNMEASURED",
+    "GENERATOR_QUALITY_GATES": "FAIL",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "UNMEASURED"
+  },
+  "solver_contract_version": 12,
+  "stage": "L1A-2s",
+  "stage_decision": {
+    "decision": "B_INITIALIZATION_HELPFUL_BUT_REFINEMENT_OR_GEOMETRY_BLOCKS",
+    "next_action": "diagnose the below-floor local-normal approach on pillar_training under the frozen geometry, drop placement, and inherited 0.2*u_impact threshold; do not tune the threshold or promote data",
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION"
+  },
+  "status": "BLOCKED_DIAGNOSTIC_ONLY"
+}

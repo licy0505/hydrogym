@@ -1,0 +1,36 @@
+{
+  "schema": "quality3_post_approval_merge_eligibility_v1",
+  "decision": "QUALITY3_INTEGRATION_VALIDATED_PR22_MERGE_BLOCKED",
+  "owner_approval": {
+    "approved_by": "licy0505",
+    "approval_commit": "0909dd69fa847c51e75dad7528b0f066823baebd",
+    "approved_entry_count": 4,
+    "pending_or_rejected_entry_count": 0
+  },
+  "hosted_validation": {
+    "workflow": "Python CI",
+    "run_id": 38053658694,
+    "head_sha": "7a0284c438d37f0015f079a7869c3ea640c6e9cb",
+    "conclusion": "success",
+    "evidence": "examples/two_phase/evidence/quality3/post_approval_hosted_checks.json"
+  },
+  "pr22": {
+    "number": 22,
+    "state": "OPEN",
+    "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "merge_executed": false,
+    "merge_eligibility": "NOT_ELIGIBLE",
+    "reason": "PR #22 remains open and its own observed head Quality check is not green; the session branch integration validation does not perform a PR merge."
+  },
+  "safety_invariants": {
+    "solver_contract_version": 12,
+    "l1b_data": "L1B_DATA_NOT_READY",
+    "l1a_2t": "NOT_RUN",
+    "t8_cfd": "NOT_RUN",
+    "ml_training": "NOT_RUN",
+    "production_physics_thresholds_changed": false,
+    "frozen_sources_changed": false,
+    "new_quality_debt": "NONE_OBSERVED"
+  },
+  "next_action": "No merge action is authorized or executed by this agent; retain PR #22 OPEN pending separate merge authorization and current PR-head policy checks."
+}

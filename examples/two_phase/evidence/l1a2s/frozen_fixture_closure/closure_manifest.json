@@ -1,0 +1,53 @@
+{
+  "base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+  "diagnostic_only": true,
+  "files": [
+    {
+      "bytes": 384,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/base_operator_hash_regression.txt",
+      "sha256": "1e4e95f83b74be04d4252b0a5008f68b60837f906257a3dfacda98c473c998b5"
+    },
+    {
+      "bytes": 1080,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/base_phasefield_contract12_metadata_change.md",
+      "sha256": "b163a8b143a38a5fb5ec076a53a4ca6a780c6c9bc76b7d0e35652e4bdad1e5e2"
+    },
+    {
+      "bytes": 1343610,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/base_sha_pytest_full_tracebacks.txt",
+      "sha256": "936f1b0226dd9c9a43798c1bdcdcd209a82c05f44eda7452a7fa44da085aa879"
+    },
+    {
+      "bytes": 7446,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/ci_frozen_fixture_closure.md",
+      "sha256": "f968f36aed26ff1b2e972cb01fefc18b7f3fef270a4d8b1d24111a0b1eb69da7"
+    },
+    {
+      "bytes": 439,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/fixed_anchor_targeted_tests.txt",
+      "sha256": "a3d7598e75609101176f5960a3d718fa4f9c25ac741fd367c0b1329fa4023daf"
+    },
+    {
+      "bytes": 698,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/full_non_slow_regression.txt",
+      "sha256": "dad5eefd5dc1a669dc06e95e829774855ceff70aa4ed697f377081feccb68110"
+    },
+    {
+      "bytes": 1879,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/hosted_ci_postclosure_attempt.md",
+      "sha256": "32f20dae5c22f1ad751c2f7ee2a43e769e002a30e06d419280a12ca59faa9cfb"
+    },
+    {
+      "bytes": 6511,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/pypi_locked_vulnerability_scan.json",
+      "sha256": "ead536b5ecb0a34ddd0dcc0d60f96808630a36054b129a829b6e5e6baad92942"
+    },
+    {
+      "bytes": 568,
+      "path": "examples/two_phase/evidence/l1a2s/frozen_fixture_closure/uv_audit_local_osv_unavailable.txt",
+      "sha256": "126ec625c40cc7b13e3a0fcba472c7c552a96a577ad87a76b3af4f5ab5990af0"
+    }
+  ],
+  "schema_version": 1,
+  "stage": "L1A-2s CI / frozen-fixture closure"
+}

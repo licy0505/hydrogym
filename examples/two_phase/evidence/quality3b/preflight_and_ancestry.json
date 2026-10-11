@@ -1,0 +1,45 @@
+{
+  "schema": "quality3b_preflight_and_ancestry_v1",
+  "generated_at_utc": "2026-10-10T14:46:53.923428Z",
+  "repository": "licy0505/hydrogym",
+  "workspace": {
+    "branch": "arena/9fa6b0dd-hydrogym",
+    "tested_code_commit": "86125cfaf8656af0de691cae6398ea58bc95eeae",
+    "tested_code_tree": "0081e844c737570efa175cc4fdf017bb9a697a55",
+    "clean_before_evidence": true,
+    "worktree_status_at_capture": "evidence files are the only current uncommitted files before evidence commit",
+    "merge_base_main_pr22": "002120f3a051e638a7e85f9db4022107dbe45780"
+  },
+  "main": {
+    "ref": "refs/heads/main",
+    "sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "pr23_merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "pr23_merge_sha_matches_main": true
+  },
+  "pr22": {
+    "number": 22,
+    "state": "OPEN",
+    "head_ref": "arena/3d47375a-hydrogym",
+    "head_sha": "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf",
+    "base_ref": "main",
+    "base_sha": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "head_matches_attestation": true,
+    "url": "https://github.com/licy0505/hydrogym/pull/22"
+  },
+  "integration_reference": {
+    "commit": "39dfdab0ef384eabb6693833dc33a4b08b378d8e",
+    "parents": [
+      "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+      "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    ],
+    "expected_parents": [
+      "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+      "19da2a4d695e6cceabd0e6c3dcc505d09ba84daf"
+    ],
+    "parents_exact": true,
+    "merge_base": "002120f3a051e638a7e85f9db4022107dbe45780",
+    "not_main_merge": true
+  },
+  "latest_session_branch_remote": "338d08acd6315c17d115e01ad6e32f9bd2ff4bf2\trefs/heads/arena/9fa6b0dd-hydrogym",
+  "original_base_main_sha_preserved": true
+}

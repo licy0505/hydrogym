@@ -1,0 +1,17 @@
+MIGRATIONS_LOADED=4 APPROVED=4 PENDING_OR_REJECTED=0
+RAW_TOOL_FAIL tool=ruff RAW_TOOL_EXIT=1
+HISTORICAL_EXCEPTIONS=171; NEW_FINDINGS=0; GATE=PASS_BASELINE_ONLY
+RATCHET_DECISION=PASS_BASELINE_ONLY kept=171 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=4 sha_drift_unapproved=0
+BASELINE_ONLY_ACCEPTED (historical debt remains; not a clean tree)
+RAW_TOOL_FAIL tool=format RAW_TOOL_EXIT=1
+HISTORICAL_EXCEPTIONS=27; NEW_FINDINGS=0; GATE=PASS_BASELINE_ONLY
+RATCHET_DECISION=PASS_BASELINE_ONLY kept=27 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=4 sha_drift_unapproved=0
+BASELINE_ONLY_ACCEPTED (historical debt remains; not a clean tree)
+RAW_TOOL_FAIL tool=isort RAW_TOOL_EXIT=1
+HISTORICAL_EXCEPTIONS=28; NEW_FINDINGS=0; GATE=PASS_BASELINE_ONLY
+RATCHET_DECISION=PASS_BASELINE_ONLY kept=28 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=4 sha_drift_unapproved=0
+BASELINE_ONLY_ACCEPTED (historical debt remains; not a clean tree)
+RAW_TOOL_FAIL tool=codespell RAW_TOOL_EXIT=65
+HISTORICAL_EXCEPTIONS=3; NEW_FINDINGS=0; GATE=PASS_BASELINE_ONLY
+RATCHET_DECISION=PASS_BASELINE_ONLY kept=3 added=0 missing_historical=0 moved_approved=0 removed_approved=0 sha_transitions_approved=4 sha_drift_unapproved=0
+BASELINE_ONLY_ACCEPTED (historical debt remains; not a clean tree)

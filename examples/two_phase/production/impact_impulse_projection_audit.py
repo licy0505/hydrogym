@@ -315,13 +315,21 @@ def divergence_of(u: np.ndarray, v: np.ndarray, dx: float, dy: float) -> np.ndar
 # B17 substep ledger (section 6) — exact reimplementation with captures
 # ---------------------------------------------------------------------------
 def substep_ledger(
-    state, solid, p, h: float, static_weights: dict[str, np.ndarray] | None = None, light: bool = False
+    state,
+    solid,
+    p,
+    h: float,
+    static_weights: dict[str, np.ndarray] | None = None,
+    light: bool = False,
+    capture_fields: bool = False,
 ) -> tuple[Any, dict[str, Any]]:
     """One production substep, instrumented (eager reference implementation).
 
     Arithmetic identical to pf.step: rhs at carry -> phase update -> momentum
     Euler -> Brinkman factor -> divergence -> FFT Poisson -> gradient correction.
-    ``light=True`` skips the heavy per-region increment norms.
+    ``light=True`` skips the heavy per-region increment norms. ``capture_fields=True`` adds
+    host-side snapshots of the already-computed velocity stages for a diagnostic consumer; it
+    does not alter the arithmetic or production state.
     """
     dt = h  # production name
     phi, u, v = state.phi, state.u, state.v
@@ -449,6 +457,21 @@ def substep_ledger(
             "after": region_velocity_stats(u_nw, v_nw, weights),
         },
     })
+    if capture_fields:
+        ledger["captured_fields"] = {
+            "phi_before": np.asarray(phi, dtype=np.float64),
+            "phi_after": np.asarray(phi_new, dtype=np.float64),
+            "u_before": u_n,
+            "v_before": v_n,
+            "u_after_explicit_rhs": u_ex,
+            "v_after_explicit_rhs": v_ex,
+            "u_after_brinkman": u_st,
+            "v_after_brinkman": v_st,
+            "u_after_pressure_projection": u_nw,
+            "v_after_pressure_projection": v_nw,
+            "du_projection": np.asarray(du_proj, dtype=np.float64),
+            "dv_projection": np.asarray(dv_proj, dtype=np.float64),
+        }
     return new_state, ledger
 
 
@@ -517,6 +540,37 @@ SCALAR_NAMES = (
     "ke_liquid",
     "phi_min",
     "phi_max",
+    # L1A-2s causal additions. These are stage-separated observations, not solver inputs.
+    "rhs_dv_liquid_mean",
+    "brinkman_dv_liquid_mean_exact",
+    "projection_dv_liquid_mean_exact",
+    "rhs_dv_grid_mean",
+    "brinkman_dv_grid_mean_exact",
+    "projection_dv_grid_mean_exact",
+    "v_liquid_before",
+    "v_liquid_after_rhs",
+    "v_liquid_after_brinkman",
+    "v_liquid_after_projection",
+    "v_core_before",
+    "v_core_after_rhs",
+    "v_core_after_brinkman",
+    "v_core_after_projection",
+    "v_gas_before",
+    "v_gas_after_rhs",
+    "v_gas_after_brinkman",
+    "v_gas_after_projection",
+    "liquid_momentum_y_before",
+    "liquid_momentum_y_after_rhs",
+    "liquid_momentum_y_after_brinkman",
+    "liquid_momentum_y_after_projection",
+    "kinetic_energy_physical_before",
+    "kinetic_energy_physical_after_rhs",
+    "kinetic_energy_physical_after_brinkman",
+    "kinetic_energy_physical_after_projection",
+    "div_before_linf",
+    "div_after_rhs_linf",
+    "div_after_brinkman_linf",
+    "div_after_projection_linf",
 )
 
 
@@ -584,6 +638,37 @@ def make_fast_substep(solid, p, h: float):
             - div_star.astype(jnp.float64) / dt
         )
         scale = jnp.max(jnp.abs(div_star.astype(jnp.float64) / dt)) + 1e-30
+
+        # Explicit RHS, Brinkman damping and projection are kept as three distinct
+        # velocity-stage changes. All reductions below use the incoming phi and V_i,
+        # so a simultaneous phase update cannot change the weights used to attribute
+        # a momentum increment.
+        phi_before64 = phi.astype(jnp.float64)
+        u_before64, v_before64 = u.astype(jnp.float64), v.astype(jnp.float64)
+        u_rhs64, v_rhs64 = u_exp.astype(jnp.float64), v_exp.astype(jnp.float64)
+        u_brink64, v_brink64 = u_star.astype(jnp.float64), v_star.astype(jnp.float64)
+        u_proj64, v_proj64 = u_new.astype(jnp.float64), v_new.astype(jnp.float64)
+        liquid_before = volume * phi_before64
+        gas_before = volume * (1.0 - phi_before64)
+        core_before = volume * (phi_before64 >= CORE_PHI).astype(jnp.float64)
+        liquid_denom = jnp.sum(liquid_before) + 1e-30
+        gas_denom = jnp.sum(gas_before) + 1e-30
+        core_denom = jnp.sum(core_before) + 1e-30
+        rho_before = p.rho_g + (p.rho_l - p.rho_g) * phi_before64
+        u_stages = (u_before64, u_rhs64, u_brink64, u_proj64)
+        v_stages = (v_before64, v_rhs64, v_brink64, v_proj64)
+        stage_v_liquid = [jnp.sum(liquid_before * value) / liquid_denom for value in v_stages]
+        stage_v_gas = [jnp.sum(gas_before * value) / gas_denom for value in v_stages]
+        stage_v_core = [jnp.sum(core_before * value) / core_denom for value in v_stages]
+        stage_momentum = [jnp.sum(liquid_before * rho_before * value) for value in v_stages]
+        stage_ke = [
+            0.5 * jnp.sum(volume * rho_before * (u_value**2 + v_value**2))
+            for u_value, v_value in zip(u_stages, v_stages)
+        ]
+        div_before = (pf._ddx(u, dx) + pf._ddy(v, dy)).astype(jnp.float64)
+        div_after_rhs = (pf._ddx(u_exp, dx) + pf._ddy(v_exp, dy)).astype(jnp.float64)
+        div_after_brinkman = div_star.astype(jnp.float64)
+
         scalars = jnp.stack([
             jnp.mean(v_nw64),
             jnp.mean(v_n64),
@@ -615,6 +700,21 @@ def make_fast_substep(solid, p, h: float):
             0.5 * jnp.sum(volume * liquid * speed2),
             jnp.min(phi64),
             jnp.max(phi64),
+            jnp.sum(liquid_before * (v_rhs64 - v_before64)) / liquid_denom,
+            jnp.sum(liquid_before * (v_brink64 - v_rhs64)) / liquid_denom,
+            jnp.sum(liquid_before * (v_proj64 - v_brink64)) / liquid_denom,
+            jnp.mean(v_rhs64 - v_before64),
+            jnp.mean(v_brink64 - v_rhs64),
+            jnp.mean(v_proj64 - v_brink64),
+            *stage_v_liquid,
+            *stage_v_core,
+            *stage_v_gas,
+            *stage_momentum,
+            *stage_ke,
+            jnp.max(jnp.abs(div_before)),
+            jnp.max(jnp.abs(div_after_rhs)),
+            jnp.max(jnp.abs(div_after_brinkman)),
+            jnp.max(jnp.abs(div_new)),
         ])
         new_state = pf.State(
             phi=phi_new.astype(pf.phase_state_dtype(params)),
