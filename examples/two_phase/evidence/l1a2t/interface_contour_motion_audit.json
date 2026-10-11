@@ -1,0 +1,410 @@
+{
+  "complex_heldout": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "complex_heldout",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 2.5579538487363607e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.988300323511345,
+        "delta_phi": 0.0006161352598604841,
+        "grad_dot_normal": -6.9656030282635015,
+        "grad_norm": 7.0480630862441895,
+        "grad_phi": [
+          -3.4515438079833984,
+          6.145082473754883
+        ],
+        "linearized_normal_advance": 8.845397266546271e-05,
+        "linearized_normal_speed": 0.13268095899819407,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.02684636843795829,
+        "median_displacement_over_dx": 0.00598238461998335,
+        "normal_projection_max_over_h": 1.1311620156021152,
+        "normal_projection_mean_over_h": 0.1500296906616379,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 178,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          106,
+          35
+        ],
+        "support_cell_before": [
+          106,
+          35
+        ],
+        "switched": false
+      }
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "complex_heldout",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 2.5579538487363607e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.988300323511345,
+        "delta_phi": 0.001191368844395857,
+        "grad_dot_normal": -6.9656030282635015,
+        "grad_norm": 7.0480630862441895,
+        "grad_phi": [
+          -3.4515438079833984,
+          6.145082473754883
+        ],
+        "linearized_normal_advance": 0.0001710359949543178,
+        "linearized_normal_speed": 0.2565539924314767,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.03132165580051094,
+        "median_displacement_over_dx": 0.005899676628885686,
+        "normal_projection_max_over_h": 0.9684223013463933,
+        "normal_projection_mean_over_h": 0.14418444389181512,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 178,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          106,
+          35
+        ],
+        "support_cell_before": [
+          106,
+          35
+        ],
+        "switched": false
+      }
+    }
+  },
+  "flat_we100_ct050": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we100_ct050",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.001565945576281147,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -0.00022282232903604184,
+        "linearized_normal_speed": -0.3342334935540628,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.02731664839585335,
+        "median_displacement_over_dx": 0.006648497792021146,
+        "normal_projection_max_over_h": 1.193126416692003,
+        "normal_projection_mean_over_h": 0.1459771381346897,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          95,
+          10
+        ],
+        "support_cell_before": [
+          95,
+          10
+        ],
+        "switched": false
+      }
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we100_ct050",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.0015678087815337305,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -0.00022308744919100838,
+        "linearized_normal_speed": -0.3346311737865126,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.033056476083658026,
+        "median_displacement_over_dx": 0.0058601824175141815,
+        "normal_projection_max_over_h": 1.0344720867663248,
+        "normal_projection_mean_over_h": 0.13954155956237432,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          95,
+          10
+        ],
+        "support_cell_before": [
+          95,
+          10
+        ],
+        "switched": false
+      }
+    }
+  },
+  "flat_we200_ct000": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we200_ct000",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.0010126408782841212,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -0.00014409121389277453,
+        "linearized_normal_speed": -0.2161368208391618,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.027316652750528192,
+        "median_displacement_over_dx": 0.005788952568181571,
+        "normal_projection_max_over_h": 1.1931265030415972,
+        "normal_projection_mean_over_h": 0.15101168213814536,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          95,
+          10
+        ],
+        "support_cell_before": [
+          95,
+          10
+        ],
+        "switched": false
+      }
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we200_ct000",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.0010145039253469657,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -0.00014435631153852582,
+        "linearized_normal_speed": -0.21653446730778875,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.033056849576567515,
+        "median_displacement_over_dx": 0.005650609386549377,
+        "normal_projection_max_over_h": 1.0344654343010795,
+        "normal_projection_mean_over_h": 0.14457595329416362,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          95,
+          10
+        ],
+        "support_cell_before": [
+          95,
+          10
+        ],
+        "switched": false
+      }
+    }
+  },
+  "pillar_training": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "pillar_training",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.0003247389678165402,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -4.6207923336315555e-05,
+        "linearized_normal_speed": -0.06931188500447333,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.034956614702778666,
+        "median_displacement_over_dx": 0.00594747518083949,
+        "normal_projection_max_over_h": 0.9471370423146386,
+        "normal_projection_mean_over_h": 0.1528562139649876,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          96,
+          23
+        ],
+        "support_cell_before": [
+          95,
+          23
+        ],
+        "switched": true
+      }
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "pillar_training",
+      "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+      "independent_contour_points_before": 176,
+      "independent_vs_official": {
+        "agreement_within_declared_tolerance": true,
+        "declared_tolerance_dx": 0.1,
+        "matched_fraction": 1.0,
+        "max_match_distance_over_dx": 4.547473508864641e-13,
+        "support_location_difference_over_dx": 1.7053025658242404e-13
+      },
+      "linearized_normal_advance": {
+        "conditioning_ratio": 0.9997140062937165,
+        "delta_phi": -0.00032518396158648377,
+        "grad_dot_normal": -7.027776718139648,
+        "grad_norm": 7.029787193033368,
+        "grad_phi": [
+          0.16811418533325195,
+          7.027776718139648
+        ],
+        "linearized_normal_advance": -4.627124261747527e-05,
+        "linearized_normal_speed": -0.06940686392621291,
+        "not_exact_contour_motion": true,
+        "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+      },
+      "matched_contour_motion": {
+        "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+        "max_displacement_over_dx": 0.04670804718642785,
+        "median_displacement_over_dx": 0.005810766981220183,
+        "normal_projection_max_over_h": 0.9626806741842575,
+        "normal_projection_mean_over_h": 0.14986742634749947,
+        "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+        "usable_match_fraction": 1.0
+      },
+      "official_contour_points_after": 176,
+      "official_contour_points_before": 176,
+      "support_switch": {
+        "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+        "support_cell_after": [
+          96,
+          23
+        ],
+        "support_cell_before": [
+          95,
+          23
+        ],
+        "switched": true
+      }
+    }
+  }
+}

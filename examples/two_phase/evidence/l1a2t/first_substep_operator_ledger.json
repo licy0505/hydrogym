@@ -1,0 +1,642 @@
+{
+  "complex_heldout": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "complex_heldout",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 1.3806897657814288e-06,
+            "explicit_rhs": -0.0003494203563225995,
+            "periodic_pressure_projection": -0.0010073052908069063
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -0.007826750972327212,
+            "after_explicit_rhs": -0.007828131662092994,
+            "after_pressure_projection": -0.008834056263134119,
+            "before": -0.007478711305770394
+          },
+          "cg_converged": true,
+          "cg_iterations": 39,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.5000128462631767,
+            "before": -0.5000000248595142
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.07100439071655273,
+            "after_projection": 3.2782554626464844e-06,
+            "after_rhs": 0.07103157043457031,
+            "before": 3.337860107421875e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": 6.129801912970991e-12,
+            "projection_correction_mean": 5.084250439639041e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.3137952282561661,
+            "after_projection": -0.31379050353972315,
+            "after_rhs": -0.31379513749998467,
+            "before": -0.3137291700919055
+          },
+          "poisson_residual_relative": 2.3907539605256973e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -4.9185347153171376e-12,
+            "mean_ddy_pressure": -5.749869716156455e-12,
+            "mean_of_proj_correction": 5.084250439639041e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "complex_heldout",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 1.1534627146925214e-05,
+            "explicit_rhs": -0.0028733012543946113,
+            "periodic_pressure_projection": 0.0030200863055395155
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -0.06962426279235678,
+            "after_explicit_rhs": -0.06963579741950371,
+            "after_pressure_projection": -0.06660417648681727,
+            "before": -0.0667624961651091
+          },
+          "cg_converged": true,
+          "cg_iterations": 39,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.49996034514774484,
+            "before": -0.4999999770254271
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.18584060668945312,
+            "after_projection": 3.4868717193603516e-06,
+            "after_rhs": 0.18708515167236328,
+            "before": 3.337860107421875e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": -3.0232776159088024e-11,
+            "projection_correction_mean": -4.333892355504621e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.31501251438254535,
+            "after_projection": -0.31500606339699266,
+            "after_rhs": -0.3150122500071138,
+            "before": -0.3149494944613065
+          },
+          "poisson_residual_relative": 1.1289693536137283e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -1.507929583668657e-12,
+            "mean_ddy_pressure": 2.360265069809328e-11,
+            "mean_of_proj_correction": -4.333892355504621e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    }
+  },
+  "flat_we100_ct050": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we100_ct050",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 5.731906137324493e-07,
+            "explicit_rhs": -0.00010040250660486214,
+            "periodic_pressure_projection": 0.001056013980627852
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -9.982931599112969e-05,
+            "after_explicit_rhs": -0.00010040250660486214,
+            "after_pressure_projection": 0.0009561846646367224,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 9,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.5000726305090148,
+            "before": -0.5000000077079005
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.08585166931152344,
+            "after_projection": 2.5033950805664062e-06,
+            "after_rhs": 0.08580589294433594,
+            "before": 2.9206275939941406e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": 2.3508496075722953e-11,
+            "projection_correction_mean": -1.4395467240121973e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.3105459003039078,
+            "after_projection": -0.3105495489955722,
+            "after_rhs": -0.3105459986899035,
+            "before": -0.3104516847741483
+          },
+          "poisson_residual_relative": 2.628986988365807e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -1.2990300193551876e-11,
+            "mean_ddy_pressure": -5.152540122960797e-11,
+            "mean_of_proj_correction": -1.4395467240121973e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we100_ct050",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 5.724650833877434e-07,
+            "explicit_rhs": -9.993450689474011e-05,
+            "periodic_pressure_projection": 0.0012274093824242713
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -9.936204181135237e-05,
+            "after_explicit_rhs": -9.993450689474011e-05,
+            "after_pressure_projection": 0.001128047340612919,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 9,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.5000251647650763,
+            "before": -0.4999999903804759
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.12773823738098145,
+            "after_projection": 2.682209014892578e-06,
+            "after_rhs": 0.12789487838745117,
+            "before": 2.6226043701171875e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 1.1920928955078125e-07,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": -3.703724055843022e-12,
+            "projection_correction_mean": -2.5899468553719686e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.3117240326604096,
+            "after_projection": -0.311734072066393,
+            "after_rhs": -0.31172435238192603,
+            "before": -0.3116426365459686
+          },
+          "poisson_residual_relative": 1.299057623284488e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -8.384404281969182e-12,
+            "mean_ddy_pressure": 8.730201746705763e-12,
+            "mean_of_proj_correction": -2.5899468553719686e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    }
+  },
+  "flat_we200_ct000": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we200_ct000",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 2.8653400936465165e-07,
+            "explicit_rhs": -5.016171424468018e-05,
+            "periodic_pressure_projection": 0.0009485125497499963
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -4.987518023531553e-05,
+            "after_explicit_rhs": -5.016171424468018e-05,
+            "after_pressure_projection": 0.0008986373695146808,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 9,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.5000712484482448,
+            "before": -0.5000000077079005
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.08584785461425781,
+            "after_projection": 2.7865171432495117e-06,
+            "after_rhs": 0.08580303192138672,
+            "before": 2.9206275939941406e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": 2.3508496075722953e-11,
+            "projection_correction_mean": -4.994766340375673e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.31054554241939547,
+            "after_projection": -0.3105481323320246,
+            "after_rhs": -0.31054562500368726,
+            "before": -0.3104516847741483
+          },
+          "poisson_residual_relative": 2.9068260421989677e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": 5.0527483431829345e-12,
+            "mean_ddy_pressure": -3.6777692002942786e-11,
+            "mean_of_proj_correction": -4.994766340375673e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we200_ct000",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 2.8580845453956194e-07,
+            "explicit_rhs": -4.9693714534558156e-05,
+            "periodic_pressure_projection": 0.0011199114475122043
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -4.9407906080018594e-05,
+            "after_explicit_rhs": -4.9693714534558156e-05,
+            "after_pressure_projection": 0.0010705035414321858,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 9,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.5000237809655693,
+            "before": -0.4999999903804759
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.12751150131225586,
+            "after_projection": 3.2186508178710938e-06,
+            "after_rhs": 0.12766790390014648,
+            "before": 2.6226043701171875e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": -3.703724055843022e-12,
+            "projection_correction_mean": 4.4105428703545955e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.3117236748004339,
+            "after_projection": -0.31173265394169636,
+            "after_rhs": -0.31172397871401064,
+            "before": -0.3116426365459686
+          },
+          "poisson_residual_relative": 1.3898705239001637e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -1.6876179466231e-11,
+            "mean_ddy_pressure": 2.843493342020843e-11,
+            "mean_of_proj_correction": 4.4105428703545955e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    }
+  },
+  "pillar_training": {
+    "C2_BASE": {
+      "candidate": "C2_BASE",
+      "case_name": "pillar_training",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 4.4301686402857467e-07,
+            "explicit_rhs": -0.00010027744691200732,
+            "periodic_pressure_projection": 0.0006680717422631319
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -9.983443004797875e-05,
+            "after_explicit_rhs": -0.00010027744691200732,
+            "after_pressure_projection": 0.0005682373122151532,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 18,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.4999911760482966,
+            "before": -0.4999999831981805
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.08461284637451172,
+            "after_projection": 2.7418136596679688e-06,
+            "after_rhs": 0.0846409797668457,
+            "before": 2.86102294921875e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 1.1920928955078125e-07,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": 7.028928056879774e-11,
+            "projection_correction_mean": 1.3883732849726918e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.31766646662151327,
+            "after_projection": -0.31767928083467917,
+            "after_rhs": -0.3176666855237888,
+            "before": -0.3176470020909587
+          },
+          "poisson_residual_relative": 2.0269077165259664e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -2.4095293661553618e-11,
+            "mean_ddy_pressure": 5.068538181755381e-12,
+            "mean_of_proj_correction": 1.3883732849726918e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    },
+    "T3_FAR_NARROW": {
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "pillar_training",
+      "internal_substep_h": 0.0006666666666666666,
+      "projection_local_vs_global_note": "a nonzero local projected correction coexists with a plain-grid mean of ~0; local and global quantities are reported separately and no claim is made that projection destroys the grid mean",
+      "substeps": [
+        {
+          "approach_delta_by_operator": {
+            "brinkman": 4.416206992223986e-07,
+            "explicit_rhs": -9.910461923117574e-05,
+            "periodic_pressure_projection": 0.0009209582133156252
+          },
+          "approach_speed_by_velocity_stage_into_solid": {
+            "after_brinkman": -9.866299853195334e-05,
+            "after_explicit_rhs": -9.910461923117574e-05,
+            "after_pressure_projection": 0.0008222952147836719,
+            "before": 0.0
+          },
+          "cg_converged": true,
+          "cg_iterations": 18,
+          "core_mean_v_by_stage": {
+            "after_projection": -0.4999871554541777,
+            "before": -0.5000000189948868
+          },
+          "divergence_by_stage_linf": {
+            "after_brinkman": 0.1333608627319336,
+            "after_projection": 2.384185791015625e-06,
+            "after_rhs": 0.1327800750732422,
+            "before": 3.516674041748047e-06
+          },
+          "fast_kernel_vs_capture_state_max_abs_delta": {
+            "phi": 0.0,
+            "u": 5.960464477539063e-08,
+            "v": 1.1920928955078125e-07
+          },
+          "grid_mean_v_by_stage": {
+            "before": 5.840789888781708e-11,
+            "projection_correction_mean": -2.3581252691270056e-14
+          },
+          "liquid_mean_v_by_stage": {
+            "after_brinkman": -0.3172466770816288,
+            "after_projection": -0.31726298149003407,
+            "after_rhs": -0.3172474354783801,
+            "before": -0.3172274161594946
+          },
+          "poisson_residual_relative": 1.406379240888927e-06,
+          "projection_plain_grid_mean_identity": {
+            "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+            "mean_ddx_pressure": -2.1868531676874328e-11,
+            "mean_ddy_pressure": 2.05773176276125e-11,
+            "mean_of_proj_correction": -2.3581252691270056e-14
+          },
+          "substep_index_1_based": 1,
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "t_before": 0.0
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "declared_run_order": [
+    "C2_BASE",
+    "T1_NEAR_NARROW",
+    "T2_NEAR_WIDE",
+    "T3_FAR_NARROW"
+  ],
+  "evidence_class": "FORENSIC_N192",
+  "extra_candidates": [],
+  "not_an_optimization": true,
+  "prespecified_candidates": {
+    "C2_BASE": {
+      "eligible": true,
+      "onset_a_dx": 4.0,
+      "role": "exact L1A-2s C2 reproduction",
+      "transition_sdf_over_dx": [
+        4.0,
+        12.0
+      ],
+      "width_b_dx": 8.0
+    },
+    "T1_NEAR_NARROW": {
+      "eligible": true,
+      "onset_a_dx": 1.0,
+      "role": "shortened near-wall taper",
+      "transition_sdf_over_dx": [
+        1.0,
+        5.0
+      ],
+      "width_b_dx": 4.0
+    },
+    "T2_NEAR_WIDE": {
+      "eligible": true,
+      "onset_a_dx": 1.0,
+      "role": "onset-only comparison vs C2",
+      "transition_sdf_over_dx": [
+        1.0,
+        9.0
+      ],
+      "width_b_dx": 8.0
+    },
+    "T3_FAR_NARROW": {
+      "eligible": true,
+      "onset_a_dx": 4.0,
+      "role": "width-only comparison vs C2",
+      "transition_sdf_over_dx": [
+        4.0,
+        8.0
+      ],
+      "width_b_dx": 4.0
+    }
+  },
+  "quarantined_controls": {
+    "NC_NO_WALL_TAPER": {
+      "eligible": false,
+      "onset_a_dx": null,
+      "role": "quarantined diagnostic counterfactual; not a candidate",
+      "wall_taper": "identically one",
+      "width_b_dx": null
+    }
+  },
+  "taper_equation": "wall_taper = smooth5((sdf - a*dx)/(b*dx)); smooth5(z)=6z^5-15z^4+10z^3",
+  "unchanged_components": [
+    "compact radial envelope (1 - r2/(R+0.45)^2)^4_+ times sx",
+    "periodic y seam taper smooth5((dist_seam-3dy)/(3dy))",
+    "streamfunction differentiation u=D_y psi, v=-D_x psi",
+    "V_i-weighted phi>=0.9 core-mean amplitude normalization to -u_impact",
+    "phase field, solid geometry, case placement, M, We, Re, cos_theta, eps, dt policy"
+  ]
+}

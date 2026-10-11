@@ -1,0 +1,165 @@
+{
+  "candidate_identity": {
+    "prespecified": {
+      "C2_BASE": {
+        "eligible": true,
+        "onset_a_dx": 4.0,
+        "role": "exact L1A-2s C2 reproduction",
+        "transition_sdf_over_dx": [
+          4.0,
+          12.0
+        ],
+        "width_b_dx": 8.0
+      },
+      "T1_NEAR_NARROW": {
+        "eligible": true,
+        "onset_a_dx": 1.0,
+        "role": "shortened near-wall taper",
+        "transition_sdf_over_dx": [
+          1.0,
+          5.0
+        ],
+        "width_b_dx": 4.0
+      },
+      "T2_NEAR_WIDE": {
+        "eligible": true,
+        "onset_a_dx": 1.0,
+        "role": "onset-only comparison vs C2",
+        "transition_sdf_over_dx": [
+          1.0,
+          9.0
+        ],
+        "width_b_dx": 8.0
+      },
+      "T3_FAR_NARROW": {
+        "eligible": true,
+        "onset_a_dx": 4.0,
+        "role": "width-only comparison vs C2",
+        "transition_sdf_over_dx": [
+          4.0,
+          8.0
+        ],
+        "width_b_dx": 4.0
+      }
+    },
+    "quarantined": {
+      "NC_NO_WALL_TAPER": {
+        "eligible": false,
+        "onset_a_dx": null,
+        "role": "quarantined diagnostic counterfactual; not a candidate",
+        "wall_taper": "identically one",
+        "width_b_dx": null
+      }
+    }
+  },
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training",
+    "complex_heldout"
+  ],
+  "evidence_class": "FORENSIC_N192",
+  "evidence_files": {
+    "bounded_candidate_event_matrix.json": {
+      "sha256": "8080275cab8e3b44457ba7474ea5e6a82a28e99938154f1bbe7867c7d7ee27a7"
+    },
+    "candidate_initial_compatibility_matrix.json": {
+      "sha256": "2a39393d11ca98f7cf0356961b0dd39a36dc58b865a1aa3186eaaaa5fc501992"
+    },
+    "counterfactual_and_falsification_matrix.json": {
+      "sha256": "b8195d0a627e3b1f215e8b4e3123db49de1ffee584525b22ed9416c5c0e47c7b"
+    },
+    "first_substep_operator_ledger.json": {
+      "sha256": "22e9965399e1aae2e3c77f092178ac4c95d486d45b8c30f5319290f028fbcc75"
+    },
+    "front_velocity_distance_band_matrix.json": {
+      "sha256": "ed88bce4771435783704786f617315d1c2c4e635a7688e59c80de190208fb2d2"
+    },
+    "interface_contour_motion_audit.json": {
+      "sha256": "0f7654950f3f820ee31647cd52c191bee3dd6a05c2be4abe715ae638a9300748"
+    },
+    "l1a2t_final_report.json": {
+      "sha256": "4ded99bad0a3760565a8ebc97202a234b9dae8879944c061bb77778993295d92"
+    },
+    "l1a2t_final_report.md": {
+      "sha256": "18554f275f7c0853d82f090c2c853a293fc9dc473dd93c8e171b6ccf7bc64758"
+    },
+    "mechanism_decision.json": {
+      "sha256": "3dc2dd9d07f8d95b0829ee6cd52171712cce63c5c2ea9aeb4e92924e808dc6a8"
+    },
+    "phase_advective_CH_implicit_budget.json": {
+      "sha256": "2ac3adcf48bce5894abbdaa913f4033cc024a0175887f8e8d5001ed3e66cf412"
+    },
+    "prerequisite_and_source_map.json": {
+      "sha256": "28d442bb7f6d9b9b14cc6c4c3e3a7eb9159288e19d1d7705fd582f44dee89bde"
+    },
+    "quality_and_blocker_matrix.json": {
+      "sha256": "7849920e5b58932d6dc011c6e085a9eff5f7c712b759eda2372b8370e642f507"
+    },
+    "taper_candidate_design_contract.json": {
+      "sha256": "cffe6b6a32b53d6a97f5a94c6d7ee5b12f98d77c52f06ea9ce881ae30dc09ed5"
+    },
+    "temporal_sensitivity_matrix.json": {
+      "sha256": "825ddcfeb4a5654c74dc6f0a60973d05a620fecfd74e1e0b27e5917668543bd2"
+    }
+  },
+  "frozen_evidence_input_sha256": {
+    "l1a2s/impact_event_matrix.json": "ea39659f03d5b3ee4562cf14618c136f235b3a7fd3b3de46e46c1f2bce02abac",
+    "l1a2s/initializer_constraint_matrix.json": "ffa04938c1252dbdfd408233289b795396837cfa2a0bcd682549412efae46095",
+    "l1a2s/l1a2s_final_report.json": "9591d7193226a4d01c621eb471d996b38c15f85b7254beff42700ee40f7d6f2a",
+    "l1a2s/l1a2s_final_report.md": "5c8cbf619b16554a6ffc2ef9a5408171d4424e35a753a69155c02b717ccb3bbc",
+    "l1a2s/manifest.json": "08bd1274163028dda2c18a4936ce0f966bb30c54ba330046ae1fc1c1c0c54c92",
+    "l1a2s/pillar_flat_operator_comparison/pillar_flat_operator_comparison.json": "54cdc9434b851a58e5ef228b70df21296d8c68a76b3c5f190ac27220d17b07db",
+    "l1a2s/quality_status.json": "ff0edb0ca360de390cc893d28c8f719b6b359c02bc6c94cf28e5a2b8103defca"
+  },
+  "missing_or_unmeasured": [],
+  "no_promotion": true,
+  "pr22": {
+    "head_sha": "865317d438eee5c8d5f1e942f0ad30c943010818",
+    "merge_sha": "09e2993b8da478d79e768054194201af57121784",
+    "merged_at_utc": "2026-10-11T07:37:01Z",
+    "number": 22,
+    "state": "MERGED",
+    "url": "https://github.com/licy0505/hydrogym/pull/22"
+  },
+  "profile": "forensic",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "run_profile": {
+    "N": 192,
+    "dt_levels": [
+      0.002,
+      0.001,
+      0.0005
+    ],
+    "stages": [
+      "preflight",
+      "initial",
+      "operator",
+      "budget",
+      "events",
+      "temporal",
+      "assemble"
+    ]
+  },
+  "solver_contract_version": 12,
+  "source_hashes": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "stage": "L1A-2t",
+  "stage_version": "l1a2t_v1",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

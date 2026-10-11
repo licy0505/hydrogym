@@ -1,0 +1,95 @@
+{
+  "candidate_outcome": "COMPATIBLE_IMPACT_BUT_QUALITY_OR_REFINEMENT_FAIL",
+  "compatible_candidates_per_case": {
+    "complex_heldout": [
+      "C2_BASE",
+      "T3_FAR_NARROW"
+    ],
+    "flat_we100_ct050": [
+      "C2_BASE",
+      "T3_FAR_NARROW"
+    ],
+    "flat_we200_ct000": [
+      "C2_BASE",
+      "T3_FAR_NARROW"
+    ],
+    "pillar_training": [
+      "C2_BASE",
+      "T3_FAR_NARROW"
+    ]
+  },
+  "evidence_class": "FORENSIC_N192",
+  "front_speed_raising_and_compatible": [],
+  "front_speed_raising_candidates": [
+    {
+      "candidate": "T1_NEAR_NARROW",
+      "case": "flat_we100_ct050",
+      "delta_over_u_impact": 0.09050176751021194
+    },
+    {
+      "candidate": "T2_NEAR_WIDE",
+      "case": "flat_we100_ct050",
+      "delta_over_u_impact": 0.016260468410208867
+    },
+    {
+      "candidate": "T1_NEAR_NARROW",
+      "case": "flat_we200_ct000",
+      "delta_over_u_impact": 0.09050176751021194
+    },
+    {
+      "candidate": "T2_NEAR_WIDE",
+      "case": "flat_we200_ct000",
+      "delta_over_u_impact": 0.016260468410208867
+    },
+    {
+      "candidate": "T1_NEAR_NARROW",
+      "case": "pillar_training",
+      "delta_over_u_impact": 0.11851401468347303
+    },
+    {
+      "candidate": "T2_NEAR_WIDE",
+      "case": "pillar_training",
+      "delta_over_u_impact": 0.022516196361137768
+    },
+    {
+      "candidate": "T1_NEAR_NARROW",
+      "case": "complex_heldout",
+      "delta_over_u_impact": 0.22580809264649304
+    },
+    {
+      "candidate": "T2_NEAR_WIDE",
+      "case": "complex_heldout",
+      "delta_over_u_impact": 0.058485931555363815
+    }
+  ],
+  "incompatible_candidates_per_case": {
+    "complex_heldout": [
+      "T1_NEAR_NARROW",
+      "T2_NEAR_WIDE"
+    ],
+    "flat_we100_ct050": [
+      "T1_NEAR_NARROW",
+      "T2_NEAR_WIDE"
+    ],
+    "flat_we200_ct000": [
+      "T1_NEAR_NARROW",
+      "T2_NEAR_WIDE"
+    ],
+    "pillar_training": [
+      "T1_NEAR_NARROW",
+      "T2_NEAR_WIDE"
+    ]
+  },
+  "next_action": {
+    "action": "Design and audit a boundary-consistent incident velocity whose advective forcing is confined to the region sdf > 3 dx while preserving the frozen chi>=0.01 near-wall gate: rebuild the seed from a single smooth streamfunction whose *radial envelope* (not the wall taper) supplies the near-wall roll-off, then re-measure the same t=0 matrix before any trajectory work.",
+    "bounded_scope": "initializer design + same-state matrix only; no trajectory, no generator, no ML",
+    "must_not_be_started_in_this_stage": true
+  },
+  "phase_budget_identity_holds": true,
+  "physical_verdict_valid": true,
+  "profile": "forensic",
+  "quick_only": false,
+  "stage_decision": "DIAGNOSTIC_COMPLETE_NO_PROMOTION",
+  "taper_mechanism_verdict": "TAPER_COMPATIBILITY_TRADEOFF",
+  "temporal_dt_sensitive": true
+}
