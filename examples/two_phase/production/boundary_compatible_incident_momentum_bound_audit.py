@@ -1305,7 +1305,9 @@ def decide(
             ),
         },
         "constructibility_rule_applied": {
-            "attained": [name for name, row in per_case.items() if row["admissible_constructions"]],
+            "cases_with_at_least_one_admissible_construction": [
+                name for name, row in per_case.items() if row["admissible_constructions"]
+            ],
             "not_found": [name for name, row in per_case.items() if not row["admissible_constructions"]],
             "proven_infeasible": [],
             "statement": (

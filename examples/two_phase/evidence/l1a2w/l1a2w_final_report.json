@@ -160,13 +160,13 @@
     "bound_holds_on_every_admissible_state": true,
     "bound_inequalities_checked": 60,
     "constructibility_rule_applied": {
-      "attained": [
+      "attainment_is_judged_on_the_tight_cell_cap": "for the in-band cases the contour support cell itself is inside the gate band, so its cap 0.02 u_impact is tight; the bilinear point cap is weaker because the crossing point straddles the band edge, and both are reported so that no looser number is used where a tighter one applies",
+      "cases_with_at_least_one_admissible_construction": [
         "flat_we100_ct050",
         "flat_we200_ct000",
         "pillar_training",
         "complex_heldout"
       ],
-      "attainment_is_judged_on_the_tight_cell_cap": "for the in-band cases the contour support cell itself is inside the gate band, so its cap 0.02 u_impact is tight; the bilinear point cap is weaker because the crossing point straddles the band edge, and both are reported so that no looser number is used where a tighter one applies",
       "exploratory_arm_provenance": "the exploratory appendix arm was added after the primary arm showed every wall-onset ramp to be analytically rejected; it carries no promotion rights and is labelled as post hoc in every artefact",
       "in_band_cases_attaining_at_least_90pct_of_the_cell_cap": [],
       "not_found": [],
@@ -467,13 +467,15 @@
       "worktree_clean_outside_stage_deliverables": true
     },
     "commits_above_baseline": [
+      "5dd0325 L1A-2w: re-seal evidence with the observed hosted CI result for the final stage head",
+      "5f889d2 L1A-2w: record the frozen-adjacent suite outcome by failing set, not by a moving pass count",
       "af291af L1A-2w: correct an unsupported attainability phrase in the next-action text",
       "0bc6d45 L1A-2w: re-seal evidence with the observed hosted CI result",
       "66da27c L1A-2w: boundary-compatible incident-momentum reachability bound at t=0"
     ],
     "contact_events_measured": 0,
     "dt": 0.002,
-    "head_at_run": "af291af988f6f2ef39338e559cd22361eaafc146",
+    "head_at_run": "5dd0325316afd4bbee4dddb922cd6f748df38cc8",
     "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
     "refinement_studies_run": 0,
     "solver_contract_version": 12,

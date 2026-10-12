@@ -23,13 +23,15 @@
     "worktree_clean_outside_stage_deliverables": true
   },
   "commits_above_baseline": [
+    "5dd0325 L1A-2w: re-seal evidence with the observed hosted CI result for the final stage head",
+    "5f889d2 L1A-2w: record the frozen-adjacent suite outcome by failing set, not by a moving pass count",
     "af291af L1A-2w: correct an unsupported attainability phrase in the next-action text",
     "0bc6d45 L1A-2w: re-seal evidence with the observed hosted CI result",
     "66da27c L1A-2w: boundary-compatible incident-momentum reachability bound at t=0"
   ],
   "contact_events_measured": 0,
   "dt": 0.002,
-  "head_at_run": "af291af988f6f2ef39338e559cd22361eaafc146",
+  "head_at_run": "5dd0325316afd4bbee4dddb922cd6f748df38cc8",
   "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
   "refinement_studies_run": 0,
   "solver_contract_version": 12,

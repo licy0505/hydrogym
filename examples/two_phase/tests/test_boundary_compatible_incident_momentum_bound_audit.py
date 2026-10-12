@@ -498,6 +498,15 @@ def test_reseal_records_only_an_observed_status_on_a_copy(tmp_path):
     assert "hosted CI observed after push" in (target / "l1a2w_final_report.md").read_text()
 
 
+def test_constructibility_language_is_exact(evidence):
+    """No key may read as if the necessary cap were reached, and none claims infeasibility."""
+    applied = evidence["mechanism_decision.json"]["constructibility_rule_applied"]
+    assert "attained" not in applied
+    assert "cases_with_at_least_one_admissible_construction" in applied
+    assert applied["in_band_cases_attaining_at_least_90pct_of_the_cell_cap"] == []
+    assert "no mathematical proof of infeasibility" in applied["statement"]
+
+
 def test_decision_never_claims_infeasibility(evidence):
     decision = evidence["mechanism_decision.json"]
     applied = decision["constructibility_rule_applied"]

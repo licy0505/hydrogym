@@ -16,21 +16,15 @@
     "feasibility_constructions.json": "5f74b6f777de3ac41c6abfb0876bc69af703b0f76a29ba955d5ee3d75e3ec6a6",
     "frozen_evidence_verification.json": "dd1f17b13ced7f94d86f989a10da5d1c2f9d9eb558b562c5880c5275ac4590ac",
     "incident_momentum_bound.json": "8e5757c048dd869b5c02cd6b4ebce36cece997caea4f2d9b7b446990c7722209",
-    "l1a2w_final_report.json": "396675f744a175c208da782e94ee132f76991d87d8b6ebc613d65f0c47e92eb5",
-    "l1a2w_final_report.md": "7cccd6d8c681c434de81366455c17c280fa97c13b0c79a3bb1876affbe5723cc",
-    "mechanism_decision.json": "7ee4e7d2cb6632d8c4eba0a05e5c94825ef5e2bcfbee002021d5545ed0e66079",
-    "preflight.json": "d7b88c08f5a8d1f0fd7c98625821b0947a72d91690d3cb1cf20a5999493f45ee",
+    "l1a2w_final_report.json": "ea1a6cacc8176350cf6765552feb621d329509f26fd9584b07bb15b6fc63ad23",
+    "l1a2w_final_report.md": "630a47a1b553bd88c7c1060d2cd18ba66a0709984a2124dc3f080ce49a2ec0f6",
+    "mechanism_decision.json": "39267675b74593596191284b03cae8fc10bfc1596a62f87b5e5664957b187ee2",
+    "preflight.json": "170b938eec7be6861c7f4ccb0d9b17ce2e7b37bd28c37d65fd589fe7d06e4931",
     "prerequisite_and_source_map.json": "48fa14edaf279355423d6a2e2821c48140980a556a1e60c7434c65460f85486f",
-    "quality_and_blocker_matrix.json": "5ebfafd660f1e3605f988cdb6fa83ca4c1bf6fd0775b92f4ae953927cbbf0673",
-    "source_and_provenance.json": "48d34fbef0c415fefcc2e11e1c82b9c3f17a28ccc0acb4a9e9858991a965a4e2"
+    "quality_and_blocker_matrix.json": "606290d29a70d720d9c727090d0489c891060fa162ffca74e382ff8cd292b6e2",
+    "source_and_provenance.json": "6f61439381b25fe4016bf83abc94ca78c0dc19ddcfa01807f8d57996a446485c"
   },
-  "hosted_ci_reseal": {
-    "observed_head_sha": "5f889d27f6517b7e122f7b29f877615ffb660a93",
-    "performed": true,
-    "physics_evidence_untouched": true,
-    "status": "success"
-  },
-  "module_sha256": "ee1f5a42b96830446be57ebc516da60959122edde0a40d70a528acf9be54b5fe",
+  "module_sha256": "1bfe0842b8cce6005f87708e437827f8a8f767358a3580d98db459b30e20ff17",
   "no_hosted_ci_claim_before_push": true,
   "no_promotion": true,
   "profile": "t0_bound",
