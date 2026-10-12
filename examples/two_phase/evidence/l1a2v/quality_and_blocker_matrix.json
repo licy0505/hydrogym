@@ -10,6 +10,13 @@
       "statement": "the frozen L1A-2t preflight asserts that every commit above the verified main touches only L1A-2t paths and that no other stage's files are present; that assertion cannot hold on a branch that carries L1A-2u and L1A-2v; not edited"
     }
   },
+  "hosted_ci": {
+    "observed_head_sha": "aeac0a74400757e1ebe1900103fbd360df0523a1",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
+  },
   "inherited_statuses": {
     "L1A_STATUS": "BLOCKED",
     "L1B_DATA": "L1B_DATA_NOT_READY",

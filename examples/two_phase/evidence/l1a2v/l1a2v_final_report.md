@@ -92,6 +92,8 @@
 - inherited: {"SOLVER_CONTRACT_VERSION": 12, "L1A_STATUS": "BLOCKED", "L1B_DATA": "L1B_DATA_NOT_READY", "unchanged_by_this_stage": true}
 - blocker for any contact study: no admissible radial member exists under the prespecified family
 
+- hosted CI observed after push: `success` for head `aeac0a74400757e1ebe1900103fbd360df0523a1` (previous record: `UNMEASURED`)
+
 ## L. Exactly one next action
 - Do not re-tune the radial family. At t=0 only, measure the *reachable* interaction window that the frozen six gates themselves define: for each canary case, compute the maximum incident normal momentum that can be placed inside the admissible region (sdf above the gate band and open-cell speed under the 4.905526491646905 envelope) using a support whose interior peak respects the envelope by construction, and report whether that reachable window can deliver any incident momentum to the frozen phi=0.5 contour at all; no trajectory, event or refinement work until that t=0 bound is established.
 - bounded scope: one t=0 reachability bound per canary case; no trajectory, no event, no refinement, no new initializer promotion
