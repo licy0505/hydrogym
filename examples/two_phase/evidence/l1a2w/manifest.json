@@ -17,12 +17,18 @@
     "frozen_evidence_verification.json": "dd1f17b13ced7f94d86f989a10da5d1c2f9d9eb558b562c5880c5275ac4590ac",
     "incident_momentum_bound.json": "8e5757c048dd869b5c02cd6b4ebce36cece997caea4f2d9b7b446990c7722209",
     "l1a2w_final_report.json": "05aadee42f036f66c4ae54c86e4ff0f35b7aabe80ef95e3738ac7aee3081f229",
-    "l1a2w_final_report.md": "0b3852effbc90e7ad678487576f0068ee6183f1808473c9621a96735443a4755",
+    "l1a2w_final_report.md": "666ec07e17c9c1fa11f186503c892f9db214b6aecb2205aaa67ffdfb499d2185",
     "mechanism_decision.json": "39267675b74593596191284b03cae8fc10bfc1596a62f87b5e5664957b187ee2",
     "preflight.json": "7a607a7c4e1dfade029b690dd14d5de224af7709950d4ba24663cdfb149f8e09",
     "prerequisite_and_source_map.json": "48fa14edaf279355423d6a2e2821c48140980a556a1e60c7434c65460f85486f",
-    "quality_and_blocker_matrix.json": "606290d29a70d720d9c727090d0489c891060fa162ffca74e382ff8cd292b6e2",
+    "quality_and_blocker_matrix.json": "c11e1133520f473ec1608bfc0b0b6fa19cabf334ca46c95b8722e2c5fd63a801",
     "source_and_provenance.json": "b71ded92380f585624fd3a5e702f444e123906672795c5043d6119eb81953647"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "fe2e584bebf181b712682dc8ed374afd5c5a36a4",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "status": "success"
   },
   "module_sha256": "9dfc472d710a276d16182bdf156be80bb7ee5983eee77a6e207eea3c5c1c90de",
   "no_hosted_ci_claim_before_push": true,
