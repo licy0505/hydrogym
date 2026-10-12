@@ -467,6 +467,8 @@
       "worktree_clean_outside_stage_deliverables": true
     },
     "commits_above_baseline": [
+      "b225722 L1A-2w: re-seal evidence with the observed hosted CI result for the corrected stage head",
+      "fed2795 L1A-2w: name the constructibility key for what it records",
       "5dd0325 L1A-2w: re-seal evidence with the observed hosted CI result for the final stage head",
       "5f889d2 L1A-2w: record the frozen-adjacent suite outcome by failing set, not by a moving pass count",
       "af291af L1A-2w: correct an unsupported attainability phrase in the next-action text",
@@ -475,7 +477,7 @@
     ],
     "contact_events_measured": 0,
     "dt": 0.002,
-    "head_at_run": "5dd0325316afd4bbee4dddb922cd6f748df38cc8",
+    "head_at_run": "b2257223ee5d7022cfbeb4862bb8c591ae7617ec",
     "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
     "refinement_studies_run": 0,
     "solver_contract_version": 12,

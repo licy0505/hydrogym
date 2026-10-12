@@ -1988,6 +1988,14 @@ def reseal_ci_status(ci_status: str, head_sha: str, out_dir: str | Path) -> dict
     report = report_path.read_text()
     marker = "\n## N. Exactly one next action"
     line = f"- hosted CI observed after push: `{ci_status}` for head `{head_sha}` (previous record: `{previous}`)\n"
+    prose_marker = "reconfirmed at the re-seal head: "
+    if prose_marker in report:
+        # The suite outcome line is rendered from the same field the reseal updates; rewrite both
+        # so the prose and quality_and_blocker_matrix.json can never disagree about that head.
+        start = report.index(prose_marker) + len(prose_marker)
+        end = report.index(";", start)
+        report = report[:start] + head_sha + report[end:]
+        report_path.write_text(report)
     if "hosted CI observed after push" in report:
         start = report.index("- hosted CI observed after push")
         end = report.index("\n", start) + 1

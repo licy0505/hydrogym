@@ -495,7 +495,12 @@ def test_reseal_records_only_an_observed_status_on_a_copy(tmp_path):
     quality = json.loads((target / "quality_and_blocker_matrix.json").read_text())
     assert quality["hosted_ci"]["status_for_this_head"] == "success"
     assert quality["hosted_ci"]["observed_head_sha"] == head
-    assert "hosted CI observed after push" in (target / "l1a2w_final_report.md").read_text()
+    text = (target / "l1a2w_final_report.md").read_text()
+    assert "hosted CI observed after push" in text
+    # the prose and the JSON must never disagree about the head the suite outcome was reconfirmed at
+    assert quality["frozen_adjacent_suite_run_at_stage_commit"]["reconfirmed_at_head"] == head
+    assert f"reconfirmed at the re-seal head: {head};" in text
+    assert "reconfirmed at the re-seal head: UNMEASURED" not in text
 
 
 def test_constructibility_language_is_exact(evidence):
