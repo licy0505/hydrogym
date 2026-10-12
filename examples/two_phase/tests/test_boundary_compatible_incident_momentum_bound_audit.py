@@ -542,6 +542,13 @@ def test_report_records_the_headline_and_the_frozen_adjacent_failures(evidence):
     assert "not a proof of global infeasibility" in report
 
 
+def test_next_action_claims_no_unmeasured_attainability(evidence):
+    action = evidence["mechanism_decision.json"]["next_action"]["action"]
+    assert "attains it" not in action
+    assert "none of the screened same-language shapes is admissible" in action
+    assert "no refinement, no new initializer, no generator" in action
+
+
 def test_stage_never_constructs_the_frozen_substep_kernel():
     source = Path(stage.__file__).read_text()
     needle = "make_fast" + "_substep"

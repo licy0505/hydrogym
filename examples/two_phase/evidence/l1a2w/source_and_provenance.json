@@ -1,8 +1,8 @@
 {
   "baseline_head_sha": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
   "baseline_pull_request": 24,
-  "head_at_run": "034759030e47c223bc970889665816ab6181b315",
-  "module_sha256": "53252766e80fe195bfe6384b0c5a8efab3fc91f753312b04fb4f3cd32ff9a2f9",
+  "head_at_run": "0bc6d457fa1dc59753b21f9981d7d61f725c50ce",
+  "module_sha256": "7b0d6c9364de8780b993068dc93be9d757f49ed639007c892d06579c2e4cb3a9",
   "read_only_frozen_sources": [
     "examples/two_phase/phasefield.py",
     "examples/two_phase/production/impact_initialization_compatibility_audit.py",

@@ -1387,9 +1387,10 @@ def next_action(verdict: str, per_case: dict[str, Any], constructions: dict[str,
     """Exactly one bounded next physical action; never started in this stage."""
     in_band = [name for name, row in per_case.items() if row["contour_regime"] == "INSIDE_BAND"]
     action = (
-        "Resolve the one question this t=0 bound raises and cannot answer: the frozen seeds place no normal "
-        "fluid motion at the contact contour, yet the six gates permit up to the band cap there and a "
-        "same-language construction attains it. Measure, in a single short window, whether the *interface* "
+        "Resolve the one question this t=0 bound raises and cannot answer: the frozen seeds place exactly no "
+        "normal fluid motion at the contact contour in the in-band cases, the frozen band gate would permit "
+        "up to the band cap there, and none of the screened same-language shapes is admissible while "
+        "delivering that flow. Measure, in a single short window, whether the *interface* "
         "transport (frozen Cahn-Hilliard flux and the resulting contour motion) or fluid advection produces "
         "the observed L1A-2s contact signature. Run exactly one frozen-solver trajectory for the frozen "
         "pillar_training case at N=192, dt=0.002 over t <= 0.08 only, and report the per-cell split of the "
