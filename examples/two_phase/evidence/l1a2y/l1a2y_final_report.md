@@ -184,7 +184,7 @@
 - old lineage failure, reported separately: ['test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed'] (FROZEN_LINEAGE_DRIFT_CONFIRMED)
 - not run: ["control trajectories", "contact events", "temporal refinement", "spatial refinement", "T=8 recomputation", "L1B data generation", "ML training", "contract 13", "parameter sweep"]
 - declared new diagnostics 0, expectation `PASS_BASELINE_ONLY`
-- hosted CI observed after push: `UNMEASURED` (a re-seal records the observed result)
+- hosted CI observed after push: `success` for head `e63e845bc9888f217307f4bbb8e3fa7c52ed82fb` (previous record: `UNMEASURED`)
 
 
 ## O. Post-window diagnosis of the failed gates (exploratory, no promotion rights)

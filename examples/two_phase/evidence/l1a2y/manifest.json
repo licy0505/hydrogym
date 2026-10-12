@@ -14,11 +14,11 @@
     "initial_state_identity.json": "68acf0688f0c3df9fcc0a49d7a1851d9008fda81f1962afe126b747e0b7b2bd3",
     "interface_attribution.json": "aa1f8b82c4d4e35eee43c17714f064001b899df608e38481292c860eda911f08",
     "l1a2y_final_report.json": "122df55134b6b2d177cdbddc1bd0ce648faaffba0497362fca68283c601549d0",
-    "l1a2y_final_report.md": "8abb9f9b3631d766425c280bb0e37f8b8a433a275ee739eec8581e43cb42a945",
+    "l1a2y_final_report.md": "0aca9c1ed6d97f7bd1faac7b3883588c620caec140b419d88ec41e357c9cc276",
     "mechanism_decision.json": "6b4dac6b53ef545657bcfa24d33cb177b0e144392a155e6efa3cca44e7cd2378",
     "next_action.json": "a16c82ef32e216aaf8d1bdd5b33831d2a804cac748ae0e179e9d1d15022edd08",
     "preflight.json": "4671b68487ca1ae430f13228947e11a5167919f613909205c21251d609152475",
-    "quality_and_blocker_matrix.json": "a66fbae78da649f67c5b4325c91955d8906429aaebf634ea54ca3dc255616241",
+    "quality_and_blocker_matrix.json": "e2e3e59af2f32d6dc5e5628bb2460cb50bd19fe0c62de02c36b226f636a11432",
     "readout_design.json": "7421cbd0e4706bfc8bb3c1c9cdf34942ee6ac059ce5a161b16a29e624bdabd8b",
     "residual_decomposition.json": "69a848158ac86e50acf94c69aa6aa4c81985dccd0debac1bf189eab39c56c55e",
     "source_and_provenance.json": "ac53a5153ea7e21ff199b8c0857cb59d521f31fe93b4208a204c084749e1c2e8",
@@ -27,6 +27,12 @@
     "synthetic_reader_validation.json": "9d03fc1a392bdc3c84f5317208ccac9dd0feb12685e904b5533d810992b59fb0",
     "trajectory_specification.json": "b615b18490170b6d24e5498d51aff1a7f63329692226ec4ee76edadde1a0fe6b",
     "validity_screen.json": "c577e28f0b36f17a40b88c443be88ac30bf1ec35f78198251a73924b33c804a8"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "e63e845bc9888f217307f4bbb8e3fa7c52ed82fb",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "status": "success"
   },
   "initializer_promoted": false,
   "l1b_data_generated": false,

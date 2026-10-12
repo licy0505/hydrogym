@@ -34,9 +34,11 @@
     "sweep_result": "8 failed, 221 passed"
   },
   "hosted_ci": {
-    "observed_head_sha": null,
+    "observed_head_sha": "e63e845bc9888f217307f4bbb8e3fa7c52ed82fb",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
     "rule": "no hosted result is claimed for a head that was not pushed and observed",
-    "status_for_this_head": "UNMEASURED"
+    "status_for_this_head": "success"
   },
   "legacy_debt_baseline": {
     "codespell": 3,
