@@ -17,12 +17,18 @@
     "frozen_evidence_verification.json": "dd1f17b13ced7f94d86f989a10da5d1c2f9d9eb558b562c5880c5275ac4590ac",
     "incident_momentum_bound.json": "8e5757c048dd869b5c02cd6b4ebce36cece997caea4f2d9b7b446990c7722209",
     "l1a2w_final_report.json": "5b2b1ae7c2aed7051c17eb21f02b0c8c41078727f025cf216d4a455e02867242",
-    "l1a2w_final_report.md": "f2e32a9aee0a665547ff67e631a35d3cd19ea2ce4b10c4e17827bc81bcbb3d13",
+    "l1a2w_final_report.md": "fcd77483889dac3165c7dfbf13d19ce158f5a3884c20f2ac6eb7ef1969f5df7e",
     "mechanism_decision.json": "942465aee91b27e43be7c60f8a0f03f178d20d3baa1ae3419b3690773f4d1abc",
     "preflight.json": "46d8d791d744600d5920e8412d427ae0d2efc4d8c7f23dd69dd788399802ae53",
     "prerequisite_and_source_map.json": "48fa14edaf279355423d6a2e2821c48140980a556a1e60c7434c65460f85486f",
-    "quality_and_blocker_matrix.json": "27c93fdae681a5a2e4174a6db0a0b886e6ef6f4adfdac69e6a2c44c908121b27",
+    "quality_and_blocker_matrix.json": "3351f464fc1e67ad3fed5a6b04873da2e39fc7bcacbdaab9d46fc98a18729b57",
     "source_and_provenance.json": "1c391b9a34b46e9793fd6da1e82f8302dde5f4862db6c20505f0946d1bea96be"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "66da27c1064494b66b84e594f52d56b2a9a7bf8b",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "status": "success"
   },
   "module_sha256": "53252766e80fe195bfe6384b0c5a8efab3fc91f753312b04fb4f3cd32ff9a2f9",
   "no_hosted_ci_claim_before_push": true,

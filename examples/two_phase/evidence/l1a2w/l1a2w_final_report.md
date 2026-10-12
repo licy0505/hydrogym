@@ -228,6 +228,8 @@
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section
 - not run: ['trajectories', 'contact events', 'temporal refinement', 'spatial refinement', 'T=8 recompute', 'L1B data generation', 'ML training', 'contract 13']
 
+- hosted CI observed after push: `success` for head `66da27c1064494b66b84e594f52d56b2a9a7bf8b` (previous record: `UNMEASURED`)
+
 ## N. Exactly one next action
 - Resolve the one question this t=0 bound raises and cannot answer: the frozen seeds place no normal fluid motion at the contact contour, yet the six gates permit up to the band cap there and a same-language construction attains it. Measure, in a single short window, whether the *interface* transport (frozen Cahn-Hilliard flux and the resulting contour motion) or fluid advection produces the observed L1A-2s contact signature. Run exactly one frozen-solver trajectory for the frozen pillar_training case at N=192, dt=0.002 over t <= 0.08 only, and report the per-cell split of the contour's normal motion into advective and Cahn-Hilliard contributions with the frozen event rule unchanged; no refinement, no new initializer, no generator.
 - bounded scope: one case (pillar_training), one dt (0.002), one window (t <= 0.08), frozen solver and frozen event rule, attribution readout only; no refinement, no generator, no ML
