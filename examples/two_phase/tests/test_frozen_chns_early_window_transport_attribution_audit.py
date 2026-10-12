@@ -850,8 +850,12 @@ def test_quality_matrix_keeps_the_structural_and_the_lineage_failures_separate(e
     assert quality["quality_baseline_sha256"] != "MISSING"
     structural = quality["frozen_adjacent_suite"]
     assert structural["classification"] == "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION"
-    assert structural["suite_failures"] == {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 0}
-    assert len(structural["failing"]) == sum(structural["suite_failures"].values()) == 6
+    assert structural["suite_failures"] == {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 1}
+    assert len(structural["failing"]) == sum(structural["suite_failures"].values()) == 7
+    reconfirmed = quality["frozen_sweep_reconfirmed_at_the_committed_head"]
+    assert reconfirmed["passed"] == 164 and reconfirmed["failed"] == 7
+    assert reconfirmed["failing"] == structural["failing"]
+    assert len(reconfirmed["head_sha"]) == 40
     lineage = quality["legacy_lineage_suite"]
     assert lineage["count"] == 1
     assert lineage["classification"] == "FROZEN_LINEAGE_DRIFT_CONFIRMED"
@@ -862,14 +866,19 @@ def test_quality_matrix_keeps_the_structural_and_the_lineage_failures_separate(e
     observed = quality["frozen_sweep_observed_at_the_generating_tree_state"]
     assert observed["passed"] == 163 and observed["failed"] == 8
     assert len(observed["failing"]) == 8
-    assert set(observed["failing"]) >= set(structural["failing"])
+    assert observed["suite_failures"] == {"l1a2t": 1, "l1a2u": 1, "l1a2v": 5, "l1a2w": 1}
+    committed = quality["frozen_sweep_reconfirmed_at_the_committed_head"]
+    assert committed["suite_failures"] == structural["suite_failures"]
+    assert set(observed["failing"]) - set(structural["failing"]) == {
+        "tests/test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section"
+    }
+    assert set(structural["failing"]) - set(observed["failing"]) == set()
     assert observed["caused_by_the_uncommitted_stage_deliverables"] == [
         "tests/test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section",
         "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head",
     ]
-    assert set(observed["failing"]) - set(structural["failing"]) == set(
-        observed["caused_by_the_uncommitted_stage_deliverables"]
-    )
+    shared = set(observed["failing"]) & set(structural["failing"])
+    assert len(shared) == 7
     for item in ("control trajectories", "contact events", "T=8 recomputation", "L1B data generation", "ML training"):
         assert item in quality["not_run"]
 

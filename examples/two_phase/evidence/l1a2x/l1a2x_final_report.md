@@ -153,13 +153,14 @@
 
 ## M. Quality, tests and hosted CI
 - quality baseline sha256 `52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b`
-- frozen adjacent suite: SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION, suite failures {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 0}
+- frozen adjacent suite: SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION, suite failures {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 1}
     - failing: tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section
+    - failing: tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head
 - old L1A-2s lineage failure, reported separately: ['tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed'] (FROZEN_LINEAGE_DRIFT_CONFIRMED)
 - not run: ["control trajectories", "contact events", "temporal refinement", "spatial refinement", "T=8 recomputation", "L1B data generation", "ML training", "contract 13"]
 - declared new diagnostics 0, expectation `PASS_BASELINE_ONLY`

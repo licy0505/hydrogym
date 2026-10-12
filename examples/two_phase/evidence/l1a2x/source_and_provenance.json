@@ -12,10 +12,10 @@
     "L1B_DATA_NOT_READY": "unchanged",
     "contract": 12
   },
-  "head_sha": "0b93fc0227d67eba9c4730d641156f6f05b2b3dd",
+  "head_sha": "41e962606dbeccf80c26d93e931fd3ae8098da5e",
   "main_sha": "09e2993b8da478d79e768054194201af57121784",
   "module_path": "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py",
-  "module_sha256": "1ea06ddc91c089885a826f1f3560cb75db73b1b19bdda0b53c01829c6a663120",
+  "module_sha256": "f0fddeabfdd4498123c84f8cd9125470056e589ef6e2241f2448a12eb3d0214e",
   "phase_boundary_model": "impermeable_flux",
   "phase_storage_model": "phase_only_float64_v1",
   "phase_transport_geometry": "sdf_cutcell_fv_v1",

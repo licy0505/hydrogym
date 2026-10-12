@@ -2080,7 +2080,22 @@ FROZEN_ADJACENT_FAILING_SET = (
     "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
     "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
     "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+    "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head",
 )
+FROZEN_ADJACENT_SUITE_FAILURES = {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 1}
+FROZEN_SWEEP_RECONFIRMED_AT_HEAD = {
+    "head_sha": "41e962606dbeccf80c26d93e931fd3ae8098da5e",
+    "passed": 164,
+    "failed": 7,
+    "suite_failures": dict(FROZEN_ADJACENT_SUITE_FAILURES),
+    "failing": list(FROZEN_ADJACENT_FAILING_SET),
+    "note": (
+        "the same sweep re-run on a clean worktree at this stage's first committed head returns the "
+        "seven structural failures and nothing else; the two worktree-cleanliness failures observed at "
+        "generation time are then replaced by the L1A-2w stage-owned-commit failure, which is the same "
+        "superseded-by-next-stage rule with a different trigger"
+    ),
+}
 LEGACY_LINEAGE_FAILING_SET = (
     "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed",
 )
@@ -2099,6 +2114,7 @@ FROZEN_SWEEP_OBSERVED_AT_GENERATION = {
     ),
     "passed": 163,
     "failed": 8,
+    "suite_failures": {"l1a2t": 1, "l1a2u": 1, "l1a2v": 5, "l1a2w": 1},
     "failing": (
         "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
         "tests/test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section",
@@ -2137,12 +2153,14 @@ def quality_and_blockers(verdict: str) -> dict[str, Any]:
                 "tests/test_boundary_compatible_incident_momentum_bound_audit.py -q"
             ),
             "failing": list(FROZEN_ADJACENT_FAILING_SET),
-            "suite_failures": {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 0},
+            "suite_failures": dict(FROZEN_ADJACENT_SUITE_FAILURES),
             "classification": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION",
             "cause": (
-                "the frozen L1A-2t and L1A-2v preflights require every commit above their own baseline "
-                "to belong to their own stage and the worktree to be clean outside their own paths, "
-                "which cannot hold once a later stage is committed on the same branch"
+                "the frozen preflights require every commit above their own baseline to belong to their own "
+                "stage and, while this stage's deliverables were uncommitted, the worktree to be clean "
+                "outside their own paths; neither can hold once a later stage exists on the same branch, "
+                "so the L1A-2t, L1A-2v and L1A-2w preflight assertions fail by construction while the "
+                "L1A-2u suite stays green"
             ),
             "action": "recorded as observed; no frozen test edited",
             "pass_count_not_recorded_because": (
@@ -2153,6 +2171,7 @@ def quality_and_blockers(verdict: str) -> dict[str, Any]:
             "command": FROZEN_SWEEP_OBSERVED_AT_GENERATION["command"],
             "passed": FROZEN_SWEEP_OBSERVED_AT_GENERATION["passed"],
             "failed": FROZEN_SWEEP_OBSERVED_AT_GENERATION["failed"],
+            "suite_failures": dict(FROZEN_SWEEP_OBSERVED_AT_GENERATION["suite_failures"]),
             "failing": list(FROZEN_SWEEP_OBSERVED_AT_GENERATION["failing"]),
             "caused_by_the_uncommitted_stage_deliverables": list(
                 FROZEN_SWEEP_OBSERVED_AT_GENERATION["caused_by_the_uncommitted_stage_deliverables"]
@@ -2163,6 +2182,7 @@ def quality_and_blockers(verdict: str) -> dict[str, Any]:
                 "artifacts/l1a2x/local_validation.json, never hidden and never turned green"
             ),
         },
+        "frozen_sweep_reconfirmed_at_the_committed_head": dict(FROZEN_SWEEP_RECONFIRMED_AT_HEAD),
         "legacy_lineage_suite": {
             "failing": list(LEGACY_LINEAGE_FAILING_SET),
             "count": len(LEGACY_LINEAGE_FAILING_SET),
