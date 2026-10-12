@@ -17,12 +17,18 @@
     "frozen_evidence_verification.json": "dd1f17b13ced7f94d86f989a10da5d1c2f9d9eb558b562c5880c5275ac4590ac",
     "incident_momentum_bound.json": "8e5757c048dd869b5c02cd6b4ebce36cece997caea4f2d9b7b446990c7722209",
     "l1a2w_final_report.json": "ea1a6cacc8176350cf6765552feb621d329509f26fd9584b07bb15b6fc63ad23",
-    "l1a2w_final_report.md": "630a47a1b553bd88c7c1060d2cd18ba66a0709984a2124dc3f080ce49a2ec0f6",
+    "l1a2w_final_report.md": "95da9fcc25dfa70dd3d8393eff74f2e76c14fb87c03225d38c79126c5f5336e0",
     "mechanism_decision.json": "39267675b74593596191284b03cae8fc10bfc1596a62f87b5e5664957b187ee2",
     "preflight.json": "170b938eec7be6861c7f4ccb0d9b17ce2e7b37bd28c37d65fd589fe7d06e4931",
     "prerequisite_and_source_map.json": "48fa14edaf279355423d6a2e2821c48140980a556a1e60c7434c65460f85486f",
-    "quality_and_blocker_matrix.json": "606290d29a70d720d9c727090d0489c891060fa162ffca74e382ff8cd292b6e2",
+    "quality_and_blocker_matrix.json": "b13ba91bc7e07bf912e84ad6f6d20894fce54b060e8ded19af4a2100499cfa9a",
     "source_and_provenance.json": "6f61439381b25fe4016bf83abc94ca78c0dc19ddcfa01807f8d57996a446485c"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "fed27957e8b7b61895cef0d98f79141ce501a9e9",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "status": "success"
   },
   "module_sha256": "1bfe0842b8cce6005f87708e437827f8a8f767358a3580d98db459b30e20ff17",
   "no_hosted_ci_claim_before_push": true,
