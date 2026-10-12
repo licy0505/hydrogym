@@ -164,7 +164,7 @@
 - old L1A-2s lineage failure, reported separately: ['tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed'] (FROZEN_LINEAGE_DRIFT_CONFIRMED)
 - not run: ["control trajectories", "contact events", "temporal refinement", "spatial refinement", "T=8 recomputation", "L1B data generation", "ML training", "contract 13"]
 - declared new diagnostics 0, expectation `PASS_BASELINE_ONLY`
-- hosted CI observed after push: `UNMEASURED` (a re-seal records the observed result)
+- hosted CI observed after push: `success` for head `270fd6c1a51033617dc7b4df8874991f286bb1d6` (previous record: `UNMEASURED`)
 
 ## N. Exactly one next action
 - Prespecify, without editing the frozen event rule, a displacement readout whose support is the reconstructed contour arc itself (the bilinear line root along the frozen interface normal, already recorded in this stage's ledger on every macro step) and then re-run this stage's identical single-case window under that readout, so that the blocking condition becomes the continuity of the reconstructed position instead of the identity of the grid edge that carries it. Diagnose the frozen global probe's non-uniqueness on this surface in the same run and report it separately. No mechanism may be claimed until every blocking guard passes.

@@ -70,6 +70,13 @@
       "l1a2w": 1
     }
   },
+  "hosted_ci": {
+    "observed_head_sha": "270fd6c1a51033617dc7b4df8874991f286bb1d6",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
+  },
   "legacy_lineage_suite": {
     "action": "kept separate from the structural failures and never counted as a pass",
     "cause": "pre-existing on a pristine worktree at the verified main; not caused by this stage",
