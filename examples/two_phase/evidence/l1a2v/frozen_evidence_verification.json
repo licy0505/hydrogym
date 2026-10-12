@@ -1,0 +1,292 @@
+{
+  "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "inventory": {
+    "l1a2h": {
+      "mismatched": 0,
+      "sections": {
+        "files": [
+          2,
+          0,
+          0
+        ]
+      },
+      "stage": "L1A-2h",
+      "unresolved_names": 0,
+      "verified": 2
+    },
+    "l1a2i": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2i",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2i_baseline": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2i",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2j": {
+      "manifest": false
+    },
+    "l1a2k": {
+      "mismatched": 0,
+      "sections": {
+        "config_fingerprints": [
+          0,
+          0,
+          3
+        ],
+        "source_hashes": [
+          0,
+          0,
+          6
+        ]
+      },
+      "stage": "L1A-2k",
+      "unresolved_names": 9,
+      "verified": 0
+    },
+    "l1a2k_quick": {
+      "mismatched": 0,
+      "sections": {
+        "source_hashes": [
+          0,
+          0,
+          6
+        ]
+      },
+      "stage": "L1A-2k",
+      "unresolved_names": 6,
+      "verified": 0
+    },
+    "l1a2l": {
+      "mismatched": 0,
+      "sections": {
+        "config_fingerprints": [
+          0,
+          0,
+          3
+        ],
+        "source_hashes": [
+          0,
+          0,
+          10
+        ]
+      },
+      "stage": "L1A-2l",
+      "unresolved_names": 13,
+      "verified": 0
+    },
+    "l1a2m": {
+      "mismatched": 0,
+      "sections": {
+        "config_fingerprints": [
+          0,
+          0,
+          4
+        ],
+        "source_hashes": [
+          0,
+          0,
+          8
+        ]
+      },
+      "stage": "L1A-2m",
+      "unresolved_names": 12,
+      "verified": 0
+    },
+    "l1a2n": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2n",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2o": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2o",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2p": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2p",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2q": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2q",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2r": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": "L1A-2r",
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "l1a2s": {
+      "mismatched": 0,
+      "sections": {
+        "source_hash_baselines_from_l1a2r": [
+          0,
+          0,
+          5
+        ],
+        "source_hashes_current": [
+          0,
+          0,
+          9
+        ],
+        "source_hashes_sha256": [
+          0,
+          0,
+          14
+        ]
+      },
+      "stage": "L1A-2s",
+      "unresolved_names": 28,
+      "verified": 0
+    },
+    "l1a2t": {
+      "mismatched": 0,
+      "sections": {
+        "frozen_evidence_input_sha256": [
+          0,
+          0,
+          7
+        ],
+        "source_hashes": [
+          0,
+          0,
+          14
+        ]
+      },
+      "stage": "L1A-2t",
+      "unresolved_names": 21,
+      "verified": 0
+    },
+    "l1a2u": {
+      "mismatched": 1,
+      "sections": {
+        "evidence_files": [
+          13,
+          0,
+          0
+        ],
+        "frozen_inputs": [
+          0,
+          1,
+          13
+        ],
+        "source_hashes": [
+          0,
+          0,
+          14
+        ]
+      },
+      "stage": "L1A-2u",
+      "unresolved_names": 27,
+      "verified": 13
+    },
+    "mass_precision": {
+      "mismatched": 0,
+      "sections": {
+        "files": [
+          2,
+          0,
+          0
+        ]
+      },
+      "stage": "L1A-2g",
+      "unresolved_names": 0,
+      "verified": 2
+    },
+    "quality1": {
+      "mismatched": 0,
+      "sections": {
+        "sha256": [
+          0,
+          0,
+          12
+        ]
+      },
+      "stage": null,
+      "unresolved_names": 12,
+      "verified": 0
+    },
+    "quality2": {
+      "mismatched": 0,
+      "sections": {
+        "sha256": [
+          0,
+          0,
+          11
+        ]
+      },
+      "stage": null,
+      "unresolved_names": 11,
+      "verified": 0
+    },
+    "quality3": {
+      "mismatched": 0,
+      "sections": {},
+      "stage": null,
+      "unresolved_names": 0,
+      "verified": 0
+    },
+    "quality3b": {
+      "mismatched": 0,
+      "sections": {
+        "bound_external_files": [
+          0,
+          0,
+          3
+        ]
+      },
+      "stage": null,
+      "unresolved_names": 3,
+      "verified": 0
+    }
+  },
+  "l1a2t_frozen_verifier": {
+    "bound_files": 14,
+    "verified": true
+  },
+  "l1a2u_frozen_verifier": {
+    "bound_files": 13,
+    "verified": true
+  },
+  "superseded_historical_records": {
+    "examples/two_phase/evidence/quality1/check_invariants.py": {
+      "approved_quality_migration": true,
+      "explanation": "an approved QUALITY-2 / QUALITY-3 commit (ancestor of the verified main) rewrote this file after the quality1 / quality2 manifest was recorded, so the older manifest value is a superseded snapshot rather than drift; the authoritative frozen baseline is quality/legacy_two_phase_debt_v1.json, whose ratchet reports sha_drift_unapproved=0",
+      "last_change_commit": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1 QUALITY-2: Option-R SHA-pinned quality-debt ratchet"
+    },
+    "examples/two_phase/evidence/quality1/codespell.txt": {
+      "approved_quality_migration": true,
+      "explanation": "an approved QUALITY-2 / QUALITY-3 commit (ancestor of the verified main) rewrote this file after the quality1 / quality2 manifest was recorded, so the older manifest value is a superseded snapshot rather than drift; the authoritative frozen baseline is quality/legacy_two_phase_debt_v1.json, whose ratchet reports sha_drift_unapproved=0",
+      "last_change_commit": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1 QUALITY-2: Option-R SHA-pinned quality-debt ratchet"
+    },
+    "examples/two_phase/evidence/quality1/quality_baseline.json": {
+      "approved_quality_migration": true,
+      "explanation": "an approved QUALITY-2 / QUALITY-3 commit (ancestor of the verified main) rewrote this file after the quality1 / quality2 manifest was recorded, so the older manifest value is a superseded snapshot rather than drift; the authoritative frozen baseline is quality/legacy_two_phase_debt_v1.json, whose ratchet reports sha_drift_unapproved=0",
+      "last_change_commit": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1 QUALITY-2: Option-R SHA-pinned quality-debt ratchet"
+    },
+    "scripts/quality_debt_gate.py": {
+      "approved_quality_migration": true,
+      "explanation": "an approved QUALITY-2 / QUALITY-3 commit (ancestor of the verified main) rewrote this file after the quality1 / quality2 manifest was recorded, so the older manifest value is a superseded snapshot rather than drift; the authoritative frozen baseline is quality/legacy_two_phase_debt_v1.json, whose ratchet reports sha_drift_unapproved=0",
+      "last_change_commit": "32c1cbf4237189408cc8b9a8d8f5ec659bf57ba6 QUALITY-3: reconcile PR22 quality baseline and record integration evidence"
+    }
+  },
+  "unresolved_names_note": "L1A-2k/2l/2m/2s manifest sections bind *logical* source keys (for example 'phasefield', 'cases'), not filenames, so a filename inventory cannot resolve them; those bindings are verified by the frozen L1A-2s reader that the frozen adjacent suite exercises (69 passed)",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

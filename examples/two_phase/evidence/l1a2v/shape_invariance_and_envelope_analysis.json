@@ -1,0 +1,44 @@
+{
+  "derivation": "shape_ratio_limit = envelope_limit / |core target over u_impact| = envelope / 1.0",
+  "measured_not_assumed": true,
+  "rows": {
+    "C2_BASE": {
+      "core_over_u_impact": -1.000000015415801,
+      "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+      "peak_over_u_impact": 4.315600561416556,
+      "rescaled_core_target_if_envelope_satisfied": 1.1366961380774108,
+      "shape_passes": true,
+      "shape_ratio": 4.315600494888117,
+      "shape_ratio_limit": 4.905526491646905
+    },
+    "R0_WEAK": {
+      "core_over_u_impact": -0.9999999420767068,
+      "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+      "peak_over_u_impact": 30.973781858021553,
+      "rescaled_core_target_if_envelope_satisfied": 0.15837673662625337,
+      "shape_passes": false,
+      "shape_ratio": 30.973783652125103,
+      "shape_ratio_limit": 4.905526491646905
+    },
+    "R1_MEDIUM": {
+      "core_over_u_impact": -0.9999999118796323,
+      "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+      "peak_over_u_impact": 89.76984464265173,
+      "rescaled_core_target_if_envelope_satisfied": 0.05464559408757376,
+      "shape_passes": false,
+      "shape_ratio": 89.76985255320415,
+      "shape_ratio_limit": 4.905526491646905
+    },
+    "R2_SHARP": {
+      "core_over_u_impact": -0.9999999069613134,
+      "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+      "peak_over_u_impact": 36.328378172556846,
+      "rescaled_core_target_if_envelope_satisfied": 0.13503290646078533,
+      "shape_passes": false,
+      "shape_ratio": 36.32838155250175,
+      "shape_ratio_limit": 4.905526491646905
+    }
+  },
+  "rule": "the envelope (4.905526491646905) and the core target (core-mean v = -u_impact, dimensionless magnitude 1.0) together require a shape ratio peak/core <= 4.905526491646905; the ratio is invariant under amplitude rescaling, so a violation cannot be repaired by re-scaling within the family",
+  "shape_ratio_limit": 4.905526491646905
+}

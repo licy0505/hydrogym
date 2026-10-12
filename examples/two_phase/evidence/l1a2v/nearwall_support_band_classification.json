@@ -1,0 +1,57 @@
+{
+  "cases_with_support_inside_gate_band": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training"
+  ],
+  "cases_with_support_outside_gate_band": [
+    "complex_heldout"
+  ],
+  "correction": "the L1A-2u statement that every frozen canary places the phi=0.5 contour support cell inside the chi >= 0.01 gate band does not hold: complex_heldout places it outside (measured here). The statement is recorded as refuted in this independent evidence rather than edited in place; the L1A-2u evidence remains sealed and byte-identical.",
+  "l1a2u_sealed_statement_verbatim": "every case places the frozen phi=0.5 contour support cell inside the chi >= 0.01 gate band, so the frozen gate caps the initial normal speed *at the contour itself* at 0.02 u_impact",
+  "l1a2u_statement_holds_for": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training"
+  ],
+  "l1a2u_statement_is_universal": true,
+  "l1a2u_statement_refuted_for": [
+    "complex_heldout"
+  ],
+  "l1a2u_universal_claim_refuted": true,
+  "measured_not_assumed": true,
+  "per_case": {
+    "complex_heldout": {
+      "gate_band_cell_count": 4188,
+      "gate_band_max_sdf_over_dx": 3.445622444152832,
+      "open_cells_min_sdf_over_dx": 3.4481067657470703,
+      "phi05_support_chi": 0.0005123895243741572,
+      "phi05_support_is_inside_gate_band": false,
+      "phi05_support_sdf_over_dx": 5.681934833526611
+    },
+    "flat_we100_ct050": {
+      "gate_band_cell_count": 2112,
+      "gate_band_max_sdf_over_dx": 2.5,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "phi05_support_chi": 0.03444519639015198,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.5
+    },
+    "flat_we200_ct000": {
+      "gate_band_cell_count": 2112,
+      "gate_band_max_sdf_over_dx": 2.5,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "phi05_support_chi": 0.03444519639015198,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.5
+    },
+    "pillar_training": {
+      "gate_band_cell_count": 2936,
+      "gate_band_max_sdf_over_dx": 3.1906111240386963,
+      "open_cells_min_sdf_over_dx": 3.5,
+      "phi05_support_chi": 0.02659699320793152,
+      "phi05_support_is_inside_gate_band": true,
+      "phi05_support_sdf_over_dx": 2.700000047683716
+    }
+  }
+}

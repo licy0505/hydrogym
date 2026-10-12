@@ -1,0 +1,44 @@
+{
+  "adversarial": {
+    "candidate_set_is_the_frozen_one": true,
+    "core_target_unchanged_from_l1a2u": true,
+    "envelope_is_a_single_case_independent_constant": true,
+    "family_parameters_not_modified": {
+      "R0_WEAK": {
+        "delta_dx": 1.5,
+        "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+        "w_dx": 2.0
+      },
+      "R1_MEDIUM": {
+        "delta_dx": 2.0,
+        "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+        "w_dx": 2.0
+      },
+      "R2_SHARP": {
+        "delta_dx": 2.0,
+        "role": "strong roll-off: mid-window clearance with the sharpest transition",
+        "w_dx": 1.0
+      }
+    },
+    "no_kernel_constructed_by_this_module": true,
+    "verdict_vocabulary_fixed": true
+  },
+  "injected_failures": {
+    "envelope_comparison_is_fail_closed_at_the_boundary": {
+      "error": null,
+      "raised": false
+    },
+    "envelope_must_equal_the_sealed_l1a2u_value": {
+      "error": null,
+      "raised": false
+    },
+    "relaxed_envelope_must_be_refused": {
+      "error": "envelope relaxation refused by construction: a relaxed limit 46.46067278703233 would admit R0_WEAK (peak 30.973781858021553) and is not permitted by this stage",
+      "raised": true
+    },
+    "unknown_candidate_is_rejected": {
+      "error": "unknown reference candidate 'NOT_A_CANDIDATE'",
+      "raised": true
+    }
+  }
+}
