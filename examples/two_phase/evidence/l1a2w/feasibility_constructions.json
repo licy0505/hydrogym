@@ -1,0 +1,3228 @@
+{
+  "arms": [
+    "PRESPECIFIED_PRIMARY",
+    "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS"
+  ],
+  "arms_added_after_seeing_the_primary_arm": [
+    "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS"
+  ],
+  "arms_declared_before_measurement": [
+    "PRESPECIFIED_PRIMARY"
+  ],
+  "cases": {
+    "complex_heldout": {
+      "admissible_constructions": [
+        "RAMP_A4_W8"
+      ],
+      "admissible_constructions_by_arm": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+          "RAMP_A4_W8"
+        ],
+        "PRESPECIFIED_PRIMARY": []
+      },
+      "arm_summaries": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": {
+          "admissible_constructions": [
+            "RAMP_A4_W8"
+          ],
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.33539095520973206,
+          "best_achieved_contour_point_normal_over_u_impact": 0.24841098623015156,
+          "best_achieved_fraction_of_contour_point_cap": 0.050639006160326315,
+          "best_shape": "RAMP_A4_W8",
+          "min_band_core_ratio_among_constructed": 0.001058934963270859,
+          "shapes_constructed": [
+            "RAMP_A4_W8"
+          ],
+          "shapes_rejected_analytically": [
+            "RAMP_A2.5_W2",
+            "RAMP_A2.5_W3",
+            "RAMP_A2.5_W4",
+            "RAMP_A2_W2",
+            "RAMP_A2_W3",
+            "RAMP_A2_W4",
+            "RAMP_A3.5_W3",
+            "RAMP_A3_W2",
+            "RAMP_A3_W3",
+            "RAMP_A3_W4"
+          ],
+          "shapes_screened": 11
+        },
+        "PRESPECIFIED_PRIMARY": {
+          "admissible_constructions": [],
+          "arm": "PRESPECIFIED_PRIMARY",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": null,
+          "shapes_constructed": [],
+          "shapes_rejected_analytically": [
+            "RAMP_A0.5_W8",
+            "RAMP_A0_W10",
+            "RAMP_A0_W12",
+            "RAMP_A0_W16",
+            "RAMP_A0_W24",
+            "RAMP_A0_W32",
+            "RAMP_A0_W4",
+            "RAMP_A0_W6",
+            "RAMP_A0_W8",
+            "RAMP_A1_W8"
+          ],
+          "shapes_screened": 10
+        }
+      },
+      "best_achieved_contour_cell_normal_over_u_impact": 0.33539095520973206,
+      "best_achieved_contour_point_normal_over_u_impact": 0.24841098623015156,
+      "best_achieved_fraction_of_contour_cell_cap": 0.06837002221491074,
+      "best_achieved_fraction_of_contour_point_cap": 0.050639006160326315,
+      "best_admissible_shape": "RAMP_A4_W8",
+      "best_shape_arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+      "case_name": "complex_heldout",
+      "constructibility_summary": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+      "constructions": {
+        "RAMP_A0.5_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.1252953393713943,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.2699614075909522,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.1380228751411705,
+            "contour_point_unit_normal_velocity": 0.14877497749689228,
+            "core_unit_v": -0.23990271544335767,
+            "peak_core_ratio": 4.144903167718438,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.084178159784326
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A0_W10": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8901635345471913,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.21324432443619593,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.12971603610017085,
+            "contour_point_unit_normal_velocity": 0.13182338855811354,
+            "core_unit_v": -0.2395563468511088,
+            "peak_core_ratio": 4.150896180611153,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0871916213965496
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 10.0
+        },
+        "RAMP_A0_W12": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6030274338596073,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.14372530248951976,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.11272863691644819,
+            "contour_point_unit_normal_velocity": 0.10963762031842075,
+            "core_unit_v": -0.2383395753152101,
+            "peak_core_ratio": 4.17208734164414,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.097847155004524
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 12.0
+        },
+        "RAMP_A0_W16": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.3088468644471459,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.07235104552149366,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.07199297435454449,
+            "contour_point_unit_normal_velocity": 0.06754763788934638,
+            "core_unit_v": -0.23426187489714784,
+            "peak_core_ratio": 4.244709155606331,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.134363520395813
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 16.0
+        },
+        "RAMP_A0_W24": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.11316350795101246,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.02523868465032907,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.03007760681415593,
+            "contour_point_unit_normal_velocity": 0.02754389228119773,
+            "core_unit_v": -0.22302847540971146,
+            "peak_core_ratio": 4.458504786703705,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.2418661970471785
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 24.0
+        },
+        "RAMP_A0_W32": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.05552532950909811,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.01150156794287077,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.014772207539352787,
+            "contour_point_unit_normal_velocity": 0.013401457516526133,
+            "core_unit_v": -0.20714092189198408,
+            "peak_core_ratio": 4.752680060924942,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9844745292776436,
+            "streamfunction_scale_for_core_target": 2.4138156547392917
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 32.0
+        },
+        "RAMP_A0_W4": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.000174764240897,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.47990522469042984,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.002483677821483954,
+            "contour_point_unit_normal_velocity": 0.004948417150047125,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A0_W6": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.9672741809538306,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4720113335679618,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.012111794748138394,
+            "contour_point_unit_normal_velocity": 0.04280848776805078,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 6.0
+        },
+        "RAMP_A0_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.3516625138226228,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.32430274678954235,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.11149069081385943,
+            "contour_point_unit_normal_velocity": 0.1281682613068687,
+            "core_unit_v": -0.2399287865669849,
+            "peak_core_ratio": 4.144452774564474,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839516889750396
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A1_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 1.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8717113898304992,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.20904579545770077,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.15728776838495695,
+            "contour_point_unit_normal_velocity": 0.161108739316493,
+            "core_unit_v": -0.23981078817651894,
+            "peak_core_ratio": 4.1464920437753365,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0849770929903375
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A2.5_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.8761168485941813,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.6900714513235832,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.002483677821483954,
+            "contour_point_unit_normal_velocity": 0.005440993259444008,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.7973817462908024,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.43124876197282036,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.003616259448972814,
+            "contour_point_unit_normal_velocity": 0.08092719939115506,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2.5_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.034165219923922,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.24812896408228258,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.12803999810344424,
+            "contour_point_unit_normal_velocity": 0.19562722058087378,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A2_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.9586667514700733,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.7098777854480232,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.002483677821483954,
+            "contour_point_unit_normal_velocity": 0.004948417150047125,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.5639964574755196,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.615183891942184,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.002483677821483954,
+            "contour_point_unit_normal_velocity": 0.022291321241135878,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.7159661412917804,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4117145818057231,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.03216447979880366,
+            "contour_point_unit_normal_velocity": 0.1046480903158356,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A3.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.23573795312303766,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.056560995261086114,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.24781072683678174,
+            "contour_point_unit_normal_velocity": 0.31003637173153586,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.9412880756521242,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4657764445339641,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.002483677821483954,
+            "contour_point_unit_normal_velocity": 0.05350488075338428,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A3_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8929086762664158,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.2142370489682168,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.06649518841136304,
+            "contour_point_unit_normal_velocity": 0.18432687817105858,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.4568513509583437,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.10961309689105991,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.24448708402306463,
+            "contour_point_unit_normal_velocity": 0.2732153253415879,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A4_W8": {
+          "achieved_contour_cell_normal_over_u_impact": 0.33539095520973206,
+          "achieved_contour_point_normal_over_u_impact": 0.24841098623015156,
+          "achieved_fraction_of_contour_cell_cap": 0.06837002221491074,
+          "achieved_fraction_of_contour_point_cap": 0.050639006160326315,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 4.905526491646905,
+          "contour_point_cap_over_u_impact": 4.9055264916469055,
+          "details": {
+            "band_core_ratio": 0.001058934963270859,
+            "core_unit_v": -0.2360276258892564,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.212953977056846,
+            "streamfunction_scale": 2.118396090780487
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.212954138578362,
+            "band_core_speed_ratio": 0.001058934954657757,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 0.0010589349549263716,
+            "candidate": "RAMP_A4_W8",
+            "contour_cell_chi": 0.0005123895243741572,
+            "contour_cell_frozen_flux_y_over_u_impact": 0.008203899621508968,
+            "contour_cell_inside_band": false,
+            "contour_cell_normal_velocity_over_u_impact": 0.33539095520973206,
+            "contour_cell_speed_over_u_impact": 0.91987891115305,
+            "contour_point_normal_velocity_over_u_impact": 0.24841098623015156,
+            "contour_point_phi_normal_flux_over_u_impact": 0.13511285023567404,
+            "contour_point_speed_over_u_impact": 0.6680870474471804,
+            "contour_support_cell": [
+              106,
+              35
+            ],
+            "core_mean_normal_speed_over_u_impact": -1.0000000002536649,
+            "cutcell_flux_div_Linf": 1.0132789611816406e-05,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.564621925354004e-07,
+              "dx_FV_Linf_over_u_impact": 6.332993507385254e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0010589349549263716,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 0.0009112317929975688,
+            "in_band_downward_phase_flux": 1.0462082525295162e-15,
+            "in_band_downward_phase_flux_over_u_impact": 2.0924165050590325e-15,
+            "in_band_face_area_phi_upwind": 2.3507530489921146e-05,
+            "in_band_face_count": 1372,
+            "initial_D_div_Linf": 2.5033950805664062e-06,
+            "peak_open_cell_speed_over_u_impact": 4.212954138578362,
+            "phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "placeable_downward_momentum": 0.8570597660227213,
+            "placeable_downward_momentum_over_u_impact": 1.7141195320454425,
+            "u_hash": "de82b310f95ebb4f2709bac185f6ee4810469b1f4aa4e7c2f9b63e15bb179b83",
+            "v_hash": "7f12659d0a0a9544b20fc4baa4eabd05d0fa8b22f96a66b05eb831f9e2f1830d"
+          },
+          "onset_dx": 4.0,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 0.001058934963270859,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 0.0002499379053519478,
+            "contour_cell": [
+              106,
+              35
+            ],
+            "contour_cell_unit_normal_velocity": 0.07916153037653101,
+            "contour_point_unit_normal_velocity": 0.05863185466403248,
+            "core_unit_v": -0.2360276258892564,
+            "peak_core_ratio": 4.212953977056846,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.118396090780487
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 8.0
+        }
+      },
+      "contour_cell_cap_over_u_impact": 4.905526491646905,
+      "contour_point_cap_over_u_impact": 4.9055264916469055,
+      "shapes_rejected_analytically": [
+        "RAMP_A0.5_W8",
+        "RAMP_A0_W10",
+        "RAMP_A0_W12",
+        "RAMP_A0_W16",
+        "RAMP_A0_W24",
+        "RAMP_A0_W32",
+        "RAMP_A0_W4",
+        "RAMP_A0_W6",
+        "RAMP_A0_W8",
+        "RAMP_A1_W8",
+        "RAMP_A2.5_W2",
+        "RAMP_A2.5_W3",
+        "RAMP_A2.5_W4",
+        "RAMP_A2_W2",
+        "RAMP_A2_W3",
+        "RAMP_A2_W4",
+        "RAMP_A3.5_W3",
+        "RAMP_A3_W2",
+        "RAMP_A3_W3",
+        "RAMP_A3_W4"
+      ],
+      "u_impact": 0.5
+    },
+    "flat_we100_ct050": {
+      "admissible_constructions": [
+        "RAMP_A3.5_W3",
+        "RAMP_A4_W8"
+      ],
+      "admissible_constructions_by_arm": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+          "RAMP_A3.5_W3",
+          "RAMP_A4_W8"
+        ],
+        "PRESPECIFIED_PRIMARY": []
+      },
+      "arm_summaries": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": {
+          "admissible_constructions": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": 0.0,
+          "shapes_constructed": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "shapes_rejected_analytically": [
+            "RAMP_A2.5_W2",
+            "RAMP_A2.5_W3",
+            "RAMP_A2.5_W4",
+            "RAMP_A2_W2",
+            "RAMP_A2_W3",
+            "RAMP_A2_W4",
+            "RAMP_A3_W2",
+            "RAMP_A3_W3",
+            "RAMP_A3_W4"
+          ],
+          "shapes_screened": 11
+        },
+        "PRESPECIFIED_PRIMARY": {
+          "admissible_constructions": [],
+          "arm": "PRESPECIFIED_PRIMARY",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": null,
+          "shapes_constructed": [],
+          "shapes_rejected_analytically": [
+            "RAMP_A0.5_W8",
+            "RAMP_A0_W10",
+            "RAMP_A0_W12",
+            "RAMP_A0_W16",
+            "RAMP_A0_W24",
+            "RAMP_A0_W32",
+            "RAMP_A0_W4",
+            "RAMP_A0_W6",
+            "RAMP_A0_W8",
+            "RAMP_A1_W8"
+          ],
+          "shapes_screened": 10
+        }
+      },
+      "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+      "best_achieved_contour_point_normal_over_u_impact": 0.0,
+      "best_achieved_fraction_of_contour_cell_cap": 0.0,
+      "best_achieved_fraction_of_contour_point_cap": 0.0,
+      "best_admissible_shape": null,
+      "best_shape_arm": null,
+      "case_name": "flat_we100_ct050",
+      "constructibility_summary": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+      "constructions": {
+        "RAMP_A0.5_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6614178144012002,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1580962430308087,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.016337983197215817,
+            "core_unit_v": -0.23902628503276344,
+            "peak_core_ratio": 4.160101158117941,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0918201524634195
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A0_W10": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.54794425327602,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1303643833779121,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.016292392233365507,
+            "core_unit_v": -0.2379154131072576,
+            "peak_core_ratio": 4.179525454860473,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.1015872551922006
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 10.0
+        },
+        "RAMP_A0_W12": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.36030255053027244,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.08481900452608113,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.010048069414890216,
+            "contour_point_unit_normal_velocity": -0.010161311728492689,
+            "core_unit_v": -0.2354105026490915,
+            "peak_core_ratio": 4.223998139401899,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.123949417606537
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 12.0
+        },
+        "RAMP_A0_W16": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.18013888699876096,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.04108269619121218,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.004635471347957628,
+            "contour_point_unit_normal_velocity": -0.0046912491828499684,
+            "core_unit_v": -0.22806123028557826,
+            "peak_core_ratio": 4.360116464952301,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.192393680301996
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 16.0
+        },
+        "RAMP_A0_W24": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.06688787347745244,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.013859784713329514,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0014966672737051346,
+            "contour_point_unit_normal_velocity": -0.001515756568242445,
+            "core_unit_v": -0.2072092293082329,
+            "peak_core_ratio": 4.79888639381535,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735512002436,
+            "streamfunction_scale_for_core_target": 2.4130199299965924
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 24.0
+        },
+        "RAMP_A0_W32": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.03426265400373019,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.006221463911654819,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0006582992985151029,
+            "contour_point_unit_normal_velocity": -0.000666923353049182,
+            "core_unit_v": -0.18158149427004358,
+            "peak_core_ratio": 5.250447786269016,
+            "peak_core_ratio_exceeds_the_envelope": true,
+            "peak_unit_speed": 0.9533841546175704,
+            "streamfunction_scale_for_core_target": 2.7535845654866797
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 32.0
+        },
+        "RAMP_A0_W4": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.0229869390597015,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4853785873574419,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.11287575787967913,
+            "contour_point_unit_normal_velocity": -0.11332100858002941,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A0_W6": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.464441458748044,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.35135155821121083,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.05398086926539561,
+            "contour_point_unit_normal_velocity": -0.05440198298834612,
+            "core_unit_v": -0.2399218870186743,
+            "peak_core_ratio": 4.14457195857263,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.084011618169219
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 6.0
+        },
+        "RAMP_A0_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8809916162151421,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.21093487073905048,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.02803328855235452,
+            "contour_point_unit_normal_velocity": -0.028302896827216987,
+            "core_unit_v": -0.23942891947741218,
+            "peak_core_ratio": 4.153105344817119,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.088302453568773
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A1_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 1.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.4465342527079349,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1064757906767947,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0075950532979618835,
+            "contour_point_unit_normal_velocity": -0.007754594723489689,
+            "core_unit_v": -0.23844932394567597,
+            "peak_core_ratio": 4.170167097693128,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0968816003601294
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A2.5_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.242219213364467,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.2980477013120863,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0005693441140201124,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.5214253488196527,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1251064425260609,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00023898394909486196,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2.5_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.2573912144729068,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.06170518816226787,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00011787202360572638,
+            "core_unit_v": -0.2397330782584384,
+            "peak_core_ratio": 4.14783613679489,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0856529421483807
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A2_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.2272614755621354,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.5343905132607961,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.01704542383889193,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.2422194758818619,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.29804776429831714,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.00552764101277651,
+            "contour_point_unit_normal_velocity": -0.006063921900631184,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6838239944230233,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1640499605658624,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0024999009955667885,
+            "contour_point_unit_normal_velocity": -0.0027983235626771958,
+            "core_unit_v": -0.23990085446516043,
+            "peak_core_ratio": 4.144935320894557,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0841943273387233
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A3.5_W3": {
+          "achieved_contour_cell_normal_over_u_impact": 0.0,
+          "achieved_contour_point_normal_over_u_impact": 0.0,
+          "achieved_fraction_of_contour_cell_cap": 0.0,
+          "achieved_fraction_of_contour_point_cap": 0.0,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 0.02,
+          "contour_point_cap_over_u_impact": 2.49198570563175,
+          "details": {
+            "band_core_ratio": 0.0,
+            "core_unit_v": -0.23952905193766413,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.151369185246921,
+            "streamfunction_scale": 2.087429461918138
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.151369145885356,
+            "band_core_speed_ratio": 0.0,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 0.0,
+            "candidate": "RAMP_A3.5_W3",
+            "contour_cell_chi": 0.03444519639015198,
+            "contour_cell_frozen_flux_y_over_u_impact": -0.0,
+            "contour_cell_inside_band": true,
+            "contour_cell_normal_velocity_over_u_impact": -0.0,
+            "contour_cell_speed_over_u_impact": 0.0,
+            "contour_point_normal_velocity_over_u_impact": -0.0,
+            "contour_point_phi_normal_flux_over_u_impact": -0.0,
+            "contour_point_speed_over_u_impact": 0.00030134565414426334,
+            "contour_support_cell": [
+              95,
+              10
+            ],
+            "core_mean_normal_speed_over_u_impact": -0.9999999977733057,
+            "cutcell_flux_div_Linf": 6.67572021484375e-06,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.4156103134155273e-07,
+              "dx_FV_Linf_over_u_impact": 4.172325134277344e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 0.0,
+            "in_band_downward_phase_flux": 0.0,
+            "in_band_downward_phase_flux_over_u_impact": 0.0,
+            "in_band_face_area_phi_upwind": 0.0003500398997665247,
+            "in_band_face_count": 384,
+            "initial_D_div_Linf": 2.2649765014648438e-06,
+            "peak_open_cell_speed_over_u_impact": 4.151369145885356,
+            "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "placeable_downward_momentum": 0.8434308213924702,
+            "placeable_downward_momentum_over_u_impact": 1.6868616427849403,
+            "u_hash": "769105d3ba1b926171eb1de8d9215d7b347190b29086f228efba09b7f03a2a15",
+            "v_hash": "b2e64cdaf6322a16aad9b09ac4ca092e6683aafd71ad051d0362ef9a14b6f2d5"
+          },
+          "onset_dx": 3.5,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 0.0,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 0.0,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0,
+            "core_unit_v": -0.23952905193766413,
+            "peak_core_ratio": 4.151369185246921,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.087429461918138
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.2571781965168623,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.06170518816226787,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00011787202360572638,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A3_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.08820725885223808,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.02115770719190736,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -4.0416403155748715e-05,
+            "core_unit_v": -0.2398635607456078,
+            "peak_core_ratio": 4.145579770826597,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.084518375553864
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.039976946947152626,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.009568670098276208,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -1.8278503660557806e-05,
+            "core_unit_v": -0.2393546988699631,
+            "peak_core_ratio": 4.154393165791379,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.088950007501798
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A4_W8": {
+          "achieved_contour_cell_normal_over_u_impact": 0.0,
+          "achieved_contour_point_normal_over_u_impact": 0.0,
+          "achieved_fraction_of_contour_cell_cap": 0.0,
+          "achieved_fraction_of_contour_point_cap": 0.0,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 0.02,
+          "contour_point_cap_over_u_impact": 2.49198570563175,
+          "details": {
+            "band_core_ratio": 0.0,
+            "core_unit_v": -0.23041371522239348,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.315600415650895,
+            "streamfunction_scale": 2.170009712822017
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.315600561442479,
+            "band_core_speed_ratio": 0.0,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 0.0,
+            "candidate": "RAMP_A4_W8",
+            "contour_cell_chi": 0.03444519639015198,
+            "contour_cell_frozen_flux_y_over_u_impact": -0.0,
+            "contour_cell_inside_band": true,
+            "contour_cell_normal_velocity_over_u_impact": -0.0,
+            "contour_cell_speed_over_u_impact": 0.0,
+            "contour_point_normal_velocity_over_u_impact": -0.0,
+            "contour_point_phi_normal_flux_over_u_impact": -0.0,
+            "contour_point_speed_over_u_impact": 3.3110113768475127e-06,
+            "contour_support_cell": [
+              95,
+              10
+            ],
+            "core_mean_normal_speed_over_u_impact": -0.9999999982967177,
+            "cutcell_flux_div_Linf": 9.775161743164062e-06,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 2.0675361156463623e-07,
+              "dx_FV_Linf_over_u_impact": 6.109476089477539e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 0.0,
+            "in_band_downward_phase_flux": 0.0,
+            "in_band_downward_phase_flux_over_u_impact": 0.0,
+            "in_band_face_area_phi_upwind": 0.0003500398997665247,
+            "in_band_face_count": 384,
+            "initial_D_div_Linf": 3.3080577850341797e-06,
+            "peak_open_cell_speed_over_u_impact": 4.315600561442479,
+            "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "placeable_downward_momentum": 0.8497805472736726,
+            "placeable_downward_momentum_over_u_impact": 1.6995610945473452,
+            "u_hash": "b1870b62baf29a8c62b45ab0133f5b6507c28a4b3cb860af629fb9a5c8f94398",
+            "v_hash": "9015381042296e8613b7e7b086c492a11990d2700d360d5b8f418f5bf0f3449a"
+          },
+          "onset_dx": 4.0,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 0.0,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 0.0,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0,
+            "core_unit_v": -0.23041371522239348,
+            "peak_core_ratio": 4.315600415650895,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.170009712822017
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 8.0
+        }
+      },
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "shapes_rejected_analytically": [
+        "RAMP_A0.5_W8",
+        "RAMP_A0_W10",
+        "RAMP_A0_W12",
+        "RAMP_A0_W16",
+        "RAMP_A0_W24",
+        "RAMP_A0_W32",
+        "RAMP_A0_W4",
+        "RAMP_A0_W6",
+        "RAMP_A0_W8",
+        "RAMP_A1_W8",
+        "RAMP_A2.5_W2",
+        "RAMP_A2.5_W3",
+        "RAMP_A2.5_W4",
+        "RAMP_A2_W2",
+        "RAMP_A2_W3",
+        "RAMP_A2_W4",
+        "RAMP_A3_W2",
+        "RAMP_A3_W3",
+        "RAMP_A3_W4"
+      ],
+      "u_impact": 0.5
+    },
+    "flat_we200_ct000": {
+      "admissible_constructions": [
+        "RAMP_A3.5_W3",
+        "RAMP_A4_W8"
+      ],
+      "admissible_constructions_by_arm": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+          "RAMP_A3.5_W3",
+          "RAMP_A4_W8"
+        ],
+        "PRESPECIFIED_PRIMARY": []
+      },
+      "arm_summaries": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": {
+          "admissible_constructions": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": 0.0,
+          "shapes_constructed": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "shapes_rejected_analytically": [
+            "RAMP_A2.5_W2",
+            "RAMP_A2.5_W3",
+            "RAMP_A2.5_W4",
+            "RAMP_A2_W2",
+            "RAMP_A2_W3",
+            "RAMP_A2_W4",
+            "RAMP_A3_W2",
+            "RAMP_A3_W3",
+            "RAMP_A3_W4"
+          ],
+          "shapes_screened": 11
+        },
+        "PRESPECIFIED_PRIMARY": {
+          "admissible_constructions": [],
+          "arm": "PRESPECIFIED_PRIMARY",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": null,
+          "shapes_constructed": [],
+          "shapes_rejected_analytically": [
+            "RAMP_A0.5_W8",
+            "RAMP_A0_W10",
+            "RAMP_A0_W12",
+            "RAMP_A0_W16",
+            "RAMP_A0_W24",
+            "RAMP_A0_W32",
+            "RAMP_A0_W4",
+            "RAMP_A0_W6",
+            "RAMP_A0_W8",
+            "RAMP_A1_W8"
+          ],
+          "shapes_screened": 10
+        }
+      },
+      "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+      "best_achieved_contour_point_normal_over_u_impact": 0.0,
+      "best_achieved_fraction_of_contour_cell_cap": 0.0,
+      "best_achieved_fraction_of_contour_point_cap": 0.0,
+      "best_admissible_shape": null,
+      "best_shape_arm": null,
+      "case_name": "flat_we200_ct000",
+      "constructibility_summary": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+      "constructions": {
+        "RAMP_A0.5_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6614178144012002,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1580962430308087,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.016337983197215817,
+            "core_unit_v": -0.23902628503276344,
+            "peak_core_ratio": 4.160101158117941,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0918201524634195
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A0_W10": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.54794425327602,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1303643833779121,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.016292392233365507,
+            "core_unit_v": -0.2379154131072576,
+            "peak_core_ratio": 4.179525454860473,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.1015872551922006
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 10.0
+        },
+        "RAMP_A0_W12": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.36030255053027244,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.08481900452608113,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.010048069414890216,
+            "contour_point_unit_normal_velocity": -0.010161311728492689,
+            "core_unit_v": -0.2354105026490915,
+            "peak_core_ratio": 4.223998139401899,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.123949417606537
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 12.0
+        },
+        "RAMP_A0_W16": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.18013888699876096,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.04108269619121218,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.004635471347957628,
+            "contour_point_unit_normal_velocity": -0.0046912491828499684,
+            "core_unit_v": -0.22806123028557826,
+            "peak_core_ratio": 4.360116464952301,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.192393680301996
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 16.0
+        },
+        "RAMP_A0_W24": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.06688787347745244,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.013859784713329514,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0014966672737051346,
+            "contour_point_unit_normal_velocity": -0.001515756568242445,
+            "core_unit_v": -0.2072092293082329,
+            "peak_core_ratio": 4.79888639381535,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735512002436,
+            "streamfunction_scale_for_core_target": 2.4130199299965924
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 24.0
+        },
+        "RAMP_A0_W32": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.03426265400373019,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.006221463911654819,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0006582992985151029,
+            "contour_point_unit_normal_velocity": -0.000666923353049182,
+            "core_unit_v": -0.18158149427004358,
+            "peak_core_ratio": 5.250447786269016,
+            "peak_core_ratio_exceeds_the_envelope": true,
+            "peak_unit_speed": 0.9533841546175704,
+            "streamfunction_scale_for_core_target": 2.7535845654866797
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 32.0
+        },
+        "RAMP_A0_W4": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.0229869390597015,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4853785873574419,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.11287575787967913,
+            "contour_point_unit_normal_velocity": -0.11332100858002941,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A0_W6": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.464441458748044,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.35135155821121083,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.05398086926539561,
+            "contour_point_unit_normal_velocity": -0.05440198298834612,
+            "core_unit_v": -0.2399218870186743,
+            "peak_core_ratio": 4.14457195857263,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.084011618169219
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 6.0
+        },
+        "RAMP_A0_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8809916162151421,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.21093487073905048,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.02803328855235452,
+            "contour_point_unit_normal_velocity": -0.028302896827216987,
+            "core_unit_v": -0.23942891947741218,
+            "peak_core_ratio": 4.153105344817119,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.088302453568773
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A1_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 1.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.4465342527079349,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1064757906767947,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0075950532979618835,
+            "contour_point_unit_normal_velocity": -0.007754594723489689,
+            "core_unit_v": -0.23844932394567597,
+            "peak_core_ratio": 4.170167097693128,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0968816003601294
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A2.5_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.242219213364467,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.2980477013120863,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0005693441140201124,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.5214253488196527,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1251064425260609,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00023898394909486196,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2.5_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.2573912144729068,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.06170518816226787,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00011787202360572638,
+            "core_unit_v": -0.2397330782584384,
+            "peak_core_ratio": 4.14783613679489,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0856529421483807
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A2_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.2272614755621354,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.5343905132607961,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.016121034556963017,
+            "contour_point_unit_normal_velocity": -0.01704542383889193,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.2422194758818619,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.29804776429831714,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.00552764101277651,
+            "contour_point_unit_normal_velocity": -0.006063921900631184,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6838239944230233,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1640499605658624,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0024999009955667885,
+            "contour_point_unit_normal_velocity": -0.0027983235626771958,
+            "core_unit_v": -0.23990085446516043,
+            "peak_core_ratio": 4.144935320894557,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0841943273387233
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A3.5_W3": {
+          "achieved_contour_cell_normal_over_u_impact": 0.0,
+          "achieved_contour_point_normal_over_u_impact": 0.0,
+          "achieved_fraction_of_contour_cell_cap": 0.0,
+          "achieved_fraction_of_contour_point_cap": 0.0,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 0.02,
+          "contour_point_cap_over_u_impact": 2.49198570563175,
+          "details": {
+            "band_core_ratio": 0.0,
+            "core_unit_v": -0.23952905193766413,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.151369185246921,
+            "streamfunction_scale": 2.087429461918138
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.151369145885356,
+            "band_core_speed_ratio": 0.0,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 0.0,
+            "candidate": "RAMP_A3.5_W3",
+            "contour_cell_chi": 0.03444519639015198,
+            "contour_cell_frozen_flux_y_over_u_impact": -0.0,
+            "contour_cell_inside_band": true,
+            "contour_cell_normal_velocity_over_u_impact": -0.0,
+            "contour_cell_speed_over_u_impact": 0.0,
+            "contour_point_normal_velocity_over_u_impact": -0.0,
+            "contour_point_phi_normal_flux_over_u_impact": -0.0,
+            "contour_point_speed_over_u_impact": 0.00030134565414426334,
+            "contour_support_cell": [
+              95,
+              10
+            ],
+            "core_mean_normal_speed_over_u_impact": -0.9999999977733057,
+            "cutcell_flux_div_Linf": 6.67572021484375e-06,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.4156103134155273e-07,
+              "dx_FV_Linf_over_u_impact": 4.172325134277344e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 0.0,
+            "in_band_downward_phase_flux": 0.0,
+            "in_band_downward_phase_flux_over_u_impact": 0.0,
+            "in_band_face_area_phi_upwind": 0.0003500398997665247,
+            "in_band_face_count": 384,
+            "initial_D_div_Linf": 2.2649765014648438e-06,
+            "peak_open_cell_speed_over_u_impact": 4.151369145885356,
+            "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "placeable_downward_momentum": 0.8434308213924702,
+            "placeable_downward_momentum_over_u_impact": 1.6868616427849403,
+            "u_hash": "769105d3ba1b926171eb1de8d9215d7b347190b29086f228efba09b7f03a2a15",
+            "v_hash": "b2e64cdaf6322a16aad9b09ac4ca092e6683aafd71ad051d0362ef9a14b6f2d5"
+          },
+          "onset_dx": 3.5,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 0.0,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 0.0,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0,
+            "core_unit_v": -0.23952905193766413,
+            "peak_core_ratio": 4.151369185246921,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.087429461918138
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.2571781965168623,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.06170518816226787,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00011787202360572638,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A3_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.08820725885223808,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.02115770719190736,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -4.0416403155748715e-05,
+            "core_unit_v": -0.2398635607456078,
+            "peak_core_ratio": 4.145579770826597,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.084518375553864
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.039976946947152626,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.009568670098276208,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -1.8278503660557806e-05,
+            "core_unit_v": -0.2393546988699631,
+            "peak_core_ratio": 4.154393165791379,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.088950007501798
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A4_W8": {
+          "achieved_contour_cell_normal_over_u_impact": 0.0,
+          "achieved_contour_point_normal_over_u_impact": 0.0,
+          "achieved_fraction_of_contour_cell_cap": 0.0,
+          "achieved_fraction_of_contour_point_cap": 0.0,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 0.02,
+          "contour_point_cap_over_u_impact": 2.49198570563175,
+          "details": {
+            "band_core_ratio": 0.0,
+            "core_unit_v": -0.23041371522239348,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.315600415650895,
+            "streamfunction_scale": 2.170009712822017
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.315600561442479,
+            "band_core_speed_ratio": 0.0,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 0.0,
+            "candidate": "RAMP_A4_W8",
+            "contour_cell_chi": 0.03444519639015198,
+            "contour_cell_frozen_flux_y_over_u_impact": -0.0,
+            "contour_cell_inside_band": true,
+            "contour_cell_normal_velocity_over_u_impact": -0.0,
+            "contour_cell_speed_over_u_impact": 0.0,
+            "contour_point_normal_velocity_over_u_impact": -0.0,
+            "contour_point_phi_normal_flux_over_u_impact": -0.0,
+            "contour_point_speed_over_u_impact": 3.3110113768475127e-06,
+            "contour_support_cell": [
+              95,
+              10
+            ],
+            "core_mean_normal_speed_over_u_impact": -0.9999999982967177,
+            "cutcell_flux_div_Linf": 9.775161743164062e-06,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 2.0675361156463623e-07,
+              "dx_FV_Linf_over_u_impact": 6.109476089477539e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 0.0,
+            "in_band_downward_phase_flux": 0.0,
+            "in_band_downward_phase_flux_over_u_impact": 0.0,
+            "in_band_face_area_phi_upwind": 0.0003500398997665247,
+            "in_band_face_count": 384,
+            "initial_D_div_Linf": 3.3080577850341797e-06,
+            "peak_open_cell_speed_over_u_impact": 4.315600561442479,
+            "phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "placeable_downward_momentum": 0.8497805472736726,
+            "placeable_downward_momentum_over_u_impact": 1.6995610945473452,
+            "u_hash": "b1870b62baf29a8c62b45ab0133f5b6507c28a4b3cb860af629fb9a5c8f94398",
+            "v_hash": "9015381042296e8613b7e7b086c492a11990d2700d360d5b8f418f5bf0f3449a"
+          },
+          "onset_dx": 4.0,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 0.0,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 0.0,
+            "contour_cell": [
+              95,
+              10
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0,
+            "core_unit_v": -0.23041371522239348,
+            "peak_core_ratio": 4.315600415650895,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.170009712822017
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 8.0
+        }
+      },
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "shapes_rejected_analytically": [
+        "RAMP_A0.5_W8",
+        "RAMP_A0_W10",
+        "RAMP_A0_W12",
+        "RAMP_A0_W16",
+        "RAMP_A0_W24",
+        "RAMP_A0_W32",
+        "RAMP_A0_W4",
+        "RAMP_A0_W6",
+        "RAMP_A0_W8",
+        "RAMP_A1_W8",
+        "RAMP_A2.5_W2",
+        "RAMP_A2.5_W3",
+        "RAMP_A2.5_W4",
+        "RAMP_A2_W2",
+        "RAMP_A2_W3",
+        "RAMP_A2_W4",
+        "RAMP_A3_W2",
+        "RAMP_A3_W3",
+        "RAMP_A3_W4"
+      ],
+      "u_impact": 0.5
+    },
+    "pillar_training": {
+      "admissible_constructions": [
+        "RAMP_A4_W8"
+      ],
+      "admissible_constructions_by_arm": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+          "RAMP_A4_W8"
+        ],
+        "PRESPECIFIED_PRIMARY": []
+      },
+      "arm_summaries": {
+        "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": {
+          "admissible_constructions": [
+            "RAMP_A4_W8"
+          ],
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": 1.561301053529904e-05,
+          "shapes_constructed": [
+            "RAMP_A4_W8"
+          ],
+          "shapes_rejected_analytically": [
+            "RAMP_A2.5_W2",
+            "RAMP_A2.5_W3",
+            "RAMP_A2.5_W4",
+            "RAMP_A2_W2",
+            "RAMP_A2_W3",
+            "RAMP_A2_W4",
+            "RAMP_A3.5_W3",
+            "RAMP_A3_W2",
+            "RAMP_A3_W3",
+            "RAMP_A3_W4"
+          ],
+          "shapes_screened": 11
+        },
+        "PRESPECIFIED_PRIMARY": {
+          "admissible_constructions": [],
+          "arm": "PRESPECIFIED_PRIMARY",
+          "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+          "best_achieved_contour_point_normal_over_u_impact": 0.0,
+          "best_achieved_fraction_of_contour_point_cap": 0.0,
+          "best_shape": null,
+          "min_band_core_ratio_among_constructed": null,
+          "shapes_constructed": [],
+          "shapes_rejected_analytically": [
+            "RAMP_A0.5_W8",
+            "RAMP_A0_W10",
+            "RAMP_A0_W12",
+            "RAMP_A0_W16",
+            "RAMP_A0_W24",
+            "RAMP_A0_W32",
+            "RAMP_A0_W4",
+            "RAMP_A0_W6",
+            "RAMP_A0_W8",
+            "RAMP_A1_W8"
+          ],
+          "shapes_screened": 10
+        }
+      },
+      "best_achieved_contour_cell_normal_over_u_impact": 0.0,
+      "best_achieved_contour_point_normal_over_u_impact": 0.0,
+      "best_achieved_fraction_of_contour_cell_cap": 0.0,
+      "best_achieved_fraction_of_contour_point_cap": 0.0,
+      "best_admissible_shape": null,
+      "best_shape_arm": null,
+      "case_name": "pillar_training",
+      "constructibility_summary": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+      "constructions": {
+        "RAMP_A0.5_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.8435026304397552,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.20195693226054937,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.020497601500783526,
+            "contour_point_unit_normal_velocity": -0.020736461629828333,
+            "core_unit_v": -0.23942655893706022,
+            "peak_core_ratio": 4.153146290870874,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0883230424384065
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A0_W10": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.6650208997772409,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.15885637971454683,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.01957953736838814,
+            "contour_point_unit_normal_velocity": -0.019766467320943223,
+            "core_unit_v": -0.23887426660990393,
+            "peak_core_ratio": 4.162748626285895,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0931513766467367
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 10.0
+        },
+        "RAMP_A0_W12": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.44959891764181187,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.10687204123211043,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.012291063607219122,
+            "contour_point_unit_normal_velocity": -0.012415994252095917,
+            "core_unit_v": -0.23770529028998608,
+            "peak_core_ratio": 4.18322000310701,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.1034449817672556
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 12.0
+        },
+        "RAMP_A0_W16": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.22907167033258502,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.05368200551372717,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.005717280745167655,
+            "contour_point_unit_normal_velocity": -0.0057795714349204745,
+            "core_unit_v": -0.23434589460926022,
+            "peak_core_ratio": 4.243187305855774,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.1335982899708217
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 16.0
+        },
+        "RAMP_A0_W24": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.0837870703641767,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.01868833148443914,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0018600544699917095,
+            "contour_point_unit_normal_velocity": -0.0018815982760245042,
+            "core_unit_v": -0.22304552961705376,
+            "peak_core_ratio": 4.458163911837392,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735308354074,
+            "streamfunction_scale_for_core_target": 2.2416947824887976
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 24.0
+        },
+        "RAMP_A0_W32": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.04146503494494525,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.008508385150686911,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0008210676167115694,
+            "contour_point_unit_normal_velocity": -0.0008308467359350732,
+            "core_unit_v": -0.20519421150817374,
+            "peak_core_ratio": 4.658787549773686,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9559562378599084,
+            "streamfunction_scale_for_core_target": 2.4367159108680942
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 32.0
+        },
+        "RAMP_A0_W4": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.495806987975495,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.35889143363446574,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.12494842616837101,
+            "contour_point_unit_normal_velocity": -0.12533546387025402,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A0_W6": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.4750425233989715,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.35390674638375386,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.06336450119357583,
+            "contour_point_unit_normal_velocity": -0.06379502941449675,
+            "core_unit_v": -0.23992986016988793,
+            "peak_core_ratio": 4.144434229575839,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839423640140637
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 6.0
+        },
+        "RAMP_A0_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 0.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.010940366709763,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.24226561165141625,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.03365248242478575,
+            "contour_point_unit_normal_velocity": -0.033940772128016786,
+            "core_unit_v": -0.23964382037676585,
+            "peak_core_ratio": 4.1493810423406,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0864297656993807
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A1_W8": {
+          "arm": "PRESPECIFIED_PRIMARY",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 1.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.654363962335004,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.15647166620870992,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.010585415307302467,
+            "contour_point_unit_normal_velocity": -0.010768155885819898,
+            "core_unit_v": -0.23912023768907323,
+            "peak_core_ratio": 4.158466614098999,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.090998256074617
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 8.0
+        },
+        "RAMP_A2.5_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.4463611751518153,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.5869594649549229,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0013330948753484235,
+            "contour_point_unit_normal_velocity": -0.002102344138666865,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.3672366314303632,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.328043336283464,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0004165248610748335,
+            "contour_point_unit_normal_velocity": -0.0007754986670204496,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2.5_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.7550948014133307,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1810934127807263,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0001803610436039421,
+            "contour_point_unit_normal_velocity": -0.0003649795199083064,
+            "core_unit_v": -0.23982871083441312,
+            "peak_core_ratio": 4.1461821719584755,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0848212804063273
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A2_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.4775020861007695,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.594431154995815,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.03662417357667755,
+            "contour_point_unit_normal_velocity": -0.037513494070560864,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A2_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 2.0634313003169247,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.4950824695499436,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.01350598086824628,
+            "contour_point_unit_normal_velocity": -0.014135197946537913,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A2_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 2.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.3243760925309749,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.31775203953602227,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.006308864616830153,
+            "contour_point_unit_normal_velocity": -0.006682730366140384,
+            "core_unit_v": -0.2399258347595025,
+            "peak_core_ratio": 4.144503763765878,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.083977327832125
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A3.5_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.5,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.11092256457083233,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.02658971830286651,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -3.045501086391432e-06,
+            "core_unit_v": -0.2397142403418467,
+            "peak_core_ratio": 4.148162094030762,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.085816842950049
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W2": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 1.3653421593782458,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.3275887924845444,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.00026778464106112646,
+            "core_unit_v": -0.23993164660917152,
+            "peak_core_ratio": 4.144403371703522,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0839268477761834
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 2.0
+        },
+        "RAMP_A3_W3": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.580674946471359,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.1393145898120013,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -9.875155903271765e-05,
+            "core_unit_v": -0.2399183754329115,
+            "peak_core_ratio": 4.14463262095356,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.0840421209829976
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 3.0
+        },
+        "RAMP_A3_W4": {
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "onset_dx": 3.0,
+          "reason": "the shape's in-band speed ratio exceeds the frozen band gate at the mandated core target, so no amplitude can make it admissible",
+          "shape_invariants": {
+            "band_core_ratio": 0.28861843725364217,
+            "band_core_ratio_exceeds_the_gate": true,
+            "band_max_unit_speed": 0.06914378652098312,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -4.612846876623948e-05,
+            "core_unit_v": -0.23956815503168474,
+            "peak_core_ratio": 4.150691585256457,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.087088744887112
+          },
+          "status": "SHAPE_REJECTED_ANALYTICALLY",
+          "width_dx": 4.0
+        },
+        "RAMP_A4_W8": {
+          "achieved_contour_cell_normal_over_u_impact": 0.0,
+          "achieved_contour_point_normal_over_u_impact": 0.0,
+          "achieved_fraction_of_contour_cell_cap": 0.0,
+          "achieved_fraction_of_contour_point_cap": 0.0,
+          "arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+          "constructibility": "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+          "contour_cell_cap_over_u_impact": 0.02,
+          "contour_point_cap_over_u_impact": 2.49198570563175,
+          "details": {
+            "band_core_ratio": 1.561301053529904e-05,
+            "core_unit_v": -0.2353588697396326,
+            "normalisation": "V_i-weighted phi>=0.9 core mean v = -u_impact (frozen target)",
+            "peak_core_ratio": 4.224924797971119,
+            "streamfunction_scale": 2.124415368552409
+          },
+          "inadmissible_reason": null,
+          "labels": [
+            "DIAGNOSTIC_CONSTRUCTION",
+            "NOT_A_CANDIDATE",
+            "NEVER_PROMOTED"
+          ],
+          "measurements": {
+            "admissible_max_speed_over_u_impact": 4.2249246669952605,
+            "band_core_speed_ratio": 1.561300993539737e-05,
+            "band_gate_ratio_floor_reached": true,
+            "band_max_speed_over_u_impact": 1.5613009963999502e-05,
+            "candidate": "RAMP_A4_W8",
+            "contour_cell_chi": 0.02659699320793152,
+            "contour_cell_frozen_flux_y_over_u_impact": -0.0,
+            "contour_cell_inside_band": true,
+            "contour_cell_normal_velocity_over_u_impact": -0.0,
+            "contour_cell_speed_over_u_impact": 0.0,
+            "contour_point_normal_velocity_over_u_impact": -0.0,
+            "contour_point_phi_normal_flux_over_u_impact": -0.0,
+            "contour_point_speed_over_u_impact": 8.549440356498713e-06,
+            "contour_support_cell": [
+              95,
+              23
+            ],
+            "core_mean_normal_speed_over_u_impact": -1.0000000018319422,
+            "cutcell_flux_div_Linf": 1.0192394256591797e-05,
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.862645149230957e-07,
+              "dx_FV_Linf_over_u_impact": 6.370246410369873e-07,
+              "nearwall_chi_speed_over_u_impact": 1.5613009963999502e-05,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "gates": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "gates_pass": true,
+            "in_band_downward_face_max_speed_over_u_impact": 5.5830473684181925e-06,
+            "in_band_downward_phase_flux": 1.9461729237042795e-11,
+            "in_band_downward_phase_flux_over_u_impact": 3.892345847408559e-11,
+            "in_band_face_area_phi_upwind": 0.0003375301876634428,
+            "in_band_face_count": 824,
+            "initial_D_div_Linf": 2.9802322387695312e-06,
+            "peak_open_cell_speed_over_u_impact": 4.2249246669952605,
+            "phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "placeable_downward_momentum": 0.8557536524412119,
+            "placeable_downward_momentum_over_u_impact": 1.7115073048824239,
+            "u_hash": "ad44518bcca58a23b3a4826d5bd2343cb0e3639580a4b986f2695db92965924a",
+            "v_hash": "2be7943416b0e5d5b949786f968b9bcfef0530976ec5355325cb7c3100341233"
+          },
+          "onset_dx": 4.0,
+          "satisfies_all_gates_and_envelope": true,
+          "shape_invariants": {
+            "band_core_ratio": 1.561301053529904e-05,
+            "band_core_ratio_exceeds_the_gate": false,
+            "band_max_unit_speed": 3.674660512820959e-06,
+            "contour_cell": [
+              95,
+              23
+            ],
+            "contour_cell_unit_normal_velocity": -0.0,
+            "contour_point_unit_normal_velocity": -0.0,
+            "core_unit_v": -0.2353588697396326,
+            "peak_core_ratio": 4.224924797971119,
+            "peak_core_ratio_exceeds_the_envelope": false,
+            "peak_unit_speed": 0.9943735251854282,
+            "streamfunction_scale_for_core_target": 2.124415368552409
+          },
+          "status": "CONSTRUCTED",
+          "width_dx": 8.0
+        }
+      },
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "shapes_rejected_analytically": [
+        "RAMP_A0.5_W8",
+        "RAMP_A0_W10",
+        "RAMP_A0_W12",
+        "RAMP_A0_W16",
+        "RAMP_A0_W24",
+        "RAMP_A0_W32",
+        "RAMP_A0_W4",
+        "RAMP_A0_W6",
+        "RAMP_A0_W8",
+        "RAMP_A1_W8",
+        "RAMP_A2.5_W2",
+        "RAMP_A2.5_W3",
+        "RAMP_A2.5_W4",
+        "RAMP_A2_W2",
+        "RAMP_A2_W3",
+        "RAMP_A2_W4",
+        "RAMP_A3.5_W3",
+        "RAMP_A3_W2",
+        "RAMP_A3_W3",
+        "RAMP_A3_W4"
+      ],
+      "u_impact": 0.5
+    }
+  },
+  "criterion": "band_core_ratio > band cap => the shape can never be admissible at the mandated core target, whatever the amplitude, so it is rejected analytically without constructing a state",
+  "design_language": "every construction keeps the frozen C2 radial factor, compact envelope, seam plateau and the frozen quintic, and only moves the near-wall factor onset/width; the mandated core normalisation is applied unchanged",
+  "profile": "t0_bound",
+  "promoted_to_production_initializer": false
+}

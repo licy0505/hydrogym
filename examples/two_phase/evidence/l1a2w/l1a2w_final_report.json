@@ -1,0 +1,484 @@
+{
+  "case_classification.json": {
+    "cases_inside_band": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "cases_outside_band": [
+      "complex_heldout"
+    ],
+    "consequence": "for cases whose contour support cell lies inside the chi >= 0.01 band the frozen band cap applies at the contour itself and the bound is tight by construction; for the remaining case the binding limit at the contour is the reference envelope, which is a much weaker necessary condition, so the two regimes must never be averaged together",
+    "measured_not_assumed": true,
+    "per_case": {
+      "complex_heldout": {
+        "band_top_sdf_over_dx": 3.445622444152832,
+        "binding_constraint_at_contour": "global_speed_envelope",
+        "contour_cell_cap_over_u_impact": 4.905526491646905,
+        "contour_point_cap_over_u_impact": 4.9055264916469055,
+        "contour_support_chi": 0.0005123895243741572,
+        "contour_support_sdf_over_dx": 5.681934833526611,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 0,
+        "regime": "CONTOUR_OUTSIDE_CHI_GATE_BAND"
+      },
+      "flat_we100_ct050": {
+        "band_top_sdf_over_dx": 2.5,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.03444519639015198,
+        "contour_support_sdf_over_dx": 2.5,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      },
+      "flat_we200_ct000": {
+        "band_top_sdf_over_dx": 2.5,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.03444519639015198,
+        "contour_support_sdf_over_dx": 2.5,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      },
+      "pillar_training": {
+        "band_top_sdf_over_dx": 3.1906111240386963,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.02659699320793152,
+        "contour_support_sdf_over_dx": 2.700000047683716,
+        "in_band_normal_distance_from_contour_to_band_top": 0.01533159613609314,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      }
+    }
+  },
+  "incident_momentum_bound.json": {
+    "band_cap_over_u_impact": 0.02,
+    "derivation": {
+      "B1": "|v_n| <= speed(contour cell) <= min(envelope, band cap if the cell is in the band)",
+      "B1b": "|v_n(point)| <= sum_c w_c cap_c over the bilinear support of the crossing point",
+      "B2": "P_down = sum V_i phi_i max(0, -v_i) <= v_max sum_{open, chi<0.01} V_i phi_i",
+      "B3": "each in-band face flux |A_f phi_upwind v_f| <= A_f phi_upwind v_band, summed over faces",
+      "B4": "dt_min = ds / v_band across an in-band normal distance ds",
+      "B5": "band_core_ratio(shape) is amplitude independent: exceeding the band gate ratio is fatal"
+    },
+    "envelope_over_u_impact": 4.905526491646905,
+    "measured_not_assumed": true,
+    "per_case": {
+      "complex_heldout": {
+        "B1_contour_normal_speed_cap": 2.4527632458234523,
+        "B1_contour_normal_speed_cap_over_u_impact": 4.905526491646905,
+        "B1_source": "reference envelope",
+        "B1b_contour_point_cap": 2.4527632458234527,
+        "B1b_contour_point_cap_over_u_impact": 4.9055264916469055,
+        "B2_core_mandated_downward_momentum": 0.6220703125,
+        "B2_placeable_downward_momentum_max": 3.801681276270036,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.603362552540072,
+        "B3_in_band_face_area_phi_upwind": 2.3507530489921146e-05,
+        "B3_in_band_flux_bound": 2.3507530489921147e-07,
+        "B3_in_band_flux_bound_over_u_impact": 4.7015060979842294e-07,
+        "B4_in_band_normal_distance": null,
+        "B4_in_band_transport_time_lower_bound": null,
+        "B4_in_band_transport_time_note": "UNMEASURED_NO_IN_BAND_LEG",
+        "B4_note": "the transport-time bound is valid only while the initializer constraint set holds; the six gates do not constrain the evolved solver",
+        "contour_regime": "OUTSIDE_BAND",
+        "u_impact": 0.5,
+        "v_band": 0.01,
+        "v_max": 2.4527632458234523
+      },
+      "flat_we100_ct050": {
+        "B1_contour_normal_speed_cap": 0.01,
+        "B1_contour_normal_speed_cap_over_u_impact": 0.02,
+        "B1_source": "band cap",
+        "B1b_contour_point_cap": 1.245992852815875,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_core_mandated_downward_momentum": 0.6220703125,
+        "B2_placeable_downward_momentum_max": 3.7688371104153164,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.537674220830633,
+        "B3_in_band_face_area_phi_upwind": 0.0003500398997665247,
+        "B3_in_band_flux_bound": 3.500398997665247e-06,
+        "B3_in_band_flux_bound_over_u_impact": 7.000797995330494e-06,
+        "B4_in_band_normal_distance": null,
+        "B4_in_band_transport_time_lower_bound": null,
+        "B4_in_band_transport_time_note": "UNMEASURED_NO_IN_BAND_LEG",
+        "B4_note": "the transport-time bound is valid only while the initializer constraint set holds; the six gates do not constrain the evolved solver",
+        "contour_regime": "INSIDE_BAND",
+        "u_impact": 0.5,
+        "v_band": 0.01,
+        "v_max": 2.4527632458234523
+      },
+      "flat_we200_ct000": {
+        "B1_contour_normal_speed_cap": 0.01,
+        "B1_contour_normal_speed_cap_over_u_impact": 0.02,
+        "B1_source": "band cap",
+        "B1b_contour_point_cap": 1.245992852815875,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_core_mandated_downward_momentum": 0.6220703125,
+        "B2_placeable_downward_momentum_max": 3.7688371104153164,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.537674220830633,
+        "B3_in_band_face_area_phi_upwind": 0.0003500398997665247,
+        "B3_in_band_flux_bound": 3.500398997665247e-06,
+        "B3_in_band_flux_bound_over_u_impact": 7.000797995330494e-06,
+        "B4_in_band_normal_distance": null,
+        "B4_in_band_transport_time_lower_bound": null,
+        "B4_in_band_transport_time_note": "UNMEASURED_NO_IN_BAND_LEG",
+        "B4_note": "the transport-time bound is valid only while the initializer constraint set holds; the six gates do not constrain the evolved solver",
+        "contour_regime": "INSIDE_BAND",
+        "u_impact": 0.5,
+        "v_band": 0.01,
+        "v_max": 2.4527632458234523
+      },
+      "pillar_training": {
+        "B1_contour_normal_speed_cap": 0.01,
+        "B1_contour_normal_speed_cap_over_u_impact": 0.02,
+        "B1_source": "band cap",
+        "B1b_contour_point_cap": 1.245992852815875,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_core_mandated_downward_momentum": 0.6220703125,
+        "B2_placeable_downward_momentum_max": 3.7752259432361734,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.550451886472347,
+        "B3_in_band_face_area_phi_upwind": 0.0003375301876634428,
+        "B3_in_band_flux_bound": 3.375301876634428e-06,
+        "B3_in_band_flux_bound_over_u_impact": 6.750603753268856e-06,
+        "B4_in_band_normal_distance": 0.01533159613609314,
+        "B4_in_band_transport_time_lower_bound": 1.533159613609314,
+        "B4_in_band_transport_time_note": "ds / v_band over the in-band leg between the contour cell and the band top",
+        "B4_note": "the transport-time bound is valid only while the initializer constraint set holds; the six gates do not constrain the evolved solver",
+        "contour_regime": "INSIDE_BAND",
+        "u_impact": 0.5,
+        "v_band": 0.01,
+        "v_max": 2.4527632458234523
+      }
+    }
+  },
+  "mechanism_decision.json": {
+    "bound_holds_on_every_admissible_state": true,
+    "bound_inequalities_checked": 60,
+    "constructibility_rule_applied": {
+      "attained": [
+        "flat_we100_ct050",
+        "flat_we200_ct000",
+        "pillar_training",
+        "complex_heldout"
+      ],
+      "attainment_is_judged_on_the_tight_cell_cap": "for the in-band cases the contour support cell itself is inside the gate band, so its cap 0.02 u_impact is tight; the bilinear point cap is weaker because the crossing point straddles the band edge, and both are reported so that no looser number is used where a tighter one applies",
+      "exploratory_arm_provenance": "the exploratory appendix arm was added after the primary arm showed every wall-onset ramp to be analytically rejected; it carries no promotion rights and is labelled as post hoc in every artefact",
+      "in_band_cases_attaining_at_least_90pct_of_the_cell_cap": [],
+      "not_found": [],
+      "proven_infeasible": [],
+      "statement": "shapes rejected analytically are rejected only for the mandated core target and the frozen band gate, not in general; a failed search is NOT_FOUND_NOT_PROVEN_INFEASIBLE; this stage holds no mathematical proof of infeasibility for any case, and no construction is promoted"
+    },
+    "contact_events_measured": 0,
+    "headline": "At t=0 the frozen initializers place exactly zero normal fluid velocity at the frozen phi=0.5 contact contour in 3 of the 3 in-band cases (contour support cell |v_n| = 0.000000 u_impact; in-band downward phase flux at or below 2e-11), while the frozen band gate would permit up to 0.02 u_impact there. Of the 21 shapes screened in the frozen design language (84 shape-case evaluations), none is admissible while delivering normal flow to that cell: the shapes whose in-band speed ratio comes closest to the gate are rejected analytically at ratio 0.03426 > 0.02 (and those already exceed the reference envelope), while the admissible shapes keep the band quiet (band/core ratio 0) and place |v_n| <= 0 u_impact at the contour cell. That is a measured tension between the frozen band gate and the reference envelope inside this design language, not a proof of global infeasibility",
+    "inadmissible_rows": {
+      "complex_heldout/R0_WEAK": "global reference envelope exceeded",
+      "complex_heldout/R1_MEDIUM": "global reference envelope exceeded",
+      "complex_heldout/R2_SHARP": "global reference envelope exceeded",
+      "flat_we100_ct050/R0_WEAK": "global reference envelope exceeded",
+      "flat_we100_ct050/R1_MEDIUM": "global reference envelope exceeded",
+      "flat_we100_ct050/R2_SHARP": "global reference envelope exceeded",
+      "flat_we200_ct000/R0_WEAK": "global reference envelope exceeded",
+      "flat_we200_ct000/R1_MEDIUM": "global reference envelope exceeded",
+      "flat_we200_ct000/R2_SHARP": "global reference envelope exceeded",
+      "pillar_training/R0_WEAK": "global reference envelope exceeded",
+      "pillar_training/R1_MEDIUM": "global reference envelope exceeded",
+      "pillar_training/R2_SHARP": "global reference envelope exceeded"
+    },
+    "instantaneous_vs_finite_time": {
+      "finite_time": "B3/B4 describe what the initial configuration could deliver while the initializer constraint set holds. They are not a bound on the evolved solver: after t=0 the frozen advection, Brinkman penalization and Cahn-Hilliard dynamics transport the interface, and nothing in the six initializer gates constrains that transport",
+      "instantaneous": "B1/B1b are evaluated on the t=0 state at the frozen phi=0.5 contour cell and crossing point, and are checked there for every admissible state. In the three in-band cases the frozen families place exactly zero normal velocity at that cell, so the initial state exerts no normal advection on the contact contour at all; the in-band downward phase flux is likewise zero to machine level"
+    },
+    "next_action": {
+      "action": "Resolve the one question this t=0 bound raises and cannot answer: the frozen seeds place no normal fluid motion at the contact contour, yet the six gates permit up to the band cap there and a same-language construction attains it. Measure, in a single short window, whether the *interface* transport (frozen Cahn-Hilliard flux and the resulting contour motion) or fluid advection produces the observed L1A-2s contact signature. Run exactly one frozen-solver trajectory for the frozen pillar_training case at N=192, dt=0.002 over t <= 0.08 only, and report the per-cell split of the contour's normal motion into advective and Cahn-Hilliard contributions with the frozen event rule unchanged; no refinement, no new initializer, no generator.",
+      "bounded_scope": "one case (pillar_training), one dt (0.002), one window (t <= 0.08), frozen solver and frozen event rule, attribution readout only; no refinement, no generator, no ML",
+      "constructions_available_for_reuse": [
+        "RAMP_A3.5_W3",
+        "RAMP_A4_W8"
+      ],
+      "in_band_cases": [
+        "flat_we100_ct050",
+        "flat_we200_ct000",
+        "pillar_training"
+      ],
+      "must_not_be_started_in_this_stage": true,
+      "verdict_context": "BOUND_PROVEN_NECESSARY_ONLY_CONSTRUCTION_BELOW_THE_CAP"
+    },
+    "per_case": {
+      "complex_heldout": {
+        "B1_contour_cell_cap_over_u_impact": 4.905526491646905,
+        "B1b_contour_point_cap_over_u_impact": 4.9055264916469055,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.603362552540072,
+        "B3_in_band_flux_bound_over_u_impact": 4.7015060979842294e-07,
+        "B4_transport_time_lower_bound": null,
+        "admissible_constructions": [
+          "RAMP_A4_W8"
+        ],
+        "admissible_constructions_by_arm": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+            "RAMP_A4_W8"
+          ],
+          "PRESPECIFIED_PRIMARY": []
+        },
+        "binding_constraint_at_contour": "global_speed_envelope",
+        "constructed_best_contour_cell_normal_over_u_impact": 0.33539095520973206,
+        "constructed_best_fraction_of_contour_cell_cap": 0.06837002221491074,
+        "constructed_best_fraction_of_contour_point_cap": 0.050639006160326315,
+        "constructed_best_normal_over_u_impact": 0.24841098623015156,
+        "constructed_best_shape": "RAMP_A4_W8",
+        "constructed_best_shape_arm": "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS",
+        "contour_regime": "OUTSIDE_BAND",
+        "frozen_best_contour_cell_normal_over_u_impact": 0.3353910446166992,
+        "frozen_best_contour_point_key": "C2_BASE",
+        "frozen_best_contour_point_normal_over_u_impact": 0.24841104091198396,
+        "frozen_best_fraction_of_contour_point_cap": 0.050639017307311754,
+        "frozen_family_places_no_incident_normal_flow_at_the_contour": false,
+        "min_band_core_ratio_among_constructed": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": 0.001058934963270859,
+          "PRESPECIFIED_PRIMARY": null
+        },
+        "shapes_rejected_analytically": [
+          "RAMP_A0.5_W8",
+          "RAMP_A0_W10",
+          "RAMP_A0_W12",
+          "RAMP_A0_W16",
+          "RAMP_A0_W24",
+          "RAMP_A0_W32",
+          "RAMP_A0_W4",
+          "RAMP_A0_W6",
+          "RAMP_A0_W8",
+          "RAMP_A1_W8",
+          "RAMP_A2.5_W2",
+          "RAMP_A2.5_W3",
+          "RAMP_A2.5_W4",
+          "RAMP_A2_W2",
+          "RAMP_A2_W3",
+          "RAMP_A2_W4",
+          "RAMP_A3.5_W3",
+          "RAMP_A3_W2",
+          "RAMP_A3_W3",
+          "RAMP_A3_W4"
+        ]
+      },
+      "flat_we100_ct050": {
+        "B1_contour_cell_cap_over_u_impact": 0.02,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.537674220830633,
+        "B3_in_band_flux_bound_over_u_impact": 7.000797995330494e-06,
+        "B4_transport_time_lower_bound": null,
+        "admissible_constructions": [
+          "RAMP_A3.5_W3",
+          "RAMP_A4_W8"
+        ],
+        "admissible_constructions_by_arm": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "PRESPECIFIED_PRIMARY": []
+        },
+        "binding_constraint_at_contour": "band_speed_cap",
+        "constructed_best_contour_cell_normal_over_u_impact": 0.0,
+        "constructed_best_fraction_of_contour_cell_cap": 0.0,
+        "constructed_best_fraction_of_contour_point_cap": 0.0,
+        "constructed_best_normal_over_u_impact": 0.0,
+        "constructed_best_shape": null,
+        "constructed_best_shape_arm": null,
+        "contour_regime": "INSIDE_BAND",
+        "frozen_best_contour_cell_normal_over_u_impact": 0.0,
+        "frozen_best_contour_point_key": null,
+        "frozen_best_contour_point_normal_over_u_impact": 0.0,
+        "frozen_best_fraction_of_contour_point_cap": 0.0,
+        "frozen_family_places_no_incident_normal_flow_at_the_contour": true,
+        "min_band_core_ratio_among_constructed": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": 0.0,
+          "PRESPECIFIED_PRIMARY": null
+        },
+        "shapes_rejected_analytically": [
+          "RAMP_A0.5_W8",
+          "RAMP_A0_W10",
+          "RAMP_A0_W12",
+          "RAMP_A0_W16",
+          "RAMP_A0_W24",
+          "RAMP_A0_W32",
+          "RAMP_A0_W4",
+          "RAMP_A0_W6",
+          "RAMP_A0_W8",
+          "RAMP_A1_W8",
+          "RAMP_A2.5_W2",
+          "RAMP_A2.5_W3",
+          "RAMP_A2.5_W4",
+          "RAMP_A2_W2",
+          "RAMP_A2_W3",
+          "RAMP_A2_W4",
+          "RAMP_A3_W2",
+          "RAMP_A3_W3",
+          "RAMP_A3_W4"
+        ]
+      },
+      "flat_we200_ct000": {
+        "B1_contour_cell_cap_over_u_impact": 0.02,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.537674220830633,
+        "B3_in_band_flux_bound_over_u_impact": 7.000797995330494e-06,
+        "B4_transport_time_lower_bound": null,
+        "admissible_constructions": [
+          "RAMP_A3.5_W3",
+          "RAMP_A4_W8"
+        ],
+        "admissible_constructions_by_arm": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+            "RAMP_A3.5_W3",
+            "RAMP_A4_W8"
+          ],
+          "PRESPECIFIED_PRIMARY": []
+        },
+        "binding_constraint_at_contour": "band_speed_cap",
+        "constructed_best_contour_cell_normal_over_u_impact": 0.0,
+        "constructed_best_fraction_of_contour_cell_cap": 0.0,
+        "constructed_best_fraction_of_contour_point_cap": 0.0,
+        "constructed_best_normal_over_u_impact": 0.0,
+        "constructed_best_shape": null,
+        "constructed_best_shape_arm": null,
+        "contour_regime": "INSIDE_BAND",
+        "frozen_best_contour_cell_normal_over_u_impact": 0.0,
+        "frozen_best_contour_point_key": null,
+        "frozen_best_contour_point_normal_over_u_impact": 0.0,
+        "frozen_best_fraction_of_contour_point_cap": 0.0,
+        "frozen_family_places_no_incident_normal_flow_at_the_contour": true,
+        "min_band_core_ratio_among_constructed": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": 0.0,
+          "PRESPECIFIED_PRIMARY": null
+        },
+        "shapes_rejected_analytically": [
+          "RAMP_A0.5_W8",
+          "RAMP_A0_W10",
+          "RAMP_A0_W12",
+          "RAMP_A0_W16",
+          "RAMP_A0_W24",
+          "RAMP_A0_W32",
+          "RAMP_A0_W4",
+          "RAMP_A0_W6",
+          "RAMP_A0_W8",
+          "RAMP_A1_W8",
+          "RAMP_A2.5_W2",
+          "RAMP_A2.5_W3",
+          "RAMP_A2.5_W4",
+          "RAMP_A2_W2",
+          "RAMP_A2_W3",
+          "RAMP_A2_W4",
+          "RAMP_A3_W2",
+          "RAMP_A3_W3",
+          "RAMP_A3_W4"
+        ]
+      },
+      "pillar_training": {
+        "B1_contour_cell_cap_over_u_impact": 0.02,
+        "B1b_contour_point_cap_over_u_impact": 2.49198570563175,
+        "B2_placeable_downward_momentum_max_over_u_impact": 7.550451886472347,
+        "B3_in_band_flux_bound_over_u_impact": 6.750603753268856e-06,
+        "B4_transport_time_lower_bound": 1.533159613609314,
+        "admissible_constructions": [
+          "RAMP_A4_W8"
+        ],
+        "admissible_constructions_by_arm": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": [
+            "RAMP_A4_W8"
+          ],
+          "PRESPECIFIED_PRIMARY": []
+        },
+        "binding_constraint_at_contour": "band_speed_cap",
+        "constructed_best_contour_cell_normal_over_u_impact": 0.0,
+        "constructed_best_fraction_of_contour_cell_cap": 0.0,
+        "constructed_best_fraction_of_contour_point_cap": 0.0,
+        "constructed_best_normal_over_u_impact": 0.0,
+        "constructed_best_shape": null,
+        "constructed_best_shape_arm": null,
+        "contour_regime": "INSIDE_BAND",
+        "frozen_best_contour_cell_normal_over_u_impact": 0.0,
+        "frozen_best_contour_point_key": null,
+        "frozen_best_contour_point_normal_over_u_impact": 0.0,
+        "frozen_best_fraction_of_contour_point_cap": 0.0,
+        "frozen_family_places_no_incident_normal_flow_at_the_contour": true,
+        "min_band_core_ratio_among_constructed": {
+          "EXPLORATORY_POST_HOC_NO_PROMOTION_RIGHTS": 1.561301053529904e-05,
+          "PRESPECIFIED_PRIMARY": null
+        },
+        "shapes_rejected_analytically": [
+          "RAMP_A0.5_W8",
+          "RAMP_A0_W10",
+          "RAMP_A0_W12",
+          "RAMP_A0_W16",
+          "RAMP_A0_W24",
+          "RAMP_A0_W32",
+          "RAMP_A0_W4",
+          "RAMP_A0_W6",
+          "RAMP_A0_W8",
+          "RAMP_A1_W8",
+          "RAMP_A2.5_W2",
+          "RAMP_A2.5_W3",
+          "RAMP_A2.5_W4",
+          "RAMP_A2_W2",
+          "RAMP_A2_W3",
+          "RAMP_A2_W4",
+          "RAMP_A3.5_W3",
+          "RAMP_A3_W2",
+          "RAMP_A3_W3",
+          "RAMP_A3_W4"
+        ]
+      }
+    },
+    "profile": "t0_bound",
+    "radial_family_untouched": true,
+    "re_tuning_performed": false,
+    "refinement_studies_run": 0,
+    "stage": "L1A-2w",
+    "stage_version": "l1a2w_v1",
+    "trajectories_run": 0,
+    "verdict": "BOUND_PROVEN_NECESSARY_ONLY_CONSTRUCTION_BELOW_THE_CAP",
+    "violations": []
+  },
+  "preflight.json": {
+    "N": 192,
+    "baseline_head_sha": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
+    "baseline_pull_request": 24,
+    "baseline_rule": "the study baseline is the exact PR #24 head; it must be an ancestor of the run head and every commit above it must touch only this stage's deliverables",
+    "branch": "arena/02b6c71b-hydrogym",
+    "cases": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training",
+      "complex_heldout"
+    ],
+    "checks": {
+      "branch_head_contains_the_verified_main": true,
+      "branch_is_the_authorized_session_branch": true,
+      "every_commit_above_the_baseline_is_stage_owned": true,
+      "origin_main_is_the_verified_main": true,
+      "policy_matches_contract": true,
+      "pr24_head_is_an_ancestor_of_head": true,
+      "quality_baseline_present": true,
+      "solver_contract_12": true,
+      "timestep_policy_default": true,
+      "worktree_clean_outside_stage_deliverables": true
+    },
+    "commits_above_baseline": [
+      "0347590 L1A-2w: boundary-compatible incident-momentum reachability bound at t=0"
+    ],
+    "contact_events_measured": 0,
+    "dt": 0.002,
+    "head_at_run": "034759030e47c223bc970889665816ab6181b315",
+    "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+    "refinement_studies_run": 0,
+    "solver_contract_version": 12,
+    "stage": "L1A-2w",
+    "stage_version": "l1a2w_v1",
+    "timestep_policy": "impact_phase_cap_dx2_v1",
+    "trajectories_run": 0,
+    "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+  }
+}

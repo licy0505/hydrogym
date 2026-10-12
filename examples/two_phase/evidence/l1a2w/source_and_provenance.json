@@ -1,0 +1,22 @@
+{
+  "baseline_head_sha": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
+  "baseline_pull_request": 24,
+  "head_at_run": "034759030e47c223bc970889665816ab6181b315",
+  "module_sha256": "53252766e80fe195bfe6384b0c5a8efab3fc91f753312b04fb4f3cd32ff9a2f9",
+  "read_only_frozen_sources": [
+    "examples/two_phase/phasefield.py",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py",
+    "examples/two_phase/production/radial_incident_seed_eta_dt_audit.py",
+    "examples/two_phase/production/nearwall_taper_interface_transport_audit.py",
+    "examples/two_phase/production/interior_speed_admissibility_screen_audit.py",
+    "examples/two_phase/production/timestep_policy.py"
+  ],
+  "sealed_dependency_hashes": {
+    "evidence/l1a2u/radial_seed_constraint_matrix.json": "1b2d3f67fa8a33b7b45f83bbd7f25bc99c12ed9d28fc9439b32cdae800a27f4c",
+    "evidence/l1a2v/manifest.json": "3f30a76a338638c72671b424659cc487c8452dc0928337196ce7e9a8fd77758c",
+    "production/interior_speed_admissibility_screen_audit.py": "1890e6557755dfdc68d6386434fd70dada65db4f268eeeb55c28a7f9aed82f42"
+  },
+  "stage": "L1A-2w",
+  "stage_version": "l1a2w_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

@@ -1,0 +1,53 @@
+{
+  "baseline_head_sha": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
+  "baseline_pull_request": 24,
+  "frozen_solver_edits": "none",
+  "frozen_source_hashes_at_baseline": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "historical_evidence_edits": "none",
+  "opened_questions_from_l1a2v": {
+    "next_action_taken_here": "measure the reachable incident-momentum window the frozen six gates themselves define, and separate that necessity from what a construction can actually attain",
+    "verdict": "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+  },
+  "screen_profile": {
+    "N": 192,
+    "candidates": [
+      "C2_BASE",
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "cases": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training",
+      "complex_heldout"
+    ],
+    "dt": 0.002
+  },
+  "sealed_inputs": {
+    "evidence/l1a2t/manifest.json": "upstream taper/transport stage, verified here",
+    "evidence/l1a2u/mechanism_decision.json": "holds the interior-speed ceiling reused here",
+    "evidence/l1a2u/radial_seed_constraint_matrix.json": "frozen t=0 matrix reproduced by L1A-2v",
+    "evidence/l1a2v/manifest.json": "the admissibility screen whose envelope this stage reuses"
+  },
+  "solver_contract_version": 12,
+  "stage": "L1A-2w",
+  "stage_version": "l1a2w_v1",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

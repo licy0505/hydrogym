@@ -1,0 +1,59 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_adjacent_suite_failures": {
+    "test_l1a2r_merged_base_verified_or_fail_closed": {
+      "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+      "statement": "pre-existing; reproduced on a pristine worktree at the verified main; not edited"
+    },
+    "tests/test_interior_speed_admissibility_screen_audit.py (5 tests)": {
+      "classification": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION",
+      "statement": "the frozen L1A-2v preflight requires every commit above its own baseline to touch only L1A-2v paths and the worktree to be clean outside them; the L1A-2w stage commit necessarily breaks that rule, so test_required_evidence_files_are_declared_and_complete, test_manifest_self_verification_and_tamper_detection, test_evidence_verification_rejects_a_moved_envelope, test_reseal_records_the_observed_ci_status_without_touching_physics and test_report_carries_every_required_section fail on the stage commit; not edited"
+    },
+    "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight": {
+      "classification": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION",
+      "statement": "the frozen L1A-2t preflight forbids any file or commit from a later stage on the same branch, which cannot hold once L1A-2u/2v/2w exist; not edited"
+    }
+  },
+  "frozen_adjacent_suite_run_at_stage_commit": {
+    "action": "recorded; no frozen test edited",
+    "cause": "frozen later-stage lineage rules, not a physics or protocol difference",
+    "command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py -q",
+    "failing": [
+      "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section"
+    ],
+    "l1a2u_suite_failures": 0,
+    "l1a2w_suite_failures": 0,
+    "measured_at": "the L1A-2w stage commit, with the stage test file, module and evidence committed and the worktree clean outside the stage paths",
+    "outcome": "6 failed, 163 passed",
+    "reconfirmed_at_head": null
+  },
+  "hosted_ci": {
+    "reason": "not pushed at assembly time",
+    "status_for_this_head": "UNMEASURED"
+  },
+  "inherited_statuses": {
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "SOLVER_CONTRACT_VERSION": 12,
+    "unchanged_by_this_stage": true
+  },
+  "no_promotion": true,
+  "not_run": [
+    "trajectories",
+    "contact events",
+    "temporal refinement",
+    "spatial refinement",
+    "T=8 recompute",
+    "L1B data generation",
+    "ML training",
+    "contract 13"
+  ],
+  "profile": "t0_bound",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "ratchet_expectation": "PASS_BASELINE_ONLY"
+}
