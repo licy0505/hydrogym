@@ -1,7 +1,7 @@
 # L1A-2w final report - boundary-compatible incident-momentum reachability bound at t=0
 
 ## A. Scope, authority and baseline
-- baseline: PR #24 head `73c230b93f7e2d55fc7142a9b481ae4a45cc43e2`; run head `0bc6d457fa1dc59753b21f9981d7d61f725c50ce`
+- baseline: PR #24 head `73c230b93f7e2d55fc7142a9b481ae4a45cc43e2`; run head `af291af988f6f2ef39338e559cd22361eaafc146`
 - verified main `09e2993b8da478d79e768054194201af57121784`; branch `arena/02b6c71b-hydrogym`; contract 12; policy `impact_phase_cap_dx2_v1`
 - profile N=192, dt=0.002, cases ['flat_we100_ct050', 'flat_we200_ct000', 'pillar_training', 'complex_heldout']
 - trajectories 0, contact events 0, refinements 0
@@ -219,7 +219,7 @@
 - frozen adjacent failure `test_l1a2r_merged_base_verified_or_fail_closed`: FROZEN_LINEAGE_DRIFT_CONFIRMED - pre-existing; reproduced on a pristine worktree at the verified main; not edited
 - frozen adjacent failure `tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight`: SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION - the frozen L1A-2t preflight forbids any file or commit from a later stage on the same branch, which cannot hold once L1A-2u/2v/2w exist; not edited
 - frozen adjacent failure `tests/test_interior_speed_admissibility_screen_audit.py (5 tests)`: SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION - the frozen L1A-2v preflight requires every commit above its own baseline to touch only L1A-2v paths and the worktree to be clean outside them; the L1A-2w stage commit necessarily breaks that rule, so test_required_evidence_files_are_declared_and_complete, test_manifest_self_verification_and_tamper_detection, test_evidence_verification_rejects_a_moved_envelope, test_reseal_records_the_observed_ci_status_without_touching_physics and test_report_carries_every_required_section fail on the stage commit; not edited
-- frozen adjacent suite run (the L1A-2w stage commit, with the stage test file, module and evidence committed and the worktree clean outside the stage paths): 6 failed, 163 passed (L1A-2u suite failures 0, L1A-2w suite failures 0); reinstated at the re-seal head: UNMEASURED; cause: frozen later-stage lineage rules, not a physics or protocol difference; action: recorded; no frozen test edited
+- frozen adjacent suite run (the L1A-2w stage commit, with the stage test file, module and evidence committed and the worktree clean outside the stage paths): 6 failed, and every other collected test passed; the pass count is not recorded because it moves with the stage test count, while the failing set is structural (suite failures L1A-2t 1, L1A-2u 0, L1A-2v 5, L1A-2w 0); reconfirmed at the re-seal head: UNMEASURED; cause: frozen later-stage lineage rules, not a physics or protocol difference; action: recorded; no frozen test edited
     - failing: tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete
     - failing: tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection

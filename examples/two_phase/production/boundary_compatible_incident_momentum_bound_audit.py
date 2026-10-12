@@ -1559,7 +1559,11 @@ def quality_and_blockers(profile: str) -> dict[str, Any]:
                 "tests/test_interior_speed_admissibility_screen_audit.py "
                 "tests/test_boundary_compatible_incident_momentum_bound_audit.py -q"
             ),
-            "outcome": "6 failed, 163 passed",
+            "outcome": (
+                "6 failed, and every other collected test passed; the pass count is not recorded because it "
+                "moves with the stage test count, while the failing set is structural"
+            ),
+            "suite_failures": {"l1a2t": 1, "l1a2u": 0, "l1a2v": 5, "l1a2w": 0},
             "failing": [
                 "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
                 "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
@@ -1568,7 +1572,9 @@ def quality_and_blockers(profile: str) -> dict[str, Any]:
                 "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
                 "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
             ],
+            "l1a2t_suite_failures": 1,
             "l1a2u_suite_failures": 0,
+            "l1a2v_suite_failures": 5,
             "l1a2w_suite_failures": 0,
             "cause": "frozen later-stage lineage rules, not a physics or protocol difference",
             "action": "recorded; no frozen test edited",
@@ -1823,9 +1829,9 @@ def render_report(
     run = quality["frozen_adjacent_suite_run_at_stage_commit"]
     add(
         f"- frozen adjacent suite run ({run['measured_at']}): {run['outcome']} "
-        f"(L1A-2u suite failures {run['l1a2u_suite_failures']}, L1A-2w suite failures "
-        f"{run['l1a2w_suite_failures']}); reinstated at the re-seal head: "
-        f"{_fmt(run.get('reconfirmed_at_head'))}; cause: {run['cause']}; action: {run['action']}"
+        f"(suite failures L1A-2t {run['l1a2t_suite_failures']}, L1A-2u {run['l1a2u_suite_failures']}, "
+        f"L1A-2v {run['l1a2v_suite_failures']}, L1A-2w {run['l1a2w_suite_failures']}); reconfirmed at the "
+        f"re-seal head: {_fmt(run.get('reconfirmed_at_head'))}; cause: {run['cause']}; action: {run['action']}"
     )
     for failing in run["failing"]:
         add(f"    - failing: {failing}")

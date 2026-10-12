@@ -23,12 +23,13 @@
     "worktree_clean_outside_stage_deliverables": true
   },
   "commits_above_baseline": [
+    "af291af L1A-2w: correct an unsupported attainability phrase in the next-action text",
     "0bc6d45 L1A-2w: re-seal evidence with the observed hosted CI result",
     "66da27c L1A-2w: boundary-compatible incident-momentum reachability bound at t=0"
   ],
   "contact_events_measured": 0,
   "dt": 0.002,
-  "head_at_run": "0bc6d457fa1dc59753b21f9981d7d61f725c50ce",
+  "head_at_run": "af291af988f6f2ef39338e559cd22361eaafc146",
   "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
   "refinement_studies_run": 0,
   "solver_contract_version": 12,

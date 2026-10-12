@@ -538,7 +538,7 @@ def test_report_records_the_headline_and_the_frozen_adjacent_failures(evidence):
     assert "exactly zero normal fluid velocity" in report
     assert "FROZEN_LINEAGE_DRIFT_CONFIRMED" in report
     assert "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION" in report
-    assert "6 failed, 163 passed" in report
+    assert "6 failed, and every other collected test passed" in report
     assert "not a proof of global infeasibility" in report
 
 
