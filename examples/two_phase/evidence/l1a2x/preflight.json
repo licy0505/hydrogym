@@ -1,0 +1,38 @@
+{
+  "baseline_head_sha": "45749bc603568bdac8629a90e529ae1573796d51",
+  "baseline_pull_request": 24,
+  "baseline_rule": "this stage ran from the L1A-2w evidence head 45749bc603568bdac8629a90e529ae1573796d51; every commit above it must be stage owned or the stage refuses to measure",
+  "branch": "arena/02b6c71b-hydrogym",
+  "commits_above_baseline": [
+    "0b93fc0227d67eba9c4730d641156f6f05b2b3dd"
+  ],
+  "commits_above_baseline_not_stage_owned": [],
+  "dirty_paths_outside_stage_deliverables": [],
+  "head_sha": "0b93fc0227d67eba9c4730d641156f6f05b2b3dd",
+  "main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "shallow_repository": false,
+  "stage": "L1A-2x",
+  "stage_owned_dirty_paths": [
+    "examples/two_phase/evidence/l1a2x/adversarial_and_falsification.json",
+    "examples/two_phase/evidence/l1a2x/capture_equivalence.json",
+    "examples/two_phase/evidence/l1a2x/conservation_and_convergence.json",
+    "examples/two_phase/evidence/l1a2x/frozen_evidence_verification.json",
+    "examples/two_phase/evidence/l1a2x/initial_state_identity.json",
+    "examples/two_phase/evidence/l1a2x/interface_attribution.json",
+    "examples/two_phase/evidence/l1a2x/l1a2x_final_report.json",
+    "examples/two_phase/evidence/l1a2x/l1a2x_final_report.md",
+    "examples/two_phase/evidence/l1a2x/manifest.json",
+    "examples/two_phase/evidence/l1a2x/mechanism_decision.json",
+    "examples/two_phase/evidence/l1a2x/next_action.json",
+    "examples/two_phase/evidence/l1a2x/preflight.json",
+    "examples/two_phase/evidence/l1a2x/quality_and_blocker_matrix.json",
+    "examples/two_phase/evidence/l1a2x/residual_decomposition.json",
+    "examples/two_phase/evidence/l1a2x/source_and_provenance.json",
+    "examples/two_phase/evidence/l1a2x/substep_ledger.json",
+    "examples/two_phase/evidence/l1a2x/trajectory_specification.json",
+    "examples/two_phase/evidence/l1a2x/validity_screen.json",
+    "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py",
+    "examples/two_phase/tests/test_frozen_chns_early_window_transport_attribution_audit.py"
+  ],
+  "worktree_clean_outside_stage_deliverables": true
+}

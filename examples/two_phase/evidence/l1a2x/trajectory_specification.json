@@ -1,0 +1,39 @@
+{
+  "case_name": "pillar_training",
+  "contact_guard": {
+    "gap_over_dx": null,
+    "macro_step": null,
+    "triggered": false
+  },
+  "dt": 0.002,
+  "dt_substep": 0.0006666666666666666,
+  "equivalence_note": "the eager and the jitted public step are advanced from the same initial state in lockstep with the capture. They duplicate the single sanctioned trajectory and exist only to verify that the diagnostic capture reproduces the frozen public step; no physical conclusion is drawn from them and no control arm is run.",
+  "final_state_hashes": {
+    "phi_hash": "74e1d3f94c7a063f4f78bc69cd2b54bb7fe3481e8a4b8154a7dce1404545e5cf",
+    "t": 0.08000000000000002,
+    "u_hash": "8283f068cb571d5022393e897bcccffafdceeed457895bf0fdc9e5b345b4f728",
+    "v_hash": "d2a4fad0deb00144816324f6fd0b9f39110fc23bafffb894a8308b63c5e7a0cf"
+  },
+  "initial_state_hashes": {
+    "phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+    "t": 0.0,
+    "u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+    "v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+  },
+  "macro_step_cap": 40,
+  "macro_steps_run": 40,
+  "profile_N": 192,
+  "prohibitions": {
+    "contact_events_scored": 0,
+    "control_arm_runs": 0,
+    "initializer_promoted": false,
+    "l1b_data_generated": false,
+    "ml_training_runs": 0,
+    "refinement_runs": 0,
+    "solver_source_edited": false,
+    "t8_recomputed": false
+  },
+  "solver": "frozen phasefield.step path, re-executed by the diagnostic capture",
+  "substeps_per_macro": 3,
+  "t_final": 0.08000000000000002
+}

@@ -1,0 +1,72 @@
+{
+  "advective_magnitude_dx": 0.1043183182935683,
+  "band_semantics": "the decision compares two contributions of the SAME sampled increments through the SAME positive coefficient, so the band that matters for the comparison is the spread of the margin across the prespecified attribution rules (plus the machine-level algebraic recombination term); the larger total-map band is reported separately and used only to bound the total-displacement closure, it is not the uncertainty of a comparison",
+  "cahn_hilliard_cancellation_qualifier": true,
+  "cahn_hilliard_cancellation_ratio": 0.12125706756394349,
+  "capture_equivalence_ok": true,
+  "case_name": "pillar_training",
+  "comparison_band_dx": 6.410089540870474e-15,
+  "cumulative_dn_dx": {
+    "adv": 0.1043183182935683,
+    "ch": 0.14456818695735474,
+    "full": 0.06442061040557831,
+    "imp": -0.18446589484534476,
+    "net_ch": -0.03989770788799004
+  },
+  "direct_probe_status": "UNRESOLVED_NON_UNIQUE_CONTOUR_MATCH_ON_THIS_SURFACE",
+  "dominance_floor_dx": 1.9230268622611423e-14,
+  "dominance_margin_dx": 0.06442061040557825,
+  "dominance_margin_factor": 3.0,
+  "dominance_margin_over_comparison_band": 10049876837887.37,
+  "dominance_margin_over_total_map_band": 9.625958845150958,
+  "dominance_rule_outcome_recorded_not_claimed": {
+    "note": "the outcome the prespecified dominance rule returns on the recorded magnitudes, quoted only to show which part of the rule the verdict rests on and which part the guards withhold; it is never used as a claim while a blocking guard has failed",
+    "with_the_comparison_band": "ADVECTIVE_TERM_CARRIES_THE_EARLY_WINDOW_CONTOUR_MOTION",
+    "with_the_total_residual_map_band": "ADVECTIVE_TERM_CARRIES_THE_EARLY_WINDOW_CONTOUR_MOTION"
+  },
+  "equivalence": {
+    "macro_steps_compared": 40,
+    "max_cg_iterations_observed": 18,
+    "max_gap_difference_over_dx": 8.942901530417657e-09,
+    "max_phi_difference_vs_eager_public_step": 1.4139207138441634e-08,
+    "max_phi_difference_vs_jitted_public_step": 1.4139207138441634e-08,
+    "max_velocity_difference_vs_eager_public_step": 7.152557373046875e-07,
+    "max_velocity_difference_vs_jitted_public_step": 7.152557373046875e-07,
+    "meaning": "the frozen public step advances its three substeps inside a jitted lax.scan, so XLA fusion changes the last-bit rounding of the elementwise update; the observed differences are reported as measured and are compared against thresholds that are two orders above them and at least three orders below the smallest physical displacement the stage reports",
+    "thresholds": {
+      "max_gap_difference_over_dx": 0.0001,
+      "max_phi_difference": 1e-06
+    }
+  },
+  "fixed_support_attribution_status": "UNRESOLVED",
+  "forbidden_claims_respected": {
+    "no_contact_mechanism_claim": true,
+    "no_extrapolation_to_late_contact_time": true,
+    "no_impact_claim_from_early_displacement": true,
+    "no_production_initializer_promotion": true,
+    "no_refinement_or_convergence_claim": true
+  },
+  "net_chemical_hilliard_magnitude_dx": 0.03989770788799004,
+  "net_motion_sign_matches_dominant_term": true,
+  "next_action_is_not_started_in_this_stage": true,
+  "rankings_agree_across_rules": true,
+  "reason": "at least one prespecified validity guard failed ({\"frozen_support_edge_alive\": 16}), so no mechanism is claimed; the per-substep ledger, the attribution table and the residual decomposition are still reported as measured quantities. The frozen linear reconstruction stopped carrying the contact-side crossing on the tracked support edge at macro step 25: the reconstructed curve passed a shared grid node, so its support moved to the neighbouring segment. Every other guard passed, and the reconstructed crossing position itself changes smoothly across that node, but a support change of the frozen reconstruction is a prespecified unresolved condition, so the dominance comparison is not entered",
+  "scope": {
+    "case": "pillar_training",
+    "contact_events_scored": 0,
+    "contact_threshold_reached": false,
+    "dt": 0.002,
+    "macro_steps_run": 40,
+    "t_window": [
+      0.0,
+      0.08000000000000002
+    ],
+    "window_limited_to_early_response": true
+  },
+  "total_map_band_dx": 0.0066923837346375015,
+  "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+  "verdict_withheld_because": [
+    "blocking validity guards failed: {\"frozen_support_edge_alive\": 16}",
+    "the frozen global minimum-gap probe is not unique on this surface: UNRESOLVED_NON_UNIQUE_CONTOUR_MATCH_ON_THIS_SURFACE"
+  ]
+}

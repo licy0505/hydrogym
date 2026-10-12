@@ -1,0 +1,14 @@
+{
+  "macro_steps_compared": 40,
+  "max_cg_iterations_observed": 18,
+  "max_gap_difference_over_dx": 8.942901530417657e-09,
+  "max_phi_difference_vs_eager_public_step": 1.4139207138441634e-08,
+  "max_phi_difference_vs_jitted_public_step": 1.4139207138441634e-08,
+  "max_velocity_difference_vs_eager_public_step": 7.152557373046875e-07,
+  "max_velocity_difference_vs_jitted_public_step": 7.152557373046875e-07,
+  "meaning": "the frozen public step advances its three substeps inside a jitted lax.scan, so XLA fusion changes the last-bit rounding of the elementwise update; the observed differences are reported as measured and are compared against thresholds that are two orders above them and at least three orders below the smallest physical displacement the stage reports",
+  "thresholds": {
+    "max_gap_difference_over_dx": 0.0001,
+    "max_phi_difference": 1e-06
+  }
+}
