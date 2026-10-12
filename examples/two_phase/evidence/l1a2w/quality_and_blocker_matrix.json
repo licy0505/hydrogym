@@ -32,7 +32,7 @@
     "l1a2w_suite_failures": 0,
     "measured_at": "the L1A-2w stage commit, with the stage test file, module and evidence committed and the worktree clean outside the stage paths",
     "outcome": "6 failed, and every other collected test passed; the pass count is not recorded because it moves with the stage test count, while the failing set is structural",
-    "reconfirmed_at_head": null,
+    "reconfirmed_at_head": "5f889d27f6517b7e122f7b29f877615ffb660a93",
     "suite_failures": {
       "l1a2t": 1,
       "l1a2u": 0,
@@ -41,8 +41,11 @@
     }
   },
   "hosted_ci": {
-    "reason": "not pushed at assembly time",
-    "status_for_this_head": "UNMEASURED"
+    "observed_head_sha": "5f889d27f6517b7e122f7b29f877615ffb660a93",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
   },
   "inherited_statuses": {
     "L1A_STATUS": "BLOCKED",
