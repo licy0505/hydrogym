@@ -1,0 +1,91 @@
+{
+  "cross_ray_total_displacement_over_dx": 0.23431518599397128,
+  "definition": "R_attribution_closure compares the complete update's tracked displacement with the sum of its three ingredient displacements measured the same way (the prespecified primary rule); R_attribution_closure_own_base and R_ch_pair_closure_own_base repeat that comparison for the per-substep measurement on the field each increment produces; R_ch_pair_closure compares the sum of the two Cahn-Hilliard halves with the displacement of their combined field; the two nonlinearity terms compare the geometric measurement with the arithmetic linearisations at the pinned point and over the support cell; R_rule_spread and R_walk_noise are the measured comparison-error terms; R_operator_recombination, R_static_reconstruction_forward, R_static_reconstruction_ch_pair, R_order_symmetry and R_half_increment_nonlinearity are the static reconstruction and order-decomposition terms of the macro steps; R_cross_ray_full_displacement is the independent interface-normal ray measurement of the same total; R_operator_splitting is the algebraic recombination of the ingredients through the coefficient. Every term is in dx and none is normalised",
+  "linearised_support_cell_total_displacement_over_dx": 0.06423917493446044,
+  "linearised_total_displacement_over_dx": 0.06442061040557831,
+  "measured_total_displacement_over_dx": 0.06264868189304451,
+  "post_window_diagnosis": {
+    "coherent_families": {
+      "agreement": "the three coherent families agree with each other and reproduce the sealed L1A-2x arithmetic numbers of the identical window; their margins put the advective leg above the Cahn-Hilliard pair by roughly the same amount, whereas the failing primary rule puts them within its own closure error of each other and at half the total",
+      "own_base": "the per-substep displacement of the field each increment produces on its own base field: the semantics written into the prespecified readout design before the window ran",
+      "point_linearised": "the arithmetic rule of L1A-2x itself: the same increments through the frozen t = 0 coefficient",
+      "support_cell_linearised": "the same arithmetic rule sampled over the pinned support cell"
+    },
+    "consequence": "no mechanism is claimed in this stage: the prespecified primary rule is not a decomposition, so the prespecified verdict rule cannot be applied to it, and the tracked support point is not uniquely attached to the frozen global contour either, so the verdict stays UNRESOLVED. The coherent families are recorded here as an exploratory reading with no promotion rights, and the next action prespecifies a corrected primary rule and a unique support-point measurement before any further window is run",
+    "measured_structure_of_the_failure": {
+      "closure_band_over_dx": 0.01,
+      "comparison_error_note": "the comparison error of the prespecified rules is dominated by the difference between the cumulative-walk construction and the arithmetic constructions (0.1238 dx), not by the nonlinearity of the contour mapping (0.0018 dx on the pinned point, 0.0016 dx over the support cell) or by the operator decomposition (2.5e-16 dx), so the primary margin of this window is smaller than its own comparison error and no dominance statement is available from these rules",
+      "note": "both constructions use the same three ingredient increment fields and the same tracked branch; only the field each increment is measured against differs. The cumulative-walk construction of the prespecified primary rule does not close, and the own-base construction - evaluated against the base field of the substep that produced each increment, which is the semantics the readout design wrote down before the window ran - closes inside the prespecified band. This is recorded as an exploratory observation with no promotion rights: it promotes nothing and it changes no rule, band or constant of this stage, whose verdict stays with its failing primary rule",
+      "own_base_rule_closure_over_dx": 0.007937057754737964,
+      "primary_rule_closure_over_dx": 0.12231965567175251
+    },
+    "numbers": {
+      "own_base_legs_dx": {
+        "adv": 0.10104428914258534,
+        "ch_pair": -0.046332665004278795,
+        "complete_update": 0.06264868189304451
+      },
+      "point_linearised_legs_dx": {
+        "adv": 0.1043183182935683,
+        "ch_pair": -0.03989770788799002,
+        "complete_update": 0.06442061040557831
+      },
+      "primary_rule_legs_dx": {
+        "adv": 0.06278083231231335,
+        "ch_explicit": 0.06316004863985114,
+        "ch_implicit": 0.059027456612632534,
+        "ch_pair": 0.12218750525248367,
+        "complete_update": 0.06264868189304451,
+        "half_of_the_pair_dx": 0.06109375262624184
+      },
+      "rule_margins_dx": {
+        "RULE_A_GEOMETRIC_TRACKED_BRANCH": -0.059406672940170324,
+        "RULE_B_GEOMETRIC_OWN_BASE": 0.05471162413830655,
+        "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.06442061040557828,
+        "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.06423917493446041
+      },
+      "sealed_l1a2x_primary_rule_dx": {
+        "adv": 0.1043183182935683,
+        "ch": 0.14456818695735474,
+        "full": 0.0644206104055783,
+        "imp": -0.18446589484534476
+      },
+      "sealed_l1a2x_support_cell_rule_dx": {
+        "adv": 0.1042297173881725,
+        "ch": 0.12622997751408632,
+        "full": 0.06423917493446042,
+        "imp": -0.1662205199677984
+      },
+      "support_cell_linearised_legs_dx": {
+        "adv": 0.1042297173881725,
+        "ch_pair": -0.039990542453712086,
+        "complete_update": 0.06423917493446044
+      }
+    },
+    "primary_rule": "RULE_A_GEOMETRIC_TRACKED_BRANCH",
+    "reading_caveats": {
+      "fixed_ray_vs_tracked_branch": "the independent interface-normal ray is anchored at the t = 0 crossing and therefore measures the contour sweeping past a fixed point, not the motion of the tracked branch; the two differ by the residual recorded in R_cross_ray_full_displacement, so every reading here is a statement about the tracked branch's motion along the wall normal only, never about the interface as a whole",
+      "window_only": "the window ends at t = 0.08 with the frozen gap still far above the event threshold, so nothing here is extrapolated toward contact"
+    },
+    "status": "EXPLORATORY_DIAGNOSIS_NO_PROMOTION_RIGHTS",
+    "what_failed": "two independent things withhold the verdict of this stage. First, the prespecified primary rule fails its attribution closure by a wide margin. Second, the frozen global contour match at the tracked support point is non-unique on every macro step, which by itself is a non-unique root and therefore an UNRESOLVED verdict. Every other guard of this stage passes - branch continuity, ingredient continuity, the step bound, the gradient floor, the probe band, the arc, the ray-local ambiguity test, the static reconstruction, conservation and capture equivalence - and the comparison error is reported in full",
+    "why_the_primary_rule_fails": "the primary rule walks one continuous chain per ingredient over the partial fields of the substeps. Such a chain telescopes: its total is the displacement from the t = 0 crossing to the crossing of the last field of that chain, and the last field of a chain is the physical field of a substep with that ingredient's own increment applied to it - it already contains the rest of the update, so the chain measures the complete motion of that substep, lagged, rather than the contribution of its own ingredient. The measured numbers show exactly that: the advective leg lands at the complete displacement of the window and the Cahn-Hilliard pair leg at about twice it, so the sum of the legs overshoots the complete displacement by the closure residual, irrespective of which physical term really carries the motion"
+  },
+  "terms_dx": {
+    "R_attribution_closure": -0.12231965567175251,
+    "R_attribution_closure_own_base": -0.007937057754737964,
+    "R_ch_pair_closure": 0.16059965822478972,
+    "R_ch_pair_closure_own_base": -0.007920512031972748,
+    "R_cross_ray_full_displacement": -0.17166650410092676,
+    "R_half_increment_nonlinearity": 4.5522606406223076e-05,
+    "R_nonlinearity_point_linearisation": -0.0017719285125337991,
+    "R_nonlinearity_support_cell_linearisation": -0.0015904930414159246,
+    "R_operator_recombination": 3.552713678800501e-15,
+    "R_operator_splitting": 2.491496592371689e-16,
+    "R_order_symmetry": 0.006256663763668513,
+    "R_rule_spread": 0.1238272833457486,
+    "R_static_reconstruction_ch_pair": 0.0011175576204998094,
+    "R_static_reconstruction_forward": 0.0011162864914204818,
+    "R_walk_noise": 0.0041602703987528855
+  }
+}

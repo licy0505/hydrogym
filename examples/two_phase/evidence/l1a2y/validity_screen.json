@@ -1,0 +1,133 @@
+{
+  "attribution_closure_ok": false,
+  "blocking_failures": {
+    "frozen_global_contour_uniqueness": 40
+  },
+  "comparison_error_dx": 0.1238272833457486,
+  "comparison_error_terms_dx": {
+    "prespecified_floor": 0.001,
+    "rule_spread": 0.1238272833457486,
+    "walk_noise": 0.0041602703987528855
+  },
+  "criteria": {
+    "ambiguity_separation_dx": 0.5,
+    "arc_root_match_tolerance_dx": 0.05,
+    "attribution_closure_band_dx": 0.01,
+    "continuity_bound_dx": 0.25,
+    "dominance_factor": 3.0,
+    "equivalence_max_gap_diff_over_dx": 0.0001,
+    "equivalence_max_phi_diff": 1e-06,
+    "gradient_floor_ratio": 0.5,
+    "probe_band": 0.1,
+    "static_reconstruction_tolerance_dx": 0.01,
+    "total_displacement_closure_band_dx": 0.01
+  },
+  "dominance_floor_dx": 0.3714818500372458,
+  "dominance_margin_dx": -0.059406672940170324,
+  "equivalence_ok": true,
+  "failures": {
+    "ambiguity_free": 0,
+    "arc_open_path": 0,
+    "branch_continuity": 0,
+    "gradient_resolved": 0,
+    "ingredient_continuity": 0,
+    "probe_band": 0,
+    "step_within_continuity_bound": 0
+  },
+  "linearisation_closure_ok": true,
+  "macro_guards": {
+    "frozen_global_contour_uniqueness": {
+      "holds": false,
+      "macros_non_unique": 40,
+      "macros_total": 40,
+      "max_margin_over_dx": 1.803201143957267e-09,
+      "min_margin_over_dx": 2.2637891561316792e-11,
+      "non_unique_macro_steps": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "rule": "inherited from the frozen L1A-2x contour-uniqueness diagnostic: if the tracked support point is at the same SDF distance from two contour locations the root at that point is not unique, and a non-unique root is reported and withholds the verdict. This stage's own readout guard is the ray-local ambiguity test above; this macro-level guard is reported because the same non-uniqueness is visible in the fields this stage measured",
+      "second_candidate_distance_over_dx": [
+        1.0
+      ],
+      "source": "ledger macro rows (frozen stage_2x._contour_uniqueness), reported not re-defined",
+      "statuses_seen": [
+        "NON_UNIQUE"
+      ]
+    }
+  },
+  "observed": {
+    "arc_statuses": [
+      "OPEN_PATH"
+    ],
+    "max_abs_probe_offset": 0.01414246723386614,
+    "max_step_over_dx": 0.0028738140884740915,
+    "max_substep_displacement_over_eps": 0.0019702171834202566,
+    "min_gradient_ratio_to_t0": 1.0074368611017006,
+    "segment_binding_switch": {
+      "found": true,
+      "from_segment_index": 23,
+      "macro_step": 25,
+      "note": "the reconstructed crossing moved from one grid segment to the next; this is the support change that stopped L1A-2x at its macro step 25, and the readout reports it as an ordinary recorded event because the tracked root is matched by continuation",
+      "substep": 74,
+      "t": 0.050000000000000065,
+      "to_segment_index": 22
+    },
+    "support_cells_seen": [
+      [
+        95,
+        23
+      ],
+      [
+        96,
+        23
+      ]
+    ],
+    "tracked_segment_indices": [
+      22,
+      23
+    ]
+  },
+  "rule": "a failed guard withholds the verdict, never grants one: a branch that is not continuous, an ingredient readout that fails, a step beyond the continuity bound, an unresolved local gradient, a probe point outside the interface band, an arc that is not a simple open path, any root ambiguity, a non-unique frozen global-contour match at the tracked point, a capture that does not reproduce the frozen public step, a broken attribution or Cahn-Hilliard-pair closure, a linearisation error above its closure band, or a static reconstruction beyond its tolerance all return UNRESOLVED",
+  "static_reconstruction_ok": true,
+  "substeps": 120,
+  "unresolved": true
+}

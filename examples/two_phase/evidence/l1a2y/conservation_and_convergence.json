@@ -1,0 +1,28 @@
+{
+  "implicit_solve": {
+    "all_converged": true,
+    "iteration_cap": 200,
+    "max_iterations": 18,
+    "max_relative_residual": 5.718904648233452e-07,
+    "min_iterations": 18,
+    "rtol": 1e-06,
+    "substeps": 120
+  },
+  "mass": {
+    "mass_after_last": 1.5500927792312642,
+    "mass_before_first": 1.5500927792312642,
+    "mass_drift_absolute": 0.0,
+    "mass_drift_relative": 0.0,
+    "max_abs_substep_drift": 4.470435646983889e-16,
+    "max_abs_telescoping_adv": 3.297906153804306e-17,
+    "max_abs_telescoping_ch": 9.153984653522975e-17
+  },
+  "recombination": {
+    "max_recombination_linf": 1.1102230246251565e-16,
+    "rule": "d_adv + d_ch + d_imp - d_full recombined cell by cell for every substep"
+  },
+  "wall": {
+    "max_abs_flux_on_closed_faces": 0.0,
+    "rule": "every face whose frozen aperture is exactly zero carries exactly zero advective and zero chemical-potential flux; no separate wall flux exists"
+  }
+}

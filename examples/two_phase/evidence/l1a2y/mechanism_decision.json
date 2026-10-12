@@ -1,0 +1,75 @@
+{
+  "advective_magnitude_dx": 0.06278083231231335,
+  "cahn_hilliard_cancellation_ratio": 1.0,
+  "cahn_hilliard_halves_are_one_update": true,
+  "capture_equivalence_ok": true,
+  "case_name": "pillar_training",
+  "comparison_error_dx": 0.1238272833457486,
+  "comparison_error_terms_dx": {
+    "prespecified_floor": 0.001,
+    "rule_spread": 0.1238272833457486,
+    "walk_noise": 0.0041602703987528855
+  },
+  "comparison_terms_dx": {
+    "RULE_B_GEOMETRIC_OWN_BASE": 0.11411829707847687,
+    "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.1238272833457486,
+    "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.12364584787463073
+  },
+  "cumulative_dn_dx": {
+    "adv": 0.06278083231231335,
+    "ch_explicit": 0.06316004863985114,
+    "ch_implicit": 0.059027456612632534,
+    "ch_pair": 0.12218750525248367,
+    "ch_pair_direct_over_dx": -0.038412152972306046,
+    "full": 0.06264868189304451,
+    "normal_ray_full_dx": 0.23431518599397128
+  },
+  "dominance_factor": 3.0,
+  "dominance_floor_dx": 0.3714818500372458,
+  "dominance_margin_dx": -0.059406672940170324,
+  "forbidden_claims_respected": {
+    "no_contact_mechanism_claim": true,
+    "no_extrapolation_to_late_contact_time": true,
+    "no_impact_claim_from_early_displacement": true,
+    "no_production_initializer_promotion": true,
+    "no_refinement_or_convergence_claim": true,
+    "no_separate_mechanism_for_the_two_cahn_hilliard_halves": true
+  },
+  "margin_over_comparison_error": -0.4797543104801544,
+  "net_chemical_hilliard_magnitude_dx": 0.12218750525248367,
+  "next_action_is_not_started_in_this_stage": true,
+  "primary_rule": "RULE_A_GEOMETRIC_TRACKED_BRANCH",
+  "reason": "at least one prespecified guard or gate failed, so no mechanism is claimed; every measurement is still reported",
+  "rule_margins_dx": {
+    "RULE_A_GEOMETRIC_TRACKED_BRANCH": -0.059406672940170324,
+    "RULE_B_GEOMETRIC_OWN_BASE": 0.05471162413830655,
+    "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.06442061040557828,
+    "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.06423917493446041
+  },
+  "scope": {
+    "case": "pillar_training",
+    "contact_events_scored": 0,
+    "contact_threshold_reached": false,
+    "dt": 0.002,
+    "macro_steps_run": 40,
+    "t_window": [
+      0.0,
+      0.08000000000000002
+    ],
+    "window_limited_to_early_response": true
+  },
+  "segment_binding_switch": {
+    "found": true,
+    "from_segment_index": 23,
+    "macro_step": 25,
+    "note": "the reconstructed crossing moved from one grid segment to the next; this is the support change that stopped L1A-2x at its macro step 25, and the readout reports it as an ordinary recorded event because the tracked root is matched by continuation",
+    "substep": 74,
+    "t": 0.050000000000000065,
+    "to_segment_index": 22
+  },
+  "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+  "verdict_withheld_because": [
+    "the attribution closure exceeds its band",
+    "the frozen global contour match at the tracked support point is not unique on 40 of 40 macro steps"
+  ]
+}

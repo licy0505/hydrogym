@@ -1,0 +1,195 @@
+{
+  "all_verified": true,
+  "failures": [],
+  "rule": "every prerequisite evidence file is re-hashed from disk against the seal of its own manifest (both frozen seal conventions are read), every source hash those manifests recorded is re-verified by content against the worktree or against the commit history of its own path, and a manifest that declares no recognizable seal is refused instead of counted as verified; a single mismatch blocks the stage before any solver call",
+  "stages": {
+    "L1A-2t": {
+      "bound_files": 14,
+      "directory": "evidence/l1a2t",
+      "manifest_sha256": "c7f90a4aa4b48c795966ba41778e42e7335a1c57add1ce02d17c7a7d63356a9f",
+      "problems": [],
+      "recorded_baseline_head": null,
+      "recorded_hosted_ci": null,
+      "source_hash_provenance": {
+        "from_commit_history": {
+          "impact_impulse_projection_audit_at_l1a2r": [
+            "examples/two_phase/production/impact_impulse_projection_audit.py@8220c32c6fed"
+          ]
+        },
+        "from_the_worktree": {
+          "cases": [
+            "examples/two_phase/cases.py"
+          ],
+          "cases_at_l1a2r": [
+            "examples/two_phase/cases.py"
+          ],
+          "generate_dataset": [
+            "examples/two_phase/generate_dataset.py"
+          ],
+          "generate_dataset_at_l1a2r": [
+            "examples/two_phase/generate_dataset.py"
+          ],
+          "impact_impulse_projection_audit": [
+            "examples/two_phase/production/impact_impulse_projection_audit.py"
+          ],
+          "l1a2r_final_report_json": [
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.json",
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.json"
+          ],
+          "l1a2r_final_report_md": [
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.md",
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.md"
+          ],
+          "l1a_data_readiness_exit_audit": [
+            "examples/two_phase/production/l1a_data_readiness_exit_audit.py"
+          ],
+          "observables": [
+            "examples/two_phase/production/observables.py"
+          ],
+          "phasefield": [
+            "examples/two_phase/phasefield.py"
+          ],
+          "phasefield_at_l1a2r": [
+            "examples/two_phase/phasefield.py"
+          ],
+          "timestep_policy": [
+            "examples/two_phase/production/timestep_policy.py"
+          ],
+          "timestep_policy_at_l1a2r": [
+            "examples/two_phase/production/timestep_policy.py"
+          ]
+        }
+      },
+      "source_hashes_recorded": 14,
+      "source_hashes_unverifiable": [],
+      "source_hashes_verified_from_commit_history": 1,
+      "source_hashes_verified_from_the_worktree": 13,
+      "stage": "L1A-2t",
+      "status": "VERIFIED",
+      "verdict": null
+    },
+    "L1A-2u": {
+      "bound_files": 13,
+      "directory": "evidence/l1a2u",
+      "manifest_sha256": "457d9d27c109fd3deef0c943a7a81e517ce6706bc7498254af3054d764c109b5",
+      "problems": [],
+      "recorded_baseline_head": null,
+      "recorded_hosted_ci": null,
+      "source_hash_provenance": {
+        "from_commit_history": {
+          "impact_impulse_projection_audit_at_l1a2r": [
+            "examples/two_phase/production/impact_impulse_projection_audit.py@8220c32c6fed"
+          ]
+        },
+        "from_the_worktree": {
+          "cases": [
+            "examples/two_phase/cases.py"
+          ],
+          "cases_at_l1a2r": [
+            "examples/two_phase/cases.py"
+          ],
+          "generate_dataset": [
+            "examples/two_phase/generate_dataset.py"
+          ],
+          "generate_dataset_at_l1a2r": [
+            "examples/two_phase/generate_dataset.py"
+          ],
+          "impact_impulse_projection_audit": [
+            "examples/two_phase/production/impact_impulse_projection_audit.py"
+          ],
+          "l1a2r_final_report_json": [
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.json",
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.json"
+          ],
+          "l1a2r_final_report_md": [
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.md",
+            "examples/two_phase/evidence/l1a2r/impact_impulse_causal_report.md"
+          ],
+          "l1a_data_readiness_exit_audit": [
+            "examples/two_phase/production/l1a_data_readiness_exit_audit.py"
+          ],
+          "observables": [
+            "examples/two_phase/production/observables.py"
+          ],
+          "phasefield": [
+            "examples/two_phase/phasefield.py"
+          ],
+          "phasefield_at_l1a2r": [
+            "examples/two_phase/phasefield.py"
+          ],
+          "timestep_policy": [
+            "examples/two_phase/production/timestep_policy.py"
+          ],
+          "timestep_policy_at_l1a2r": [
+            "examples/two_phase/production/timestep_policy.py"
+          ]
+        }
+      },
+      "source_hashes_recorded": 14,
+      "source_hashes_unverifiable": [],
+      "source_hashes_verified_from_commit_history": 1,
+      "source_hashes_verified_from_the_worktree": 13,
+      "stage": "L1A-2u",
+      "status": "VERIFIED",
+      "verdict": null
+    },
+    "L1A-2v": {
+      "bound_files": 14,
+      "directory": "evidence/l1a2v",
+      "manifest_sha256": "3f30a76a338638c72671b424659cc487c8452dc0928337196ce7e9a8fd77758c",
+      "problems": [],
+      "recorded_baseline_head": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+      "recorded_hosted_ci": "success",
+      "source_hash_provenance": {
+        "from_commit_history": {},
+        "from_the_worktree": {}
+      },
+      "source_hashes_recorded": 0,
+      "source_hashes_unverifiable": [],
+      "source_hashes_verified_from_commit_history": 0,
+      "source_hashes_verified_from_the_worktree": 0,
+      "stage": "L1A-2v",
+      "status": "VERIFIED",
+      "verdict": null
+    },
+    "L1A-2w": {
+      "bound_files": 16,
+      "directory": "evidence/l1a2w",
+      "manifest_sha256": "8b58544e5467e93e70cec8f53bd2927f4f16c8ea5aaa0d051cd20cb72b7976c8",
+      "problems": [],
+      "recorded_baseline_head": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
+      "recorded_hosted_ci": "success",
+      "source_hash_provenance": {
+        "from_commit_history": {},
+        "from_the_worktree": {}
+      },
+      "source_hashes_recorded": 0,
+      "source_hashes_unverifiable": [],
+      "source_hashes_verified_from_commit_history": 0,
+      "source_hashes_verified_from_the_worktree": 0,
+      "stage": "L1A-2w",
+      "status": "VERIFIED",
+      "verdict": null
+    },
+    "L1A-2x": {
+      "bound_files": 17,
+      "directory": "evidence/l1a2x",
+      "manifest_sha256": "a6cb22b5d8b70c07bf0e3e1e486f341b2025cfab76c14a1a9c6dca6e48d42f26",
+      "problems": [],
+      "recorded_baseline_head": "45749bc603568bdac8629a90e529ae1573796d51",
+      "recorded_hosted_ci": "success",
+      "source_hash_provenance": {
+        "from_commit_history": {},
+        "from_the_worktree": {}
+      },
+      "source_hashes_recorded": 0,
+      "source_hashes_unverifiable": [],
+      "source_hashes_verified_from_commit_history": 0,
+      "source_hashes_verified_from_the_worktree": 0,
+      "stage": "L1A-2x",
+      "status": "VERIFIED",
+      "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED"
+    }
+  },
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

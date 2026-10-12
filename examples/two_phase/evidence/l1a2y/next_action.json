@@ -1,0 +1,17 @@
+{
+  "action": "Prespecify a corrected primary decomposition rule for the identical window - the per-substep displacement of the field that each increment produces on its own base field, the semantics the readout design wrote down before this window ran - together with a support-point measurement that is unique against the frozen global contour, freeze both with their adversarial tests before any new measurement, and re-run the identical prespecified window with this stage's gates, bands and constants unchanged. Report the failing quantities of this stage ([\"the attribution closure exceeds its band\", \"the frozen global contour match at the tracked support point is not unique on 40 of 40 macro steps\"]) alongside the corrected reading, and claim no mechanism until every prespecified gate passes.",
+  "bounded_scope": {
+    "cases": [],
+    "criteria": "this stage's, unchanged",
+    "dt": 0.002,
+    "macro_step_cap": 40,
+    "no_control_arms": true,
+    "no_extension_toward_contact": true,
+    "no_generator_or_ml": true,
+    "no_refinement": true,
+    "solver": "frozen, unmodified",
+    "window": "t <= 0.08"
+  },
+  "must_not_be_started_in_this_stage": true,
+  "requires_owner_approval": true
+}

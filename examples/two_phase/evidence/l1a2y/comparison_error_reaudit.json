@@ -1,0 +1,99 @@
+{
+  "contributions_of_each_leg": [
+    {
+      "adv": 0.10202729930608564,
+      "ch": 0.14116440796688015,
+      "delta_adv_dx": -0.002291018987482657,
+      "delta_full_dx": -0.0015229599058270843,
+      "delta_net_ch_dx": 0.0007680590816555588,
+      "full": 0.06289765049975121,
+      "imp": -0.1802940567732146,
+      "margin_dx": 0.06289765049975118,
+      "rule": "POINT_LOCAL_COEFFICIENT"
+    },
+    {
+      "adv": 0.1042297173881725,
+      "ch": 0.12622997751408632,
+      "delta_adv_dx": -8.860090539580812e-05,
+      "delta_full_dx": -0.0001814354711178745,
+      "delta_net_ch_dx": -9.283456572206639e-05,
+      "full": 0.06423917493446042,
+      "imp": -0.1662205199677984,
+      "margin_dx": 0.06423917493446041,
+      "rule": "SUPPORT_CELL_T0_COEFFICIENT"
+    }
+  ],
+  "how_l1a2x_reported_it": {
+    "arithmetic_note": "for the two alternative rules the rescaled margin came out numerically equal to the raw margin (to 4e-17 dx) although the rescaling factors are 0.976359 and 0.997184; the recorded field is therefore not a correct quotient of the quantities it names, and it is recomputed here from the sealed margins and displacements rather than trusted",
+    "criticism": "the recorded spread was the spread of the *rescaled* margins, that is each rule's margin divided by that rule's own full displacement in primary units; that normalisation is exactly one and divides a genuine difference by the effect it is supposed to measure, so the comparison band of L1A-2x (6.4e-15 dx) understated its own rule disagreement. This stage does not inherit that band and does not use any such rescaling",
+    "recorded_margin_spread_across_rules_dx": 1.3877787807814457e-17,
+    "recorded_rescaling": [
+      {
+        "margin_primary_units_dx": 0.06442061040557827,
+        "rescaling_to_the_primary_full_displacement": 0.9763591202219467,
+        "rule": "POINT_LOCAL_COEFFICIENT"
+      },
+      {
+        "margin_primary_units_dx": 0.06442061040557828,
+        "rescaling_to_the_primary_full_displacement": 0.997183580379391,
+        "rule": "SUPPORT_CELL_T0_COEFFICIENT"
+      }
+    ]
+  },
+  "l1a2x_measured_reconstruction_residuals_dx": {
+    "common_window_linearisation_overshoot_dx": 0.00011097993272544092,
+    "common_window_total_band_dx": 0.0034622436666701495,
+    "interpolation": 9.84019431626848e-06,
+    "linearisation_coefficient_drift": 0.002651136644789408,
+    "nonlinearity": 0.004031405771986833,
+    "operator_splitting": 6.39621175306266e-15,
+    "support_migration": 1.1235385954933008e-09,
+    "total_band": 0.0066923837346375015,
+    "tracked_edge_coverage": {
+      "first_macro_step": 1,
+      "first_macro_step_without_it": 25,
+      "last_macro_step": 24,
+      "macros_available": 24,
+      "macros_total": 40
+    }
+  },
+  "per_rule": [
+    {
+      "difference_from_primary_dx": -0.0015229599058270982,
+      "full_displacement_dx": 0.06289765049975121,
+      "margin_dx": 0.06289765049975118,
+      "rule": "POINT_LOCAL_COEFFICIENT"
+    },
+    {
+      "difference_from_primary_dx": 0.0,
+      "full_displacement_dx": 0.0644206104055783,
+      "margin_dx": 0.06442061040557828,
+      "rule": "PRIMARY_POINT_T0_COEFFICIENT"
+    },
+    {
+      "difference_from_primary_dx": -0.0001814354711178745,
+      "full_displacement_dx": 0.06423917493446042,
+      "margin_dx": 0.06423917493446041,
+      "rule": "SUPPORT_CELL_T0_COEFFICIENT"
+    }
+  ],
+  "prespecified_comparison_error_of_this_stage": {
+    "dominance_factor": 3.0,
+    "rule": "comparison_error = max(raw rule spread, measured walk noise floor, arc/root agreement), all in dx and all measured in this run; the verdict needs margin > dominance factor x comparison_error",
+    "walk_noise_floor_dx": 0.001
+  },
+  "raw_margin_spread_dx": 0.0015229599058270982,
+  "raw_margins_dx": {
+    "POINT_LOCAL_COEFFICIENT": 0.06289765049975118,
+    "PRIMARY_POINT_T0_COEFFICIENT": 0.06442061040557828,
+    "SUPPORT_CELL_T0_COEFFICIENT": 0.06423917493446041
+  },
+  "rule": "the comparison error of L1A-2x is recomputed from its sealed numbers and reported in raw dx; the old stage's payloads are left exactly as they are and no new conclusion is written into them",
+  "source": "evidence/l1a2x/interface_attribution.json and residual_decomposition.json (sealed, unedited)",
+  "stage": "L1A-2y",
+  "what_the_spread_is_made_of": {
+    "coefficient_leg_over_dx": -0.0001814354711178745,
+    "note": "the spread between the prespecified rules is a genuine, dimensional disagreement: it carries both the difference between sampling the increment at one point and over the support cell, and the difference between the frozen t = 0 coefficient and the local coefficient. It is reported here in dx, unreduced",
+    "sampling_point_leg_over_dx": -0.0015229599058270982
+  }
+}
