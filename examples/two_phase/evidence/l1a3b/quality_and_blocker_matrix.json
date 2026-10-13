@@ -31,18 +31,18 @@
       "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
       "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
     ],
-    "result": "7 failed, 222 passed in 106.39s"
+    "result": "7 failed, 222 passed in 122.28s"
   },
   "holds": true,
   "l1a2y_suite": {
     "failing": [],
-    "result": "71 passed in 23.81s"
+    "result": "71 passed in 28.10s"
   },
   "legacy_lineage_suite": {
     "failing": [
       "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
     ],
-    "result": "1 failed, 48 passed in 61.16s"
+    "result": "1 failed, 48 passed in 71.56s"
   },
   "observations": {
     "frozen_adjacent_sweep": {
@@ -55,11 +55,11 @@
         "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
         "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
       ],
-      "result": "7 failed, 222 passed in 106.39s"
+      "result": "7 failed, 222 passed in 122.28s"
     },
     "github": {
       "hosted_ci": {
-        "reason": "L1A-3b has not yet been pushed to the existing Draft PR; prior checks refer to the L1A-3a head.",
+        "reason": "The L1A-3b commits are not yet pushed; existing PR checks refer to the preceding L1A-3a head.",
         "status": "NOT_OBSERVED_FOR_NEW_HEAD"
       },
       "pr_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
@@ -68,18 +68,18 @@
     },
     "l1a2y_suite": {
       "failing": [],
-      "result": "71 passed in 23.81s"
+      "result": "71 passed in 28.10s"
     },
     "legacy_lineage_suite": {
       "failing": [
         "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
       ],
-      "result": "1 failed, 48 passed in 61.16s"
+      "result": "1 failed, 48 passed in 71.56s"
     },
-    "observed_at": "2026-10-13T20:14:47.236640+08:00",
+    "observed_at": "2026-10-13T20:17:50.043854+08:00",
     "predecessor_suite": {
       "failing": [],
-      "result": "70 passed in 7.17s"
+      "result": "70 passed in 9.15s"
     },
     "quality_ratchet": {
       "added_diagnostics": 0,
@@ -93,14 +93,14 @@
     },
     "stage_suite": {
       "failing": [],
-      "result": "25 passed in 1.47s"
+      "result": "25 passed in 4.71s"
     },
     "unexpected_regressions": []
   },
-  "observed_at": "2026-10-13T20:14:47.236640+08:00",
+  "observed_at": "2026-10-13T20:17:50.043854+08:00",
   "predecessor_suite": {
     "failing": [],
-    "result": "70 passed in 7.17s"
+    "result": "70 passed in 9.15s"
   },
   "quality_gate_problems": [],
   "quality_ratchet": {
@@ -129,7 +129,7 @@
   "stage": "L1A-3b",
   "stage_suite": {
     "failing": [],
-    "result": "25 passed in 1.47s"
+    "result": "25 passed in 4.71s"
   },
   "unexpected_regressions": []
 }
