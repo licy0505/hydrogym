@@ -1,0 +1,89 @@
+{
+  "checks": {
+    "advective_limit": true,
+    "capture_public_equivalence": true,
+    "cg_identity": true,
+    "mass_conservation": true,
+    "momentum_and_capillary_retained": true,
+    "nonzero_capillary_probe": true,
+    "positive_mobility_discriminated": true,
+    "rhs_and_mu_independent_of_M": true,
+    "zero_ch_flux": true,
+    "zero_implicit_exchange": true
+  },
+  "discrete_audit": {
+    "all_M_attribute_occurrences": [
+      {
+        "expression": "return -p.M * weight_x * grad_x, -p.M * weight_y * grad_y",
+        "function": "chemical_potential_fluxes",
+        "line": 2143
+      },
+      {
+        "expression": "return -p.M * weight_x * grad_x, -p.M * weight_y * grad_y",
+        "function": "chemical_potential_fluxes",
+        "line": 2143
+      },
+      {
+        "expression": "alpha = jnp.asarray(float(dt) * float(p.M) * float(p.eps), dtype=rhs_field.dtype)",
+        "function": "solve_ch_implicit",
+        "line": 3065
+      },
+      {
+        "expression": "\"implicit_alpha\": float(dt) * float(p.M) * float(p.eps),",
+        "function": "implicit_solve_diagnostics",
+        "line": 3108
+      },
+      {
+        "expression": "\"spectral_bound_estimate\": float(dt) * float(p.M) * float(p.eps) * float(jnp.max(diagonal)) ** 2,",
+        "function": "implicit_solve_diagnostics",
+        "line": 3109
+      },
+      {
+        "expression": "source_hat = jnp.fft.rfft2(phi_rhs) - p.M * m2 * jnp.fft.rfft2(mu_expl)",
+        "function": "_phase_update",
+        "line": 3143
+      },
+      {
+        "expression": "denominator = 1.0 + dt * p.M * p.eps * m2**2",
+        "function": "_phase_update",
+        "line": 3142
+      }
+    ],
+    "boundary": "shared apertures close wall/seam flux; no separate mobility wall flux",
+    "chemical_potential": "mu=fprime(phi)/eps+wall_derivative-eps*fluid_laplacian(phi); independent of M",
+    "conditioning": "A=I has condition number 1; no inverse mobility or zero-mobility preconditioner",
+    "conservation": "sum(V*div(face_flux)) telescopes; implicit identity adds no exchange at M=0",
+    "explicit": "J_CH,f=-M*w_f*(mu_exp,j-mu_exp,i); b=phi+h*(a-div(J_CH))",
+    "implicit": "A=I+h*M*eps*L^2; L=V_safe^-1*K; solve A*phi_new=b in the V inner product",
+    "legacy_unexecuted": "projection_legacy FFT denominator=1+h*M*eps*m2^2; at zero it is 1; not selected",
+    "limitations": "Finite fields/geometry only; discrete advection persists; no material-velocity claim.",
+    "momentum": "rhs retains +(SIGMA_NORM/We)*mu*grad(phi)/rho_l, viscosity, advection, gravity flag",
+    "normalization": "CG floors/denominators depend on rhs/residual, not 1/M; zero residual skips body",
+    "pressure_and_Brinkman": "unchanged damping then frozen central-D/G periodic pressure projection",
+    "source_sha256": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "zero_limit": "J_CH=0, A=I, correction_rhs=b-A*b=0; zero CG iterations, phi_new=b"
+  },
+  "holds": true,
+  "public_capture_max_difference": {
+    "phi": 4.44899672658039e-12,
+    "u": 1.862645149230957e-09,
+    "v": 9.313225746154785e-10
+  },
+  "synthetic_grid": [
+    16,
+    16
+  ],
+  "target_trajectories_run": 0,
+  "zero_check": {
+    "arithmetic_mass_check_bound": 3.421973813048952e-14,
+    "checks": {
+      "advective_limit": true,
+      "cg_identity": true,
+      "mass_conservation": true,
+      "zero_ch_flux": true,
+      "zero_implicit_exchange": true
+    },
+    "holds": true,
+    "mass_delta": 0.0
+  }
+}
