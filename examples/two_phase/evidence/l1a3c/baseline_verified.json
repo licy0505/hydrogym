@@ -1,0 +1,15 @@
+{
+  "actual_baseline_trajectories": 1,
+  "control_trajectories": 0,
+  "independent_consumer_check": {
+    "full_contour_replay": true,
+    "historical_endpoints_dx": {
+      "RAY_95": 0.0626486818930445,
+      "RAY_96": 0.0626486836962457
+    },
+    "holds": true,
+    "max_root_difference_dx": 0.0,
+    "state_hashes_match_every_intermediate": true
+  },
+  "sha256": "f9e668c53209aa3a670950807d33b304e4d7b256c22d43f0cfe3c62efc05c5ef"
+}
