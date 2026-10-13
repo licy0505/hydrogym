@@ -1007,13 +1007,14 @@ def test_the_quality_matrix_separates_the_classes_and_records_observations(evide
         assert entry["result"]
         assert entry["observed_at"]
     declared = quality["declared_expectations"]
-    assert _declared_failures(declared["frozen_adjacent_suite"]) == list(stage.DECLARED_FROZEN_ADJACENT_SUITE_FAILURES)
+    frozen_nodes = sorted(node for group in stage.DECLARED_FROZEN_ADJACENT_SUITE_FAILURES.values() for node in group)
+    assert sorted(_declared_failures(declared["frozen_adjacent_suite"])) == frozen_nodes
     assert _declared_failures(declared["predecessor_stage_suite"]) == list(
         stage.DECLARED_PREDECESSOR_STAGE_SUITE_FAILURES
     )
     assert _declared_failures(declared["legacy_lineage_suite"]) == list(stage.DECLARED_LEGACY_LINEAGE_FAILURES)
     assert _declared_failures(declared["stage_suite"]) == list(stage.DECLARED_STAGE_SUITE_FAILURES)
-    assert quality["frozen_adjacent_suite"]["declared"] == list(stage.DECLARED_FROZEN_ADJACENT_SUITE_FAILURES)
+    assert sorted(quality["frozen_adjacent_suite"]["declared"]) == frozen_nodes
     assert quality["predecessor_stage_suite"]["declared"] == list(stage.DECLARED_PREDECESSOR_STAGE_SUITE_FAILURES)
     assert quality["legacy_lineage_suite"]["declared"] == list(stage.DECLARED_LEGACY_LINEAGE_FAILURES)
     assert quality["stage_suite"]["failing"] == list(stage.DECLARED_STAGE_SUITE_FAILURES)
