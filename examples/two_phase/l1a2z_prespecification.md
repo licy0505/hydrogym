@@ -224,6 +224,6 @@ a prespecified measurement convention, not a mechanism. Failing any of A, B or a
 <!-- L1A2Z-FROZEN-HASHES
 protocol_version l1a2z_v1
 module_sha256 1c1815991e929860d377855a2d4c46d890040da0d0ee1733ff9f675784f5e858
-test_sha256 0dc6945baf841bc27a506e3c4f779da11fcb81da4f00c8e322ee3d7fbd9f45cc
-sync_count 1
+test_sha256 0f329a0fd0b62f9de411e5f3de544b53e60378e964887b49878cb99037ec4a70
+sync_count 2
 -->

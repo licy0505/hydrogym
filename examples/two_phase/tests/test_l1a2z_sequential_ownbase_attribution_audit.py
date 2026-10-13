@@ -1018,8 +1018,8 @@ def test_the_quality_matrix_separates_the_classes_and_records_observations(evide
     assert quality["predecessor_stage_suite"]["declared"] == list(stage.DECLARED_PREDECESSOR_STAGE_SUITE_FAILURES)
     assert quality["legacy_lineage_suite"]["declared"] == list(stage.DECLARED_LEGACY_LINEAGE_FAILURES)
     assert quality["stage_suite"]["failing"] == list(stage.DECLARED_STAGE_SUITE_FAILURES)
-    assert quality["frozen_adjacent_suite"]["classification"] in stage.STRUCTURAL_FAILURE_CLASSES.values()
-    assert quality["legacy_lineage_suite"]["classification"] in stage.STRUCTURAL_FAILURE_CLASSES.values()
+    assert quality["frozen_adjacent_suite"]["classification"] in stage.STRUCTURAL_FAILURE_CLASSES
+    assert quality["legacy_lineage_suite"]["classification"] in stage.STRUCTURAL_FAILURE_CLASSES
     assert quality["not_run"]
     assert quality["hosted_ci"]["status_for_this_head"] in ("UNMEASURED", "success", "failure", "partial", "NOT_RUN")
     assert quality["hosted_ci"]["rule"]
