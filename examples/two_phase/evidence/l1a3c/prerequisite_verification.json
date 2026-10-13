@@ -1,0 +1,30 @@
+{
+  "l1a2z": {
+    "baseline_head_sha": "cd20a7838fb616f3857092c580f3c24802c6115a",
+    "bound_files": 21,
+    "directory": "/home/user/hydrogym/examples/two_phase/evidence/l1a2z",
+    "evidence_class": "FROZEN_CHNS_SEQUENTIAL_OWNBASE_ATTRIBUTION",
+    "hosted_ci_reseal": {
+      "observed_head_sha": "1892996745fa88a52ed150ca499443e4eec00cd4",
+      "performed": true,
+      "physics_evidence_untouched": true,
+      "previous_status": "UNMEASURED",
+      "status": "success"
+    },
+    "missing_required": [],
+    "prespecification_commit": "7a9fdf0eea48f479edd05de2d4e5cafc501a34f2",
+    "problems": [],
+    "profile": "early_window_sequential_own_base",
+    "readout_version": "contour_branch_v1",
+    "recorded_source_hashes": 8,
+    "recorded_source_hashes_verified_from_the_worktree": 8,
+    "stage": "L1A-2z",
+    "stage_version": "l1a2z_v1",
+    "verdict": "EARLY_WINDOW_MEASUREMENT_ATTRIBUTION_RESOLVED",
+    "verified": true,
+    "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+  },
+  "l1a3b_content_verified": true,
+  "l1a3b_prior_head_consumer_verified": "144d92f273eaaef68175baf72620ec3919275b31",
+  "note": "Stage-owned live preflight of L1A-3b is not reused after a successor commit; content is verified."
+}
