@@ -125,6 +125,8 @@
 - scope: one case, one dt, one trajectory, t <= 0.08, zero contact events. Nothing here is a statement about the impact at t ~ 0.354, about a real contact mechanism, about a grid or time-step refinement, or about any parameter outside the frozen set
 - the two Cahn-Hilliard halves, the four attribution conventions and the support tie are all measurement choices; a resolved attribution under this convention is not a statement that this convention is the only admissible one
 
+- hosted CI observed after push: `success` for head `1892996745fa88a52ed150ca499443e4eec00cd4` (previous record: `UNMEASURED`)
+
 ## P. Exactly one next action
 - Design, with the owner, one controlled comparison that could turn the resolved measurement attribution into a testable statement about a physical mechanism - for example a prespecified second trajectory whose advective or Cahn-Hilliard increment is suppressed on the same initial state - and freeze it before any such trajectory is run; no trajectory, no control arm and no physics change is started in this stage
 - not started in this stage and requiring owner approval before it is started

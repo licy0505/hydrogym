@@ -84,9 +84,11 @@
     "unexpected_vs_declared": []
   },
   "hosted_ci": {
-    "observed_head_sha": null,
+    "observed_head_sha": "1892996745fa88a52ed150ca499443e4eec00cd4",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
     "rule": "no hosted result is claimed for a head that was not pushed and observed",
-    "status_for_this_head": "UNMEASURED"
+    "status_for_this_head": "success"
   },
   "legacy_debt_baseline": {
     "codespell": 3,
