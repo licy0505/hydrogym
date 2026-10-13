@@ -1,0 +1,83 @@
+{
+  "blocker": "PAIRED_GEOMETRIC_BRANCH_CORRESPONDENCE_LOST",
+  "final_absolute_support_effect_disagreement_dx": null,
+  "final_displacement_support_difference_dx": {
+    "baseline": -1.803201143957267e-09,
+    "control": 7.174168814572113e-09
+  },
+  "final_failed_pair": {
+    "effect": {
+      "E_dx": null,
+      "absolute_support_to_support_effect_disagreement_dx": null,
+      "no_partial_support_effect_reported": true,
+      "raw_signed_effect_range_dx": null,
+      "sign_discordant": null,
+      "status": "INVALID",
+      "validity_failures": [
+        "control:PAIRED_GEOMETRIC_BRANCH_CORRESPONDENCE_LOST"
+      ]
+    },
+    "paired_correspondence": {
+      "holds": false,
+      "relation": {
+        "crossings_after": 178,
+        "crossings_before": 176,
+        "max_min_distance_after_to_before_over_dx": 0.4275161900580997,
+        "max_min_distance_before_to_after_over_dx": 0.4610161732986212,
+        "reassignment": true,
+        "relation": "DISJOINT_REASSIGNMENT",
+        "tolerance_over_dx": 0.375
+      },
+      "status": "CORRESPONDENCE_LOST",
+      "topology_event": "DISJOINT_REASSIGNMENT"
+    },
+    "state_name": "s3",
+    "substep_index": 119
+  },
+  "final_paired_E_dx": null,
+  "final_paired_sign_discordance": null,
+  "final_signed_effect_range_dx": null,
+  "final_signed_support_effect_disagreement_dx": null,
+  "first_failed_pair": {
+    "effect": {
+      "E_dx": null,
+      "absolute_support_to_support_effect_disagreement_dx": null,
+      "no_partial_support_effect_reported": true,
+      "raw_signed_effect_range_dx": null,
+      "sign_discordant": null,
+      "status": "INVALID",
+      "validity_failures": [
+        "control:PAIRED_GEOMETRIC_BRANCH_CORRESPONDENCE_LOST"
+      ]
+    },
+    "paired_correspondence": {
+      "holds": false,
+      "relation": {
+        "crossings_after": 178,
+        "crossings_before": 178,
+        "max_min_distance_after_to_before_over_dx": 0.37576366060551897,
+        "max_min_distance_before_to_after_over_dx": 0.5026621620898484,
+        "reassignment": true,
+        "relation": "DISJOINT_REASSIGNMENT",
+        "tolerance_over_dx": 0.375
+      },
+      "status": "CORRESPONDENCE_LOST",
+      "topology_event": "DISJOINT_REASSIGNMENT"
+    },
+    "state_name": "s1",
+    "substep_index": 89
+  },
+  "interpretation": "Single-arm roots stay valid. The frozen same-time global-branch relation fails; this is not proof that the physical branch changed identity. The complete paired protocol fails closed.",
+  "large_disagreement_is_not_automatically_invalid": true,
+  "no_partial_or_extrapolated_final_effect": true,
+  "noncontiguous_pointwise_valid_pairs": "Some later states pass independently; none repairs a failed complete-window comparison or authorizes extrapolation.",
+  "pair_status_counts": {
+    "INVALID": 49,
+    "VALID": 311
+  },
+  "pointwise_valid_sign_counts": {
+    "{'RAY_95': -1, 'RAY_96': -1}": 1,
+    "{'RAY_95': 0, 'RAY_96': 0}": 1,
+    "{'RAY_95': 1, 'RAY_96': 1}": 309
+  }
+}
