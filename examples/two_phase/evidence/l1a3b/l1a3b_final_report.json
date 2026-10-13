@@ -3659,13 +3659,73 @@
   "prespecification_boundary": "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15",
   "publication": {
     "branch": "arena/02b6c71b-hydrogym",
-    "head_at_report_generation": "ce08ec133cc053e86706dfe305da4f889ca1aa48",
+    "head_at_report_generation": "1042d7d879436f33976fb6aa7721565c841d82bc",
     "hosted_ci": {
-      "reason": "The L1A-3b commits are not yet pushed; existing PR checks refer to the preceding L1A-3a head.",
-      "status": "NOT_OBSERVED_FOR_NEW_HEAD"
+      "codeql_check_conclusion": "SUCCESS",
+      "codeql_check_run_id": 115292630675,
+      "head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
+      "observed_at_utc": "2026-10-13T12:37:33Z",
+      "runs": [
+        {
+          "conclusion": "success",
+          "notable_job": {
+            "conclusion": "success",
+            "duration": "19m6s",
+            "job_id": 115292339490,
+            "name": "Two-phase unit + E2E smoke"
+          },
+          "run_id": 38396320521,
+          "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320521",
+          "workflow": "Python CI"
+        },
+        {
+          "conclusion": "success",
+          "notable_job": {
+            "conclusion": "success",
+            "duration": "14m24s",
+            "job_id": 115292319987,
+            "name": "Two-phase unit + E2E smoke"
+          },
+          "run_id": 38396315189,
+          "url": "https://github.com/licy0505/hydrogym/actions/runs/38396315189",
+          "workflow": "Python CI"
+        },
+        {
+          "conclusion": "success",
+          "jobs": [
+            {
+              "conclusion": "success",
+              "job_id": 115292337767,
+              "name": "Analyze python"
+            },
+            {
+              "conclusion": "success",
+              "job_id": 115292338331,
+              "name": "Analyze javascript-typescript"
+            }
+          ],
+          "run_id": 38396320493,
+          "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320493",
+          "workflow": "CodeQL"
+        },
+        {
+          "conclusion": "success",
+          "job_id": 115292336577,
+          "run_id": 38396320368,
+          "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320368",
+          "workflow": "Test deployment"
+        }
+      ],
+      "status": "ALL_CHECKS_SUCCESS",
+      "status_check_rollup": {
+        "failure": 0,
+        "pending": 0,
+        "success": 20,
+        "total": 20
+      }
     },
     "prespecification_boundary_commit": "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15",
-    "pull_request_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+    "pull_request_head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
     "pull_request_is_draft": true,
     "pull_request_number": 24,
     "pull_request_state": "OPEN"
@@ -3731,10 +3791,70 @@
       },
       "github": {
         "hosted_ci": {
-          "reason": "The L1A-3b commits are not yet pushed; existing PR checks refer to the preceding L1A-3a head.",
-          "status": "NOT_OBSERVED_FOR_NEW_HEAD"
+          "codeql_check_conclusion": "SUCCESS",
+          "codeql_check_run_id": 115292630675,
+          "head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
+          "observed_at_utc": "2026-10-13T12:37:33Z",
+          "runs": [
+            {
+              "conclusion": "success",
+              "notable_job": {
+                "conclusion": "success",
+                "duration": "19m6s",
+                "job_id": 115292339490,
+                "name": "Two-phase unit + E2E smoke"
+              },
+              "run_id": 38396320521,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320521",
+              "workflow": "Python CI"
+            },
+            {
+              "conclusion": "success",
+              "notable_job": {
+                "conclusion": "success",
+                "duration": "14m24s",
+                "job_id": 115292319987,
+                "name": "Two-phase unit + E2E smoke"
+              },
+              "run_id": 38396315189,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396315189",
+              "workflow": "Python CI"
+            },
+            {
+              "conclusion": "success",
+              "jobs": [
+                {
+                  "conclusion": "success",
+                  "job_id": 115292337767,
+                  "name": "Analyze python"
+                },
+                {
+                  "conclusion": "success",
+                  "job_id": 115292338331,
+                  "name": "Analyze javascript-typescript"
+                }
+              ],
+              "run_id": 38396320493,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320493",
+              "workflow": "CodeQL"
+            },
+            {
+              "conclusion": "success",
+              "job_id": 115292336577,
+              "run_id": 38396320368,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320368",
+              "workflow": "Test deployment"
+            }
+          ],
+          "status": "ALL_CHECKS_SUCCESS",
+          "status_check_rollup": {
+            "failure": 0,
+            "pending": 0,
+            "success": 20,
+            "total": 20
+          }
         },
-        "pr_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+        "pr_head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
         "pr_is_draft": true,
         "pr_state": "OPEN"
       },
@@ -3748,7 +3868,7 @@
         ],
         "result": "1 failed, 48 passed in 71.56s"
       },
-      "observed_at": "2026-10-13T20:17:50.043854+08:00",
+      "observed_at": "2026-10-13T20:38:22.893033+08:00",
       "predecessor_suite": {
         "failing": [],
         "result": "70 passed in 9.15s"
@@ -3769,7 +3889,7 @@
       },
       "unexpected_regressions": []
     },
-    "observed_at": "2026-10-13T20:17:50.043854+08:00",
+    "observed_at": "2026-10-13T20:38:22.893033+08:00",
     "predecessor_suite": {
       "failing": [],
       "result": "70 passed in 9.15s"
@@ -16100,10 +16220,70 @@
           },
           "github": {
             "hosted_ci": {
-              "reason": "The L1A-3b commits are not yet pushed; existing PR checks refer to the preceding L1A-3a head.",
-              "status": "NOT_OBSERVED_FOR_NEW_HEAD"
+              "codeql_check_conclusion": "SUCCESS",
+              "codeql_check_run_id": 115292630675,
+              "head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
+              "observed_at_utc": "2026-10-13T12:37:33Z",
+              "runs": [
+                {
+                  "conclusion": "success",
+                  "notable_job": {
+                    "conclusion": "success",
+                    "duration": "19m6s",
+                    "job_id": 115292339490,
+                    "name": "Two-phase unit + E2E smoke"
+                  },
+                  "run_id": 38396320521,
+                  "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320521",
+                  "workflow": "Python CI"
+                },
+                {
+                  "conclusion": "success",
+                  "notable_job": {
+                    "conclusion": "success",
+                    "duration": "14m24s",
+                    "job_id": 115292319987,
+                    "name": "Two-phase unit + E2E smoke"
+                  },
+                  "run_id": 38396315189,
+                  "url": "https://github.com/licy0505/hydrogym/actions/runs/38396315189",
+                  "workflow": "Python CI"
+                },
+                {
+                  "conclusion": "success",
+                  "jobs": [
+                    {
+                      "conclusion": "success",
+                      "job_id": 115292337767,
+                      "name": "Analyze python"
+                    },
+                    {
+                      "conclusion": "success",
+                      "job_id": 115292338331,
+                      "name": "Analyze javascript-typescript"
+                    }
+                  ],
+                  "run_id": 38396320493,
+                  "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320493",
+                  "workflow": "CodeQL"
+                },
+                {
+                  "conclusion": "success",
+                  "job_id": 115292336577,
+                  "run_id": 38396320368,
+                  "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320368",
+                  "workflow": "Test deployment"
+                }
+              ],
+              "status": "ALL_CHECKS_SUCCESS",
+              "status_check_rollup": {
+                "failure": 0,
+                "pending": 0,
+                "success": 20,
+                "total": 20
+              }
             },
-            "pr_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+            "pr_head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
             "pr_is_draft": true,
             "pr_state": "OPEN"
           },
@@ -16117,7 +16297,7 @@
             ],
             "result": "1 failed, 48 passed in 71.56s"
           },
-          "observed_at": "2026-10-13T20:17:50.043854+08:00",
+          "observed_at": "2026-10-13T20:38:22.893033+08:00",
           "predecessor_suite": {
             "failing": [],
             "result": "70 passed in 9.15s"
@@ -16138,7 +16318,7 @@
           },
           "unexpected_regressions": []
         },
-        "observed_at": "2026-10-13T20:17:50.043854+08:00",
+        "observed_at": "2026-10-13T20:38:22.893033+08:00",
         "predecessor_suite": {
           "failing": [],
           "result": "70 passed in 9.15s"
@@ -16180,13 +16360,73 @@
       "item": 12,
       "result": {
         "branch": "arena/02b6c71b-hydrogym",
-        "head_at_report_generation": "ce08ec133cc053e86706dfe305da4f889ca1aa48",
+        "head_at_report_generation": "1042d7d879436f33976fb6aa7721565c841d82bc",
         "hosted_ci": {
-          "reason": "The L1A-3b commits are not yet pushed; existing PR checks refer to the preceding L1A-3a head.",
-          "status": "NOT_OBSERVED_FOR_NEW_HEAD"
+          "codeql_check_conclusion": "SUCCESS",
+          "codeql_check_run_id": 115292630675,
+          "head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
+          "observed_at_utc": "2026-10-13T12:37:33Z",
+          "runs": [
+            {
+              "conclusion": "success",
+              "notable_job": {
+                "conclusion": "success",
+                "duration": "19m6s",
+                "job_id": 115292339490,
+                "name": "Two-phase unit + E2E smoke"
+              },
+              "run_id": 38396320521,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320521",
+              "workflow": "Python CI"
+            },
+            {
+              "conclusion": "success",
+              "notable_job": {
+                "conclusion": "success",
+                "duration": "14m24s",
+                "job_id": 115292319987,
+                "name": "Two-phase unit + E2E smoke"
+              },
+              "run_id": 38396315189,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396315189",
+              "workflow": "Python CI"
+            },
+            {
+              "conclusion": "success",
+              "jobs": [
+                {
+                  "conclusion": "success",
+                  "job_id": 115292337767,
+                  "name": "Analyze python"
+                },
+                {
+                  "conclusion": "success",
+                  "job_id": 115292338331,
+                  "name": "Analyze javascript-typescript"
+                }
+              ],
+              "run_id": 38396320493,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320493",
+              "workflow": "CodeQL"
+            },
+            {
+              "conclusion": "success",
+              "job_id": 115292336577,
+              "run_id": 38396320368,
+              "url": "https://github.com/licy0505/hydrogym/actions/runs/38396320368",
+              "workflow": "Test deployment"
+            }
+          ],
+          "status": "ALL_CHECKS_SUCCESS",
+          "status_check_rollup": {
+            "failure": 0,
+            "pending": 0,
+            "success": 20,
+            "total": 20
+          }
         },
         "prespecification_boundary_commit": "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15",
-        "pull_request_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+        "pull_request_head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
         "pull_request_is_draft": true,
         "pull_request_number": 24,
         "pull_request_state": "OPEN"

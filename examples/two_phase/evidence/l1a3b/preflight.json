@@ -2,6 +2,7 @@
   "baseline_l1a3a_blocker_head": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
   "branch": "arena/02b6c71b-hydrogym",
   "commits_above_l1a3a_blocker": [
+    "1042d7d879436f33976fb6aa7721565c841d82bc",
     "ce08ec133cc053e86706dfe305da4f889ca1aa48",
     "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15"
   ],
@@ -9,7 +10,7 @@
   "control_trajectories_run": 0,
   "dirty_paths": [],
   "dirty_paths_outside_stage": [],
-  "head_sha": "ce08ec133cc053e86706dfe305da4f889ca1aa48",
+  "head_sha": "1042d7d879436f33976fb6aa7721565c841d82bc",
   "main_sha": "09e2993b8da478d79e768054194201af57121784",
   "shallow_repository": false,
   "solver_source_edited": false,
