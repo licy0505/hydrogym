@@ -1,0 +1,42 @@
+{
+  "prior_stages": {
+    "frozen_chain": {
+      "all_verified": true,
+      "failures": [],
+      "stages": {
+        "L1A-2t": {
+          "bound_files": 14,
+          "problems": [],
+          "status": "VERIFIED",
+          "verdict": null
+        },
+        "L1A-2u": {
+          "bound_files": 13,
+          "problems": [],
+          "status": "VERIFIED",
+          "verdict": null
+        },
+        "L1A-2v": {
+          "bound_files": 14,
+          "problems": [],
+          "status": "VERIFIED",
+          "verdict": null
+        },
+        "L1A-2w": {
+          "bound_files": 16,
+          "problems": [],
+          "status": "VERIFIED",
+          "verdict": null
+        }
+      }
+    },
+    "l1a2y": {
+      "bound_files": 22,
+      "problems": [],
+      "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+      "verified": true
+    }
+  },
+  "rule": "the prior stages are read-only inputs: their evidence is re-hashed against their own manifests and their recorded source hashes are re-verified from the worktree before this stage measures anything",
+  "stage": "L1A-2z"
+}

@@ -1,0 +1,77 @@
+{
+  "headline": {
+    "advective_displacement_dx": 0.10104428914258534,
+    "cahn_hilliard_displacement_dx": -0.03839560724954083,
+    "closure_band_dx": 0.01,
+    "closure_residual_dx": 0.0,
+    "dominance_floor_dx": 0.023811173264213892,
+    "dominance_margin_dx": 0.06264868189304451,
+    "dominance_reading": "ADVECTIVE_LEG_LARGER",
+    "measurement_attribution_resolved_under_the_specified_convention": true,
+    "physical_mechanism_claim": false,
+    "support_uniqueness": {
+      "frozen_l1a2x_rule": [
+        "NON_UNIQUE"
+      ],
+      "support_tie_spread_dx": 1.803201143957267e-09,
+      "this_stage_rule": [
+        "UNIQUE_BRANCH"
+      ],
+      "tied_supports_measured": 2
+    },
+    "total_displacement_dx": 0.06264868189304451
+  },
+  "identity": {
+    "identity_checks": {
+      "contract_version": true,
+      "phi_hash": true,
+      "state_t_zero": true,
+      "u_hash": true,
+      "v_hash": true
+    },
+    "initial_state_hashes": {
+      "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+      "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+      "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+    },
+    "support": {
+      "cell": [
+        95,
+        23
+      ],
+      "gap_over_dx": 2.705981482818345,
+      "point": [
+        2.984375,
+        0.7345619198479572
+      ],
+      "wall_normal_into_solid": [
+        0.0,
+        -1.0
+      ]
+    }
+  },
+  "reference_times": {
+    "macro_steps_run": 40,
+    "t_final": 0.08000000000000002
+  },
+  "sections": [
+    "A. Scope, authority and baseline",
+    "B. Why the L1A-2y primary rule could not close",
+    "C. The corrected rule and why it closes",
+    "D. The frozen L1A-2x uniqueness diagnostic, retained and explained",
+    "E. The prespecified branch-uniqueness rule and its t = 0 degeneracy",
+    "F. The corrected attribution in dx",
+    "G. Raw closure and residual decomposition",
+    "H. Comparison with L1A-2y and L1A-2x",
+    "I. Support uniqueness over the window",
+    "J. Identical-window reconstruction check",
+    "K. Conservation, solver convergence and capture equivalence",
+    "L. Adversarial and falsification results",
+    "M. Quality ratchet, stage tests and frozen adjacent suites",
+    "N. Validity screen and the verdict",
+    "O. Limitations and what would be needed for a mechanism claim",
+    "P. Exactly one next action"
+  ],
+  "stage": "L1A-2z",
+  "verdict": "EARLY_WINDOW_MEASUREMENT_ATTRIBUTION_RESOLVED"
+}

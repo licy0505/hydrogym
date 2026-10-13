@@ -1,0 +1,75 @@
+{
+  "case_name": "pillar_training",
+  "changed_relative_to_l1a2y": {
+    "acceptance_criteria": false,
+    "contact_guard": false,
+    "dt": false,
+    "measurement_protocol": true,
+    "mesh": false,
+    "physical_constants": false,
+    "solver_operators": false,
+    "trajectory": false
+  },
+  "contact_guard": {
+    "gap_over_dx": null,
+    "macro_step": null,
+    "triggered": false
+  },
+  "contact_threshold_over_dx": 1.5,
+  "dt": 0.002,
+  "equivalence_note": "the same trajectory as L1A-2y is re-run through the frozen kernel capture; the measurement layer is the only thing this stage replaces",
+  "final_state_hashes": {
+    "phi_hash": "74e1d3f94c7a063f4f78bc69cd2b54bb7fe3481e8a4b8154a7dce1404545e5cf",
+    "t": 0.08000000000000002,
+    "u_hash": "8283f068cb571d5022393e897bcccffafdceeed457895bf0fdc9e5b345b4f728",
+    "v_hash": "d2a4fad0deb00144816324f6fd0b9f39110fc23bafffb894a8308b63c5e7a0cf"
+  },
+  "initial_state_hashes": {
+    "phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+    "t": 0.0,
+    "u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+    "v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+  },
+  "macro_step_cap": 40,
+  "macro_steps_run": 40,
+  "pinned_components": {
+    "PRIMARY": {
+      "t0_component": 76,
+      "t0_root_over_dx": 23.50598143513463,
+      "t0_segment_index": 23,
+      "t0_status": "OK"
+    },
+    "TIE_1": {
+      "t0_component": 76,
+      "t0_root_over_dx": 23.50598143513463,
+      "t0_segment_index": 23,
+      "t0_status": "OK"
+    }
+  },
+  "profile_N": 192,
+  "prohibitions": {
+    "contact_events_scored": 0,
+    "control_arm_runs": 0,
+    "initializer_promoted": false,
+    "l1b_data_generated": false,
+    "ml_training_runs": 0,
+    "refinement_runs": 0,
+    "solver_source_edited": false,
+    "t8_recomputed": false
+  },
+  "readout": "l1a2y_contour_branch_readout (frozen contour-branch readout)",
+  "segment_binding_switch": {
+    "found": true,
+    "from_segment_index": 23,
+    "macro_step": 25,
+    "note": "the reconstructed crossing moved from one grid segment to the next; this is the support change that stopped L1A-2x at its macro step 25 and that L1A-2y already reported as an ordinary recorded event",
+    "substep": 74,
+    "t": 0.050000000000000065,
+    "to_segment_index": 22
+  },
+  "solver": "the frozen contract-12 phasefield path, re-executed by the frozen L1A-2x capture",
+  "stage": "L1A-2z",
+  "substep_dt": 0.0006666666666666666,
+  "substeps_per_macro": 3,
+  "t_final": 0.08000000000000002
+}

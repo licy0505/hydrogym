@@ -1,0 +1,251 @@
+{
+  "all_hold": true,
+  "checks": [
+    {
+      "check": "exact_telescoping_identity_on_a_synthetic_operator_sequence",
+      "detail": {
+        "deliberately_wrong_sum_residual": -0.10000000000000009,
+        "note": "the wrong sum is discriminating: it is not within 1e-14 of zero",
+        "residual": 0.0,
+        "steps_dx": [
+          -0.10000000000000009,
+          -0.19999999999999996,
+          0.10000000000000009
+        ],
+        "total_dx": -0.19999999999999996
+      },
+      "holds": true
+    },
+    {
+      "check": "a_wrong_base_or_wrong_pairing_is_detected",
+      "detail": {
+        "rule": "summing two of three increments never reproduces the end-to-end difference",
+        "wrong_sum_residual_dx": -0.10000000000000009
+      },
+      "holds": true
+    },
+    {
+      "check": "a_mixed_family_sum_is_not_admissible_even_when_it_lands_inside_the_band",
+      "detail": {
+        "contract": "the band is a closure check on one prespecified rule, so the fact that a mixture can land inside the band is exactly why the contract - one family, one rule - is the gate and not the band alone",
+        "inside_the_band": true,
+        "mixed_sum_dx": 0.05471162413830655,
+        "residual_dx": -0.007937057754737964
+      },
+      "holds": true
+    },
+    {
+      "check": "operator_order_is_recorded_and_the_swap_is_measured",
+      "detail": {
+        "executed_order": "adv, ch_explicit (together as phi_hat), then ch_implicit",
+        "maximum_order_swap_difference_dx": 4.4806704480038206e-07,
+        "note": "the executed order is the frozen one; the swap is a diagnostic, never the reported rule"
+      },
+      "holds": true
+    },
+    {
+      "check": "nonlinear_contour_response_is_measured_not_assumed",
+      "detail": {
+        "band_dx": 0.01,
+        "nonlinearity_point_vs_geometric_dx": -0.0017719285125337852,
+        "note": "a nonlinearity beyond the band would withhold the verdict"
+      },
+      "holds": true
+    },
+    {
+      "check": "the_frozen_closure_gate_can_fail",
+      "detail": {
+        "band_dx": 0.01,
+        "l1a2y_primary_closure_dx": -0.12231965567175251,
+        "note": "the sealed L1A-2y primary rule missed the same band by 12.2 times it; this stage's gate is applied to the same band, so the gate is demonstrably able to fail"
+      },
+      "holds": true
+    },
+    {
+      "check": "a_rule_that_improves_the_number_by_rescaling_one_leg_is_rejected",
+      "detail": {
+        "cheat_ch_pair_dx": 0.052544252978785976,
+        "cheat_closure_residual_dx": 0.0,
+        "cheat_dominance_margin_dx": -0.04243982406452744,
+        "cheat_flips_the_dominance_reading": true,
+        "cheat_max_leg_deviation_dx": 0.09093986022832681,
+        "contract_leg_tolerance_dx": 1e-09,
+        "honest_dominance_margin_dx": 0.06264868189304451,
+        "measured_ch_pair_dx": -0.03839560724954083,
+        "rescale_factor": 0.1,
+        "rule": "every leg must be the measured sum of that operator's own differences over its own base state; a leg rescaled to improve the reading, or defined as the remainder of the total, closes by construction and is refused"
+      },
+      "holds": true
+    },
+    {
+      "check": "the_frozen_l1a2x_diagnostic_is_retained_and_not_redefined",
+      "detail": {
+        "frozen_constant": 0.01,
+        "frozen_statuses_in_this_window": [
+          "NON_UNIQUE"
+        ],
+        "note": "the answers differ because the questions differ: the frozen rule asks whether one candidate minimises the wall distance, this stage asks whether every competing candidate lies on one interface component",
+        "this_stage_constant": 0.01,
+        "this_stage_statuses_in_this_window": [
+          "UNIQUE_BRANCH"
+        ]
+      },
+      "holds": true
+    },
+    {
+      "check": "the_prior_evidence_is_unmodified_by_this_run",
+      "detail": {
+        "frozen_chain_all_verified": true,
+        "l1a2y_verified": true,
+        "problems": [],
+        "rule": "the sealed L1A-2y directory and the whole frozen L1A-2t/u/v/w/x chain are re-hashed after the run; any change is a failure"
+      },
+      "holds": true
+    },
+    {
+      "check": "candidate_permutation_and_enumeration_order_do_not_move_the_answer",
+      "detail": {
+        "best_gap_over_dx": 2.705981482818345,
+        "rule": "the frozen rule selects by distance, so a permutation of the enumeration cannot change it",
+        "tie_set_size": 2
+      },
+      "holds": true
+    },
+    {
+      "check": "the_tied_second_candidate_lies_on_the_tracked_arc",
+      "detail": {
+        "along_arc_over_dx": 1.0,
+        "arc_status": "OPEN_PATH",
+        "distance_to_the_contour_over_dx": [
+          0.0,
+          0.0
+        ],
+        "note": "this is the physical content of the prespecified rule: the pair the frozen diagnostic cannot separate is one and the same branch of the reconstructed contour",
+        "same_local_branch": true,
+        "segment_hops": 1,
+        "segments_in_the_window": 10,
+        "segments_traced": 6
+      },
+      "holds": true
+    },
+    {
+      "check": "a_broken_or_absent_observable_is_caught_by_the_gate",
+      "detail": {
+        "counted_by_the_screen": true,
+        "note": "the validity screen counts every non-OK readout status as a blocking failure",
+        "status": "NO_ROOT_IN_WINDOW"
+      },
+      "holds": true
+    },
+    {
+      "check": "two_distinct_branches_near_the_wall_are_reported_as_non_unique",
+      "detail": {
+        "control_competition_components": [
+          20
+        ],
+        "control_status": "UNIQUE_BRANCH",
+        "note": "the rule bites when the competing candidates genuinely sit on different components",
+        "probe": "two separate interface pieces at the same height over a flat synthetic wall, with the single long interface as the discriminating control",
+        "probe_competition_components": [
+          20,
+          60
+        ],
+        "probe_status": "NON_UNIQUE_BRANCH"
+      },
+      "holds": true
+    },
+    {
+      "check": "an_exact_threshold_grid_node_is_flagged",
+      "detail": {
+        "exact_threshold_nodes": 1,
+        "rule": "an exact threshold node blocks the gate"
+      },
+      "holds": true
+    },
+    {
+      "check": "the_recorded_support_switch_stays_on_one_branch",
+      "detail": {
+        "component_relation_counts": {
+          "FRAGMENTED_OR_SPLIT": 2,
+          "GREW_OR_MERGED": 2,
+          "PERSISTENT": 716
+        },
+        "reassignments": 0,
+        "rule": "a segment change is a recorded within-branch event; the tracked root's component stays geometrically connected to its previous component at every measured state",
+        "switch": {
+          "found": true,
+          "from_segment_index": 23,
+          "macro_step": 25,
+          "note": "the reconstructed crossing moved from one grid segment to the next; this is the support change that stopped L1A-2x at its macro step 25 and that L1A-2y already reported as an ordinary recorded event",
+          "substep": 74,
+          "t": 0.050000000000000065,
+          "to_segment_index": 22
+        }
+      },
+      "holds": true
+    },
+    {
+      "check": "the_branch_identity_relation_table_is_discriminating",
+      "detail": {
+        "note": "a moved-away component is classified as a reassignment and blocks the verdict",
+        "probe_extension_over_dx": 2.0,
+        "probe_relations": {
+          "merged": "GREW_OR_MERGED",
+          "persistent": "PERSISTENT",
+          "reassigned": "DISJOINT_REASSIGNMENT",
+          "split": "FRAGMENTED_OR_SPLIT"
+        },
+        "probe_separation_over_dx": 4.0,
+        "probe_step_over_dx": 0.25,
+        "tolerance_over_dx": 0.375
+      },
+      "holds": true
+    },
+    {
+      "check": "the_tie_break_is_never_used_as_evidence_of_uniqueness",
+      "detail": {
+        "nearest_non_competing_candidate": {
+          "component": 76,
+          "distance_to_the_best_over_dx": 1.0011235917216088,
+          "gap_increase_over_dx": 0.04741778043702993,
+          "gap_over_dx": 2.7533992632553748,
+          "x": 2.953125,
+          "y": 0.7360437254866143
+        },
+        "note": "every tied support is measured and their difference is reported; the smallest-x choice is a reporting tie-break only",
+        "support_tie_spread_dx": 1.803201143957267e-09,
+        "tie_pair_local_path_over_dx": 1.0,
+        "tie_set_size": 2,
+        "tied_supports_measured": 2
+      },
+      "holds": true
+    },
+    {
+      "check": "the_identical_window_tolerance_can_reject",
+      "detail": {
+        "note": "an inflated comparison fails the predicate, so the check is not vacuous",
+        "observed_max_root_difference_over_dx": 0.0,
+        "tolerance_over_dx": 0.05
+      },
+      "holds": true
+    },
+    {
+      "check": "evidence_mutation_is_rejected_by_the_independent_verifier",
+      "detail": {
+        "mutated_file": "adversarial_and_falsification.json",
+        "refused_by_raising": "AuditBlocked",
+        "rejected_after_mutation": true,
+        "rejection_detail": [
+          "AuditBlocked: evidence verification failed: ['sha mismatch adversarial_and_falsification.json']"
+        ],
+        "rule": "a verifier that accepts a mutated payload is not a verifier",
+        "verified_before_and_after": true
+      },
+      "holds": true
+    }
+  ],
+  "checks_run": 19,
+  "failed_checks": [],
+  "rule": "every test here is designed to be able to fail; a failed test withholds the verdict and is reported, never repaired in place. The tests, their thresholds and this file are frozen by the prespecification commit and are never changed after the target window is inspected",
+  "stage": "L1A-2z"
+}

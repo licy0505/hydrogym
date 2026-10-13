@@ -1,0 +1,35 @@
+{
+  "final_state_hashes": {
+    "phi_hash": "74e1d3f94c7a063f4f78bc69cd2b54bb7fe3481e8a4b8154a7dce1404545e5cf",
+    "t": 0.08000000000000002,
+    "u_hash": "8283f068cb571d5022393e897bcccffafdceeed457895bf0fdc9e5b345b4f728",
+    "v_hash": "d2a4fad0deb00144816324f6fd0b9f39110fc23bafffb894a8308b63c5e7a0cf"
+  },
+  "final_state_hashes_match": true,
+  "holds": true,
+  "initial_state_hashes_match": true,
+  "macro_steps_compared": 40,
+  "max_abs_difference_adv": 0.0,
+  "max_abs_difference_ch": 0.0,
+  "max_abs_difference_full": 0.0,
+  "max_abs_difference_imp": 0.0,
+  "max_absolute_root_difference_over_dx": 0.0,
+  "per_substep_increment_samples": {
+    "max_abs_difference_adv": 0.0,
+    "max_abs_difference_ch": 0.0,
+    "max_abs_difference_full": 0.0,
+    "max_abs_difference_imp": 0.0
+  },
+  "reference_head_sha": "cd20a7838fb616f3857092c580f3c24802c6115a",
+  "reference_stage": "L1A-2y",
+  "rule": "the measured observable is compared with the sealed L1A-2y window substep by substep and macro by macro; a difference beyond the prespecified tolerance is a reconstruction regression and forbids this stage from reporting a resolved attribution",
+  "sealed_final_state_hashes": {
+    "phi_hash": "74e1d3f94c7a063f4f78bc69cd2b54bb7fe3481e8a4b8154a7dce1404545e5cf",
+    "t": 0.08000000000000002,
+    "u_hash": "8283f068cb571d5022393e897bcccffafdceeed457895bf0fdc9e5b345b4f728",
+    "v_hash": "d2a4fad0deb00144816324f6fd0b9f39110fc23bafffb894a8308b63c5e7a0cf"
+  },
+  "stage": "L1A-2z",
+  "substeps_compared": 120,
+  "tracked_segment_indices_agree": true
+}
