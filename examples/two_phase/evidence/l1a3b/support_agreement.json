@@ -1,0 +1,18 @@
+{
+  "available_solver_reconstruction_checks": {
+    "capture_equivalence_max_gap_difference_dx": 8.942901530417657e-09,
+    "capture_equivalence_max_phi_difference": 1.4139207138441634e-08,
+    "identical_window_max_root_difference_dx": 0.0,
+    "note": "These are historical diagnostics, not a validated per-ray root uncertainty bound for an intervention."
+  },
+  "binary_support_invariance_threshold_dx": null,
+  "future_per_root_arithmetic_check": "Recompute each crossing from the same stored binary64 edge values using high-precision Decimal and report the raw interpolation difference in dx; do not call it solver uncertainty.",
+  "historical_baseline_difference_is_a_noise_floor": false,
+  "interpretation": "The observable is the full support-indexed vector; the contract does not require the two components to agree. Report raw disagreement and uncertainty separately, without averaging or discarding either ray.",
+  "original_baseline_final_support_root_spread_dx": 1.803201143957267e-09,
+  "original_baseline_support_displacement_spread_dx": 1.8504060506074893e-09,
+  "original_baseline_support_root_spread_dx": 1.8504060506074893e-09,
+  "solver_state_uncertainty_bound_dx": null,
+  "stage": "L1A-3b",
+  "support_agreement_conclusion": "UNRESOLVED_NO_JUSTIFIED_BINARY_THRESHOLD"
+}

@@ -1,0 +1,20 @@
+{
+  "baseline_l1a3a_blocker_head": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+  "branch": "arena/02b6c71b-hydrogym",
+  "commits_above_l1a3a_blocker": [
+    "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15"
+  ],
+  "commits_above_l1a3a_blocker_not_stage_owned": [],
+  "control_trajectories_run": 0,
+  "dirty_paths": [
+    "examples/two_phase/evidence/l1a3b/"
+  ],
+  "dirty_paths_outside_stage": [],
+  "head_sha": "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15",
+  "main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "shallow_repository": false,
+  "solver_source_edited": false,
+  "stage": "L1A-3b",
+  "stage_version": "l1a3b_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

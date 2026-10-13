@@ -1,0 +1,135 @@
+{
+  "commands": {
+    "frozen_adjacent_sweep": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py tests/test_frozen_chns_early_window_transport_attribution_audit.py -q",
+    "l1a2y_suite": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_frozen_reconstruction_branch_attribution_audit.py -q",
+    "l1a2z_suite": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_l1a2z_sequential_ownbase_attribution_audit.py -q",
+    "legacy_lineage_suite": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_impact_initialization_compatibility_audit.py -q",
+    "quality_ratchet": "PATH=.venv/bin:/home/user/uvtools/bin:$PATH .venv/bin/python scripts/quality_debt_gate.py --tool all",
+    "stage_suite": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_l1a3b_support_indexed_observable_audit.py -q"
+  },
+  "control_trajectories_run": 0,
+  "declared_frozen_adjacent_failures_from_immutable_l1a2z_record": [
+    "test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head",
+    "test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+    "test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+    "test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+    "test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+    "test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+    "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+    "test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section"
+  ],
+  "declared_legacy_lineage_failures_from_immutable_l1a2z_record": [
+    "test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+  ],
+  "frozen_adjacent_sweep": {
+    "failing": [
+      "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+      "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+    ],
+    "result": "7 failed, 222 passed in 106.39s"
+  },
+  "holds": true,
+  "l1a2y_suite": {
+    "failing": [],
+    "result": "71 passed in 23.81s"
+  },
+  "legacy_lineage_suite": {
+    "failing": [
+      "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+    ],
+    "result": "1 failed, 48 passed in 61.16s"
+  },
+  "observations": {
+    "frozen_adjacent_sweep": {
+      "failing": [
+        "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+        "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+        "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+        "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+        "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+        "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+        "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+      ],
+      "result": "7 failed, 222 passed in 106.39s"
+    },
+    "github": {
+      "hosted_ci": {
+        "reason": "L1A-3b has not yet been pushed to the existing Draft PR; prior checks refer to the L1A-3a head.",
+        "status": "NOT_OBSERVED_FOR_NEW_HEAD"
+      },
+      "pr_head_sha": "29dd981dd0b162af05ca9bba00aa90f7dc5e8fea",
+      "pr_is_draft": true,
+      "pr_state": "OPEN"
+    },
+    "l1a2y_suite": {
+      "failing": [],
+      "result": "71 passed in 23.81s"
+    },
+    "legacy_lineage_suite": {
+      "failing": [
+        "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+      ],
+      "result": "1 failed, 48 passed in 61.16s"
+    },
+    "observed_at": "2026-10-13T20:14:47.236640+08:00",
+    "predecessor_suite": {
+      "failing": [],
+      "result": "70 passed in 7.17s"
+    },
+    "quality_ratchet": {
+      "added_diagnostics": 0,
+      "historical_counts": {
+        "codespell": 3,
+        "format": 27,
+        "isort": 28,
+        "ruff": 171
+      },
+      "result": "PASS_BASELINE_ONLY"
+    },
+    "stage_suite": {
+      "failing": [],
+      "result": "25 passed in 1.47s"
+    },
+    "unexpected_regressions": []
+  },
+  "observed_at": "2026-10-13T20:14:47.236640+08:00",
+  "predecessor_suite": {
+    "failing": [],
+    "result": "70 passed in 7.17s"
+  },
+  "quality_gate_problems": [],
+  "quality_ratchet": {
+    "baseline_path": "quality/legacy_two_phase_debt_v1.json",
+    "baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+    "expected": "PASS_BASELINE_ONLY",
+    "expected_historical_counts": {
+      "codespell": 3,
+      "format": 27,
+      "isort": 28,
+      "ruff": 171
+    },
+    "new_diagnostics_allowed": 0,
+    "new_python_files": 2,
+    "standalone_ratchet_results": {
+      "added_diagnostics": 0,
+      "historical_counts": {
+        "codespell": 3,
+        "format": 27,
+        "isort": 28,
+        "ruff": 171
+      },
+      "result": "PASS_BASELINE_ONLY"
+    }
+  },
+  "stage": "L1A-3b",
+  "stage_suite": {
+    "failing": [],
+    "result": "25 passed in 1.47s"
+  },
+  "unexpected_regressions": []
+}

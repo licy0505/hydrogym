@@ -1,0 +1,8 @@
+{
+  "action": "If approved, design a separate paired-control protocol using the frozen two-ray vector and explicit numerical-uncertainty handling; do not assume support invariance or average the components.",
+  "control_experiment_authorized_by_this_stage": false,
+  "m0_trajectory_run": false,
+  "requires_separate_owner_approval": true,
+  "stage": "L1A-3b",
+  "status": "NOT_STARTED"
+}

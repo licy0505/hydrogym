@@ -1,0 +1,22 @@
+{
+  "boundary_commit": "6849cc0dd77383a728ffdaf8c8c23df10c9a8e15",
+  "boundary_is_ancestor": true,
+  "document": "examples/two_phase/l1a3b_prespecification.md",
+  "document_sha256": "d280a12919ff04a8b5a0705185d0909bafb56c5b836091e8c8df75bfea1025a7",
+  "frozen_hashes": {
+    "module_sha256": "64ea61b912630cd35b8ed3dd1bfcf51a733b12373325340e4983b9814625a104",
+    "protocol_version": "l1a3b_v1",
+    "sync_count": "0",
+    "test_sha256": "932ce4f2d5fc7ab37d05eb71e962833a9e75708786a728e1d955db2c9993b686"
+  },
+  "holds": true,
+  "post_boundary_source_changes": [],
+  "stage": "L1A-3b",
+  "sync_count_declared": 0,
+  "sync_count_observed": 0,
+  "verified_worktree_hashes": {
+    "module_sha256": "64ea61b912630cd35b8ed3dd1bfcf51a733b12373325340e4983b9814625a104",
+    "protocol_version": "l1a3b_v1",
+    "test_sha256": "932ce4f2d5fc7ab37d05eb71e962833a9e75708786a728e1d955db2c9993b686"
+  }
+}
