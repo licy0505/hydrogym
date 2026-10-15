@@ -1,0 +1,46 @@
+{
+  "N": 192,
+  "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "baseline_pull_request": 24,
+  "baseline_rule": "the study baseline is the exact PR #24 head; it must be an ancestor of the run head and every commit above it must touch only this stage's deliverables, so no frozen source can have moved between the baseline and the screen",
+  "branch": "arena/02b6c71b-hydrogym",
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training",
+    "complex_heldout"
+  ],
+  "checks": {
+    "branch_head_contains_the_verified_main": true,
+    "branch_is_the_authorized_session_branch": true,
+    "every_commit_above_the_baseline_is_stage_owned": true,
+    "frozen_sources_present": true,
+    "origin_main_is_the_verified_main": true,
+    "policy_matches_contract": true,
+    "pr24_baseline_is_an_ancestor_of_head": true,
+    "quality_baseline_present": true,
+    "solver_contract_12": true,
+    "timestep_policy_default": true,
+    "worktree_clean_outside_stage_deliverables": true
+  },
+  "commits_above_baseline": [],
+  "contact_events": "NOT_RUN_IN_THIS_STAGE",
+  "dt": 0.002,
+  "frozen_source_hashes": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "head_at_run": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "solver_contract_version": 12,
+  "spatial_convergence": "NOT_RUN_IN_THIS_STAGE",
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "temporal_convergence": "NOT_RUN_IN_THIS_STAGE",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "trajectories_run": 0,
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

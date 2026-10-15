@@ -1,0 +1,319 @@
+{
+  "competition_tolerance_dx": 0.01,
+  "frozen_l1a2x_rule_retained": "the frozen L1A-2x minimum-gap diagnostic is recomputed here on every state and reported unchanged, including its NON_UNIQUE verdict; this stage does not redefine it and does not read its verdict as a branch ambiguity",
+  "frozen_support_replay": {
+    "gap_matches": true,
+    "gradient_norm_difference": 0.0,
+    "holds": true,
+    "interface_normal_matches": true,
+    "point_matches": true,
+    "wall_normal_matches": true
+  },
+  "historical_rule": "RULE_A_L1A2Y_PRIMARY_CHAIN_CONTINUATION",
+  "pinned_branch": [
+    {
+      "column_index": 95,
+      "column_x_over_dx": 95.5,
+      "constants": {
+        "ARC_BOUNDARY_TOLERANCE_DX": 0.001,
+        "ARC_MAX_SEGMENTS": 400,
+        "ARC_ROOT_MATCH_TOLERANCE_DX": 0.05,
+        "ARC_WINDOW_RADIUS_DX": 3.0,
+        "CROSS_RAY_TOLERANCE_DX": 0.005,
+        "GRADIENT_FLOOR_RATIO": 0.5,
+        "MAX_SUBSTEP_DISPLACEMENT_OVER_EPS": 0.25,
+        "NODE_DEGENERACY_TOLERANCE_DX": 1e-09,
+        "PROBE_BAND": 0.1,
+        "RAY_ROOT_TOLERANCE_DX": 1e-09,
+        "RAY_SCAN_STEP_DX": 0.05,
+        "RAY_SEARCH_HALF_WINDOW_DX": 1.5,
+        "ROOT_AMBIGUITY_SEPARATION_DX": 0.5,
+        "ROOT_MATCH_MAX_STEP_DX": 0.25,
+        "SADDLE_AMBIGUITY_TOLERANCE": 0.001
+      },
+      "gradient_norm_at_origin": 7.0230551400388235,
+      "interface_normal": [
+        0.023916713251809555,
+        0.9997139545026021
+      ],
+      "origin": [
+        2.984375,
+        0.7345619198479572
+      ],
+      "origin_over_dx": [
+        95.5,
+        23.50598143513463
+      ],
+      "readout_version": "contour_branch_v1",
+      "rules": {
+        "ambiguity": "two roots closer than 0.5 dx, a saddle cell at the matched point whose asymptotic decider value is within 0.001 of the threshold, or a junction where more than two traced segments meet make the step ambiguous; ambiguity is a property of the reconstruction and is tested before the continuity bound, so an inseparable pair is reported as ambiguous rather than as a step",
+        "branch_definition": "the tracked branch is pinned at t = 0 from the frozen state alone: the frozen global phi = 0.5 minimum-gap support point O, the embedded-wall normal n_w into the solid, the t = 0 discrete interface normal n_phi, and the t = 0 root of the frozen linear reconstruction on the fixed wall-normal ray through O. No later field, no target direction and no outcome enters it",
+        "cahn_hilliard_pairing": "the explicit chemical-potential flux and the implicit solve increment are two halves of one Cahn-Hilliard update; they are reported separately as ingredients and every physical statement is made about their sum, never about either half as an independent mechanism",
+        "continuity": "the tracked root may move by at most 0.25 dx between consecutive measurements; a change of the grid edge that carries the crossing is an allowed, recorded event (segment_index change), while a change of the connected contour branch is a failure",
+        "failure": "no root inside the continuation window, a root step beyond 0.25 dx, an arc that is not a simple open path through the matched point, or an arc segment farther than 0.05 dx from the matched root are failures; ambiguity and failure both withhold a verdict and are never resolved by preferring a candidate",
+        "no_favourable_selection": "the readout is direction-blind: mirroring the wall normal mirrors the reported displacement exactly, and a nearer root is always preferred to a farther one even when the farther root would move the interface toward the solid",
+        "root_matching": "inside the continuation window of +/- 1.5 dx around the previous root the tracked root is the one nearest that previous root; matching uses proximity only and never the direction or the magnitude of the implied motion",
+        "why_branch_following": "the readout follows the frozen linear reconstruction across adjacent grid edges instead of pinning one grid edge, because the frozen event rule reconstructs the contour as linear crossings on grid edges and a physical interface is not attached to a grid edge"
+      },
+      "t0_root_at_shared_node": false,
+      "t0_root_over_dx": 23.50598143513463,
+      "t0_root_segment_index": 23,
+      "t0_root_separation_over_dx": null,
+      "wall_normal_into_solid": [
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "column_index": 96,
+      "column_x_over_dx": 96.5,
+      "constants": {
+        "ARC_BOUNDARY_TOLERANCE_DX": 0.001,
+        "ARC_MAX_SEGMENTS": 400,
+        "ARC_ROOT_MATCH_TOLERANCE_DX": 0.05,
+        "ARC_WINDOW_RADIUS_DX": 3.0,
+        "CROSS_RAY_TOLERANCE_DX": 0.005,
+        "GRADIENT_FLOOR_RATIO": 0.5,
+        "MAX_SUBSTEP_DISPLACEMENT_OVER_EPS": 0.25,
+        "NODE_DEGENERACY_TOLERANCE_DX": 1e-09,
+        "PROBE_BAND": 0.1,
+        "RAY_ROOT_TOLERANCE_DX": 1e-09,
+        "RAY_SCAN_STEP_DX": 0.05,
+        "RAY_SEARCH_HALF_WINDOW_DX": 1.5,
+        "ROOT_AMBIGUITY_SEPARATION_DX": 0.5,
+        "ROOT_MATCH_MAX_STEP_DX": 0.25,
+        "SADDLE_AMBIGUITY_TOLERANCE": 0.001
+      },
+      "gradient_norm_at_origin": 7.0230551400388235,
+      "interface_normal": [
+        -0.023916713251809555,
+        0.9997139545026021
+      ],
+      "origin": [
+        3.015625,
+        0.7345619198479572
+      ],
+      "origin_over_dx": [
+        96.5,
+        23.50598143513463
+      ],
+      "readout_version": "contour_branch_v1",
+      "rules": {
+        "ambiguity": "two roots closer than 0.5 dx, a saddle cell at the matched point whose asymptotic decider value is within 0.001 of the threshold, or a junction where more than two traced segments meet make the step ambiguous; ambiguity is a property of the reconstruction and is tested before the continuity bound, so an inseparable pair is reported as ambiguous rather than as a step",
+        "branch_definition": "the tracked branch is pinned at t = 0 from the frozen state alone: the frozen global phi = 0.5 minimum-gap support point O, the embedded-wall normal n_w into the solid, the t = 0 discrete interface normal n_phi, and the t = 0 root of the frozen linear reconstruction on the fixed wall-normal ray through O. No later field, no target direction and no outcome enters it",
+        "cahn_hilliard_pairing": "the explicit chemical-potential flux and the implicit solve increment are two halves of one Cahn-Hilliard update; they are reported separately as ingredients and every physical statement is made about their sum, never about either half as an independent mechanism",
+        "continuity": "the tracked root may move by at most 0.25 dx between consecutive measurements; a change of the grid edge that carries the crossing is an allowed, recorded event (segment_index change), while a change of the connected contour branch is a failure",
+        "failure": "no root inside the continuation window, a root step beyond 0.25 dx, an arc that is not a simple open path through the matched point, or an arc segment farther than 0.05 dx from the matched root are failures; ambiguity and failure both withhold a verdict and are never resolved by preferring a candidate",
+        "no_favourable_selection": "the readout is direction-blind: mirroring the wall normal mirrors the reported displacement exactly, and a nearer root is always preferred to a farther one even when the farther root would move the interface toward the solid",
+        "root_matching": "inside the continuation window of +/- 1.5 dx around the previous root the tracked root is the one nearest that previous root; matching uses proximity only and never the direction or the magnitude of the implied motion",
+        "why_branch_following": "the readout follows the frozen linear reconstruction across adjacent grid edges instead of pinning one grid edge, because the frozen event rule reconstructs the contour as linear crossings on grid edges and a physical interface is not attached to a grid edge"
+      },
+      "t0_root_at_shared_node": false,
+      "t0_root_over_dx": 23.50598143513463,
+      "t0_root_segment_index": 23,
+      "t0_root_separation_over_dx": null,
+      "wall_normal_into_solid": [
+        0.0,
+        -1.0
+      ]
+    }
+  ],
+  "primary_rule": "RULE_S_SEQUENTIAL_OWN_BASE_ACTUAL_INTERMEDIATE_STATES",
+  "primary_support": "PRIMARY",
+  "stage": "L1A-2z",
+  "supports": [
+    {
+      "cell": [
+        95,
+        23
+      ],
+      "chi_at_cell": 0.02659699320793152,
+      "coefficient0_over_dx": 4.555118236464027,
+      "column_index": 95,
+      "gap": 0.08456192133807328,
+      "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "gap_over_dx": 2.705981482818345,
+      "gradient": [
+        0.16796839593595575,
+        7.021046226738038
+      ],
+      "gradient_norm": 7.0230551400388235,
+      "interface_normal": [
+        0.023916713251809555,
+        0.9997139545026021
+      ],
+      "label": "PRIMARY",
+      "point": [
+        2.984375,
+        0.7345619198479572
+      ],
+      "wall_normal_into_solid": [
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "cell": [
+        96,
+        23
+      ],
+      "chi_at_cell": 0.02659699320793152,
+      "coefficient0_over_dx": 4.555118236464027,
+      "column_index": 96,
+      "gap": 0.08456192133807328,
+      "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "gap_over_dx": 2.705981482818345,
+      "gradient": [
+        -0.16796839593595575,
+        7.021046226738038
+      ],
+      "gradient_norm": 7.0230551400388235,
+      "interface_normal": [
+        -0.023916713251809555,
+        0.9997139545026021
+      ],
+      "label": "TIE_1",
+      "point": [
+        3.015625,
+        0.7345619198479572
+      ],
+      "wall_normal_into_solid": [
+        0.0,
+        -1.0
+      ]
+    }
+  ],
+  "t0_mirror_structure": {
+    "gap_differences_over_dx": [
+      0.0,
+      0.0
+    ],
+    "nearest_non_competing_candidate": {
+      "component": 76,
+      "distance_to_the_best_over_dx": 1.0011235917216088,
+      "gap_increase_over_dx": 0.04741778043702993,
+      "gap_over_dx": 2.7533992632553748,
+      "x": 2.953125,
+      "y": 0.7360437254866143
+    },
+    "same_height": true,
+    "separation_justification": "the tied pair is separated from the next non-competing candidate by the gap increase and the point separation recorded above; the tie inside the pair is resolved by pinning both supports and reporting their difference, never by a tie-break",
+    "tie_components": [
+      76
+    ],
+    "tie_is_one_component": true,
+    "tie_pair_arc_detail": {
+      "along_arc_over_dx": 1.0,
+      "arc_status": "OPEN_PATH",
+      "distance_to_the_contour_over_dx": [
+        0.0,
+        0.0
+      ],
+      "note": "a path inside the pinned window means the tied pair is one local piece of the reconstructed contour; no path would mean separated branches and the gate would block",
+      "on_one_arc": true,
+      "same_local_branch": true,
+      "segment_hops": 1,
+      "segments_in_the_window": 10,
+      "segments_traced": 6,
+      "window_radius_dx": 3.0
+    },
+    "tie_pair_is_one_local_branch": true,
+    "tie_pair_local_path_over_dx": 1.0,
+    "tied_points_are_all_on_one_component": true,
+    "tied_supports": 2,
+    "wall_normals_agree": true
+  },
+  "t0_uniqueness": {
+    "branch_unique": true,
+    "candidates": 176,
+    "competition_components": [
+      76
+    ],
+    "competition_set_size": 2,
+    "competitors": [
+      {
+        "component": 76,
+        "distance_to_the_best_over_dx": 0.0,
+        "gap_over_dx": 2.705981482818345,
+        "x": 2.984375,
+        "y": 0.7345619198479572
+      },
+      {
+        "component": 76,
+        "distance_to_the_best_over_dx": 1.0,
+        "gap_over_dx": 2.705981482818345,
+        "x": 3.015625,
+        "y": 0.7345619198479572
+      }
+    ],
+    "component_sizes": {
+      "76": 176
+    },
+    "components": 1,
+    "exact_threshold_degeneracy_ok": true,
+    "exact_threshold_nodes": 0,
+    "frozen_cell_by_cell_validation": {
+      "cells_checked": 176,
+      "matches": true,
+      "problems": [],
+      "rule": "every cell that carries a crossing is reconstructed again by the frozen per-cell routine and the segment endpoints and the pairing are compared; a mismatch means the component graph is not the frozen reconstruction"
+    },
+    "frozen_enumeration_matches": {
+      "count_frozen": 176,
+      "count_mine": 176,
+      "matches": true,
+      "max_abs_difference": 0.0
+    },
+    "frozen_l1a2x_diagnostic": {
+      "best_sdf_over_dx": 2.705981482818345,
+      "candidates": 352,
+      "candidates_within_uniqueness_tolerance": 2,
+      "margin_over_dx": 0.0,
+      "second_candidate_distance_over_dx": 1.0,
+      "status": "NON_UNIQUE"
+    },
+    "minimum_gap_over_dx": 2.705981482818345,
+    "nearest_non_competing_candidate": {
+      "component": 76,
+      "distance_to_the_best_over_dx": 1.0011235917216088,
+      "gap_increase_over_dx": 0.04741778043702993,
+      "gap_over_dx": 2.7533992632553748,
+      "x": 2.953125,
+      "y": 0.7360437254866143
+    },
+    "rule": "every competing candidate within COMPETITION_TOLERANCE_DX of the global minimum wall distance must lie on one connected component of the frozen reconstruction, and no grid node may sit exactly on the threshold; a tie inside that component is recorded, is never called uniqueness of a point, and is handled by measuring on every tied support",
+    "rule_ok": true,
+    "status": "UNIQUE_BRANCH",
+    "tie_components": [
+      76
+    ],
+    "tie_is_one_component": true,
+    "tie_points": [
+      {
+        "component": 76,
+        "gap_over_dx": 2.705981482818345,
+        "grid_edge": [
+          1,
+          95,
+          23
+        ],
+        "x": 2.984375,
+        "y": 0.7345619198479572
+      },
+      {
+        "component": 76,
+        "gap_over_dx": 2.705981482818345,
+        "grid_edge": [
+          1,
+          96,
+          23
+        ],
+        "x": 3.015625,
+        "y": 0.7345619198479572
+      }
+    ],
+    "tie_set_size": 2
+  },
+  "tie_break": "the primary support is the tied minimum-gap candidate with the smallest x; this is a deterministic tie-break for reporting, it is never used as evidence of uniqueness, and the whole attribution is measured on every tied support so the tie contribution to the comparison error is visible",
+  "tie_tolerance_dx": 1e-06
+}

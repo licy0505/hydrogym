@@ -1,0 +1,11 @@
+{
+  "cg_all_converged_eager": true,
+  "macros": 40,
+  "max_gap_difference_over_dx": 8.942901530417657e-09,
+  "max_phi_difference_vs_eager_public_step": 1.4139207138441634e-08,
+  "max_phi_difference_vs_jitted_public_step": 1.4139207138441634e-08,
+  "max_velocity_difference_vs_eager_public_step": 7.152557373046875e-07,
+  "max_velocity_difference_vs_jitted_public_step": 7.152557373046875e-07,
+  "note": "the frozen public step advances its substeps inside a jitted scan, so XLA fusion changes the last bits of the arithmetic; the frozen thresholds for this equivalence are the L1A-2y ones",
+  "stage": "L1A-2z"
+}

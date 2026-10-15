@@ -1,0 +1,45 @@
+{
+  "N": 192,
+  "baseline_head_sha": "73c230b93f7e2d55fc7142a9b481ae4a45cc43e2",
+  "baseline_pull_request": 24,
+  "baseline_rule": "the study baseline is the exact PR #24 head; it must be an ancestor of the run head and every commit above it must touch only this stage's deliverables",
+  "branch": "arena/02b6c71b-hydrogym",
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training",
+    "complex_heldout"
+  ],
+  "checks": {
+    "branch_head_contains_the_verified_main": true,
+    "branch_is_the_authorized_session_branch": true,
+    "every_commit_above_the_baseline_is_stage_owned": true,
+    "origin_main_is_the_verified_main": true,
+    "policy_matches_contract": true,
+    "pr24_head_is_an_ancestor_of_head": true,
+    "quality_baseline_present": true,
+    "solver_contract_12": true,
+    "timestep_policy_default": true,
+    "worktree_clean_outside_stage_deliverables": true
+  },
+  "commits_above_baseline": [
+    "b225722 L1A-2w: re-seal evidence with the observed hosted CI result for the corrected stage head",
+    "fed2795 L1A-2w: name the constructibility key for what it records",
+    "5dd0325 L1A-2w: re-seal evidence with the observed hosted CI result for the final stage head",
+    "5f889d2 L1A-2w: record the frozen-adjacent suite outcome by failing set, not by a moving pass count",
+    "af291af L1A-2w: correct an unsupported attainability phrase in the next-action text",
+    "0bc6d45 L1A-2w: re-seal evidence with the observed hosted CI result",
+    "66da27c L1A-2w: boundary-compatible incident-momentum reachability bound at t=0"
+  ],
+  "contact_events_measured": 0,
+  "dt": 0.002,
+  "head_at_run": "b2257223ee5d7022cfbeb4862bb8c591ae7617ec",
+  "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "refinement_studies_run": 0,
+  "solver_contract_version": 12,
+  "stage": "L1A-2w",
+  "stage_version": "l1a2w_v1",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "trajectories_run": 0,
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

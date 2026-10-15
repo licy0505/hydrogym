@@ -1,0 +1,99 @@
+{
+  "admissible_radial_members": [],
+  "band_classification_correction": {
+    "cases_with_support_inside_gate_band": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "cases_with_support_outside_gate_band": [
+      "complex_heldout"
+    ],
+    "l1a2u_universal_claim_refuted": true
+  },
+  "contact_events_measured": 0,
+  "family_stopped": true,
+  "next_action": {
+    "action": "Do not re-tune the radial family. At t=0 only, measure the *reachable* interaction window that the frozen six gates themselves define: for each canary case, compute the maximum incident normal momentum that can be placed inside the admissible region (sdf above the gate band and open-cell speed under the 4.905526491646905 envelope) using a support whose interior peak respects the envelope by construction, and report whether that reachable window can deliver any incident momentum to the frozen phi=0.5 contour at all; no trajectory, event or refinement work until that t=0 bound is established.",
+    "bounded_scope": "one t=0 reachability bound per canary case; no trajectory, no event, no refinement, no new initializer promotion",
+    "must_not_be_started_in_this_stage": true,
+    "shape_ratio_limit": 4.905526491646905,
+    "verdict_context": "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+  },
+  "profile": "t0_screen",
+  "radial_family_rows": {
+    "R0_WEAK": {
+      "admissible_in_every_case": false,
+      "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+      "failure_reason": "peak open-cell speed 30.973782 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 6.314x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+      "global_speed_envelope_in_every_case": false,
+      "peak_over_envelope_ratio": 6.31405862566709,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 30.973781858021553,
+        "flat_we100_ct050": 30.973781858021553,
+        "flat_we200_ct000": 30.973781858021553,
+        "pillar_training": 30.973781858021553
+      },
+      "primary_failure": "global_speed_envelope",
+      "shape_ratio": 30.973783652125103,
+      "shape_ratio_passes": false,
+      "six_frozen_initial_constraints_in_every_case": true,
+      "worst_case": "flat_we100_ct050"
+    },
+    "R1_MEDIUM": {
+      "admissible_in_every_case": false,
+      "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+      "failure_reason": "peak open-cell speed 89.769845 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 18.300x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+      "global_speed_envelope_in_every_case": false,
+      "peak_over_envelope_ratio": 18.29973699979221,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 89.76984464265173,
+        "flat_we100_ct050": 89.76984464265173,
+        "flat_we200_ct000": 89.76984464265173,
+        "pillar_training": 89.76984464265173
+      },
+      "primary_failure": "global_speed_envelope",
+      "shape_ratio": 89.76985255320415,
+      "shape_ratio_passes": false,
+      "six_frozen_initial_constraints_in_every_case": true,
+      "worst_case": "flat_we100_ct050"
+    },
+    "R2_SHARP": {
+      "admissible_in_every_case": false,
+      "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+      "failure_reason": "peak open-cell speed 36.328378 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 7.406x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+      "global_speed_envelope_in_every_case": false,
+      "peak_over_envelope_ratio": 7.40560228028868,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 36.328378172556846,
+        "flat_we100_ct050": 36.328378172556846,
+        "flat_we200_ct000": 36.328378172556846,
+        "pillar_training": 36.328378172556846
+      },
+      "primary_failure": "global_speed_envelope",
+      "shape_ratio": 36.32838155250175,
+      "shape_ratio_passes": false,
+      "six_frozen_initial_constraints_in_every_case": true,
+      "worst_case": "flat_we100_ct050"
+    }
+  },
+  "re_tuning_performed": false,
+  "reference_baseline": {
+    "admissible_in_every_case": true,
+    "candidate": "C2_BASE",
+    "peak_over_u_impact_by_case": {
+      "complex_heldout": 4.212954615390365,
+      "flat_we100_ct050": 4.315600561416556,
+      "flat_we200_ct000": 4.315600561416556,
+      "pillar_training": 4.224925143806713
+    },
+    "role": "frozen reference baseline, not a member of the radial family under test",
+    "shape_ratio": 4.315600494888117
+  },
+  "refinement_studies_run": 0,
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "stop_rule": "when no prespecified member is admissible the stage stops and reports; it does not re-tune envelope width, radial support radius or amplitude to manufacture a passing member",
+  "trajectories_run": 0,
+  "verdict": "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+}

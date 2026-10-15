@@ -1,0 +1,40 @@
+{
+  "advective_displacement_dx": 0.10104428914258534,
+  "cahn_hilliard_displacement_dx": -0.03839560724954083,
+  "cahn_hilliard_halves_are_one_update": true,
+  "case_name": "pillar_training",
+  "comparison_error_dx": 0.007937057754737964,
+  "dominance_floor_dx": 0.023811173264213892,
+  "dominance_margin_dx": 0.06264868189304451,
+  "dominance_reading": "ADVECTIVE_LEG_LARGER",
+  "forbidden_claims_respected": [
+    "no causal physical mechanism is claimed",
+    "the two Cahn-Hilliard halves are never presented as two independent mechanisms",
+    "no contact-time or late-time inference is made from this early window",
+    "no claim is made that the measurement convention is the only admissible one"
+  ],
+  "measurement_attribution_resolved_under_the_specified_convention": true,
+  "questions": {
+    "A_measurement_validity": true,
+    "B_mathematical_attribution_closure": true,
+    "C_note": "this stage never answers C. One trajectory without a control arm cannot separate a causal mechanism, and the telescoping identity is algebra: it says how the measured motion splits under a prespecified convention, not which operator caused it",
+    "C_physical_mechanism": false
+  },
+  "reason": "no direction of motion is inferred from this stage; every number is a displacement along the frozen wall normal, positive toward the solid",
+  "scope": {
+    "case": "pillar_training",
+    "contact_events_scored": 0,
+    "contact_threshold_reached": false,
+    "dt": 0.002,
+    "macro_steps_run": 40,
+    "t_window": [
+      0.0,
+      0.08000000000000002
+    ],
+    "window_limited_to_early_response": true
+  },
+  "stage": "L1A-2z",
+  "total_displacement_dx": 0.06264868189304451,
+  "verdict": "EARLY_WINDOW_MEASUREMENT_ATTRIBUTION_RESOLVED",
+  "verdict_withheld_because": []
+}

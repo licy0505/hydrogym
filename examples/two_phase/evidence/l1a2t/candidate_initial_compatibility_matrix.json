@@ -1,0 +1,3954 @@
+{
+  "complex_heldout": {
+    "candidates": {
+      "C2_BASE": {
+        "candidate": "C2_BASE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 2.086162567138672e-07,
+            "dx_FV_Linf_over_u_impact": 5.513429641723633e-07,
+            "nearwall_chi_speed_over_u_impact": 0.001058935304172337,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": -0.014957422611540788,
+          "local_normal_approach_speed_into_solid": -0.007478711305770394,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2741,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1785,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                105,
+                30
+              ],
+              "argmax_chi": 0.011110623367130756,
+              "argmax_sdf_over_dx": 3.3665106296539307,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 1447,
+              "max_speed_over_u_impact": 0.001058935304172337
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                54
+              ],
+              "argmax_chi": 3.885780586188048e-16,
+              "argmax_sdf_over_dx": 27.61563491821289,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34240,
+              "max_speed_over_u_impact": 4.212954615390365
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                105,
+                30
+              ],
+              "argmax_chi": 0.011110623367130756,
+              "argmax_sdf_over_dx": 3.3665106296539307,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 4188,
+              "max_speed_over_u_impact": 0.001058935304172337
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.5000000248595142,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.015328636104703815,
+          "kinetic_energy_open_fluid": 0.9703620185724317,
+          "liquid_physical_kinetic_energy": 0.8911188215325255,
+          "liquid_v_weighted": -0.3137291700919056,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0005294676520861685,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.1064773076951826,
+          "open_face_fv_divergence_Linf": 8.821487426757812e-06,
+          "peak_abs_divergence_central_D": 3.337860107421875e-06,
+          "return_flow_peak_speed": 1.2098035904284965
+        },
+        "role": "exact L1A-2s C2 reproduction",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+            "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+            "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1183961728581067,
+          "candidate": "C2_BASE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "b8109567be28e480d15344e880d101a97e0906d80d2375f7947f8f32cbdbf636",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "exact L1A-2s C2 reproduction",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.2360276167443259,
+          "wall_taper_plateau_above_sdf_over_dx": 12.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.715625
+        }
+      },
+      "T1_NEAR_NARROW": {
+        "candidate": "T1_NEAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 0.0006193346926011145,
+            "nearwall_chi_speed_over_u_impact": 2.462821933122661,
+            "wall_normal_sample_over_u_impact": 0.000807729400512639
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.43665876268144527,
+          "local_normal_approach_speed_into_solid": 0.21832938134072263,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2741,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1785,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 1447,
+              "max_speed_over_u_impact": 2.462821933122661
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                54
+              ],
+              "argmax_chi": 3.885780586188048e-16,
+              "argmax_sdf_over_dx": 27.61563491821289,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34240,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 4188,
+              "max_speed_over_u_impact": 2.462821933122661
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 1.4824611456760632e-05,
+          "gas_v_weighted": 0.015572679780976796,
+          "kinetic_energy_open_fluid": 0.9116462609434526,
+          "liquid_physical_kinetic_energy": 0.8371689209305069,
+          "liquid_v_weighted": -0.31872441928031875,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 1.2314109665613304,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.9235852315097228,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0004038647002563195,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 0.009909355081617832,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.2314109665613304
+        },
+        "role": "shortened near-wall taper",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+            "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "u": "bfc8cfd45db95529b4b00461368eb79e87abfa6a9e55966f3a5e914493fe78c4",
+            "v": "afdda01e35e01549f3ec614b424626f678c76fa7aeebaaef340689687fb85e59"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "T1_NEAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "b8109567be28e480d15344e880d101a97e0906d80d2375f7947f8f32cbdbf636",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "shortened near-wall taper",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": 5.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.715625
+        }
+      },
+      "T2_NEAR_WIDE": {
+        "candidate": "T2_NEAR_WIDE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 2.086162567138672e-07,
+            "dx_FV_Linf_over_u_impact": 8.318191976286471e-05,
+            "nearwall_chi_speed_over_u_impact": 0.8717116460590647,
+            "wall_normal_sample_over_u_impact": 0.00011031913386809377
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.10201444049918684,
+          "local_normal_approach_speed_into_solid": 0.05100722024959342,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2741,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1785,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 1447,
+              "max_speed_over_u_impact": 0.8717116460590647
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                54
+              ],
+              "argmax_chi": 3.885780586188048e-16,
+              "argmax_sdf_over_dx": 27.61563491821289,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34240,
+              "max_speed_over_u_impact": 4.146492051984964
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 4188,
+              "max_speed_over_u_impact": 0.8717116460590647
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999928586419,
+          "embedded_wall_absolute_flux_bilinear": 1.9826848881749486e-06,
+          "gas_v_weighted": 0.015461558094284485,
+          "kinetic_energy_open_fluid": 0.9184256399153685,
+          "liquid_physical_kinetic_energy": 0.8422585566210831,
+          "liquid_v_weighted": -0.3164497253254512,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.43585582302953235,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.22819993753369672,
+          "max_embedded_wall_bilinear_normal_velocity": 5.515956693404689e-05,
+          "max_speed_global": 2.073246025992482,
+          "open_face_fv_divergence_Linf": 0.0013309107162058353,
+          "peak_abs_divergence_central_D": 3.337860107421875e-06,
+          "return_flow_peak_speed": 1.0400332826269525
+        },
+        "role": "onset-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+            "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "u": "22c004971ce87462d82770aa3276d4ca73e16e78e19a630ed0c4453b7c6e09b8",
+            "v": "6787b167634481fa850d70244ff653190cec208f2921d502567ef2c15e7a552a"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0849771777505253,
+          "candidate": "T2_NEAR_WIDE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "b8109567be28e480d15344e880d101a97e0906d80d2375f7947f8f32cbdbf636",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "onset-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23981077842753573,
+          "wall_taper_plateau_above_sdf_over_dx": 9.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.715625
+        }
+      },
+      "T3_FAR_NARROW": {
+        "candidate": "T3_FAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 2.086162567138672e-07,
+            "dx_FV_Linf_over_u_impact": 3.948807716369629e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0077554876916110516,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": -0.1335249923302182,
+          "local_normal_approach_speed_into_solid": -0.0667624961651091,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2741,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1785,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                105,
+                30
+              ],
+              "argmax_chi": 0.011110623367130756,
+              "argmax_sdf_over_dx": 3.3665106296539307,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 1447,
+              "max_speed_over_u_impact": 0.0077554876916110516
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                107,
+                36
+              ],
+              "argmax_chi": 0.0002200032613473013,
+              "argmax_sdf_over_dx": 6.3162360191345215,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34240,
+              "max_speed_over_u_impact": 4.194151630386702
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                105,
+                30
+              ],
+              "argmax_chi": 0.011110623367130756,
+              "argmax_sdf_over_dx": 3.3665106296539307,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 4188,
+              "max_speed_over_u_impact": 0.0077554876916110516
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999770254271,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.015388260446407516,
+          "kinetic_energy_open_fluid": 0.9258085771419788,
+          "liquid_physical_kinetic_energy": 0.8463847207333592,
+          "liquid_v_weighted": -0.31494949446130643,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0038777438458055258,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.097075815193351,
+          "open_face_fv_divergence_Linf": 6.318092346191406e-06,
+          "peak_abs_divergence_central_D": 3.337860107421875e-06,
+          "return_flow_peak_speed": 1.4138426898966145
+        },
+        "role": "width-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+            "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "u": "dcbefe12ad980a3fbf9ba7faa997e63a4927aa7cc1bb1b9eb7576c20058cc275",
+            "v": "1d7e869786310a4ebfffd2dd245e64bd194c7a0c3434efc9b2aaa752268e6578"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0841086898080734,
+          "candidate": "T3_FAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "b8109567be28e480d15344e880d101a97e0906d80d2375f7947f8f32cbdbf636",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "width-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23991071216446264,
+          "wall_taper_plateau_above_sdf_over_dx": 8.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.715625
+        }
+      }
+    },
+    "case_identity": {
+      "Lx": 6.0,
+      "Ly": 6.0,
+      "M": 0.002,
+      "N": 192,
+      "R": 0.7,
+      "Re": 200.0,
+      "We": 100.0,
+      "case": {
+        "We": 100.0,
+        "cos_theta": -0.5,
+        "n_pillars": 7,
+        "seed": 100,
+        "split": "test",
+        "surface": "random_pillars",
+        "width_range": [
+          0.2,
+          0.4
+        ]
+      },
+      "case_name": "complex_heldout",
+      "cos_theta": -0.5,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "eta_pen": 0.004,
+      "initial_gap": 0.09375,
+      "local_surface_top": 0.921875,
+      "nu_g": 0.05,
+      "nu_l": 0.005,
+      "phase_dtype": "float64",
+      "policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "requested_dt": 0.002,
+      "rho_g": 0.1,
+      "rho_l": 1.0,
+      "u_impact_argument": 0.5,
+      "velocity_dtype": "float32",
+      "x0": 3.0,
+      "y0": 1.715625
+    },
+    "quarantined_controls": {
+      "NC_NO_WALL_TAPER": {
+        "candidate": "NC_NO_WALL_TAPER",
+        "candidate_outcome_eligible": false,
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": false,
+            "embedded_wall_normal_velocity": false,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": false
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.2243082021618388,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.9694294929504395,
+            "nearwall_chi_speed_over_u_impact": 1.103520666734141,
+            "wall_normal_sample_over_u_impact": 0.45661449387238834
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.42744784669957636,
+          "local_normal_approach_speed_into_solid": 0.21372392334978818,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.16674129221032855,
+            "gap_cell": [
+              106,
+              35
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.35100586253106025,
+              -0.9363732612953162
+            ],
+            "support_xy": [
+              3.328125,
+              1.0972376856971315
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              3.42506742477417,
+              0.942160427570343
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                109,
+                29
+              ],
+              "argmax_chi": 0.7006125450134277,
+              "argmax_sdf_over_dx": -0.6376622319221497,
+              "argmax_volume_over_cell_area": 0.03535815328359604,
+              "cell_count": 2741,
+              "max_speed_over_u_impact": 0.5260911716932517
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                111,
+                28
+              ],
+              "argmax_chi": 0.9200660586357117,
+              "argmax_sdf_over_dx": -1.8324337005615234,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1785,
+              "max_speed_over_u_impact": 0.3256872776020313
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 1447,
+              "max_speed_over_u_impact": 1.103520666734141
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                54
+              ],
+              "argmax_chi": 3.885780586188048e-16,
+              "argmax_sdf_over_dx": 27.61563491821289,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34240,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                108,
+                33
+              ],
+              "argmax_chi": 0.014050268568098545,
+              "argmax_sdf_over_dx": 3.188222885131836,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 4188,
+              "max_speed_over_u_impact": 1.103520666734141
+            }
+          }
+        },
+        "quarantined_negative_control": true,
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.05108209233244665,
+          "gas_v_weighted": 0.015531178891390987,
+          "kinetic_energy_open_fluid": 0.9102632730070263,
+          "liquid_physical_kinetic_energy": 0.8369762430748463,
+          "liquid_v_weighted": -0.31901716493156246,
+          "max_abs_velocity_deep_solid": 0.1121541010809194,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.5517603333670705,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.48312064555260553,
+          "max_embedded_wall_bilinear_normal_velocity": 0.22830724693619417,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 63.51087188720703,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.039509478470453
+        },
+        "role": "quarantined diagnostic counterfactual; not a candidate",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+            "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+            "u": "b6b6258be2091ad7e4968bafb135b7286cd045433920338ef715e9a4dbf269ef",
+            "v": "574e5ca7ed5e164a443e0dec18d88cb9ddff729a7ec9aada84a9926dccec9b4f"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": null
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "NC_NO_WALL_TAPER",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": false,
+          "geometry_sdf_hash": "b8109567be28e480d15344e880d101a97e0906d80d2375f7947f8f32cbdbf636",
+          "onset_a_dx": null,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "quarantined diagnostic counterfactual; not a candidate",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": null,
+          "wall_taper_zero_below_sdf_over_dx": 0.0,
+          "width_b_dx": null,
+          "x0": 3.0,
+          "y0": 1.715625
+        }
+      }
+    }
+  },
+  "flat_we100_ct050": {
+    "candidates": {
+      "C2_BASE": {
+        "candidate": "C2_BASE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+            "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                0,
+                8
+              ],
+              "argmax_chi": 0.339243620634079,
+              "argmax_sdf_over_dx": 0.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.0
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.315600561416556
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.0
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.5000000077079005,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014599085561054527,
+          "kinetic_energy_open_fluid": 1.050826573658556,
+          "liquid_physical_kinetic_energy": 0.9658437467435232,
+          "liquid_v_weighted": -0.31045168477414836,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.157800280708278,
+          "open_face_fv_divergence_Linf": 9.179115295410156e-06,
+          "peak_abs_divergence_central_D": 2.9206275939941406e-06,
+          "return_flow_peak_speed": 1.2109906225545215
+        },
+        "role": "exact L1A-2s C2 reproduction",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+            "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1700098144431816,
+          "candidate": "C2_BASE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "exact L1A-2s C2 reproduction",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.2304137044321611,
+          "wall_taper_plateau_above_sdf_over_dx": 12.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T1_NEAR_NARROW": {
+        "candidate": "T1_NEAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+            "nearwall_chi_speed_over_u_impact": 1.7758206853374545,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.18100353502042388,
+          "local_normal_approach_speed_into_solid": 0.09050176751021194,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 1.7758206853374545
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 1.7758206853374545
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.01492290470234788,
+          "kinetic_energy_open_fluid": 0.9174587731970715,
+          "liquid_physical_kinetic_energy": 0.8400249960988828,
+          "liquid_v_weighted": -0.3173377476964378,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.8879103426687273,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.8879103426687273,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 5.7220458984375e-06,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.1768322534610784
+        },
+        "role": "shortened near-wall taper",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "891467734e7d2ed97767b3d74922b277b1fd931e6b16e732fdd7bbe3a07bb863",
+            "v": "85f9b6e8f0ffb1a338fbe50ba88819fcbc0e1160423c4fd576fa4d85c2b80f51"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "T1_NEAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "shortened near-wall taper",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": 5.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T2_NEAR_WIDE": {
+        "candidate": "T2_NEAR_WIDE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.862645149230957e-07,
+            "dx_FV_Linf_over_u_impact": 4.3213367462158203e-07,
+            "nearwall_chi_speed_over_u_impact": 0.4465340029428682,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.032520936820417734,
+          "local_normal_approach_speed_into_solid": 0.016260468410208867,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.4465340029428682
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.170167033497173
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.4465340029428682
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.49999998263310014,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014749356119415285,
+          "kinetic_energy_open_fluid": 0.9419170738154634,
+          "liquid_physical_kinetic_energy": 0.8627959291055998,
+          "liquid_v_weighted": -0.3136472099152682,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.2232670014714341,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.2232670014714341,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.0850835167485866,
+          "open_face_fv_divergence_Linf": 6.9141387939453125e-06,
+          "peak_abs_divergence_central_D": 2.9802322387695312e-06,
+          "return_flow_peak_speed": 1.0459715960275808
+        },
+        "role": "onset-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "44732cf2702e21839feb19620632447658b37732acaebe078315164b31a98a18",
+            "v": "f689e73079af88a0eb847c634afdb2b8341205839bcf667a413986f20140eaff"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.096881695037846,
+          "candidate": "T2_NEAR_WIDE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "onset-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23844931317929008,
+          "wall_taper_plateau_above_sdf_over_dx": 9.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T3_FAR_NARROW": {
+        "candidate": "T3_FAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.6391277313232422e-07,
+            "dx_FV_Linf_over_u_impact": 3.725290298461914e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                0,
+                8
+              ],
+              "argmax_chi": 0.339243620634079,
+              "argmax_sdf_over_dx": 0.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.0
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.1843796518036065
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.0
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999903804759,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014655090403057628,
+          "kinetic_energy_open_fluid": 0.9701091395714198,
+          "liquid_physical_kinetic_energy": 0.8855862972099074,
+          "liquid_v_weighted": -0.3116426365459686,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.0921898259018032,
+          "open_face_fv_divergence_Linf": 5.9604644775390625e-06,
+          "peak_abs_divergence_central_D": 2.6226043701171875e-06,
+          "return_flow_peak_speed": 1.383278981211529
+        },
+        "role": "width-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "f207771ae4227a074c8173a09541f4b2fde7594650be63523cd92852cd84bb5b",
+            "v": "4b469eeec2a9664b38cbd784ea24ed12f6801c51560c2d75d13e16f948e08d05"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1040280256227057,
+          "candidate": "T3_FAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "width-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23763942015554693,
+          "wall_taper_plateau_above_sdf_over_dx": 8.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      }
+    },
+    "case_identity": {
+      "Lx": 6.0,
+      "Ly": 6.0,
+      "M": 0.002,
+      "N": 192,
+      "R": 0.7,
+      "Re": 200.0,
+      "We": 100.0,
+      "case": {
+        "We": 100.0,
+        "cos_theta": 0.5,
+        "seed": 6,
+        "split": "train",
+        "surface": "flat"
+      },
+      "case_name": "flat_we100_ct050",
+      "cos_theta": 0.5,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "eta_pen": 0.004,
+      "initial_gap": 0.09375,
+      "local_surface_top": 0.234375,
+      "nu_g": 0.05,
+      "nu_l": 0.005,
+      "phase_dtype": "float64",
+      "policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "requested_dt": 0.002,
+      "rho_g": 0.1,
+      "rho_l": 1.0,
+      "u_impact_argument": 0.5,
+      "velocity_dtype": "float32",
+      "x0": 3.0,
+      "y0": 1.028125
+    },
+    "quarantined_controls": {
+      "NC_NO_WALL_TAPER": {
+        "candidate": "NC_NO_WALL_TAPER",
+        "candidate_outcome_eligible": false,
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": false,
+            "embedded_wall_normal_velocity": false,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": false
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.48245515628210545,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 0.3586963415145874,
+            "nearwall_chi_speed_over_u_impact": 0.9662412911052111,
+            "wall_normal_sample_over_u_impact": 0.3586963266134262
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.649945330530116,
+          "local_normal_approach_speed_into_solid": 0.324972665265058,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                85,
+                7
+              ],
+              "argmax_chi": 0.6607563495635986,
+              "argmax_sdf_over_dx": -0.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.5738223719681067
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                87,
+                5
+              ],
+              "argmax_chi": 0.9655548334121704,
+              "argmax_sdf_over_dx": -2.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.48245515628210545
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                84,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.9662412911052111
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                84,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.9662412911052111
+            }
+          }
+        },
+        "quarantined_negative_control": true,
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.1273881049983247,
+          "gas_v_weighted": 0.015010538880604541,
+          "kinetic_energy_open_fluid": 0.9100515678246018,
+          "liquid_physical_kinetic_energy": 0.8369735767089482,
+          "liquid_v_weighted": -0.3192013014005438,
+          "max_abs_velocity_deep_solid": 0.24122757814105272,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.48312064555260553,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.48312064555260553,
+          "max_embedded_wall_bilinear_normal_velocity": 0.1793481633067131,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 5.739141464233398,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.039509478470453
+        },
+        "role": "quarantined diagnostic counterfactual; not a candidate",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "30b8db6b349559afd1a115b6193e05f80411e474eed2cdbd659f47075e4fdd24",
+            "v": "c31ce4454fe5bff72ab3e7e1c71848b827cc50350842d0e3d9198c6465537fff"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": null
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "NC_NO_WALL_TAPER",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": false,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": null,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "quarantined diagnostic counterfactual; not a candidate",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": null,
+          "wall_taper_zero_below_sdf_over_dx": 0.0,
+          "width_b_dx": null,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      }
+    }
+  },
+  "flat_we200_ct000": {
+    "candidates": {
+      "C2_BASE": {
+        "candidate": "C2_BASE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+            "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                0,
+                8
+              ],
+              "argmax_chi": 0.339243620634079,
+              "argmax_sdf_over_dx": 0.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.0
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.315600561416556
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.0
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.5000000077079005,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014599085561054527,
+          "kinetic_energy_open_fluid": 1.050826573658556,
+          "liquid_physical_kinetic_energy": 0.9658437467435232,
+          "liquid_v_weighted": -0.31045168477414836,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.157800280708278,
+          "open_face_fv_divergence_Linf": 9.179115295410156e-06,
+          "peak_abs_divergence_central_D": 2.9206275939941406e-06,
+          "return_flow_peak_speed": 1.2109906225545215
+        },
+        "role": "exact L1A-2s C2 reproduction",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+            "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1700098144431816,
+          "candidate": "C2_BASE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "exact L1A-2s C2 reproduction",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.2304137044321611,
+          "wall_taper_plateau_above_sdf_over_dx": 12.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T1_NEAR_NARROW": {
+        "candidate": "T1_NEAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+            "nearwall_chi_speed_over_u_impact": 1.7758206853374545,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.18100353502042388,
+          "local_normal_approach_speed_into_solid": 0.09050176751021194,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 1.7758206853374545
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 1.7758206853374545
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.01492290470234788,
+          "kinetic_energy_open_fluid": 0.9174587731970715,
+          "liquid_physical_kinetic_energy": 0.8400249960988828,
+          "liquid_v_weighted": -0.3173377476964378,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.8879103426687273,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.8879103426687273,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 5.7220458984375e-06,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.1768322534610784
+        },
+        "role": "shortened near-wall taper",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "891467734e7d2ed97767b3d74922b277b1fd931e6b16e732fdd7bbe3a07bb863",
+            "v": "85f9b6e8f0ffb1a338fbe50ba88819fcbc0e1160423c4fd576fa4d85c2b80f51"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "T1_NEAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "shortened near-wall taper",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": 5.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T2_NEAR_WIDE": {
+        "candidate": "T2_NEAR_WIDE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.862645149230957e-07,
+            "dx_FV_Linf_over_u_impact": 4.3213367462158203e-07,
+            "nearwall_chi_speed_over_u_impact": 0.4465340029428682,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.032520936820417734,
+          "local_normal_approach_speed_into_solid": 0.016260468410208867,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.4465340029428682
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.170167033497173
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                86,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.4465340029428682
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.49999998263310014,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014749356119415285,
+          "kinetic_energy_open_fluid": 0.9419170738154634,
+          "liquid_physical_kinetic_energy": 0.8627959291055998,
+          "liquid_v_weighted": -0.3136472099152682,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.2232670014714341,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.2232670014714341,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.0850835167485866,
+          "open_face_fv_divergence_Linf": 6.9141387939453125e-06,
+          "peak_abs_divergence_central_D": 2.9802322387695312e-06,
+          "return_flow_peak_speed": 1.0459715960275808
+        },
+        "role": "onset-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "44732cf2702e21839feb19620632447658b37732acaebe078315164b31a98a18",
+            "v": "f689e73079af88a0eb847c634afdb2b8341205839bcf667a413986f20140eaff"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.096881695037846,
+          "candidate": "T2_NEAR_WIDE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "onset-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23844931317929008,
+          "wall_taper_plateau_above_sdf_over_dx": 9.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      },
+      "T3_FAR_NARROW": {
+        "candidate": "T3_FAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.6391277313232422e-07,
+            "dx_FV_Linf_over_u_impact": 3.725290298461914e-07,
+            "nearwall_chi_speed_over_u_impact": 0.0,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                0,
+                8
+              ],
+              "argmax_chi": 0.339243620634079,
+              "argmax_sdf_over_dx": 0.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.0
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.1843796518036065
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.0
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999903804759,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.014655090403057628,
+          "kinetic_energy_open_fluid": 0.9701091395714198,
+          "liquid_physical_kinetic_energy": 0.8855862972099074,
+          "liquid_v_weighted": -0.3116426365459686,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.0,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.0921898259018032,
+          "open_face_fv_divergence_Linf": 5.9604644775390625e-06,
+          "peak_abs_divergence_central_D": 2.6226043701171875e-06,
+          "return_flow_peak_speed": 1.383278981211529
+        },
+        "role": "width-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "f207771ae4227a074c8173a09541f4b2fde7594650be63523cd92852cd84bb5b",
+            "v": "4b469eeec2a9664b38cbd784ea24ed12f6801c51560c2d75d13e16f948e08d05"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1040280256227057,
+          "candidate": "T3_FAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "width-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23763942015554693,
+          "wall_taper_plateau_above_sdf_over_dx": 8.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      }
+    },
+    "case_identity": {
+      "Lx": 6.0,
+      "Ly": 6.0,
+      "M": 0.002,
+      "N": 192,
+      "R": 0.7,
+      "Re": 200.0,
+      "We": 200.0,
+      "case": {
+        "We": 200.0,
+        "cos_theta": 0.0,
+        "seed": 5,
+        "split": "train",
+        "surface": "flat"
+      },
+      "case_name": "flat_we200_ct000",
+      "cos_theta": 0.0,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "eta_pen": 0.004,
+      "initial_gap": 0.09375,
+      "local_surface_top": 0.234375,
+      "nu_g": 0.05,
+      "nu_l": 0.005,
+      "phase_dtype": "float64",
+      "policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "requested_dt": 0.002,
+      "rho_g": 0.1,
+      "rho_l": 1.0,
+      "u_impact_argument": 0.5,
+      "velocity_dtype": "float32",
+      "x0": 3.0,
+      "y0": 1.028125
+    },
+    "quarantined_controls": {
+      "NC_NO_WALL_TAPER": {
+        "candidate": "NC_NO_WALL_TAPER",
+        "candidate_outcome_eligible": false,
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": false,
+            "embedded_wall_normal_velocity": false,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": false
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.48245515628210545,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 0.3586963415145874,
+            "nearwall_chi_speed_over_u_impact": 0.9662412911052111,
+            "wall_normal_sample_over_u_impact": 0.3586963266134262
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.649945330530116,
+          "local_normal_approach_speed_into_solid": 0.324972665265058,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.07831191984795716,
+            "gap_cell": [
+              95,
+              10
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.32831191984795716
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.25
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                85,
+                7
+              ],
+              "argmax_chi": 0.6607563495635986,
+              "argmax_sdf_over_dx": -0.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1536,
+              "max_speed_over_u_impact": 0.5738223719681067
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                87,
+                5
+              ],
+              "argmax_chi": 0.9655548334121704,
+              "argmax_sdf_over_dx": -2.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1152,
+              "max_speed_over_u_impact": 0.48245515628210545
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                84,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 576,
+              "max_speed_over_u_impact": 0.9662412911052111
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                32
+              ],
+              "argmax_chi": 6.439293542825908e-15,
+              "argmax_sdf_over_dx": 24.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 35328,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                84,
+                10
+              ],
+              "argmax_chi": 0.03444519639015198,
+              "argmax_sdf_over_dx": 2.5,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2112,
+              "max_speed_over_u_impact": 0.9662412911052111
+            }
+          }
+        },
+        "quarantined_negative_control": true,
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.1273881049983247,
+          "gas_v_weighted": 0.015010538880604541,
+          "kinetic_energy_open_fluid": 0.9100515678246018,
+          "liquid_physical_kinetic_energy": 0.8369735767089482,
+          "liquid_v_weighted": -0.3192013014005438,
+          "max_abs_velocity_deep_solid": 0.24122757814105272,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.48312064555260553,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.48312064555260553,
+          "max_embedded_wall_bilinear_normal_velocity": 0.1793481633067131,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 5.739141464233398,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.039509478470453
+        },
+        "role": "quarantined diagnostic counterfactual; not a candidate",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+            "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+            "u": "30b8db6b349559afd1a115b6193e05f80411e474eed2cdbd659f47075e4fdd24",
+            "v": "c31ce4454fe5bff72ab3e7e1c71848b827cc50350842d0e3d9198c6465537fff"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": null
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "NC_NO_WALL_TAPER",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": false,
+          "geometry_sdf_hash": "4761caf1046e5b8073ac234cf5059cc2e26409f5829aacfc3ec59c68fe57cfbb",
+          "onset_a_dx": null,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "quarantined diagnostic counterfactual; not a candidate",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": null,
+          "wall_taper_zero_below_sdf_over_dx": 0.0,
+          "width_b_dx": null,
+          "x0": 3.0,
+          "y0": 1.028125
+        }
+      }
+    }
+  },
+  "pillar_training": {
+    "candidates": {
+      "C2_BASE": {
+        "candidate": "C2_BASE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+            "nearwall_chi_speed_over_u_impact": 1.5613006326020695e-05,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2056,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1368,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 880,
+              "max_speed_over_u_impact": 1.5613006326020695e-05
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                45
+              ],
+              "argmax_chi": 5.051514762044462e-15,
+              "argmax_sdf_over_dx": 24.700000762939453,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34944,
+              "max_speed_over_u_impact": 4.224925143806713
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2936,
+              "max_speed_over_u_impact": 1.5613006326020695e-05
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999831981805,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.015164285047566659,
+          "kinetic_energy_open_fluid": 0.9732166163518303,
+          "liquid_physical_kinetic_energy": 0.8959220467754011,
+          "liquid_v_weighted": -0.3176470020909587,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 7.806503163010348e-06,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.1124625719033565,
+          "open_face_fv_divergence_Linf": 5.7220458984375e-06,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.0597060593271082
+        },
+        "role": "exact L1A-2s C2 reproduction",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+            "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+            "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.1244154587470976,
+          "candidate": "C2_BASE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "c899302bf1832f43ac7f815707da24a9725efbc5f81efc2e50e0c28dfb04c789",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "exact L1A-2s C2 reproduction",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23535885974718038,
+          "wall_taper_plateau_above_sdf_over_dx": 12.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.434375
+        }
+      },
+      "T1_NEAR_NARROW": {
+        "candidate": "T1_NEAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+            "nearwall_chi_speed_over_u_impact": 1.8889678467056015,
+            "wall_normal_sample_over_u_impact": 0.0006206819483945932
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.23702802936694606,
+          "local_normal_approach_speed_into_solid": 0.11851401468347303,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2056,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1368,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 880,
+              "max_speed_over_u_impact": 1.8889678467056015
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                45
+              ],
+              "argmax_chi": 5.051514762044462e-15,
+              "argmax_sdf_over_dx": 24.700000762939453,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34944,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2936,
+              "max_speed_over_u_impact": 1.8889678467056015
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 3.2407903905959525e-05,
+          "gas_v_weighted": 0.015205744229104503,
+          "kinetic_energy_open_fluid": 0.9127937364889438,
+          "liquid_physical_kinetic_energy": 0.8382832089231063,
+          "liquid_v_weighted": -0.3185154523072212,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.9444839233528007,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.7972950097202344,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0003103409741972966,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 5.7220458984375e-06,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.039509478470453
+        },
+        "role": "shortened near-wall taper",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+            "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "u": "14316f39de615f112eae61e6decbbaa7d3d31516e80cc6ea38f95fdb80018cd1",
+            "v": "46b614884fdf37061f6d43a03d56a46d1032e550f09eabb5ef854c70bff5f297"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "T1_NEAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "c899302bf1832f43ac7f815707da24a9725efbc5f81efc2e50e0c28dfb04c789",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "shortened near-wall taper",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": 5.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.434375
+        }
+      },
+      "T2_NEAR_WIDE": {
+        "candidate": "T2_NEAR_WIDE",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 4.023313522338867e-07,
+            "nearwall_chi_speed_over_u_impact": 0.6543639118200636,
+            "wall_normal_sample_over_u_impact": 8.99467729174056e-05
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.045032392722275535,
+          "local_normal_approach_speed_into_solid": 0.022516196361137768,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2056,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1368,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 880,
+              "max_speed_over_u_impact": 0.6543639118200636
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                45
+              ],
+              "argmax_chi": 5.051514762044462e-15,
+              "argmax_sdf_over_dx": 24.700000762939453,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34944,
+              "max_speed_over_u_impact": 4.158466871938792
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2936,
+              "max_speed_over_u_impact": 0.6543639118200636
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.5000000156665417,
+          "embedded_wall_absolute_flux_bilinear": 4.696425256190798e-06,
+          "gas_v_weighted": 0.015163923811530587,
+          "kinetic_energy_open_fluid": 0.9242686122267145,
+          "liquid_physical_kinetic_energy": 0.8492739494909991,
+          "liquid_v_weighted": -0.3176394371282681,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.3271819559100318,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.22419780545812604,
+          "max_embedded_wall_bilinear_normal_velocity": 4.49733864587028e-05,
+          "max_speed_global": 2.079233435969396,
+          "open_face_fv_divergence_Linf": 6.4373016357421875e-06,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.0430368104152647
+        },
+        "role": "onset-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+            "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "u": "b635e6ce503c446185751228998198fec0091632b21bcd311054086e9358e968",
+            "v": "4f2e2de042d8938076a2547c1ce403d7a0f08f4fac1316b44927775b823db560"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0909983477846388,
+          "candidate": "T2_NEAR_WIDE",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "c899302bf1832f43ac7f815707da24a9725efbc5f81efc2e50e0c28dfb04c789",
+          "onset_a_dx": 1.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "onset-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23912022720139292,
+          "wall_taper_plateau_above_sdf_over_dx": 9.0,
+          "wall_taper_zero_below_sdf_over_dx": 1.0,
+          "width_b_dx": 8.0,
+          "x0": 3.0,
+          "y0": 1.434375
+        }
+      },
+      "T3_FAR_NARROW": {
+        "candidate": "T3_FAR_NARROW",
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": true,
+            "embedded_wall_normal_velocity": true,
+            "nearwall_chi_velocity": true,
+            "open_face_FV_divergence": true
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.0,
+            "dx_D_Linf_over_u_impact": 2.1979212760925293e-07,
+            "dx_FV_Linf_over_u_impact": 4.5821070671081543e-07,
+            "nearwall_chi_speed_over_u_impact": 0.00012152335693826899,
+            "wall_normal_sample_over_u_impact": 0.0
+          },
+          "pass": true,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": false,
+          "local_normal_approach_over_u_impact": 0.0,
+          "local_normal_approach_speed_into_solid": 0.0,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 2056,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                0,
+                0
+              ],
+              "argmax_chi": 0.9999545812606812,
+              "argmax_sdf_over_dx": -7.5,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1368,
+              "max_speed_over_u_impact": 0.0
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 880,
+              "max_speed_over_u_impact": 0.00012152335693826899
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                45
+              ],
+              "argmax_chi": 5.051514762044462e-15,
+              "argmax_sdf_over_dx": 24.700000762939453,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34944,
+              "max_speed_over_u_impact": 4.166861595997139
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2936,
+              "max_speed_over_u_impact": 0.00012152335693826899
+            }
+          }
+        },
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.5000000189948868,
+          "embedded_wall_absolute_flux_bilinear": 0.0,
+          "gas_v_weighted": 0.015144254243634955,
+          "kinetic_energy_open_fluid": 0.937939852324447,
+          "liquid_physical_kinetic_energy": 0.8608643877942108,
+          "liquid_v_weighted": -0.31722741615949457,
+          "max_abs_velocity_deep_solid": 0.0,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 6.0761678469134495e-05,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.0,
+          "max_embedded_wall_bilinear_normal_velocity": 0.0,
+          "max_speed_global": 2.0834307979985693,
+          "open_face_fv_divergence_Linf": 7.331371307373047e-06,
+          "peak_abs_divergence_central_D": 3.516674041748047e-06,
+          "return_flow_peak_speed": 1.0451424043369344
+        },
+        "role": "width-only comparison vs C2",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+            "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "u": "5f38e3081f7e23d19a561474584e58474895ed03fac0c38c6e3b6ed27afeb42c",
+            "v": "bd1c68f44b2c194bef715e5de8c2b0fe65ae62e20e80c2f6acba0e41810077f6"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": true
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.095219286020479,
+          "candidate": "T3_FAR_NARROW",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": true,
+          "geometry_sdf_hash": "c899302bf1832f43ac7f815707da24a9725efbc5f81efc2e50e0c28dfb04c789",
+          "onset_a_dx": 4.0,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "width-only comparison vs C2",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.23863850592444044,
+          "wall_taper_plateau_above_sdf_over_dx": 8.0,
+          "wall_taper_zero_below_sdf_over_dx": 4.0,
+          "width_b_dx": 4.0,
+          "x0": 3.0,
+          "y0": 1.434375
+        }
+      }
+    },
+    "case_identity": {
+      "Lx": 6.0,
+      "Ly": 6.0,
+      "M": 0.002,
+      "N": 192,
+      "R": 0.7,
+      "Re": 200.0,
+      "We": 100.0,
+      "case": {
+        "We": 100.0,
+        "cos_theta": -0.5,
+        "height": 0.4,
+        "n_pillars": 4,
+        "seed": 8,
+        "split": "train",
+        "surface": "pillars",
+        "width": 0.3
+      },
+      "case_name": "pillar_training",
+      "cos_theta": -0.5,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "effective_dt": 0.002,
+      "eps": 0.046875,
+      "eps_over_dx": 1.5,
+      "eta_pen": 0.004,
+      "initial_gap": 0.09375,
+      "local_surface_top": 0.640625,
+      "nu_g": 0.05,
+      "nu_l": 0.005,
+      "phase_dtype": "float64",
+      "policy": {
+        "dx": 0.03125,
+        "effective_dt": 0.002,
+        "limiting_criterion": "requested_dt",
+        "limiting_value": 0.002,
+        "policy_cap_value": 0.002,
+        "registry_version": 1,
+        "requested_dt": 0.002,
+        "stable_dt_cap": 0.00625,
+        "time_step_policy_name": "impact_phase_cap_dx2_v1",
+        "time_step_policy_version": 1
+      },
+      "requested_dt": 0.002,
+      "rho_g": 0.1,
+      "rho_l": 1.0,
+      "u_impact_argument": 0.5,
+      "velocity_dtype": "float32",
+      "x0": 3.0,
+      "y0": 1.434375
+    },
+    "quarantined_controls": {
+      "NC_NO_WALL_TAPER": {
+        "candidate": "NC_NO_WALL_TAPER",
+        "candidate_outcome_eligible": false,
+        "frozen_initial_acceptance": {
+          "checks": {
+            "central_D": true,
+            "core_target": true,
+            "deep_solid_velocity": false,
+            "embedded_wall_normal_velocity": false,
+            "nearwall_chi_velocity": false,
+            "open_face_FV_divergence": false
+          },
+          "denominators": {
+            "definition": "residual = dx * Linf(D) / u_impact for divergence; speed / u_impact for wall gates",
+            "dx": 0.03125,
+            "dx_over_u_impact": 0.0625,
+            "eps": 0.046875,
+            "u_impact": 0.5
+          },
+          "dimensionless_residuals": {
+            "deep_solid_speed_over_u_impact": 0.20412822380547177,
+            "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+            "dx_FV_Linf_over_u_impact": 1.7042909860610962,
+            "nearwall_chi_speed_over_u_impact": 0.8275692274859634,
+            "wall_normal_sample_over_u_impact": 0.339292049892606
+          },
+          "pass": false,
+          "predeclared": {
+            "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+            "core_mean_speed_relative_error_max": 0.01,
+            "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+            "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+            "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+            "open_face_FV_dimensionless_Linf_max": 0.01,
+            "region_definitions": {
+              "core_mean": "V_i-weighted mean over phi >= 0.9",
+              "deep_solid": "sdf < -2*dx",
+              "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+              "nearwall_chi": "chi >= 0.01",
+              "nearwall_sdf": "abs(sdf) <= 3*dx",
+              "partial_cells": "0 < V_i < dx*dy",
+              "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+            }
+          }
+        },
+        "initial_front_contour": {
+          "exceeds_frozen_approach_floor": true,
+          "local_normal_approach_over_u_impact": 0.649945330530116,
+          "local_normal_approach_speed_into_solid": 0.324972665265058,
+          "meaningful_approach_floor": 0.1,
+          "note": "phase field is bitwise identical across candidates, so this support is candidate-independent at t=0",
+          "support": {
+            "gap": 0.08456192133807328,
+            "gap_cell": [
+              95,
+              23
+            ],
+            "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+            "local_wall_normal_into_solid": [
+              0.0,
+              -1.0
+            ],
+            "support_xy": [
+              2.984375,
+              0.7345619198479572
+            ],
+            "threshold_contour_crossing_count": 176,
+            "wall_normal_source": "nearest wall_measure centroid to reconstructed local phi contour, with periodic x/y distance",
+            "wall_xy": [
+              2.984375,
+              0.6499999761581421
+            ]
+          },
+          "support_is_shared_across_candidates": true
+        },
+        "nearwall_region_decomposition": {
+          "definition": "frozen near-wall gate uses chi>=0.01; this decomposition reports where its mass sits",
+          "groups": {
+            "chi_ge_0p5_cut_or_solid": {
+              "argmax_cell": [
+                91,
+                20
+              ],
+              "argmax_chi": 0.5986876487731934,
+              "argmax_sdf_over_dx": -0.30000001192092896,
+              "argmax_volume_over_cell_area": 0.7311111092567444,
+              "cell_count": 2056,
+              "max_speed_over_u_impact": 0.42723195697895927
+            },
+            "chi_ge_0p9_solid": {
+              "argmax_cell": [
+                93,
+                18
+              ],
+              "argmax_chi": 0.9554966688156128,
+              "argmax_sdf_over_dx": -2.299999952316284,
+              "argmax_volume_over_cell_area": 0.0,
+              "cell_count": 1368,
+              "max_speed_over_u_impact": 0.20412822380547177
+            },
+            "chi_in_0p01_to_0p5_diffuse_fluid_side": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 880,
+              "max_speed_over_u_impact": 0.8275692274859634
+            },
+            "fluid_volume_positive": {
+              "argmax_cell": [
+                95,
+                45
+              ],
+              "argmax_chi": 5.051514762044462e-15,
+              "argmax_sdf_over_dx": 24.700000762939453,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 34944,
+              "max_speed_over_u_impact": 4.14440350376667
+            },
+            "frozen_chi_ge_0p01": {
+              "argmax_cell": [
+                89,
+                23
+              ],
+              "argmax_chi": 0.014006223529577255,
+              "argmax_sdf_over_dx": 3.1906111240386963,
+              "argmax_volume_over_cell_area": 1.0,
+              "cell_count": 2936,
+              "max_speed_over_u_impact": 0.8275692274859634
+            }
+          }
+        },
+        "quarantined_negative_control": true,
+        "raw_constraint_values": {
+          "core_v_phi_ge_0p9": -0.4999999951672107,
+          "embedded_wall_absolute_flux_bilinear": 0.0767139959252168,
+          "gas_v_weighted": 0.015341983018025793,
+          "kinetic_energy_open_fluid": 0.9102603073858786,
+          "liquid_physical_kinetic_energy": 0.8369752769069501,
+          "liquid_v_weighted": -0.31909833587633474,
+          "max_abs_velocity_deep_solid": 0.10206411190273589,
+          "max_abs_velocity_nearwall_chi_ge_0p01": 0.4137846137429817,
+          "max_abs_velocity_nearwall_sdf_abs_le_3dx": 0.3933135817799585,
+          "max_embedded_wall_bilinear_normal_velocity": 0.169646024946303,
+          "max_speed_global": 2.072201751883335,
+          "open_face_fv_divergence_Linf": 27.26865577697754,
+          "peak_abs_divergence_central_D": 2.86102294921875e-06,
+          "return_flow_peak_speed": 1.039509478470453
+        },
+        "role": "quarantined diagnostic counterfactual; not a candidate",
+        "t0_identity": {
+          "frozen_state_hashes": {
+            "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+            "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+            "u": "722e0f4dfacb90717ae1ff6d643352800b8becff2f03c06463a44cde66ee08fe",
+            "v": "d2604e5317c2c6612ec96a33f5ccf80ab4d7f711e6366a7ce10c0d2cff7169e4"
+          },
+          "l1a2s_reproduction_checks": {
+            "geometry_hash_matches_saved": true,
+            "phi_hash_matches_saved": true
+          },
+          "phi_bitwise_identical_across_candidates": null
+        },
+        "taper_parameters": {
+          "R": 0.7,
+          "amplitude_scale": 2.0839269418257196,
+          "candidate": "NC_NO_WALL_TAPER",
+          "diagnostic_pressure_projection_applied_to_seed": false,
+          "eligible_for_promotion": false,
+          "geometry_sdf_hash": "c899302bf1832f43ac7f815707da24a9725efbc5f81efc2e50e0c28dfb04c789",
+          "onset_a_dx": null,
+          "periodic_y_seam_taper": "smooth5((dist_seam-3dy)/(3dy))",
+          "post_derivative_masking": false,
+          "radial_envelope": "A*sx*(1-r2/(R+0.45)^2)^4_+",
+          "role": "quarantined diagnostic counterfactual; not a candidate",
+          "scale_target": "V_i-weighted mean v over phi>=0.9 equals -u_impact",
+          "solver_contract_version": 12,
+          "unit_core_v_before_scale": -0.239931635780836,
+          "wall_taper_plateau_above_sdf_over_dx": null,
+          "wall_taper_zero_below_sdf_over_dx": 0.0,
+          "width_b_dx": null,
+          "x0": 3.0,
+          "y0": 1.434375
+        }
+      }
+    }
+  }
+}

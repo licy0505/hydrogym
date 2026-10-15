@@ -1,0 +1,53 @@
+{
+  "all_self_checks_hold": true,
+  "checks": {
+    "c2_t0_hash_reproduces_l1a2t_record_at_N48_is_not_comparable": {
+      "full_hash_comparison_deferred_to": "c2_reproduction_check",
+      "note": "N=48 workspace hash is not comparable to the N=192 record; the N=192 replay is the binding check",
+      "record_u_hash_present": false,
+      "workspace_u_hash": "eec51fcf982d4c9afc795f33043f568a63223b2c09bcf374b23f50572730a4cf"
+    },
+    "eta_override_does_not_change_production_default": {
+      "default_eta_pen": 0.004,
+      "expected": 0.004,
+      "holds": true
+    },
+    "eta_override_is_local_and_reversible": {
+      "bundle_eta_after": 0.004,
+      "bundle_eta_before": 0.004,
+      "cloned_eta": 0.001,
+      "holds": true
+    },
+    "injected_failures_are_rejected": {
+      "empty_plateau_rejected": true,
+      "negative_eta_rejected": true,
+      "unknown_candidate_rejected": true,
+      "zero_width_rejected": true
+    },
+    "l1a2t_evidence_still_verifies": {
+      "module_sha_matches_stage_record": true,
+      "verified": true
+    },
+    "missing_l1a2t_commits_are_recorded": {
+      "all_unresolved": true,
+      "commits": [
+        "c52f049",
+        "2dd0f16",
+        "2649031"
+      ],
+      "resolved": {
+        "2649031": null,
+        "2dd0f16": null,
+        "c52f049": null
+      }
+    },
+    "radial_family_uses_no_sdf_taper": {
+      "envelope_above_zero_sdf": 0.0,
+      "envelope_is_radial_only": true,
+      "holds": true,
+      "psi_support_min_sdf_over_dx": 5.5,
+      "radius_support_over_R": 0.6341172456741333
+    }
+  },
+  "diagnostic_only": true
+}

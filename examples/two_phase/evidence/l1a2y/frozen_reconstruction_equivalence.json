@@ -1,0 +1,30 @@
+{
+  "all_hold": true,
+  "checks": {
+    "column_crossings_match_the_frozen_reconstruction": true,
+    "pinned_column_is_the_frozen_support_column": true,
+    "pinned_root_is_the_frozen_crossing": true,
+    "pinned_segment_is_the_one_l1a2x_tracked": true,
+    "sampler_matches_the_frozen_sampler": true
+  },
+  "frozen_column_crossings_over_dx": [
+    23.50598143513463,
+    68.28745085961559
+  ],
+  "frozen_contour": "impact_initialization_compatibility_audit._threshold_contour_edge_crossings",
+  "frozen_sampler": "impact_initialization_compatibility_audit._periodic_bilinear_sample",
+  "pinned_branch": {
+    "column_index": 95,
+    "column_x_over_dx": 95.5,
+    "t0_root_at_shared_node": false,
+    "t0_root_over_dx": 23.50598143513463,
+    "t0_root_segment_index": 23
+  },
+  "readout_column_crossings_over_dx": [
+    23.50598143513463
+  ],
+  "rule": "the readout is only used if it reproduces the frozen sampler and the frozen linear contour reconstruction on the actual t = 0 field, and if the branch it pins is the very segment L1A-2x tracked",
+  "sampler_max_abs_difference": 2.220446049250313e-16,
+  "stage": "L1A-2y",
+  "support_gap_over_dx_reference": 2.705981482818345
+}

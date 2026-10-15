@@ -1,0 +1,1386 @@
+{
+  "complex_heldout": {
+    "C2_BASE": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "C2_BASE",
+      "case_name": "complex_heldout",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006909444019898743,
+            "ch_scale": 0.002874182342357943,
+            "sum_V_div_advective_flux": -4.336808689942018e-18,
+            "sum_V_div_ch_flux": 7.291369495739516e-19
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 39,
+            "relative_residual": 9.371593907620107e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004754783681569638,
+            "ch_explicit": 0.016236494288275814,
+            "ch_implicit": 0.017608768376866486,
+            "total": 0.00423896942522306
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.000000000822535,
+            "max_abs_overshoot": 3.0247716129033687e-07,
+            "min": -3.0247716129033687e-07
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5507205085017368,
+            "V_phi_before": 1.5507205085017368,
+            "closure_residual": 6.708500942254059e-19,
+            "sum_V_delta_adv": 3.3881317890172014e-21,
+            "sum_V_delta_ch_explicit": 5.251604272976662e-20,
+            "sum_V_delta_ch_implicit": -4.496050884025826e-18,
+            "sum_V_delta_pre_implicit": 6.860966872759833e-19,
+            "sum_V_delta_total": -3.818424526222386e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.637851296924623e-17,
+          "closure_linf_all_cells": 5.637851296924623e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006905909589585589,
+            "ch_scale": 0.002873939909229477,
+            "sum_V_div_advective_flux": 1.6479873021779667e-17,
+            "sum_V_div_ch_flux": -1.9514792071791826e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 101,
+            "relative_residual": 5.510437473845443e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004749452632118304,
+            "ch_explicit": 0.03009091139686508,
+            "ch_implicit": 0.02985773139287574,
+            "total": 0.004246065237931362
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000022341762,
+            "max_abs_overshoot": 4.5470166970304516e-07,
+            "min": -4.5470166970304516e-07
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550720508501737,
+            "V_phi_before": 1.5507205085017368,
+            "closure_residual": 2.676624113323589e-19,
+            "sum_V_delta_adv": 5.082197683525802e-21,
+            "sum_V_delta_ch_explicit": -1.6940658945086007e-20,
+            "sum_V_delta_ch_implicit": -3.1753147610195584e-19,
+            "sum_V_delta_pre_implicit": 2.558039500707987e-19,
+            "sum_V_delta_total": -5.251604272976662e-20
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 1.0272583642856395e-16,
+          "closure_linf_all_cells": 1.0272583642856395e-16,
+          "flux_telescoping": {
+            "advective_scale": 0.0006902934582811709,
+            "ch_scale": 0.0028710472787649684,
+            "sum_V_div_advective_flux": 8.673617379884035e-19,
+            "sum_V_div_ch_flux": 7.013856319739234e-18
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 103,
+            "relative_residual": 6.753792861800284e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004739751974954739,
+            "ch_explicit": 0.027596096431374745,
+            "ch_implicit": 0.027681387241033976,
+            "total": 0.004230802425470248
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000033054657,
+            "max_abs_overshoot": 8.2885422377347e-07,
+            "min": -8.2885422377347e-07
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550720508501737,
+            "V_phi_before": 1.550720508501737,
+            "closure_residual": -3.218725199566341e-20,
+            "sum_V_delta_adv": -1.1858461261560205e-20,
+            "sum_V_delta_ch_explicit": -2.202285662861181e-20,
+            "sum_V_delta_ch_implicit": 3.0452952036160233e-18,
+            "sum_V_delta_pre_implicit": -4.2351647362715017e-20,
+            "sum_V_delta_total": 3.020519489908835e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": -8.504210790433175e-19
+    },
+    "T3_FAR_NARROW": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "complex_heldout",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006829619468069656,
+            "ch_scale": 0.002874182342357943,
+            "sum_V_div_advective_flux": -2.6020852139652106e-18,
+            "sum_V_div_ch_flux": 7.291369495739516e-19
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 39,
+            "relative_residual": 9.494481494127361e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005482852567863634,
+            "ch_explicit": 0.016236494288275814,
+            "ch_implicit": 0.017609232461770725,
+            "total": 0.004478951607480408
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999994499015,
+            "max_abs_overshoot": 3.2545517197953183e-07,
+            "min": -3.2545517197953183e-07
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550720508501737,
+            "V_phi_before": 1.5507205085017368,
+            "closure_residual": -8.046812998915853e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 5.251604272976662e-20,
+            "sum_V_delta_ch_implicit": -5.158430648778689e-19,
+            "sum_V_delta_pre_implicit": -7.758821796849391e-19,
+            "sum_V_delta_total": -1.2807138162485021e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 1.0978749965180568e-16,
+          "closure_linf_all_cells": 1.0978749965180568e-16,
+          "flux_telescoping": {
+            "advective_scale": 0.0006824813109821322,
+            "ch_scale": 0.0028741311813565394,
+            "sum_V_div_advective_flux": 7.806255641895632e-18,
+            "sum_V_div_ch_flux": 1.5199738231959952e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 99,
+            "relative_residual": 9.568612267532374e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005462825925944885,
+            "ch_explicit": 0.030095014868836593,
+            "ch_implicit": 0.029861823836690723,
+            "total": 0.004312568985903542
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999998411612,
+            "max_abs_overshoot": 4.6261876544641137e-07,
+            "min": -4.6261876544641137e-07
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5507205085017368,
+            "V_phi_before": 1.550720508501737,
+            "closure_residual": 1.1655173354219173e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 1.3552527156068805e-20,
+            "sum_V_delta_ch_implicit": -2.8154316375548875e-18,
+            "sum_V_delta_pre_implicit": 1.1587410718438829e-18,
+            "sum_V_delta_total": -1.650020181251377e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 8.387185558028843e-17,
+          "closure_linf_all_cells": 8.387185558028843e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006820823077624746,
+            "ch_scale": 0.002871399826134897,
+            "sum_V_div_advective_flux": -6.938893903907228e-18,
+            "sum_V_div_ch_flux": -3.386330520515306e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 105,
+            "relative_residual": 9.384758004520114e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005438281400847307,
+            "ch_explicit": 0.027600804719735795,
+            "ch_implicit": 0.027684309129300318,
+            "total": 0.004160006661959981
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000005701428,
+            "max_abs_overshoot": 4.678070583846186e-07,
+            "min": -4.678070583846186e-07
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550720508501737,
+            "V_phi_before": 1.5507205085017368,
+            "closure_residual": 1.497554250745603e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 3.049318610115481e-20,
+            "sum_V_delta_ch_implicit": 3.262135638113124e-18,
+            "sum_V_delta_pre_implicit": 1.5415999640028266e-18,
+            "sum_V_delta_total": 4.773877690725237e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": 1.8431436932253575e-18
+    }
+  },
+  "flat_we100_ct050": {
+    "C2_BASE": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "C2_BASE",
+      "case_name": "flat_we100_ct050",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.572799166575493e-17,
+          "closure_linf_all_cells": 5.572799166575493e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006843900647420787,
+            "ch_scale": 0.002935336755524263,
+            "sum_V_div_advective_flux": 1.734723475976807e-17,
+            "sum_V_div_ch_flux": -5.5057987512339874e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.424120901770968e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004798842791112111,
+            "ch_explicit": 0.008844531301869183,
+            "ch_implicit": 0.005814722632571323,
+            "total": 0.007233393829400775
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999992888633,
+            "max_abs_overshoot": 1.012302850751285e-17,
+            "min": -1.012302850751285e-17
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.549507021597507,
+            "closure_residual": 1.0164395367051604e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 4.573977915173222e-20,
+            "sum_V_delta_ch_implicit": 2.2776715951668136e-18,
+            "sum_V_delta_pre_implicit": 1.0299920638612292e-18,
+            "sum_V_delta_total": 3.3068166260807885e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 7.539452588501654e-17,
+          "closure_linf_all_cells": 7.539452588501654e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006840750293089538,
+            "ch_scale": 0.002934949626499292,
+            "sum_V_div_advective_flux": 1.9949319973733282e-17,
+            "sum_V_div_ch_flux": -1.7881126020270098e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.772836203459099e-07
+          },
+          "max_abs_component": {
+            "adv": 0.00479187852545648,
+            "ch_explicit": 0.008985223915555132,
+            "ch_implicit": 0.005977966153656866,
+            "total": 0.0058952502685884756
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000001003284,
+            "max_abs_overshoot": 1.2634846070083098e-17,
+            "min": -1.2634846070083098e-17
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": 1.5585406229479126e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": -8.470329472543003e-21,
+            "sum_V_delta_ch_implicit": 3.2780175058741423e-19,
+            "sum_V_delta_pre_implicit": 1.5856456772600502e-18,
+            "sum_V_delta_total": 1.9244588561617704e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.637851296924623e-17,
+          "closure_linf_all_cells": 5.637851296924623e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006838106707882011,
+            "ch_scale": 0.002933220788238451,
+            "sum_V_div_advective_flux": 2.949029909160572e-17,
+            "sum_V_div_ch_flux": -5.721498944398548e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.957275026392945e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004780147805283195,
+            "ch_explicit": 0.00905253089674106,
+            "ch_implicit": 0.006445541061416649,
+            "total": 0.004942973719530203
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000005359975,
+            "max_abs_overshoot": 1.5965900638970005e-17,
+            "min": -1.5965900638970005e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": 7.318364664277155e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 1.3552527156068805e-20,
+            "sum_V_delta_ch_implicit": -4.7366082410460475e-18,
+            "sum_V_delta_pre_implicit": 7.318364664277155e-19,
+            "sum_V_delta_total": -3.984442983884229e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": 1.2468324983583301e-18
+    },
+    "T3_FAR_NARROW": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we100_ct050",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006635802841691163,
+            "ch_scale": 0.002935336755524263,
+            "sum_V_div_advective_flux": -6.071532165918825e-18,
+            "sum_V_div_ch_flux": -5.5057987512339874e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.426539575562628e-07
+          },
+          "max_abs_component": {
+            "adv": 0.00519732221907941,
+            "ch_explicit": 0.008844531301869183,
+            "ch_implicit": 0.005712174354137289,
+            "total": 0.007233297576614561
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999987948844,
+            "max_abs_overshoot": 1.012307010942132e-17,
+            "min": -1.012307010942132e-17
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.549507021597507,
+            "closure_residual": -1.6263032587282567e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 4.573977915173222e-20,
+            "sum_V_delta_ch_implicit": 1.4331797467542762e-18,
+            "sum_V_delta_pre_implicit": -9.486769009248164e-20,
+            "sum_V_delta_total": 1.3145951341386741e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006632811698297018,
+            "ch_scale": 0.0029353797799466677,
+            "sum_V_div_advective_flux": -1.0408340855860843e-17,
+            "sum_V_div_ch_flux": -1.095184931883002e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.781165271722617e-07
+          },
+          "max_abs_component": {
+            "adv": 0.0052032860380605474,
+            "ch_explicit": 0.008985197434170653,
+            "ch_implicit": 0.005905625057440522,
+            "total": 0.005894873612669299
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999986415148,
+            "max_abs_overshoot": 1.2634820205543409e-17,
+            "min": -1.2634820205543409e-17
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": -1.8905775382715984e-18,
+            "sum_V_delta_adv": -6.776263578034403e-21,
+            "sum_V_delta_ch_explicit": -1.1858461261560205e-20,
+            "sum_V_delta_ch_implicit": 3.852305844112558e-18,
+            "sum_V_delta_pre_implicit": -1.917682592583736e-18,
+            "sum_V_delta_total": 1.9786689647860456e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006630305701036247,
+            "ch_scale": 0.0029340324948892915,
+            "sum_V_div_advective_flux": 4.336808689942018e-18,
+            "sum_V_div_ch_flux": -1.848100036671153e-18
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.972672484394687e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005205462845792088,
+            "ch_explicit": 0.009052493323798358,
+            "ch_implicit": 0.006441558426403038,
+            "total": 0.0049421054455541236
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999984931314,
+            "max_abs_overshoot": 1.5965892159980693e-17,
+            "min": -1.5965892159980693e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.549507021597507,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": -4.2012834183813297e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 2.371692252312041e-20,
+            "sum_V_delta_ch_implicit": -4.030182763035961e-18,
+            "sum_V_delta_pre_implicit": -4.336808689942018e-19,
+            "sum_V_delta_total": -4.4655576979246714e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": -1.1722935989999517e-18
+    }
+  },
+  "flat_we200_ct000": {
+    "C2_BASE": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "C2_BASE",
+      "case_name": "flat_we200_ct000",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.572799166575493e-17,
+          "closure_linf_all_cells": 5.572799166575493e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006843900647420787,
+            "ch_scale": 0.002846562710016056,
+            "sum_V_div_advective_flux": 1.734723475976807e-17,
+            "sum_V_div_ch_flux": 1.3049730855563566e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.437087909810263e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004798842791112111,
+            "ch_explicit": 0.006033046588749142,
+            "ch_implicit": 0.005814687186626144,
+            "total": 0.004401971153824374
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999992888731,
+            "max_abs_overshoot": 9.355132974865332e-18,
+            "min": -9.355132974865332e-18
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.549507021597507,
+            "closure_residual": 1.179069862577986e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 2.202285662861181e-20,
+            "sum_V_delta_ch_implicit": 7.936698715772794e-19,
+            "sum_V_delta_pre_implicit": 1.2468324983583301e-18,
+            "sum_V_delta_total": 2.0057740190981832e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 9.532354271061471e-17,
+          "closure_linf_all_cells": 9.532354271061471e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006840750265988644,
+            "ch_scale": 0.0028435966553492314,
+            "sum_V_div_advective_flux": -1.5612511283791264e-17,
+            "sum_V_div_ch_flux": -3.2032325060663626e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.7509736318680213e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004791878807081412,
+            "ch_explicit": 0.0060597814755647475,
+            "ch_implicit": 0.005977872763277214,
+            "total": 0.004297314037725708
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000001003209,
+            "max_abs_overshoot": 1.1783305847776483e-17,
+            "min": -1.1783305847776483e-17
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.549507021597507,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": -3.5236570605778894e-19,
+            "sum_V_delta_adv": -1.3552527156068805e-20,
+            "sum_V_delta_ch_explicit": 3.218725199566341e-20,
+            "sum_V_delta_ch_implicit": 4.4909686863423004e-18,
+            "sum_V_delta_pre_implicit": -3.2526065174565133e-19,
+            "sum_V_delta_total": 4.106415728288848e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 1.0416935758733636e-16,
+          "closure_linf_all_cells": 1.0416935758733636e-16,
+          "flux_telescoping": {
+            "advective_scale": 0.0006838106686434565,
+            "ch_scale": 0.002839618680261143,
+            "sum_V_div_advective_flux": 8.673617379884035e-18,
+            "sum_V_div_ch_flux": 2.054742490975863e-19
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.900961665205088e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004780148260337092,
+            "ch_explicit": 0.00608841237939081,
+            "ch_implicit": 0.006097009495971029,
+            "total": 0.004278723563043818
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000005359677,
+            "max_abs_overshoot": 1.3906910031139627e-17,
+            "min": -1.3906910031139627e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975075,
+            "V_phi_before": 1.549507021597507,
+            "closure_residual": 2.0328790734103208e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": -1.3552527156068805e-20,
+            "sum_V_delta_ch_implicit": -3.1424922343134543e-18,
+            "sum_V_delta_pre_implicit": 2.168404344971009e-19,
+            "sum_V_delta_total": -2.9544509200229996e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": 3.1577388273640317e-18
+    },
+    "T3_FAR_NARROW": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "flat_we200_ct000",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006635802841691163,
+            "ch_scale": 0.002846562710016056,
+            "sum_V_div_advective_flux": -6.071532165918825e-18,
+            "sum_V_div_ch_flux": 1.3049730855563566e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.439350602513263e-07
+          },
+          "max_abs_component": {
+            "adv": 0.00519732221907941,
+            "ch_explicit": 0.006033046588749142,
+            "ch_implicit": 0.005712168426511677,
+            "total": 0.004518076241682101
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999987948851,
+            "max_abs_overshoot": 9.355267610649181e-18,
+            "min": -9.355267610649181e-18
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.549507021597507,
+            "closure_residual": 0.0,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 2.202285662861181e-20,
+            "sum_V_delta_ch_implicit": -1.9608812728937053e-18,
+            "sum_V_delta_pre_implicit": 8.131516293641283e-20,
+            "sum_V_delta_total": -1.9244588561617704e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006632811672536384,
+            "ch_scale": 0.0028440284450144044,
+            "sum_V_div_advective_flux": 9.540979117872439e-18,
+            "sum_V_div_ch_flux": -3.898813260443671e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.758907184887409e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005203286364616168,
+            "ch_explicit": 0.006027120756777701,
+            "ch_implicit": 0.005909499339641688,
+            "total": 0.0043425291751351125
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.999999998641515,
+            "max_abs_overshoot": 1.17832872146397e-17,
+            "min": -1.17832872146397e-17
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5495070215975073,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": 2.0328790734103208e-20,
+            "sum_V_delta_adv": -1.3552527156068805e-20,
+            "sum_V_delta_ch_explicit": -2.0328790734103208e-20,
+            "sum_V_delta_ch_implicit": -1.0562500852261125e-18,
+            "sum_V_delta_pre_implicit": 6.776263578034403e-21,
+            "sum_V_delta_total": -9.961107459710572e-19
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.551115123125783e-17,
+          "closure_linf_all_cells": 5.551115123125783e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006630305681968522,
+            "ch_scale": 0.002840437167293342,
+            "sum_V_div_advective_flux": -9.540979117872439e-18,
+            "sum_V_div_ch_flux": -2.0762225911068436e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 9,
+            "relative_residual": 4.915869829523302e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005205461511569255,
+            "ch_explicit": 0.006021817278812894,
+            "ch_implicit": 0.006141565521669445,
+            "total": 0.00420223952143739
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999984931297,
+            "max_abs_overshoot": 1.390690884764571e-17,
+            "min": -1.390690884764571e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.549507021597507,
+            "V_phi_before": 1.5495070215975073,
+            "closure_residual": 3.5914196963582334e-19,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 2.371692252312041e-20,
+            "sum_V_delta_ch_implicit": 1.2197274440461925e-19,
+            "sum_V_delta_pre_implicit": 3.9302328752599536e-19,
+            "sum_V_delta_total": 4.946672411965114e-19
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": -2.425902360936316e-18
+    }
+  },
+  "pillar_training": {
+    "C2_BASE": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "C2_BASE",
+      "case_name": "pillar_training",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 6.640349531585815e-17,
+          "closure_linf_all_cells": 6.640349531585815e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006700101754972207,
+            "ch_scale": 0.0030104262868267907,
+            "sum_V_div_advective_flux": -1.8214596497756474e-17,
+            "sum_V_div_ch_flux": -2.166183268091076e-18
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.169921042527577e-07
+          },
+          "max_abs_component": {
+            "adv": 0.0044654649034059106,
+            "ch_explicit": 0.04971956026799824,
+            "ch_implicit": 0.08881311858219954,
+            "total": 0.039093558314201304
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 0.9999999996829917,
+            "max_abs_overshoot": 9.382554352643972e-18,
+            "min": -9.382554352643972e-18
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550092779231264,
+            "V_phi_before": 1.5500927792312642,
+            "closure_residual": 4.8721335126067356e-18,
+            "sum_V_delta_adv": 6.776263578034403e-21,
+            "sum_V_delta_ch_explicit": -2.0328790734103208e-20,
+            "sum_V_delta_ch_implicit": -1.0782729418547243e-18,
+            "sum_V_delta_pre_implicit": 4.865357249028701e-18,
+            "sum_V_delta_total": 3.821812658011403e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 6.549996634635678e-17,
+          "closure_linf_all_cells": 6.549996634635678e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006697060599519848,
+            "ch_scale": 0.00315677389311699,
+            "sum_V_div_advective_flux": -6.938893903907228e-18,
+            "sum_V_div_ch_flux": 6.52200662373014e-18
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.215776896428076e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004470533095222481,
+            "ch_explicit": 0.10456211935076933,
+            "ch_implicit": 0.10398519082597289,
+            "total": 0.004138590721030955
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000001404266,
+            "max_abs_overshoot": 9.995971036490177e-18,
+            "min": -9.995971036490177e-18
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5500927792312642,
+            "V_phi_before": 1.550092779231264,
+            "closure_residual": -1.6872896309305663e-18,
+            "sum_V_delta_adv": -1.3552527156068805e-20,
+            "sum_V_delta_ch_explicit": -3.3881317890172014e-20,
+            "sum_V_delta_ch_implicit": -2.0227146780432692e-18,
+            "sum_V_delta_pre_implicit": -1.7550522667109103e-18,
+            "sum_V_delta_total": -3.7269449679189215e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 5.572799166575493e-17,
+          "closure_linf_all_cells": 5.572799166575493e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006694509304482898,
+            "ch_scale": 0.0031529925308522834,
+            "sum_V_div_advective_flux": 9.540979117872439e-18,
+            "sum_V_div_ch_flux": 9.236187398058764e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.302512433268537e-07
+          },
+          "max_abs_component": {
+            "adv": 0.004471038676675085,
+            "ch_explicit": 0.10352165314363355,
+            "ch_implicit": 0.10475565897700097,
+            "total": 0.004058582435471858
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000004203322,
+            "max_abs_overshoot": 1.1012950177417036e-17,
+            "min": -1.1012950177417036e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5500927792312642,
+            "V_phi_before": 1.5500927792312642,
+            "closure_residual": -1.1180834903756764e-18,
+            "sum_V_delta_adv": -6.776263578034403e-21,
+            "sum_V_delta_ch_explicit": 6.098637220230962e-20,
+            "sum_V_delta_ch_implicit": 2.605473345754228e-18,
+            "sum_V_delta_pre_implicit": -1.0909784360635388e-18,
+            "sum_V_delta_total": 1.5382118322138094e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": 1.633079522306291e-18
+    },
+    "T3_FAR_NARROW": {
+      "active_branch": {
+        "meaning": "subcycling inactive: the advective increment is exactly h*phi_rhs from pf.rhs, so no recomputed subcycled advective rate enters the budget",
+        "phase_advection_subcycling": "disabled",
+        "phase_boundary_model": "impermeable_flux",
+        "phase_transport_geometry": "sdf_cutcell_fv_v1",
+        "subcycling_active": false
+      },
+      "candidate": "T3_FAR_NARROW",
+      "case_name": "pillar_training",
+      "identity": "delta_phi_total = delta_phi_adv + delta_phi_CH_explicit + delta_phi_CH_implicit",
+      "implicit_term_semantics": "delta_phi_CH_implicit is the implicit solve increment (I + h M eps L^2)^-1 applied to the pre-implicit state; it is not an independent explicit CH term and must not be double counted",
+      "substeps": [
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 9.232599733503892e-17,
+          "closure_linf_all_cells": 9.232599733503892e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006608021675419009,
+            "ch_scale": 0.0030104262868267907,
+            "sum_V_div_advective_flux": 7.806255641895632e-18,
+            "sum_V_div_ch_flux": -2.166183268091076e-18
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.174973263451094e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005168537060289942,
+            "ch_explicit": 0.04971956026799824,
+            "ch_implicit": 0.08881303795331677,
+            "total": 0.03909347768531854
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000004314873,
+            "max_abs_overshoot": 9.38257646161378e-18,
+            "min": -9.38257646161378e-18
+          },
+          "substep_index_1_based": 1,
+          "t_before": 0.0,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5500927792312638,
+            "V_phi_before": 1.5500927792312642,
+            "closure_residual": -1.5585406229479126e-19,
+            "sum_V_delta_adv": 3.3881317890172014e-21,
+            "sum_V_delta_ch_explicit": -2.0328790734103208e-20,
+            "sum_V_delta_ch_implicit": 1.3044307387716225e-19,
+            "sum_V_delta_pre_implicit": -1.5754812818929986e-19,
+            "sum_V_delta_total": -7.792703114739563e-20
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 8.594951180141262e-17,
+          "closure_linf_all_cells": 8.594951180141262e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006605052039212363,
+            "ch_scale": 0.003156743511061679,
+            "sum_V_div_advective_flux": -3.469446951953614e-18,
+            "sum_V_div_ch_flux": 2.714672834994463e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.223910189429533e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005120058149048746,
+            "ch_explicit": 0.10456204855558007,
+            "ch_implicit": 0.10398474590844557,
+            "total": 0.004597463696145554
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000022259938,
+            "max_abs_overshoot": 9.995973786502403e-18,
+            "min": -9.995973786502403e-18
+          },
+          "substep_index_1_based": 2,
+          "t_before": 0.0006666666666666666,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.550092779231264,
+            "V_phi_before": 1.5500927792312638,
+            "closure_residual": 3.161126959153049e-18,
+            "sum_V_delta_adv": -1.0164395367051604e-20,
+            "sum_V_delta_ch_explicit": 3.8963515573697816e-20,
+            "sum_V_delta_ch_implicit": -5.449809982634168e-18,
+            "sum_V_delta_pre_implicit": 3.1289397071573855e-18,
+            "sum_V_delta_total": -2.31239994600424e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        },
+        {
+          "advection_subcycling_active": false,
+          "advective_rate_equals_rhs_phi_rhs": true,
+          "blocked_face_flux_max_abs": {
+            "advective": 0.0,
+            "ch": 0.0,
+            "note": "faces with zero open length must carry exactly zero flux"
+          },
+          "closure_linf_active_cells": 8.662174907752528e-17,
+          "closure_linf_all_cells": 8.662174907752528e-17,
+          "flux_telescoping": {
+            "advective_scale": 0.0006602565481478774,
+            "ch_scale": 0.0031529556007501734,
+            "sum_V_div_advective_flux": -1.734723475976807e-18,
+            "sum_V_div_ch_flux": -4.0129774398990704e-17
+          },
+          "implicit_solver": {
+            "converged": true,
+            "iterations": 18,
+            "relative_residual": 5.311999709851149e-07
+          },
+          "max_abs_component": {
+            "adv": 0.005073544263779848,
+            "ch_explicit": 0.1035211847816799,
+            "ch_implicit": 0.10475435376623624,
+            "total": 0.0043937831257075954
+          },
+          "phase_update_bitwise_reproduced": true,
+          "phi_overshoot": {
+            "max": 1.0000000034420626,
+            "max_abs_overshoot": 1.10129528991875e-17,
+            "min": -1.10129528991875e-17
+          },
+          "substep_index_1_based": 3,
+          "t_before": 0.0013333333333333333,
+          "weighted_mass_budget": {
+            "V_phi_after": 1.5500927792312638,
+            "V_phi_before": 1.550092779231264,
+            "closure_residual": 3.2559946492455305e-18,
+            "sum_V_delta_adv": 0.0,
+            "sum_V_delta_ch_explicit": 1.0164395367051604e-20,
+            "sum_V_delta_ch_implicit": -1.711853586400941e-18,
+            "sum_V_delta_pre_implicit": 3.2729353081906165e-18,
+            "sum_V_delta_total": 1.5297415027412664e-18
+          },
+          "zero_volume_cell_component_max_abs": {
+            "adv": 0.0,
+            "ch_explicit": 0.0,
+            "ch_implicit": 0.0,
+            "total": 0.0
+          }
+        }
+      ],
+      "sum_V_delta_total_over_substeps": -8.605854744103691e-19
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "envelope_readback": {
+    "matches": true,
+    "measured_from": [
+      "complex_heldout/C1_STREAMFUNCTION_V0",
+      "flat_we100_ct050/C1_STREAMFUNCTION_V0",
+      "flat_we200_ct000/C1_STREAMFUNCTION_V0",
+      "pillar_training/C1_STREAMFUNCTION_V0"
+    ],
+    "measurement_rule": "a candidate is admissible only while its peak open-cell seed speed stays within the maximum the frozen reference family (C0/C1/C2) itself produces in the same cases; the ceiling is measured here and is not adjustable, and an inadmissible seed invalidates any flux, approach or event comparison derived from its flow field",
+    "prespecified_value": 4.905526491646905,
+    "recorded_in": "examples/two_phase/evidence/l1a2u/mechanism_decision.json",
+    "recorded_value": 4.905526491646905
+  },
+  "evidence_sha256": {
+    "l1a2t": "c7f90a4aa4b48c795966ba41778e42e7335a1c57add1ce02d17c7a7d63356a9f",
+    "l1a2u": "457d9d27c109fd3deef0c943a7a81e517ce6706bc7498254af3054d764c109b5",
+    "l1a2v": "3f30a76a338638c72671b424659cc487c8452dc0928337196ce7e9a8fd77758c"
+  },
+  "l1a2t": {
+    "bound_files": 14,
+    "verified": true
+  },
+  "l1a2u": {
+    "bound_files": 13,
+    "verified": true
+  },
+  "l1a2v": {
+    "bound_files": 14,
+    "verified": true
+  },
+  "read_only": true
+}

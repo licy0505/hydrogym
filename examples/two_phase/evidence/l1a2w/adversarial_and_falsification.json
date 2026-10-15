@@ -1,0 +1,94 @@
+{
+  "case_probed": "flat_we100_ct050",
+  "falsifiers": {
+    "bound_violation_would_fail_the_stage": true,
+    "case_set_is_the_frozen_canary_set": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training",
+      "complex_heldout"
+    ],
+    "construction_never_promoted": true,
+    "thresholds_not_relaxed": true
+  },
+  "frozen_family_contour_readout": {
+    "best_frozen_contour_cell_normal_velocity_over_u_impact": -0.0,
+    "best_frozen_contour_point_normal_velocity_over_u_impact": -0.0,
+    "in_band_downward_phase_flux": 0.0
+  },
+  "probes": {
+    "amplified_state_is_refused_and_exempted_correctly": {
+      "band_cap": 0.02,
+      "band_gate_passed": true,
+      "band_max_speed_over_u_impact": 0.0,
+      "classified_inadmissible": true,
+      "envelope": 4.905526491646905,
+      "note": "the caps are not vacuous (a 200x amplified frozen state is refused), and an inadmissible state is exempted from the bound instead of being reported as a violation",
+      "peak_over_u_impact": 863.1201122833244,
+      "reason": "frozen six gates failed",
+      "violates_band_cap": false,
+      "violates_envelope": true
+    },
+    "band_geometry_is_non_trivial": {
+      "admissible_open_cell_count": 34752,
+      "band_cell_count": 2112,
+      "contour_interpolation_support": {
+        "95,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "95,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        },
+        "96,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "96,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        }
+      },
+      "holds": true
+    },
+    "checker_refuses_a_fabricated_violation": {
+      "discriminates": true,
+      "note": "a checker that accepted these would make the whole bound verification vacuous",
+      "violations": [
+        "B1b_contour_point_normal_speed[flat_we100_ct050/FABRICATED]",
+        "B2_placeable_downward_momentum[flat_we100_ct050/FABRICATED]",
+        "B3_in_band_flux[flat_we100_ct050/FABRICATED]"
+      ]
+    },
+    "no_trajectory_material_in_the_evidence": {
+      "contact_events_measured": 0,
+      "holds": true,
+      "refinement_studies_run": 0,
+      "trajectories_run": 0
+    },
+    "shape_criterion_rejects_a_gate_violating_shape": {
+      "band_cap": 0.02,
+      "band_core_ratio": 1.8650827712843494,
+      "holds": true,
+      "rejected": true
+    }
+  },
+  "search_failure_is_not_impossibility": "constructions that were not found are labelled NOT_FOUND_NOT_PROVEN_INFEASIBLE, and shapes rejected by the band-gate ratio are rejected only for the mandated core target; the only impossibility claims in this stage are the derived bounds themselves"
+}

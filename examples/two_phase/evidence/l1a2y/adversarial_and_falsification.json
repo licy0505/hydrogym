@@ -1,0 +1,352 @@
+{
+  "all_hold": true,
+  "checks": {
+    "a_crossing_exactly_on_a_cell_centre_is_reported_once": {
+      "at_shared_node": true,
+      "holds": true,
+      "root_over_dx": 24.5,
+      "status": "OK"
+    },
+    "a_jump_beyond_the_continuity_bound_is_refused_on_the_real_grid": {
+      "continuity_bound_over_dx": 0.25,
+      "holds": true,
+      "reason": "the nearest root moved 0.4800000000000004 dx, beyond the continuity bound 0.25 dx",
+      "status": "BRANCH_STEP_TOO_LARGE",
+      "step_over_dx": 0.4800000000000004
+    },
+    "attribution_closure_gate_bites": {
+      "band_over_dx": 0.01,
+      "fabricated_closure_beyond_the_band": 0.1,
+      "fabricated_closure_inside_the_band": 0.005,
+      "gate_accepts_the_fabricated_inside_band_closure": true,
+      "gate_rejects_the_fabricated_beyond_band_closure": true,
+      "holds": true,
+      "observed_closure_over_band_ratio": 12.231965567175251,
+      "observed_closure_over_dx": -0.12231965567175251,
+      "observed_closure_within_band": false,
+      "observed_own_base_closure_over_dx": -0.007937057754737964,
+      "observed_own_base_closure_within_band": true,
+      "rule": "the falsification is that the closure gate discriminates: the same residual decomposition with a fabricated closure inside the band is accepted and with a fabricated closure beyond the band it is rejected. The observed closure of this stage is a result; it is reported here, in the residual decomposition and in the validity screen, and it is never forced inside the band"
+    },
+    "comparison_error_is_not_normalised": {
+      "holds": true,
+      "raw_spread_over_dx": 0.1238272833457486,
+      "raw_terms_over_dx": {
+        "RULE_B_GEOMETRIC_OWN_BASE": 0.11411829707847687,
+        "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.1238272833457486,
+        "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.12364584787463073
+      },
+      "recorded_spread_over_dx": 0.1238272833457486,
+      "recorded_terms_over_dx": {
+        "RULE_B_GEOMETRIC_OWN_BASE": 0.11411829707847687,
+        "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.1238272833457486,
+        "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.12364584787463073
+      }
+    },
+    "frozen_sources_and_the_readout_are_unmodified": {
+      "contract_and_model_flags": {
+        "l1a_status": [
+          "BLOCKED",
+          "BLOCKED"
+        ],
+        "l1b_data_not_ready": [
+          "unchanged",
+          "unchanged"
+        ],
+        "phase_boundary_model": [
+          "impermeable_flux",
+          "impermeable_flux"
+        ],
+        "phase_storage_model": [
+          "phase_only_float64_v1",
+          "phase_only_float64_v1"
+        ],
+        "phase_transport_geometry": [
+          "sdf_cutcell_fv_v1",
+          "sdf_cutcell_fv_v1"
+        ],
+        "solver_contract_version": [
+          12,
+          12
+        ]
+      },
+      "frozen_hashes_hold": true,
+      "holds": true,
+      "readout_hash_holds": true,
+      "readout_module_sha256": "563553a398f2eea53bf0cc73d53047ea483c37d6686d2572f92ddf3fad540e97"
+    },
+    "identical_window_cross_check_holds": {
+      "all_hold": true,
+      "checks": {
+        "final_state_hashes_match_the_sealed_window": true,
+        "root_agrees_where_l1a2x_could_measure_it": true,
+        "the_independent_line_root_agrees_with_the_tracked_root": true,
+        "the_support_change_is_reported_as_a_continuous_event": true,
+        "the_support_change_of_l1a2x_is_identified_here": true,
+        "the_window_is_the_identical_one": true,
+        "this_stage_measures_the_window_l1a2x_could_not": true
+      },
+      "first_lost_macro_step_of_l1a2x": 25,
+      "holds": true,
+      "max_gap_difference_over_dx": 0.0
+    },
+    "l1a2x_spread_is_reproduced_from_its_sealed_payload": {
+      "holds": true,
+      "recomputed_spread_over_dx": 0.0015229599058270982,
+      "recorded_by_l1a2x_itself_over_dx": 1.3877787807814457e-17,
+      "recorded_in_the_reaudit_over_dx": 0.0015229599058270982
+    },
+    "no_forbidden_claim_in_the_reported_payload": {
+      "forbidden_phrases": [
+        "real impact",
+        "impact mechanism",
+        "confirmed contact",
+        "contact event occurred",
+        "two independent mechanisms"
+      ],
+      "found": [],
+      "holds": true
+    },
+    "reader_is_direction_blind_on_the_real_field": {
+      "displacement_forward_over_dx": 0.06264868189304451,
+      "displacement_mirrored_over_dx": -0.06264868189304451,
+      "holds": true
+    },
+    "reader_tracks_the_support_change_on_the_real_grid": {
+      "holds": true,
+      "max_step_over_dx": 0.20351700520240712,
+      "rows": [
+        {
+          "applied_height_over_dx": 23.5,
+          "at_shared_node": true,
+          "root_over_dx": 23.5,
+          "segment_index": 23,
+          "status": "OK",
+          "step_over_dx": 0.0059814351346290096
+        },
+        {
+          "applied_height_over_dx": 23.7,
+          "at_shared_node": false,
+          "root_over_dx": 23.703517005202407,
+          "segment_index": 23,
+          "status": "OK",
+          "step_over_dx": 0.20351700520240712
+        },
+        {
+          "applied_height_over_dx": 23.900000000000002,
+          "at_shared_node": false,
+          "root_over_dx": 23.901755388374,
+          "segment_index": 23,
+          "status": "OK",
+          "step_over_dx": 0.19823838317159215
+        },
+        {
+          "applied_height_over_dx": 24.1,
+          "at_shared_node": false,
+          "root_over_dx": 24.098244611626004,
+          "segment_index": 23,
+          "status": "OK",
+          "step_over_dx": 0.19648922325200502
+        },
+        {
+          "applied_height_over_dx": 24.3,
+          "at_shared_node": false,
+          "root_over_dx": 24.296482994797593,
+          "segment_index": 23,
+          "status": "OK",
+          "step_over_dx": 0.1982383831715886
+        },
+        {
+          "applied_height_over_dx": 24.5,
+          "at_shared_node": true,
+          "root_over_dx": 24.5,
+          "segment_index": 24,
+          "status": "OK",
+          "step_over_dx": 0.20351700520240712
+        },
+        {
+          "applied_height_over_dx": 24.7,
+          "at_shared_node": false,
+          "root_over_dx": 24.703517005202407,
+          "segment_index": 24,
+          "status": "OK",
+          "step_over_dx": 0.20351700520240712
+        }
+      ],
+      "segment_indices": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        24,
+        24
+      ],
+      "segment_switches_at": [
+        5
+      ]
+    },
+    "the_arithmetic_rules_reproduce_the_sealed_l1a2x_window": {
+      "holds": true,
+      "max_differences_over_dx": {
+        "point": {
+          "adv": 0.0,
+          "ch": 0.0,
+          "full": 1.3877787807814457e-17,
+          "imp": 0.0
+        },
+        "support_cell": {
+          "adv": 0.0,
+          "ch": 0.0,
+          "full": 1.3877787807814457e-17,
+          "imp": 0.0
+        }
+      },
+      "rule": "the point-linearised and support-cell-linearised rules of this stage rebuild the two arithmetic rules of the sealed L1A-2x stage on the identical window; every ingredient and the complete update must agree with the sealed numbers to round-off"
+    },
+    "the_attribution_is_a_pure_function_of_the_recorded_ledger": {
+      "holds": true,
+      "rule": "recomputing the whole attribution from the recorded substep ledger reproduces the reported payload exactly, so every number of this stage is a function of the one frozen window and not of any later choice"
+    },
+    "the_decision_rule_follows_its_prespecified_thresholds": {
+      "fabricated_screens": {
+        "blocking_guard_failed": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+        "margin_at_minus_the_floor": "CAHN_HILLIARD_TERM_CARRIES_THE_EARLY_WINDOW_CONTOUR_MOTION",
+        "margin_at_the_floor": "ADVECTIVE_TERM_CARRIES_THE_EARLY_WINDOW_CONTOUR_MOTION",
+        "margin_below_the_floor": "MIXED_TERMS_WITHIN_THE_COMPARISON_ERROR",
+        "non_unique_global_contour": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED"
+      },
+      "holds": true
+    },
+    "the_ledger_is_not_vacuous": {
+      "holds": true,
+      "macros_with_a_resolved_support_cell": 40,
+      "max_abs_mass_adv": 1.845726874880784e-20,
+      "max_abs_mass_ch": 7.000265481357666e-20,
+      "max_abs_mass_imp": 5.292527550673734e-18,
+      "substeps": 120,
+      "tracked_segments_seen": [
+        22,
+        23
+      ]
+    },
+    "the_reader_cannot_pick_a_favourable_root": {
+      "case": {
+        "candidate_roots_over_dx": [
+          15.3,
+          16.1
+        ],
+        "holds": true,
+        "matched_root_over_dx": 15.883024344093537,
+        "mirrored_root_over_dx": 15.883024344093537,
+        "mirrored_wall_normal_gives_the_same_root": true,
+        "nearer_root_moves_away_from_the_solid": false,
+        "prefers_the_nearer_root": true,
+        "previous_root_over_dx": 15.95,
+        "status": "OK"
+      },
+      "holds": true
+    },
+    "the_sealed_stages_are_untouched_on_disk": {
+      "holds": true,
+      "stages": {
+        "l1a2w": {
+          "bound_files": 16,
+          "directory": "evidence/l1a2w",
+          "holds": true,
+          "problems": []
+        },
+        "l1a2x": {
+          "bound_files": 17,
+          "directory": "evidence/l1a2x",
+          "holds": true,
+          "problems": []
+        }
+      }
+    },
+    "the_static_reconstruction_gate_bites_when_it_is_violated": {
+      "fabricated_deviation_over_dx": 0.1,
+      "gate_rejects_the_fabricated_study": true,
+      "holds": true,
+      "observed_holds": true,
+      "rule": "the observed static reconstruction holds; the same screen fed a fabricated study beyond its tolerance is rejected and returns unresolved, so the gate this stage reports as passing is demonstrably able to fail"
+    },
+    "the_window_budget_is_capped": {
+      "cap_macro_steps": 40,
+      "holds": true,
+      "refused_a_request_above_the_cap": true
+    },
+    "the_withheld_verdict_cannot_be_flipped_by_choosing_a_nicer_rule": {
+      "fabricated_margin_over_dx": 0.05471162413830655,
+      "fabricated_primary_rule": "RULE_B_GEOMETRIC_OWN_BASE",
+      "holds": true,
+      "resulting_verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+      "resulting_withheld_reasons": [
+        "the attribution closure exceeds its band",
+        "the frozen global contour match at the tracked support point is not unique on 40 of 40 macro steps"
+      ],
+      "rule": "the failing gates of this stage are properties of the measurement, not of the chosen rule: re-running the prespecified decision rule with the alternative primary rule and that rule's own margin still returns UNRESOLVED, so no mechanism verdict is obtainable in this stage by selecting a rule after seeing the window"
+    }
+  },
+  "failed_checks": [],
+  "identical_window_cross_check": {
+    "all_hold": true,
+    "checks": {
+      "final_state_hashes_match_the_sealed_window": true,
+      "root_agrees_where_l1a2x_could_measure_it": true,
+      "the_independent_line_root_agrees_with_the_tracked_root": true,
+      "the_support_change_is_reported_as_a_continuous_event": true,
+      "the_support_change_of_l1a2x_is_identified_here": true,
+      "the_window_is_the_identical_one": true,
+      "this_stage_measures_the_window_l1a2x_could_not": true
+    },
+    "final_state_hash_matches": {
+      "phi": true,
+      "u": true,
+      "v": true
+    },
+    "first_lost_macro_step": 25,
+    "macros_measured_by_each_stage": {
+      "l1a2x": 40,
+      "this_stage": 40
+    },
+    "macros_where_l1a2x_could_measure_its_pinned_edge": 24,
+    "macros_where_l1a2x_lost_its_pinned_edge": [
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "max_gap_difference_over_dx": 0.0,
+    "max_line_root_difference_over_dx": 7.922815720107224e-05,
+    "max_phi_at_point_difference": 0.0,
+    "max_root_difference_over_dx": 0.0,
+    "rule": "this stage's window must be the identical trajectory: the frozen gap and the level at the pinned point must reproduce the sealed L1A-2x values at every macro step and the final state must hash to the sealed final state; the macro step at which L1A-2x lost its pinned edge must be reported here as a continuous support change, the tracked root must agree with the L1A-2x line root where that stage could measure it, and this stage must still measure the steps L1A-2x lost",
+    "source": "evidence/l1a2x (sealed, unedited): substep_ledger.json",
+    "stage": "L1A-2y",
+    "support_change_this_stage": {
+      "found": true,
+      "from_segment_index": 23,
+      "macro_step": 25,
+      "note": "the reconstructed crossing moved from one grid segment to the next; this is the support change that stopped L1A-2x at its macro step 25, and the readout reports it as an ordinary recorded event because the tracked root is matched by continuation",
+      "substep": 74,
+      "t": 0.050000000000000065,
+      "to_segment_index": 22
+    },
+    "tolerance_over_dx": 0.05
+  },
+  "rule": "every claim of this stage is exercised so that it can fail: the reader is walked across the very support change that stopped L1A-2x on the real grid, a crossing that lands exactly on a cell centre is checked to be reported once, a jump beyond the continuity bound is checked to be refused, the wall normal is mirrored to show the reader has no direction preference, the prespecified decision rule is exercised at its own thresholds with fabricated validity screens, the closure gate is exercised against a fabricated violation, the comparison error is checked to be a raw spread rather than a rescaled one, the L1A-2x spread is recomputed from its sealed payload, the frozen sources and the readout module are re-hashed, the sealed evidence directories are re-hashed against their own manifests, the window cap is exercised, and the reported payload is searched for forbidden claims",
+  "stage": "L1A-2y"
+}

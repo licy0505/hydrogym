@@ -1,0 +1,23 @@
+{
+  "baseline_published_head": "d774e38209d7bd1c13810aaa3c2b6434209291f9",
+  "bound_file_count": 2,
+  "bound_files": {
+    "phase_a_audit.json": "890cbfc96f48bfc4695fbb55f9c8ac41bf135d4b6b221e6de2b4bf72f367ae80",
+    "phase_a_audit.md": "a8f212dfbd8baf28a4eb9d5b3f27ec6d8ffd7a567c3b15001690bd618ce5f087"
+  },
+  "control_trajectory_run": false,
+  "hosted_ci_note": "The final published audit head CI is reported from GitHub after push; this pre-push record makes no CI claim.",
+  "hosted_ci_status_embedded": false,
+  "input_l1a2z_manifest_sha256": "65d42c5fc11c244975d8cf40a06d8a4fdd26884830677c36c8697eb4e63f94e4",
+  "input_l1a2z_manifest_verified_before_audit": true,
+  "manifest_verification_rule": "SHA-256 of every bound file must match bound_files; all input hashes refer to immutable sealed L1A-2z evidence/source files.",
+  "physical_mechanism_claim": false,
+  "prespecification_commit": null,
+  "prespecification_not_created_reason": "Phase A failed before protocol freeze; no control trajectory was run",
+  "protocol_frozen": false,
+  "record_status": "SEALED_PHASE_A_BLOCKER_NO_MEASUREMENT",
+  "record_type": "phase_a_precontrol_blocker_only",
+  "stage": "L1A-3a",
+  "stage_version": "l1a3a_phase_a_v1",
+  "verdict": "EARLY_WINDOW_CONTROL_INCONCLUSIVE"
+}

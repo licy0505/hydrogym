@@ -1,0 +1,33 @@
+{
+  "definition": "every term is a raw displacement in dx. Nothing is normalised by the displacement it measures and no term is rescaled into primary units",
+  "historical_comparator": {
+    "l1a2y_comparison_error_dx": 0.1238272833457486,
+    "l1a2y_own_base_closure_dx": -0.007937057754737964,
+    "l1a2y_primary_closure_dx": -0.12231965567175251,
+    "l1a2y_primary_rule": "RULE_A_GEOMETRIC_TRACKED_BRANCH",
+    "l1a2y_rule_margins_dx": {
+      "RULE_A_GEOMETRIC_TRACKED_BRANCH": -0.059406672940170324,
+      "RULE_B_GEOMETRIC_OWN_BASE": 0.05471162413830655,
+      "RULE_D_LINEARISED_POINT_T0_COEFFICIENT": 0.06442061040557828,
+      "RULE_E_LINEARISED_SUPPORT_CELL_T0_COEFFICIENT": 0.06423917493446041
+    },
+    "note": "the L1A-2y numbers are read from its sealed evidence and are reported as the historical comparator; they are never overwritten and no L1A-2y file is modified"
+  },
+  "identity_note": "R_sequential_telescoping_total is the floating-point residual of an algebraic identity: the sum of the per-operator differences of one observable between consecutive actual states equals the difference between the first and the last state by construction. It is reported as a closure check and it is not evidence of a mechanism",
+  "stage": "L1A-2z",
+  "terms_dx": {
+    "R_ch_pair_sequential_vs_marginal": 0.007937057754737964,
+    "R_convention_spread": 0.007937057754737964,
+    "R_marginal_interaction": -0.007937057754737964,
+    "R_mass_residual": 4.470435646983889e-16,
+    "R_nonlinearity_cell_vs_geometric": -0.0015904930414159107,
+    "R_nonlinearity_point_vs_geometric": -0.0017719285125337852,
+    "R_operator_recombination": 1.1102230246251565e-16,
+    "R_order_swap_pair_total": 4.4806704480038206e-07,
+    "R_phi_hat_identity": 2.220446049250313e-16,
+    "R_root_matching_noise": 0.0,
+    "R_sequential_telescoping_max_substep": 0.0,
+    "R_sequential_telescoping_total": 0.0,
+    "R_support_tie_margin": 1.803201143957267e-09
+  }
+}

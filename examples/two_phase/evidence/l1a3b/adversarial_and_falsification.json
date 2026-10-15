@@ -1,0 +1,140 @@
+{
+  "checks": {
+    "branch_fragmentation_or_correspondence_loss_detected": {
+      "detail": "CORRESPONDENCE_LOST",
+      "holds": true
+    },
+    "candidate_enumeration_permutation_invariant": {
+      "detail": 10.25,
+      "holds": true
+    },
+    "distinct_valid_support_responses_retained": {
+      "detail": {
+        "RAY_95": 0.20000000000000107,
+        "RAY_96": -0.10000000000000142
+      },
+      "holds": true
+    },
+    "equal_support_effects_reported": {
+      "detail": {
+        "RAY_95": 0.20000000000000107,
+        "RAY_96": 0.20000000000000107
+      },
+      "holds": true
+    },
+    "evidence_mutation_rejected": {
+      "detail": {
+        "clean_seal_holds": true,
+        "mutated_payload_rejected": true
+      },
+      "holds": true
+    },
+    "genuinely_competing_branches_rejected": {
+      "detail": [
+        "GEOMETRIC_BRANCH_CORRESPONDENCE_LOST",
+        "RAY_A:MULTIPLE_ADMISSIBLE_ROOTS",
+        "RAY_B:MULTIPLE_ADMISSIBLE_ROOTS"
+      ],
+      "holds": true
+    },
+    "historical_segment_switch_keeps_ray_identity": {
+      "detail": "historical q switches are recorded against RAY_95/RAY_96; they never redefine either ray",
+      "holds": true
+    },
+    "missing_root_fails_closed": {
+      "detail": [
+        "GEOMETRIC_BRANCH_CORRESPONDENCE_LOST",
+        "NO_GLOBAL_CONTOUR",
+        "RAY_A:NO_ROOT_IN_WINDOW",
+        "RAY_B:NO_ROOT_IN_WINDOW"
+      ],
+      "holds": true
+    },
+    "multiple_roots_on_one_ray_fail_closed": {
+      "detail": [
+        "GEOMETRIC_BRANCH_CORRESPONDENCE_LOST",
+        "RAY_A:MULTIPLE_ADMISSIBLE_ROOTS",
+        "RAY_B:MULTIPLE_ADMISSIBLE_ROOTS"
+      ],
+      "holds": true
+    },
+    "near_limit_perturbations_are_not_tie_broken": {
+      "detail": {
+        "multiple": "MULTIPLE_ADMISSIBLE_ROOTS",
+        "step_boundary": "OK"
+      },
+      "holds": true
+    },
+    "opposite_sign_effects_reported": {
+      "detail": {
+        "RAY_95": 0.20000000000000107,
+        "RAY_96": -0.10000000000000142
+      },
+      "holds": true
+    },
+    "preferential_single_support_selection_rejected": {
+      "detail": {
+        "partial_vector_rejected": true,
+        "ray_ids": [
+          "RAY_A",
+          "RAY_B"
+        ]
+      },
+      "holds": true
+    },
+    "ray_order_permutation_equivariant": {
+      "detail": {
+        "RAY_A": 10.208280272437573,
+        "RAY_B": 10.208280272437573
+      },
+      "holds": true
+    },
+    "scalar_mean_cannot_hide_disagreement": {
+      "detail": 0.3000000000000025,
+      "holds": true
+    },
+    "signed_displacement_convention_checked": {
+      "detail": {
+        "RAY_95": 0.5,
+        "RAY_96": 0.75
+      },
+      "holds": true
+    },
+    "swapped_fixed_ray_identity_rejected": {
+      "detail": "the published ray identifiers remain bound to columns 95 and 96",
+      "holds": true
+    },
+    "two_co_minimal_supports_same_branch": {
+      "detail": {
+        "RAY_A": 10.208280272437573,
+        "RAY_B": 10.208280272437573
+      },
+      "holds": true
+    }
+  },
+  "checks_run": 17,
+  "failed_checks": [],
+  "holds": true,
+  "note": "These are observable-contract falsification checks only; no physical solver trajectory is involved.",
+  "passed_checks": 17,
+  "stage": "L1A-3b",
+  "test_ids_frozen_in_source": [
+    "two_co_minimal_supports_same_branch",
+    "genuinely_competing_branches_rejected",
+    "candidate_enumeration_permutation_invariant",
+    "ray_order_permutation_equivariant",
+    "preferential_single_support_selection_rejected",
+    "distinct_valid_support_responses_retained",
+    "opposite_sign_effects_reported",
+    "equal_support_effects_reported",
+    "missing_root_fails_closed",
+    "multiple_roots_on_one_ray_fail_closed",
+    "branch_fragmentation_or_correspondence_loss_detected",
+    "historical_segment_switch_keeps_ray_identity",
+    "near_limit_perturbations_are_not_tie_broken",
+    "signed_displacement_convention_checked",
+    "swapped_fixed_ray_identity_rejected",
+    "scalar_mean_cannot_hide_disagreement",
+    "evidence_mutation_rejected"
+  ]
+}

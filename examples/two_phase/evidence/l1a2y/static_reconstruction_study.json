@@ -1,0 +1,2314 @@
+{
+  "anchors_over_dx": [
+    23.50598143513463,
+    23.512784700755542,
+    23.52088213387081,
+    23.52686662407644,
+    23.530858943136316,
+    23.53336863883416,
+    23.53480339346235,
+    23.535443354958975,
+    23.535477893906798,
+    23.5350374581888,
+    23.534214510584093,
+    23.533076551636633,
+    23.531674197015903,
+    23.530046275654378,
+    23.528223135165987,
+    23.5262288555952,
+    23.52408273361129,
+    23.521800323221676,
+    23.51939418979375,
+    23.516874492865902,
+    23.51424940893445,
+    23.511525474236432,
+    23.508707859558736,
+    23.505800582526156,
+    23.50280668689186,
+    23.49972076266602,
+    23.49647517156962,
+    23.493154196191618,
+    23.48975911706807,
+    23.486290808456424,
+    23.482749814507947,
+    23.47913641480368,
+    23.475450679317127,
+    23.47169251773937,
+    23.467861722202773,
+    23.463958000644062,
+    23.459981006370167,
+    23.45593036380216,
+    23.451805687130182,
+    23.44760660138048
+  ],
+  "holds": true,
+  "level_based_fraction_inside_the_unit_interval": 2,
+  "level_based_fraction_max_abs": 969.1721054738944,
+  "level_based_fraction_note": "the level-based fraction (0.5 - cell level) / cell increment is recorded only as a diagnostic of why it is not a usable interpolation weight: it resolves the *cell* level onto the threshold rather than the *crossing*, so whenever the tracked crossing is not sweeping through that cell centre inside the step the fraction leaves the unit interval and the rescaled field is unrelated to the trajectory; the reconstruction above therefore never rescales the increment",
+  "level_based_fraction_total": 80,
+  "macros_total": 40,
+  "macros_with_a_resolved_support_cell": 40,
+  "max_frozen_sigma_chpair_deviation_over_dx": 0.0011175576204998094,
+  "max_frozen_sigma_deviation_over_dx": 0.0011162864914204818,
+  "max_half_increment_nonlinearity_over_dx": 4.5522606406223076e-05,
+  "max_operator_recombination_over_dx": 3.552713678800501e-15,
+  "max_order_symmetry_over_dx": 0.006256663763668513,
+  "max_static_backward_over_dx": 0.006983144482809678,
+  "max_static_ch_pair_over_dx": 0.0011175576204998094,
+  "max_static_ch_pair_reconstruction_over_dx": 0.0011175576204998094,
+  "max_static_forward_over_dx": 0.0011162864914204818,
+  "max_static_reconstruction_backward_over_dx": 0.006983144482809678,
+  "max_static_reconstruction_forward_over_dx": 0.0011162864914204818,
+  "method": "for every macro step the base field of the step, the three ingredient increments of its three frozen substeps and the complete increment are recombined statically and read with the same branch readout pinned on the same wall-normal ray. Nothing is scaled by a level fraction: the complete increment is applied as it is produced, and the order decomposition is taken in both directions - once from the base crossing and once by removing each ingredient from the complete crossing - so the nonlinearity of the contour mapping is measured symmetrically",
+  "nonlinearity_attribution": "the total displacement of a macro step is attributed twice: forward, as the sum of the displacements that each ingredient produces on its own on that base field, and backward, as the displacement the complete update loses when an ingredient is removed. The difference between the two is the order-symmetry term, the difference between either sum and the directly measured crossing is the nonlinearity of the contour mapping, and the difference between the recombined ingredients and the complete increment is the operator-recombination term",
+  "readout_statuses_seen": [
+    "OK"
+  ],
+  "rows": [
+    {
+      "R_half_increment_nonlinearity_over_dx": 4.5522606406223076e-05,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004733982638573053,
+      "R_static_backward_over_dx": 0.005768906367627835,
+      "R_static_ch_pair_over_dx": 0.0010351383725080154,
+      "R_static_forward_over_dx": 0.001034923729054782,
+      "anchor_over_dx": 23.50598143513463,
+      "base_levels_at_cells": [
+        0.4986848640358181,
+        0.4986848640358181
+      ],
+      "increment_at_cells": [
+        -0.0015337029257354584,
+        -0.0015337029207548314
+      ],
+      "level_based_fraction": [
+        -0.8574906796577147,
+        -0.8574906824423748
+      ],
+      "macro_step": 1,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.512784700755542,
+      "root_base_over_dx": 23.50598143513463,
+      "root_ch_pair_over_dx": 23.512834908911586,
+      "root_component_over_dx": {
+        "adv": 23.505931012335132,
+        "ch": 23.502348630528708,
+        "imp": 23.517502851890015
+      },
+      "root_full_over_dx": 23.512784700755542,
+      "root_half_increment_over_dx": 23.50940582924829,
+      "root_ingredient_sum_over_dx": 23.512784700755542,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.512834908911586,
+        "ch": 23.51744844715897,
+        "imp": 23.502301839828444
+      },
+      "static_reconstruction_backward_over_dx": 23.51855360712317,
+      "static_reconstruction_ch_pair_over_dx": 23.513870047284094,
+      "static_reconstruction_forward_over_dx": 23.513819624484597,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.002
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 4.050245441789002e-05,
+      "R_operator_recombination_over_dx": 3.552713678800501e-15,
+      "R_order_symmetry_over_dx": 0.005866857991389196,
+      "R_static_backward_over_dx": 0.006983144482809678,
+      "R_static_ch_pair_over_dx": 0.0011175576204998094,
+      "R_static_forward_over_dx": 0.0011162864914204818,
+      "anchor_over_dx": 23.512784700755542,
+      "base_levels_at_cells": [
+        0.4971511611100826,
+        0.49715116111506324
+      ],
+      "increment_at_cells": [
+        -0.001851149864204149,
+        -0.0018511498525416448
+      ],
+      "level_based_fraction": [
+        -1.5389563778739017,
+        -1.5389563848789847
+      ],
+      "macro_step": 2,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.52088213387081,
+      "root_base_over_dx": 23.512784700755542,
+      "root_ch_pair_over_dx": 23.52107670566883,
+      "root_component_over_dx": {
+        "adv": 23.512588857828444,
+        "ch": 23.509604506047417,
+        "imp": 23.525374457997454
+      },
+      "root_full_over_dx": 23.52088213387081,
+      "root_half_increment_over_dx": 23.516853668540385,
+      "root_ingredient_sum_over_dx": 23.520882133870813,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.52107670566883,
+        "ch": 23.525164227044606,
+        "imp": 23.509422324416185
+      },
+      "static_reconstruction_backward_over_dx": 23.52786527835362,
+      "static_reconstruction_ch_pair_over_dx": 23.52219426328933,
+      "static_reconstruction_forward_over_dx": 23.52199842036223,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.004
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.7049572491600884e-05,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004160429810852406,
+      "R_static_backward_over_dx": 0.005074296075054718,
+      "R_static_ch_pair_over_dx": 0.0009151582986497431,
+      "R_static_forward_over_dx": 0.0009138662642023121,
+      "anchor_over_dx": 23.52088213387081,
+      "base_levels_at_cells": [
+        0.49530001124587847,
+        0.4953000112625216
+      ],
+      "increment_at_cells": [
+        -0.0013814960178075708,
+        -0.0013814960050222425
+      ],
+      "level_based_fraction": [
+        -3.402100833834032,
+        -3.4021008532722674
+      ],
+      "macro_step": 3,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.52686662407644,
+      "root_base_over_dx": 23.52088213387081,
+      "root_ch_pair_over_dx": 23.52720306761469,
+      "root_component_over_dx": {
+        "adv": 23.520544398298114,
+        "ch": 23.51826018700538,
+        "imp": 23.530740172778767
+      },
+      "root_full_over_dx": 23.52686662407644,
+      "root_half_increment_over_dx": 23.52388290375987,
+      "root_ingredient_sum_over_dx": 23.52686662407644,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.52720306761469,
+        "ch": 23.53037628787243,
+        "imp": 23.51794622066715
+      },
+      "static_reconstruction_backward_over_dx": 23.531940920151495,
+      "static_reconstruction_ch_pair_over_dx": 23.52811822591334,
+      "static_reconstruction_forward_over_dx": 23.527780490340643,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.006000000000000001
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 6.0442219904643935e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0025526142392706674,
+      "R_static_backward_over_dx": 0.0032751961565438137,
+      "R_static_ch_pair_over_dx": 0.0007234809877409987,
+      "R_static_forward_over_dx": 0.0007225819172731462,
+      "anchor_over_dx": 23.52686662407644,
+      "base_levels_at_cells": [
+        0.4939185152280709,
+        0.49391851525749936
+      ],
+      "increment_at_cells": [
+        -0.0009248774381320213,
+        -0.0009248774405603566
+      ],
+      "level_based_fraction": [
+        -6.575449374364566,
+        -6.575449325281462
+      ],
+      "macro_step": 4,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.530858943136316,
+      "root_base_over_dx": 23.52686662407644,
+      "root_ch_pair_over_dx": 23.531335339560634,
+      "root_component_over_dx": {
+        "adv": 23.526389328581654,
+        "ch": 23.524641530374403,
+        "imp": 23.534283914250413
+      },
+      "root_full_over_dx": 23.530858943136316,
+      "root_half_increment_over_dx": 23.528865805717373,
+      "root_ingredient_sum_over_dx": 23.530858943136316,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.531335339560634,
+        "ch": 23.533768152781462,
+        "imp": 23.524198140910308
+      },
+      "static_reconstruction_backward_over_dx": 23.53413413929286,
+      "static_reconstruction_ch_pair_over_dx": 23.532058820548375,
+      "static_reconstruction_forward_over_dx": 23.53158152505359,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.008000000000000002
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.9415930125887826e-06,
+      "R_operator_recombination_over_dx": 3.552713678800501e-15,
+      "R_order_symmetry_over_dx": 0.001353395547511127,
+      "R_static_backward_over_dx": 0.0019351750436520376,
+      "R_static_ch_pair_over_dx": 0.0005822543820244164,
+      "R_static_forward_over_dx": 0.0005817794961409106,
+      "anchor_over_dx": 23.530858943136316,
+      "base_levels_at_cells": [
+        0.4929936377899389,
+        0.492993637816939
+      ],
+      "increment_at_cells": [
+        -0.0005815448209456897,
+        -0.0005815448156848979
+      ],
+      "level_based_fraction": [
+        -12.04784559626479,
+        -12.04784565882417
+      ],
+      "macro_step": 5,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.53336863883416,
+      "root_base_over_dx": 23.530858943136316,
+      "root_ch_pair_over_dx": 23.533983124866865,
+      "root_component_over_dx": {
+        "adv": 23.530243982217726,
+        "ch": 23.528888028821648,
+        "imp": 23.536536293563557
+      },
+      "root_full_over_dx": 23.53336863883416,
+      "root_half_increment_over_dx": 23.53211476178174,
+      "root_ingredient_sum_over_dx": 23.533368638834162,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.533983124866865,
+        "ch": 23.535870564363034,
+        "imp": 23.528317052228925
+      },
+      "static_reconstruction_backward_over_dx": 23.53530381387781,
+      "static_reconstruction_ch_pair_over_dx": 23.53456537924889,
+      "static_reconstruction_forward_over_dx": 23.5339504183303,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.01
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 5.310772266398089e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0004756327235355684,
+      "R_static_backward_over_dx": 0.0009597091967776805,
+      "R_static_ch_pair_over_dx": 0.00048420470167087615,
+      "R_static_forward_over_dx": 0.0004840764732421121,
+      "anchor_over_dx": 23.53336863883416,
+      "base_levels_at_cells": [
+        0.4924120929689932,
+        0.4924120930012541
+      ],
+      "increment_at_cells": [
+        -0.0003321190375936145,
+        -0.0003321190502966198
+      ],
+      "level_based_fraction": [
+        -22.84694995500825,
+        -22.846948984013533
+      ],
+      "macro_step": 6,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.53480339346235,
+      "root_base_over_dx": 23.53336863883416,
+      "root_ch_pair_over_dx": 23.535554215780763,
+      "root_component_over_dx": {
+        "adv": 23.532617688287317,
+        "ch": 23.53155214325431,
+        "imp": 23.537854916062283
+      },
+      "root_full_over_dx": 23.53480339346235,
+      "root_half_increment_over_dx": 23.534086281686868,
+      "root_ingredient_sum_over_dx": 23.53480339346235,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.535554215780763,
+        "ch": 23.537041108469438,
+        "imp": 23.530855146940073
+      },
+      "static_reconstruction_backward_over_dx": 23.53576310265913,
+      "static_reconstruction_ch_pair_over_dx": 23.536038420482434,
+      "static_reconstruction_forward_over_dx": 23.535287469935593,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.011999999999999999
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 9.563583347471649e-08,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.00018445901127961406,
+      "R_static_backward_over_dx": 0.0002331323913011829,
+      "R_static_ch_pair_over_dx": 0.0004174594106416407,
+      "R_static_forward_over_dx": 0.00041759140258079697,
+      "anchor_over_dx": 23.53480339346235,
+      "base_levels_at_cells": [
+        0.4920799739313996,
+        0.4920799739509575
+      ],
+      "increment_at_cells": [
+        -0.00014804371195459298,
+        -0.0001480436820825437
+      ],
+      "level_based_fraction": [
+        -53.49788899530976,
+        -53.4978996579307
+      ],
+      "macro_step": 7,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.535443354958975,
+      "root_base_over_dx": 23.53480339346235,
+      "root_ch_pair_over_dx": 23.536328880956564,
+      "root_component_over_dx": {
+        "adv": 23.5339179994567,
+        "ch": 23.533073040081696,
+        "imp": 23.53847669374786
+      },
+      "root_full_over_dx": 23.535443354958975,
+      "root_half_increment_over_dx": 23.53512342202858,
+      "root_ingredient_sum_over_dx": 23.535443354958975,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.536328880956564,
+        "ch": 23.53751661438781,
+        "imp": 23.53225143714125
+      },
+      "static_reconstruction_backward_over_dx": 23.535676487350276,
+      "static_reconstruction_ch_pair_over_dx": 23.536746340367205,
+      "static_reconstruction_forward_over_dx": 23.535860946361556,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.013999999999999997
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 9.890328556139139e-10,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0006993518060092185,
+      "R_static_backward_over_dx": 0.00032618171753640013,
+      "R_static_ch_pair_over_dx": 0.00037284781569368874,
+      "R_static_forward_over_dx": 0.0003731700884728184,
+      "anchor_over_dx": 23.535443354958975,
+      "base_levels_at_cells": [
+        0.491931930219445,
+        0.49193193026887494
+      ],
+      "increment_at_cells": [
+        -8.324723690056324e-06,
+        -8.324702790718508e-06
+      ],
+      "level_based_fraction": [
+        -969.1696782912003,
+        -969.1721054738944
+      ],
+      "macro_step": 8,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.535477893906798,
+      "root_base_over_dx": 23.535443354958975,
+      "root_ch_pair_over_dx": 23.536496601577216,
+      "root_component_over_dx": {
+        "adv": 23.534424969561336,
+        "ch": 23.53375117825236,
+        "imp": 23.538561626099526
+      },
+      "root_full_over_dx": 23.535477893906798,
+      "root_half_increment_over_dx": 23.535460624927403,
+      "root_ingredient_sum_over_dx": 23.535477893906798,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.536496601577216,
+        "ch": 23.53745698551746,
+        "imp": 23.532806276343255
+      },
+      "static_reconstruction_backward_over_dx": 23.53515171218926,
+      "static_reconstruction_ch_pair_over_dx": 23.53686944939291,
+      "static_reconstruction_forward_over_dx": 23.53585106399527,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.015999999999999997
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.6049732209921785e-08,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0011154406872826428,
+      "R_static_backward_over_dx": 0.0007708918982523016,
+      "R_static_ch_pair_over_dx": 0.0003440873460576199,
+      "R_static_forward_over_dx": 0.00034454878903034114,
+      "anchor_over_dx": 23.535477893906798,
+      "base_levels_at_cells": [
+        0.4919236054957549,
+        0.4919236055660842
+      ],
+      "increment_at_cells": [
+        0.00010084464179166419,
+        0.00010084466697085626
+      ],
+      "level_based_fraction": [
+        80.08749260997098,
+        80.0874719160888
+      ],
+      "macro_step": 9,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.5350374581888,
+      "root_base_over_dx": 23.535477893906798,
+      "root_ch_pair_over_dx": 23.536187920869157,
+      "root_component_over_dx": {
+        "adv": 23.534327892669413,
+        "ch": 23.533788925831026,
+        "imp": 23.538220976290987
+      },
+      "root_full_over_dx": 23.5350374581888,
+      "root_half_increment_over_dx": 23.535257684072665,
+      "root_ingredient_sum_over_dx": 23.5350374581888,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.536187920869157,
+        "ch": 23.53697339422167,
+        "imp": 23.532721951373826
+      },
+      "static_reconstruction_backward_over_dx": 23.534266566290547,
+      "static_reconstruction_ch_pair_over_dx": 23.536532008215215,
+      "static_reconstruction_forward_over_dx": 23.53538200697783,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.017999999999999995
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 5.744332298718291e-08,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0014622851537993142,
+      "R_static_backward_over_dx": 0.0011347698839259124,
+      "R_static_ch_pair_over_dx": 0.0003269502109120026,
+      "R_static_forward_over_dx": 0.00032751526987340185,
+      "anchor_over_dx": 23.5350374581888,
+      "base_levels_at_cells": [
+        0.4920244501375466,
+        0.4920244502330551
+      ],
+      "increment_at_cells": [
+        0.000188414124910663,
+        0.0001884141407960116
+      ],
+      "level_based_fraction": [
+        42.329893611930835,
+        42.329889536156045
+      ],
+      "macro_step": 10,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.534214510584093,
+      "root_base_over_dx": 23.5350374581888,
+      "root_ch_pair_over_dx": 23.53549538277506,
+      "root_component_over_dx": {
+        "adv": 23.533757151056793,
+        "ch": 23.53332525835194,
+        "imp": 23.537534532822832
+      },
+      "root_full_over_dx": 23.534214510584093,
+      "root_half_increment_over_dx": 23.534626013108106,
+      "root_ingredient_sum_over_dx": 23.534214510584093,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.53549538277506,
+        "ch": 23.53614554819862,
+        "imp": 23.532137370662525
+      },
+      "static_reconstruction_backward_over_dx": 23.533079740700167,
+      "static_reconstruction_ch_pair_over_dx": 23.535822332985973,
+      "static_reconstruction_forward_over_dx": 23.534542025853966,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.019999999999999993
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 9.656510968625298e-08,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0017591006233672601,
+      "R_static_backward_over_dx": 0.0014399038752479498,
+      "R_static_ch_pair_over_dx": 0.00031855188714047245,
+      "R_static_forward_over_dx": 0.0003191967481193103,
+      "anchor_over_dx": 23.534214510584093,
+      "base_levels_at_cells": [
+        0.49221286426245725,
+        0.4922128643738511
+      ],
+      "increment_at_cells": [
+        0.0002602741068590264,
+        0.0002602740952924454
+      ],
+      "level_based_fraction": [
+        29.918979769126768,
+        29.918980670739604
+      ],
+      "macro_step": 11,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.533076551636633,
+      "root_base_over_dx": 23.534214510584093,
+      "root_ch_pair_over_dx": 23.534486556855942,
+      "root_component_over_dx": {
+        "adv": 23.532805150225762,
+        "ch": 23.532458431427123,
+        "imp": 23.536561187900052
+      },
+      "root_full_over_dx": 23.533076551636633,
+      "root_half_increment_over_dx": 23.533645579392918,
+      "root_ingredient_sum_over_dx": 23.533076551636633,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.534486556855942,
+        "ch": 23.535032269352378,
+        "imp": 23.531150732576826
+      },
+      "static_reconstruction_backward_over_dx": 23.531636647761385,
+      "static_reconstruction_ch_pair_over_dx": 23.534805108743083,
+      "static_reconstruction_forward_over_dx": 23.533395748384752,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.021999999999999992
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.2524976256145237e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0020187498678154725,
+      "R_static_backward_over_dx": 0.0017011671364741687,
+      "R_static_ch_pair_over_dx": 0.000316873260267414,
+      "R_static_forward_over_dx": 0.00031758273134130377,
+      "anchor_over_dx": 23.533076551636633,
+      "base_levels_at_cells": [
+        0.4924731383693163,
+        0.49247313846914353
+      ],
+      "increment_at_cells": [
+        0.0003204055753020518,
+        0.00032040557019963334
+      ],
+      "level_based_fraction": [
+        23.491668718897984,
+        23.49166878143456
+      ],
+      "macro_step": 12,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.531674197015903,
+      "root_base_over_dx": 23.533076551636633,
+      "root_ch_pair_over_dx": 23.53321211781672,
+      "root_component_over_dx": {
+        "adv": 23.53153934030689,
+        "ch": 23.531260026699815,
+        "imp": 23.535345516013805
+      },
+      "root_full_over_dx": 23.531674197015903,
+      "root_half_increment_over_dx": 23.53237543695115,
+      "root_ingredient_sum_over_dx": 23.531674197015903,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.53321211781672,
+        "ch": 23.533678071292645,
+        "imp": 23.529833569074817
+      },
+      "static_reconstruction_backward_over_dx": 23.52997302987943,
+      "static_reconstruction_ch_pair_over_dx": 23.533528991076988,
+      "static_reconstruction_forward_over_dx": 23.531991779747244,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.02399999999999999
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.427894673611263e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0022501221072808164,
+      "R_static_backward_over_dx": 0.0019288971841433522,
+      "R_static_ch_pair_over_dx": 0.0003204597471082593,
+      "R_static_forward_over_dx": 0.0003212249231374642,
+      "anchor_over_dx": 23.531674197015903,
+      "base_levels_at_cells": [
+        0.49279354394461833,
+        0.49279354403934317
+      ],
+      "increment_at_cells": [
+        0.0003715808424514244,
+        0.0003715808431791756
+      ],
+      "level_based_fraction": [
+        19.394046280315834,
+        19.394045987408163
+      ],
+      "macro_step": 13,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.530046275654378,
+      "root_base_over_dx": 23.531674197015903,
+      "root_ch_pair_over_dx": 23.531710945373252,
+      "root_component_over_dx": {
+        "adv": 23.530010292473058,
+        "ch": 23.529783633038427,
+        "imp": 23.533921969097836
+      },
+      "root_full_over_dx": 23.530046275654378,
+      "root_half_increment_over_dx": 23.530860307729874,
+      "root_ingredient_sum_over_dx": 23.530046275654378,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.531710945373252,
+        "ch": 23.53211735325743,
+        "imp": 23.528239425516595
+      },
+      "static_reconstruction_backward_over_dx": 23.528117378470235,
+      "static_reconstruction_ch_pair_over_dx": 23.53203140512036,
+      "static_reconstruction_forward_over_dx": 23.530367500577515,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.02599999999999999
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.509224247797647e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.002459553633354261,
+      "R_static_backward_over_dx": 0.0021305024528714966,
+      "R_static_ch_pair_over_dx": 0.00032823465701525834,
+      "R_static_forward_over_dx": 0.0003290511804827645,
+      "anchor_over_dx": 23.530046275654378,
+      "base_levels_at_cells": [
+        0.49316512478706975,
+        0.49316512488252234
+      ],
+      "increment_at_cells": [
+        0.00041578772121769747,
+        0.00041578770283168254
+      ],
+      "level_based_fraction": [
+        16.438376758489348,
+        16.438377255819233
+      ],
+      "macro_step": 14,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.528223135165987,
+      "root_base_over_dx": 23.530046275654378,
+      "root_ch_pair_over_dx": 23.530013432071495,
+      "root_component_over_dx": {
+        "adv": 23.528256795272338,
+        "ch": 23.528070305821593,
+        "imp": 23.532317636561295
+      },
+      "root_full_over_dx": 23.528223135165987,
+      "root_half_increment_over_dx": 23.529134780871395,
+      "root_ingredient_sum_over_dx": 23.528223135165987,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.530013432071495,
+        "ch": 23.53037715788618,
+        "imp": 23.52640931799316
+      },
+      "static_reconstruction_backward_over_dx": 23.526092632713116,
+      "static_reconstruction_ch_pair_over_dx": 23.53034166672851,
+      "static_reconstruction_forward_over_dx": 23.52855218634647,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.027999999999999987
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.5197903735497675e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0026516857148592976,
+      "R_static_backward_over_dx": 0.0023114370811292417,
+      "R_static_ch_pair_over_dx": 0.0003393817348005257,
+      "R_static_forward_over_dx": 0.00034024863373005587,
+      "anchor_over_dx": 23.528223135165987,
+      "base_levels_at_cells": [
+        0.49358091250828745,
+        0.493580912585354
+      ],
+      "increment_at_cells": [
+        0.00045448935469100116,
+        0.0004544893546419293
+      ],
+      "level_based_fraction": [
+        14.123735628696446,
+        14.123735460654013
+      ],
+      "macro_step": 15,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.5262288555952,
+      "root_base_over_dx": 23.528223135165987,
+      "root_ch_pair_over_dx": 23.528143694797308,
+      "root_component_over_dx": {
+        "adv": 23.52630916286281,
+        "ch": 23.526152098603017,
+        "imp": 23.53055411309508
+      },
+      "root_full_over_dx": 23.5262288555952,
+      "root_half_increment_over_dx": 23.527226071370112,
+      "root_ingredient_sum_over_dx": 23.5262288555952,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.528143694797308,
+        "ch": 23.528479041619708,
+        "imp": 23.524375267449713
+      },
+      "static_reconstruction_backward_over_dx": 23.52391741851407,
+      "static_reconstruction_ch_pair_over_dx": 23.52848307653211,
+      "static_reconstruction_forward_over_dx": 23.52656910422893,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.029999999999999985
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.4820762572753665e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.002830036275994985,
+      "R_static_backward_over_dx": 0.0024758514821208166,
+      "R_static_ch_pair_over_dx": 0.0003532659413387762,
+      "R_static_forward_over_dx": 0.00035418479387416824,
+      "anchor_over_dx": 23.5262288555952,
+      "base_levels_at_cells": [
+        0.49403540186297845,
+        0.49403540193999596
+      ],
+      "increment_at_cells": [
+        0.0004887972858566569,
+        0.0004887972435718702
+      ],
+      "level_based_fraction": [
+        12.202600770517998,
+        12.20260166857312
+      ],
+      "macro_step": 16,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.52408273361129,
+      "root_base_over_dx": 23.5262288555952,
+      "root_ch_pair_over_dx": 23.526121066038293,
+      "root_component_over_dx": {
+        "adv": 23.524191442020733,
+        "ch": 23.524054424911245,
+        "imp": 23.528648762663586
+      },
+      "root_full_over_dx": 23.52408273361129,
+      "root_half_increment_over_dx": 23.525155868707056,
+      "root_ingredient_sum_over_dx": 23.52408273361129,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.526121066038293,
+        "ch": 23.52644033116885,
+        "imp": 23.52216265510885
+      },
+      "static_reconstruction_backward_over_dx": 23.52160688212917,
+      "static_reconstruction_ch_pair_over_dx": 23.52647433197963,
+      "static_reconstruction_forward_over_dx": 23.524436918405165,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.03199999999999999
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.4153324201515716e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0029973440508648252,
+      "R_static_backward_over_dx": 0.0026269861948620132,
+      "R_static_ch_pair_over_dx": 0.0003693835657045952,
+      "R_static_forward_over_dx": 0.000370357856002812,
+      "anchor_over_dx": 23.52408273361129,
+      "base_levels_at_cells": [
+        0.4945241991488351,
+        0.4945241991835678
+      ],
+      "increment_at_cells": [
+        0.0005195767611659852,
+        0.0005195767327887957
+      ],
+      "level_based_fraction": [
+        10.538964134724994,
+        10.538964643472688
+      ],
+      "macro_step": 17,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.521800323221676,
+      "root_base_over_dx": 23.52408273361129,
+      "root_ch_pair_over_dx": 23.523961128594586,
+      "root_component_over_dx": {
+        "adv": 23.52192290252868,
+        "ch": 23.521797633922944,
+        "imp": 23.526615611848637
+      },
+      "root_full_over_dx": 23.521800323221676,
+      "root_half_increment_over_dx": 23.522941599183103,
+      "root_ingredient_sum_over_dx": 23.521800323221676,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.523961128594586,
+        "ch": 23.524275023437696,
+        "imp": 23.51979180382761
+      },
+      "static_reconstruction_backward_over_dx": 23.519173337026814,
+      "static_reconstruction_ch_pair_over_dx": 23.52433051216029,
+      "static_reconstruction_forward_over_dx": 23.52217068107768,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.033999999999999996
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.3352191530202617e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.003155791491632698,
+      "R_static_backward_over_dx": 0.0027674266470043563,
+      "R_static_ch_pair_over_dx": 0.000387330220526394,
+      "R_static_forward_over_dx": 0.00038836484462834164,
+      "anchor_over_dx": 23.521800323221676,
+      "base_levels_at_cells": [
+        0.4950437759100011,
+        0.4950437759163566
+      ],
+      "increment_at_cells": [
+        0.0005475149980724847,
+        0.0005475149831907777
+      ],
+      "level_based_fraction": [
+        9.052216117270195,
+        9.052216351705608
+      ],
+      "macro_step": 18,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.51939418979375,
+      "root_base_over_dx": 23.521800323221676,
+      "root_ch_pair_over_dx": 23.521676476108343,
+      "root_component_over_dx": {
+        "adv": 23.519519071531185,
+        "ch": 23.519398111395446,
+        "imp": 23.5244660181551
+      },
+      "root_full_over_dx": 23.51939418979375,
+      "root_half_increment_over_dx": 23.52059732326867,
+      "root_ingredient_sum_over_dx": 23.51939418979375,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.521676476108343,
+        "ch": 23.521994446869265,
+        "imp": 23.51727907305065
+      },
+      "static_reconstruction_backward_over_dx": 23.516626763146746,
+      "static_reconstruction_ch_pair_over_dx": 23.52206380632887,
+      "static_reconstruction_forward_over_dx": 23.51978255463838,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.036000000000000004
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.2540719040998738e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0033071341827763945,
+      "R_static_backward_over_dx": 0.002899253483949593,
+      "R_static_ch_pair_over_dx": 0.00040677979978553935,
+      "R_static_forward_over_dx": 0.00040788069882680134,
+      "anchor_over_dx": 23.51939418979375,
+      "base_levels_at_cells": [
+        0.4955912909080736,
+        0.4955912908995474
+      ],
+      "increment_at_cells": [
+        0.0005731621617854343,
+        0.0005731621113670426
+      ],
+      "level_based_fraction": [
+        7.6919053382606934,
+        7.6919060297573365
+      ],
+      "macro_step": 19,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.516874492865902,
+      "root_base_over_dx": 23.51939418979375,
+      "root_ch_pair_over_dx": 23.519277292073518,
+      "root_component_over_dx": {
+        "adv": 23.516992491485176,
+        "ch": 23.51686907612142,
+        "imp": 23.522209185545634
+      },
+      "root_full_over_dx": 23.516874492865902,
+      "root_half_increment_over_dx": 23.51813440403342,
+      "root_ingredient_sum_over_dx": 23.516874492865902,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.519277292073518,
+        "ch": 23.5196077811194,
+        "imp": 23.514637658888738
+      },
+      "static_reconstruction_backward_over_dx": 23.513975239381953,
+      "static_reconstruction_ch_pair_over_dx": 23.519684071873304,
+      "static_reconstruction_forward_over_dx": 23.51728237356473,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.03800000000000001
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.181841824404728e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0034528243401119596,
+      "R_static_backward_over_dx": 0.003024184315219003,
+      "R_static_ch_pair_over_dx": 0.00042746610830235454,
+      "R_static_forward_over_dx": 0.0004286400248929567,
+      "anchor_over_dx": 23.516874492865902,
+      "base_levels_at_cells": [
+        0.496164453069859,
+        0.49616445301091444
+      ],
+      "increment_at_cells": [
+        0.000596969263934044,
+        0.0005969692526632819
+      ],
+      "level_based_fraction": [
+        6.425032513172665,
+        6.425032733216804
+      ],
+      "macro_step": 20,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.51424940893445,
+      "root_base_over_dx": 23.516874492865902,
+      "root_ch_pair_over_dx": 23.516771775231152,
+      "root_component_over_dx": {
+        "adv": 23.51435330048579,
+        "ch": 23.514221195868288,
+        "imp": 23.51985253833707
+      },
+      "root_full_over_dx": 23.51424940893445,
+      "root_half_increment_over_dx": 23.51556200999227,
+      "root_ingredient_sum_over_dx": 23.51424940893445,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.516771775231152,
+        "ch": 23.51712242819622,
+        "imp": 23.511878207691197
+      },
+      "static_reconstruction_backward_over_dx": 23.51122522461923,
+      "static_reconstruction_ch_pair_over_dx": 23.517199241339455,
+      "static_reconstruction_forward_over_dx": 23.514678048959343,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.04000000000000002
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.1265299804108508e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.003594069984455217,
+      "R_static_backward_over_dx": 0.0031436432955516125,
+      "R_static_ch_pair_over_dx": 0.00044917237489627837,
+      "R_static_forward_over_dx": 0.0004504266889036046,
+      "anchor_over_dx": 23.51424940893445,
+      "base_levels_at_cells": [
+        0.49676142233379306,
+        0.4967614222635777
+      ],
+      "increment_at_cells": [
+        0.000619307184165252,
+        0.0006193072137801736
+      ],
+      "level_based_fraction": [
+        5.229355881882975,
+        5.229355745195352
+      ],
+      "macro_step": 21,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.511525474236432,
+      "root_base_over_dx": 23.51424940893445,
+      "root_ch_pair_over_dx": 23.514166482466674,
+      "root_component_over_dx": {
+        "adv": 23.511609655018216,
+        "ch": 23.51146303289122,
+        "imp": 23.5174020308848
+      },
+      "root_full_over_dx": 23.511525474236432,
+      "root_half_increment_over_dx": 23.51288749791194,
+      "root_ingredient_sum_over_dx": 23.511525474236432,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.514166482466674,
+        "ch": 23.514544322010437,
+        "imp": 23.509009261527737
+      },
+      "static_reconstruction_backward_over_dx": 23.50838183094088,
+      "static_reconstruction_ch_pair_over_dx": 23.51461565484157,
+      "static_reconstruction_forward_over_dx": 23.511975900925336,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.04200000000000003
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.0945836237397089e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0037318847116090126,
+      "R_static_backward_over_dx": 0.003258820006855956,
+      "R_static_ch_pair_over_dx": 0.00047172212454782425,
+      "R_static_forward_over_dx": 0.00047306470475305673,
+      "anchor_over_dx": 23.511525474236432,
+      "base_levels_at_cells": [
+        0.4973807295179583,
+        0.4973807294773579
+      ],
+      "increment_at_cells": [
+        0.0006404827114637746,
+        0.0006404826845847755
+      ],
+      "level_based_fraction": [
+        4.089525658008079,
+        4.089525893022658
+      ],
+      "macro_step": 22,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.508707859558736,
+      "root_base_over_dx": 23.511525474236432,
+      "root_ch_pair_over_dx": 23.51146660283616,
+      "root_component_over_dx": {
+        "adv": 23.508768073539215,
+        "ch": 23.508601405681304,
+        "imp": 23.514862393515834
+      },
+      "root_full_over_dx": 23.508707859558736,
+      "root_half_increment_over_dx": 23.510116721626765,
+      "root_ingredient_sum_over_dx": 23.508707859558736,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.511466602836155,
+        "ch": 23.511878175209866,
+        "imp": 23.506037620637045
+      },
+      "static_reconstruction_backward_over_dx": 23.50544903955188,
+      "static_reconstruction_ch_pair_over_dx": 23.511938324960706,
+      "static_reconstruction_forward_over_dx": 23.50918092426349,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.04400000000000004
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.0912471992696737e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.00386713495930735,
+      "R_static_backward_over_dx": 0.003370724341188236,
+      "R_static_ch_pair_over_dx": 0.0004949715214408457,
+      "R_static_forward_over_dx": 0.0004964106181191141,
+      "anchor_over_dx": 23.508707859558736,
+      "base_levels_at_cells": [
+        0.4980212122294221,
+        0.4980212121619427
+      ],
+      "increment_at_cells": [
+        0.0006607531770305153,
+        0.000660753183784113
+      ],
+      "level_based_fraction": [
+        2.9947457528252355,
+        2.9947458243407485
+      ],
+      "macro_step": 23,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.505800582526156,
+      "root_base_over_dx": 23.508707859558736,
+      "root_ch_pair_over_dx": 23.508676171255157,
+      "root_component_over_dx": {
+        "adv": 23.505833709926414,
+        "ch": 23.505641677756163,
+        "imp": 23.51223732457917
+      },
+      "root_full_over_dx": 23.505800582526156,
+      "root_half_increment_over_dx": 23.507254275604804,
+      "root_ingredient_sum_over_dx": 23.505800582526156,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.508676171255157,
+        "ch": 23.50912766971757,
+        "imp": 23.502968630946928
+      },
+      "static_reconstruction_backward_over_dx": 23.502429858184968,
+      "static_reconstruction_ch_pair_over_dx": 23.509171142776598,
+      "static_reconstruction_forward_over_dx": 23.506296993144275,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.04600000000000005
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.120674539833999e-07,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.00399462717210497,
+      "R_static_backward_over_dx": 0.0034742786288362026,
+      "R_static_ch_pair_over_dx": 0.0005188044205688414,
+      "R_static_forward_over_dx": 0.0005203485432687671,
+      "anchor_over_dx": 23.505800582526156,
+      "base_levels_at_cells": [
+        0.4986819654064526,
+        0.4986819653457268
+      ],
+      "increment_at_cells": [
+        0.0006803342478721719,
+        0.0006803342445536598
+      ],
+      "level_based_fraction": [
+        1.9373338879671498,
+        1.9373339866758064
+      ],
+      "macro_step": 24,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.50280668689186,
+      "root_base_over_dx": 23.505800582526156,
+      "root_ch_pair_over_dx": 23.505798246964083,
+      "root_component_over_dx": {
+        "adv": 23.50281056657663,
+        "ch": 23.502587980558868,
+        "imp": 23.50952965335194
+      },
+      "root_full_over_dx": 23.50280668689186,
+      "root_half_increment_over_dx": 23.504303690742734,
+      "root_ingredient_sum_over_dx": 23.50280668689186,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.505798246964083,
+        "ch": 23.50629562055838,
+        "imp": 23.49980047178195
+      },
+      "static_reconstruction_backward_over_dx": 23.499332408263022,
+      "static_reconstruction_ch_pair_over_dx": 23.506317051384652,
+      "static_reconstruction_forward_over_dx": 23.503327035435127,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.048000000000000057
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 7.761115156768028e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004039310289595477,
+      "R_static_backward_over_dx": 0.0035118819450232763,
+      "R_static_ch_pair_over_dx": 0.000526582476105375,
+      "R_static_forward_over_dx": 0.0005274283445722006,
+      "anchor_over_dx": 23.50280668689186,
+      "base_levels_at_cells": [
+        0.49936229965432477,
+        0.49936229959028045
+      ],
+      "increment_at_cells": [
+        0.0006994039778766004,
+        0.0006994039636308846
+      ],
+      "level_based_fraction": [
+        0.9117768354868327,
+        0.9117769456281002
+      ],
+      "macro_step": 25,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.49972076266602,
+      "root_base_over_dx": 23.50280668689186,
+      "root_ch_pair_over_dx": 23.502835077377423,
+      "root_component_over_dx": {
+        "adv": 23.49969321804892,
+        "ch": 23.499426854016832,
+        "imp": 23.506741492728555
+      },
+      "root_full_over_dx": 23.49972076266602,
+      "root_half_increment_over_dx": 23.501267605336515,
+      "root_ingredient_sum_over_dx": 23.49972076266602,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.502835077377423,
+        "ch": 23.503384127237627,
+        "imp": 23.49645496532803
+      },
+      "static_reconstruction_backward_over_dx": 23.496208880720996,
+      "static_reconstruction_ch_pair_over_dx": 23.503361659853528,
+      "static_reconstruction_forward_over_dx": 23.50024819101059,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.050000000000000065
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 1.9303618543631273e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0042609180403694324,
+      "R_static_backward_over_dx": 0.003783548414912019,
+      "R_static_ch_pair_over_dx": 0.0004761402202007048,
+      "R_static_forward_over_dx": 0.00047736962545741335,
+      "anchor_over_dx": 23.49972076266602,
+      "base_levels_at_cells": [
+        0.5000617036322014,
+        0.5000617035539113
+      ],
+      "increment_at_cells": [
+        0.0007181118176501355,
+        0.0007181118754581162
+      ],
+      "level_based_fraction": [
+        -0.08592482491554389,
+        -0.08592470897653134
+      ],
+      "macro_step": 26,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.49647517156962,
+      "root_base_over_dx": 23.49972076266602,
+      "root_ch_pair_over_dx": 23.499782305888083,
+      "root_component_over_dx": {
+        "adv": 23.496414857752814,
+        "ch": 23.496104860883854,
+        "imp": 23.50387434789045
+      },
+      "root_full_over_dx": 23.49647517156962,
+      "root_half_increment_over_dx": 23.498097001936895,
+      "root_ingredient_sum_over_dx": 23.49647517156962,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.499782305888083,
+        "ch": 23.50039468273396,
+        "imp": 23.493032074501734
+      },
+      "static_reconstruction_backward_over_dx": 23.49269162315471,
+      "static_reconstruction_ch_pair_over_dx": 23.500258446108283,
+      "static_reconstruction_forward_over_dx": 23.49695254119508,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.052000000000000074
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.045721160470748e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004490968915416005,
+      "R_static_backward_over_dx": 0.003898790185640877,
+      "R_static_ch_pair_over_dx": 0.0005908172490904917,
+      "R_static_forward_over_dx": 0.000592178729775128,
+      "anchor_over_dx": 23.49647517156962,
+      "base_levels_at_cells": [
+        0.5007798154498515,
+        0.5007798154293694
+      ],
+      "increment_at_cells": [
+        0.0007365830711288934,
+        0.0007365831641045206
+      ],
+      "level_based_fraction": [
+        -1.0586931473409438,
+        -1.0586929858999474
+      ],
+      "macro_step": 27,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.493154196191618,
+      "root_base_over_dx": 23.49647517156962,
+      "root_ch_pair_over_dx": 23.496569700542402,
+      "root_component_over_dx": {
+        "adv": 23.493061028699522,
+        "ch": 23.492706478368653,
+        "imp": 23.50092921099246
+      },
+      "root_full_over_dx": 23.493154196191618,
+      "root_half_increment_over_dx": 23.49481366102004,
+      "root_ingredient_sum_over_dx": 23.493154196191618,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.496569700542402,
+        "ch": 23.497257195031587,
+        "imp": 23.489534483186507
+      },
+      "static_reconstruction_backward_over_dx": 23.489255406005977,
+      "static_reconstruction_ch_pair_over_dx": 23.497160517791492,
+      "static_reconstruction_forward_over_dx": 23.493746374921393,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.05400000000000008
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.157225843291144e-06,
+      "R_operator_recombination_over_dx": 3.552713678800501e-15,
+      "R_order_symmetry_over_dx": 0.004651435756827027,
+      "R_static_backward_over_dx": 0.0040022417769804974,
+      "R_static_ch_pair_over_dx": 0.0006476860950250796,
+      "R_static_forward_over_dx": 0.0006491939798465296,
+      "anchor_over_dx": 23.493154196191618,
+      "base_levels_at_cells": [
+        0.5015163985209804,
+        0.501516398593474
+      ],
+      "increment_at_cells": [
+        0.0007549208491467452,
+        0.0007549207963672977
+      ],
+      "level_based_fraction": [
+        -2.008685443903583,
+        -2.008685680366634
+      ],
+      "macro_step": 28,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.48975911706807,
+      "root_base_over_dx": 23.493154196191618,
+      "root_ch_pair_over_dx": 23.49328130879331,
+      "root_component_over_dx": {
+        "adv": 23.489633512351197,
+        "ch": 23.489233733462314,
+        "imp": 23.49784945761764
+      },
+      "root_full_over_dx": 23.48975911706807,
+      "root_half_increment_over_dx": 23.49145557801692,
+      "root_ingredient_sum_over_dx": 23.489759117068065,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.49328130879331,
+        "ch": 23.494034067680456,
+        "imp": 23.48596421650742
+      },
+      "static_reconstruction_backward_over_dx": 23.485756875291088,
+      "static_reconstruction_ch_pair_over_dx": 23.493928994888336,
+      "static_reconstruction_forward_over_dx": 23.490408311047915,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.05600000000000009
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.26525848034953e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004785460029662403,
+      "R_static_backward_over_dx": 0.004104956885967681,
+      "R_static_ch_pair_over_dx": 0.0006788358740372757,
+      "R_static_forward_over_dx": 0.0006805031436947218,
+      "anchor_over_dx": 23.48975911706807,
+      "base_levels_at_cells": [
+        0.5022713193701271,
+        0.5022713193898413
+      ],
+      "increment_at_cells": [
+        0.000773208468994091,
+        0.0007732084758305113
+      ],
+      "level_based_fraction": [
+        -2.9375252098338085,
+        -2.937525209357821
+      ],
+      "macro_step": 29,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.486290808456424,
+      "root_base_over_dx": 23.48975911706807,
+      "root_ch_pair_over_dx": 23.48991800028268,
+      "root_component_over_dx": {
+        "adv": 23.486133592511468,
+        "ch": 23.485688110200105,
+        "imp": 23.494667843024683
+      },
+      "root_full_over_dx": 23.486290808456424,
+      "root_half_increment_over_dx": 23.488023830133006,
+      "root_ingredient_sum_over_dx": 23.486290808456424,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.48991800028268,
+        "ch": 23.490736622214065,
+        "imp": 23.482322759758492
+      },
+      "static_reconstruction_backward_over_dx": 23.482185851570456,
+      "static_reconstruction_ch_pair_over_dx": 23.49059683615672,
+      "static_reconstruction_forward_over_dx": 23.48697131160012,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.0580000000000001
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.370158888709284e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.004919131399010013,
+      "R_static_backward_over_dx": 0.004207210833524044,
+      "R_static_ch_pair_over_dx": 0.0007100822121444139,
+      "R_static_forward_over_dx": 0.0007119205654859684,
+      "anchor_over_dx": 23.486290808456424,
+      "base_levels_at_cells": [
+        0.5030445278391212,
+        0.5030445278656718
+      ],
+      "increment_at_cells": [
+        0.0007915133648787043,
+        0.000791513383953224
+      ],
+      "level_based_fraction": [
+        -3.8464642218489837,
+        -3.8464641626978446
+      ],
+      "macro_step": 30,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.482749814507947,
+      "root_base_over_dx": 23.486290808456424,
+      "root_ch_pair_over_dx": 23.48648031646462,
+      "root_component_over_dx": {
+        "adv": 23.482562144853095,
+        "ch": 23.4820706530377,
+        "imp": 23.491410554095488
+      },
+      "root_full_over_dx": 23.482749814507947,
+      "root_half_increment_over_dx": 23.48451912640274,
+      "root_ingredient_sum_over_dx": 23.482749814507947,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.48648031646462,
+        "ch": 23.48736518093161,
+        "imp": 23.478611156961136
+      },
+      "static_reconstruction_backward_over_dx": 23.478542603674423,
+      "static_reconstruction_ch_pair_over_dx": 23.487190398676763,
+      "static_reconstruction_forward_over_dx": 23.483461735073433,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.06000000000000011
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.4722206646288214e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005052620906081273,
+      "R_static_backward_over_dx": 0.004309221574164468,
+      "R_static_ch_pair_over_dx": 0.0007413794240207494,
+      "R_static_forward_over_dx": 0.0007433993319168053,
+      "anchor_over_dx": 23.482749814507947,
+      "base_levels_at_cells": [
+        0.5038360412039999,
+        0.503836041249625
+      ],
+      "increment_at_cells": [
+        0.0008098892671020153,
+        0.0008098893394773432
+      ],
+      "level_based_fraction": [
+        -4.736500852426712,
+        -4.736500485486775
+      ],
+      "macro_step": 31,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.47913641480368,
+      "root_base_over_dx": 23.482749814507947,
+      "root_ch_pair_over_dx": 23.482968532447533,
+      "root_component_over_dx": {
+        "adv": 23.47891971677199,
+        "ch": 23.478382050154305,
+        "imp": 23.488077676225195
+      },
+      "root_full_over_dx": 23.47913641480368,
+      "root_half_increment_over_dx": 23.480941878545483,
+      "root_ingredient_sum_over_dx": 23.47913641480368,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.482968532447533,
+        "ch": 23.48391983596954,
+        "imp": 23.47483009756813
+      },
+      "static_reconstruction_backward_over_dx": 23.474827193229515,
+      "static_reconstruction_ch_pair_over_dx": 23.483709911871554,
+      "static_reconstruction_forward_over_dx": 23.479879814135597,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.06200000000000012
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.571695389974593e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005186057800301569,
+      "R_static_backward_over_dx": 0.004411158690949435,
+      "R_static_ch_pair_over_dx": 0.0007726883535035256,
+      "R_static_forward_over_dx": 0.000774899109352134,
+      "anchor_over_dx": 23.47913641480368,
+      "base_levels_at_cells": [
+        0.504645930471102,
+        0.5046459305891023
+      ],
+      "increment_at_cells": [
+        0.0008283783969972314,
+        0.000828378448353928
+      ],
+      "level_based_fraction": [
+        -5.608464064179939,
+        -5.60846385892134
+      ],
+      "macro_step": 32,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.475450679317127,
+      "root_base_over_dx": 23.47913641480368,
+      "root_ch_pair_over_dx": 23.479382712793996,
+      "root_component_over_dx": {
+        "adv": 23.47520659208266,
+        "ch": 23.474622704967405,
+        "imp": 23.484669110983774
+      },
+      "root_full_over_dx": 23.475450679317127,
+      "root_half_increment_over_dx": 23.47729226121271,
+      "root_ingredient_sum_over_dx": 23.475450679317127,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.479382712793996,
+        "ch": 23.48040049666536,
+        "imp": 23.470979987182975
+      },
+      "static_reconstruction_backward_over_dx": 23.471039520626178,
+      "static_reconstruction_ch_pair_over_dx": 23.4801554011475,
+      "static_reconstruction_forward_over_dx": 23.47622557842648,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.06400000000000011
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.668789669257876e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005319533743154636,
+      "R_static_backward_over_dx": 0.00451314828986682,
+      "R_static_ch_pair_over_dx": 0.000803975639662724,
+      "R_static_forward_over_dx": 0.0008063854532878167,
+      "anchor_over_dx": 23.475450679317127,
+      "base_levels_at_cells": [
+        0.5054743088680992,
+        0.5054743090374563
+      ],
+      "increment_at_cells": [
+        0.0008470125704170828,
+        0.0008470125590227529
+      ],
+      "level_based_fraction": [
+        -6.463078659391735,
+        -6.463078946281855
+      ],
+      "macro_step": 33,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.47169251773937,
+      "root_base_over_dx": 23.475450679317127,
+      "root_ch_pair_over_dx": 23.475722764413707,
+      "root_component_over_dx": {
+        "adv": 23.471422842456416,
+        "ch": 23.470792795871468,
+        "imp": 23.48118462349903
+      },
+      "root_full_over_dx": 23.47169251773937,
+      "root_half_increment_over_dx": 23.473570264133414,
+      "root_ingredient_sum_over_dx": 23.47169251773937,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.475722764413707,
+        "ch": 23.476806933059603,
+        "imp": 23.46706100403467
+      },
+      "static_reconstruction_backward_over_dx": 23.467179369449504,
+      "static_reconstruction_ch_pair_over_dx": 23.47652674005337,
+      "static_reconstruction_forward_over_dx": 23.47249890319266,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.0660000000000001
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.763664127769516e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005453105406399317,
+      "R_static_backward_over_dx": 0.004615277667447515,
+      "R_static_ch_pair_over_dx": 0.0008352117092229605,
+      "R_static_forward_over_dx": 0.0008378277389518018,
+      "anchor_over_dx": 23.47169251773937,
+      "base_levels_at_cells": [
+        0.5063213214385163,
+        0.506321321596479
+      ],
+      "increment_at_cells": [
+        0.0008658145215195701,
+        0.0008658145638430481
+      ],
+      "level_based_fraction": [
+        -7.3010111073464925,
+        -7.301010932896402
+      ],
+      "macro_step": 34,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.467861722202773,
+      "root_base_over_dx": 23.47169251773937,
+      "root_ch_pair_over_dx": 23.471988470724895,
+      "root_component_over_dx": {
+        "adv": 23.467568385246977,
+        "ch": 23.46689233048382,
+        "imp": 23.47762386968967
+      },
+      "root_full_over_dx": 23.467861722202773,
+      "root_half_increment_over_dx": 23.469775738139006,
+      "root_ingredient_sum_over_dx": 23.467861722202773,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.471988470724895,
+        "ch": 23.473138812498334,
+        "imp": 23.463073161052538
+      },
+      "static_reconstruction_backward_over_dx": 23.463246444535326,
+      "static_reconstruction_ch_pair_over_dx": 23.472823682434118,
+      "static_reconstruction_forward_over_dx": 23.468699549941725,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.06800000000000009
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.8564424141563904e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005586803544986196,
+      "R_static_backward_over_dx": 0.004717604439210987,
+      "R_static_ch_pair_over_dx": 0.0008663706401463855,
+      "R_static_forward_over_dx": 0.0008691991057752091,
+      "anchor_over_dx": 23.467861722202773,
+      "base_levels_at_cells": [
+        0.5071871359600358,
+        0.5071871361603221
+      ],
+      "increment_at_cells": [
+        0.0008847998802873347,
+        0.0008847999472921808
+      ],
+      "level_based_fraction": [
+        -8.122894363075467,
+        -8.122893974301649
+      ],
+      "macro_step": 35,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.463958000644062,
+      "root_base_over_dx": 23.467861722202773,
+      "root_ch_pair_over_dx": 23.468179537313937,
+      "root_component_over_dx": {
+        "adv": 23.463643013998528,
+        "ch": 23.462921191745075,
+        "imp": 23.47398643841178
+      },
+      "root_full_over_dx": 23.463958000644062,
+      "root_half_increment_over_dx": 23.465908433202213,
+      "root_ingredient_sum_over_dx": 23.463958000644062,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.468179537313937,
+        "ch": 23.469395728385777,
+        "imp": 23.459016340671685
+      },
+      "static_reconstruction_backward_over_dx": 23.45924039620485,
+      "static_reconstruction_ch_pair_over_dx": 23.469045907954083,
+      "static_reconstruction_forward_over_dx": 23.464827199749838,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.07000000000000008
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 2.9472127067720066e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005720633368063943,
+      "R_static_backward_over_dx": 0.004820158701782873,
+      "R_static_ch_pair_over_dx": 0.000897428445078674,
+      "R_static_forward_over_dx": 0.0009004746662810703,
+      "anchor_over_dx": 23.463958000644062,
+      "base_levels_at_cells": [
+        0.5080719358403232,
+        0.5080719361076143
+      ],
+      "increment_at_cells": [
+        0.000903977916418941,
+        0.0009039779496557987
+      ],
+      "level_based_fraction": [
+        -8.92935069951676,
+        -8.929350666891539
+      ],
+      "macro_step": 36,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.459981006370167,
+      "root_base_over_dx": 23.463958000644062,
+      "root_ch_pair_over_dx": 23.46429561153273,
+      "root_component_over_dx": {
+        "adv": 23.459646441702702,
+        "ch": 23.458879174577973,
+        "imp": 23.4702718660439
+      },
+      "root_full_over_dx": 23.459981006370167,
+      "root_half_increment_over_dx": 23.46196802990076,
+      "root_ingredient_sum_over_dx": 23.459981006370167,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.46429561153273,
+        "ch": 23.465577225667584,
+        "imp": 23.45489034061197
+      },
+      "static_reconstruction_backward_over_dx": 23.455160847668385,
+      "static_reconstruction_ch_pair_over_dx": 23.46519303997781,
+      "static_reconstruction_forward_over_dx": 23.46088148103645,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.07200000000000006
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 3.0360282892161194e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.0058545777182601455,
+      "R_static_backward_over_dx": 0.004922946504006376,
+      "R_static_ch_pair_over_dx": 0.0009283627394651717,
+      "R_static_forward_over_dx": 0.0009316312142537697,
+      "anchor_over_dx": 23.459981006370167,
+      "base_levels_at_cells": [
+        0.5089759137567421,
+        0.50897591405727
+      ],
+      "increment_at_cells": [
+        0.0009233522906628711,
+        0.0009233523348067818
+      ],
+      "level_based_fraction": [
+        -9.721006648825599,
+        -9.721006509555561
+      ],
+      "macro_step": 37,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.45593036380216,
+      "root_base_over_dx": 23.459981006370167,
+      "root_ch_pair_over_dx": 23.460336312461116,
+      "root_component_over_dx": {
+        "adv": 23.455578326186,
+        "ch": 23.45476601806335,
+        "imp": 23.4664796635074
+      },
+      "root_full_over_dx": 23.45593036380216,
+      "root_half_increment_over_dx": 23.457954167072018,
+      "root_ingredient_sum_over_dx": 23.45593036380216,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.460336312461116,
+        "ch": 23.461682823266752,
+        "imp": 23.45069490218262
+      },
+      "static_reconstruction_backward_over_dx": 23.451007417298154,
+      "static_reconstruction_ch_pair_over_dx": 23.46126467520058,
+      "static_reconstruction_forward_over_dx": 23.456861995016414,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.07400000000000005
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 3.122918329268032e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.005988602434413792,
+      "R_static_backward_over_dx": 0.005025956069353299,
+      "R_static_ch_pair_over_dx": 0.0009591518991172165,
+      "R_static_forward_over_dx": 0.0009626463650604933,
+      "anchor_over_dx": 23.45593036380216,
+      "base_levels_at_cells": [
+        0.509899266047405,
+        0.5098992663920768
+      ],
+      "increment_at_cells": [
+        0.0009429225860621004,
+        0.0009429225444008704
+      ],
+      "level_based_fraction": [
+        -10.498492870710624,
+        -10.498493700102156
+      ],
+      "macro_step": 38,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.451805687130182,
+      "root_base_over_dx": 23.45593036380216,
+      "root_ch_pair_over_dx": 23.456301250807126,
+      "root_component_over_dx": {
+        "adv": 23.45143829459116,
+        "ch": 23.45058143320895,
+        "imp": 23.462609333299454
+      },
+      "root_full_over_dx": 23.451805687130182,
+      "root_half_increment_over_dx": 23.453866464007007,
+      "root_ingredient_sum_over_dx": 23.451805687130182,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.456301250807126,
+        "ch": 23.457712029784975,
+        "imp": 23.4464297368678
+      },
+      "static_reconstruction_backward_over_dx": 23.44677973106083,
+      "static_reconstruction_ch_pair_over_dx": 23.457260402706243,
+      "static_reconstruction_forward_over_dx": 23.452768333495243,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.07600000000000004
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 3.2078765599408143e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.006122653004190681,
+      "R_static_backward_over_dx": 0.0051291549556218285,
+      "R_static_ch_pair_over_dx": 0.0009897745593896445,
+      "R_static_forward_over_dx": 0.0009934980485688527,
+      "anchor_over_dx": 23.451805687130182,
+      "base_levels_at_cells": [
+        0.5108421886334671,
+        0.5108421889364777
+      ],
+      "increment_at_cells": [
+        0.0009626836454842413,
+        0.0009626836904063074
+      ],
+      "level_based_fraction": [
+        -11.262462683692249,
+        -11.26246247290393
+      ],
+      "macro_step": 39,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.44760660138048,
+      "root_base_over_dx": 23.451805687130182,
+      "root_ch_pair_over_dx": 23.452190044951948,
+      "root_component_over_dx": {
+        "adv": 23.447225967047892,
+        "ch": 23.44632512320012,
+        "imp": 23.4586603834414
+      },
+      "root_full_over_dx": 23.44760660138048,
+      "root_half_increment_over_dx": 23.44970454031705,
+      "root_ingredient_sum_over_dx": 23.44760660138048,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.452190044951948,
+        "ch": 23.453664362954687,
+        "imp": 23.442094551190422
+      },
+      "static_reconstruction_backward_over_dx": 23.442477446424856,
+      "static_reconstruction_ch_pair_over_dx": 23.453179819511337,
+      "static_reconstruction_forward_over_dx": 23.448600099429047,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.07800000000000003
+    },
+    {
+      "R_half_increment_nonlinearity_over_dx": 3.2908820131183347e-06,
+      "R_operator_recombination_over_dx": 0.0,
+      "R_order_symmetry_over_dx": 0.006256663763668513,
+      "R_static_backward_over_dx": 0.005232499718680117,
+      "R_static_ch_pair_over_dx": 0.001020209132395422,
+      "R_static_forward_over_dx": 0.001024164044988396,
+      "anchor_over_dx": 23.44760660138048,
+      "base_levels_at_cells": [
+        0.5118048722789513,
+        0.511804872626884
+      ],
+      "increment_at_cells": [
+        0.0009826278685315382,
+        0.0009826279367619595
+      ],
+      "level_based_fraction": [
+        -12.013573659978526,
+        -12.013573179879709
+      ],
+      "macro_step": 40,
+      "resolution": "the reconstruction is static: the base field of the macro step, the three ingredient increments and the complete increment are recombined algebraically and read with the same branch readout, so the deviation from the directly measured field isolates the nonlinearity of the contour mapping",
+      "resolved_root_over_dx": 23.443332753241584,
+      "root_base_over_dx": 23.44760660138048,
+      "root_ch_pair_over_dx": 23.448002339858032,
+      "root_component_over_dx": {
+        "adv": 23.442940969676624,
+        "ch": 23.4419968061378,
+        "imp": 23.454632344233104
+      },
+      "root_full_over_dx": 23.443332753241584,
+      "root_half_increment_over_dx": 23.445468031870025,
+      "root_ingredient_sum_over_dx": 23.443332753241584,
+      "root_leave_one_out_over_dx": {
+        "adv": 23.448002339858032,
+        "ch": 23.449539357582132,
+        "imp": 23.43768906200327
+      },
+      "static_reconstruction_backward_over_dx": 23.438100253522904,
+      "static_reconstruction_ch_pair_over_dx": 23.449022548990428,
+      "static_reconstruction_forward_over_dx": 23.444356917286573,
+      "statuses": {
+        "adv": "OK",
+        "base": "OK",
+        "ch": "OK",
+        "full": "OK",
+        "half": "OK",
+        "imp": "OK",
+        "ingredient_sum": "OK",
+        "without_adv": "OK",
+        "without_ch": "OK",
+        "without_imp": "OK"
+      },
+      "t": 0.08000000000000002
+    }
+  ],
+  "stage": "L1A-2y",
+  "support_cell_resolved": true,
+  "tolerance_over_dx": 0.01,
+  "tracked_roots_at_the_macro_bases_over_dx": [
+    23.50598143513463,
+    23.512784700755542,
+    23.52088213387081,
+    23.52686662407644,
+    23.530858943136316,
+    23.53336863883416,
+    23.53480339346235,
+    23.535443354958975,
+    23.535477893906798,
+    23.5350374581888,
+    23.534214510584093,
+    23.533076551636633,
+    23.531674197015903,
+    23.530046275654378,
+    23.528223135165987,
+    23.5262288555952,
+    23.52408273361129,
+    23.521800323221676,
+    23.51939418979375,
+    23.516874492865902,
+    23.51424940893445,
+    23.511525474236432,
+    23.508707859558736,
+    23.505800582526156,
+    23.50280668689186,
+    23.49972076266602,
+    23.49647517156962,
+    23.493154196191618,
+    23.48975911706807,
+    23.486290808456424,
+    23.482749814507947,
+    23.47913641480368,
+    23.475450679317127,
+    23.47169251773937,
+    23.467861722202773,
+    23.463958000644062,
+    23.459981006370167,
+    23.45593036380216,
+    23.451805687130182,
+    23.44760660138048
+  ]
+}

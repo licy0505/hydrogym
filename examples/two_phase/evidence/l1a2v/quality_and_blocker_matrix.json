@@ -1,0 +1,40 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_adjacent_suite_failures": {
+    "test_l1a2r_merged_base_verified_or_fail_closed": {
+      "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+      "statement": "pre-existing; reproduced identically on a pristine worktree at the verified main with this stage absent; not edited"
+    },
+    "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight": {
+      "classification": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION",
+      "statement": "the frozen L1A-2t preflight asserts that every commit above the verified main touches only L1A-2t paths and that no other stage's files are present; that assertion cannot hold on a branch that carries L1A-2u and L1A-2v; not edited"
+    }
+  },
+  "hosted_ci": {
+    "observed_head_sha": "aeac0a74400757e1ebe1900103fbd360df0523a1",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
+  },
+  "inherited_statuses": {
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "SOLVER_CONTRACT_VERSION": 12,
+    "unchanged_by_this_stage": true
+  },
+  "no_promotion": true,
+  "not_run": [
+    "trajectories",
+    "contact events",
+    "temporal refinement",
+    "spatial refinement",
+    "T=8 recompute",
+    "L1B data generation",
+    "ML training",
+    "contract 13"
+  ],
+  "profile": "t0_screen",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "ratchet_expectation": "PASS_BASELINE_ONLY"
+}

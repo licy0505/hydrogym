@@ -1,0 +1,60 @@
+{
+  "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "baseline_pull_request": 24,
+  "contact_events_measured": 0,
+  "envelope_max_open_cell_speed_over_u_impact": 4.905526491646905,
+  "evidence_class": "T0_SCREEN_N192",
+  "files": {
+    "admissibility_decision.json": "f018dbda3d5997eca1831c3f9fb9f9b7ee2c3955f4c8ed39393e23c47e0ec3e3",
+    "failure_and_adversarial_tests.json": "9cc6048f29b2e3e14d427e65cd5ec3b2ef16e0eda9c265569205cd8f052dd736",
+    "frozen_evidence_verification.json": "dae843b75824dbfd3ed9f63297f8c8ea39223ddaa364aba3481a1bda668401c6",
+    "l1a2u_reproduction_check.json": "d9dc0a47ceb17426b3bf0f73900568accdb26ea9b3329dfd880c6fe486bb6a18",
+    "l1a2v_final_report.json": "d9b918de1a1915131d3f19ee65a8228db39a9872b265560b5f999f765e2aa8d0",
+    "l1a2v_final_report.md": "58088b33863ff66c47c15c39b3249dad328da25fbc25ffb688c06e47756125d4",
+    "nearwall_support_band_classification.json": "226220cee0799fe25cfce29d5802da8c9ce70b22aea4d273ebcf42391fcd1d9a",
+    "preflight.json": "9ddd33a986a8167bc717d23a644ce69015478a42c26a706e4232a3c6330c3d6b",
+    "prerequisite_and_source_map.json": "b2dab2cfde557ff1d98a71dbe7345d3aac9f675e80210cbfeabe91db4309c6ae",
+    "quality_and_blocker_matrix.json": "b66319f21ee5298f16e8091b8806a2c4910cde7eea088125cb6e5a99b3cce849",
+    "screen_contract_and_prespecification.json": "c16cc74d7e5e30090b896361dffb5a01b72efe699abbf6a5ee9efbe07fca70aa",
+    "shape_invariance_and_envelope_analysis.json": "5c97b61fb92d45f01eec5d05304238bbb37fc535c3e9ee639119c8d63effba8f",
+    "source_and_provenance.json": "ab1b243dfa432dcdd6a20397f52c3485fb9af459c7a38bf65e96ad3a174ae804",
+    "t0_per_candidate_metrics.json": "19d88ed49df25825e2dbeae63abb30df75fd5f78b86c7e945bf23e333a1abc42"
+  },
+  "hosted_ci": {
+    "reason": "not pushed at assembly time",
+    "status_for_this_head": "UNMEASURED"
+  },
+  "hosted_ci_reseal": {
+    "observed_head_sha": "aeac0a74400757e1ebe1900103fbd360df0523a1",
+    "performed": true,
+    "physics_evidence_untouched": true,
+    "status": "success"
+  },
+  "module_sha256": "1890e6557755dfdc68d6386434fd70dada65db4f268eeeb55c28a7f9aed82f42",
+  "no_hosted_ci_claim_before_push": true,
+  "no_promotion": true,
+  "profile": "t0_screen",
+  "refinement_studies_run": 0,
+  "required_files": [
+    "prerequisite_and_source_map.json",
+    "frozen_evidence_verification.json",
+    "screen_contract_and_prespecification.json",
+    "t0_per_candidate_metrics.json",
+    "l1a2u_reproduction_check.json",
+    "nearwall_support_band_classification.json",
+    "shape_invariance_and_envelope_analysis.json",
+    "admissibility_decision.json",
+    "failure_and_adversarial_tests.json",
+    "quality_and_blocker_matrix.json",
+    "source_and_provenance.json",
+    "preflight.json",
+    "l1a2v_final_report.json",
+    "l1a2v_final_report.md",
+    "manifest.json"
+  ],
+  "solver_contract_version": 12,
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "trajectories_run": 0,
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

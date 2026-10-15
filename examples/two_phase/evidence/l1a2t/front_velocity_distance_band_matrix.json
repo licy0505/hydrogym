@@ -1,0 +1,3042 @@
+{
+  "complex_heldout": {
+    "bands_dx": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        3.0
+      ],
+      [
+        3.0,
+        4.0
+      ],
+      [
+        4.0,
+        6.0
+      ],
+      [
+        6.0,
+        12.0
+      ]
+    ],
+    "candidates": {
+      "C2_BASE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": -0.014957422611540788,
+          "chi": 0.0009658153001075238,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5000000000000006,
+          "psi": 0.0023818136588801882,
+          "psi_over_u_impact_R": 0.006805181882514824,
+          "sdf": 0.16674129221032855,
+          "sdf_over_dx": 5.3357213507305135,
+          "u": 0.3100347560287805,
+          "v": 0.12420552045599198,
+          "wall_taper": 0.04363411042719903
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.0007483959958116126,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.00266791492284129,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.006780696255936087,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.020996632740848616,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.027727828497277937,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0007986260282629357,
+            "mean_v_over_u_impact": 0.00045865946466614214,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 74,
+            "liquid_fraction_mean": 0.06939002313018468,
+            "max_abs_psi": 0.0036535796243697405,
+            "max_abs_speed_over_u_impact": 0.9198789437511357,
+            "max_taper": 0.07709389925003052,
+            "mean_psi": 0.0003011381035784851,
+            "mean_taper": 0.01967746619189973,
+            "mean_u_over_u_impact": 0.093580887650856,
+            "mean_v_over_u_impact": 0.04061336799744242,
+            "min_taper": 1.867492705615037e-12,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 201,
+            "liquid_fraction_mean": 0.40639254159679455,
+            "max_abs_psi": 0.12527140974998474,
+            "max_abs_speed_over_u_impact": 3.8059116876513253,
+            "max_taper": 1.000000238418579,
+            "mean_psi": 0.02766943452508183,
+            "mean_taper": 0.6075473910021545,
+            "mean_u_over_u_impact": 1.1099071787658916,
+            "mean_v_over_u_impact": 0.1373332246967045,
+            "min_taper": 0.10793086141347885,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "complex_heldout",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 76,
+          "cells_with_stencil_crossing_plateau": 40,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            105,
+            30
+          ],
+          "argmax_chi": 0.011110623367130756,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.3665106296539307,
+          "argmax_speed_over_u_impact": 0.001058935304172337,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 4188,
+          "cells_with_chi_below_half_and_open": 1447,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3734479465138491,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5507205085017368
+      },
+      "NC_NO_WALL_TAPER": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.42744784669957636,
+          "chi": 0.0009658153001075238,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5000000000000006,
+          "psi": 0.05160649141751776,
+          "psi_over_u_impact_R": 0.14744711833576504,
+          "sdf": 0.16674129221032855,
+          "sdf_over_dx": 5.3357213507305135,
+          "u": 0.6363999533188407,
+          "v": 0.010312331181114923,
+          "wall_taper": 1.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.0007483959958116126,
+            "max_abs_psi": 0.015317232348024845,
+            "max_abs_speed_over_u_impact": 0.6851851720556825,
+            "max_taper": 1.0,
+            "mean_psi": 0.002572738135575137,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.13646281049585476,
+            "mean_v_over_u_impact": 0.05181920166316372,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.00266791492284129,
+            "max_abs_psi": 0.02210613153874874,
+            "max_abs_speed_over_u_impact": 0.8312659975552036,
+            "max_taper": 1.0,
+            "mean_psi": 0.004421440340587642,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.20125173601958615,
+            "mean_v_over_u_impact": 0.06730744995897672,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.006780696255936087,
+            "max_abs_psi": 0.02875080332159996,
+            "max_abs_speed_over_u_impact": 0.9662412911052111,
+            "max_taper": 1.0,
+            "mean_psi": 0.0063813658662184025,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.2588985196351515,
+            "mean_v_over_u_impact": 0.07867561391514406,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.020996632740848616,
+            "max_abs_psi": 0.037240296602249146,
+            "max_abs_speed_over_u_impact": 1.103520666734141,
+            "max_taper": 1.0,
+            "mean_psi": 0.009565689672692312,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.34148485013315416,
+            "mean_v_over_u_impact": 0.0872274757550653,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 74,
+            "liquid_fraction_mean": 0.06939002313018468,
+            "max_abs_psi": 0.05528340861201286,
+            "max_abs_speed_over_u_impact": 1.3687013368137944,
+            "max_taper": 1.0,
+            "mean_psi": 0.01468325894479754,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.4483873260012111,
+            "mean_v_over_u_impact": 0.08472171410441562,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 201,
+            "liquid_fraction_mean": 0.40639254159679455,
+            "max_abs_psi": 0.12616905570030212,
+            "max_abs_speed_over_u_impact": 1.9838261984955141,
+            "max_taper": 1.0,
+            "mean_psi": 0.03880466241046862,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.7531988194739452,
+            "mean_v_over_u_impact": -0.07092292902665039,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "complex_heldout",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 76,
+          "cells_with_stencil_crossing_plateau": 40,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            108,
+            33
+          ],
+          "argmax_chi": 0.014050268568098545,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.188222885131836,
+          "argmax_speed_over_u_impact": 1.103520666734141,
+          "argmax_wall_taper": 1.0,
+          "cell_count": 4188,
+          "cells_with_chi_below_half_and_open": 1447,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3734479465138491,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5507205085017368
+      },
+      "T1_NEAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.43665876268144527,
+          "chi": 0.0009658153001075238,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5000000000000006,
+          "psi": 0.05158291449789472,
+          "psi_over_u_impact_R": 0.14737975570827064,
+          "sdf": 0.16674129221032855,
+          "sdf_over_dx": 5.3357213507305135,
+          "u": 0.6939296685498118,
+          "v": 0.026959335072827603,
+          "wall_taper": 0.9994853966529113
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.0007483959958116126,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.007991561881200083,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.000152466273926294,
+            "mean_v_over_u_impact": 0.0005441796940151752,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.00266791492284129,
+            "max_abs_psi": 0.0012559288879856467,
+            "max_abs_speed_over_u_impact": 0.7615075199573454,
+            "max_taper": 0.056813597679138184,
+            "mean_psi": 4.265001781136939e-05,
+            "mean_taper": 0.00896536968409633,
+            "mean_u_over_u_impact": 0.053685738547303664,
+            "mean_v_over_u_impact": 0.03470655088839964,
+            "min_taper": 0.0006897356361150742,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.006780696255936087,
+            "max_abs_psi": 0.008635793812572956,
+            "max_abs_speed_over_u_impact": 1.8471704630194457,
+            "max_taper": 0.3327193260192871,
+            "mean_psi": 0.0012945408194178455,
+            "mean_taper": 0.22499578955926394,
+            "mean_u_over_u_impact": 0.2732891060150474,
+            "mean_v_over_u_impact": 0.13143630813534754,
+            "min_taper": 0.1525195986032486,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.020996632740848616,
+            "max_abs_psi": 0.03289349004626274,
+            "max_abs_speed_over_u_impact": 2.485032583705867,
+            "max_taper": 0.8832768201828003,
+            "mean_psi": 0.006201999298865399,
+            "mean_taper": 0.6680690959880227,
+            "mean_u_over_u_impact": 0.5794592875496218,
+            "mean_v_over_u_impact": 0.22419559960904303,
+            "min_taper": 0.5781798958778381,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 74,
+            "liquid_fraction_mean": 0.06939002313018468,
+            "max_abs_psi": 0.05528340861201286,
+            "max_abs_speed_over_u_impact": 2.1948921599745703,
+            "max_taper": 1.0,
+            "mean_psi": 0.01439028390024788,
+            "mean_taper": 0.9824842432060757,
+            "mean_u_over_u_impact": 0.5540418410674167,
+            "mean_v_over_u_impact": 0.12801208134715125,
+            "min_taper": 0.8966047763824463,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 201,
+            "liquid_fraction_mean": 0.40639254159679455,
+            "max_abs_psi": 0.12616905570030212,
+            "max_abs_speed_over_u_impact": 1.9838261984955141,
+            "max_taper": 1.0,
+            "mean_psi": 0.03880466241046862,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.7531988194739452,
+            "mean_v_over_u_impact": -0.07092292902665039,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "complex_heldout",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 76,
+          "cells_with_stencil_crossing_plateau": 40,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            108,
+            33
+          ],
+          "argmax_chi": 0.014050268568098545,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.188222885131836,
+          "argmax_speed_over_u_impact": 2.462821933122661,
+          "argmax_wall_taper": 0.587709903717041,
+          "cell_count": 4188,
+          "cells_with_chi_below_half_and_open": 1447,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3734479465138491,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5507205085017368
+      },
+      "T2_NEAR_WIDE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.10201444049918684,
+          "chi": 0.0009658153001075238,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5000000000000006,
+          "psi": 0.030231511904313113,
+          "psi_over_u_impact_R": 0.08637574829803747,
+          "sdf": 0.16674129221032855,
+          "sdf_over_dx": 5.3357213507305135,
+          "u": 1.041414139390175,
+          "v": 0.3359079770859643,
+          "wall_taper": 0.5768419845159458
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.0007483959958116126,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0010732241690441888,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 1.976950779163207e-05,
+            "mean_v_over_u_impact": 7.314423957581722e-05,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.00266791492284129,
+            "max_abs_psi": 0.00018536299467086792,
+            "max_abs_speed_over_u_impact": 0.13910743699702147,
+            "max_taper": 0.008385139517486095,
+            "mean_psi": 6.14550468574561e-06,
+            "mean_taper": 0.0012369434108945709,
+            "mean_u_over_u_impact": 0.008943812022312026,
+            "mean_v_over_u_impact": 0.00605447354736008,
+            "min_taper": 8.903160050977021e-05,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.006780696255936087,
+            "max_abs_psi": 0.0015572791453450918,
+            "max_abs_speed_over_u_impact": 0.45639987506739343,
+            "max_taper": 0.061346929520368576,
+            "mean_psi": 0.00022098944913333178,
+            "mean_taper": 0.038706540081061815,
+            "mean_u_over_u_impact": 0.06091331953767191,
+            "mean_v_over_u_impact": 0.030968103662648138,
+            "min_taper": 0.024678535759449005,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.020996632740848616,
+            "max_abs_psi": 0.009878966026008129,
+            "max_abs_speed_over_u_impact": 1.271002651996017,
+            "max_taper": 0.2652762532234192,
+            "mean_psi": 0.001480419872850679,
+            "mean_taper": 0.15918526171069397,
+            "mean_u_over_u_impact": 0.21371093052775567,
+            "mean_v_over_u_impact": 0.09314236372617152,
+            "min_taper": 0.1268278956413269,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 74,
+            "liquid_fraction_mean": 0.06939002313018468,
+            "max_abs_psi": 0.03630785271525383,
+            "max_abs_speed_over_u_impact": 2.3952729513322955,
+            "max_taper": 0.6790674924850464,
+            "mean_psi": 0.0069292431936989795,
+            "mean_taper": 0.46789386103282105,
+            "mean_u_over_u_impact": 0.5481668056484345,
+            "mean_v_over_u_impact": 0.19014281190406157,
+            "min_taper": 0.2753017246723175,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 201,
+            "liquid_fraction_mean": 0.40639254159679455,
+            "max_abs_psi": 0.12616905570030212,
+            "max_abs_speed_over_u_impact": 2.6797815716239106,
+            "max_taper": 1.0,
+            "mean_psi": 0.0375688204525133,
+            "mean_taper": 0.9500040417879968,
+            "mean_u_over_u_impact": 0.8739347824085233,
+            "mean_v_over_u_impact": -0.01544414675647628,
+            "min_taper": 0.7315857410430908,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "complex_heldout",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 76,
+          "cells_with_stencil_crossing_plateau": 40,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            108,
+            33
+          ],
+          "argmax_chi": 0.014050268568098545,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.188222885131836,
+          "argmax_speed_over_u_impact": 0.8717116460590647,
+          "argmax_wall_taper": 0.1298685073852539,
+          "cell_count": 4188,
+          "cells_with_chi_below_half_and_open": 1447,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3734479465138491,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5507205085017368
+      },
+      "T3_FAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": -0.1335249923302182,
+          "chi": 0.0009658153001075238,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5000000000000006,
+          "psi": 0.012947733420392,
+          "psi_over_u_impact_R": 0.03699352405826286,
+          "sdf": 0.16674129221032855,
+          "sdf_over_dx": 5.3357213507305135,
+          "u": 1.2256427158383927,
+          "v": 0.5307394981627304,
+          "wall_taper": 0.2379390089878685
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.0007483959958116126,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.00266791492284129,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.006780696255936087,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.020996632740848616,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.18603799958409167,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.005416900284854807,
+            "mean_v_over_u_impact": 0.0032305500396836743,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 74,
+            "liquid_fraction_mean": 0.06939002313018468,
+            "max_abs_psi": 0.01953725330531597,
+            "max_abs_speed_over_u_impact": 3.4471314208958326,
+            "max_taper": 0.3994694650173187,
+            "mean_psi": 0.0017626194649792144,
+            "mean_taper": 0.11507678827656032,
+            "mean_u_over_u_impact": 0.4293265463748344,
+            "mean_v_over_u_impact": 0.18276246791208142,
+            "min_taper": 1.493865968427155e-11,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 201,
+            "liquid_fraction_mean": 0.40639254159679455,
+            "max_abs_psi": 0.12616905570030212,
+            "max_abs_speed_over_u_impact": 4.194151630386702,
+            "max_taper": 1.0,
+            "mean_psi": 0.0371374775485134,
+            "mean_taper": 0.9317141427329524,
+            "mean_u_over_u_impact": 0.9698505518831331,
+            "mean_v_over_u_impact": 0.026354064067252894,
+            "min_taper": 0.515524685382843,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "complex_heldout",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 76,
+          "cells_with_stencil_crossing_plateau": 40,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            105,
+            30
+          ],
+          "argmax_chi": 0.011110623367130756,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.3665106296539307,
+          "argmax_speed_over_u_impact": 0.0077554876916110516,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 4188,
+          "cells_with_chi_below_half_and_open": 1447,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3734479465138491,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5507205085017368
+      }
+    }
+  },
+  "flat_we100_ct050": {
+    "bands_dx": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        3.0
+      ],
+      [
+        3.0,
+        4.0
+      ],
+      [
+        4.0,
+        6.0
+      ],
+      [
+        6.0,
+        12.0
+      ]
+    ],
+    "candidates": {
+      "C2_BASE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -1.6555058625064304e-06,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.006836568005383015,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.00040215105914017735,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.0025907971430569887,
+            "max_abs_speed_over_u_impact": 0.7753448355390898,
+            "max_taper": 0.04876899719238281,
+            "mean_psi": -7.909557568970794e-05,
+            "mean_taper": 0.025493621826171875,
+            "mean_u_over_u_impact": -0.028091167702394372,
+            "mean_v_over_u_impact": -0.02184750932878267,
+            "min_taper": 0.0022182464599609375,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11639278382062912,
+            "max_abs_speed_over_u_impact": 3.445641975695966,
+            "max_taper": 0.9977817535400391,
+            "mean_psi": -0.0037660200660135233,
+            "mean_taper": 0.6581687927246094,
+            "mean_u_over_u_impact": -0.15692208678114647,
+            "mean_v_over_u_impact": -1.0409384307761986,
+            "min_taper": 0.1800060272216797,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we100_ct050",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            0,
+            0
+          ],
+          "argmax_chi": 0.9999545812606812,
+          "argmax_control_volume_fraction": 0.0,
+          "argmax_sdf_over_dx": -7.5,
+          "argmax_speed_over_u_impact": 0.0,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "NC_NO_WALL_TAPER": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.649945330530116,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0024538094956825644,
+          "psi_over_u_impact_R": -0.007010884273378756,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.03435862118497244,
+          "v": -0.324972665265058,
+          "wall_taper": 1.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.017554055899381638,
+            "max_abs_speed_over_u_impact": 0.6674702019822405,
+            "max_taper": 1.0,
+            "mean_psi": -0.0010325915234930376,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.03917811548008638,
+            "mean_v_over_u_impact": -0.2735421517316033,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0229767095297575,
+            "max_abs_speed_over_u_impact": 0.7848647655749224,
+            "max_taper": 1.0,
+            "mean_psi": -0.0013515711488092646,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.045945851241841036,
+            "mean_v_over_u_impact": -0.3581632980529,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.02926691062748432,
+            "max_abs_speed_over_u_impact": 0.9039019262658908,
+            "max_taper": 1.0,
+            "mean_psi": -0.0017215829780873131,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.05270691478953642,
+            "mean_v_over_u_impact": -0.45635074640021606,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.03641314432024956,
+            "max_abs_speed_over_u_impact": 1.0223543342641503,
+            "max_taper": 1.0,
+            "mean_psi": -0.0021419496658970326,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.05929567533380845,
+            "mean_v_over_u_impact": -0.5679284018628737,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.05312385410070419,
+            "max_abs_speed_over_u_impact": 1.2492720232027654,
+            "max_taper": 1.0,
+            "mean_psi": -0.002867848667151788,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.06843472578946282,
+            "mean_v_over_u_impact": -0.7606581112041193,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.00523962789014274,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.08428833180782842,
+            "mean_v_over_u_impact": -1.3906790351166445,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we100_ct050",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            84,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 0.9662412911052111,
+          "argmax_wall_taper": 1.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T1_NEAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.18100353502042388,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0006833595655715184,
+          "psi_over_u_impact_R": -0.0019524559016329097,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.07146007154674557,
+          "v": -0.09050176751021194,
+          "wall_taper": 0.2778966828126024
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.024595526978373528,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.0014467957046102075,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0003688278084155172,
+            "max_abs_speed_over_u_impact": 0.5371193202951585,
+            "max_taper": 0.01605224609375,
+            "mean_psi": -2.1695753436206895e-05,
+            "mean_taper": 0.01605224609375,
+            "mean_u_over_u_impact": -0.03159517049789429,
+            "mean_v_over_u_impact": -0.005749325418625684,
+            "min_taper": 0.01605224609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.00805447343736887,
+            "max_abs_speed_over_u_impact": 1.7356802926047705,
+            "max_taper": 0.27520751953125,
+            "mean_psi": -0.0004737925551393453,
+            "mean_taper": 0.27520751953125,
+            "mean_u_over_u_impact": -0.1020806256462546,
+            "mean_v_over_u_impact": -0.12559115295024478,
+            "min_taper": 0.27520751953125,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.026391973719000816,
+            "max_abs_speed_over_u_impact": 2.3782970291214625,
+            "max_taper": 0.72479248046875,
+            "mean_psi": -0.0015524690422941657,
+            "mean_taper": 0.72479248046875,
+            "mean_u_over_u_impact": -0.1397107068230124,
+            "mean_v_over_u_impact": -0.411630239118548,
+            "min_taper": 0.72479248046875,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.05312385410070419,
+            "max_abs_speed_over_u_impact": 1.7971063606176032,
+            "max_taper": 1.0,
+            "mean_psi": -0.0028468943474923864,
+            "mean_taper": 0.991973876953125,
+            "mean_u_over_u_impact": -0.08948703022564158,
+            "mean_v_over_u_impact": -0.7551008787225274,
+            "min_taper": 0.98394775390625,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.00523962789014274,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.08428833180782842,
+            "mean_v_over_u_impact": -1.3906790351166445,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we100_ct050",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            86,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 1.7758206853374545,
+          "argmax_wall_taper": 0.27520751953125,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T2_NEAR_WIDE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.032520936820417734,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.00012202048423546267,
+          "psi_over_u_impact_R": -0.0003486299549584648,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.018084028231645205,
+          "v": -0.016260468410208867,
+          "wall_taper": 0.04955398297476441
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.00341996387578547,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.0002011743456344394,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 5.096800305182114e-05,
+            "max_abs_speed_over_u_impact": 0.09577348599197655,
+            "max_taper": 0.0022182464599609375,
+            "mean_psi": -2.9981178265777144e-06,
+            "mean_taper": 0.0022182464599609375,
+            "mean_u_over_u_impact": -0.005633725401233225,
+            "mean_v_over_u_impact": -0.0007994334026828737,
+            "min_taper": 0.0022182464599609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0014273178530856967,
+            "max_abs_speed_over_u_impact": 0.4364332482515617,
+            "max_taper": 0.04876899719238281,
+            "mean_psi": -8.395987371092334e-05,
+            "mean_taper": 0.04876899719238281,
+            "mean_u_over_u_impact": -0.025670240907108084,
+            "mean_v_over_u_impact": -0.02239412091234151,
+            "min_taper": 0.04876899719238281,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.006554585415869951,
+            "max_abs_speed_over_u_impact": 1.048357616887306,
+            "max_taper": 0.1800060272216797,
+            "mean_psi": -0.00038556384799235007,
+            "mean_taper": 0.1800060272216797,
+            "mean_u_over_u_impact": -0.06164131445043227,
+            "mean_v_over_u_impact": -0.10286605062291902,
+            "min_taper": 0.1800060272216797,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.0327228344976902,
+            "max_abs_speed_over_u_impact": 2.3062782928646177,
+            "max_taper": 0.6159725189208984,
+            "mean_psi": -0.0014637390370754635,
+            "mean_taper": 0.5,
+            "mean_u_over_u_impact": -0.11925308143391329,
+            "mean_v_over_u_impact": -0.3906594891758526,
+            "min_taper": 0.38402748107910156,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.4591734999998707,
+            "max_taper": 1.0,
+            "mean_psi": -0.005092689110075726,
+            "mean_taper": 0.9615011215209961,
+            "mean_u_over_u_impact": -0.10564161515703388,
+            "mean_v_over_u_impact": -1.360095896265086,
+            "min_taper": 0.8199939727783203,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we100_ct050",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            86,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 0.4465340029428682,
+          "argmax_wall_taper": 0.04876899719238281,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T3_FAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -1.161572979182557e-05,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.04796826094388962,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.002821662408464095,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.014620084315538406,
+            "max_abs_speed_over_u_impact": 3.006290548287706,
+            "max_taper": 0.27520751953125,
+            "mean_psi": -0.00045095679952817806,
+            "mean_taper": 0.1456298828125,
+            "mean_u_over_u_impact": -0.11733763007556691,
+            "mean_v_over_u_impact": -0.12077404893523849,
+            "min_taper": 0.01605224609375,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 3.836316861460916,
+            "max_taper": 1.0,
+            "mean_psi": -0.005059395277617024,
+            "mean_taper": 0.9514567057291666,
+            "mean_u_over_u_impact": -0.12188265136643953,
+            "mean_v_over_u_impact": -1.3558140104892207,
+            "min_taper": 0.72479248046875,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we100_ct050",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            0,
+            0
+          ],
+          "argmax_chi": 0.9999545812606812,
+          "argmax_control_volume_fraction": 0.0,
+          "argmax_sdf_over_dx": -7.5,
+          "argmax_speed_over_u_impact": 0.0,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      }
+    }
+  },
+  "flat_we200_ct000": {
+    "bands_dx": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        3.0
+      ],
+      [
+        3.0,
+        4.0
+      ],
+      [
+        4.0,
+        6.0
+      ],
+      [
+        6.0,
+        12.0
+      ]
+    ],
+    "candidates": {
+      "C2_BASE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -1.6555058625064304e-06,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.006836568005383015,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.00040215105914017735,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.0025907971430569887,
+            "max_abs_speed_over_u_impact": 0.7753448355390898,
+            "max_taper": 0.04876899719238281,
+            "mean_psi": -7.909557568970794e-05,
+            "mean_taper": 0.025493621826171875,
+            "mean_u_over_u_impact": -0.028091167702394372,
+            "mean_v_over_u_impact": -0.02184750932878267,
+            "min_taper": 0.0022182464599609375,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11639278382062912,
+            "max_abs_speed_over_u_impact": 3.445641975695966,
+            "max_taper": 0.9977817535400391,
+            "mean_psi": -0.0037660200660135233,
+            "mean_taper": 0.6581687927246094,
+            "mean_u_over_u_impact": -0.15692208678114647,
+            "mean_v_over_u_impact": -1.0409384307761986,
+            "min_taper": 0.1800060272216797,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we200_ct000",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            0,
+            0
+          ],
+          "argmax_chi": 0.9999545812606812,
+          "argmax_control_volume_fraction": 0.0,
+          "argmax_sdf_over_dx": -7.5,
+          "argmax_speed_over_u_impact": 0.0,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "NC_NO_WALL_TAPER": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.649945330530116,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0024538094956825644,
+          "psi_over_u_impact_R": -0.007010884273378756,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.03435862118497244,
+          "v": -0.324972665265058,
+          "wall_taper": 1.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.017554055899381638,
+            "max_abs_speed_over_u_impact": 0.6674702019822405,
+            "max_taper": 1.0,
+            "mean_psi": -0.0010325915234930376,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.03917811548008638,
+            "mean_v_over_u_impact": -0.2735421517316033,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0229767095297575,
+            "max_abs_speed_over_u_impact": 0.7848647655749224,
+            "max_taper": 1.0,
+            "mean_psi": -0.0013515711488092646,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.045945851241841036,
+            "mean_v_over_u_impact": -0.3581632980529,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.02926691062748432,
+            "max_abs_speed_over_u_impact": 0.9039019262658908,
+            "max_taper": 1.0,
+            "mean_psi": -0.0017215829780873131,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.05270691478953642,
+            "mean_v_over_u_impact": -0.45635074640021606,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.03641314432024956,
+            "max_abs_speed_over_u_impact": 1.0223543342641503,
+            "max_taper": 1.0,
+            "mean_psi": -0.0021419496658970326,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.05929567533380845,
+            "mean_v_over_u_impact": -0.5679284018628737,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.05312385410070419,
+            "max_abs_speed_over_u_impact": 1.2492720232027654,
+            "max_taper": 1.0,
+            "mean_psi": -0.002867848667151788,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.06843472578946282,
+            "mean_v_over_u_impact": -0.7606581112041193,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.00523962789014274,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.08428833180782842,
+            "mean_v_over_u_impact": -1.3906790351166445,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we200_ct000",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            84,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 0.9662412911052111,
+          "argmax_wall_taper": 1.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T1_NEAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.18100353502042388,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0006833595655715184,
+          "psi_over_u_impact_R": -0.0019524559016329097,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.07146007154674557,
+          "v": -0.09050176751021194,
+          "wall_taper": 0.2778966828126024
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.024595526978373528,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.0014467957046102075,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0003688278084155172,
+            "max_abs_speed_over_u_impact": 0.5371193202951585,
+            "max_taper": 0.01605224609375,
+            "mean_psi": -2.1695753436206895e-05,
+            "mean_taper": 0.01605224609375,
+            "mean_u_over_u_impact": -0.03159517049789429,
+            "mean_v_over_u_impact": -0.005749325418625684,
+            "min_taper": 0.01605224609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.00805447343736887,
+            "max_abs_speed_over_u_impact": 1.7356802926047705,
+            "max_taper": 0.27520751953125,
+            "mean_psi": -0.0004737925551393453,
+            "mean_taper": 0.27520751953125,
+            "mean_u_over_u_impact": -0.1020806256462546,
+            "mean_v_over_u_impact": -0.12559115295024478,
+            "min_taper": 0.27520751953125,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.026391973719000816,
+            "max_abs_speed_over_u_impact": 2.3782970291214625,
+            "max_taper": 0.72479248046875,
+            "mean_psi": -0.0015524690422941657,
+            "mean_taper": 0.72479248046875,
+            "mean_u_over_u_impact": -0.1397107068230124,
+            "mean_v_over_u_impact": -0.411630239118548,
+            "min_taper": 0.72479248046875,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.05312385410070419,
+            "max_abs_speed_over_u_impact": 1.7971063606176032,
+            "max_taper": 1.0,
+            "mean_psi": -0.0028468943474923864,
+            "mean_taper": 0.991973876953125,
+            "mean_u_over_u_impact": -0.08948703022564158,
+            "mean_v_over_u_impact": -0.7551008787225274,
+            "min_taper": 0.98394775390625,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.00523962789014274,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.08428833180782842,
+            "mean_v_over_u_impact": -1.3906790351166445,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we200_ct000",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            86,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 1.7758206853374545,
+          "argmax_wall_taper": 0.27520751953125,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T2_NEAR_WIDE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.032520936820417734,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.00012202048423546267,
+          "psi_over_u_impact_R": -0.0003486299549584648,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -0.018084028231645205,
+          "v": -0.016260468410208867,
+          "wall_taper": 0.04955398297476441
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.00341996387578547,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.0002011743456344394,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 5.096800305182114e-05,
+            "max_abs_speed_over_u_impact": 0.09577348599197655,
+            "max_taper": 0.0022182464599609375,
+            "mean_psi": -2.9981178265777144e-06,
+            "mean_taper": 0.0022182464599609375,
+            "mean_u_over_u_impact": -0.005633725401233225,
+            "mean_v_over_u_impact": -0.0007994334026828737,
+            "min_taper": 0.0022182464599609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0014273178530856967,
+            "max_abs_speed_over_u_impact": 0.4364332482515617,
+            "max_taper": 0.04876899719238281,
+            "mean_psi": -8.395987371092334e-05,
+            "mean_taper": 0.04876899719238281,
+            "mean_u_over_u_impact": -0.025670240907108084,
+            "mean_v_over_u_impact": -0.02239412091234151,
+            "min_taper": 0.04876899719238281,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.006554585415869951,
+            "max_abs_speed_over_u_impact": 1.048357616887306,
+            "max_taper": 0.1800060272216797,
+            "mean_psi": -0.00038556384799235007,
+            "mean_taper": 0.1800060272216797,
+            "mean_u_over_u_impact": -0.06164131445043227,
+            "mean_v_over_u_impact": -0.10286605062291902,
+            "min_taper": 0.1800060272216797,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.0327228344976902,
+            "max_abs_speed_over_u_impact": 2.3062782928646177,
+            "max_taper": 0.6159725189208984,
+            "mean_psi": -0.0014637390370754635,
+            "mean_taper": 0.5,
+            "mean_u_over_u_impact": -0.11925308143391329,
+            "mean_v_over_u_impact": -0.3906594891758526,
+            "min_taper": 0.38402748107910156,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 2.4591734999998707,
+            "max_taper": 1.0,
+            "mean_psi": -0.005092689110075726,
+            "mean_taper": 0.9615011215209961,
+            "mean_u_over_u_impact": -0.10564161515703388,
+            "mean_v_over_u_impact": -1.360095896265086,
+            "min_taper": 0.8199939727783203,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we200_ct000",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            86,
+            10
+          ],
+          "argmax_chi": 0.03444519639015198,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 2.5,
+          "argmax_speed_over_u_impact": 0.4465340029428682,
+          "argmax_wall_taper": 0.04876899719238281,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      },
+      "T3_FAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.034294887487784254,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.07831191984795716,
+          "sdf_over_dx": 2.505981435134629,
+          "u": -1.161572979182557e-05,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.09269090812493952,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.20286655654645247,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.38390403221330327,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 17,
+            "liquid_fraction_mean": 0.5997253010108627,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.04796826094388962,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -0.002821662408464095,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 34,
+            "liquid_fraction_mean": 0.8384508300893954,
+            "max_abs_psi": 0.014620084315538406,
+            "max_abs_speed_over_u_impact": 3.006290548287706,
+            "max_taper": 0.27520751953125,
+            "mean_psi": -0.00045095679952817806,
+            "mean_taper": 0.1456298828125,
+            "mean_u_over_u_impact": -0.11733763007556691,
+            "mean_v_over_u_impact": -0.12077404893523849,
+            "min_taper": 0.01605224609375,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9867641027643823,
+            "max_abs_psi": 0.11665154248476028,
+            "max_abs_speed_over_u_impact": 3.836316861460916,
+            "max_taper": 1.0,
+            "mean_psi": -0.005059395277617024,
+            "mean_taper": 0.9514567057291666,
+            "mean_u_over_u_impact": -0.12188265136643953,
+            "mean_v_over_u_impact": -1.3558140104892207,
+            "min_taper": 0.72479248046875,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "flat_we200_ct000",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 34,
+          "cells_with_stencil_crossing_plateau": 34,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            0,
+            0
+          ],
+          "argmax_chi": 0.9999545812606812,
+          "argmax_control_volume_fraction": 0.0,
+          "argmax_sdf_over_dx": -7.5,
+          "argmax_speed_over_u_impact": 0.0,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2112,
+          "cells_with_chi_below_half_and_open": 576,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.2727272727272727,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.549507021597507
+      }
+    }
+  },
+  "pillar_training": {
+    "bands_dx": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        2.0
+      ],
+      [
+        2.0,
+        3.0
+      ],
+      [
+        3.0,
+        4.0
+      ],
+      [
+        4.0,
+        6.0
+      ],
+      [
+        6.0,
+        12.0
+      ]
+    ],
+    "candidates": {
+      "C2_BASE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.026480677966892092,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.08456192133807328,
+          "sdf_over_dx": 2.705981482818345,
+          "u": -4.27471948191866e-06,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 43,
+            "liquid_fraction_mean": 0.033046316348367695,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 41,
+            "liquid_fraction_mean": 0.07466247336776798,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.1468767198795963,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 29,
+            "liquid_fraction_mean": 0.3212039222068301,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.01692878616104973,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -3.85037718184196e-07,
+            "mean_v_over_u_impact": -0.001263834752284436,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.7533471983806951,
+            "max_abs_psi": 0.004487553611397743,
+            "max_abs_speed_over_u_impact": 0.9557370943883582,
+            "max_taper": 0.10110974311828613,
+            "mean_psi": -0.0001481751143700942,
+            "mean_taper": 0.03545864071412851,
+            "mean_u_over_u_impact": -0.030296438361371036,
+            "mean_v_over_u_impact": -0.09230946558282564,
+            "min_taper": 7.1486501838080585e-06,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9809021276044386,
+            "max_abs_psi": 0.10475950688123703,
+            "max_abs_speed_over_u_impact": 3.1725904230003357,
+            "max_taper": 0.9998946189880371,
+            "mean_psi": -0.0033813992186504252,
+            "mean_taper": 0.680781240848934,
+            "mean_u_over_u_impact": -0.13627974309173285,
+            "mean_v_over_u_impact": -1.1814336017066358,
+            "min_taper": 0.14806659519672394,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "pillar_training",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 49,
+          "cells_with_stencil_crossing_plateau": 36,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            89,
+            23
+          ],
+          "argmax_chi": 0.014006223529577255,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.1906111240386963,
+          "argmax_speed_over_u_impact": 1.5613006326020695e-05,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2936,
+          "cells_with_chi_below_half_and_open": 880,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3460490463215259,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5500927792312642
+      },
+      "NC_NO_WALL_TAPER": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.649945330530116,
+          "chi": 0.026480677966892092,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0024538094956825644,
+          "psi_over_u_impact_R": -0.007010884273378756,
+          "sdf": 0.08456192133807328,
+          "sdf_over_dx": 2.705981482818345,
+          "u": -0.03435862118497244,
+          "v": -0.324972665265058,
+          "wall_taper": 1.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 43,
+            "liquid_fraction_mean": 0.033046316348367695,
+            "max_abs_psi": 0.014403175562620163,
+            "max_abs_speed_over_u_impact": 0.5647919296799343,
+            "max_taper": 1.0,
+            "mean_psi": 0.0,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": -0.11514167074695394,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 41,
+            "liquid_fraction_mean": 0.07466247336776798,
+            "max_abs_psi": 0.0185711607336998,
+            "max_abs_speed_over_u_impact": 0.672133810039673,
+            "max_taper": 1.0,
+            "mean_psi": 0.0,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -8.873680821036431e-08,
+            "mean_v_over_u_impact": -0.14991268663271046,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.1468767198795963,
+            "max_abs_psi": 0.023356257006525993,
+            "max_abs_speed_over_u_impact": 0.786627163559917,
+            "max_taper": 1.0,
+            "mean_psi": -1.3989126210699163e-09,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -1.2778753164009406e-05,
+            "mean_v_over_u_impact": -0.19260744795181567,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 29,
+            "liquid_fraction_mean": 0.3212039222068301,
+            "max_abs_psi": 0.028744958341121674,
+            "max_abs_speed_over_u_impact": 0.9075043264755276,
+            "max_taper": 1.0,
+            "mean_psi": -0.0018869062266182073,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.09318340979195361,
+            "mean_v_over_u_impact": -0.32708016364305315,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.7533471983806951,
+            "max_abs_psi": 0.04628041759133339,
+            "max_abs_speed_over_u_impact": 1.187770452367608,
+            "max_taper": 1.0,
+            "mean_psi": -0.003501046448945999,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.09998653280107599,
+            "mean_v_over_u_impact": -0.694230114550967,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9809021276044386,
+            "max_abs_psi": 0.10532274842262268,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.004616807415789249,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.081374444213568,
+            "mean_v_over_u_impact": -1.3713948659452737,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "pillar_training",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 49,
+          "cells_with_stencil_crossing_plateau": 36,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            89,
+            23
+          ],
+          "argmax_chi": 0.014006223529577255,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.1906111240386963,
+          "argmax_speed_over_u_impact": 0.8275692274859634,
+          "argmax_wall_taper": 1.0,
+          "cell_count": 2936,
+          "cells_with_chi_below_half_and_open": 880,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3460490463215259,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5500927792312642
+      },
+      "T1_NEAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.23702802936694606,
+          "chi": 0.026480677966892092,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.0008948750182498176,
+          "psi_over_u_impact_R": -0.0025567857664280506,
+          "sdf": 0.08456192133807328,
+          "sdf_over_dx": 2.705981482818345,
+          "u": -0.07752787265092621,
+          "v": -0.11851401468347303,
+          "wall_taper": 0.3641070059008285
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 43,
+            "liquid_fraction_mean": 0.033046316348367695,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.10698711598187348,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": -0.007685153406729896,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 41,
+            "liquid_fraction_mean": 0.07466247336776798,
+            "max_abs_psi": 0.0012177941389381886,
+            "max_abs_speed_over_u_impact": 0.6868000915971629,
+            "max_taper": 0.06557447463274002,
+            "mean_psi": 0.0,
+            "mean_taper": 0.03997280612224486,
+            "mean_u_over_u_impact": -2.4421036336783932e-08,
+            "mean_v_over_u_impact": -0.08544409981568163,
+            "min_taper": 0.01605224609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.1468767198795963,
+            "max_abs_psi": 0.009387972764670849,
+            "max_abs_speed_over_u_impact": 1.5945900194404687,
+            "max_taper": 0.4019467830657959,
+            "mean_psi": -3.849912753267768e-10,
+            "mean_taper": 0.35259202351936925,
+            "mean_u_over_u_impact": -9.26194479689002e-06,
+            "mean_v_over_u_impact": -0.2678914469356117,
+            "min_taper": 0.2367876172065735,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 29,
+            "liquid_fraction_mean": 0.3212039222068301,
+            "max_abs_psi": 0.023725200444459915,
+            "max_abs_speed_over_u_impact": 1.8889678467056015,
+            "max_taper": 0.8429446220397949,
+            "mean_psi": -0.0015278255338420548,
+            "mean_taper": 0.7753783957711582,
+            "mean_u_over_u_impact": -0.08162262013727992,
+            "mean_v_over_u_impact": -0.523758255567498,
+            "min_taper": 0.5888094902038574,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.7533471983806951,
+            "max_abs_psi": 0.04628041759133339,
+            "max_abs_speed_over_u_impact": 1.7242823903521758,
+            "max_taper": 1.000000238418579,
+            "mean_psi": -0.0034418083531291862,
+            "mean_taper": 0.9913739891428697,
+            "mean_u_over_u_impact": -0.10881292035705165,
+            "mean_v_over_u_impact": -0.7445561823092008,
+            "min_taper": 0.9145165681838989,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9809021276044386,
+            "max_abs_psi": 0.10532274842262268,
+            "max_abs_speed_over_u_impact": 2.3478715672497046,
+            "max_taper": 1.0,
+            "mean_psi": -0.004616807415789249,
+            "mean_taper": 1.0,
+            "mean_u_over_u_impact": -0.081374444213568,
+            "mean_v_over_u_impact": -1.3713948659452737,
+            "min_taper": 1.0,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "pillar_training",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 49,
+          "cells_with_stencil_crossing_plateau": 36,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            89,
+            23
+          ],
+          "argmax_chi": 0.014006223529577255,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.1906111240386963,
+          "argmax_speed_over_u_impact": 1.8889678467056015,
+          "argmax_wall_taper": 0.5888094902038574,
+          "cell_count": 2936,
+          "cells_with_chi_below_half_and_open": 880,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3460490463215259,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5500927792312642
+      },
+      "T2_NEAR_WIDE": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.045032392722275535,
+          "chi": 0.026480677966892092,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": -0.00016943982269494072,
+          "psi_over_u_impact_R": -0.0004841137791284021,
+          "sdf": 0.08456192133807328,
+          "sdf_over_dx": 2.705981482818345,
+          "u": -0.021412768996559438,
+          "v": -0.022516196361137768,
+          "wall_taper": 0.06885651973922628
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 43,
+            "liquid_fraction_mean": 0.033046316348367695,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.016009307693061043,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": -0.0011289982296748243,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 41,
+            "liquid_fraction_mean": 0.07466247336776798,
+            "max_abs_psi": 0.00018161167099606246,
+            "max_abs_speed_over_u_impact": 0.1313607358213614,
+            "max_taper": 0.009779230691492558,
+            "mean_psi": 0.0,
+            "mean_taper": 0.00579100638264563,
+            "mean_u_over_u_impact": -4.342289909756091e-09,
+            "mean_v_over_u_impact": -0.015836042189731392,
+            "min_taper": 0.0022182464599609375,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.1468767198795963,
+            "max_abs_psi": 0.0018148731905966997,
+            "max_abs_speed_over_u_impact": 0.4483956109162521,
+            "max_taper": 0.07770393788814545,
+            "mean_psi": -6.822356355065459e-11,
+            "mean_taper": 0.06610031903554232,
+            "mean_u_over_u_impact": -2.308058192750487e-06,
+            "mean_v_over_u_impact": -0.06718689646784452,
+            "min_taper": 0.04083635285496712,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 29,
+            "liquid_fraction_mean": 0.3212039222068301,
+            "max_abs_psi": 0.006686829496175051,
+            "max_abs_speed_over_u_impact": 0.9438278375090631,
+            "max_taper": 0.2387467920780182,
+            "mean_psi": -0.0004152639952547455,
+            "mean_taper": 0.20585064692743893,
+            "mean_u_over_u_impact": -0.024635266520661014,
+            "mean_v_over_u_impact": -0.20650215251322968,
+            "min_taper": 0.1302223801612854,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.7533471983806951,
+            "max_abs_psi": 0.033045630902051926,
+            "max_abs_speed_over_u_impact": 2.067953239512415,
+            "max_taper": 0.7210009098052979,
+            "mean_psi": -0.0018586886213406136,
+            "mean_taper": 0.5291278205419842,
+            "mean_u_over_u_impact": -0.11871337733770672,
+            "mean_v_over_u_impact": -0.6022673829605705,
+            "min_taper": 0.29014796018600464,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9809021276044386,
+            "max_abs_psi": 0.10532274842262268,
+            "max_abs_speed_over_u_impact": 2.3558387916040755,
+            "max_taper": 1.0,
+            "mean_psi": -0.004524349435871723,
+            "mean_taper": 0.9686533113320669,
+            "mean_u_over_u_impact": -0.09438344193439857,
+            "mean_v_over_u_impact": -1.3822184619950313,
+            "min_taper": 0.7852489352226257,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "pillar_training",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 49,
+          "cells_with_stencil_crossing_plateau": 36,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            89,
+            23
+          ],
+          "argmax_chi": 0.014006223529577255,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.1906111240386963,
+          "argmax_speed_over_u_impact": 0.6543639118200636,
+          "argmax_wall_taper": 0.1302223801612854,
+          "cell_count": 2936,
+          "cells_with_chi_below_half_and_open": 880,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3460490463215259,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5500927792312642
+      },
+      "T3_FAR_NARROW": {
+        "at_frozen_support": {
+          "approach_speed_over_u_impact": 0.0,
+          "chi": 0.026480677966892092,
+          "method": "periodic bilinear sample at the frozen reconstructed phi=0.5 contour support",
+          "phi": 0.5,
+          "psi": 0.0,
+          "psi_over_u_impact_R": 0.0,
+          "sdf": 0.08456192133807328,
+          "sdf_over_dx": 2.705981482818345,
+          "u": -2.9191235636078245e-05,
+          "v": -0.0,
+          "wall_taper": 0.0
+        },
+        "bands": {
+          "0_1": {
+            "cell_count": 43,
+            "liquid_fraction_mean": 0.033046316348367695,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              0.0,
+              1.0
+            ],
+            "status": "MEASURED"
+          },
+          "1_2": {
+            "cell_count": 41,
+            "liquid_fraction_mean": 0.07466247336776798,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              1.0,
+              2.0
+            ],
+            "status": "MEASURED"
+          },
+          "2_3": {
+            "cell_count": 39,
+            "liquid_fraction_mean": 0.1468767198795963,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.0,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": 0.0,
+            "mean_v_over_u_impact": 0.0,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              2.0,
+              3.0
+            ],
+            "status": "MEASURED"
+          },
+          "3_4": {
+            "cell_count": 29,
+            "liquid_fraction_mean": 0.3212039222068301,
+            "max_abs_psi": 0.0,
+            "max_abs_speed_over_u_impact": 0.11424103882281318,
+            "max_taper": 0.0,
+            "mean_psi": 0.0,
+            "mean_taper": 0.0,
+            "mean_u_over_u_impact": -2.9969293070186315e-06,
+            "mean_v_over_u_impact": -0.008695014948647566,
+            "min_taper": 0.0,
+            "sdf_over_dx_interval": [
+              3.0,
+              4.0
+            ],
+            "status": "MEASURED"
+          },
+          "4_6": {
+            "cell_count": 38,
+            "liquid_fraction_mean": 0.7533471983806951,
+            "max_abs_psi": 0.022014997899532318,
+            "max_abs_speed_over_u_impact": 3.1072391762081835,
+            "max_taper": 0.491393506526947,
+            "mean_psi": -0.0007594308710610532,
+            "mean_taper": 0.1910933170052694,
+            "mean_u_over_u_impact": -0.11678698286414146,
+            "mean_v_over_u_impact": -0.4227031824228011,
+            "min_taper": 5.6416636653011665e-05,
+            "sdf_over_dx_interval": [
+              4.0,
+              6.0
+            ],
+            "status": "MEASURED"
+          },
+          "6_12": {
+            "cell_count": 102,
+            "liquid_fraction_mean": 0.9809021276044386,
+            "max_abs_psi": 0.10532274842262268,
+            "max_abs_speed_over_u_impact": 3.407886164246119,
+            "max_taper": 1.0,
+            "mean_psi": -0.00452763050356332,
+            "mean_taper": 0.964318744692148,
+            "mean_u_over_u_impact": -0.10239923935310513,
+            "mean_v_over_u_impact": -1.4075196420445162,
+            "min_taper": 0.6417238712310791,
+            "sdf_over_dx_interval": [
+              6.0,
+              12.0
+            ],
+            "status": "MEASURED"
+          }
+        },
+        "case_name": "pillar_training",
+        "central_stencil_near_boundary": {
+          "cells_with_stencil_crossing_onset": 49,
+          "cells_with_stencil_crossing_plateau": 36,
+          "note": "central stencil crosses the nominal taper boundary when the cell centre lies within 1 dx"
+        },
+        "field_layout_note": "all fields are indexed [x, y]; the band mask is a periodic x-window",
+        "front_window_definition": "open control volumes with V_i>0 within +/-8 cells (periodic x) of the frozen reconstructed phi=0.5 contour support",
+        "frozen_gate_location_diagnostic": {
+          "argmax_cell_xy": [
+            89,
+            23
+          ],
+          "argmax_chi": 0.014006223529577255,
+          "argmax_control_volume_fraction": 1.0,
+          "argmax_sdf_over_dx": 3.1906111240386963,
+          "argmax_speed_over_u_impact": 0.00012152335693826899,
+          "argmax_wall_taper": 0.0,
+          "cell_count": 2936,
+          "cells_with_chi_below_half_and_open": 880,
+          "frozen_gate": "max|velocity| over cells with chi>=0.01, divided by u_impact",
+          "gate_limit": 0.02,
+          "note": "chi is the smoothed solid indicator; cells with 0.01<=chi<0.5 are open-fluid control volumes in the diffuse band",
+          "open_volume_share_of_gate_cells": 0.3460490463215259,
+          "status": "MEASURED"
+        },
+        "phi_weighted_mass_Vphi": 1.5500927792312642
+      }
+    }
+  }
+}

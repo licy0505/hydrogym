@@ -1,0 +1,17 @@
+{
+  "action": "Prespecify, without editing the frozen event rule, a displacement readout whose support is the reconstructed contour arc itself (the bilinear line root along the frozen interface normal, already recorded in this stage's ledger on every macro step) and then re-run this stage's identical single-case window under that readout, so that the blocking condition becomes the continuity of the reconstructed position instead of the identity of the grid edge that carries it. Diagnose the frozen global probe's non-uniqueness on this surface in the same run and report it separately. No mechanism may be claimed until every blocking guard passes.",
+  "bounded_scope": {
+    "cases": [],
+    "criteria": "this stage's, unchanged",
+    "dt": 0.002,
+    "macro_step_cap": 40,
+    "no_control_arms": true,
+    "no_extension_toward_contact": true,
+    "no_generator_or_ml": true,
+    "no_refinement": true,
+    "solver": "frozen, unmodified",
+    "window": "t <= 0.08"
+  },
+  "must_not_be_started_in_this_stage": true,
+  "requires_owner_approval": true
+}

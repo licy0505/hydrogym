@@ -1,0 +1,769 @@
+{
+  "band_summary_C2_vs_T1": {
+    "C2_BASE": {
+      "0_1": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.09269090812493952,
+        "max_abs_psi": 0.0,
+        "max_abs_speed_over_u_impact": 0.0,
+        "max_taper": 0.0,
+        "mean_psi": 0.0,
+        "mean_taper": 0.0,
+        "mean_u_over_u_impact": 0.0,
+        "mean_v_over_u_impact": 0.0,
+        "min_taper": 0.0,
+        "sdf_over_dx_interval": [
+          0.0,
+          1.0
+        ],
+        "status": "MEASURED"
+      },
+      "1_2": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.20286655654645247,
+        "max_abs_psi": 0.0,
+        "max_abs_speed_over_u_impact": 0.0,
+        "max_taper": 0.0,
+        "mean_psi": 0.0,
+        "mean_taper": 0.0,
+        "mean_u_over_u_impact": 0.0,
+        "mean_v_over_u_impact": 0.0,
+        "min_taper": 0.0,
+        "sdf_over_dx_interval": [
+          1.0,
+          2.0
+        ],
+        "status": "MEASURED"
+      },
+      "2_3": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.38390403221330327,
+        "max_abs_psi": 0.0,
+        "max_abs_speed_over_u_impact": 0.0,
+        "max_taper": 0.0,
+        "mean_psi": 0.0,
+        "mean_taper": 0.0,
+        "mean_u_over_u_impact": 0.0,
+        "mean_v_over_u_impact": 0.0,
+        "min_taper": 0.0,
+        "sdf_over_dx_interval": [
+          2.0,
+          3.0
+        ],
+        "status": "MEASURED"
+      },
+      "3_4": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.5997253010108627,
+        "max_abs_psi": 0.0,
+        "max_abs_speed_over_u_impact": 0.006836568005383015,
+        "max_taper": 0.0,
+        "mean_psi": 0.0,
+        "mean_taper": 0.0,
+        "mean_u_over_u_impact": -0.00040215105914017735,
+        "mean_v_over_u_impact": 0.0,
+        "min_taper": 0.0,
+        "sdf_over_dx_interval": [
+          3.0,
+          4.0
+        ],
+        "status": "MEASURED"
+      },
+      "4_6": {
+        "cell_count": 34,
+        "liquid_fraction_mean": 0.8384508300893954,
+        "max_abs_psi": 0.0025907971430569887,
+        "max_abs_speed_over_u_impact": 0.7753448355390898,
+        "max_taper": 0.04876899719238281,
+        "mean_psi": -7.909557568970794e-05,
+        "mean_taper": 0.025493621826171875,
+        "mean_u_over_u_impact": -0.028091167702394372,
+        "mean_v_over_u_impact": -0.02184750932878267,
+        "min_taper": 0.0022182464599609375,
+        "sdf_over_dx_interval": [
+          4.0,
+          6.0
+        ],
+        "status": "MEASURED"
+      },
+      "6_12": {
+        "cell_count": 102,
+        "liquid_fraction_mean": 0.9867641027643823,
+        "max_abs_psi": 0.11639278382062912,
+        "max_abs_speed_over_u_impact": 3.445641975695966,
+        "max_taper": 0.9977817535400391,
+        "mean_psi": -0.0037660200660135233,
+        "mean_taper": 0.6581687927246094,
+        "mean_u_over_u_impact": -0.15692208678114647,
+        "mean_v_over_u_impact": -1.0409384307761986,
+        "min_taper": 0.1800060272216797,
+        "sdf_over_dx_interval": [
+          6.0,
+          12.0
+        ],
+        "status": "MEASURED"
+      }
+    },
+    "T1_NEAR_NARROW": {
+      "0_1": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.09269090812493952,
+        "max_abs_psi": 0.0,
+        "max_abs_speed_over_u_impact": 0.024595526978373528,
+        "max_taper": 0.0,
+        "mean_psi": 0.0,
+        "mean_taper": 0.0,
+        "mean_u_over_u_impact": -0.0014467957046102075,
+        "mean_v_over_u_impact": 0.0,
+        "min_taper": 0.0,
+        "sdf_over_dx_interval": [
+          0.0,
+          1.0
+        ],
+        "status": "MEASURED"
+      },
+      "1_2": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.20286655654645247,
+        "max_abs_psi": 0.0003688278084155172,
+        "max_abs_speed_over_u_impact": 0.5371193202951585,
+        "max_taper": 0.01605224609375,
+        "mean_psi": -2.1695753436206895e-05,
+        "mean_taper": 0.01605224609375,
+        "mean_u_over_u_impact": -0.03159517049789429,
+        "mean_v_over_u_impact": -0.005749325418625684,
+        "min_taper": 0.01605224609375,
+        "sdf_over_dx_interval": [
+          1.0,
+          2.0
+        ],
+        "status": "MEASURED"
+      },
+      "2_3": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.38390403221330327,
+        "max_abs_psi": 0.00805447343736887,
+        "max_abs_speed_over_u_impact": 1.7356802926047705,
+        "max_taper": 0.27520751953125,
+        "mean_psi": -0.0004737925551393453,
+        "mean_taper": 0.27520751953125,
+        "mean_u_over_u_impact": -0.1020806256462546,
+        "mean_v_over_u_impact": -0.12559115295024478,
+        "min_taper": 0.27520751953125,
+        "sdf_over_dx_interval": [
+          2.0,
+          3.0
+        ],
+        "status": "MEASURED"
+      },
+      "3_4": {
+        "cell_count": 17,
+        "liquid_fraction_mean": 0.5997253010108627,
+        "max_abs_psi": 0.026391973719000816,
+        "max_abs_speed_over_u_impact": 2.3782970291214625,
+        "max_taper": 0.72479248046875,
+        "mean_psi": -0.0015524690422941657,
+        "mean_taper": 0.72479248046875,
+        "mean_u_over_u_impact": -0.1397107068230124,
+        "mean_v_over_u_impact": -0.411630239118548,
+        "min_taper": 0.72479248046875,
+        "sdf_over_dx_interval": [
+          3.0,
+          4.0
+        ],
+        "status": "MEASURED"
+      },
+      "4_6": {
+        "cell_count": 34,
+        "liquid_fraction_mean": 0.8384508300893954,
+        "max_abs_psi": 0.05312385410070419,
+        "max_abs_speed_over_u_impact": 1.7971063606176032,
+        "max_taper": 1.0,
+        "mean_psi": -0.0028468943474923864,
+        "mean_taper": 0.991973876953125,
+        "mean_u_over_u_impact": -0.08948703022564158,
+        "mean_v_over_u_impact": -0.7551008787225274,
+        "min_taper": 0.98394775390625,
+        "sdf_over_dx_interval": [
+          4.0,
+          6.0
+        ],
+        "status": "MEASURED"
+      },
+      "6_12": {
+        "cell_count": 102,
+        "liquid_fraction_mean": 0.9867641027643823,
+        "max_abs_psi": 0.11665154248476028,
+        "max_abs_speed_over_u_impact": 2.3478715672497046,
+        "max_taper": 1.0,
+        "mean_psi": -0.00523962789014274,
+        "mean_taper": 1.0,
+        "mean_u_over_u_impact": -0.08428833180782842,
+        "mean_v_over_u_impact": -1.3906790351166445,
+        "min_taper": 1.0,
+        "sdf_over_dx_interval": [
+          6.0,
+          12.0
+        ],
+        "status": "MEASURED"
+      }
+    }
+  },
+  "ch_only_control": {
+    "flat_we100_ct050": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we100_ct050",
+      "classification": "DIAGNOSTIC_COUNTERFACTUAL_CH_ONLY",
+      "contact_reached_by_pure_relaxation": true,
+      "final_gap_phi05": 0.008952236073125008,
+      "horizon": 0.48,
+      "initial_gap_phi05": 0.07831191984795716,
+      "internal_substeps": 720,
+      "interpretation": "a finite CH-only contact would be a relaxation phenomenon, not a hydrodynamic impact; the result is classified separately and never counted as an authenticated impact",
+      "minimum_gap_phi05": 0.008952236073125008
+    },
+    "flat_we200_ct000": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we200_ct000",
+      "classification": "DIAGNOSTIC_COUNTERFACTUAL_CH_ONLY",
+      "contact_reached_by_pure_relaxation": false,
+      "final_gap_phi05": 0.07334194619281742,
+      "horizon": 0.48,
+      "initial_gap_phi05": 0.07831191984795716,
+      "internal_substeps": 720,
+      "interpretation": "a finite CH-only contact would be a relaxation phenomenon, not a hydrodynamic impact; the result is classified separately and never counted as an authenticated impact",
+      "minimum_gap_phi05": 0.07334194619281742
+    },
+    "pillar_training": {
+      "candidate": "C2_BASE",
+      "case_name": "pillar_training",
+      "classification": "DIAGNOSTIC_COUNTERFACTUAL_CH_ONLY",
+      "contact_reached_by_pure_relaxation": false,
+      "final_gap_phi05": 0.08602370001772208,
+      "horizon": 0.48,
+      "initial_gap_phi05": 0.08456192133807328,
+      "internal_substeps": 720,
+      "interpretation": "a finite CH-only contact would be a relaxation phenomenon, not a hydrodynamic impact; the result is classified separately and never counted as an authenticated impact",
+      "minimum_gap_phi05": 0.08456192133807328
+    }
+  },
+  "competing_mechanisms": {
+    "H_BP": "TESTED_SEPARATELY",
+    "H_CH": "TESTED_SEPARATELY",
+    "H_GEOMETRY": "TESTED_SEPARATELY",
+    "H_MULTI": "CONSISTENT_WITH_MEASUREMENTS",
+    "H_TAPER": "SUPPORTED_IN_DIRECTION_BUT_COMPATIBILITY_BLOCKED"
+  },
+  "counterfactual_one_state": {
+    "flat_we100_ct050": {
+      "candidate": "C2_BASE",
+      "case_name": "flat_we100_ct050",
+      "classification": "DIAGNOSTIC_COUNTERFACTUAL",
+      "production_formula_reused": true,
+      "rows": [
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "flat_we100_ct050",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": -0.001565945576281147,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": -0.00022282232903604184,
+              "linearized_normal_speed": -0.3342334935540628,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.02731664839585335,
+              "median_displacement_over_dx": 0.006648497792021146,
+              "normal_projection_max_over_h": 1.193126416692003,
+              "normal_projection_mean_over_h": 0.1459771381346897,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                95,
+                10
+              ],
+              "support_cell_before": [
+                95,
+                10
+              ],
+              "switched": false
+            }
+          },
+          "delta_mass_V_phi": 3.3115924120289512e-18,
+          "label": "i_production_phase_substep"
+        },
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "flat_we100_ct050",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": 0.0,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": 0.0,
+              "linearized_normal_speed": 0.0,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.029799875402261478,
+              "median_displacement_over_dx": 0.005502263897248838,
+              "normal_projection_max_over_h": 1.3004596332786278,
+              "normal_projection_mean_over_h": 0.16220502310598794,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                95,
+                10
+              ],
+              "support_cell_before": [
+                95,
+                10
+              ],
+              "switched": false
+            }
+          },
+          "delta_mass_V_phi": 1.3942162311805784e-18,
+          "label": "ii_advective_only_no_implicit_solve"
+        },
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "flat_we100_ct050",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": -0.001565293122702649,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": -0.0002227294897776724,
+              "linearized_normal_speed": -0.3340942346665086,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.006994585322317448,
+              "median_displacement_over_dx": 0.0010244759024260475,
+              "normal_projection_max_over_h": 0.14845339239633049,
+              "normal_projection_mean_over_h": -0.01260117863658882,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                95,
+                10
+              ],
+              "support_cell_before": [
+                95,
+                10
+              ],
+              "switched": false
+            }
+          },
+          "delta_mass_V_phi": 6.323889797043998e-21,
+          "label": "iii_ch_only_zero_velocity"
+        },
+        {
+          "delta_mass_V_phi": 3.2495691102472186e-18,
+          "gap_phi05": 0.08262884443793717,
+          "horizon": 0.08,
+          "internal_substeps": 120,
+          "label": "iv_frozen_velocity_full_phase_evolution",
+          "note": "diagnostic counterfactual: momentum frozen at t=0, phase operator unchanged"
+        }
+      ],
+      "why_no_naive_additivity": "over one substep the split is exact by construction, but the implicit solve and the advective flux are nonlinear in phi and in u, so increments from separate rollouts cannot be added once the state diverges"
+    },
+    "pillar_training": {
+      "candidate": "C2_BASE",
+      "case_name": "pillar_training",
+      "classification": "DIAGNOSTIC_COUNTERFACTUAL",
+      "production_formula_reused": true,
+      "rows": [
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "pillar_training",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": -0.0003247389678165402,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": -4.6207923336315555e-05,
+              "linearized_normal_speed": -0.06931188500447333,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.034956614702778666,
+              "median_displacement_over_dx": 0.00594747518083949,
+              "normal_projection_max_over_h": 0.9471370423146386,
+              "normal_projection_mean_over_h": 0.1528562139649876,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                96,
+                23
+              ],
+              "support_cell_before": [
+                95,
+                23
+              ],
+              "switched": true
+            }
+          },
+          "delta_mass_V_phi": 3.812579614405663e-18,
+          "label": "i_production_phase_substep"
+        },
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "pillar_training",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": 0.0,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": 0.0,
+              "linearized_normal_speed": 0.0,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.03820225408126987,
+              "median_displacement_over_dx": 0.006027845226967088,
+              "normal_projection_max_over_h": 1.0415412209596742,
+              "normal_projection_mean_over_h": 0.15709745970278594,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                95,
+                23
+              ],
+              "support_cell_before": [
+                95,
+                23
+              ],
+              "switched": false
+            }
+          },
+          "delta_mass_V_phi": 9.554531645028508e-19,
+          "label": "ii_advective_only_no_implicit_solve"
+        },
+        {
+          "contour_motion": {
+            "candidate": "C2_BASE",
+            "case_name": "pillar_training",
+            "contour_definition": "frozen official rule: linear crossing on periodic grid edges, threshold phi=0.5",
+            "independent_contour_points_before": 176,
+            "independent_vs_official": {
+              "agreement_within_declared_tolerance": true,
+              "declared_tolerance_dx": 0.1,
+              "matched_fraction": 1.0,
+              "max_match_distance_over_dx": 4.547473508864641e-13,
+              "support_location_difference_over_dx": 1.7053025658242404e-13
+            },
+            "linearized_normal_advance": {
+              "conditioning_ratio": 0.9997140062937165,
+              "delta_phi": -0.00032422275226434705,
+              "grad_dot_normal": -7.027776718139648,
+              "grad_norm": 7.029787193033368,
+              "grad_phi": [
+                0.16811418533325195,
+                7.027776718139648
+              ],
+              "linearized_normal_advance": -4.613446972888083e-05,
+              "linearized_normal_speed": -0.06920170459332124,
+              "not_exact_contour_motion": true,
+              "status": "MEASURED_FIRST_ORDER_DIAGNOSTIC"
+            },
+            "matched_contour_motion": {
+              "interpretation": "finite-difference contour speed of the reconstructed phi=0.5 level set; not a material tracer velocity and not the fluid velocity",
+              "max_displacement_over_dx": 0.003313207193286871,
+              "median_displacement_over_dx": 0.0010269320184477237,
+              "normal_projection_max_over_h": 0.14845755241799097,
+              "normal_projection_mean_over_h": -0.0009538390461033048,
+              "speed_units": "length/time; divide by u_impact for the dimensionless comparison",
+              "usable_match_fraction": 1.0
+            },
+            "official_contour_points_after": 176,
+            "official_contour_points_before": 176,
+            "support_switch": {
+              "note": "a support change is reported as SUPPORT_SWITCH, never as a velocity discontinuity",
+              "support_cell_after": [
+                96,
+                23
+              ],
+              "support_cell_before": [
+                95,
+                23
+              ],
+              "switched": true
+            }
+          },
+          "delta_mass_V_phi": 7.632296695148557e-19,
+          "label": "iii_ch_only_zero_velocity"
+        },
+        {
+          "delta_mass_V_phi": -1.1625705044896971e-18,
+          "gap_phi05": 0.08583817821167938,
+          "horizon": 0.08,
+          "internal_substeps": 120,
+          "label": "iv_frozen_velocity_full_phase_evolution",
+          "note": "diagnostic counterfactual: momentum frozen at t=0, phase operator unchanged"
+        }
+      ],
+      "why_no_naive_additivity": "over one substep the split is exact by construction, but the implicit solve and the advective flux are nonlinear in phi and in u, so increments from separate rollouts cannot be added once the state diverges"
+    }
+  },
+  "event_side_evidence": {
+    "complex_heldout": {
+      "C2_BASE": {
+        "contact_time": 0.8423870017741062,
+        "precontact_approach": 0.16233915346516647,
+        "verdict": "IMPACT_AUTHENTICATED"
+      },
+      "T3_FAR_NARROW": {
+        "contact_time": 0.8167565330562966,
+        "precontact_approach": 0.15608638120662244,
+        "verdict": "IMPACT_AUTHENTICATED"
+      }
+    },
+    "flat_we100_ct050": {
+      "C2_BASE": {
+        "contact_time": 0.20864497397827136,
+        "precontact_approach": 0.04492073303149014,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      },
+      "T3_FAR_NARROW": {
+        "contact_time": 0.18603391760068513,
+        "precontact_approach": 0.04991056763892042,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      }
+    },
+    "flat_we200_ct000": {
+      "C2_BASE": {
+        "contact_time": 0.2867620422869758,
+        "precontact_approach": 0.04548783907852,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      },
+      "T3_FAR_NARROW": {
+        "contact_time": 0.2458556384532427,
+        "precontact_approach": 0.04793812807991319,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      }
+    },
+    "pillar_training": {
+      "C2_BASE": {
+        "contact_time": 0.35364233808658024,
+        "precontact_approach": 0.06940081089845106,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      },
+      "T3_FAR_NARROW": {
+        "contact_time": 0.2915778653465014,
+        "precontact_approach": 0.07231914270801688,
+        "verdict": "CONTACT_WITHOUT_MEANINGFUL_IMPACT"
+      }
+    }
+  },
+  "hypothesis": "H-TAPER: the SDF taper onset suppresses front-side incident fluid velocity",
+  "profile": "forensic",
+  "test_A2_envelope_contribution": {
+    "definition": "the quarantined taper-free control isolates how much of the front-speed suppression comes from the compact radial envelope rather than from the wall taper",
+    "taper_free_front_approach": 0.324972665265058,
+    "taper_present_front_approach": 0.0
+  },
+  "test_A_front_speed_vs_compatibility": {
+    "C2_BASE_initial_approach": 0.0,
+    "C2_central_gates_pass": true,
+    "T1_NEAR_NARROW_initial_approach": 0.09050176751021194,
+    "T1_central_gates_pass": false,
+    "T1_failing_gate": [
+      "nearwall_chi_velocity"
+    ],
+    "T1_nearwall_ratio_over_limit": 88.79103426687273,
+    "T3_FAR_NARROW_initial_approach": 0.0,
+    "quarantined_no_wall_taper_initial_approach": 0.324972665265058
+  },
+  "test_B_front_advective_flux": {
+    "C2_BASE_front_advective_face_flux": {
+      "definition": "A_f * u_n,f * phi_upwind,f on the shared cut-cell faces; conservative by construction",
+      "flux_x_at_support": 0.0,
+      "flux_x_window_max_abs": 2.40817137651367e-05,
+      "flux_y_at_support": -0.0,
+      "flux_y_window_max_abs": 1.4912235418563635e-05,
+      "support_cell": [
+        95,
+        10
+      ]
+    },
+    "T3_FAR_NARROW_front_advective_face_flux": {
+      "definition": "A_f * u_n,f * phi_upwind,f on the shared cut-cell faces; conservative by construction",
+      "flux_x_at_support": 0.0,
+      "flux_x_window_max_abs": 0.00016896751708538217,
+      "flux_y_at_support": -0.0,
+      "flux_y_window_max_abs": 0.00010463056458628286,
+      "support_cell": [
+        95,
+        10
+      ]
+    },
+    "note": "same phase field, so any change isolates the advective face flux carried by the seed velocity"
+  },
+  "test_D_contour_robustness": {
+    "declared_tolerance_dx": 0.1,
+    "independent_reconstruction": {
+      "agreement_within_declared_tolerance": true,
+      "declared_tolerance_dx": 0.1,
+      "matched_fraction": 1.0,
+      "max_match_distance_over_dx": 4.547473508864641e-13,
+      "support_location_difference_over_dx": 1.7053025658242404e-13
+    }
+  },
+  "test_F_projection_and_negative_controls": {
+    "l1a2r_control_A": {
+      "divergence_initial": 0.0,
+      "full_step_max_abs_change_v": 5.900859832763672e-06,
+      "full_step_preserves_uniform": true,
+      "projection_only_max_abs_change_v": 0.0,
+      "projection_preserves_uniform": true
+    },
+    "l1a2r_control_B": {
+      "max_abs_change_v": 0.0,
+      "note": "solid chi is supplied to Brinkman only in the full step; here projection sees untouched uniform input",
+      "projection_alone_preserves_uniform": true
+    },
+    "l1a2r_control_D": {
+      "div_lininf_after_projection": 7.05718994140625e-05,
+      "div_lininf_before": 233.16713905334473,
+      "note": "identities use the ACTUAL D/G/poisson construction (central differences + m2_proj), not an idealized continuum Laplacian",
+      "reduced": true
+    },
+    "same_state_projection_identity": {
+      "identity_note": "periodic mean of the pressure gradient correction; ~0 is the frozen L1A-2r identity",
+      "mean_ddx_pressure": -1.2990300193551876e-11,
+      "mean_ddy_pressure": -5.152540122960797e-11,
+      "mean_of_proj_correction": -1.4395467240121973e-14
+    }
+  },
+  "test_H_global_confounders": {
+    "C2_BASE": {
+      "initial_liquid_momentum_y": -0.31045168477414836,
+      "kinetic_energy_open_fluid": 1.050826573658556,
+      "return_flow_peak_speed": 1.2109906225545215
+    },
+    "T1_NEAR_NARROW": {
+      "initial_liquid_momentum_y": -0.3173377476964378,
+      "kinetic_energy_open_fluid": 0.9174587731970715,
+      "return_flow_peak_speed": 1.1768322534610784
+    },
+    "T2_NEAR_WIDE": {
+      "initial_liquid_momentum_y": -0.3136472099152682,
+      "kinetic_energy_open_fluid": 0.9419170738154634,
+      "return_flow_peak_speed": 1.0459715960275808
+    },
+    "T3_FAR_NARROW": {
+      "initial_liquid_momentum_y": -0.3116426365459686,
+      "kinetic_energy_open_fluid": 0.9701091395714198,
+      "return_flow_peak_speed": 1.383278981211529
+    }
+  }
+}

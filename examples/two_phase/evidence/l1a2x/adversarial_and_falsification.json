@@ -1,0 +1,182 @@
+{
+  "all_hold": true,
+  "checks": {
+    "all_hold": true,
+    "contour_uniqueness_record_is_self_consistent": {
+      "margins_over_dx": [
+        2.2637891561316792e-11,
+        7.313261107810831e-11,
+        1.284412576296745e-10,
+        1.1532108601386426e-10,
+        1.4145484783512075e-10,
+        8.543921126147325e-11,
+        2.163318413295201e-10,
+        3.156586103614245e-10,
+        4.2860648363785003e-10,
+        4.845475132242427e-10,
+        4.411369047829794e-10,
+        4.107967299660231e-10,
+        4.1888270629897306e-10,
+        3.375077994860476e-10,
+        3.3156766221509315e-10,
+        1.4762591149519722e-10,
+        2.490452288839151e-11,
+        3.8252068179644994e-11,
+        2.6408386588627764e-10,
+        3.0968294595368207e-10,
+        1.7926282680491568e-10,
+        2.986908498314733e-10,
+        2.6688695697885123e-10,
+        2.8206770252836577e-10,
+        3.5423042277216155e-10,
+        9.305622938882152e-11,
+        3.248281643664086e-10,
+        8.846257060213247e-11,
+        1.2008527505713573e-10,
+        2.0450130477911443e-10,
+        5.244125134140631e-10,
+        7.510259081300319e-10,
+        7.016645042767777e-10,
+        8.84941897538738e-10,
+        1.1776428721077536e-09,
+        1.3145964317118342e-09,
+        1.5039489653645433e-09,
+        1.3270096133055631e-09,
+        1.5186785162768501e-09,
+        1.803201143957267e-09
+      ],
+      "status_consistent": true
+    },
+    "frozen_sources_are_unmodified": {
+      "hashes_hold": true,
+      "note": "the frozen solver, the frozen audit source and the L1A-2u/2s helpers re-hash to the values recorded at generation time"
+    },
+    "gradient_guard_refuses_a_flat_profile": {
+      "guards": {
+        "gradient_resolved": false,
+        "probe_band": true,
+        "ray_root_exists": true,
+        "substep_locality": true
+      },
+      "refused": true
+    },
+    "ingredient_identity_catches_a_fabricated_increment": {
+      "broken_identity_over_dx": 0.004555118236463979,
+      "discriminates": true,
+      "healthy_identity_over_dx": 4.92227786308419e-17
+    },
+    "ledger_is_not_vacuous": {
+      "closed_faces_exist": true,
+      "max_abs_mass_adv": 1.845726874880784e-20,
+      "max_abs_mass_ch": 7.000265481357666e-20
+    },
+    "linearisation_recovers_a_known_translation": {
+      "holds": true,
+      "rows": [
+        {
+          "absolute_error_over_dx": 0.012568923539645782,
+          "expected_displacement_toward_wall_over_dx": -0.5,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": -0.5,
+          "recovered_displacement_toward_wall_over_dx": -0.5125689235396458,
+          "wall_normal": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "absolute_error_over_dx": 0.0033491422270813948,
+          "expected_displacement_toward_wall_over_dx": -0.1,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": -0.1,
+          "recovered_displacement_toward_wall_over_dx": -0.1033491422270814,
+          "wall_normal": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "absolute_error_over_dx": 0.003349142227081048,
+          "expected_displacement_toward_wall_over_dx": 0.1,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": 0.1,
+          "recovered_displacement_toward_wall_over_dx": 0.10334914222708105,
+          "wall_normal": [
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "absolute_error_over_dx": 0.012568923539645782,
+          "expected_displacement_toward_wall_over_dx": 0.5,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": 0.5,
+          "recovered_displacement_toward_wall_over_dx": 0.5125689235396458,
+          "wall_normal": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    "linearisation_sign_flips_with_the_wall_normal": {
+      "holds": true,
+      "rows": [
+        {
+          "absolute_error_over_dx": 0.012568923539645782,
+          "expected_displacement_toward_wall_over_dx": 0.5,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": -0.5,
+          "recovered_displacement_toward_wall_over_dx": 0.5125689235396458,
+          "wall_normal": [
+            0.0,
+            -1.0
+          ]
+        },
+        {
+          "absolute_error_over_dx": 0.012568923539645782,
+          "expected_displacement_toward_wall_over_dx": -0.5,
+          "linearised_estimate_holds": true,
+          "offset_over_dx": 0.5,
+          "recovered_displacement_toward_wall_over_dx": -0.5125689235396458,
+          "wall_normal": [
+            0.0,
+            -1.0
+          ]
+        }
+      ]
+    },
+    "no_forbidden_claim_in_the_decision_payload": {
+      "forbidden_phrases": [
+        "real impact",
+        "impact mechanism",
+        "contact event occurred",
+        "confirmed contact"
+      ],
+      "found": [],
+      "holds": true
+    },
+    "probe_band_guard_refuses_a_drifting_probe": {
+      "guards": {
+        "gradient_resolved": true,
+        "probe_band": false,
+        "ray_root_exists": true,
+        "substep_locality": true
+      },
+      "refused": true
+    },
+    "verdict_rule_degrades_to_mixed_on_a_near_tie": {
+      "clear_win": "ADVECTIVE_TERM_CARRIES_THE_EARLY_WINDOW_CONTOUR_MOTION",
+      "degrades": true,
+      "grants_on_a_clear_win": true,
+      "near_tie": "MIXED_TERMS_WITHIN_THE_RESIDUAL_BAND",
+      "unresolved_win": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED",
+      "withholds_when_unresolved": true
+    },
+    "window_budget_is_capped": {
+      "cap": 40,
+      "refused_over_cap_request": true
+    }
+  },
+  "rule": "every mechanism claim in this stage must be able to fail: the linearisation is validated against a known translation, each guard is exercised on a state that must be refused, the ingredient identity is exercised against a fabricated increment, the verdict rule is exercised on a near tie and on a clear win, and the frozen sources are re-hashed"
+}

@@ -1,0 +1,373 @@
+{
+  "N": 192,
+  "cases": {
+    "complex_heldout": {
+      "N": 192,
+      "admissible_open_cell_count": 32676,
+      "band_cell_count": 4188,
+      "band_open_cell_count": 1564,
+      "band_sdf_range_over_dx": [
+        -7.5,
+        3.445622444152832
+      ],
+      "band_top_sdf_over_dx": 3.445622444152832,
+      "case_name": "complex_heldout",
+      "contour_cell_cap_over_u_impact": 4.905526491646905,
+      "contour_crossing_count": 176,
+      "contour_crossing_point": [
+        3.328125,
+        1.0972376856971315
+      ],
+      "contour_gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "contour_interpolation_support": {
+        "106,35": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.0005123895243741572,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 5.681934833526611,
+          "weight": 0.4441970288458954
+        },
+        "106,36": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.00014980751438997686,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 6.604506969451904,
+          "weight": 0.0558029711541046
+        },
+        "107,35": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.000803680915851146,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 5.344128131866455,
+          "weight": 0.4441970288458954
+        },
+        "107,36": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.0002200032613473013,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 6.3162360191345215,
+          "weight": 0.0558029711541046
+        }
+      },
+      "contour_interpolation_support_inside_band": [],
+      "contour_point_cap_over_u_impact": 4.9055264916469055,
+      "contour_support_cell": [
+        106,
+        35
+      ],
+      "contour_support_chi": 0.0005123895243741572,
+      "contour_support_inside_gate_band": false,
+      "contour_support_open": true,
+      "contour_support_sdf_over_dx": 5.681934833526611,
+      "core_cell_count": 1274,
+      "core_volume": 1.244140625,
+      "core_volume_fraction_of_liquid": 0.8022984272014653,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "liquid_volume_admissible": 1.5499585142363461,
+      "liquid_volume_in_band": 0.0007619942653908131,
+      "liquid_volume_open": 1.550720508501737,
+      "open_cell_count": 34240,
+      "u_impact": 0.5
+    },
+    "flat_we100_ct050": {
+      "N": 192,
+      "admissible_open_cell_count": 34752,
+      "band_cell_count": 2112,
+      "band_open_cell_count": 576,
+      "band_sdf_range_over_dx": [
+        -7.5,
+        2.5
+      ],
+      "band_top_sdf_over_dx": 2.5,
+      "case_name": "flat_we100_ct050",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_crossing_count": 176,
+      "contour_crossing_point": [
+        2.984375,
+        0.32831191984795716
+      ],
+      "contour_gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "contour_interpolation_support": {
+        "95,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "95,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        },
+        "96,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "96,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        }
+      },
+      "contour_interpolation_support_inside_band": [
+        "95,10",
+        "96,10"
+      ],
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_cell": [
+        95,
+        10
+      ],
+      "contour_support_chi": 0.03444519639015198,
+      "contour_support_inside_gate_band": true,
+      "contour_support_open": true,
+      "contour_support_sdf_over_dx": 2.5,
+      "core_cell_count": 1274,
+      "core_volume": 1.244140625,
+      "core_volume_fraction_of_liquid": 0.8029267422856328,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "liquid_volume_admissible": 1.5365678350052192,
+      "liquid_volume_in_band": 0.012939186592288309,
+      "liquid_volume_open": 1.549507021597507,
+      "open_cell_count": 35328,
+      "u_impact": 0.5
+    },
+    "flat_we200_ct000": {
+      "N": 192,
+      "admissible_open_cell_count": 34752,
+      "band_cell_count": 2112,
+      "band_open_cell_count": 576,
+      "band_sdf_range_over_dx": [
+        -7.5,
+        2.5
+      ],
+      "band_top_sdf_over_dx": 2.5,
+      "case_name": "flat_we200_ct000",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_crossing_count": 176,
+      "contour_crossing_point": [
+        2.984375,
+        0.32831191984795716
+      ],
+      "contour_gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "contour_interpolation_support": {
+        "95,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "95,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        },
+        "96,10": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.03444519639015198,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.5,
+          "weight": 0.2470092824326855
+        },
+        "96,11": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.009315959177911282,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.5,
+          "weight": 0.2529907175673145
+        }
+      },
+      "contour_interpolation_support_inside_band": [
+        "95,10",
+        "96,10"
+      ],
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_cell": [
+        95,
+        10
+      ],
+      "contour_support_chi": 0.03444519639015198,
+      "contour_support_inside_gate_band": true,
+      "contour_support_open": true,
+      "contour_support_sdf_over_dx": 2.5,
+      "core_cell_count": 1274,
+      "core_volume": 1.244140625,
+      "core_volume_fraction_of_liquid": 0.8029267422856328,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "liquid_volume_admissible": 1.5365678350052192,
+      "liquid_volume_in_band": 0.012939186592288309,
+      "liquid_volume_open": 1.549507021597507,
+      "open_cell_count": 35328,
+      "u_impact": 0.5
+    },
+    "pillar_training": {
+      "N": 192,
+      "admissible_open_cell_count": 33928,
+      "band_cell_count": 2936,
+      "band_open_cell_count": 1016,
+      "band_sdf_range_over_dx": [
+        -7.5,
+        3.1906111240386963
+      ],
+      "band_top_sdf_over_dx": 3.1906111240386963,
+      "case_name": "pillar_training",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_crossing_count": 176,
+      "contour_crossing_point": [
+        2.984375,
+        0.7345619198479572
+      ],
+      "contour_gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+      "contour_interpolation_support": {
+        "95,23": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.02659699320793152,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.700000047683716,
+          "weight": 0.2470092824326855
+        },
+        "95,24": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.007150950841605663,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.700000047683716,
+          "weight": 0.2529907175673145
+        },
+        "96,23": {
+          "cell_cap_over_u_impact": 0.02,
+          "chi": 0.02659699320793152,
+          "inside_gate_band": true,
+          "open": true,
+          "sdf_over_dx": 2.700000047683716,
+          "weight": 0.2470092824326855
+        },
+        "96,24": {
+          "cell_cap_over_u_impact": 4.905526491646905,
+          "chi": 0.007150950841605663,
+          "inside_gate_band": false,
+          "open": true,
+          "sdf_over_dx": 3.700000047683716,
+          "weight": 0.2529907175673145
+        }
+      },
+      "contour_interpolation_support_inside_band": [
+        "95,23",
+        "96,23"
+      ],
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_cell": [
+        95,
+        23
+      ],
+      "contour_support_chi": 0.02659699320793152,
+      "contour_support_inside_gate_band": true,
+      "contour_support_open": true,
+      "contour_support_sdf_over_dx": 2.700000047683716,
+      "core_cell_count": 1274,
+      "core_volume": 1.244140625,
+      "core_volume_fraction_of_liquid": 0.8026233278868672,
+      "dx": 0.03125,
+      "dy": 0.03125,
+      "geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+      "in_band_normal_distance_from_contour_to_band_top": 0.01533159613609314,
+      "liquid_volume_admissible": 1.5391725840904544,
+      "liquid_volume_in_band": 0.010920195140809611,
+      "liquid_volume_open": 1.550092779231264,
+      "open_cell_count": 34944,
+      "u_impact": 0.5
+    }
+  },
+  "classification": {
+    "cases_inside_band": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "cases_outside_band": [
+      "complex_heldout"
+    ],
+    "consequence": "for cases whose contour support cell lies inside the chi >= 0.01 band the frozen band cap applies at the contour itself and the bound is tight by construction; for the remaining case the binding limit at the contour is the reference envelope, which is a much weaker necessary condition, so the two regimes must never be averaged together",
+    "measured_not_assumed": true,
+    "per_case": {
+      "complex_heldout": {
+        "band_top_sdf_over_dx": 3.445622444152832,
+        "binding_constraint_at_contour": "global_speed_envelope",
+        "contour_cell_cap_over_u_impact": 4.905526491646905,
+        "contour_point_cap_over_u_impact": 4.9055264916469055,
+        "contour_support_chi": 0.0005123895243741572,
+        "contour_support_sdf_over_dx": 5.681934833526611,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 0,
+        "regime": "CONTOUR_OUTSIDE_CHI_GATE_BAND"
+      },
+      "flat_we100_ct050": {
+        "band_top_sdf_over_dx": 2.5,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.03444519639015198,
+        "contour_support_sdf_over_dx": 2.5,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      },
+      "flat_we200_ct000": {
+        "band_top_sdf_over_dx": 2.5,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.03444519639015198,
+        "contour_support_sdf_over_dx": 2.5,
+        "in_band_normal_distance_from_contour_to_band_top": null,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      },
+      "pillar_training": {
+        "band_top_sdf_over_dx": 3.1906111240386963,
+        "binding_constraint_at_contour": "band_speed_cap",
+        "contour_cell_cap_over_u_impact": 0.02,
+        "contour_point_cap_over_u_impact": 2.49198570563175,
+        "contour_support_chi": 0.02659699320793152,
+        "contour_support_sdf_over_dx": 2.700000047683716,
+        "in_band_normal_distance_from_contour_to_band_top": 0.01533159613609314,
+        "interpolation_support_cells_in_band": 2,
+        "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+      }
+    }
+  },
+  "profile": "t0_bound"
+}

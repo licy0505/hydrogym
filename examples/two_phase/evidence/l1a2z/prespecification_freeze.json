@@ -1,0 +1,55 @@
+{
+  "declared_sync_count": 2,
+  "document": "examples/two_phase/l1a2z_prespecification.md",
+  "document_sha256": "488568ab96221883bda7233b586f645f1ebc64694e8b6bc876774473ba3449eb",
+  "frozen_hashes": {
+    "module_sha256": "1c1815991e929860d377855a2d4c46d890040da0d0ee1733ff9f675784f5e858",
+    "protocol_version": "l1a2z_v1",
+    "sync_count": "2",
+    "test_sha256": "0f329a0fd0b62f9de411e5f3de544b53e60378e964887b49878cb99037ec4a70"
+  },
+  "hash_block_syncs": {
+    "commits": [
+      {
+        "commit": "0abf257c53528561a1c4b22a1defb04c840c492a",
+        "files": [
+          "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py"
+        ]
+      },
+      {
+        "commit": "ad0aa45db6713c17d0df8db1bc8553d9f61507fe",
+        "files": [
+          "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py"
+        ]
+      }
+    ],
+    "declared": 2,
+    "observed": 2,
+    "rule": "the document declares how many hash-block syncs happened before the measurement; the run counts the commits above the boundary that touched the module or the focused test file and refuses to measure if the two disagree, recording the commit shas for the consumer"
+  },
+  "holds": true,
+  "measurement_code_changes_since_the_boundary": [
+    {
+      "commit": "0abf257c53528561a1c4b22a1defb04c840c492a",
+      "files": [
+        "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py"
+      ]
+    },
+    {
+      "commit": "ad0aa45db6713c17d0df8db1bc8553d9f61507fe",
+      "files": [
+        "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py"
+      ]
+    }
+  ],
+  "observed_sync_count": 2,
+  "prespecification_commit": "7a9fdf0eea48f479edd05de2d4e5cafc501a34f2",
+  "prespecification_commit_is_an_ancestor_of_head": true,
+  "rule": "the measurement code, its thresholds and its adversarial tests are frozen by the hash block of the prespecification document; the block declares how many pre-measurement hash-block syncs exist and the run records exactly which commits they were. A run whose files do not match the block, whose prespecification commit is not an ancestor, or whose measurement code changed without a declared sync, is refused",
+  "stage": "L1A-2z",
+  "verified_against_the_worktree": {
+    "module_sha256": "1c1815991e929860d377855a2d4c46d890040da0d0ee1733ff9f675784f5e858",
+    "protocol_version": "l1a2z_v1",
+    "test_sha256": "0f329a0fd0b62f9de411e5f3de544b53e60378e964887b49878cb99037ec4a70"
+  }
+}

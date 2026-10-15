@@ -1,0 +1,40 @@
+{
+  "geometry": {
+    "dx": 0.03125,
+    "dy": 0.03125,
+    "grid_shape": [
+      192,
+      192
+    ],
+    "holds": true,
+    "problems": [],
+    "ray_ids": [
+      "RAY_95",
+      "RAY_96"
+    ],
+    "x_identity_rule": "ray x is the cell-centre coordinate (column_index + 0.5) * dx; identity never depends on a measured root"
+  },
+  "rays": [
+    {
+      "column_index": 95,
+      "geometry_holds": true,
+      "grid_x_reconstructed": 2.984375,
+      "initial_root_over_dx": 23.50598143513463,
+      "ray_id": "RAY_95",
+      "same_initial_component": 76,
+      "support_y": 0.7345619198479572,
+      "x": 2.984375
+    },
+    {
+      "column_index": 96,
+      "geometry_holds": true,
+      "grid_x_reconstructed": 3.015625,
+      "initial_root_over_dx": 23.50598143513463,
+      "ray_id": "RAY_96",
+      "same_initial_component": 76,
+      "support_y": 0.7345619198479572,
+      "x": 3.015625
+    }
+  ],
+  "same_initial_component": true
+}

@@ -1,0 +1,38 @@
+{
+  "branch": "arena/02b6c71b-hydrogym",
+  "branch_session_policy": "Arena binds this execution to the authorized session branch; no unauthorized branch is created and no pull request is merged by this stage",
+  "checks": {
+    "branch_head_contains_verified_main": true,
+    "l1a2t_evidence_published_on_this_head": true,
+    "origin_main_equals_verified_merge_sha": true,
+    "policy_matches_contract": true,
+    "quality_baseline_present": true,
+    "solver_contract_12": true,
+    "timestep_policy_default": true,
+    "verified_main_sha_has_the_verified_parents": true,
+    "worktree_clean_outside_stage_deliverables": true
+  },
+  "diagnostic_only": true,
+  "failed_checks": [],
+  "frozen_modules_never_edited": true,
+  "head_sha": "fecf7ecd6b33a53b03d6d1b0d55372b9d9a0d6e5",
+  "l1a2t_missing_commits_resolve_to": {
+    "2649031": null,
+    "2dd0f16": null,
+    "c52f049": null
+  },
+  "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "pr22_hosted_head": "865317d438eee5c8d5f1e942f0ad30c943010818",
+  "pr22_hosted_run": 38120327651,
+  "production_lineage_eligible": false,
+  "profile": "forensic",
+  "profile_N": 192,
+  "stage": "L1A-2u",
+  "stage_version": "l1a2u_v1",
+  "unexpected_worktree_changes": [],
+  "verified_main_parents": [
+    "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+    "865317d438eee5c8d5f1e942f0ad30c943010818"
+  ],
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

@@ -1,0 +1,63 @@
+{
+  "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "baseline_pull_request": 24,
+  "frozen_solver_edits": "none",
+  "frozen_source_hashes_at_baseline": {
+    "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+    "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+    "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+    "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+    "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+    "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+    "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+    "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+    "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+    "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "historical_evidence_edits": "none",
+  "read_only_frozen_sources": [
+    "examples/two_phase/phasefield.py",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py",
+    "examples/two_phase/production/radial_incident_seed_eta_dt_audit.py",
+    "examples/two_phase/production/nearwall_taper_interface_transport_audit.py",
+    "examples/two_phase/production/timestep_policy.py",
+    "examples/two_phase/quality/legacy_two_phase_debt_v1.json"
+  ],
+  "screen_profile": {
+    "N": 192,
+    "candidates": [
+      "C2_BASE",
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "cases": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training",
+      "complex_heldout"
+    ],
+    "dt": 0.002
+  },
+  "sealed_input_sha256": {
+    "examples/two_phase/evidence/l1a2t/manifest.json": "c7f90a4aa4b48c795966ba41778e42e7335a1c57add1ce02d17c7a7d63356a9f",
+    "examples/two_phase/evidence/l1a2u/mechanism_decision.json": "daf2d49e678a9da89c5ab26dc455626b2fda728b46b72516d5d3a25d12a7b1cb",
+    "examples/two_phase/evidence/l1a2u/radial_seed_constraint_matrix.json": "1b2d3f67fa8a33b7b45f83bbd7f25bc99c12ed9d28fc9439b32cdae800a27f4c",
+    "examples/two_phase/evidence/l1a2u/t0_feasibility_matrix.json": "fa9b9324b91be59bc75a1607f5d5d2e8937561410612868d2624b67fe855be28"
+  },
+  "sealed_inputs": {
+    "examples/two_phase/evidence/l1a2t/manifest.json": "upstream stage binding verified here",
+    "examples/two_phase/evidence/l1a2u/mechanism_decision.json": "holds the interior-speed ceiling re-read as the prespecified envelope",
+    "examples/two_phase/evidence/l1a2u/radial_seed_constraint_matrix.json": "the t=0 matrix this stage reproduces before reporting anything",
+    "examples/two_phase/evidence/l1a2u/t0_feasibility_matrix.json": "holds the sealed contour-support statement tested in this stage"
+  },
+  "solver_contract_version": 12,
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "timestep_policy": "impact_phase_cap_dx2_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

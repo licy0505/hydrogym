@@ -1,0 +1,141 @@
+{
+  "constants": {
+    "ARC_BOUNDARY_TOLERANCE_DX": 0.001,
+    "ARC_MAX_SEGMENTS": 400,
+    "ARC_ROOT_MATCH_TOLERANCE_DX": 0.05,
+    "ARC_WINDOW_RADIUS_DX": 3.0,
+    "CROSS_RAY_TOLERANCE_DX": 0.005,
+    "GRADIENT_FLOOR_RATIO": 0.5,
+    "MAX_SUBSTEP_DISPLACEMENT_OVER_EPS": 0.25,
+    "NODE_DEGENERACY_TOLERANCE_DX": 1e-09,
+    "PROBE_BAND": 0.1,
+    "RAY_ROOT_TOLERANCE_DX": 1e-09,
+    "RAY_SCAN_STEP_DX": 0.05,
+    "RAY_SEARCH_HALF_WINDOW_DX": 1.5,
+    "ROOT_AMBIGUITY_SEPARATION_DX": 0.5,
+    "ROOT_MATCH_MAX_STEP_DX": 0.25,
+    "SADDLE_AMBIGUITY_TOLERANCE": 0.001
+  },
+  "fingerprint_sha256": "95e42ac169016fd46ea868085795a9f5583a7f65ec9bbcca41700b723b34e232",
+  "measured_quantity": "the displacement, in dx units, of the tracked phi = 0.5 branch along the fixed wall-normal ray, positive toward the solid; every ingredient displacement is the same functional applied to the field that its own increment produces",
+  "not_used": [
+    "any field later than the one being measured",
+    "any target direction, verdict or dominance consideration",
+    "any rescaling or normalisation of the displacement by its own magnitude"
+  ],
+  "pinned_branch": {
+    "column_index": 95,
+    "column_x_over_dx": 95.5,
+    "gradient_norm_at_origin": 7.0230551400388235,
+    "interface_normal": [
+      0.023916713251809555,
+      0.9997139545026021
+    ],
+    "origin_over_dx": [
+      95.5,
+      23.50598143513463
+    ],
+    "t0_root_at_shared_node": false,
+    "t0_root_over_dx": 23.50598143513463,
+    "t0_root_segment_index": 23,
+    "t0_root_separation_over_dx": null,
+    "wall_normal_into_solid": [
+      0.0,
+      -1.0
+    ]
+  },
+  "pinned_branch_model": {
+    "crossings_at_t0_over_dx": [
+      19.50598143513463,
+      23.50598143513463,
+      27.50598143513463
+    ],
+    "field": "f(y) = 0.45 * tanh((y - a) / eps_num) - 0.025 * tanh((y - b) / eps_num), dy = 0.1 dx",
+    "matched_t0_root_over_dx": 23.50598143513463,
+    "measured_at_the_pinned_column_over_dx": 95.5,
+    "rule": "the synthetic model is built so that the middle crossing sits exactly on a shared grid node at t = 0, which is the support configuration L1A-2x met at its macro step 25; the same model field is then translated and the readout must report it without ambiguity"
+  },
+  "readout_version": "contour_branch_v1",
+  "rules": {
+    "ambiguity": "two roots closer than 0.5 dx, a saddle cell at the matched point whose asymptotic decider value is within 0.001 of the threshold, or a junction where more than two traced segments meet make the step ambiguous; ambiguity is a property of the reconstruction and is tested before the continuity bound, so an inseparable pair is reported as ambiguous rather than as a step",
+    "branch_definition": "the tracked branch is pinned at t = 0 from the frozen state alone: the frozen global phi = 0.5 minimum-gap support point O, the embedded-wall normal n_w into the solid, the t = 0 discrete interface normal n_phi, and the t = 0 root of the frozen linear reconstruction on the fixed wall-normal ray through O. No later field, no target direction and no outcome enters it",
+    "cahn_hilliard_pairing": "the explicit chemical-potential flux and the implicit solve increment are two halves of one Cahn-Hilliard update; they are reported separately as ingredients and every physical statement is made about their sum, never about either half as an independent mechanism",
+    "continuity": "the tracked root may move by at most 0.25 dx between consecutive measurements; a change of the grid edge that carries the crossing is an allowed, recorded event (segment_index change), while a change of the connected contour branch is a failure",
+    "failure": "no root inside the continuation window, a root step beyond 0.25 dx, an arc that is not a simple open path through the matched point, or an arc segment farther than 0.05 dx from the matched root are failures; ambiguity and failure both withhold a verdict and are never resolved by preferring a candidate",
+    "no_favourable_selection": "the readout is direction-blind: mirroring the wall normal mirrors the reported displacement exactly, and a nearer root is always preferred to a farther one even when the farther root would move the interface toward the solid",
+    "root_matching": "inside the continuation window of +/- 1.5 dx around the previous root the tracked root is the one nearest that previous root; matching uses proximity only and never the direction or the magnitude of the implied motion",
+    "why_branch_following": "the readout follows the frozen linear reconstruction across adjacent grid edges instead of pinning one grid edge, because the frozen event rule reconstructs the contour as linear crossings on grid edges and a physical interface is not attached to a grid edge"
+  },
+  "stage": "L1A-2y",
+  "t0_pinned_point_phi_level": 0.4986848640358181,
+  "t0_readout": {
+    "arc": {
+      "arc_length_over_dx": 6.019961408122969,
+      "ends": [
+        {
+          "at": [
+            2.890625,
+            0.7431740617688931
+          ],
+          "reason": "window_boundary"
+        },
+        {
+          "at": [
+            3.078125,
+            0.7389436152368111
+          ],
+          "reason": "window_boundary"
+        }
+      ],
+      "junctions": [],
+      "open_simple_path": true,
+      "revisit": false,
+      "saddles": [],
+      "seed_cell": [
+        95,
+        23
+      ],
+      "seed_segment_distance_over_dx": 0.0,
+      "segments_traced": 6,
+      "status": "OPEN_PATH",
+      "truncated": false
+    },
+    "candidates_over_dx": [
+      23.50598143513463
+    ],
+    "coordinates": [
+      2.984375,
+      0.7345619198479572
+    ],
+    "matched": {
+      "at_shared_node": false,
+      "fraction": 0.00598143513462881,
+      "s_over_dx": 23.50598143513463,
+      "segment_index": 23,
+      "x_over_dx": 95.5,
+      "y_over_dx": 23.50598143513463
+    },
+    "matched_cell": {
+      "cell": [
+        95,
+        23
+      ],
+      "saddle": false,
+      "saddle_ambiguous": false,
+      "saddle_value": 0.6086196818998537
+    },
+    "ray": "wall_normal",
+    "reason": null,
+    "separation_over_dx": null,
+    "status": "OK",
+    "step_over_dx": 0.0
+  },
+  "verdict_rule": {
+    "attribution_closure_band_dx": 0.01,
+    "cross_check_tolerance_dx": 0.05,
+    "dominance_factor": 3.0,
+    "statement": "margin = |d_adv| - |d_CH_expl + d_CH_impl| compared against DOMINANCE_FACTOR times a comparison error made of raw dimensional terms only: the spread of the three prespecified attribution rules, the measured walk-vs-single-step noise floor, and the arc/root agreement term. No term is normalised by the displacement it measures. The verdict is withheld whenever any validity guard fails",
+    "total_displacement_closure_band_dx": 0.01,
+    "walk_noise_floor_dx": 0.001
+  }
+}

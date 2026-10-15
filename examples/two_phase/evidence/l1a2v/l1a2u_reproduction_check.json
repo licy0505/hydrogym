@@ -1,0 +1,171 @@
+{
+  "compared_rows": 16,
+  "measured_not_assumed": true,
+  "rows": {
+    "complex_heldout/C2_BASE": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -1.0000000497190284,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 4.212954615390365,
+      "peak_over_u_impact_sealed_l1a2u": 4.212954615390365,
+      "raw_core_v_mine": -0.5000000248595142,
+      "raw_core_v_sealed_l1a2u": -0.5000000248595142,
+      "six_gate_status_match": true
+    },
+    "complex_heldout/R0_WEAK": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999420767068,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 30.973781858021553,
+      "peak_over_u_impact_sealed_l1a2u": 30.973781858021553,
+      "raw_core_v_mine": -0.4999999710383534,
+      "raw_core_v_sealed_l1a2u": -0.4999999710383534,
+      "six_gate_status_match": true
+    },
+    "complex_heldout/R1_MEDIUM": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999118796323,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 89.76984464265173,
+      "peak_over_u_impact_sealed_l1a2u": 89.76984464265173,
+      "raw_core_v_mine": -0.49999995593981617,
+      "raw_core_v_sealed_l1a2u": -0.49999995593981617,
+      "six_gate_status_match": true
+    },
+    "complex_heldout/R2_SHARP": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999069613134,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 36.328378172556846,
+      "peak_over_u_impact_sealed_l1a2u": 36.328378172556846,
+      "raw_core_v_mine": -0.4999999534806567,
+      "raw_core_v_sealed_l1a2u": -0.4999999534806567,
+      "six_gate_status_match": true
+    },
+    "flat_we100_ct050/C2_BASE": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -1.000000015415801,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 4.315600561416556,
+      "peak_over_u_impact_sealed_l1a2u": 4.315600561416556,
+      "raw_core_v_mine": -0.5000000077079005,
+      "raw_core_v_sealed_l1a2u": -0.5000000077079005,
+      "six_gate_status_match": true
+    },
+    "flat_we100_ct050/R0_WEAK": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999420767068,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 30.973781858021553,
+      "peak_over_u_impact_sealed_l1a2u": 30.973781858021553,
+      "raw_core_v_mine": -0.4999999710383534,
+      "raw_core_v_sealed_l1a2u": -0.4999999710383534,
+      "six_gate_status_match": true
+    },
+    "flat_we100_ct050/R1_MEDIUM": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999118796323,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 89.76984464265173,
+      "peak_over_u_impact_sealed_l1a2u": 89.76984464265173,
+      "raw_core_v_mine": -0.49999995593981617,
+      "raw_core_v_sealed_l1a2u": -0.49999995593981617,
+      "six_gate_status_match": true
+    },
+    "flat_we100_ct050/R2_SHARP": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999069613134,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 36.328378172556846,
+      "peak_over_u_impact_sealed_l1a2u": 36.328378172556846,
+      "raw_core_v_mine": -0.4999999534806567,
+      "raw_core_v_sealed_l1a2u": -0.4999999534806567,
+      "six_gate_status_match": true
+    },
+    "flat_we200_ct000/C2_BASE": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -1.000000015415801,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 4.315600561416556,
+      "peak_over_u_impact_sealed_l1a2u": 4.315600561416556,
+      "raw_core_v_mine": -0.5000000077079005,
+      "raw_core_v_sealed_l1a2u": -0.5000000077079005,
+      "six_gate_status_match": true
+    },
+    "flat_we200_ct000/R0_WEAK": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999420767068,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 30.973781858021553,
+      "peak_over_u_impact_sealed_l1a2u": 30.973781858021553,
+      "raw_core_v_mine": -0.4999999710383534,
+      "raw_core_v_sealed_l1a2u": -0.4999999710383534,
+      "six_gate_status_match": true
+    },
+    "flat_we200_ct000/R1_MEDIUM": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999118796323,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 89.76984464265173,
+      "peak_over_u_impact_sealed_l1a2u": 89.76984464265173,
+      "raw_core_v_mine": -0.49999995593981617,
+      "raw_core_v_sealed_l1a2u": -0.49999995593981617,
+      "six_gate_status_match": true
+    },
+    "flat_we200_ct000/R2_SHARP": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999069613134,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 36.328378172556846,
+      "peak_over_u_impact_sealed_l1a2u": 36.328378172556846,
+      "raw_core_v_mine": -0.4999999534806567,
+      "raw_core_v_sealed_l1a2u": -0.4999999534806567,
+      "six_gate_status_match": true
+    },
+    "pillar_training/C2_BASE": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.999999966396361,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 4.224925143806713,
+      "peak_over_u_impact_sealed_l1a2u": 4.224925143806713,
+      "raw_core_v_mine": -0.4999999831981805,
+      "raw_core_v_sealed_l1a2u": -0.4999999831981805,
+      "six_gate_status_match": true
+    },
+    "pillar_training/R0_WEAK": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999420767068,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 30.973781858021553,
+      "peak_over_u_impact_sealed_l1a2u": 30.973781858021553,
+      "raw_core_v_mine": -0.4999999710383534,
+      "raw_core_v_sealed_l1a2u": -0.4999999710383534,
+      "six_gate_status_match": true
+    },
+    "pillar_training/R1_MEDIUM": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999118796323,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 89.76984464265173,
+      "peak_over_u_impact_sealed_l1a2u": 89.76984464265173,
+      "raw_core_v_mine": -0.49999995593981617,
+      "raw_core_v_sealed_l1a2u": -0.49999995593981617,
+      "six_gate_status_match": true
+    },
+    "pillar_training/R2_SHARP": {
+      "core_abs_delta": 0.0,
+      "core_over_u_impact_mine": -0.9999999069613134,
+      "peak_abs_delta": 0.0,
+      "peak_over_u_impact_mine": 36.328378172556846,
+      "peak_over_u_impact_sealed_l1a2u": 36.328378172556846,
+      "raw_core_v_mine": -0.4999999534806567,
+      "raw_core_v_sealed_l1a2u": -0.4999999534806567,
+      "six_gate_status_match": true
+    }
+  },
+  "sealed_source": "examples/two_phase/evidence/l1a2u/radial_seed_constraint_matrix.json",
+  "units_note": "the sealed L1A-2u matrix records the raw core speed (-0.5 at u_impact = 0.5); this stage compares raw to raw and also reports the dimensionless ratio, which is -1.0 and equals the frozen target -u_impact",
+  "verdict": "BASELINE_REPLAY_OK",
+  "worst_core_abs_delta": 0.0,
+  "worst_peak_abs_delta": 0.0
+}

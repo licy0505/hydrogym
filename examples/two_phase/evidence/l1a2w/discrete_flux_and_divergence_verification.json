@@ -1,0 +1,544 @@
+{
+  "admissible_rows_checked": 10,
+  "bound_holds_everywhere": true,
+  "bound_holds_on_every_admissible_state": true,
+  "bound_inequalities_checked": 60,
+  "bound_rows_checked": 22,
+  "checks": {
+    "B1_contour_cell_normal_speed[complex_heldout/C2_BASE]": {
+      "bound": 4.905526491646905,
+      "holds": true,
+      "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+      "measured": 0.3353910446166992,
+      "ratio": 0.06837004044067455
+    },
+    "B1_contour_cell_normal_speed[complex_heldout/R0_WEAK]": {
+      "bound": 4.905526491646905,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[complex_heldout/R1_MEDIUM]": {
+      "bound": 4.905526491646905,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[complex_heldout/R2_SHARP]": {
+      "bound": 4.905526491646905,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we100_ct050/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1_contour_cell_normal_speed[flat_we100_ct050/R0_WEAK]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we100_ct050/R1_MEDIUM]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we100_ct050/R2_SHARP]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we200_ct000/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1_contour_cell_normal_speed[flat_we200_ct000/R0_WEAK]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we200_ct000/R1_MEDIUM]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[flat_we200_ct000/R2_SHARP]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[pillar_training/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1_contour_cell_normal_speed[pillar_training/R0_WEAK]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[pillar_training/R1_MEDIUM]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1_contour_cell_normal_speed[pillar_training/R2_SHARP]": {
+      "bound": 0.02,
+      "holds": null,
+      "label": "bound exempted: the state already violates the frozen constraint set",
+      "measured": 0.0,
+      "not_applicable": "global reference envelope exceeded"
+    },
+    "B1b_contour_point_normal_speed[complex_heldout/C2_BASE]": {
+      "bound": 4.9055264916469055,
+      "holds": true,
+      "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+      "measured": 0.24841104091198396,
+      "ratio": 0.050639017307311754
+    },
+    "B1b_contour_point_normal_speed[flat_we100_ct050/C2_BASE]": {
+      "bound": 2.49198570563175,
+      "holds": true,
+      "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1b_contour_point_normal_speed[flat_we200_ct000/C2_BASE]": {
+      "bound": 2.49198570563175,
+      "holds": true,
+      "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1b_contour_point_normal_speed[pillar_training/C2_BASE]": {
+      "bound": 2.49198570563175,
+      "holds": true,
+      "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1c_band_speed[complex_heldout/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+      "measured": 0.001058935304172337,
+      "ratio": 0.05294676520861685
+    },
+    "B1c_band_speed[flat_we100_ct050/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1c_band_speed[flat_we200_ct000/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B1c_band_speed[pillar_training/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+      "measured": 1.5613006326020695e-05,
+      "ratio": 0.0007806503163010348
+    },
+    "B2_placeable_downward_momentum[complex_heldout/C2_BASE]": {
+      "bound": 3.801681276270036,
+      "holds": true,
+      "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+      "measured": 0.8570598169182937,
+      "ratio": 0.22544231213385288
+    },
+    "B2_placeable_downward_momentum[flat_we100_ct050/C2_BASE]": {
+      "bound": 3.7688371104153164,
+      "holds": true,
+      "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+      "measured": 0.8497805776031515,
+      "ratio": 0.22547553866277542
+    },
+    "B2_placeable_downward_momentum[flat_we200_ct000/C2_BASE]": {
+      "bound": 3.7688371104153164,
+      "holds": true,
+      "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+      "measured": 0.8497805776031515,
+      "ratio": 0.22547553866277542
+    },
+    "B2_placeable_downward_momentum[pillar_training/C2_BASE]": {
+      "bound": 3.7752259432361734,
+      "holds": true,
+      "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+      "measured": 0.8557536387522569,
+      "ratio": 0.22667613849323506
+    },
+    "B3_in_band_flux[complex_heldout/C2_BASE]": {
+      "bound": 2.3507530489921147e-07,
+      "holds": true,
+      "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+      "measured": 1.046208656484161e-15,
+      "ratio": 4.450525574911933e-09
+    },
+    "B3_in_band_flux[flat_we100_ct050/C2_BASE]": {
+      "bound": 3.500398997665247e-06,
+      "holds": true,
+      "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B3_in_band_flux[flat_we200_ct000/C2_BASE]": {
+      "bound": 3.500398997665247e-06,
+      "holds": true,
+      "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B3_in_band_flux[pillar_training/C2_BASE]": {
+      "bound": 3.375301876634428e-06,
+      "holds": true,
+      "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+      "measured": 1.9461727651856565e-11,
+      "ratio": 5.765922090281949e-06
+    },
+    "B3b_face_speed[complex_heldout/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+      "measured": 0.0009112320840358734,
+      "ratio": 0.04556160420179367
+    },
+    "B3b_face_speed[flat_we100_ct050/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B3b_face_speed[flat_we200_ct000/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+      "measured": 0.0,
+      "ratio": 0.0
+    },
+    "B3b_face_speed[pillar_training/C2_BASE]": {
+      "bound": 0.02,
+      "holds": true,
+      "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+      "measured": 5.583046913670842e-06,
+      "ratio": 0.0002791523456835421
+    }
+  },
+  "constructions": {
+    "admissible_rows_checked": 6,
+    "bound_holds_on_every_admissible_state": true,
+    "bound_inequalities_checked": 36,
+    "bound_rows_checked": 6,
+    "checks": {
+      "B1_contour_cell_normal_speed[complex_heldout::RAMP_A4_W8]": {
+        "bound": 4.905526491646905,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.33539095520973206,
+        "ratio": 0.06837002221491074
+      },
+      "B1_contour_cell_normal_speed[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1_contour_cell_normal_speed[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1_contour_cell_normal_speed[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1_contour_cell_normal_speed[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1_contour_cell_normal_speed[pillar_training::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "|v_n| at the contour support cell <= the cap that binds at that cell",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1b_contour_point_normal_speed[complex_heldout::RAMP_A4_W8]": {
+        "bound": 4.9055264916469055,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.24841098623015156,
+        "ratio": 0.050639006160326315
+      },
+      "B1b_contour_point_normal_speed[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 2.49198570563175,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1b_contour_point_normal_speed[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 2.49198570563175,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1b_contour_point_normal_speed[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 2.49198570563175,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1b_contour_point_normal_speed[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 2.49198570563175,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1b_contour_point_normal_speed[pillar_training::RAMP_A4_W8]": {
+        "bound": 2.49198570563175,
+        "holds": true,
+        "label": "|v_n| at the bilinear contour point <= the weighted per-cell cap",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1c_band_speed[complex_heldout::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 0.0010589349549263716,
+        "ratio": 0.05294674774631858
+      },
+      "B1c_band_speed[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1c_band_speed[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1c_band_speed[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1c_band_speed[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B1c_band_speed[pillar_training::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "max speed over chi>=0.01 open cells <= 0.02 u_impact (frozen gate)",
+        "measured": 1.5613009963999502e-05,
+        "ratio": 0.0007806504981999751
+      },
+      "B2_placeable_downward_momentum[complex_heldout::RAMP_A4_W8]": {
+        "bound": 3.801681276270036,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8570597660227213,
+        "ratio": 0.22544229874620444
+      },
+      "B2_placeable_downward_momentum[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 3.7688371104153164,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8434308213924702,
+        "ratio": 0.22379073350281414
+      },
+      "B2_placeable_downward_momentum[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 3.7688371104153164,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8497805472736726,
+        "ratio": 0.2254755306153385
+      },
+      "B2_placeable_downward_momentum[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 3.7688371104153164,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8434308213924702,
+        "ratio": 0.22379073350281414
+      },
+      "B2_placeable_downward_momentum[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 3.7688371104153164,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8497805472736726,
+        "ratio": 0.2254755306153385
+      },
+      "B2_placeable_downward_momentum[pillar_training::RAMP_A4_W8]": {
+        "bound": 3.7752259432361734,
+        "holds": true,
+        "label": "downward liquid momentum over admissible cells <= v_max * admissible liquid volume",
+        "measured": 0.8557536524412119,
+        "ratio": 0.22667614211923132
+      },
+      "B3_in_band_flux[complex_heldout::RAMP_A4_W8]": {
+        "bound": 2.3507530489921147e-07,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 1.0462082525295162e-15,
+        "ratio": 4.450523856506654e-09
+      },
+      "B3_in_band_flux[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 3.500398997665247e-06,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3_in_band_flux[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 3.500398997665247e-06,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3_in_band_flux[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 3.500398997665247e-06,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3_in_band_flux[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 3.500398997665247e-06,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3_in_band_flux[pillar_training::RAMP_A4_W8]": {
+        "bound": 3.375301876634428e-06,
+        "holds": true,
+        "label": "in-band downward face flux <= v_band * in-band face area * phi_upwind",
+        "measured": 1.9461729237042795e-11,
+        "ratio": 5.765922559924751e-06
+      },
+      "B3b_face_speed[complex_heldout::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 0.0009112317929975688,
+        "ratio": 0.04556158964987844
+      },
+      "B3b_face_speed[flat_we100_ct050::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3b_face_speed[flat_we100_ct050::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3b_face_speed[flat_we200_ct000::RAMP_A3.5_W3]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3b_face_speed[flat_we200_ct000::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 0.0,
+        "ratio": 0.0
+      },
+      "B3b_face_speed[pillar_training::RAMP_A4_W8]": {
+        "bound": 0.02,
+        "holds": true,
+        "label": "fastest in-band face speed <= the band cap (both sides are in-band cells)",
+        "measured": 5.5830473684181925e-06,
+        "ratio": 0.0002791523684209096
+      }
+    },
+    "inadmissible_rows": {},
+    "measured_not_assumed": true,
+    "rule": "every necessary bound is checked against every admissible measured state, including the diagnostic constructions. A state that already violates the frozen constraint set is reported as inadmissible (the bound's hypothesis fails there) rather than as a bound violation, and any violation on an admissible state fails the stage closed",
+    "section": "diagnostic constructions",
+    "violations": []
+  },
+  "inadmissible_rows": {
+    "complex_heldout/R0_WEAK": "global reference envelope exceeded",
+    "complex_heldout/R1_MEDIUM": "global reference envelope exceeded",
+    "complex_heldout/R2_SHARP": "global reference envelope exceeded",
+    "flat_we100_ct050/R0_WEAK": "global reference envelope exceeded",
+    "flat_we100_ct050/R1_MEDIUM": "global reference envelope exceeded",
+    "flat_we100_ct050/R2_SHARP": "global reference envelope exceeded",
+    "flat_we200_ct000/R0_WEAK": "global reference envelope exceeded",
+    "flat_we200_ct000/R1_MEDIUM": "global reference envelope exceeded",
+    "flat_we200_ct000/R2_SHARP": "global reference envelope exceeded",
+    "pillar_training/R0_WEAK": "global reference envelope exceeded",
+    "pillar_training/R1_MEDIUM": "global reference envelope exceeded",
+    "pillar_training/R2_SHARP": "global reference envelope exceeded"
+  },
+  "measured_not_assumed": true,
+  "rule": "every necessary bound is checked against every admissible measured state, including the diagnostic constructions. A state that already violates the frozen constraint set is reported as inadmissible (the bound's hypothesis fails there) rather than as a bound violation, and any violation on an admissible state fails the stage closed",
+  "section": "frozen candidates",
+  "violations": []
+}

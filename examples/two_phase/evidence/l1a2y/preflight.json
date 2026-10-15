@@ -1,0 +1,18 @@
+{
+  "baseline_head_sha": "3695282e1de6c990514636b28d185ba3f4427a5b",
+  "baseline_pull_request": 24,
+  "baseline_rule": "this stage ran from the L1A-2x evidence head 3695282e1de6c990514636b28d185ba3f4427a5b; every commit above it must be stage owned or the stage refuses to measure",
+  "branch": "arena/02b6c71b-hydrogym",
+  "commits_above_baseline": [
+    "1d6615ef46d6c060e149804ffbebbf517dcda74f"
+  ],
+  "commits_above_baseline_not_stage_owned": [],
+  "dirty_paths_outside_stage_deliverables": [],
+  "head_sha": "1d6615ef46d6c060e149804ffbebbf517dcda74f",
+  "main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "shallow_repository": false,
+  "stage": "L1A-2y",
+  "stage_evidence_tracked_at_head": false,
+  "stage_owned_dirty_paths": [],
+  "worktree_clean_outside_stage_deliverables": true
+}

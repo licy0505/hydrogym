@@ -1,0 +1,97 @@
+{
+  "blocking_failures": {
+    "frozen_support_edge_alive": 16
+  },
+  "criteria": {
+    "contour_uniqueness_margin_dx": 0.01,
+    "equivalence_max_gap_diff_over_dx": 0.0001,
+    "equivalence_max_phi_diff": 1e-06,
+    "fixed_point_probe_band": 0.1,
+    "local_gradient_floor_ratio": 0.5,
+    "max_substep_displacement_over_eps": 0.25
+  },
+  "direct_probe_status": "UNRESOLVED_NON_UNIQUE_CONTOUR_MATCH_ON_THIS_SURFACE",
+  "direct_probe_unique": false,
+  "equivalence_ok": true,
+  "failures": {
+    "contour_unique": 40,
+    "frozen_support_edge_alive": 16,
+    "gradient_resolved": 0,
+    "probe_band": 0,
+    "ray_root_exists": 0,
+    "substep_locality": 0
+  },
+  "fixed_support_attribution_status": "UNRESOLVED",
+  "observed": {
+    "contour_uniqueness_margins_over_dx": [
+      2.2637891561316792e-11,
+      7.313261107810831e-11,
+      1.284412576296745e-10,
+      1.1532108601386426e-10,
+      1.4145484783512075e-10,
+      8.543921126147325e-11,
+      2.163318413295201e-10,
+      3.156586103614245e-10,
+      4.2860648363785003e-10,
+      4.845475132242427e-10,
+      4.411369047829794e-10,
+      4.107967299660231e-10,
+      4.1888270629897306e-10,
+      3.375077994860476e-10,
+      3.3156766221509315e-10,
+      1.4762591149519722e-10,
+      2.490452288839151e-11,
+      3.8252068179644994e-11,
+      2.6408386588627764e-10,
+      3.0968294595368207e-10,
+      1.7926282680491568e-10,
+      2.986908498314733e-10,
+      2.6688695697885123e-10,
+      2.8206770252836577e-10,
+      3.5423042277216155e-10,
+      9.305622938882152e-11,
+      3.248281643664086e-10,
+      8.846257060213247e-11,
+      1.2008527505713573e-10,
+      2.0450130477911443e-10,
+      5.244125134140631e-10,
+      7.510259081300319e-10,
+      7.016645042767777e-10,
+      8.84941897538738e-10,
+      1.1776428721077536e-09,
+      1.3145964317118342e-09,
+      1.5039489653645433e-09,
+      1.3270096133055631e-09,
+      1.5186785162768501e-09,
+      1.803201143957267e-09
+    ],
+    "contour_uniqueness_ok": false,
+    "frozen_support_edge_branch_lost_at_macro_step": 25,
+    "frozen_support_edge_identity": {
+      "axis": 1,
+      "i": 95,
+      "j": 23,
+      "t0_fraction": 0.00598143513462881,
+      "t0_radius_over_dx": 0.0,
+      "t0_x_over_dx": 95.5,
+      "t0_y_over_dx": 23.50598143513463
+    },
+    "max_abs_probe_offset": 0.01414246723386614,
+    "max_substep_displacement_over_eps": 0.0019702171834202566,
+    "min_gradient_ratio_to_t0": 1.0074368611017006,
+    "support_cells_seen": [
+      [
+        95,
+        23
+      ],
+      [
+        96,
+        23
+      ]
+    ],
+    "tracked_edge_continuity_macros_ok": 24
+  },
+  "rule": "a failed guard withholds the verdict, never grants one: an unresolved local gradient, a probe point that has drifted out of the interface band, a lost line root, a substep displacement beyond the locality cap, a jump of the frozen contour crossing off the tracked support edge, or a capture that does not reproduce the frozen public step all return UNRESOLVED. The contour-uniqueness guard applies to the frozen global minimum-gap probe, whose support can migrate between tied candidates on a flat pillar top; the primary readout is the fixed-support attribution, whose support and normal are frozen once at t = 0 and reported with the migration residual instead of being followed",
+  "substeps": 120,
+  "unresolved": true
+}

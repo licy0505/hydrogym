@@ -1,0 +1,2359 @@
+{
+  "N": 192,
+  "baseline_eta": 0.004,
+  "cases": {
+    "flat_we100_ct050": {
+      "C2_BASE": {
+        "comparison": {
+          "approach_t_0": {
+            "coupled": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            }
+          },
+          "approach_t_0.12": {
+            "coupled": {
+              "dt_0.0005": 0.02300758617216917,
+              "dt_0.001": 0.03883111614294004,
+              "dt_0.002": 0.05899187768311636
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.057498546241116215,
+              "dt_0.001": 0.05800315339022158,
+              "dt_0.002": 0.05899187768311636
+            }
+          },
+          "approach_t_0.24": {
+            "coupled": {
+              "dt_0.0005": 0.01394322372428011,
+              "dt_0.001": 0.01550445148759806,
+              "dt_0.002": 0.029445973695853885
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.027414757924150886,
+              "dt_0.001": 0.028097589662958403,
+              "dt_0.002": 0.029445973695853885
+            }
+          },
+          "front_speed_gap_per_time": {
+            "coupled": {
+              "dt_0.0005": -0.11301037327228688,
+              "dt_0.001": -0.26299691921803764,
+              "dt_0.002": -0.27349236730816395
+            },
+            "coupled_finest_over_coarsest": 0.4132121652409765,
+            "fixed_eta": {
+              "dt_0.0005": -0.2727885343377932,
+              "dt_0.001": -0.2730385172990487,
+              "dt_0.002": -0.27349236730816395
+            },
+            "fixed_finest_over_coarsest": 0.9974264986723462
+          },
+          "gate_band_max_speed_over_u_impact_peak": {
+            "coupled": {
+              "dt_0.0005": 0.3800485580029953,
+              "dt_0.001": 0.5492810867927161,
+              "dt_0.002": 0.7026378432234446
+            },
+            "coupled_finest_over_coarsest": 0.5408882565440426,
+            "fixed_eta": {
+              "dt_0.0005": 0.701931413321705,
+              "dt_0.001": 0.7021658953975382,
+              "dt_0.002": 0.7026378432234446
+            },
+            "fixed_finest_over_coarsest": 0.9989946031109016
+          }
+        },
+        "coupled_dt_eta_baseline": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.01394322372428011,
+            "approach_speed_max": 0.023212176201150188,
+            "band_mass_weighted_v_final": -0.012232425255788885,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 3.9873162398505524e-97,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.975323852900436,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.0005,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 11.759882282000035,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.11301037327228688,
+            "gap_phi05_final_over_dx": 1.6380617684034657,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.3800485580029953,
+            "mass_ratio_final": 1.0000000000000002,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.01164075150303918,
+                "gap_phi05_over_dx": 2.4328555531509863,
+                "gate_band_max_speed_over_u_impact": 0.28836430470743984,
+                "local_normal_approach_speed": 0.02300758617216917,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.012232425255788885,
+                "gap_phi05_over_dx": 1.6380617684034657,
+                "gate_band_max_speed_over_u_impact": 0.3800485580029953,
+                "local_normal_approach_speed": 0.01394322372428011,
+                "support_sdf_over_dx": 1.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.01550445148759806,
+            "approach_speed_max": 0.038938475212713666,
+            "band_mass_weighted_v_final": -0.014556631830680756,
+            "contact_time_discrete": 0.232,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 6.31451996580148e-49,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9781715779338211,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.001,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 7.972373798999797,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.26299691921803764,
+            "gap_phi05_final_over_dx": 0.4861650955401,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.5492810867927161,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.012984903789740862,
+                "gap_phi05_over_dx": 2.3816918276491936,
+                "gate_band_max_speed_over_u_impact": 0.3825563367469674,
+                "local_normal_approach_speed": 0.03883111614294004,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.014556631830680756,
+                "gap_phi05_over_dx": 0.4861650955401,
+                "gate_band_max_speed_over_u_impact": 0.5492810867927161,
+                "local_normal_approach_speed": 0.01550445148759806,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": 0.029445973695853885,
+            "approach_speed_max": 0.059808819974399643,
+            "band_mass_weighted_v_final": -0.017059199625870443,
+            "contact_time_discrete": 0.21,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 5.8808886750002785,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.27349236730816395,
+            "gap_phi05_final_over_dx": 0.40556005420793007,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.7026378432234446,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.014258528019012253,
+                "gap_phi05_over_dx": 2.3262800263138477,
+                "gate_band_max_speed_over_u_impact": 0.45394520150662276,
+                "local_normal_approach_speed": 0.05899187768311636,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.017059199625870443,
+                "gap_phi05_over_dx": 0.40556005420793007,
+                "gate_band_max_speed_over_u_impact": 0.7026378432234446,
+                "local_normal_approach_speed": 0.029445973695853885,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_dt_eta_diagnostic": {
+          "eta_0.001": {
+            "approach_speed_final": 0.01593267565692708,
+            "approach_speed_max": 0.025356464003603793,
+            "band_mass_weighted_v_final": -0.012369632741496193,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.371799308005283e-80,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9753282081634417,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 2.0,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.977552019145952,
+                "mean": 0.6959234891641987,
+                "min": 0.6000109006954749
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.6666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.998429768356818,
+                "min": 0.8155526452134032
+              },
+              "volume_weighted_mean_damp": 0.998429768356818,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.6942013616218,
+                "mean": 0.6169589984298525,
+                "min": 0.6000109006954749
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 2.0,
+            "elapsed_seconds": 5.495476181000413,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.11823073937315248,
+            "gap_phi05_final_over_dx": 1.597969356748818,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.38188466670555093,
+            "mass_ratio_final": 1.0000000000000002,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.011754292700467787,
+                "gap_phi05_over_dx": 2.425094875049462,
+                "gate_band_max_speed_over_u_impact": 0.28915367396463526,
+                "local_normal_approach_speed": 0.025356464003603793,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.012369632741496193,
+                "gap_phi05_over_dx": 1.597969356748818,
+                "gate_band_max_speed_over_u_impact": 0.38188466670555093,
+                "local_normal_approach_speed": 0.01593267565692708,
+                "support_sdf_over_dx": 1.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.002": {
+            "approach_speed_final": 0.01700931299412834,
+            "approach_speed_max": 0.0402516702773913,
+            "band_mass_weighted_v_final": -0.01464529189910773,
+            "contact_time_discrete": 0.23,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.0564041309505758e-45,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9781744277972101,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 1.0,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9886486015858422,
+                "mean": 0.8136611108431626,
+                "min": 0.75000851611032
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.3333333333333333,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9991555708217438,
+                "min": 0.8984070468719917
+              },
+              "volume_weighted_mean_damp": 0.9991555708217438,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.8195027785330844,
+                "mean": 0.7626790497336252,
+                "min": 0.75000851611032
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 1.0,
+            "elapsed_seconds": 5.635155887999645,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.26378305822505127,
+            "gap_phi05_final_over_dx": 0.48012754796623547,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.5501258216775337,
+            "mass_ratio_final": 1.0000000000000002,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.013048778840448961,
+                "gap_phi05_over_dx": 2.3781399236475806,
+                "gate_band_max_speed_over_u_impact": 0.38266867689534056,
+                "local_normal_approach_speed": 0.04011959059866757,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.01464529189910773,
+                "gap_phi05_over_dx": 0.48012754796623547,
+                "gate_band_max_speed_over_u_impact": 0.5501258216775337,
+                "local_normal_approach_speed": 0.01700931299412834,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.004": {
+            "approach_speed_final": 0.029445973695853885,
+            "approach_speed_max": 0.059808819974399643,
+            "band_mass_weighted_v_final": -0.017059199625870443,
+            "contact_time_discrete": 0.21,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 5.570570954999312,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.27349236730816395,
+            "gap_phi05_final_over_dx": 0.40556005420793007,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.7026378432234446,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.014258528019012253,
+                "gap_phi05_over_dx": 2.3262800263138477,
+                "gate_band_max_speed_over_u_impact": 0.45394520150662276,
+                "local_normal_approach_speed": 0.05899187768311636,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.017059199625870443,
+                "gap_phi05_over_dx": 0.40556005420793007,
+                "gate_band_max_speed_over_u_impact": 0.7026378432234446,
+                "local_normal_approach_speed": 0.029445973695853885,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_eta_dt_diagnostic": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.027414757924150886,
+            "approach_speed_max": 0.058234799128069024,
+            "band_mass_weighted_v_final": -0.016937137703352957,
+            "contact_time_discrete": 0.212,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 2.962864184666591e-26,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.9810282005342821,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.125,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9985668403781034,
+                "mean": 0.9708457021807716,
+                "min": 0.9600017440827583
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.041666666666666664,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9998867309037505,
+                "min": 0.986061866756349
+              },
+              "volume_weighted_mean_damp": 0.9998867309037505,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9732061604195164,
+                "mean": 0.9624520322615506,
+                "min": 0.9600017440827583
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.0005,
+            "dt_over_eta": 0.125,
+            "elapsed_seconds": 11.758072503000221,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.2727885343377932,
+            "gap_phi05_final_over_dx": 0.4109654914203773,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.701931413321705,
+            "mass_ratio_final": 1.0000000000000002,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.01418541492661666,
+                "gap_phi05_over_dx": 2.3291965673618122,
+                "gate_band_max_speed_over_u_impact": 0.454139147121125,
+                "local_normal_approach_speed": 0.057498546241116215,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.016937137703352957,
+                "gap_phi05_over_dx": 0.4109654914203773,
+                "gate_band_max_speed_over_u_impact": 0.701931413321705,
+                "local_normal_approach_speed": 0.027414757924150886,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.028097589662958403,
+            "approach_speed_max": 0.05876570578186301,
+            "band_mass_weighted_v_final": -0.01697787848652936,
+            "contact_time_discrete": 0.212,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 9.383739929333436e-26,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9810296729048129,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.25,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9971377827703695,
+                "mean": 0.9437320108783386,
+                "min": 0.9230801480874321
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.08333333333333333,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9997758326719866,
+                "min": 0.9725069355088521
+              },
+              "volume_weighted_mean_damp": 0.9997758326719866,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9478106732867999,
+                "mean": 0.927655409076355,
+                "min": 0.9230801480874321
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.001,
+            "dt_over_eta": 0.25,
+            "elapsed_seconds": 7.823761894999734,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.2730385172990487,
+            "gap_phi05_final_over_dx": 0.40904562227793484,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.7021658953975382,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.014210048820624247,
+                "gap_phi05_over_dx": 2.328225470466796,
+                "gate_band_max_speed_over_u_impact": 0.4540700730057472,
+                "local_normal_approach_speed": 0.05800315339022158,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.01697787848652936,
+                "gap_phi05_over_dx": 0.40904562227793484,
+                "gate_band_max_speed_over_u_impact": 0.7021658953975382,
+                "local_normal_approach_speed": 0.028097589662958403,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": 0.029445973695853885,
+            "approach_speed_max": 0.059808819974399643,
+            "band_mass_weighted_v_final": -0.017059199625870443,
+            "contact_time_discrete": 0.21,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 5.764064707000216,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.27349236730816395,
+            "gap_phi05_final_over_dx": 0.40556005420793007,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 0.7026378432234446,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.005023782638909814,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.014258528019012253,
+                "gap_phi05_over_dx": 2.3262800263138477,
+                "gate_band_max_speed_over_u_impact": 0.45394520150662276,
+                "local_normal_approach_speed": 0.05899187768311636,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.017059199625870443,
+                "gap_phi05_over_dx": 0.40556005420793007,
+                "gate_band_max_speed_over_u_impact": 0.7026378432234446,
+                "local_normal_approach_speed": 0.029445973695853885,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "initial_state_hashes": {
+          "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+          "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+        }
+      },
+      "R1_MEDIUM": {
+        "comparison": {
+          "approach_t_0": {
+            "coupled": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            }
+          },
+          "approach_t_0.12": {
+            "coupled": {
+              "dt_0.0005": 0.647104328685892,
+              "dt_0.001": 1.1229109009373,
+              "dt_0.002": null
+            },
+            "fixed_eta": {
+              "dt_0.0005": 1.5267916509271446,
+              "dt_0.001": 1.6590127162463824,
+              "dt_0.002": null
+            }
+          },
+          "approach_t_0.24": {
+            "coupled": {
+              "dt_0.0005": 0.08405897393833436,
+              "dt_0.001": 0.19950264597951373,
+              "dt_0.002": null
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.48664077066185524,
+              "dt_0.001": 0.5376442993953656,
+              "dt_0.002": null
+            }
+          },
+          "front_speed_gap_per_time": {
+            "coupled": {
+              "dt_0.0005": -0.3299198662106077,
+              "dt_0.001": -0.3332415278510489,
+              "dt_0.002": -0.2505722797551256
+            },
+            "coupled_finest_over_coarsest": 1.3166654608922639,
+            "fixed_eta": {
+              "dt_0.0005": -0.3386980613699455,
+              "dt_0.001": -0.3388947449207577,
+              "dt_0.002": -0.2505722797551256
+            },
+            "fixed_finest_over_coarsest": 1.3516980477686589
+          },
+          "gate_band_max_speed_over_u_impact_peak": {
+            "coupled": {
+              "dt_0.0005": 22.917178206041026,
+              "dt_0.001": 27.137077214247075,
+              "dt_0.002": 46073.613540031656
+            },
+            "coupled_finest_over_coarsest": 0.0004974035341536461,
+            "fixed_eta": {
+              "dt_0.0005": 27.248016164967197,
+              "dt_0.001": 28.144124967671004,
+              "dt_0.002": 46073.613540031656
+            },
+            "fixed_finest_over_coarsest": 0.0005914017606040907
+          }
+        },
+        "coupled_dt_eta_baseline": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.08405897393833436,
+            "approach_speed_max": 1.141585727168228,
+            "band_mass_weighted_v_final": -0.01605205492225452,
+            "contact_time_discrete": 0.1,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 3.9873162398505524e-97,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.975323852900436,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.0005,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 12.430812613999478,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.3299198662106077,
+            "gap_phi05_final_over_dx": -0.027803137362838015,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 22.917178206041026,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.07818034901902923,
+                "gap_phi05_over_dx": 0.23817403962996586,
+                "gate_band_max_speed_over_u_impact": 9.090843895925458,
+                "local_normal_approach_speed": 0.647104328685892,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.01605205492225452,
+                "gap_phi05_over_dx": -0.027803137362838015,
+                "gate_band_max_speed_over_u_impact": 5.239102955269626,
+                "local_normal_approach_speed": 0.08405897393833436,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.19950264597951373,
+            "approach_speed_max": 2.403488136411749,
+            "band_mass_weighted_v_final": -0.008079603070774486,
+            "contact_time_discrete": 0.09,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 6.31451996580148e-49,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9781715779338211,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.001,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 7.8682485970002745,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.3332415278510489,
+            "gap_phi05_final_over_dx": -0.053313498761426104,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 27.137077214247075,
+            "mass_ratio_final": 1.0000000000000002,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.10323722182584275,
+                "gap_phi05_over_dx": 0.07890696949254661,
+                "gate_band_max_speed_over_u_impact": 10.788074058015452,
+                "local_normal_approach_speed": 1.1229109009373,
+                "support_sdf_over_dx": 0.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.008079603070774486,
+                "gap_phi05_over_dx": -0.053313498761426104,
+                "gate_band_max_speed_over_u_impact": 8.62964273717451,
+                "local_normal_approach_speed": 0.19950264597951373,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": -1923.42795498711,
+            "approach_speed_max": 0.2195788451826618,
+            "band_mass_weighted_v_final": NaN,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 4.173732463000306,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.2505722797551256,
+            "gap_phi05_final_over_dx": null,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 46073.613540031656,
+            "mass_ratio_final": NaN,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": null,
+              "t_0.24": null
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_dt_eta_diagnostic": {
+          "eta_0.001": {
+            "approach_speed_final": -2288.190041073337,
+            "approach_speed_max": 0.1574112679495483,
+            "band_mass_weighted_v_final": NaN,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.371799308005283e-80,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9753282081634417,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 2.0,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.977552019145952,
+                "mean": 0.6959234891641987,
+                "min": 0.6000109006954749
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.6666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.998429768356818,
+                "min": 0.8155526452134032
+              },
+              "volume_weighted_mean_damp": 0.998429768356818,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.6942013616218,
+                "mean": 0.6169589984298525,
+                "min": 0.6000109006954749
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 2.0,
+            "elapsed_seconds": 4.11657158700018,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.1540378604810842,
+            "gap_phi05_final_over_dx": null,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 31239.44122880827,
+            "mass_ratio_final": NaN,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": null,
+              "t_0.24": null
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.002": {
+            "approach_speed_final": -2180.342815052474,
+            "approach_speed_max": 0.18731989651369296,
+            "band_mass_weighted_v_final": NaN,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.0564041309505758e-45,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9781744277972101,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 1.0,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9886486015858422,
+                "mean": 0.8136611108431626,
+                "min": 0.75000851611032
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.3333333333333333,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9991555708217438,
+                "min": 0.8984070468719917
+              },
+              "volume_weighted_mean_damp": 0.9991555708217438,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.8195027785330844,
+                "mean": 0.7626790497336252,
+                "min": 0.75000851611032
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 1.0,
+            "elapsed_seconds": 3.7326166480006577,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.20026748651198817,
+            "gap_phi05_final_over_dx": null,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 38593.77202455052,
+            "mass_ratio_final": NaN,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": null,
+              "t_0.24": null
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.004": {
+            "approach_speed_final": -1923.42795498711,
+            "approach_speed_max": 0.2195788451826618,
+            "band_mass_weighted_v_final": NaN,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 3.6786163959995974,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.2505722797551256,
+            "gap_phi05_final_over_dx": null,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 46073.613540031656,
+            "mass_ratio_final": NaN,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": null,
+              "t_0.24": null
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_eta_dt_diagnostic": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.48664077066185524,
+            "approach_speed_max": 4.227778915390033,
+            "band_mass_weighted_v_final": -0.004902088231739038,
+            "contact_time_discrete": 0.082,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 2.962864184666591e-26,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.9810282005342821,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.125,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9985668403781034,
+                "mean": 0.9708457021807716,
+                "min": 0.9600017440827583
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.041666666666666664,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9998867309037505,
+                "min": 0.986061866756349
+              },
+              "volume_weighted_mean_damp": 0.9998867309037505,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9732061604195164,
+                "mean": 0.9624520322615506,
+                "min": 0.9600017440827583
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.0005,
+            "dt_over_eta": 0.125,
+            "elapsed_seconds": 11.906792143999155,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.3386980613699455,
+            "gap_phi05_final_over_dx": -0.09521967618655225,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 27.248016164967197,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.12716156595002948,
+                "gap_phi05_over_dx": -0.0030665974252155337,
+                "gate_band_max_speed_over_u_impact": 10.6446972711944,
+                "local_normal_approach_speed": 1.5267916509271446,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.004902088231739038,
+                "gap_phi05_over_dx": -0.09521967618655225,
+                "gate_band_max_speed_over_u_impact": 12.361221472230513,
+                "local_normal_approach_speed": 0.48664077066185524,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.5376442993953656,
+            "approach_speed_max": 4.550848772983307,
+            "band_mass_weighted_v_final": 0.0025722387303051004,
+            "contact_time_discrete": 0.082,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 9.383739929333436e-26,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9810296729048129,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.25,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9971377827703695,
+                "mean": 0.9437320108783386,
+                "min": 0.9230801480874321
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.08333333333333333,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9997758326719866,
+                "min": 0.9725069355088521
+              },
+              "volume_weighted_mean_damp": 0.9997758326719866,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9478106732867999,
+                "mean": 0.927655409076355,
+                "min": 0.9230801480874321
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.001,
+            "dt_over_eta": 0.25,
+            "elapsed_seconds": 8.284883856000306,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.3388947449207577,
+            "gap_phi05_final_over_dx": -0.09673020585679026,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 28.144124967671004,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.1303438825406546,
+                "gap_phi05_over_dx": -0.015885601211682143,
+                "gate_band_max_speed_over_u_impact": 11.31117580524553,
+                "local_normal_approach_speed": 1.6590127162463824,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": 0.0025722387303051004,
+                "gap_phi05_over_dx": -0.09673020585679026,
+                "gate_band_max_speed_over_u_impact": 13.090499851145918,
+                "local_normal_approach_speed": 0.5376442993953656,
+                "support_sdf_over_dx": -0.5,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": -1923.42795498711,
+            "approach_speed_max": 0.2195788451826618,
+            "band_mass_weighted_v_final": NaN,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9810326184455984,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2112,
+                "max": 0.9942919033533095,
+                "mean": 0.8947940943300204,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 35328,
+                "max": 1.0,
+                "mean": 0.9995607986197675,
+                "min": 0.9464851580195073
+              },
+              "volume_weighted_mean_damp": 0.9995607986197675,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 1536,
+                "max": 0.9007986008065149,
+                "mean": 0.8651797643227516,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 3.8221793980001166,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.2505722797551256,
+            "gap_phi05_final_over_dx": null,
+            "gap_phi05_initial_over_dx": 2.505981435134629,
+            "gate_band_max_speed_over_u_impact_peak": 46073.613540031656,
+            "mass_ratio_final": NaN,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.004802239065013979,
+                "gap_phi05_over_dx": 2.505981435134629,
+                "gate_band_max_speed_over_u_impact": 0.0,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.5,
+                "t_sampled": 0.0
+              },
+              "t_0.12": null,
+              "t_0.24": null
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "initial_state_hashes": {
+          "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "u": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+          "v": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09"
+        }
+      }
+    },
+    "pillar_training": {
+      "C2_BASE": {
+        "comparison": {
+          "approach_t_0": {
+            "coupled": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.0,
+              "dt_0.001": 0.0,
+              "dt_0.002": 0.0
+            }
+          },
+          "approach_t_0.12": {
+            "coupled": {
+              "dt_0.0005": 0.03265563423405416,
+              "dt_0.001": 0.05059827101381229,
+              "dt_0.002": 0.07009765139620647
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.06908658835642469,
+              "dt_0.001": 0.06942832942377003,
+              "dt_0.002": 0.07009765139620647
+            }
+          },
+          "approach_t_0.24": {
+            "coupled": {
+              "dt_0.0005": 0.03623944326364119,
+              "dt_0.001": 0.059188477966644275,
+              "dt_0.002": 0.08779689894864937
+            },
+            "fixed_eta": {
+              "dt_0.0005": 0.08617931865832876,
+              "dt_0.001": 0.08672766632267036,
+              "dt_0.002": 0.08779689894864937
+            }
+          },
+          "front_speed_gap_per_time": {
+            "coupled": {
+              "dt_0.0005": -0.04653947406899478,
+              "dt_0.001": -0.062264782411289764,
+              "dt_0.002": -0.07907595674266031
+            },
+            "coupled_finest_over_coarsest": 0.5885413972346846,
+            "fixed_eta": {
+              "dt_0.0005": -0.07832507155495771,
+              "dt_0.001": -0.07857060133161185,
+              "dt_0.002": -0.07907595674266031
+            },
+            "fixed_finest_over_coarsest": 0.9905042541546955
+          },
+          "gate_band_max_speed_over_u_impact_peak": {
+            "coupled": {
+              "dt_0.0005": 0.7158070114608238,
+              "dt_0.001": 0.8583509383434405,
+              "dt_0.002": 0.9437263151618517
+            },
+            "coupled_finest_over_coarsest": 0.758490040979795,
+            "fixed_eta": {
+              "dt_0.0005": 0.9436158714598979,
+              "dt_0.001": 0.9436441665991966,
+              "dt_0.002": 0.9437263151618517
+            },
+            "fixed_finest_over_coarsest": 0.9998829706238139
+          }
+        },
+        "coupled_dt_eta_baseline": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.03623944326364119,
+            "approach_speed_max": 0.036684164854456636,
+            "band_mass_weighted_v_final": -0.032448577136354864,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 3.9873162398505524e-97,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.9626986870253417,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.997671066006753,
+                "mean": 0.9009836332954569,
+                "min": 0.8571484186572264
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9990327277623792,
+                "min": 0.9092717096732864
+              },
+              "volume_weighted_mean_damp": 0.9993074312885493,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9092717096732864,
+                "mean": 0.8687978531050093,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.0005,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 14.362703108999995,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.04653947406899478,
+            "gap_phi05_final_over_dx": 2.348558321968465,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.7158070114608238,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.024323693189640724,
+                "gap_phi05_over_dx": 2.606391354554823,
+                "gate_band_max_speed_over_u_impact": 0.466712935787397,
+                "local_normal_approach_speed": 0.03265563423405416,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.032448577136354864,
+                "gap_phi05_over_dx": 2.348558321968465,
+                "gate_band_max_speed_over_u_impact": 0.7158070114608238,
+                "local_normal_approach_speed": 0.03623944326364119,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.059188477966644275,
+            "approach_speed_max": 0.05980027329245301,
+            "band_mass_weighted_v_final": -0.034820708372990734,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 6.31451996580148e-49,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9668971385261896,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.997671066006753,
+                "mean": 0.9009836332954569,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9990327277623792,
+                "min": 0.9092717096732864
+              },
+              "volume_weighted_mean_damp": 0.9993074312885493,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9092717096732864,
+                "mean": 0.8687978531050093,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.001,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 9.741560090999883,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.062264782411289764,
+            "gap_phi05_final_over_dx": 2.2277879538996395,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.8583509383434405,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.02522503699279273,
+                "gap_phi05_over_dx": 2.572845345779296,
+                "gate_band_max_speed_over_u_impact": 0.5209430730186018,
+                "local_normal_approach_speed": 0.05059827101381229,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.034820708372990734,
+                "gap_phi05_over_dx": 2.2277879538996395,
+                "gate_band_max_speed_over_u_impact": 0.8583509383434405,
+                "local_normal_approach_speed": 0.059188477966644275,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": 0.08779689894864937,
+            "approach_speed_max": 0.08832230705263196,
+            "band_mass_weighted_v_final": -0.03689294101641104,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9711593722250881,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.997671066006753,
+                "mean": 0.9009836332954569,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9990327277623792,
+                "min": 0.9092717096732864
+              },
+              "volume_weighted_mean_damp": 0.9993074312885493,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9092717096732864,
+                "mean": 0.8687978531050093,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": false,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 7.004506393000156,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.07907595674266031,
+            "gap_phi05_final_over_dx": 2.0986781350347137,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.9437263151618517,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.025944457650848726,
+                "gap_phi05_over_dx": 2.542089134000019,
+                "gate_band_max_speed_over_u_impact": 0.5477920999981245,
+                "local_normal_approach_speed": 0.07009765139620647,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.03689294101641104,
+                "gap_phi05_over_dx": 2.0986781350347137,
+                "gate_band_max_speed_over_u_impact": 0.9437263151618517,
+                "local_normal_approach_speed": 0.08779689894864937,
+                "support_sdf_over_dx": 1.7000000476837158,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_dt_eta_diagnostic": {
+          "eta_0.001": {
+            "approach_speed_final": 0.03888096771498072,
+            "approach_speed_max": 0.03926518157148884,
+            "band_mass_weighted_v_final": -0.03254696069462626,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.371799308005283e-80,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9627050442678412,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 2.0,
+              "eta_pen": 0.001,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.9907488996333683,
+                "mean": 0.7116347997962631,
+                "min": 0.6000109006954749
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.6666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9966791658143486,
+                "min": 0.7147323713830586
+              },
+              "volume_weighted_mean_damp": 0.9975430867620981,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.7147323713830586,
+                "mean": 0.6248100967767781,
+                "min": 0.6000109006954749
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 2.0,
+            "elapsed_seconds": 7.235060709999743,
+            "eta_pen": 0.001,
+            "front_speed_gap_per_time": -0.04812620573237253,
+            "gap_phi05_final_over_dx": 2.336372222793724,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.7167339394370299,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.02437985171781631,
+                "gap_phi05_over_dx": 2.6026893529272357,
+                "gate_band_max_speed_over_u_impact": 0.4665400826182486,
+                "local_normal_approach_speed": 0.03472636340144915,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.03254696069462626,
+                "gap_phi05_over_dx": 2.336372222793724,
+                "gate_band_max_speed_over_u_impact": 0.7167339394370299,
+                "local_normal_approach_speed": 0.03888096771498072,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.002": {
+            "approach_speed_final": 0.060597366584670354,
+            "approach_speed_max": 0.06117661166031378,
+            "band_mass_weighted_v_final": -0.03487640860317408,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 1.0564041309505758e-45,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9669014703890005,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 1.0,
+              "eta_pen": 0.002,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.9953529546753307,
+                "mean": 0.824104253809162,
+                "min": 0.75000851611032
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.3333333333333333,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9981687850122023,
+                "min": 0.8336372291223195
+              },
+              "volume_weighted_mean_damp": 0.9986725412381436,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.8336372291223195,
+                "mean": 0.7684504170826542,
+                "min": 0.75000851611032
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 1.0,
+            "elapsed_seconds": 8.689399761999994,
+            "eta_pen": 0.002,
+            "front_speed_gap_per_time": -0.06303449837529498,
+            "gap_phi05_final_over_dx": 2.2218765352960794,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.858542445051041,
+            "mass_ratio_final": 0.9999999999999999,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.025253586424939925,
+                "gap_phi05_over_dx": 2.571521023598308,
+                "gate_band_max_speed_over_u_impact": 0.5207812344058823,
+                "local_normal_approach_speed": 0.05160111816911484,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.03487640860317408,
+                "gap_phi05_over_dx": 2.2218765352960794,
+                "gate_band_max_speed_over_u_impact": 0.858542445051041,
+                "local_normal_approach_speed": 0.060597366584670354,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          },
+          "eta_0.004": {
+            "approach_speed_final": 0.08779689894864937,
+            "approach_speed_max": 0.08832230705263196,
+            "band_mass_weighted_v_final": -0.03689294101641104,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9711593722250881,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.997671066006753,
+                "mean": 0.9009836332954569,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9990327277623792,
+                "min": 0.9092717096732864
+              },
+              "volume_weighted_mean_damp": 0.9993074312885493,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9092717096732864,
+                "mean": 0.8687978531050093,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 7.287372196999968,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.07907595674266031,
+            "gap_phi05_final_over_dx": 2.0986781350347137,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.9437263151618517,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.025944457650848726,
+                "gap_phi05_over_dx": 2.542089134000019,
+                "gate_band_max_speed_over_u_impact": 0.5477920999981245,
+                "local_normal_approach_speed": 0.07009765139620647,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.03689294101641104,
+                "gap_phi05_over_dx": 2.0986781350347137,
+                "gate_band_max_speed_over_u_impact": 0.9437263151618517,
+                "local_normal_approach_speed": 0.08779689894864937,
+                "support_sdf_over_dx": 1.7000000476837158,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "fixed_eta_dt_diagnostic": {
+          "dt_0.0005": {
+            "approach_speed_final": 0.08617931865832876,
+            "approach_speed_max": 0.08673891762837921,
+            "band_mass_weighted_v_final": -0.036824079563262314,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 2.962864184666591e-26,
+                "substeps": 1440,
+                "volume_weighted_mean": 0.971152798721809,
+                "window": 0.24
+              },
+              "dt": 0.0005,
+              "dt_over_eta": 0.125,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.9994167477346678,
+                "mean": 0.9726329181583655,
+                "min": 0.9600017440827583
+              },
+              "h": 0.00016666666666666666,
+              "h_over_eta": 0.041666666666666664,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9997472075756332,
+                "min": 0.9756618053238685
+              },
+              "volume_weighted_mean_damp": 0.9998208910410509,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9756618053238685,
+                "mean": 0.9635449959265439,
+                "min": 0.9600017440827583
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.0005,
+            "dt_over_eta": 0.125,
+            "elapsed_seconds": 15.21418909499971,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.07832507155495771,
+            "gap_phi05_final_over_dx": 2.1044449332762696,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.9436158714598979,
+            "mass_ratio_final": 0.9999999999999997,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.025914092273562082,
+                "gap_phi05_over_dx": 2.5426972731332285,
+                "gate_band_max_speed_over_u_impact": 0.5478656763077392,
+                "local_normal_approach_speed": 0.06908658835642469,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.036824079563262314,
+                "gap_phi05_over_dx": 2.1044449332762696,
+                "gate_band_max_speed_over_u_impact": 0.9436158714598979,
+                "local_normal_approach_speed": 0.08617931865832876,
+                "support_sdf_over_dx": 1.7000000476837158,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 480
+          },
+          "dt_0.001": {
+            "approach_speed_final": 0.08672766632267036,
+            "approach_speed_max": 0.08727504896644131,
+            "band_mass_weighted_v_final": -0.036847445035583584,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 9.383739929333436e-26,
+                "substeps": 720,
+                "volume_weighted_mean": 0.9711549892136173,
+                "window": 0.24
+              },
+              "dt": 0.001,
+              "dt_over_eta": 0.25,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.9988341754391514,
+                "mean": 0.9471326611215256,
+                "min": 0.9230801480874321
+              },
+              "h": 0.0003333333333333333,
+              "h_over_eta": 0.08333333333333333,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9995020070685375,
+                "min": 0.9524801578177478
+              },
+              "volume_weighted_mean_damp": 0.9996458772381672,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9524801578177478,
+                "mean": 0.9297033496818409,
+                "min": 0.9230801480874321
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.001,
+            "dt_over_eta": 0.25,
+            "elapsed_seconds": 9.589056332999462,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.07857060133161185,
+            "gap_phi05_final_over_dx": 2.102559264591566,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.9436441665991966,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.02592445021551725,
+                "gap_phi05_over_dx": 2.5424997181179165,
+                "gate_band_max_speed_over_u_impact": 0.5478370648730334,
+                "local_normal_approach_speed": 0.06942832942377003,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.036847445035583584,
+                "gap_phi05_over_dx": 2.102559264591566,
+                "gate_band_max_speed_over_u_impact": 0.9436441665991966,
+                "local_normal_approach_speed": 0.08672766632267036,
+                "support_sdf_over_dx": 1.7000000476837158,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 240
+          },
+          "dt_0.002": {
+            "approach_speed_final": 0.08779689894864937,
+            "approach_speed_max": 0.08832230705263196,
+            "band_mass_weighted_v_final": -0.03689294101641104,
+            "contact_time_discrete": null,
+            "damping": {
+              "cumulative_over_factorial_window": {
+                "gate_band_min": 7.946395387722335e-25,
+                "substeps": 360,
+                "volume_weighted_mean": 0.9711593722250881,
+                "window": 0.24
+              },
+              "dt": 0.002,
+              "dt_over_eta": 0.5,
+              "eta_pen": 0.004,
+              "formula": "damp_i = 1 / (1 + h * chi_i / eta_pen), h = dt / 3",
+              "gate_band_chi_ge_0p01": {
+                "cell_count": 2936,
+                "max": 0.997671066006753,
+                "mean": 0.9009836332954569,
+                "min": 0.8571484186572264
+              },
+              "h": 0.0006666666666666666,
+              "h_over_eta": 0.16666666666666666,
+              "open_control_volumes": {
+                "cell_count": 34944,
+                "max": 1.0,
+                "mean": 0.9990327277623792,
+                "min": 0.9092717096732864
+              },
+              "volume_weighted_mean_damp": 0.9993074312885493,
+              "wall_band_chi_ge_0p5": {
+                "cell_count": 2056,
+                "max": 0.9092717096732864,
+                "mean": 0.8687978531050093,
+                "min": 0.8571484186572264
+              },
+              "wallclock_note": "the cumulative factor counts substeps, so a smaller dt applies more, individually weaker damping steps; only the product is the same only when eta_pen scales with dt"
+            },
+            "diagnostic_override": true,
+            "dt": 0.002,
+            "dt_over_eta": 0.5,
+            "elapsed_seconds": 7.091630264999367,
+            "eta_pen": 0.004,
+            "front_speed_gap_per_time": -0.07907595674266031,
+            "gap_phi05_final_over_dx": 2.0986781350347137,
+            "gap_phi05_initial_over_dx": 2.705981482818345,
+            "gate_band_max_speed_over_u_impact_peak": 0.9437263151618517,
+            "mass_ratio_final": 1.0,
+            "matched_physical_times": {
+              "t_0": {
+                "band_mass_weighted_v": -0.01271688990857536,
+                "gap_phi05_over_dx": 2.705981482818345,
+                "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+                "local_normal_approach_speed": 0.0,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.0
+              },
+              "t_0.12": {
+                "band_mass_weighted_v": -0.025944457650848726,
+                "gap_phi05_over_dx": 2.542089134000019,
+                "gate_band_max_speed_over_u_impact": 0.5477920999981245,
+                "local_normal_approach_speed": 0.07009765139620647,
+                "support_sdf_over_dx": 2.700000047683716,
+                "t_sampled": 0.12
+              },
+              "t_0.24": {
+                "band_mass_weighted_v": -0.03689294101641104,
+                "gap_phi05_over_dx": 2.0986781350347137,
+                "gate_band_max_speed_over_u_impact": 0.9437263151618517,
+                "local_normal_approach_speed": 0.08779689894864937,
+                "support_sdf_over_dx": 1.7000000476837158,
+                "t_sampled": 0.24
+              }
+            },
+            "sampling_cadence": 0.002,
+            "steps": 120
+          }
+        },
+        "initial_state_hashes": {
+          "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+          "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+        }
+      }
+    }
+  },
+  "dt_levels": [
+    0.002,
+    0.001,
+    0.0005
+  ],
+  "fixed_eta_levels": [
+    0.004,
+    0.002,
+    0.001
+  ],
+  "interpretation_rule": "a dt trend that persists under fixed eta_pen is a time-discretization residual; a trend that changes materially when eta_pen is held fixed is confounded by the Brinkman penalty timescale",
+  "matched_physical_times": [
+    0.0,
+    0.12,
+    0.24
+  ],
+  "profile": "forensic",
+  "verdict": {
+    "all_rows_counts": {
+      "confounded": 3,
+      "residual": 3
+    },
+    "all_rows_verdict_including_inadmissible_seeds": "DT_ETA_CONFOUNDED",
+    "confounded_observables": 3,
+    "excluded_inadmissible_rows": [
+      "flat_we100_ct050/R1_MEDIUM"
+    ],
+    "residual_observables": 1,
+    "rule": "the coupled and the fixed-eta dt trends are compared on the same observables at matched physical times; a material difference (>25% of the larger ratio) marks the observable as confounded by the Brinkman penalty timescale, otherwise as a time-discretization residual; rows from interior-inadmissible seeds that were actually run here are labelled and excluded",
+    "trends": {
+      "flat_we100_ct050/C2_BASE/front_speed_gap_per_time": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.4132121652409765,
+        "fixed_eta_finest_over_coarsest": 0.9974264986723462,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "flat_we100_ct050/C2_BASE/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.5408882565440426,
+        "fixed_eta_finest_over_coarsest": 0.9989946031109016,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "flat_we100_ct050/R1_MEDIUM/front_speed_gap_per_time": {
+        "counted_in_verdict": false,
+        "coupled_finest_over_coarsest": 1.3166654608922639,
+        "fixed_eta_finest_over_coarsest": 1.3516980477686589,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "DISCRETIZATION_INADMISSIBLE"
+      },
+      "flat_we100_ct050/R1_MEDIUM/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": false,
+        "coupled_finest_over_coarsest": 0.0004974035341536461,
+        "fixed_eta_finest_over_coarsest": 0.0005914017606040907,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "DISCRETIZATION_INADMISSIBLE"
+      },
+      "pillar_training/C2_BASE/front_speed_gap_per_time": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.5885413972346846,
+        "fixed_eta_finest_over_coarsest": 0.9905042541546955,
+        "label": "DT_ETA_CONFOUNDED",
+        "seed_admissibility": "ADMISSIBLE"
+      },
+      "pillar_training/C2_BASE/gate_band_max_speed_over_u_impact_peak": {
+        "counted_in_verdict": true,
+        "coupled_finest_over_coarsest": 0.758490040979795,
+        "fixed_eta_finest_over_coarsest": 0.9998829706238139,
+        "label": "DT_DISCRETIZATION_RESIDUAL",
+        "seed_admissibility": "ADMISSIBLE"
+      }
+    },
+    "verdict": "DT_ETA_CONFOUNDED"
+  },
+  "window": 0.24
+}

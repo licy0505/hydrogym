@@ -1,0 +1,78 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_adjacent_suite": {
+    "action": "recorded truthfully as observed; no frozen test was edited and none was turned green",
+    "cause": "the frozen predecessor preflights require every commit above their own baseline to belong to their own stage, and two of them additionally require a worktree clean outside their own paths; neither can hold once a later stage is committed on the same branch, so these failures are structural and are recorded as observed rather than repaired. Nothing here is an arithmetic or physics disagreement with a predecessor result",
+    "classification": "SUPERSEDED_BY_THE_NEXT_STAGE_BY_CONSTRUCTION",
+    "combined_sweep_observation": {
+      "command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py tests/test_frozen_chns_early_window_transport_attribution_audit.py tests/test_impact_initialization_compatibility_audit.py -q",
+      "derivation": "the five predecessor suites returned 8 failed / 221 passed, the lineage suite returned 1 failed / 48 passed, and one invocation of the combined command returned 9 failed / 269 passed; all three were runs in this state and the combined figure is the observed one, not a reconstruction",
+      "result": "9 failed, 269 passed",
+      "split": "the eight structural failures listed here plus the one legacy lineage failure, which is reported separately below"
+    },
+    "failing": [
+      "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+      "test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head",
+      "test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section"
+    ],
+    "measured_at": "head 1d6615ef46d6c060e149804ffbebbf517dcda74f, with this stage's own evidence directory present in the worktree but uncommitted (the state the stage produced that evidence in)",
+    "state_dependence": "measured in two states of the same head. With this stage's own evidence directory present in the worktree but uncommitted - the state this stage produced its evidence in - the five suites report 8 failures, including the L1A-2u report-section check, because that preflight refuses to build its state while the worktree is dirty outside its own paths. With that directory absent the same five suites report 7 and that check passes. The set below is the one observed in the state recorded in preflight.json, which is the state the stage ran in",
+    "suite_failure_count": 8,
+    "suite_failures": {
+      "l1a2t": 1,
+      "l1a2u": 1,
+      "l1a2v": 5,
+      "l1a2w": 1,
+      "l1a2x": 0
+    },
+    "sweep_command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py tests/test_frozen_chns_early_window_transport_attribution_audit.py -q",
+    "sweep_result": "8 failed, 221 passed"
+  },
+  "hosted_ci": {
+    "observed_head_sha": "e63e845bc9888f217307f4bbb8e3fa7c52ed82fb",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
+  },
+  "legacy_debt_baseline": {
+    "codespell": 3,
+    "formatter": 27,
+    "isort": 28,
+    "ruff": 171
+  },
+  "legacy_lineage_suite": {
+    "action": "kept strictly separate from the structural failures and never counted as a pass",
+    "cause": "pre-existing; reproduced on a pristine worktree of the verified main, not caused by this stage",
+    "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+    "count": 1,
+    "failing": [
+      "test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+    ],
+    "sweep_command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_impact_initialization_compatibility_audit.py -q",
+    "sweep_result": "1 failed, 48 passed"
+  },
+  "not_run": [
+    "control trajectories",
+    "contact events",
+    "temporal refinement",
+    "spatial refinement",
+    "T=8 recomputation",
+    "L1B data generation",
+    "ML training",
+    "contract 13",
+    "parameter sweep"
+  ],
+  "quality_baseline_path": "quality/legacy_two_phase_debt_v1.json",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "ratchet_expectation": "PASS_BASELINE_ONLY",
+  "reporting_rule": "the structural frozen-adjacent failures and the old lineage failure are reported separately with their own counts; nothing is hidden, suppressed or forced green",
+  "stage": "L1A-2y",
+  "stage_test_file": "tests/test_frozen_reconstruction_branch_attribution_audit.py",
+  "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED"
+}

@@ -1,0 +1,37 @@
+{
+  "baseline_head_sha": "3695282e1de6c990514636b28d185ba3f4427a5b",
+  "branch": "arena/02b6c71b-hydrogym",
+  "frozen_source_sha256": {
+    "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py": "f0fddeabfdd4498123c84f8cd9125470056e589ef6e2241f2448a12eb3d0214e",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py": "788791df2b0bb3e737fe68cba6e5cd3e98d100285184e0b727ce02363309a3b0",
+    "examples/two_phase/production/radial_incident_seed_eta_dt_audit.py": "e005d24f9e3c5f5ccd21fcff5957a523860dfc23918f576a1c87e47738fdc1c3"
+  },
+  "frozen_status_flags": {
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA_NOT_READY": "unchanged",
+    "contract": 12
+  },
+  "head_sha": "1d6615ef46d6c060e149804ffbebbf517dcda74f",
+  "main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "module_path": "examples/two_phase/production/frozen_reconstruction_branch_attribution_audit.py",
+  "module_sha256": "d6c9e05a42384b227faa6d86b47284984d14e0255d7ba17345fd359ad7f51131",
+  "phase_boundary_model": "impermeable_flux",
+  "phase_boundary_models_available": [
+    "impermeable_flux",
+    "projection_legacy"
+  ],
+  "phase_storage_model": "phase_only_float64_v1",
+  "phase_transport_geometry": "sdf_cutcell_fv_v1",
+  "read_only_study_inputs": [
+    "production/frozen_chns_early_window_transport_attribution_audit.py (L1A-2x): its frozen-kernel substep capture, its fixed support probe and its evidence/seal helpers, imported and never edited",
+    "evidence/l1a2x: the sealed L1A-2x payloads, read for the comparison-error re-audit and for the cross-check of this stage's identical window"
+  ],
+  "readout_module_path": "examples/two_phase/production/l1a2y_contour_branch_readout.py",
+  "readout_module_sha256": "563553a398f2eea53bf0cc73d53047ea483c37d6686d2572f92ddf3fad540e97",
+  "solver_contract_version": 12,
+  "stage": "L1A-2y",
+  "stage_version": "l1a2y_v1",
+  "trajectories_run": 1,
+  "trajectory_definition": "exactly one case (pillar_training), one dt (0.002), one initial state (frozen L1A-2s C2), at most 40 frozen macro steps; no control arm, no refinement, no extension toward contact"
+}

@@ -1,0 +1,105 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_adjacent_suite": {
+    "action": "recorded as observed; no frozen test edited",
+    "cause": "the frozen preflights require every commit above their own baseline to belong to their own stage and, while this stage's deliverables were uncommitted, the worktree to be clean outside their own paths; neither can hold once a later stage exists on the same branch, so the L1A-2t, L1A-2v and L1A-2w preflight assertions fail by construction while the L1A-2u suite stays green",
+    "classification": "SUPERSEDED_BY_NEXT_STAGE_BY_CONSTRUCTION",
+    "command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py -q",
+    "failing": [
+      "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+      "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+    ],
+    "pass_count_not_recorded_because": "the global pass count moves with the stage test count while the failing set is structural",
+    "suite_failures": {
+      "l1a2t": 1,
+      "l1a2u": 0,
+      "l1a2v": 5,
+      "l1a2w": 1
+    }
+  },
+  "frozen_sweep_observed_at_the_generating_tree_state": {
+    "action": "recorded as observed at generation time; re-run at the committed head and written to artifacts/l1a2x/local_validation.json, never hidden and never turned green",
+    "cause": "the frozen L1A-2u and L1A-2w preflights above require the worktree to be clean outside their own deliverables; while this stage's own module and tests were still uncommitted they saw this stage's paths. Their L1A-2t and L1A-2v structural failures and the old L1A-2r lineage failure are independent of this stage and are reported separately below",
+    "caused_by_the_uncommitted_stage_deliverables": [
+      "tests/test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section",
+      "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+    ],
+    "command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. python -m pytest tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py -q",
+    "failed": 8,
+    "failing": [
+      "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "tests/test_radial_incident_seed_eta_dt_audit.py::test_report_contains_every_required_section",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+      "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+    ],
+    "passed": 163,
+    "suite_failures": {
+      "l1a2t": 1,
+      "l1a2u": 1,
+      "l1a2v": 5,
+      "l1a2w": 1
+    }
+  },
+  "frozen_sweep_reconfirmed_at_the_committed_head": {
+    "failed": 7,
+    "failing": [
+      "tests/test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+      "tests/test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+      "tests/test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+    ],
+    "head_sha": "41e962606dbeccf80c26d93e931fd3ae8098da5e",
+    "note": "the same sweep re-run on a clean worktree at this stage's first committed head returns the seven structural failures and nothing else; the two worktree-cleanliness failures observed at generation time are then replaced by the L1A-2w stage-owned-commit failure, which is the same superseded-by-next-stage rule with a different trigger",
+    "passed": 164,
+    "suite_failures": {
+      "l1a2t": 1,
+      "l1a2u": 0,
+      "l1a2v": 5,
+      "l1a2w": 1
+    }
+  },
+  "hosted_ci": {
+    "observed_head_sha": "270fd6c1a51033617dc7b4df8874991f286bb1d6",
+    "previous_status": "UNMEASURED",
+    "resealed_after_push": true,
+    "rule": "no hosted result is claimed for a head that was not pushed and observed",
+    "status_for_this_head": "success"
+  },
+  "legacy_lineage_suite": {
+    "action": "kept separate from the structural failures and never counted as a pass",
+    "cause": "pre-existing on a pristine worktree at the verified main; not caused by this stage",
+    "classification": "FROZEN_LINEAGE_DRIFT_CONFIRMED",
+    "count": 1,
+    "failing": [
+      "tests/test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+    ],
+    "suite_file": "tests/test_impact_initialization_compatibility_audit.py"
+  },
+  "not_run": [
+    "control trajectories",
+    "contact events",
+    "temporal refinement",
+    "spatial refinement",
+    "T=8 recomputation",
+    "L1B data generation",
+    "ML training",
+    "contract 13"
+  ],
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "ratchet_expectation": "PASS_BASELINE_ONLY",
+  "reporting_rule": "the structural frozen-adjacent failures (L1A-2t/L1A-2u/L1A-2v/L1A-2w lineage rules) and the old L1A-2s/2r lineage failure are reported separately with their own counts; neither is hidden, suppressed or turned green",
+  "stage_test_file": "tests/test_frozen_chns_early_window_transport_attribution_audit.py",
+  "verdict": "EARLY_WINDOW_ATTRIBUTION_UNRESOLVED"
+}

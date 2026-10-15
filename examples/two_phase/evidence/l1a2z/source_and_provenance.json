@@ -1,0 +1,36 @@
+{
+  "baseline_head_sha": "cd20a7838fb616f3857092c580f3c24802c6115a",
+  "frozen_sources_expected_unchanged": {
+    "l1a2x_module": "the frozen kernel capture and the frozen uniqueness diagnostic are read-only",
+    "l1a2y_module": "the frozen readout and the L1A-2y consumer verifier are read-only",
+    "phasefield_module": "the frozen solver is byte-identical to the L1A-2x and L1A-2y runs",
+    "readout_module": "the frozen contour-branch readout is imported, never edited"
+  },
+  "head_sha": "0abf257c53528561a1c4b22a1defb04c840c492a",
+  "prespecification_commit": "7a9fdf0eea48f479edd05de2d4e5cafc501a34f2",
+  "readout_version": "contour_branch_v1",
+  "rule": "the trajectory, the contact guard, the mesh, the time step and every physical constant come from the frozen L1A-2x capture of the C2 state; this stage adds a measurement layer and does not touch a solver expression",
+  "solver_contract_version": 12,
+  "source_hashes": {
+    "frozen_audit_module": "788791df2b0bb3e737fe68cba6e5cd3e98d100285184e0b727ce02363309a3b0",
+    "l1a2x_module": "f0fddeabfdd4498123c84f8cd9125470056e589ef6e2241f2448a12eb3d0214e",
+    "l1a2y_module": "d6c9e05a42384b227faa6d86b47284984d14e0255d7ba17345fd359ad7f51131",
+    "phasefield_module": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "prespecification": "488568ab96221883bda7233b586f645f1ebc64694e8b6bc876774473ba3449eb",
+    "readout_module": "563553a398f2eea53bf0cc73d53047ea483c37d6686d2572f92ddf3fad540e97",
+    "stage_module": "1c1815991e929860d377855a2d4c46d890040da0d0ee1733ff9f675784f5e858",
+    "stage_test": "0f329a0fd0b62f9de411e5f3de544b53e60378e964887b49878cb99037ec4a70"
+  },
+  "source_paths": {
+    "frozen_audit_module": "examples/two_phase/production/impact_initialization_compatibility_audit.py",
+    "l1a2x_module": "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py",
+    "l1a2y_module": "examples/two_phase/production/frozen_reconstruction_branch_attribution_audit.py",
+    "phasefield_module": "examples/two_phase/phasefield.py",
+    "prespecification": "examples/two_phase/l1a2z_prespecification.md",
+    "readout_module": "examples/two_phase/production/l1a2y_contour_branch_readout.py",
+    "stage_module": "examples/two_phase/production/l1a2z_sequential_ownbase_attribution_audit.py",
+    "stage_test": "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py"
+  },
+  "stage": "L1A-2z",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

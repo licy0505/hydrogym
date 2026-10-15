@@ -1,0 +1,44 @@
+{
+  "declared_new_code_diagnostics": 0,
+  "frozen_prohibitions": {
+    "approved_sha_migrations_unmodified": true,
+    "frozen_solver_unmodified": true,
+    "historical_evidence_unmodified": true,
+    "mass_baseline_unmodified": true,
+    "no_autoformat_on_frozen_modules": true,
+    "production_initializer_unmodified": true,
+    "solver_contract_unmodified": true,
+    "thresholds_unmodified": true
+  },
+  "historical_baseline_status": "PASS_BASELINE_ONLY",
+  "historical_summary": {
+    "codespell_findings": 3,
+    "format_files": 27,
+    "isort_files": 28,
+    "ruff_files": 12,
+    "ruff_findings": 171
+  },
+  "inherited_blockers": {
+    "DIRECT_FIELD_LABELS": "UNMEASURED",
+    "L1B_DATA": "L1B_DATA_NOT_READY",
+    "SPATIAL_REFINEMENT": "FAIL",
+    "TEMPORAL_REFINEMENT": "UNMEASURED",
+    "inherited_blockers_unchanged_by_this_stage": true,
+    "max_total_mass_ratio_inherited": 1.005185,
+    "max_total_mass_ratio_limit": 1.005,
+    "pillar_training_overshoot_inherited": 0.03697,
+    "pillar_training_overshoot_limit": 0.02,
+    "primary_blocker": "REQUIRED_PILLAR_OR_COMPLEX_IMPACT_AUTHENTICATION"
+  },
+  "no_promotion": {
+    "candidate_promoted": false,
+    "contract_13": false,
+    "full_t8_recomputation": false,
+    "l1b_generation": false,
+    "ml_training": false,
+    "production_change": false
+  },
+  "profile": "forensic",
+  "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+  "quality_baseline_untouched": true
+}

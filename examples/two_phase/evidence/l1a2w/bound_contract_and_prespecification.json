@@ -1,0 +1,141 @@
+{
+  "N": 192,
+  "band_speed_cap_over_u_impact": 0.02,
+  "bounds_derived": {
+    "B1_contour_cell_normal_speed": "|v_n| at the contour support cell <= min(envelope, band cap if that cell lies in the chi >= 0.01 band); for any admissible state this is implied by the frozen gate set itself",
+    "B1b_contour_point_normal_speed": "the bilinear value at the contour crossing point is a convex combination of its four supporting cells, so |v_n(point)| <= sum_c w_c * cap_c with cap_c the per-cell cap; this is the tightest statement available without assuming the point lies in one regime",
+    "B2_placeable_downward_momentum": "P_down <= v_max * sum_{open, chi<0.01} V_i phi_i : pointwise speed cap times the admissible liquid volume, valid for any admissible field",
+    "B3_in_band_phase_flux": "downward advective phase flux over in-band faces <= v_band * sum_f A_f phi_upwind,f, because every in-band cell speed is <= v_band so every in-band face speed is too",
+    "B4_in_band_transport_time": "crossing an in-band normal distance ds takes at least ds / v_band while the initializer constraint set holds",
+    "B5_shape_ratio_criterion": "for a seed built as psi = sx * envelope * seam * T(sdf) and renormalised so the mandated phi>=0.9 core mean equals -u_impact, the ratio max_band|v| / |core mean v| is a shape invariant independent of the amplitude. A shape whose ratio exceeds the band gate can never be admissible under the mandated core target, whatever its amplitude; this is a necessary rejection that costs no construction"
+  },
+  "candidates_measured": [
+    "C2_BASE",
+    "R0_WEAK",
+    "R1_MEDIUM",
+    "R2_SHARP"
+  ],
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training",
+    "complex_heldout"
+  ],
+  "constructibility_rule": "a necessary bound is not an attained one: attainment is claimed only when an explicit diagnostic construction satisfies the six frozen gates and the envelope at the mandated core target, and the construction is never promoted to a production initializer",
+  "constructibility_states": [
+    "ATTAINED_BY_DIAGNOSTIC_CONSTRUCTION",
+    "NOT_FOUND_NOT_PROVEN_INFEASIBLE",
+    "SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET",
+    "PROVEN_INFEASIBLE_BY_BOUND"
+  ],
+  "core_normalisation_target_over_u_impact": -1.0,
+  "dt": 0.002,
+  "envelope_definition": "the maximum peak open-cell seed speed the frozen reference family (C0/C1/C2) itself produces in the same cases, sealed in L1A-2u and re-read through the L1A-2v seal; it is a reference-calibrated cap, not a physical threshold",
+  "frozen_gate_source": "production.impact_initialization_compatibility_audit.INITIAL_ACCEPTANCE, inherited verbatim",
+  "frozen_six_gates": {
+    "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+    "core_mean_speed_relative_error_max": 0.01,
+    "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+    "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+    "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+    "open_face_FV_dimensionless_Linf_max": 0.01,
+    "region_definitions": {
+      "core_mean": "V_i-weighted mean over phi >= 0.9",
+      "deep_solid": "sdf < -2*dx",
+      "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+      "nearwall_chi": "chi >= 0.01",
+      "nearwall_sdf": "abs(sdf) <= 3*dx",
+      "partial_cells": "0 < V_i < dx*dy",
+      "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+    }
+  },
+  "global_speed_envelope_over_u_impact": 4.905526491646905,
+  "infeasibility_rule": "a failed search is reported as NOT_FOUND_NOT_PROVEN_INFEASIBLE; SHAPE_REJECTED_BY_THE_BAND_GATE_AT_THE_MANDATED_CORE_TARGET states only that a specific shape cannot satisfy the band gate at the mandated core target, not that no seed exists; PROVEN_INFEASIBLE_BY_BOUND may only be used when a derived bound rules an option out mathematically",
+  "prespecification_rule": "case set, candidate set, gate values, envelope, band cap, the ramp ladder and the verdict vocabulary are fixed before any measurement",
+  "profile": "t0_bound",
+  "prohibitions": {
+    "contact_events": "none",
+    "contract_13": false,
+    "historical_evidence_edits": "none",
+    "l1b_data_generation": false,
+    "ml_training": false,
+    "production_initializer_promotion": "none",
+    "spatial_refinement": "none",
+    "t8_recomputation": "none",
+    "temporal_refinement": "none",
+    "trajectories": "none; the frozen substep kernel is never constructed"
+  },
+  "radial_family_untouched": {
+    "keys": [
+      "R0_WEAK",
+      "R1_MEDIUM",
+      "R2_SHARP"
+    ],
+    "parameters": {
+      "R0_WEAK": {
+        "delta_dx": 1.5,
+        "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+        "w_dx": 2.0
+      },
+      "R1_MEDIUM": {
+        "delta_dx": 2.0,
+        "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+        "w_dx": 2.0
+      },
+      "R2_SHARP": {
+        "delta_dx": 2.0,
+        "role": "strong roll-off: mid-window clearance with the sharpest transition",
+        "w_dx": 1.0
+      }
+    },
+    "re_tuned": false
+  },
+  "ramp_ladder": [
+    [
+      0.0,
+      4.0
+    ],
+    [
+      0.0,
+      6.0
+    ],
+    [
+      0.0,
+      8.0
+    ],
+    [
+      0.0,
+      10.0
+    ],
+    [
+      0.0,
+      12.0
+    ],
+    [
+      0.0,
+      16.0
+    ],
+    [
+      0.0,
+      24.0
+    ],
+    [
+      0.0,
+      32.0
+    ],
+    [
+      0.5,
+      8.0
+    ],
+    [
+      1.0,
+      8.0
+    ]
+  ],
+  "separation_required": {
+    "finite_time": "what can reach the contour in finite time from the t=0 state. The six gates constrain the initializer, not the evolved solver, so B3/B4 describe the initial configuration's reachability only; they are not a bound on the subsequent trajectory, whose transport is governed by the frozen solver's advection, Brinkman penalization and Cahn-Hilliard dynamics",
+    "instantaneous": "what the t=0 state does at the frozen phi=0.5 contour right now: the normal speed at the contour support cell and at the contour crossing point, plus the frozen face flux there"
+  },
+  "stage": "L1A-2w",
+  "stage_version": "l1a2w_v1"
+}

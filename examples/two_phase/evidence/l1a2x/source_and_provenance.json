@@ -1,0 +1,27 @@
+{
+  "baseline_head_sha": "45749bc603568bdac8629a90e529ae1573796d51",
+  "branch": "arena/02b6c71b-hydrogym",
+  "frozen_source_sha256": {
+    "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py": "788791df2b0bb3e737fe68cba6e5cd3e98d100285184e0b727ce02363309a3b0",
+    "examples/two_phase/production/radial_incident_seed_eta_dt_audit.py": "e005d24f9e3c5f5ccd21fcff5957a523860dfc23918f576a1c87e47738fdc1c3",
+    "examples/two_phase/production/timestep_policy.py": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+  },
+  "frozen_status_flags": {
+    "L1A_STATUS": "BLOCKED",
+    "L1B_DATA_NOT_READY": "unchanged",
+    "contract": 12
+  },
+  "head_sha": "41e962606dbeccf80c26d93e931fd3ae8098da5e",
+  "main_sha": "09e2993b8da478d79e768054194201af57121784",
+  "module_path": "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py",
+  "module_sha256": "f0fddeabfdd4498123c84f8cd9125470056e589ef6e2241f2448a12eb3d0214e",
+  "phase_boundary_model": "impermeable_flux",
+  "phase_storage_model": "phase_only_float64_v1",
+  "phase_transport_geometry": "sdf_cutcell_fv_v1",
+  "solver_contract_version": 12,
+  "stage": "L1A-2x",
+  "stage_version": "l1a2x_v1",
+  "trajectories_run": 1,
+  "trajectory_definition": "exactly one case (pillar_training), one dt (0.002), one initial state (frozen C2), at most 40 frozen macro steps; no control arm, no refinement, no extension toward contact"
+}

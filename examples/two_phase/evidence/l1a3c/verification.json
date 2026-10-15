@@ -1,0 +1,32 @@
+{
+  "consumer_verification": {
+    "bound_files": 16,
+    "physical_status": "PHYSICAL_MECHANISM_NOT_ESTABLISHED",
+    "source_hashes": 18,
+    "verdict": "CONTROL_OBSERVABLE_INVALID",
+    "verified": true
+  },
+  "independent_stdlib_hash_check": {
+    "bound_files_checked": 16,
+    "problems": [],
+    "sources_checked": 18
+  },
+  "method_protocol_source_changes_after_target": [],
+  "mutation_rejections": {
+    "bound_payload_mutation": "tampered evidence paired_response.json",
+    "source_hash_mutation": "source hash mismatch"
+  },
+  "no_trajectory_reexecuted_during_verification": true,
+  "target_execution_receipts": {
+    "baseline": {
+      "arm": "baseline",
+      "head": "003855cb121defa19f86519d4ecbd8c3e3858fb4",
+      "status": "STARTED_NO_RETRY_PERMITTED"
+    },
+    "control": {
+      "arm": "control",
+      "head": "4ea307110d9fe863f36c2265f2aa226c43ad8d76",
+      "status": "STARTED_NO_RETRY_PERMITTED"
+    }
+  }
+}

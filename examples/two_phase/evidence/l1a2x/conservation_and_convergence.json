@@ -1,0 +1,34 @@
+{
+  "implicit_solve": {
+    "all_converged": true,
+    "iteration_cap": 200,
+    "max_iterations": 18,
+    "max_relative_residual": 5.718904648233452e-07,
+    "min_iterations": 18,
+    "rtol": 1e-06,
+    "substeps": 120
+  },
+  "mass": {
+    "mass_after_last": 1.5500927792312642,
+    "mass_before_first": 1.5500927792312642,
+    "mass_drift_absolute": 0.0,
+    "mass_drift_relative": 0.0,
+    "max_abs_mass_adv": 1.845726874880784e-20,
+    "max_abs_mass_ch": 7.000265481357666e-20,
+    "max_abs_mass_imp": 5.292527550673734e-18,
+    "max_abs_substep_drift": 4.470435646983889e-16,
+    "max_abs_telescoping_adv": 3.297906153804306e-17,
+    "max_abs_telescoping_ch": 9.153984653522975e-17
+  },
+  "recombination": {
+    "max_abs_substep_increment_linf": 0.039093558314201304,
+    "max_recombination_linf": 1.1102230246251565e-16,
+    "rule": "d_adv + d_ch + d_imp - d_full is recombined cell by cell for every substep; the frozen update is exactly the sum of the three recorded ingredients up to floating point"
+  },
+  "wall": {
+    "closed_face_count_x": 1968,
+    "closed_face_count_y": 2112,
+    "max_abs_flux_on_closed_faces": 0.0,
+    "rule": "every face whose frozen aperture is exactly zero carries exactly zero advective and zero chemical-potential flux, which is how n.grad(mu) = 0 and the impermeability of the solid are imposed; no separate wall flux exists"
+  }
+}

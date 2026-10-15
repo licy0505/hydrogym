@@ -1,0 +1,105 @@
+{
+  "N": 192,
+  "cases": {
+    "complex_heldout": {
+      "comparable_profile": true,
+      "geometry_replay_ok": true,
+      "matched": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "recorded": {
+        "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      },
+      "status": "MEASURED",
+      "u_replay_ok": true,
+      "workspace": {
+        "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      }
+    },
+    "flat_we100_ct050": {
+      "comparable_profile": true,
+      "geometry_replay_ok": true,
+      "matched": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "recorded": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "status": "MEASURED",
+      "u_replay_ok": true,
+      "workspace": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    "flat_we200_ct000": {
+      "comparable_profile": true,
+      "geometry_replay_ok": true,
+      "matched": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "recorded": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "status": "MEASURED",
+      "u_replay_ok": true,
+      "workspace": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      }
+    },
+    "pillar_training": {
+      "comparable_profile": true,
+      "geometry_replay_ok": true,
+      "matched": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "recorded": {
+        "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "status": "MEASURED",
+      "u_replay_ok": true,
+      "workspace": {
+        "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      }
+    }
+  },
+  "profile": "forensic",
+  "record_source": "evidence/l1a2t/candidate_initial_compatibility_matrix.json",
+  "reproduced": true,
+  "verdict": "BASELINE_REPLAY_OK"
+}

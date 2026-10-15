@@ -1,0 +1,248 @@
+{
+  "admissibility_decision.json": {
+    "admissible_radial_members": [],
+    "band_classification_correction": {
+      "cases_with_support_inside_gate_band": [
+        "flat_we100_ct050",
+        "flat_we200_ct000",
+        "pillar_training"
+      ],
+      "cases_with_support_outside_gate_band": [
+        "complex_heldout"
+      ],
+      "l1a2u_universal_claim_refuted": true
+    },
+    "contact_events_measured": 0,
+    "family_stopped": true,
+    "next_action": {
+      "action": "Do not re-tune the radial family. At t=0 only, measure the *reachable* interaction window that the frozen six gates themselves define: for each canary case, compute the maximum incident normal momentum that can be placed inside the admissible region (sdf above the gate band and open-cell speed under the 4.905526491646905 envelope) using a support whose interior peak respects the envelope by construction, and report whether that reachable window can deliver any incident momentum to the frozen phi=0.5 contour at all; no trajectory, event or refinement work until that t=0 bound is established.",
+      "bounded_scope": "one t=0 reachability bound per canary case; no trajectory, no event, no refinement, no new initializer promotion",
+      "must_not_be_started_in_this_stage": true,
+      "shape_ratio_limit": 4.905526491646905,
+      "verdict_context": "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+    },
+    "profile": "t0_screen",
+    "radial_family_rows": {
+      "R0_WEAK": {
+        "admissible_in_every_case": false,
+        "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+        "failure_reason": "peak open-cell speed 30.973782 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 6.314x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+        "global_speed_envelope_in_every_case": false,
+        "peak_over_envelope_ratio": 6.31405862566709,
+        "peak_over_u_impact_by_case": {
+          "complex_heldout": 30.973781858021553,
+          "flat_we100_ct050": 30.973781858021553,
+          "flat_we200_ct000": 30.973781858021553,
+          "pillar_training": 30.973781858021553
+        },
+        "primary_failure": "global_speed_envelope",
+        "shape_ratio": 30.973783652125103,
+        "shape_ratio_passes": false,
+        "six_frozen_initial_constraints_in_every_case": true,
+        "worst_case": "flat_we100_ct050"
+      },
+      "R1_MEDIUM": {
+        "admissible_in_every_case": false,
+        "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+        "failure_reason": "peak open-cell speed 89.769845 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 18.300x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+        "global_speed_envelope_in_every_case": false,
+        "peak_over_envelope_ratio": 18.29973699979221,
+        "peak_over_u_impact_by_case": {
+          "complex_heldout": 89.76984464265173,
+          "flat_we100_ct050": 89.76984464265173,
+          "flat_we200_ct000": 89.76984464265173,
+          "pillar_training": 89.76984464265173
+        },
+        "primary_failure": "global_speed_envelope",
+        "shape_ratio": 89.76985255320415,
+        "shape_ratio_passes": false,
+        "six_frozen_initial_constraints_in_every_case": true,
+        "worst_case": "flat_we100_ct050"
+      },
+      "R2_SHARP": {
+        "admissible_in_every_case": false,
+        "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+        "failure_reason": "peak open-cell speed 36.328378 x u_impact in case `flat_we100_ct050` exceeds the prespecified envelope 4.905526492 by 7.406x while the six frozen gates still pass; the seed's normalisation forces the whole core to move at ~1 x u_impact and the radial envelope concentrates the return flow, so the excess speed is the seed's own interior circulation, not a boundary artefact",
+        "global_speed_envelope_in_every_case": false,
+        "peak_over_envelope_ratio": 7.40560228028868,
+        "peak_over_u_impact_by_case": {
+          "complex_heldout": 36.328378172556846,
+          "flat_we100_ct050": 36.328378172556846,
+          "flat_we200_ct000": 36.328378172556846,
+          "pillar_training": 36.328378172556846
+        },
+        "primary_failure": "global_speed_envelope",
+        "shape_ratio": 36.32838155250175,
+        "shape_ratio_passes": false,
+        "six_frozen_initial_constraints_in_every_case": true,
+        "worst_case": "flat_we100_ct050"
+      }
+    },
+    "re_tuning_performed": false,
+    "reference_baseline": {
+      "admissible_in_every_case": true,
+      "candidate": "C2_BASE",
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 4.212954615390365,
+        "flat_we100_ct050": 4.315600561416556,
+        "flat_we200_ct000": 4.315600561416556,
+        "pillar_training": 4.224925143806713
+      },
+      "role": "frozen reference baseline, not a member of the radial family under test",
+      "shape_ratio": 4.315600494888117
+    },
+    "refinement_studies_run": 0,
+    "stage": "L1A-2v",
+    "stage_version": "l1a2v_v1",
+    "stop_rule": "when no prespecified member is admissible the stage stops and reports; it does not re-tune envelope width, radial support radius or amplitude to manufacture a passing member",
+    "trajectories_run": 0,
+    "verdict": "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+  },
+  "nearwall_support_band_classification.json": {
+    "cases_with_support_inside_gate_band": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "cases_with_support_outside_gate_band": [
+      "complex_heldout"
+    ],
+    "correction": "the L1A-2u statement that every frozen canary places the phi=0.5 contour support cell inside the chi >= 0.01 gate band does not hold: complex_heldout places it outside (measured here). The statement is recorded as refuted in this independent evidence rather than edited in place; the L1A-2u evidence remains sealed and byte-identical.",
+    "l1a2u_sealed_statement_verbatim": "every case places the frozen phi=0.5 contour support cell inside the chi >= 0.01 gate band, so the frozen gate caps the initial normal speed *at the contour itself* at 0.02 u_impact",
+    "l1a2u_statement_holds_for": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training"
+    ],
+    "l1a2u_statement_is_universal": true,
+    "l1a2u_statement_refuted_for": [
+      "complex_heldout"
+    ],
+    "l1a2u_universal_claim_refuted": true,
+    "measured_not_assumed": true,
+    "per_case": {
+      "complex_heldout": {
+        "gate_band_cell_count": 4188,
+        "gate_band_max_sdf_over_dx": 3.445622444152832,
+        "open_cells_min_sdf_over_dx": 3.4481067657470703,
+        "phi05_support_chi": 0.0005123895243741572,
+        "phi05_support_is_inside_gate_band": false,
+        "phi05_support_sdf_over_dx": 5.681934833526611
+      },
+      "flat_we100_ct050": {
+        "gate_band_cell_count": 2112,
+        "gate_band_max_sdf_over_dx": 2.5,
+        "open_cells_min_sdf_over_dx": 3.5,
+        "phi05_support_chi": 0.03444519639015198,
+        "phi05_support_is_inside_gate_band": true,
+        "phi05_support_sdf_over_dx": 2.5
+      },
+      "flat_we200_ct000": {
+        "gate_band_cell_count": 2112,
+        "gate_band_max_sdf_over_dx": 2.5,
+        "open_cells_min_sdf_over_dx": 3.5,
+        "phi05_support_chi": 0.03444519639015198,
+        "phi05_support_is_inside_gate_band": true,
+        "phi05_support_sdf_over_dx": 2.5
+      },
+      "pillar_training": {
+        "gate_band_cell_count": 2936,
+        "gate_band_max_sdf_over_dx": 3.1906111240386963,
+        "open_cells_min_sdf_over_dx": 3.5,
+        "phi05_support_chi": 0.02659699320793152,
+        "phi05_support_is_inside_gate_band": true,
+        "phi05_support_sdf_over_dx": 2.700000047683716
+      }
+    }
+  },
+  "preflight.json": {
+    "N": 192,
+    "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+    "baseline_pull_request": 24,
+    "baseline_rule": "the study baseline is the exact PR #24 head; it must be an ancestor of the run head and every commit above it must touch only this stage's deliverables, so no frozen source can have moved between the baseline and the screen",
+    "branch": "arena/02b6c71b-hydrogym",
+    "cases": [
+      "flat_we100_ct050",
+      "flat_we200_ct000",
+      "pillar_training",
+      "complex_heldout"
+    ],
+    "checks": {
+      "branch_head_contains_the_verified_main": true,
+      "branch_is_the_authorized_session_branch": true,
+      "every_commit_above_the_baseline_is_stage_owned": true,
+      "frozen_sources_present": true,
+      "origin_main_is_the_verified_main": true,
+      "policy_matches_contract": true,
+      "pr24_baseline_is_an_ancestor_of_head": true,
+      "quality_baseline_present": true,
+      "solver_contract_12": true,
+      "timestep_policy_default": true,
+      "worktree_clean_outside_stage_deliverables": true
+    },
+    "commits_above_baseline": [],
+    "contact_events": "NOT_RUN_IN_THIS_STAGE",
+    "dt": 0.002,
+    "frozen_source_hashes": {
+      "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "head_at_run": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+    "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+    "solver_contract_version": 12,
+    "spatial_convergence": "NOT_RUN_IN_THIS_STAGE",
+    "stage": "L1A-2v",
+    "stage_version": "l1a2v_v1",
+    "temporal_convergence": "NOT_RUN_IN_THIS_STAGE",
+    "timestep_policy": "impact_phase_cap_dx2_v1",
+    "trajectories_run": 0,
+    "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+  },
+  "shape_invariance_and_envelope_analysis.json": {
+    "derivation": "shape_ratio_limit = envelope_limit / |core target over u_impact| = envelope / 1.0",
+    "measured_not_assumed": true,
+    "rows": {
+      "C2_BASE": {
+        "core_over_u_impact": -1.000000015415801,
+        "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+        "peak_over_u_impact": 4.315600561416556,
+        "rescaled_core_target_if_envelope_satisfied": 1.1366961380774108,
+        "shape_passes": true,
+        "shape_ratio": 4.315600494888117,
+        "shape_ratio_limit": 4.905526491646905
+      },
+      "R0_WEAK": {
+        "core_over_u_impact": -0.9999999420767068,
+        "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+        "peak_over_u_impact": 30.973781858021553,
+        "rescaled_core_target_if_envelope_satisfied": 0.15837673662625337,
+        "shape_passes": false,
+        "shape_ratio": 30.973783652125103,
+        "shape_ratio_limit": 4.905526491646905
+      },
+      "R1_MEDIUM": {
+        "core_over_u_impact": -0.9999999118796323,
+        "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+        "peak_over_u_impact": 89.76984464265173,
+        "rescaled_core_target_if_envelope_satisfied": 0.05464559408757376,
+        "shape_passes": false,
+        "shape_ratio": 89.76985255320415,
+        "shape_ratio_limit": 4.905526491646905
+      },
+      "R2_SHARP": {
+        "core_over_u_impact": -0.9999999069613134,
+        "interpretation": "an amplitude rescaling multiplies the peak speed and the core-mean speed by the same factor, so the ratio between them is invariant; a member whose shape ratio exceeds the limit cannot satisfy the envelope and the core target simultaneously at any amplitude",
+        "peak_over_u_impact": 36.328378172556846,
+        "rescaled_core_target_if_envelope_satisfied": 0.13503290646078533,
+        "shape_passes": false,
+        "shape_ratio": 36.32838155250175,
+        "shape_ratio_limit": 4.905526491646905
+      }
+    },
+    "rule": "the envelope (4.905526491646905) and the core target (core-mean v = -u_impact, dimensionless magnitude 1.0) together require a shape ratio peak/core <= 4.905526491646905; the ratio is invariant under amplitude rescaling, so a violation cannot be repaired by re-scaling within the family",
+    "shape_ratio_limit": 4.905526491646905
+  }
+}

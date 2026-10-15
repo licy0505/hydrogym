@@ -1,0 +1,95 @@
+{
+  "N": 192,
+  "candidates": [
+    "C2_BASE",
+    "R0_WEAK",
+    "R1_MEDIUM",
+    "R2_SHARP"
+  ],
+  "cases": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training",
+    "complex_heldout"
+  ],
+  "checks_evaluated_per_candidate": [
+    "six_frozen_initial_constraints",
+    "global_speed_envelope",
+    "core_normalisation_target"
+  ],
+  "core_normalisation_target": {
+    "change_vs_l1a2u": "none",
+    "measured_quantity": "domain_volume_weighted_core_phi_ge_0p9_mean_normal_speed",
+    "raw_target_note": "the target is core-mean v = -u_impact; on these canary cases u_impact = 0.5, so the raw target value is -0.5, which is the number the sealed L1A-2u matrix records; the dimensionless ratio used by the frozen gate and by this screen is -1.0",
+    "target_over_u_impact": -1.0
+  },
+  "dt": 0.002,
+  "frozen_reference_baseline": "C2_BASE",
+  "frozen_six_gates": {
+    "central_D_dimensionless_Linf_max": 7.62939453125e-06,
+    "core_mean_speed_relative_error_max": 0.01,
+    "deep_solid_speed_over_u_impact_max": 3.814697265625e-06,
+    "embedded_wall_bilinear_normal_speed_over_u_impact_max": 0.02,
+    "nearwall_chi_ge_0p01_speed_over_u_impact_max": 0.02,
+    "open_face_FV_dimensionless_Linf_max": 0.01,
+    "region_definitions": {
+      "core_mean": "V_i-weighted mean over phi >= 0.9",
+      "deep_solid": "sdf < -2*dx",
+      "liquid_mean": "sum(V_i*phi_i*v_i)/sum(V_i*phi_i), raw phi as specified",
+      "nearwall_chi": "chi >= 0.01",
+      "nearwall_sdf": "abs(sdf) <= 3*dx",
+      "partial_cells": "0 < V_i < dx*dy",
+      "wall_samples": "wall_measure > 0, bilinear cell-velocity sample at wall centroid"
+    }
+  },
+  "frozen_six_gates_source": "inherited verbatim from production.impact_initialization_compatibility_audit.INITIAL_ACCEPTANCE; not re-tuned, not relaxed, not re-ordered",
+  "global_speed_envelope": {
+    "limit": 4.905526491646905,
+    "measured_from": "frozen reference family C0/C1/C2 in L1A-2u, four frozen canary cases",
+    "modifiable_after_results": false,
+    "quantity": "max_open_cell_speed_over_u_impact"
+  },
+  "implied_shape_ratio_limit": 4.905526491646905,
+  "per_candidate_diagnostics": [
+    "peak open-cell speed and its location (i, j, x, y, sdf/dx, chi)",
+    "local CFL metric at the peak cell (component-wise and summed)",
+    "domain maximum local CFL metric",
+    "central-D divergence Linf (dimensional and dimensionless)",
+    "cut-cell open-face finite-volume divergence Linf (dimensional and dimensionless)",
+    "deep-solid speed, chi >= 0.01 band speed, embedded-wall bilinear normal speed",
+    "core-mean normal speed and its relative error against -u_impact",
+    "t=0 state hashes (u, v, phi) for exact replay"
+  ],
+  "prespecification_rule": "candidate set, family parameters, six frozen gates, envelope constant, targets and verdict vocabulary are fixed before any candidate value is computed; only the declared diagnostics are reported, and no candidate is added, removed or rescaled afterwards",
+  "profile": "t0_screen",
+  "prohibitions": {
+    "contact_events": "none",
+    "contract_13": false,
+    "geometry_change": "none",
+    "historical_evidence_edits": "none",
+    "l1b_data_generation": false,
+    "ml_training": false,
+    "production_solver_edits": "none",
+    "re_tuning_after_results": "forbidden; a non-admissible family is reported, never adjusted",
+    "spatial_refinement": "none",
+    "temporal_refinement": "none",
+    "trajectories": "none; the frozen substep kernel is never constructed by this module"
+  },
+  "radial_family_under_test": [
+    "R0_WEAK",
+    "R1_MEDIUM",
+    "R2_SHARP"
+  ],
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "u_impact_by_case": {
+    "complex_heldout": 0.5,
+    "flat_we100_ct050": 0.5,
+    "flat_we200_ct000": 0.5,
+    "pillar_training": 0.5
+  },
+  "verdict_vocabulary": [
+    "RADIAL_SEED_ADMISSIBLE_UNDER_PRESPECIFIED_FAMILY",
+    "NO_ADMISSIBLE_RADIAL_SEED_UNDER_PRESPECIFIED_FAMILY"
+  ]
+}

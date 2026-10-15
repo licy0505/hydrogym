@@ -1,0 +1,1333 @@
+{
+  "N": 192,
+  "cases": {
+    "complex_heldout": {
+      "admissible_candidates": [
+        "C2_BASE"
+      ],
+      "candidates": {
+        "C2_BASE": {
+          "amplitude_scale_needed_for_envelope": 1.1643910128360988,
+          "core_mean_normal_speed_over_u_impact": -1.0000000497190284,
+          "core_mean_normal_speed_raw": -0.5000000248595142,
+          "core_target_reached_at_that_scale": 1.0,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": true,
+          "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+          "initial_v_hash": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "peak": {
+            "gate_band_cell_count": 4188,
+            "gate_band_max_speed_over_u_impact": 0.001058935304172337,
+            "local_cfl_at_peak_component": 0.134814453125,
+            "local_cfl_at_peak_sum": 0.13497413448989393,
+            "local_cfl_domain_max_sum": 0.134974146977067,
+            "open_cell_count": 34240,
+            "peak_chi": 3.885780586188048e-16,
+            "peak_index": [
+              95,
+              54
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 2.1064773076951826,
+            "peak_open_cell_speed_raw": 2.1064773076951826,
+            "peak_over_u_impact": 4.212954615390365,
+            "peak_position": [
+              2.96875,
+              1.6875
+            ],
+            "peak_sdf_over_dx": 27.61563491821289,
+            "peak_u_over_u_impact": -0.00499004265293479,
+            "peak_v_over_u_impact": -4.21295166015625,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 4.212954615390365,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 2.086162567138672e-07,
+              "dx_FV_Linf_over_u_impact": 5.513429641723633e-07,
+              "nearwall_chi_speed_over_u_impact": 0.001058935304172337,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R0_WEAK": {
+          "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+          "core_mean_normal_speed_over_u_impact": -0.9999999420767068,
+          "core_mean_normal_speed_raw": -0.4999999710383534,
+          "core_target_reached_at_that_scale": 0.15837673662625337,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "4df05bf97da972d6718c357c620bc6f2f8164bac76258778c60084dd9aae54ec",
+          "initial_v_hash": "c387ec92da6d211ce097ee4209fc1c823a363952bf60e4278e65888c9b6a746b",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "peak": {
+            "gate_band_cell_count": 4188,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.7690260620117187,
+            "local_cfl_at_peak_sum": 1.3943252563476562,
+            "local_cfl_domain_max_sum": 1.3943252563476562,
+            "open_cell_count": 34240,
+            "peak_chi": 6.661338147750939e-16,
+            "peak_index": [
+              78,
+              45
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 15.486890929010777,
+            "peak_open_cell_speed_raw": 15.486890929010777,
+            "peak_over_u_impact": 30.973781858021553,
+            "peak_position": [
+              2.4375,
+              1.40625
+            ],
+            "peak_sdf_over_dx": 26.312593460083008,
+            "peak_u_over_u_impact": -19.540599822998047,
+            "peak_v_over_u_impact": 24.03206443786621,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 30.973781858021553,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R1_MEDIUM": {
+          "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+          "core_mean_normal_speed_over_u_impact": -0.9999999118796323,
+          "core_mean_normal_speed_raw": -0.49999995593981617,
+          "core_target_reached_at_that_scale": 0.05464559408757376,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "fa5543976d2dd8d7f2668576e19f0f695c5acb29cb1a24aeb3ff7328133a6c7a",
+          "initial_v_hash": "7963ac1ff87b050b6d8b705ec2a257eb0ab0531602daa3f2748e5c511be8a683",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045697,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.11508601795515314,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "peak": {
+            "gate_band_cell_count": 4188,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 2.288248046875,
+            "local_cfl_at_peak_sum": 4.02489794921875,
+            "local_cfl_domain_max_sum": 4.02489794921875,
+            "open_cell_count": 34240,
+            "peak_chi": 3.885780586188048e-16,
+            "peak_index": [
+              78,
+              46
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 44.88492232132587,
+            "peak_open_cell_speed_raw": 44.88492232132587,
+            "peak_over_u_impact": 89.76984464265173,
+            "peak_position": [
+              2.4375,
+              1.4375
+            ],
+            "peak_sdf_over_dx": 27.173969268798828,
+            "peak_u_over_u_impact": -54.27030944824219,
+            "peak_v_over_u_impact": 71.50775146484375,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 89.76984464265173,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+              "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R2_SHARP": {
+          "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+          "core_mean_normal_speed_over_u_impact": -0.9999999069613134,
+          "core_mean_normal_speed_raw": -0.4999999534806567,
+          "core_target_reached_at_that_scale": 0.13503290646078533,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+          "initial_phi_hash": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+          "initial_u_hash": "e774e06d5914f1fc979d5989aecd48e8d7e6c6f5b26fb99bb6861b32de7546b8",
+          "initial_v_hash": "f40e48a8371a7467232d3808951aba974ccec805eb1c68eebb0f9ef45c54bc4e",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335744,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34209925943406955,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.715625
+          },
+          "peak": {
+            "gate_band_cell_count": 4188,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.8255436401367188,
+            "local_cfl_at_peak_sum": 1.64401953125,
+            "local_cfl_domain_max_sum": 1.64401953125,
+            "open_cell_count": 34240,
+            "peak_chi": 3.885780586188048e-16,
+            "peak_index": [
+              77,
+              47
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 18.164189086278423,
+            "peak_open_cell_speed_raw": 18.164189086278423,
+            "peak_over_u_impact": 36.328378172556846,
+            "peak_position": [
+              2.40625,
+              1.46875
+            ],
+            "peak_sdf_over_dx": 27.57411766052246,
+            "peak_u_over_u_impact": -25.79823875427246,
+            "peak_v_over_u_impact": 25.57737159729004,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 36.328378172556846,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        }
+      },
+      "case_name": "complex_heldout",
+      "case_verdicts": {
+        "C2_BASE": "ADMISSIBLE",
+        "R0_WEAK": "NOT_ADMISSIBLE",
+        "R1_MEDIUM": "NOT_ADMISSIBLE",
+        "R2_SHARP": "NOT_ADMISSIBLE"
+      }
+    },
+    "flat_we100_ct050": {
+      "admissible_candidates": [
+        "C2_BASE"
+      ],
+      "candidates": {
+        "C2_BASE": {
+          "amplitude_scale_needed_for_envelope": 1.1366961380774108,
+          "core_mean_normal_speed_over_u_impact": -1.000000015415801,
+          "core_mean_normal_speed_raw": -0.5000000077079005,
+          "core_target_reached_at_that_scale": 1.0,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": true,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+          "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.13809912109375,
+            "local_cfl_at_peak_sum": 0.13826269300282001,
+            "local_cfl_domain_max_sum": 0.13826271045207977,
+            "open_cell_count": 35328,
+            "peak_chi": 6.439293542825908e-15,
+            "peak_index": [
+              95,
+              32
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 2.157800280708278,
+            "peak_open_cell_speed_raw": 2.157800280708278,
+            "peak_over_u_impact": 4.315600561416556,
+            "peak_position": [
+              2.96875,
+              1.0
+            ],
+            "peak_sdf_over_dx": 24.5,
+            "peak_u_over_u_impact": -0.005111622158437967,
+            "peak_v_over_u_impact": -4.3155975341796875,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 4.315600561416556,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+              "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R0_WEAK": {
+          "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+          "core_mean_normal_speed_over_u_impact": -0.9999999420767068,
+          "core_mean_normal_speed_raw": -0.4999999710383534,
+          "core_target_reached_at_that_scale": 0.15837673662625337,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "f5a8912de9b3d92589ee06ac94f6d2335ba39190eca32702f75aaaae3304c323",
+          "initial_v_hash": "497a3c5aebd2a0dbbb6ac5263b6623aea636320ac7c068d77be9479fdfd18199",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.7690260620117187,
+            "local_cfl_at_peak_sum": 1.3943252563476562,
+            "local_cfl_domain_max_sum": 1.3943252563476562,
+            "open_cell_count": 35328,
+            "peak_chi": 1.0582315024265654e-09,
+            "peak_index": [
+              78,
+              23
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 15.486890929010777,
+            "peak_open_cell_speed_raw": 15.486890929010777,
+            "peak_over_u_impact": 30.973781858021553,
+            "peak_position": [
+              2.4375,
+              0.71875
+            ],
+            "peak_sdf_over_dx": 15.5,
+            "peak_u_over_u_impact": -19.540599822998047,
+            "peak_v_over_u_impact": 24.03206443786621,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 30.973781858021553,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R1_MEDIUM": {
+          "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+          "core_mean_normal_speed_over_u_impact": -0.9999999118796323,
+          "core_mean_normal_speed_raw": -0.49999995593981617,
+          "core_target_reached_at_that_scale": 0.05464559408757376,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+          "initial_v_hash": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045698,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.1150860179551531,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 2.288248046875,
+            "local_cfl_at_peak_sum": 4.02489794921875,
+            "local_cfl_domain_max_sum": 4.02489794921875,
+            "open_cell_count": 35328,
+            "peak_chi": 2.7894686560614446e-10,
+            "peak_index": [
+              78,
+              24
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 44.88492232132587,
+            "peak_open_cell_speed_raw": 44.88492232132587,
+            "peak_over_u_impact": 89.76984464265173,
+            "peak_position": [
+              2.4375,
+              0.75
+            ],
+            "peak_sdf_over_dx": 16.5,
+            "peak_u_over_u_impact": -54.27030944824219,
+            "peak_v_over_u_impact": 71.50775146484375,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 89.76984464265173,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+              "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R2_SHARP": {
+          "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+          "core_mean_normal_speed_over_u_impact": -0.9999999069613134,
+          "core_mean_normal_speed_raw": -0.4999999534806567,
+          "core_target_reached_at_that_scale": 0.13503290646078533,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "8b8b0d88e8e7c66ed6d3c4e0927539335ebecfd3f8d8cfbefc13147d10ab5a58",
+          "initial_v_hash": "827163f081288d64e282cf040129d7ed01ea5f49121e369f8993ce95103ea995",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335742,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.3420992594340696,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.8255436401367188,
+            "local_cfl_at_peak_sum": 1.64401953125,
+            "local_cfl_domain_max_sum": 1.64401953125,
+            "open_cell_count": 35328,
+            "peak_chi": 7.352934927595811e-11,
+            "peak_index": [
+              77,
+              25
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 18.164189086278423,
+            "peak_open_cell_speed_raw": 18.164189086278423,
+            "peak_over_u_impact": 36.328378172556846,
+            "peak_position": [
+              2.40625,
+              0.78125
+            ],
+            "peak_sdf_over_dx": 17.5,
+            "peak_u_over_u_impact": -25.79823875427246,
+            "peak_v_over_u_impact": 25.57737159729004,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 36.328378172556846,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        }
+      },
+      "case_name": "flat_we100_ct050",
+      "case_verdicts": {
+        "C2_BASE": "ADMISSIBLE",
+        "R0_WEAK": "NOT_ADMISSIBLE",
+        "R1_MEDIUM": "NOT_ADMISSIBLE",
+        "R2_SHARP": "NOT_ADMISSIBLE"
+      }
+    },
+    "flat_we200_ct000": {
+      "admissible_candidates": [
+        "C2_BASE"
+      ],
+      "candidates": {
+        "C2_BASE": {
+          "amplitude_scale_needed_for_envelope": 1.1366961380774108,
+          "core_mean_normal_speed_over_u_impact": -1.000000015415801,
+          "core_mean_normal_speed_raw": -0.5000000077079005,
+          "core_target_reached_at_that_scale": 1.0,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": true,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+          "initial_v_hash": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.13809912109375,
+            "local_cfl_at_peak_sum": 0.13826269300282001,
+            "local_cfl_domain_max_sum": 0.13826271045207977,
+            "open_cell_count": 35328,
+            "peak_chi": 6.439293542825908e-15,
+            "peak_index": [
+              95,
+              32
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 2.157800280708278,
+            "peak_open_cell_speed_raw": 2.157800280708278,
+            "peak_over_u_impact": 4.315600561416556,
+            "peak_position": [
+              2.96875,
+              1.0
+            ],
+            "peak_sdf_over_dx": 24.5,
+            "peak_u_over_u_impact": -0.005111622158437967,
+            "peak_v_over_u_impact": -4.3155975341796875,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 4.315600561416556,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.825392246246338e-07,
+              "dx_FV_Linf_over_u_impact": 5.736947059631348e-07,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R0_WEAK": {
+          "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+          "core_mean_normal_speed_over_u_impact": -0.9999999420767068,
+          "core_mean_normal_speed_raw": -0.4999999710383534,
+          "core_target_reached_at_that_scale": 0.15837673662625337,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "f5a8912de9b3d92589ee06ac94f6d2335ba39190eca32702f75aaaae3304c323",
+          "initial_v_hash": "497a3c5aebd2a0dbbb6ac5263b6623aea636320ac7c068d77be9479fdfd18199",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.7690260620117187,
+            "local_cfl_at_peak_sum": 1.3943252563476562,
+            "local_cfl_domain_max_sum": 1.3943252563476562,
+            "open_cell_count": 35328,
+            "peak_chi": 1.0582315024265654e-09,
+            "peak_index": [
+              78,
+              23
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 15.486890929010777,
+            "peak_open_cell_speed_raw": 15.486890929010777,
+            "peak_over_u_impact": 30.973781858021553,
+            "peak_position": [
+              2.4375,
+              0.71875
+            ],
+            "peak_sdf_over_dx": 15.5,
+            "peak_u_over_u_impact": -19.540599822998047,
+            "peak_v_over_u_impact": 24.03206443786621,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 30.973781858021553,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R1_MEDIUM": {
+          "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+          "core_mean_normal_speed_over_u_impact": -0.9999999118796323,
+          "core_mean_normal_speed_raw": -0.49999995593981617,
+          "core_target_reached_at_that_scale": 0.05464559408757376,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "243c5aa4f265db09ce553e0478647b819f6b9c4ade9859f43f033c31542f41fe",
+          "initial_v_hash": "7c1d82b37820cc6ed3030c84acd60140be556e9dfd2540ed9895afb94f985a09",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.344576421045698,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.1150860179551531,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 2.288248046875,
+            "local_cfl_at_peak_sum": 4.02489794921875,
+            "local_cfl_domain_max_sum": 4.02489794921875,
+            "open_cell_count": 35328,
+            "peak_chi": 2.7894686560614446e-10,
+            "peak_index": [
+              78,
+              24
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 44.88492232132587,
+            "peak_open_cell_speed_raw": 44.88492232132587,
+            "peak_over_u_impact": 89.76984464265173,
+            "peak_position": [
+              2.4375,
+              0.75
+            ],
+            "peak_sdf_over_dx": 16.5,
+            "peak_u_over_u_impact": -54.27030944824219,
+            "peak_v_over_u_impact": 71.50775146484375,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 89.76984464265173,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+              "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R2_SHARP": {
+          "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+          "core_mean_normal_speed_over_u_impact": -0.9999999069613134,
+          "core_mean_normal_speed_raw": -0.4999999534806567,
+          "core_target_reached_at_that_scale": 0.13503290646078533,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+          "initial_phi_hash": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+          "initial_u_hash": "8b8b0d88e8e7c66ed6d3c4e0927539335ebecfd3f8d8cfbefc13147d10ab5a58",
+          "initial_v_hash": "827163f081288d64e282cf040129d7ed01ea5f49121e369f8993ce95103ea995",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.4615641110335742,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.3420992594340696,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.028125
+          },
+          "peak": {
+            "gate_band_cell_count": 2112,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.8255436401367188,
+            "local_cfl_at_peak_sum": 1.64401953125,
+            "local_cfl_domain_max_sum": 1.64401953125,
+            "open_cell_count": 35328,
+            "peak_chi": 7.352934927595811e-11,
+            "peak_index": [
+              77,
+              25
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 18.164189086278423,
+            "peak_open_cell_speed_raw": 18.164189086278423,
+            "peak_over_u_impact": 36.328378172556846,
+            "peak_position": [
+              2.40625,
+              0.78125
+            ],
+            "peak_sdf_over_dx": 17.5,
+            "peak_u_over_u_impact": -25.79823875427246,
+            "peak_v_over_u_impact": 25.57737159729004,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 36.328378172556846,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        }
+      },
+      "case_name": "flat_we200_ct000",
+      "case_verdicts": {
+        "C2_BASE": "ADMISSIBLE",
+        "R0_WEAK": "NOT_ADMISSIBLE",
+        "R1_MEDIUM": "NOT_ADMISSIBLE",
+        "R2_SHARP": "NOT_ADMISSIBLE"
+      }
+    },
+    "pillar_training": {
+      "admissible_candidates": [
+        "C2_BASE"
+      ],
+      "candidates": {
+        "C2_BASE": {
+          "amplitude_scale_needed_for_envelope": 1.1610919305488476,
+          "core_mean_normal_speed_over_u_impact": -0.999999966396361,
+          "core_mean_normal_speed_raw": -0.4999999831981805,
+          "core_target_reached_at_that_scale": 1.0,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": true,
+          "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+          "initial_v_hash": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37",
+          "initializer_parameters": {
+            "candidate": "C2_BASE",
+            "source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1"
+          },
+          "peak": {
+            "gate_band_cell_count": 2936,
+            "gate_band_max_speed_over_u_impact": 1.5613006326020695e-05,
+            "local_cfl_at_peak_component": 0.135197509765625,
+            "local_cfl_at_peak_sum": 0.13535764484107496,
+            "local_cfl_domain_max_sum": 0.13535765501856803,
+            "open_cell_count": 34944,
+            "peak_chi": 5.051514762044462e-15,
+            "peak_index": [
+              95,
+              45
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 2.1124625719033565,
+            "peak_open_cell_speed_raw": 2.1124625719033565,
+            "peak_over_u_impact": 4.224925143806713,
+            "peak_position": [
+              2.96875,
+              1.40625
+            ],
+            "peak_sdf_over_dx": 24.700000762939453,
+            "peak_u_over_u_impact": -0.005004221107810736,
+            "peak_v_over_u_impact": -4.224922180175781,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 4.224925143806713,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 1.7881393432617188e-07,
+              "dx_FV_Linf_over_u_impact": 3.5762786865234375e-07,
+              "nearwall_chi_speed_over_u_impact": 1.5613006326020695e-05,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R0_WEAK": {
+          "amplitude_scale_needed_for_envelope": 0.15837673662625337,
+          "core_mean_normal_speed_over_u_impact": -0.9999999420767068,
+          "core_mean_normal_speed_raw": -0.4999999710383534,
+          "core_target_reached_at_that_scale": 0.15837673662625337,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "b63cd56d65163440fdd46061b1e6abf0145d5cef2a59193a13c5802ee41b6366",
+          "initial_v_hash": "0aa88039e4f5a1bf0ea35f02a6fa2b28901dd396a770ebd4e810a0e9ce0bcab6",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.463756716957849,
+            "candidate": "R0_WEAK",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 1.5,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.84375,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9330357142857143,
+            "role": "weak roll-off: minimum geometrically admissible clearance, widest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34158681849751554,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "peak": {
+            "gate_band_cell_count": 2936,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.7690260620117187,
+            "local_cfl_at_peak_sum": 1.3943252563476562,
+            "local_cfl_domain_max_sum": 1.3943252563476562,
+            "open_cell_count": 34944,
+            "peak_chi": 2.026434575697067e-12,
+            "peak_index": [
+              78,
+              36
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 15.486890929010777,
+            "peak_open_cell_speed_raw": 15.486890929010777,
+            "peak_over_u_impact": 30.973781858021553,
+            "peak_position": [
+              2.4375,
+              1.125
+            ],
+            "peak_sdf_over_dx": 20.19356346130371,
+            "peak_u_over_u_impact": -19.540599822998047,
+            "peak_v_over_u_impact": 24.03206443786621,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 30.973781858021553,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 2.205371856689453e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R1_MEDIUM": {
+          "amplitude_scale_needed_for_envelope": 0.05464559408757376,
+          "core_mean_normal_speed_over_u_impact": -0.9999999118796323,
+          "core_mean_normal_speed_raw": -0.49999995593981617,
+          "core_target_reached_at_that_scale": 0.05464559408757376,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "766b21403f314fba2aa0e6be854f9c650f4d446d400e5a9c98b5f82767f6f456",
+          "initial_v_hash": "fc1d62076e27916a5368d42fc60bce32c4eb8bcad88ea980550574cdc6979464",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 4.3445764210457005,
+            "candidate": "R1_MEDIUM",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8214285714285714,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "medium roll-off: mid-window clearance at the prespecified transition width",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.11508601795515304,
+            "w_dx": 2.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "peak": {
+            "gate_band_cell_count": 2936,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 2.288248046875,
+            "local_cfl_at_peak_sum": 4.02489794921875,
+            "local_cfl_domain_max_sum": 4.02489794921875,
+            "open_cell_count": 34944,
+            "peak_chi": 7.096545573404001e-13,
+            "peak_index": [
+              78,
+              37
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 44.88492232132587,
+            "peak_open_cell_speed_raw": 44.88492232132587,
+            "peak_over_u_impact": 89.76984464265173,
+            "peak_position": [
+              2.4375,
+              1.15625
+            ],
+            "peak_sdf_over_dx": 20.980466842651367,
+            "peak_u_over_u_impact": -54.27030944824219,
+            "peak_v_over_u_impact": 71.50775146484375,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 89.76984464265173,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 3.4570693969726562e-06,
+              "dx_FV_Linf_over_u_impact": 7.62939453125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        },
+        "R2_SHARP": {
+          "amplitude_scale_needed_for_envelope": 0.13503290646078533,
+          "core_mean_normal_speed_over_u_impact": -0.9999999069613134,
+          "core_mean_normal_speed_raw": -0.4999999534806567,
+          "core_target_reached_at_that_scale": 0.13503290646078533,
+          "global_speed_envelope_limit": 4.905526491646905,
+          "global_speed_envelope_pass": false,
+          "initial_geometry_hash": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+          "initial_phi_hash": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+          "initial_u_hash": "23f8c25227291837467d965d3c5519f585de13c03da44d675faa3061ece3e517",
+          "initial_v_hash": "f6812651361db4c6c4348259cb1dfb73d060528a61e07d0641368e2fb4419f47",
+          "initializer_parameters": {
+            "R": 0.7,
+            "amplitude_scale": 1.461564111033574,
+            "candidate": "R2_SHARP",
+            "core_coverage_floor": 0.5,
+            "core_volume_fraction_inside_support": 1.0,
+            "delta_dx": 2.0,
+            "family": "single_streamfunction_radial_envelope_v1",
+            "formula": "psi = A * sx * smooth5((R_in - r)/w) * smooth5((dist_y_seam - 3dy)/(3dy)); u = D_ypsi; v = -D_x psi",
+            "normalization_well_conditioned": true,
+            "plateau_radius_over_R": 0.8660714285714286,
+            "post_derivative_masking": false,
+            "r_in_over_R": 0.9107142857142857,
+            "role": "strong roll-off: mid-window clearance with the sharpest transition",
+            "sdf_wall_taper_applied": false,
+            "unit_core_v_before_scale": -0.34209925943406966,
+            "w_dx": 1.0,
+            "x0": 3.0,
+            "y0": 1.434375
+          },
+          "peak": {
+            "gate_band_cell_count": 2936,
+            "gate_band_max_speed_over_u_impact": 0.0,
+            "local_cfl_at_peak_component": 0.8255436401367188,
+            "local_cfl_at_peak_sum": 1.64401953125,
+            "local_cfl_domain_max_sum": 1.64401953125,
+            "open_cell_count": 34944,
+            "peak_chi": 1.0935696792557792e-13,
+            "peak_index": [
+              77,
+              38
+            ],
+            "peak_inside_gate_band": false,
+            "peak_inside_solid": false,
+            "peak_open_cell_speed": 18.164189086278423,
+            "peak_open_cell_speed_raw": 18.164189086278423,
+            "peak_over_u_impact": 36.328378172556846,
+            "peak_position": [
+              2.40625,
+              1.1875
+            ],
+            "peak_sdf_over_dx": 22.38258171081543,
+            "peak_u_over_u_impact": -25.79823875427246,
+            "peak_v_over_u_impact": 25.57737159729004,
+            "u_impact": 0.5
+          },
+          "shape_ratio_limit": 4.905526491646905,
+          "shape_ratio_peak_over_core_target": 36.328378172556846,
+          "six_frozen_details": {
+            "checks": {
+              "central_D": true,
+              "core_target": true,
+              "deep_solid_velocity": true,
+              "embedded_wall_normal_velocity": true,
+              "nearwall_chi_velocity": true,
+              "open_face_FV_divergence": true
+            },
+            "dimensionless_residuals": {
+              "deep_solid_speed_over_u_impact": 0.0,
+              "dx_D_Linf_over_u_impact": 9.5367431640625e-07,
+              "dx_FV_Linf_over_u_impact": 1.9073486328125e-06,
+              "nearwall_chi_speed_over_u_impact": 0.0,
+              "wall_normal_sample_over_u_impact": 0.0
+            },
+            "failing": []
+          },
+          "six_frozen_initial_constraints": true,
+          "status": "NOT_ADMISSIBLE",
+          "u_impact": 0.5
+        }
+      },
+      "case_name": "pillar_training",
+      "case_verdicts": {
+        "C2_BASE": "ADMISSIBLE",
+        "R0_WEAK": "NOT_ADMISSIBLE",
+        "R1_MEDIUM": "NOT_ADMISSIBLE",
+        "R2_SHARP": "NOT_ADMISSIBLE"
+      }
+    }
+  },
+  "dt": 0.002,
+  "profile": "t0_screen",
+  "radial_family_summary": {
+    "C2_BASE": {
+      "admissible_in_every_case": true,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 4.212954615390365,
+        "flat_we100_ct050": 4.315600561416556,
+        "flat_we200_ct000": 4.315600561416556,
+        "pillar_training": 4.224925143806713
+      }
+    },
+    "R0_WEAK": {
+      "admissible_in_every_case": false,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 30.973781858021553,
+        "flat_we100_ct050": 30.973781858021553,
+        "flat_we200_ct000": 30.973781858021553,
+        "pillar_training": 30.973781858021553
+      }
+    },
+    "R1_MEDIUM": {
+      "admissible_in_every_case": false,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 89.76984464265173,
+        "flat_we100_ct050": 89.76984464265173,
+        "flat_we200_ct000": 89.76984464265173,
+        "pillar_training": 89.76984464265173
+      }
+    },
+    "R2_SHARP": {
+      "admissible_in_every_case": false,
+      "peak_over_u_impact_by_case": {
+        "complex_heldout": 36.328378172556846,
+        "flat_we100_ct050": 36.328378172556846,
+        "flat_we200_ct000": 36.328378172556846,
+        "pillar_training": 36.328378172556846
+      }
+    }
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "c2_exact_reproduction": {
+    "complex_heldout": {
+      "amplitude_scale_l1a2s_builder": 2.1183961728581067,
+      "amplitude_scale_relative_delta": 0.0,
+      "amplitude_scale_taper_family": 2.1183961728581067,
+      "case_name": "complex_heldout",
+      "comparison_rule": "sha256 of the exact solver arrays plus bitwise array equality of the two builders",
+      "hash_checks": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "hashes": {
+        "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      },
+      "psi_bitwise_equal_to_l1a2s_builder": true,
+      "saved_evidence_compared": true,
+      "saved_hashes": {
+        "geometry": "a7fec140c3eb2ceb5892f3ff120faad289281a411efa724f4bb94e122c30ef20",
+        "phi": "9f36a6529cd2a9f1186723d40de7498f9a8976359a6312d071ff9d4f4fa7d9ad",
+        "u": "e27affa49bb65560df77d39f68ad150ac91eff55e4f477d59ae4b04b4a0e1b16",
+        "v": "324406767f6c711aa4cb531db7c0b840e3027134ab05582e9d1018e634ed0871"
+      },
+      "u_bitwise_equal_to_l1a2s_builder": true,
+      "v_bitwise_equal_to_l1a2s_builder": true
+    },
+    "flat_we100_ct050": {
+      "amplitude_scale_l1a2s_builder": 2.1700098144431816,
+      "amplitude_scale_relative_delta": 0.0,
+      "amplitude_scale_taper_family": 2.1700098144431816,
+      "case_name": "flat_we100_ct050",
+      "comparison_rule": "sha256 of the exact solver arrays plus bitwise array equality of the two builders",
+      "hash_checks": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "hashes": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "psi_bitwise_equal_to_l1a2s_builder": true,
+      "saved_evidence_compared": true,
+      "saved_hashes": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "u_bitwise_equal_to_l1a2s_builder": true,
+      "v_bitwise_equal_to_l1a2s_builder": true
+    },
+    "flat_we200_ct000": {
+      "amplitude_scale_l1a2s_builder": 2.1700098144431816,
+      "amplitude_scale_relative_delta": 0.0,
+      "amplitude_scale_taper_family": 2.1700098144431816,
+      "case_name": "flat_we200_ct000",
+      "comparison_rule": "sha256 of the exact solver arrays plus bitwise array equality of the two builders",
+      "hash_checks": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "hashes": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "psi_bitwise_equal_to_l1a2s_builder": true,
+      "saved_evidence_compared": true,
+      "saved_hashes": {
+        "geometry": "63bb10c8cf225ea1d55ad74875655c965eda07e7c1dad01f1636fc5c984934ae",
+        "phi": "7640911ae59be76dc61460b574c082ce8aaabf8a9ac93f3375912ac89b210440",
+        "u": "7466392636c28af11b8ed3f5cd26377f138b6153888c8bdc9b881d52b5de03ce",
+        "v": "d9fec9e440ac89dbc4b7fe0c0ac8c0af25041af120a3eab332dc7a0810439cf4"
+      },
+      "u_bitwise_equal_to_l1a2s_builder": true,
+      "v_bitwise_equal_to_l1a2s_builder": true
+    },
+    "pillar_training": {
+      "amplitude_scale_l1a2s_builder": 2.1244154587470976,
+      "amplitude_scale_relative_delta": 0.0,
+      "amplitude_scale_taper_family": 2.1244154587470976,
+      "case_name": "pillar_training",
+      "comparison_rule": "sha256 of the exact solver arrays plus bitwise array equality of the two builders",
+      "hash_checks": {
+        "geometry": true,
+        "phi": true,
+        "u": true,
+        "v": true
+      },
+      "hashes": {
+        "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "psi_bitwise_equal_to_l1a2s_builder": true,
+      "saved_evidence_compared": true,
+      "saved_hashes": {
+        "geometry": "c8105a5f3ba8932b603053eb6de0cbdbdfc063a89d57effae67c99a9aab7fdde",
+        "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+        "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+        "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+      },
+      "u_bitwise_equal_to_l1a2s_builder": true,
+      "v_bitwise_equal_to_l1a2s_builder": true
+    }
+  },
+  "evidence_class": "FORENSIC_N192",
+  "operator_map": {
+    "call_graph": [
+      "case registry -> impact_impulse_projection_audit.study_cases()",
+      "case -> impact_initialization_compatibility_audit._derive_bundle -> pf.build_case -> pf.droplet_initial_state -> State",
+      "diagnostic seed -> build_tapered_velocity -> pf._ddy/pf._ddx -> pf.State(phi=production phi)",
+      "step -> impulse.make_fast_substep -> pf.rhs -> pf._phase_update -> solve_ch_implicit / chemical_potential_fluxes / phase_advective_fluxes -> Brinkman -> poisson_solve",
+      "contact metric -> audit._local_gap -> audit._threshold_contour_edge_crossings -> audit._periodic_bilinear_sample"
+    ],
+    "deliberate_non_edits": [
+      "no production file, threshold, policy, contract, initializer or dataset semantic is modified",
+      "no autoformat was applied to any existing frozen module",
+      "no historical evidence or approval record is rewritten"
+    ],
+    "production_public_step": {
+      "effective_dt_policy": "impact_phase_cap_dx2_v1",
+      "internal_step": "p.dt / 3",
+      "internal_substeps": 3,
+      "momentum_chain": "u_n -> u + h*rhs -> Brinkman 1/(1+h*chi/eta_pen) -> periodic pressure projection",
+      "phase_chain": "phi_rhs (advective face-flux divergence) -> source = phi_rhs - div_V(J_CH_explicit) -> solve_ch_implicit(phi + h*source)",
+      "requested_dt": 0.004
+    },
+    "source_anchors": {
+      "advective_phase_source": "def advective_phase_source(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float):",
+      "chemical_potential_fluxes": "def chemical_potential_fluxes(mu, solid: Solid, p: PhaseFieldParams):",
+      "control_volume_divergence": "def control_volume_divergence(flux_x, flux_y, volume_safe):",
+      "periodic_D_x": "def _ddx(f, dx):",
+      "periodic_D_y": "def _ddy(f, dy):",
+      "periodic_poisson": "def poisson_solve(rhs, m2):",
+      "phase_advection_subcycles": "def phase_advection_subcycles(p: PhaseFieldParams) -> bool:",
+      "phase_advective_fluxes": "def phase_advective_fluxes(u, v, phi, solid: Solid, p: PhaseFieldParams):",
+      "phase_control_volumes": "def phase_control_volumes(solid: Solid, p: PhaseFieldParams):",
+      "phase_transport_operator": "def phase_transport_operator(solid: Solid, p: PhaseFieldParams) -> PhaseTransportOperator:",
+      "phase_update": "def _phase_update(phi, u, v, solid: Solid, p: PhaseFieldParams, dt: float, phi_rhs, mu_expl):",
+      "rhs": "def rhs(state: State, solid: Solid, p: PhaseFieldParams):",
+      "solve_ch_implicit": "def solve_ch_implicit(rhs_field, solid: Solid, p: PhaseFieldParams, dt: float):",
+      "step_with_diagnostics": "def step_with_diagnostics(state: State, solid: Solid, p: PhaseFieldParams):"
+    },
+    "source_anchors_present": {
+      "advective_phase_source": true,
+      "chemical_potential_fluxes": true,
+      "control_volume_divergence": true,
+      "periodic_D_x": true,
+      "periodic_D_y": true,
+      "periodic_poisson": true,
+      "phase_advection_subcycles": true,
+      "phase_advective_fluxes": true,
+      "phase_control_volumes": true,
+      "phase_transport_operator": true,
+      "phase_update": true,
+      "rhs": true,
+      "solve_ch_implicit": true,
+      "step_with_diagnostics": true
+    }
+  },
+  "preflight": {
+    "checks": {
+      "branch_head_contains_verified_main": true,
+      "branch_is_authorized_l1a2t_session_branch": true,
+      "commits_since_main_touch_only_stage_paths": true,
+      "merge_base_is_the_verified_sha": true,
+      "origin_main_equals_verified_merge_sha": true,
+      "policy_matches_contract": true,
+      "quality_baseline_present": true,
+      "solver_contract_12": true,
+      "stage_has_not_touched_frozen_sources": true,
+      "timestep_policy_default": true,
+      "verified_sha_has_exactly_the_verified_parents": true,
+      "worktree_has_no_changes_outside_stage_deliverables": true
+    },
+    "frozen_evidence_input_sha256": {
+      "l1a2s/impact_event_matrix.json": "ea39659f03d5b3ee4562cf14618c136f235b3a7fd3b3de46e46c1f2bce02abac",
+      "l1a2s/initializer_constraint_matrix.json": "ffa04938c1252dbdfd408233289b795396837cfa2a0bcd682549412efae46095",
+      "l1a2s/l1a2s_final_report.json": "9591d7193226a4d01c621eb471d996b38c15f85b7254beff42700ee40f7d6f2a",
+      "l1a2s/l1a2s_final_report.md": "5c8cbf619b16554a6ffc2ef9a5408171d4424e35a753a69155c02b717ccb3bbc",
+      "l1a2s/manifest.json": "08bd1274163028dda2c18a4936ce0f966bb30c54ba330046ae1fc1c1c0c54c92",
+      "l1a2s/pillar_flat_operator_comparison/pillar_flat_operator_comparison.json": "54cdc9434b851a58e5ef228b70df21296d8c68a76b3c5f190ac27220d17b07db",
+      "l1a2s/quality_status.json": "ff0edb0ca360de390cc893d28c8f719b6b359c02bc6c94cf28e5a2b8103defca"
+    },
+    "jax": "0.10.2",
+    "jax_enable_x64": true,
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "prerequisite": {
+      "branch": "arena/02b6c71b-hydrogym",
+      "commits_since_verified_main": [
+        "2dd0f16 L1A-2t: harden preflight provenance guards (branch ancestor, porcelain parsing)",
+        "c52f049 L1A-2t: near-wall taper, interface transport and contact-side impact audit (diagnostic)"
+      ],
+      "head_sha": "2dd0f1620e11e1b4f04d737ec3684b02b61c162f",
+      "merge_base_sha": "09e2993b8da478d79e768054194201af57121784",
+      "origin_main_sha": "09e2993b8da478d79e768054194201af57121784",
+      "pr22": {
+        "head_sha": "865317d438eee5c8d5f1e942f0ad30c943010818",
+        "merge_sha": "09e2993b8da478d79e768054194201af57121784",
+        "merged_at_utc": "2026-10-11T07:37:01Z",
+        "number": 22,
+        "state": "MERGED",
+        "url": "https://github.com/licy0505/hydrogym/pull/22"
+      },
+      "pr22_hosted_ci_is_engineering_only": true,
+      "pr22_hosted_python_ci_run": 38120327651,
+      "pr22_hosted_python_ci_status": "observed_pass_8_of_8_jobs_at_preflight_time",
+      "pr23": {
+        "head_sha": "ea00347c8a6cebf6cfbff36f744d39ccd60784d1",
+        "merge_sha": "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+        "number": 23,
+        "state": "MERGED"
+      },
+      "verified_merge_sha": "09e2993b8da478d79e768054194201af57121784",
+      "verified_sha_parents": [
+        "039f6a0d9a14ff601c76a58f5a66ce0900677de5",
+        "865317d438eee5c8d5f1e942f0ad30c943010818"
+      ],
+      "worktree_clean_within_stage_deliverables": true
+    },
+    "python": "3.11.2",
+    "quality_baseline_sha256": "52b41ab68b4d6b86aaa254389eb5398e65ad8c5cbdcd12626c0466248dd3d70b",
+    "source_freeze_checks": {
+      "cases": true,
+      "generate_dataset": true,
+      "phasefield": true,
+      "timestep_policy": true
+    },
+    "source_hashes_current": {
+      "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "cases_at_l1a2r": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "generate_dataset_at_l1a2r": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "impact_impulse_projection_audit_at_l1a2r": "b3da6608e06704c56bc7e9ed7f4d0c7d7eed54769635c0cf83c424e182690691",
+      "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+      "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+      "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+      "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "phasefield_at_l1a2r": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223",
+      "timestep_policy_at_l1a2r": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "source_hashes_from_l1a2s_manifest": {
+      "cases": "12f8d0f467148de9fa736d6e1511992da5d944d51f531fbe125e90a260ebd5da",
+      "generate_dataset": "5d7f97884b781266d5f2b69ac866358f690d4e18ae6310ad37feb9f59ae82b25",
+      "impact_impulse_projection_audit": "5a8a4d476e0daa7d9249da1eb0a536011021e68e6ff535703d76488fd122a9b9",
+      "l1a2r_final_report_json": "9d6f4a9b41f64e1b55a27f93f74842bba5631aa4e33f521af3f36192cc15eec5",
+      "l1a2r_final_report_md": "5a94c9d03af09fbcdd57b5721e618340dbb35d3351593a0c881c791ba03a8a71",
+      "l1a_data_readiness_exit_audit": "cce427462c8db72a2921c314e0a5e73eba968473bebb27fb17f3e452f15331dd",
+      "observables": "6653e87f2043b9e24b171b4ad50446251b088609404c4f049b1cbde29670b68a",
+      "phasefield": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+      "timestep_policy": "fa1da721609b274ffea1752ff4e074653d03ff24793ae418c109bbcc97bbb223"
+    },
+    "stage": "L1A-2t",
+    "stage_version": "l1a2t_v1"
+  }
+}

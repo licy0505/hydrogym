@@ -1,0 +1,88 @@
+{
+  "candidate_key": "C2_BASE",
+  "case_name": "pillar_training",
+  "geometry": {
+    "closed_face_count_x": 1968,
+    "closed_face_count_y": 2112,
+    "open_volume_total": 34.0199603180954,
+    "solid_area_fraction_chi_ge_0p01": 0.07964409722222222
+  },
+  "geometry_hash": "ea3159bf7e107f4271c2993cbdd9ace08dc1cf168c903b429391bb62c7751408",
+  "hashes": {
+    "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+    "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+    "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+  },
+  "identity_checks": {
+    "contour_cell": true,
+    "contour_cell_chi": true,
+    "contour_cell_normal_velocity": true,
+    "phi_hash": true,
+    "u_hash": true,
+    "v_hash": true
+  },
+  "parameter_hash": "c11634c275a29f1ea39356b917724cdf2d16115d1ed120d652ee1f31adc9059a",
+  "parameters": {
+    "Lx": 6.0,
+    "Ly": 6.0,
+    "M": 0.002,
+    "N": 192,
+    "Re": 200.0,
+    "We": 100.0,
+    "ch_solver_max_iterations": 200,
+    "ch_solver_rtol": 1e-06,
+    "cos_theta": -0.5,
+    "dx": 0.03125,
+    "dy": 0.03125,
+    "effective_dt": 0.002,
+    "eps": 0.046875,
+    "eta_pen": 0.004,
+    "initial_gap": 0.09375,
+    "local_surface_top": 0.640625,
+    "requested_dt": 0.002,
+    "rho_g": 0.1,
+    "rho_l": 1.0,
+    "substep_dt": 0.0006666666666666666,
+    "u_impact": 0.5
+  },
+  "prohibited_alternatives_not_used": [
+    "UNIFORM_ALL_DOMAIN production initializer",
+    "STREAMFUNCTION_LOCALIZED_V0 replay control",
+    "any L1A-2w exploratory ramp construction",
+    "any radial R0/R1/R2 seed"
+  ],
+  "sealed_hashes": {
+    "phi": "3022be21ea6a46ebe2e74b3a4903ae96b8e4527cbafadf1ba0ce0f0f7c14245c",
+    "u": "2b921fbcd185c4fe36173e804b91ddefb4840c580a3410548948f27057c455e9",
+    "v": "3c0963be8ef830f47db9b613ee3a7da64e1fd8694a04cd72be2d95d31a7adf37"
+  },
+  "state_source": "frozen audit.build_candidate SDF_TAPERED_STREAMFUNCTION_V1",
+  "support": {
+    "cell": [
+      95,
+      23
+    ],
+    "chi_at_cell": 0.02659699320793152,
+    "contour_crossing_count": 176,
+    "gap": 0.08456192133807328,
+    "gap_method": "BILINEAR_SDF_ON_LINEAR_PERIODIC_PHI_THRESHOLD_CONTOUR",
+    "gap_over_dx": 2.705981482818345,
+    "gradient": [
+      0.16796839593595575,
+      7.021046226738038
+    ],
+    "gradient_norm": 7.0230551400388235,
+    "interface_normal": [
+      0.023916713251809555,
+      0.9997139545026021
+    ],
+    "point": [
+      2.984375,
+      0.7345619198479572
+    ],
+    "wall_normal_into_solid": [
+      0.0,
+      -1.0
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "added_diagnostics": 0,
+  "adjacent_failures": [
+    "test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head",
+    "test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed",
+    "test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+    "test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+    "test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section",
+    "test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+    "test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+    "test_l1a3b_support_indexed_observable_audit.py::test_full_stage_evidence_verifier_rejects_a_mutated_sealed_historical_vector",
+    "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight"
+  ],
+  "adjacent_passed": 435,
+  "command": "JAX_ENABLE_X64=1 JAX_PLATFORMS=cpu PYTHONPATH=. ../../.venv/bin/python -m pytest tests/test_l1a3c_zero_mobility_control_audit.py tests/test_l1a3b_support_indexed_observable_audit.py tests/test_l1a2z_sequential_ownbase_attribution_audit.py tests/test_frozen_reconstruction_branch_attribution_audit.py tests/test_nearwall_taper_interface_transport_audit.py tests/test_radial_incident_seed_eta_dt_audit.py tests/test_interior_speed_admissibility_screen_audit.py tests/test_boundary_compatible_incident_momentum_bound_audit.py tests/test_frozen_chns_early_window_transport_attribution_audit.py tests/test_impact_initialization_compatibility_audit.py -q",
+  "environment": {
+    "codespell": "2.4.3",
+    "isort": "6.1.0",
+    "jax": "0.10.2",
+    "jaxlib": "0.10.2",
+    "numpy": "2.4.6",
+    "python": "3.11.2",
+    "ruff": "0.15.22",
+    "scipy": "1.17.1"
+  },
+  "focused_failures": [],
+  "focused_passed": 47,
+  "frozen_source_changes_since_measurement": [],
+  "head": "bd7a8fc7ddcb43c2e93ad78eac45b60238417690",
+  "historical_counts": {
+    "codespell": 3,
+    "format": 27,
+    "isort": 28,
+    "ruff": 171
+  },
+  "lineage_restore": "sandbox reset; published blobs verified bytewise, full history fetched, branch restored; no target receipt existed",
+  "passed": true,
+  "quality_command": "PATH=.venv/bin:$PATH .venv/bin/python scripts/quality_debt_gate.py --tool all",
+  "ratchet": "PASS_BASELINE_ONLY",
+  "run_result": "9 failed, 482 passed in 158.38s",
+  "source_hashes": {
+    "examples/two_phase/evidence/l1a2z/manifest.json": "65d42c5fc11c244975d8cf40a06d8a4fdd26884830677c36c8697eb4e63f94e4",
+    "examples/two_phase/evidence/l1a3a/manifest.json": "c5c32bcd9ee56f7ac9188368bf78192a2ff076ef51ea3ac9c3b6cfb5fd84dfb8",
+    "examples/two_phase/evidence/l1a3a/phase_a_audit.json": "890cbfc96f48bfc4695fbb55f9c8ac41bf135d4b6b221e6de2b4bf72f367ae80",
+    "examples/two_phase/evidence/l1a3b/manifest.json": "29157b647adf6ce1701bee60b5d0fb77322fd77f5b1aeb73c801d909d5d11845",
+    "examples/two_phase/l1a2z_prespecification.md": "488568ab96221883bda7233b586f645f1ebc64694e8b6bc876774473ba3449eb",
+    "examples/two_phase/l1a3b_prespecification.md": "d280a12919ff04a8b5a0705185d0909bafb56c5b836091e8c8df75bfea1025a7",
+    "examples/two_phase/l1a3c_prespecification.md": "5bc54b90edf4bbed4cf735442f1c780930979d3e3989693b19eec173858afee0",
+    "examples/two_phase/phasefield.py": "024665742dce67bc970052e9760fa375ccda096f534cae5faaf2b446c11fe27c",
+    "examples/two_phase/production/frozen_chns_early_window_transport_attribution_audit.py": "f0fddeabfdd4498123c84f8cd9125470056e589ef6e2241f2448a12eb3d0214e",
+    "examples/two_phase/production/frozen_reconstruction_branch_attribution_audit.py": "d6c9e05a42384b227faa6d86b47284984d14e0255d7ba17345fd359ad7f51131",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py": "788791df2b0bb3e737fe68cba6e5cd3e98d100285184e0b727ce02363309a3b0",
+    "examples/two_phase/production/l1a2y_contour_branch_readout.py": "563553a398f2eea53bf0cc73d53047ea483c37d6686d2572f92ddf3fad540e97",
+    "examples/two_phase/production/l1a2z_sequential_ownbase_attribution_audit.py": "1c1815991e929860d377855a2d4c46d890040da0d0ee1733ff9f675784f5e858",
+    "examples/two_phase/production/l1a3b_support_indexed_observable_audit.py": "64ea61b912630cd35b8ed3dd1bfcf51a733b12373325340e4983b9814625a104",
+    "examples/two_phase/production/l1a3c_zero_mobility_control_audit.py": "e56c3a2e1bf9a8699bb4096374d7e5003734a37c9f27e5d02398fd55b72c1345",
+    "examples/two_phase/tests/test_l1a2z_sequential_ownbase_attribution_audit.py": "0f329a0fd0b62f9de411e5f3de544b53e60378e964887b49878cb99037ec4a70",
+    "examples/two_phase/tests/test_l1a3b_support_indexed_observable_audit.py": "932ce4f2d5fc7ab37d05eb71e962833a9e75708786a728e1d955db2c9993b686",
+    "examples/two_phase/tests/test_l1a3c_zero_mobility_control_audit.py": "8d68d4fdad3153e247e2326dd53530d9a385f94a2c52723f1cc5dbb5afc52f5c"
+  },
+  "suites": {
+    "test_boundary_compatible_incident_momentum_bound_audit": {
+      "failed": [
+        "test_boundary_compatible_incident_momentum_bound_audit.py::test_preflight_is_clean_on_the_repository_head"
+      ],
+      "passed": 44
+    },
+    "test_frozen_chns_early_window_transport_attribution_audit": {
+      "failed": [],
+      "passed": 58
+    },
+    "test_frozen_reconstruction_branch_attribution_audit": {
+      "failed": [],
+      "passed": 71
+    },
+    "test_impact_initialization_compatibility_audit": {
+      "failed": [
+        "test_impact_initialization_compatibility_audit.py::test_l1a2r_merged_base_verified_or_fail_closed"
+      ],
+      "passed": 48
+    },
+    "test_interior_speed_admissibility_screen_audit": {
+      "failed": [
+        "test_interior_speed_admissibility_screen_audit.py::test_required_evidence_files_are_declared_and_complete",
+        "test_interior_speed_admissibility_screen_audit.py::test_manifest_self_verification_and_tamper_detection",
+        "test_interior_speed_admissibility_screen_audit.py::test_evidence_verification_rejects_a_moved_envelope",
+        "test_interior_speed_admissibility_screen_audit.py::test_reseal_records_the_observed_ci_status_without_touching_physics",
+        "test_interior_speed_admissibility_screen_audit.py::test_report_carries_every_required_section"
+      ],
+      "passed": 24
+    },
+    "test_l1a2z_sequential_ownbase_attribution_audit": {
+      "failed": [],
+      "passed": 70
+    },
+    "test_l1a3b_support_indexed_observable_audit": {
+      "failed": [
+        "test_l1a3b_support_indexed_observable_audit.py::test_full_stage_evidence_verifier_rejects_a_mutated_sealed_historical_vector"
+      ],
+      "passed": 24
+    },
+    "test_nearwall_taper_interface_transport_audit": {
+      "failed": [
+        "test_nearwall_taper_interface_transport_audit.py::test_manifest_mismatch_reference_is_recorded_in_preflight"
+      ],
+      "passed": 46
+    },
+    "test_radial_incident_seed_eta_dt_audit": {
+      "failed": [],
+      "passed": 50
+    }
+  },
+  "uncommitted_preflight_observation": "10 failed, 434 passed in 133.22s; extra radial case failed because stage files were uncommitted; neither masked nor counted as a pass"
+}

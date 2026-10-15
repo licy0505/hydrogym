@@ -1,0 +1,160 @@
+{
+  "ambiguous_branch_relations": [],
+  "blocking_failures": {},
+  "branch_identity": {
+    "ambiguous": [],
+    "first_merge": {
+      "crossings_after": 178,
+      "crossings_before": 178,
+      "macro_step": 37,
+      "span": "s0_s1",
+      "substep": 110,
+      "support": "PRIMARY"
+    },
+    "first_split": {
+      "crossings_after": 178,
+      "crossings_before": 178,
+      "macro_step": 36,
+      "span": "s0_s1",
+      "substep": 107,
+      "support": "PRIMARY"
+    },
+    "merge_events": [
+      {
+        "crossings_after": 178,
+        "crossings_before": 178,
+        "macro_step": 37,
+        "span": "s0_s1",
+        "substep": 110,
+        "support": "PRIMARY"
+      },
+      {
+        "crossings_after": 178,
+        "crossings_before": 178,
+        "macro_step": 37,
+        "span": "s0_s1",
+        "substep": 110,
+        "support": "TIE_1"
+      }
+    ],
+    "reassignments": [],
+    "relation_counts": {
+      "FRAGMENTED_OR_SPLIT": 2,
+      "GREW_OR_MERGED": 2,
+      "PERSISTENT": 716
+    },
+    "rule": "identity is geometric, never a union-find label: the tracked root's component in one state must have every crossing within BRANCH_IDENTITY_TOLERANCE_DX of a crossing of its component in the previous state and the other way round; containment is a recorded merge or split, a disjoint relation is a reassignment and an ambiguous pair blocks",
+    "split_events": [
+      {
+        "crossings_after": 178,
+        "crossings_before": 178,
+        "macro_step": 36,
+        "span": "s0_s1",
+        "substep": 107,
+        "support": "PRIMARY"
+      },
+      {
+        "crossings_after": 178,
+        "crossings_before": 178,
+        "macro_step": 36,
+        "span": "s0_s1",
+        "substep": 107,
+        "support": "TIE_1"
+      }
+    ],
+    "tolerance_over_dx": 0.375
+  },
+  "branch_reassignments": [],
+  "closure": {
+    "band_dx": 0.01,
+    "holds": true,
+    "marginal_interaction_dx": -0.007937057754737964,
+    "sequential_telescoping_max_substep_dx": 0.0,
+    "sequential_telescoping_total_dx": 0.0
+  },
+  "closure_ok": true,
+  "conservation": {
+    "cg_all_converged": true,
+    "cg_iterations_max": 18,
+    "cg_iterations_min": 18,
+    "cg_solves": 120,
+    "cg_worst_relative_residual": 5.718904648233452e-07,
+    "contact_guard": {
+      "gap_over_dx": null,
+      "macro_step": null,
+      "triggered": false
+    },
+    "contact_threshold_over_dx": 1.5,
+    "mass_drift": 0.0,
+    "mass_drift_relative": 0.0,
+    "mass_final": 1.5500927792312642,
+    "mass_initial": 1.5500927792312642,
+    "rule": "the conservation and convergence diagnostics are the frozen ones; no threshold is changed",
+    "stage": "L1A-2z",
+    "substeps": 120,
+    "t_final": 0.08000000000000002,
+    "worst_closed_face_flux": 0.0,
+    "worst_operator_recombination": 1.1102230246251565e-16,
+    "worst_phi_hat_identity": 2.220446049250313e-16,
+    "worst_substep_mass_residual": 4.470435646983889e-16
+  },
+  "conservation_ok": true,
+  "criteria": {
+    "attribution_closure_band_dx": 0.01,
+    "competition_tolerance_dx": 0.01,
+    "cross_check_tolerance_dx": 0.05,
+    "dominance_factor": 3.0,
+    "equivalence_max_gap_diff_over_dx": 0.0001,
+    "equivalence_max_phi_diff": 1e-06,
+    "tie_tolerance_dx": 1e-06,
+    "total_displacement_closure_band_dx": 0.01,
+    "walk_noise_floor_dx": 0.001
+  },
+  "equivalence": {
+    "cg_all_converged_eager": true,
+    "macros": 40,
+    "max_gap_difference_over_dx": 8.942901530417657e-09,
+    "max_phi_difference_vs_eager_public_step": 1.4139207138441634e-08,
+    "max_phi_difference_vs_jitted_public_step": 1.4139207138441634e-08,
+    "max_velocity_difference_vs_eager_public_step": 7.152557373046875e-07,
+    "max_velocity_difference_vs_jitted_public_step": 7.152557373046875e-07,
+    "note": "the frozen public step advances its substeps inside a jitted scan, so XLA fusion changes the last bits of the arithmetic; the frozen thresholds for this equivalence are the L1A-2y ones",
+    "stage": "L1A-2z"
+  },
+  "equivalence_ok": true,
+  "exact_threshold_state_count": 0,
+  "frozen_enumeration_mismatch_count": 0,
+  "frozen_l1a2x_diagnostic_retained": {
+    "maximum_margin_over_dx": 1.8504060506074893e-09,
+    "minimum_margin_over_dx": 0.0,
+    "rule": "the frozen L1A-2x minimum-gap diagnostic is reported unchanged on every state, including its NON_UNIQUE verdict; that verdict answers a question about the arg-min point which this stage does not use, and it is therefore reported rather than gated on. The gate of this stage is the branch-level rule recorded above",
+    "statuses": [
+      "NON_UNIQUE"
+    ]
+  },
+  "identical_window": {
+    "final_state_hashes_match": true,
+    "holds": true,
+    "max_absolute_root_difference_over_dx": 0.0,
+    "per_substep_increment_samples": {
+      "max_abs_difference_adv": 0.0,
+      "max_abs_difference_ch": 0.0,
+      "max_abs_difference_full": 0.0,
+      "max_abs_difference_imp": 0.0
+    }
+  },
+  "intermediate_states_checked": 360,
+  "intermediate_states_rule_ok": 360,
+  "multi_component_state_count": 0,
+  "non_unique_state_count": 0,
+  "non_unique_states": [],
+  "readout_failures": {},
+  "readout_statuses": {
+    "OK": 2160
+  },
+  "rule": "a failed guard withholds the verdict, never grants one: a non-unique branch, an exact-threshold degeneracy, a readout failure, a branch reassignment, a support tie that moves the answer by more than the closure band, a closure beyond the band, a capture that does not reproduce the frozen step, a conservation failure or a trajectory that does not reproduce the sealed window all forbid a resolved attribution",
+  "stage": "L1A-2z",
+  "support_tie_spread_dx": 1.803201143957267e-09,
+  "unique_measurement_ok": true,
+  "unresolved": false
+}

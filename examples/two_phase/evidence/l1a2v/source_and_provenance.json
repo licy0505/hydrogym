@@ -1,0 +1,21 @@
+{
+  "baseline_head_sha": "11f299d02179169ab6d8427c7b7b8b8b686f00aa",
+  "baseline_pull_request": 24,
+  "branch": "arena/02b6c71b-hydrogym",
+  "module_sha256": "1890e6557755dfdc68d6386434fd70dada65db4f268eeeb55c28a7f9aed82f42",
+  "read_only_frozen_sources": [
+    "examples/two_phase/phasefield.py",
+    "examples/two_phase/production/impact_initialization_compatibility_audit.py",
+    "examples/two_phase/production/radial_incident_seed_eta_dt_audit.py",
+    "examples/two_phase/production/nearwall_taper_interface_transport_audit.py",
+    "examples/two_phase/production/timestep_policy.py"
+  ],
+  "sealed_dependency_hashes": {
+    "evidence/l1a2t/manifest.json": "c7f90a4aa4b48c795966ba41778e42e7335a1c57add1ce02d17c7a7d63356a9f",
+    "evidence/l1a2u/manifest.json": "457d9d27c109fd3deef0c943a7a81e517ce6706bc7498254af3054d764c109b5",
+    "production/radial_incident_seed_eta_dt_audit.py": "e005d24f9e3c5f5ccd21fcff5957a523860dfc23918f576a1c87e47738fdc1c3"
+  },
+  "stage": "L1A-2v",
+  "stage_version": "l1a2v_v1",
+  "verified_main_sha": "09e2993b8da478d79e768054194201af57121784"
+}

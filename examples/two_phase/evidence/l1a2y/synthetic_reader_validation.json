@@ -1,0 +1,389 @@
+{
+  "all_hold": true,
+  "cases": {
+    "branch_disappearance_is_a_failure": {
+      "accepts_a_root_within_the_continuity_bound": true,
+      "candidates_outside_the_window": 0,
+      "holds": true,
+      "jump_status": "BRANCH_STEP_TOO_LARGE",
+      "monotone_status": "NO_ROOT_IN_WINDOW",
+      "near_status": "OK",
+      "outside_status": "NO_ROOT_IN_WINDOW",
+      "refuses_a_root_beyond_the_continuity_bound": true,
+      "refuses_a_root_outside_the_search_window": true,
+      "refuses_a_vanished_branch": true
+    },
+    "column_root_is_a_frozen_segment_crossing": {
+      "applied_over_dx": 16.37,
+      "fractions": [
+        0.8682660459487317
+      ],
+      "holds": true,
+      "roots_in_window_over_dx": [
+        16.368266046
+      ],
+      "segment_indices": [
+        15
+      ]
+    },
+    "continuity_across_a_shared_grid_node": {
+      "holds": true,
+      "max_step_over_dx": 0.05088641048221021,
+      "rows": [
+        {
+          "at_shared_node": false,
+          "crossing_over_dx": 16.400000000000002,
+          "matched_y_over_dx": 16.39850788964892,
+          "segment_index": 15,
+          "status": "OK",
+          "step_over_dx": 0.04850788964891706
+        },
+        {
+          "at_shared_node": false,
+          "crossing_over_dx": 16.450000000000003,
+          "matched_y_over_dx": 16.449113589517793,
+          "segment_index": 15,
+          "status": "OK",
+          "step_over_dx": 0.050605699868874865
+        },
+        {
+          "at_shared_node": true,
+          "crossing_over_dx": 16.5,
+          "matched_y_over_dx": 16.5,
+          "segment_index": 16,
+          "status": "OK",
+          "step_over_dx": 0.050886410482206657
+        },
+        {
+          "at_shared_node": false,
+          "crossing_over_dx": 16.55,
+          "matched_y_over_dx": 16.55088641048221,
+          "segment_index": 16,
+          "status": "OK",
+          "step_over_dx": 0.05088641048221021
+        },
+        {
+          "at_shared_node": false,
+          "crossing_over_dx": 16.6,
+          "matched_y_over_dx": 16.601492110351085,
+          "segment_index": 16,
+          "status": "OK",
+          "step_over_dx": 0.050605699868874865
+        },
+        {
+          "at_shared_node": false,
+          "crossing_over_dx": 16.650000000000002,
+          "matched_y_over_dx": 16.651848729816393,
+          "segment_index": 16,
+          "status": "OK",
+          "step_over_dx": 0.05035661946530823
+        }
+      ],
+      "segment_indices": [
+        15,
+        15,
+        16,
+        16,
+        16,
+        16
+      ],
+      "support_switch_observed": true
+    },
+    "double_roots_are_refused_or_separated": {
+      "close_separation_over_dx": 0.048780487804876316,
+      "close_status": "AMBIGUOUS_MULTIPLE_ROOTS",
+      "far_separation_over_dx": 0.8571428571428541,
+      "far_status": "OK",
+      "holds": true,
+      "refuses_when_close": true,
+      "separates_when_far": true
+    },
+    "linear_translation_is_recovered": {
+      "holds": true,
+      "max_abs_error_over_dx": 0.0014921103510850964,
+      "max_walk_error_over_dx": 0.006210924324237532,
+      "note": "the frozen linear reconstruction locates a smooth diffuse crossing with a small position-dependent bias of order (dx / eps)^2; the study below measures that bias for the diffuseness of this stage instead of assuming it",
+      "rows": [
+        {
+          "applied_offset_over_dx": -0.1,
+          "displacement_toward_solid_over_dx": 0.09900712002027963,
+          "error_over_dx": 0.0009928799797197796,
+          "mirror_is_exact": true,
+          "mirrored_displacement_over_dx": -0.09900712002027963,
+          "recovered_offset_over_dx": -0.09900712002028023,
+          "status": "OK",
+          "steps_walked": 1,
+          "walk_error_over_dx": 0.0009928799797197796,
+          "walk_statuses": [
+            "OK"
+          ],
+          "walked_displacement_over_dx": -0.09900712002028023
+        },
+        {
+          "applied_offset_over_dx": 0.1,
+          "displacement_toward_solid_over_dx": -0.099007120020282,
+          "error_over_dx": 0.0009928799797180032,
+          "mirror_is_exact": true,
+          "mirrored_displacement_over_dx": 0.099007120020282,
+          "recovered_offset_over_dx": 0.099007120020282,
+          "status": "OK",
+          "steps_walked": 1,
+          "walk_error_over_dx": 0.0009928799797180032,
+          "walk_statuses": [
+            "OK"
+          ],
+          "walked_displacement_over_dx": 0.099007120020282
+        },
+        {
+          "applied_offset_over_dx": -0.4,
+          "displacement_toward_solid_over_dx": 0.3985078896489185,
+          "error_over_dx": 0.0014921103510815437,
+          "mirror_is_exact": true,
+          "mirrored_displacement_over_dx": -0.3985078896489185,
+          "recovered_offset_over_dx": -0.3985078896489185,
+          "status": "BRANCH_STEP_TOO_LARGE",
+          "steps_walked": 4,
+          "walk_error_over_dx": 0.006210924324237532,
+          "walk_statuses": [
+            "OK",
+            "OK",
+            "OK",
+            "OK"
+          ],
+          "walked_displacement_over_dx": -0.3937890756757625
+        },
+        {
+          "applied_offset_over_dx": 0.4,
+          "displacement_toward_solid_over_dx": -0.3985078896489161,
+          "error_over_dx": 0.0014921103510850964,
+          "mirror_is_exact": true,
+          "mirrored_displacement_over_dx": 0.3985078896489161,
+          "recovered_offset_over_dx": 0.3985078896489149,
+          "status": "BRANCH_STEP_TOO_LARGE",
+          "steps_walked": 4,
+          "walk_error_over_dx": 0.006210924324230427,
+          "walk_statuses": [
+            "OK",
+            "OK",
+            "OK",
+            "OK"
+          ],
+          "walked_displacement_over_dx": 0.3937890756757696
+        }
+      ]
+    },
+    "no_favourable_selection": {
+      "candidate_roots_over_dx": [
+        15.3,
+        16.1
+      ],
+      "holds": true,
+      "matched_root_over_dx": 15.883024344093537,
+      "mirrored_root_over_dx": 15.883024344093537,
+      "mirrored_wall_normal_gives_the_same_root": true,
+      "nearer_root_moves_away_from_the_solid": false,
+      "prefers_the_nearer_root": true,
+      "previous_root_over_dx": 15.95,
+      "status": "OK"
+    },
+    "reconstruction_bias_is_measured_not_assumed": {
+      "bias_variation_over_the_sweep_over_dx": 0.001425261666341271,
+      "diffuseness_eps_over_dx": 1.5,
+      "holds": true,
+      "max_abs_bias_over_dx": 0.001425261666341271,
+      "rows": [
+        {
+          "applied_over_dx": 16.0,
+          "bias_over_dx": 0.0
+        },
+        {
+          "applied_over_dx": 16.002,
+          "bias_over_dx": -3.6561907108989544e-05
+        },
+        {
+          "applied_over_dx": 16.004,
+          "bias_over_dx": -7.312032366613153e-05
+        },
+        {
+          "applied_over_dx": 16.006,
+          "bias_over_dx": -0.0001096717590982621
+        },
+        {
+          "applied_over_dx": 16.008,
+          "bias_over_dx": -0.00014621272283221742
+        },
+        {
+          "applied_over_dx": 16.01,
+          "bias_over_dx": -0.0001827397242841755
+        },
+        {
+          "applied_over_dx": 16.012,
+          "bias_over_dx": -0.00021924927281702367
+        },
+        {
+          "applied_over_dx": 16.014,
+          "bias_over_dx": -0.0002557378777936492
+        },
+        {
+          "applied_over_dx": 16.016,
+          "bias_over_dx": -0.00029220204852364873
+        },
+        {
+          "applied_over_dx": 16.018,
+          "bias_over_dx": -0.0003286382942739863
+        },
+        {
+          "applied_over_dx": 16.02,
+          "bias_over_dx": -0.0003650431242654406
+        },
+        {
+          "applied_over_dx": 16.022,
+          "bias_over_dx": -0.0004014130476654998
+        },
+        {
+          "applied_over_dx": 16.024,
+          "bias_over_dx": -0.0004377445735670449
+        },
+        {
+          "applied_over_dx": 16.026,
+          "bias_over_dx": -0.00047403421100966625
+        },
+        {
+          "applied_over_dx": 16.028,
+          "bias_over_dx": -0.0005102784689547946
+        },
+        {
+          "applied_over_dx": 16.03,
+          "bias_over_dx": -0.0005464738562714899
+        },
+        {
+          "applied_over_dx": 16.032,
+          "bias_over_dx": -0.0005826168817577582
+        },
+        {
+          "applied_over_dx": 16.034,
+          "bias_over_dx": -0.0006187040541121291
+        },
+        {
+          "applied_over_dx": 16.036,
+          "bias_over_dx": -0.000654731881930104
+        },
+        {
+          "applied_over_dx": 16.038,
+          "bias_over_dx": -0.0006906968737041552
+        },
+        {
+          "applied_over_dx": 16.04,
+          "bias_over_dx": -0.0007265955378201738
+        },
+        {
+          "applied_over_dx": 16.042,
+          "bias_over_dx": -0.0007624243825397059
+        },
+        {
+          "applied_over_dx": 16.044,
+          "bias_over_dx": -0.0007981799160035052
+        },
+        {
+          "applied_over_dx": 16.046,
+          "bias_over_dx": -0.0008338586462208752
+        },
+        {
+          "applied_over_dx": 16.048,
+          "bias_over_dx": -0.0008694570810661162
+        },
+        {
+          "applied_over_dx": 16.05,
+          "bias_over_dx": -0.0009049717282607617
+        },
+        {
+          "applied_over_dx": 16.052,
+          "bias_over_dx": -0.0009403990953984476
+        },
+        {
+          "applied_over_dx": 16.054,
+          "bias_over_dx": -0.0009757356898987268
+        },
+        {
+          "applied_over_dx": 16.056,
+          "bias_over_dx": -0.0010109780190212803
+        },
+        {
+          "applied_over_dx": 16.058,
+          "bias_over_dx": -0.0010461225898694693
+        },
+        {
+          "applied_over_dx": 16.06,
+          "bias_over_dx": -0.0010811659093690196
+        },
+        {
+          "applied_over_dx": 16.062,
+          "bias_over_dx": -0.0011161044842538104
+        },
+        {
+          "applied_over_dx": 16.064,
+          "bias_over_dx": -0.0011509348210871906
+        },
+        {
+          "applied_over_dx": 16.066,
+          "bias_over_dx": -0.00118565342623711
+        },
+        {
+          "applied_over_dx": 16.068,
+          "bias_over_dx": -0.0012202568058583552
+        },
+        {
+          "applied_over_dx": 16.07,
+          "bias_over_dx": -0.0012547414659245248
+        },
+        {
+          "applied_over_dx": 16.072,
+          "bias_over_dx": -0.001289103912178291
+        },
+        {
+          "applied_over_dx": 16.074,
+          "bias_over_dx": -0.001323340650149163
+        },
+        {
+          "applied_over_dx": 16.076,
+          "bias_over_dx": -0.001357448185153487
+        },
+        {
+          "applied_over_dx": 16.078,
+          "bias_over_dx": -0.0013914230222731305
+        },
+        {
+          "applied_over_dx": 16.08,
+          "bias_over_dx": -0.001425261666341271
+        }
+      ],
+      "sweep_over_dx": 0.08
+    },
+    "saddle_cells_are_detected": {
+      "crossing_count": 4,
+      "holds": true,
+      "saddle": true,
+      "saddle_value": 1.0,
+      "segment_count": 2
+    },
+    "symmetric_contour_mirrors_exactly": {
+      "arc_is_an_open_path": true,
+      "arc_status": "OPEN_PATH",
+      "expected_root_over_dx": 35.0,
+      "holds": true,
+      "mirror_identical": true,
+      "mirrored_root_over_dx": 35.0,
+      "root_on_the_axis": true,
+      "root_over_dx": 35.0
+    }
+  },
+  "checks_pass": true,
+  "grid": {
+    "Lx": 6.0,
+    "Nx": 64,
+    "Ny": 64,
+    "dx": 0.09375
+  },
+  "readout_version": "contour_branch_v1",
+  "stage": "L1A-2y"
+}

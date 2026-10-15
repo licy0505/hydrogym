@@ -1,0 +1,167 @@
+{
+  "compute": {
+    "N": 192,
+    "dt_levels": [
+      0.002,
+      0.001,
+      0.0005
+    ],
+    "elapsed_seconds": 1035.1990078689996,
+    "missing_or_unmeasured": [],
+    "profile": "forensic",
+    "stages": [
+      "preflight",
+      "initial",
+      "operator",
+      "budget",
+      "events",
+      "temporal",
+      "assemble"
+    ]
+  },
+  "decision": {
+    "candidate_outcome": "COMPATIBLE_IMPACT_BUT_QUALITY_OR_REFINEMENT_FAIL",
+    "compatible_candidates_per_case": {
+      "complex_heldout": [
+        "C2_BASE",
+        "T3_FAR_NARROW"
+      ],
+      "flat_we100_ct050": [
+        "C2_BASE",
+        "T3_FAR_NARROW"
+      ],
+      "flat_we200_ct000": [
+        "C2_BASE",
+        "T3_FAR_NARROW"
+      ],
+      "pillar_training": [
+        "C2_BASE",
+        "T3_FAR_NARROW"
+      ]
+    },
+    "evidence_class": "FORENSIC_N192",
+    "front_speed_raising_and_compatible": [],
+    "front_speed_raising_candidates": [
+      {
+        "candidate": "T1_NEAR_NARROW",
+        "case": "flat_we100_ct050",
+        "delta_over_u_impact": 0.09050176751021194
+      },
+      {
+        "candidate": "T2_NEAR_WIDE",
+        "case": "flat_we100_ct050",
+        "delta_over_u_impact": 0.016260468410208867
+      },
+      {
+        "candidate": "T1_NEAR_NARROW",
+        "case": "flat_we200_ct000",
+        "delta_over_u_impact": 0.09050176751021194
+      },
+      {
+        "candidate": "T2_NEAR_WIDE",
+        "case": "flat_we200_ct000",
+        "delta_over_u_impact": 0.016260468410208867
+      },
+      {
+        "candidate": "T1_NEAR_NARROW",
+        "case": "pillar_training",
+        "delta_over_u_impact": 0.11851401468347303
+      },
+      {
+        "candidate": "T2_NEAR_WIDE",
+        "case": "pillar_training",
+        "delta_over_u_impact": 0.022516196361137768
+      },
+      {
+        "candidate": "T1_NEAR_NARROW",
+        "case": "complex_heldout",
+        "delta_over_u_impact": 0.22580809264649304
+      },
+      {
+        "candidate": "T2_NEAR_WIDE",
+        "case": "complex_heldout",
+        "delta_over_u_impact": 0.058485931555363815
+      }
+    ],
+    "incompatible_candidates_per_case": {
+      "complex_heldout": [
+        "T1_NEAR_NARROW",
+        "T2_NEAR_WIDE"
+      ],
+      "flat_we100_ct050": [
+        "T1_NEAR_NARROW",
+        "T2_NEAR_WIDE"
+      ],
+      "flat_we200_ct000": [
+        "T1_NEAR_NARROW",
+        "T2_NEAR_WIDE"
+      ],
+      "pillar_training": [
+        "T1_NEAR_NARROW",
+        "T2_NEAR_WIDE"
+      ]
+    },
+    "next_action": {
+      "action": "Design and audit a boundary-consistent incident velocity whose advective forcing is confined to the region sdf > 3 dx while preserving the frozen chi>=0.01 near-wall gate: rebuild the seed from a single smooth streamfunction whose *radial envelope* (not the wall taper) supplies the near-wall roll-off, then re-measure the same t=0 matrix before any trajectory work.",
+      "bounded_scope": "initializer design + same-state matrix only; no trajectory, no generator, no ML",
+      "must_not_be_started_in_this_stage": true
+    },
+    "phase_budget_identity_holds": true,
+    "physical_verdict_valid": true,
+    "profile": "forensic",
+    "quick_only": false,
+    "stage_decision": "DIAGNOSTIC_COMPLETE_NO_PROMOTION",
+    "taper_mechanism_verdict": "TAPER_COMPATIBILITY_TRADEOFF",
+    "temporal_dt_sensitive": true
+  },
+  "evidence_class": "FORENSIC_N192",
+  "evidence_sha256": {
+    "bounded_candidate_event_matrix.json": "8080275cab8e3b44457ba7474ea5e6a82a28e99938154f1bbe7867c7d7ee27a7",
+    "candidate_initial_compatibility_matrix.json": "2a39393d11ca98f7cf0356961b0dd39a36dc58b865a1aa3186eaaaa5fc501992",
+    "counterfactual_and_falsification_matrix.json": "b8195d0a627e3b1f215e8b4e3123db49de1ffee584525b22ed9416c5c0e47c7b",
+    "first_substep_operator_ledger.json": "22e9965399e1aae2e3c77f092178ac4c95d486d45b8c30f5319290f028fbcc75",
+    "front_velocity_distance_band_matrix.json": "ed88bce4771435783704786f617315d1c2c4e635a7688e59c80de190208fb2d2",
+    "interface_contour_motion_audit.json": "0f7654950f3f820ee31647cd52c191bee3dd6a05c2be4abe715ae638a9300748",
+    "mechanism_decision.json": "3dc2dd9d07f8d95b0829ee6cd52171712cce63c5c2ea9aeb4e92924e808dc6a8",
+    "phase_advective_CH_implicit_budget.json": "2ac3adcf48bce5894abbdaa913f4033cc024a0175887f8e8d5001ed3e66cf412",
+    "prerequisite_and_source_map.json": "28d442bb7f6d9b9b14cc6c4c3e3a7eb9159288e19d1d7705fd582f44dee89bde",
+    "quality_and_blocker_matrix.json": "7849920e5b58932d6dc011c6e085a9eff5f7c712b759eda2372b8370e642f507",
+    "taper_candidate_design_contract.json": "cffe6b6a32b53d6a97f5a94c6d7ee5b12f98d77c52f06ea9ce881ae30dc09ed5",
+    "temporal_sensitivity_matrix.json": "825ddcfeb4a5654c74dc6f0a60973d05a620fecfd74e1e0b27e5917668543bd2"
+  },
+  "profile": "forensic",
+  "quality_status": {
+    "focused_test_module": {
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_nearwall_taper_interface_transport_audit.py",
+      "duration_seconds": 61.83,
+      "note": "N=48 module-scope fixtures plus the N=192 saved-C2-hash gate; re-run at the sealed source revision after the final report-label edit",
+      "result": "47 passed; 0 failed",
+      "slow_marker_included": true
+    },
+    "not_run": [
+      "hosted CI (no PR opened for this stage revision)",
+      "T=8 recompute",
+      "L1B data generation",
+      "ML training"
+    ],
+    "quality_gate": {
+      "codespell": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 3)",
+      "command": "export PATH=\"$PWD/.venv/bin:$PATH\"; python scripts/quality_debt_gate.py --tool {ruff,format,isort,codespell}",
+      "format": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 27)",
+      "isort": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 28)",
+      "note": "new L1A-2t code adds zero diagnostics; no frozen module was reformatted",
+      "ruff": "PASS_BASELINE_ONLY NEW_FINDINGS=0 (historical 171)"
+    },
+    "recorded_at_utc": "2026-10-11T09:20:34Z",
+    "related_frozen_modules": {
+      "command": "JAX_ENABLE_X64=1 PYTHONPATH=. ../../.venv/bin/pytest -q tests/test_impact_initialization_compatibility_audit.py tests/test_impact_impulse_projection_audit.py",
+      "failure": "test_l1a2r_merged_base_verified_or_fail_closed - the frozen L1A-2s source gate rejects the current main 09e2993 (PR #22 merge) because it is later than the L1A-2s accepted lineage; pre-existing, unrelated to L1A-2t, reported not concealed",
+      "result": "69 passed; 1 failed"
+    },
+    "stage": "L1A-2t",
+    "stage_source_sha256": "f8c374892fc87a873b7ee2de8457b97b8418fe5d9520c3a2aadff8777dd01e56",
+    "stage_version": "l1a2t_v1"
+  },
+  "stage": "L1A-2t",
+  "stage_version": "l1a2t_v1"
+}

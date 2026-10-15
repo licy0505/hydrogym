@@ -1,0 +1,58 @@
+{
+  "cases_inside_band": [
+    "flat_we100_ct050",
+    "flat_we200_ct000",
+    "pillar_training"
+  ],
+  "cases_outside_band": [
+    "complex_heldout"
+  ],
+  "consequence": "for cases whose contour support cell lies inside the chi >= 0.01 band the frozen band cap applies at the contour itself and the bound is tight by construction; for the remaining case the binding limit at the contour is the reference envelope, which is a much weaker necessary condition, so the two regimes must never be averaged together",
+  "measured_not_assumed": true,
+  "per_case": {
+    "complex_heldout": {
+      "band_top_sdf_over_dx": 3.445622444152832,
+      "binding_constraint_at_contour": "global_speed_envelope",
+      "contour_cell_cap_over_u_impact": 4.905526491646905,
+      "contour_point_cap_over_u_impact": 4.9055264916469055,
+      "contour_support_chi": 0.0005123895243741572,
+      "contour_support_sdf_over_dx": 5.681934833526611,
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "interpolation_support_cells_in_band": 0,
+      "regime": "CONTOUR_OUTSIDE_CHI_GATE_BAND"
+    },
+    "flat_we100_ct050": {
+      "band_top_sdf_over_dx": 2.5,
+      "binding_constraint_at_contour": "band_speed_cap",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_chi": 0.03444519639015198,
+      "contour_support_sdf_over_dx": 2.5,
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "interpolation_support_cells_in_band": 2,
+      "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+    },
+    "flat_we200_ct000": {
+      "band_top_sdf_over_dx": 2.5,
+      "binding_constraint_at_contour": "band_speed_cap",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_chi": 0.03444519639015198,
+      "contour_support_sdf_over_dx": 2.5,
+      "in_band_normal_distance_from_contour_to_band_top": null,
+      "interpolation_support_cells_in_band": 2,
+      "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+    },
+    "pillar_training": {
+      "band_top_sdf_over_dx": 3.1906111240386963,
+      "binding_constraint_at_contour": "band_speed_cap",
+      "contour_cell_cap_over_u_impact": 0.02,
+      "contour_point_cap_over_u_impact": 2.49198570563175,
+      "contour_support_chi": 0.02659699320793152,
+      "contour_support_sdf_over_dx": 2.700000047683716,
+      "in_band_normal_distance_from_contour_to_band_top": 0.01533159613609314,
+      "interpolation_support_cells_in_band": 2,
+      "regime": "CONTOUR_INSIDE_CHI_GATE_BAND"
+    }
+  }
+}

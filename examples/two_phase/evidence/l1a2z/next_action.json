@@ -1,0 +1,18 @@
+{
+  "action": "Design, with the owner, one controlled comparison that could turn the resolved measurement attribution into a testable statement about a physical mechanism - for example a prespecified second trajectory whose advective or Cahn-Hilliard increment is suppressed on the same initial state - and freeze it before any such trajectory is run; no trajectory, no control arm and no physics change is started in this stage",
+  "bounded_scope": {
+    "cases": [],
+    "criteria": "this stage's, unchanged",
+    "dt": 0.002,
+    "macro_step_cap": 40,
+    "no_control_arms": true,
+    "no_extension_toward_contact": true,
+    "no_generator_or_ml": true,
+    "no_refinement": true,
+    "solver": "frozen, unmodified",
+    "window": "t <= 0.08"
+  },
+  "measured_failures_of_this_stage": [],
+  "must_not_be_started_in_this_stage": true,
+  "stage": "L1A-2z"
+}
